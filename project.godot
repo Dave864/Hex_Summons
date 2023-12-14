@@ -13,6 +13,10 @@ config_version=4
 config/name="Hex_Summons"
 config/icon="res://icon.png"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/hex_map_generator/plugin.cfg" )
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
