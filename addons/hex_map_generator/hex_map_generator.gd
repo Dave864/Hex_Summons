@@ -6,7 +6,7 @@ func _enter_tree():
 	add_custom_type("HexMapGenerator", 
 		"Spatial", 
 		preload("HexMap.gd"), 
-		preload("res://icon.png")) 
+		preload("Node3D.svg"))
 
 
 func _exit_tree():
