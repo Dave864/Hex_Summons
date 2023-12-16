@@ -3,7 +3,7 @@ extends Spatial
 
 
 # Reference to the scene for the map tile
-const MAP_TILE := preload("MapTile.tscn")
+const MAP_TILE := preload("map_tile/MapTile.tscn")
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges
