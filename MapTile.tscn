@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://TileSelector.gd" type="Script" id=1]
 
@@ -8,7 +8,7 @@ radial_segments = 6
 rings = 0
 
 [sub_resource type="SpatialMaterial" id=5]
-albedo_color = Color( 0.309804, 0.596078, 0.423529, 0.494118 )
+albedo_color = Color( 0.219608, 0.682353, 0.192157, 0.717647 )
 
 [sub_resource type="CylinderMesh" id=2]
 height = 0.001
@@ -20,6 +20,49 @@ albedo_color = Color( 0.282353, 0.568627, 0.298039, 0.415686 )
 
 [sub_resource type="CylinderShape" id=3]
 height = 0.001
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:hover_material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ SubResource( 5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:hover_material:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.219608, 0.682353, 0.192157, 0.717647 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "selected"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:hover_material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.01, 0.03, 0.3 ),
+"transitions": PoolRealArray( 1, 0.0642732, 1.93187, 1.7411 ),
+"update": 0,
+"values": [ Color( 0.192157, 0.396078, 0.682353, 0.529412 ), Color( 0.192157, 0.396078, 0.682353, 0.529412 ), Color( 0.219608, 0.682353, 0.192157, 0.717647 ), Color( 0.192157, 0.396078, 0.682353, 0.529412 ) ]
+}
 
 [node name="MapTile" type="Spatial"]
 
@@ -37,6 +80,10 @@ material/0 = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="TileSelector"]
 shape = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TileSelector"]
+anims/RESET = SubResource( 7 )
+anims/selected = SubResource( 8 )
 
 [connection signal="mouse_entered" from="TileSelector" to="TileSelector" method="_on_TileSelector_mouse_entered"]
 [connection signal="mouse_exited" from="TileSelector" to="TileSelector" method="_on_TileSelector_mouse_exited"]
