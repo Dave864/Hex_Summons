@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://TileSelector.gd" type="Script" id=1]
-[ext_resource path="res://MapTile.gd" type="Script" id=2]
+[ext_resource path="res://TileSelectorPractice.gd" type="Script" id=1]
+[ext_resource path="res://MapTilePractice.gd" type="Script" id=2]
 
 [sub_resource type="CylinderMesh" id=1]
 height = 0.5
@@ -66,7 +66,7 @@ tracks/0/keys = {
 "values": [ Color( 0.192157, 0.356863, 0.854902, 0.439216 ), Color( 0.854902, 0.682353, 0.192157, 0.717647 ), Color( 0.192157, 0.356863, 0.854902, 0.439216 ) ]
 }
 
-[node name="MapTile" type="Spatial"]
+[node name="MapTilePractice" type="Spatial"]
 script = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

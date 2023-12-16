@@ -2,9 +2,8 @@
 
 [ext_resource path="res://BattleMapPractice.gd" type="Script" id=1]
 
-[node name="BattleMap" type="Spatial"]
+[node name="BattleMapPractice" type="Spatial"]
 script = ExtResource( 1 )
-z_count = 6
 
 [node name="Tiles" type="Spatial" parent="."]
 

@@ -1,42 +1,75 @@
 tool
 extends Spatial
 
+
 # Reference to the scene for the map tile
-const MAP_TILE := preload("res://addons/hex_map_generator/MapTile.tscn")
+const MAP_TILE := preload("MapTile.tscn")
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges
-const HEX_EDGE_RATIO: float = 0.87
+const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
 # The number of tiles along the X axis
-export(int, 1, 30) var x_count = 1
+export(int, 1, 30) var x_count = 2
 # The number of tiles along the Z axis
-export(int, 3, 30) var z_count = 3
+export(int, 1, 30) var z_count = 3
 
-
-# Generates the hex grid map basd off of x_count and z_count
-func _generate_grid():
-	var map_tile_offset: Vector3
-	
-	# Generata a grid of hex tiles
-	for z in z_count:
-		map_tile_offset = Vector3.ZERO
-		map_tile_offset.z = 1.5 * z
-		for x in x_count:
-			map_tile_offset.x = 2 * HEX_EDGE_RATIO * x
-			# Adjust the x offset based on the current z count
-			if z % 2 != 0:
-				map_tile_offset.x += HEX_EDGE_RATIO
-			
-			var map_tile = MAP_TILE.instance()
-			add_child(map_tile)
-			map_tile.translate_object_local(map_tile_offset)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	_generate_grid()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+# Generates the hex grid map basd off of x_count and z_count
+func _generate_grid():
+	var map_tile_offset: Vector3
+	# Keeps track of if an extra tile needs to be prepended on an odd z index
+	var extra_tile_prepended: bool
+	var even_grid = z_count % 2 == 0
+	
+	for z in z_count:
+		map_tile_offset = Vector3.ZERO
+		map_tile_offset.z = 1.5 * z
+		extra_tile_prepended = false
+		for x in x_count:
+			map_tile_offset.x = 2 * HEX_EDGE_RATIO * x
+			# Generate a hex row for a grid with an even number of rows
+			if even_grid:
+				# Prepends an extra tile on odd rows except for the last row
+				if z % 2 != 0:
+					if z == (z_count - 1) or extra_tile_prepended:
+						map_tile_offset.x += HEX_EDGE_RATIO
+					else:
+						map_tile_offset.x -= HEX_EDGE_RATIO
+						extra_tile_prepended = true
+						_instantiate_tile(map_tile_offset)
+						map_tile_offset.x += 2 * HEX_EDGE_RATIO
+				# Appends an extra tile on even rows except for the first row
+				elif z != 0 and x == (x_count - 1):
+					_instantiate_tile(map_tile_offset)
+					map_tile_offset.x += 2 * HEX_EDGE_RATIO
+			# Generate a hex row for a grid with an odd number of rows
+			else:
+				map_tile_offset.x = 2 * HEX_EDGE_RATIO * x
+				# Add an extra tile before the start of odd rows
+				if z % 2 != 0: 
+					if extra_tile_prepended:
+						map_tile_offset.x += HEX_EDGE_RATIO
+					else:
+						map_tile_offset.x -= HEX_EDGE_RATIO
+						extra_tile_prepended = true
+						_instantiate_tile(map_tile_offset)
+						map_tile_offset.x += 2 * HEX_EDGE_RATIO
+			_instantiate_tile(map_tile_offset)
+
+
+# Instantiates the hex grid map tile at the specified offset
+func _instantiate_tile(offset: Vector3):
+	var map_tile = MAP_TILE.instance()
+	$Tiles.add_child(map_tile)
+	map_tile.translate_object_local(offset)

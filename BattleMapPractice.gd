@@ -1,7 +1,7 @@
 extends Spatial
 
 # Reference to the scene for the map tile
-const MAP_TILE := preload("MapTile.tscn")
+const MAP_TILE := preload("MapTilePractice.tscn")
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges
@@ -11,6 +11,22 @@ const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 export(int, 1, 30) var x_count = 2
 # The number of tiles along the Z axis
 export(int, 1, 30) var z_count = 3
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_generate_grid()
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+
+# Generates the hex grid map basd off of x_count and z_count
+func _generate_grid():
+	if z_count % 2 != 0: _generate_odd_grid()
+	else: _generate_even_grid()
 
 
 # Instantiates the hex grid map tile at the specified offset
@@ -70,19 +86,3 @@ func _generate_even_grid():
 				_instantiate_tile(map_tile_offset)
 				map_tile_offset.x += 2 * HEX_EDGE_RATIO
 			_instantiate_tile(map_tile_offset)
-
-
-# Generates the hex grid map basd off of x_count and z_count
-func _generate_grid():
-	if z_count % 2 != 0: _generate_odd_grid()
-	else: _generate_even_grid()
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	_generate_grid()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
