@@ -34,7 +34,8 @@ func _generate_grid():
 	var map_tile_offset: Vector3
 	# Keeps track of if an extra tile needs to be prepended on an odd z index
 	var extra_tile_prepended: bool
-	var even_grid = z_count % 2 == 0
+	
+	_center_grid()
 	
 	for z in z_count:
 		map_tile_offset = Vector3.ZERO
@@ -43,9 +44,9 @@ func _generate_grid():
 		for x in x_count:
 			map_tile_offset.x = 2 * HEX_EDGE_RATIO * x
 			# Generate a hex row for a grid with an even number of rows
-			if even_grid:
+			if _is_even_grid():
 				# Prepends an extra tile on odd rows except for the last row
-				if z % 2 != 0:
+				if !_is_even(z):
 					if z == (z_count - 1) or extra_tile_prepended:
 						map_tile_offset.x += HEX_EDGE_RATIO
 					else:
@@ -61,7 +62,7 @@ func _generate_grid():
 			else:
 				map_tile_offset.x = 2 * HEX_EDGE_RATIO * x
 				# Add an extra tile before the start of odd rows
-				if z % 2 != 0: 
+				if !_is_even(z): 
 					if extra_tile_prepended:
 						map_tile_offset.x += HEX_EDGE_RATIO
 					else:
@@ -70,6 +71,32 @@ func _generate_grid():
 						_instantiate_tile(map_tile_offset)
 						map_tile_offset.x += 2 * HEX_EDGE_RATIO
 			_instantiate_tile(map_tile_offset)
+
+
+# Move the map grid so its center is at the transformation of the base node
+func _center_grid():
+	var tiles_offset = Vector3(2 * HEX_EDGE_RATIO, 0.0, 1.0)
+	tiles_offset.z -= ((3.0 * z_count) + 1.0) / 4.0
+	if _is_even_grid():
+		if z_count == 2:
+			tiles_offset.x -= (x_count + 1.5) * HEX_EDGE_RATIO
+		else:
+			tiles_offset.x -= (x_count + (3.5/2.0)) * HEX_EDGE_RATIO
+		tiles_offset.x -= 0.0
+	else:
+		tiles_offset.x -= (x_count + 1.0) * HEX_EDGE_RATIO
+	
+	_tiles_node.translation = tiles_offset
+
+
+# Check if the grid has an even number of rows
+func _is_even_grid() -> bool:
+	return _is_even(z_count)
+
+
+# Check if number is even
+func _is_even(number) -> bool:
+	return number % 2 == 0
 
 
 # Instantiates the hex grid map tile at the specified offset
@@ -85,7 +112,8 @@ func _instantiate_tile(offset: Vector3):
 func _instantiate_tiles_node():
 	_tiles_node.name = "Tiles"
 	add_child(_tiles_node)
-	_tiles_node.set_owner(get_tree().edited_scene_root)
+	if get_owner() != null:
+		_tiles_node.set_owner(get_tree().edited_scene_root)
 
 
 # Removes all tiles from the tiles node and regenerates the map
