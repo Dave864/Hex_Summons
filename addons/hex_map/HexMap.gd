@@ -10,13 +10,17 @@ const MAP_TILE := preload("map_tile/MapTile.tscn")
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
 # The number of tiles along the X axis
-export(int, 1, 30) var x_count = 2
+export(int, 1, 30) var x_count = 2 setget set_x_count
 # The number of tiles along the Z axis
-export(int, 1, 30) var z_count = 3
+export(int, 1, 30) var z_count = 3 setget set_z_count
+
+var _tiles_node = Spatial.new()
+var _dimensions_updated: bool = false
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	_instantiate_tiles_node()
 	_generate_grid()
 
 
@@ -71,5 +75,38 @@ func _generate_grid():
 # Instantiates the hex grid map tile at the specified offset
 func _instantiate_tile(offset: Vector3):
 	var map_tile = MAP_TILE.instance()
-	add_child(map_tile)
+	_tiles_node.add_child(map_tile)
+	if get_owner() != null:
+		map_tile.set_owner(get_tree().edited_scene_root)
 	map_tile.translate_object_local(offset)
+
+
+# Instantiates the node that will keep track of the map tiles
+func _instantiate_tiles_node():
+	_tiles_node.name = "Tiles"
+	add_child(_tiles_node)
+	_tiles_node.set_owner(get_tree().edited_scene_root)
+
+
+# Removes all tiles from the tiles node and regenerates the map
+func _regenerate_grid():
+	# Delete the tiles of the current map
+	var map_tiles = _tiles_node.get_children()
+	for tile in map_tiles:
+		_tiles_node.remove_child(tile)
+		tile.set_owner(null)
+		tile.queue_free()
+	
+	_generate_grid()
+
+
+# Update the x_count parameter and regenerate the grid
+func set_x_count(new_count: int):
+	x_count = new_count
+	_regenerate_grid()
+
+
+# Update the z_count parameter and regenerate the grid
+func set_z_count(new_count: int):
+	z_count = new_count
+	_regenerate_grid()
