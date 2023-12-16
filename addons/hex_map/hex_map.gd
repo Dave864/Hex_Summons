@@ -3,11 +3,11 @@ extends EditorPlugin
 
 
 func _enter_tree():
-	add_custom_type("HexMapGenerator", 
+	add_custom_type("HexMap", 
 		"Spatial", 
 		preload("HexMap.gd"), 
 		preload("Node3D.svg"))
 
 
 func _exit_tree():
-	remove_custom_type("HexMapGenerator")
+	remove_custom_type("HexMap")

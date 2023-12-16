@@ -17,7 +17,7 @@ func _ready():
 	$MeshInstance.hide()
 	$MeshInstance.set_surface_material(0, hover_material)
 	# For some reason the material shows up as green when first loading
-	# but then goes to the proper color when the "selected" animation plays
+	# but then goes to the proper material when the "selected" animation plays
 	$AnimationPlayer.play("selected")
 
 

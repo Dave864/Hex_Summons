@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://addons/hex_map_generator/map_tile/TileSelector.gd" type="Script" id=1]
-[ext_resource path="res://addons/hex_map_generator/map_tile/MapTile.gd" type="Script" id=2]
+[ext_resource path="res://addons/hex_map/map_tile/TileSelector.gd" type="Script" id=1]
+[ext_resource path="res://addons/hex_map/map_tile/MapTile.gd" type="Script" id=2]
 
 [sub_resource type="CylinderMesh" id=1]
 height = 0.5

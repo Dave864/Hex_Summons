@@ -15,7 +15,7 @@ config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/hex_map_generator/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/hex_map/plugin.cfg" )
 
 [gui]
 

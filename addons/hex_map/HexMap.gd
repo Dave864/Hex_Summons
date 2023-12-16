@@ -71,5 +71,5 @@ func _generate_grid():
 # Instantiates the hex grid map tile at the specified offset
 func _instantiate_tile(offset: Vector3):
 	var map_tile = MAP_TILE.instance()
-	$Tiles.add_child(map_tile)
+	add_child(map_tile)
 	map_tile.translate_object_local(offset)
