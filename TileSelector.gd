@@ -12,9 +12,13 @@ var mouse_hover: bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	show()
 	mouse_hover = false;
-	$MeshInstance.set_surface_material(0, hover_material)
 	$MeshInstance.hide()
+	$MeshInstance.set_surface_material(0, hover_material)
+	# For some reason the material shows up as green when first loading
+	# but then goes to the proper color when the "selected" animation plays
+	$AnimationPlayer.play("selected")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,8 +28,9 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton and mouse_hover:
-		$AnimationPlayer.play("selected")
-		emit_signal("tile_selected")
+		if event.button_index == BUTTON_LEFT and event.is_pressed():
+			$AnimationPlayer.play("selected")
+			emit_signal("tile_selected")
 
 
 func _on_TileSelector_mouse_entered():
