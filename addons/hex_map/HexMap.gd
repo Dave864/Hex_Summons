@@ -8,6 +8,7 @@ const MAP_TILE := preload("map_tile/MapTile.tscn")
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
+const TILES_NODE: String = "Tiles"
 
 # The number of tiles along the X axis
 export(int, 1, 30) var x_count = 2 setget set_x_count
@@ -16,17 +17,26 @@ export(int, 1, 30) var z_count = 3 setget set_z_count
 
 var _tiles_node = Spatial.new()
 var _dimensions_updated: bool = false
+var _root_node: Node
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_instantiate_tiles_node()
-	_generate_grid()
+	_initial_grid_generation()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+# Creates the intial instance of the grid map
+func _initial_grid_generation():
+	_root_node = get_tree().edited_scene_root
+	# Create the Tiles and TileMap nodes if they haven't already been instanced
+	if get_node_or_null(TILES_NODE) == null:
+		_instantiate_tiles_node()
+		_generate_grid()
 
 
 # Generates the hex grid map basd off of x_count and z_count
@@ -103,17 +113,17 @@ func _is_even(number) -> bool:
 func _instantiate_tile(offset: Vector3):
 	var map_tile = MAP_TILE.instance()
 	_tiles_node.add_child(map_tile)
-	if get_owner() != null:
-		map_tile.set_owner(get_tree().edited_scene_root)
+	#if get_owner() != null:
+	map_tile.set_owner(_root_node)
 	map_tile.translate_object_local(offset)
 
 
 # Instantiates the node that will keep track of the map tiles
 func _instantiate_tiles_node():
-	_tiles_node.name = "Tiles"
+	_tiles_node.name = TILES_NODE
 	add_child(_tiles_node)
-	if get_owner() != null:
-		_tiles_node.set_owner(get_tree().edited_scene_root)
+	#if get_owner() != null:
+	_tiles_node.set_owner(_root_node)
 
 
 # Removes all tiles from the tiles node and regenerates the map
