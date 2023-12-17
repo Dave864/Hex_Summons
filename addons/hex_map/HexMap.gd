@@ -113,7 +113,6 @@ func _is_even(number) -> bool:
 func _instantiate_tile(offset: Vector3):
 	var map_tile = MAP_TILE.instance()
 	_tiles_node.add_child(map_tile)
-	#if get_owner() != null:
 	map_tile.set_owner(_root_node)
 	map_tile.translate_object_local(offset)
 
@@ -122,7 +121,6 @@ func _instantiate_tile(offset: Vector3):
 func _instantiate_tiles_node():
 	_tiles_node.name = TILES_NODE
 	add_child(_tiles_node)
-	#if get_owner() != null:
 	_tiles_node.set_owner(_root_node)
 
 
