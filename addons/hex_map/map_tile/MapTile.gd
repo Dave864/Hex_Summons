@@ -26,12 +26,12 @@ func _ready():
 
 
 # Gets the adjacent tile of the specified position
-func get_adjacent_tile(position: int) -> Node:
+func get_adjacent_tile(position: int) -> Spatial:
 	return _adjacent_tiles[position]
 
 
 # Gets the adjacent tile of the specified position
-func set_adjacent_tile(position: int, map_tile: Node):
+func set_adjacent_tile(position: int, map_tile: Spatial):
 	_adjacent_tiles[position] = map_tile
 
 
