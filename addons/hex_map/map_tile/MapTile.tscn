@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://addons/hex_map/map_tile/TileSelector.gd" type="Script" id=1]
 [ext_resource path="res://addons/hex_map/map_tile/MapTile.gd" type="Script" id=2]
+[ext_resource path="res://addons/hex_map/map_tile/TileHighlighter.gd" type="Script" id=3]
 
 [sub_resource type="CylinderMesh" id=1]
 height = 0.5
@@ -12,7 +13,7 @@ rings = 0
 albedo_color = Color( 0.219608, 0.682353, 0.192157, 0.717647 )
 
 [sub_resource type="CylinderMesh" id=9]
-height = 0.001
+height = 0.2
 radial_segments = 6
 rings = 0
 
@@ -66,6 +67,17 @@ tracks/0/keys = {
 "values": [ Color( 0.192157, 0.356863, 0.854902, 0.439216 ), Color( 0.854902, 0.682353, 0.192157, 0.717647 ), Color( 0.192157, 0.356863, 0.854902, 0.439216 ) ]
 }
 
+[sub_resource type="SpatialMaterial" id=12]
+albedo_color = Color( 0.196078, 0.8, 0.815686, 0.180392 )
+
+[sub_resource type="CylinderMesh" id=11]
+height = 0.001
+radial_segments = 6
+rings = 0
+
+[sub_resource type="SpatialMaterial" id=13]
+albedo_color = Color( 0.196078, 0.8, 0.815686, 0.180392 )
+
 [node name="MapTile" type="Spatial"]
 script = ExtResource( 2 )
 
@@ -78,6 +90,7 @@ script = ExtResource( 1 )
 hover_material = SubResource( 5 )
 
 [node name="MeshInstance" type="MeshInstance" parent="TileSelector"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0 )
 mesh = SubResource( 9 )
 material/0 = SubResource( 10 )
 
@@ -87,6 +100,16 @@ shape = SubResource( 3 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TileSelector"]
 anims/RESET = SubResource( 7 )
 anims/selected = SubResource( 8 )
+
+[node name="TileHighlighter" type="Spatial" parent="."]
+script = ExtResource( 3 )
+highlight_material = SubResource( 12 )
+
+[node name="MeshInstance" type="MeshInstance" parent="TileHighlighter"]
+mesh = SubResource( 11 )
+material/0 = SubResource( 13 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TileHighlighter"]
 
 [connection signal="mouse_entered" from="TileSelector" to="TileSelector" method="_on_TileSelector_mouse_entered"]
 [connection signal="mouse_exited" from="TileSelector" to="TileSelector" method="_on_TileSelector_mouse_exited"]
