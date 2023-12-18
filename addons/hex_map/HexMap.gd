@@ -32,9 +32,10 @@ func _ready():
 # Creates the intial instance of the grid map
 func _initial_grid_generation():
 	_root_node = get_tree().edited_scene_root
-	# Create the Tiles and TileMap nodes if they haven't already been instanced
+	# Create the TileMap nodes if they haven't already been instanced
 	if get_child_count() == 0:
 		_generate_grid()
+	_set_indexes()
 	_determine_adjacencies()
 
 
@@ -55,7 +56,6 @@ func _update_grid_start():
 # Generates the hex grid map basd off of x_count and z_count
 func _generate_grid():
 	var map_tile_offset: Vector3
-	var index: int = 0
 	
 	# Calculates the position for each tile relative to origin
 	# and adds extra tiles as needed
@@ -66,8 +66,7 @@ func _generate_grid():
 			map_tile_offset.x = 2 * HEX_EDGE_RATIO * x
 			if !_is_even(z):
 				map_tile_offset.x += HEX_EDGE_RATIO
-			_instantiate_tile(map_tile_offset, index)
-			index += 1
+			_instantiate_tile(map_tile_offset)
 
 
 # Check if the grid has an even number of rows
@@ -82,14 +81,19 @@ func _is_even(number) -> bool:
 
 # Instantiates the hex grid map tile at the specified offset with the HexMap
 # node position being considered origin
-func _instantiate_tile(offset: Vector3, index: int):
+func _instantiate_tile(offset: Vector3):
 	var map_tile = MAP_TILE.instance()
 	add_child(map_tile)
 	map_tile.set_owner(_root_node)
-	map_tile.set_index(index)
-	
-	# Position the tile to the appropriate position
 	map_tile.translate_object_local(offset + _grid_start)
+
+
+# Assign the index values of each map tile
+func _set_indexes():
+	var index: int = 0
+	for tile in get_children():
+		tile.set_index(index)
+		index += 1
 
 
 # Goes through the Map Tiles and establishes what each one's adjacent tiles are
