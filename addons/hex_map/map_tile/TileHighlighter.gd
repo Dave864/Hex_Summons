@@ -7,6 +7,7 @@ export var highlight_material: SpatialMaterial
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	show()
 	$MeshInstance.hide()
 	$MeshInstance.set_surface_material(0, highlight_material)
 

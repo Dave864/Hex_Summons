@@ -2,9 +2,6 @@ tool
 extends Spatial
 
 
-# Flag that indicates whether the tile is active or not
-export var active: bool = true setget ,is_active
-
 # References the MapTile nodes that are adjacent to this one
 #  0  /\  1
 #  5 |  | 2
@@ -17,7 +14,7 @@ var _index: int setget set_index, get_index
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if !active: hide()
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -47,4 +44,4 @@ func set_index(value: int):
 
 # Checks whether the Map Tile is an active element of the map
 func is_active() -> bool:
-	return active
+	return visible

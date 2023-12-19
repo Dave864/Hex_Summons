@@ -86,6 +86,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0 )
 mesh = SubResource( 1 )
 
 [node name="TileSelector" type="Area" parent="."]
+visible = false
 script = ExtResource( 1 )
 hover_material = SubResource( 5 )
 
@@ -102,6 +103,7 @@ anims/RESET = SubResource( 7 )
 anims/selected = SubResource( 8 )
 
 [node name="TileHighlighter" type="Spatial" parent="."]
+visible = false
 script = ExtResource( 3 )
 highlight_material = SubResource( 12 )
 

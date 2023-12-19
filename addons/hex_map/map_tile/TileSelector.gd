@@ -13,6 +13,7 @@ var _mouse_hover: bool
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_mouse_hover = false;
+	show()
 	$MeshInstance.hide()
 	$MeshInstance.set_surface_material(0, hover_material)
 	# For some reason the material shows up as green when first loading
