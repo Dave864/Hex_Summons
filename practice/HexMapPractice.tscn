@@ -4,32 +4,34 @@
 [ext_resource path="res://addons/hex_map/HexMap.gd" type="Script" id=2]
 [ext_resource path="res://addons/hex_map/map_tile/MapTile.tscn" type="PackedScene" id=3]
 
-[node name="HexMap" type="Spatial"]
+[node name="HexMapPractice" type="Node"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.509777, 0.860306, 0, -0.860306, 0.509777, 0, 4.05966, 3.42776 )
+
+[node name="HexMap" type="Spatial" parent="."]
 script = ExtResource( 2 )
 
-[node name="MapTile" type="Spatial" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.866025, 0, -1.5 )
+[node name="MapTile" type="Spatial" parent="HexMap" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, -1.5 )
 script = ExtResource( 1 )
 
-[node name="MapTile2" type="Spatial" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.866025, 0, -1.5 )
+[node name="MapTile2" type="Spatial" parent="HexMap" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, -1.5 )
 script = ExtResource( 1 )
 
-[node name="MapTile3" type="Spatial" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.73205, 0, 0 )
+[node name="MapTile3" type="Spatial" parent="HexMap" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, 0 )
 script = ExtResource( 1 )
 
-[node name="MapTile4" type="Spatial" parent="." instance=ExtResource( 3 )]
+[node name="MapTile4" type="Spatial" parent="HexMap" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, 0 )
 script = ExtResource( 1 )
 
-[node name="MapTile5" type="Spatial" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.73205, 0, 0 )
+[node name="MapTile5" type="Spatial" parent="HexMap" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 1.5 )
 script = ExtResource( 1 )
 
-[node name="MapTile6" type="Spatial" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.866025, 0, 1.5 )
-script = ExtResource( 1 )
-
-[node name="MapTile7" type="Spatial" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.866025, 0, 1.5 )
+[node name="MapTile6" type="Spatial" parent="HexMap" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 1.5 )
 script = ExtResource( 1 )

@@ -189,6 +189,7 @@ func _determine_adjacencies():
 func _regenerate_grid():
 	# Delete the tiles of the current map
 	var map_tiles = get_children()
+	print(get_child_count())
 	for tile in map_tiles:
 		remove_child(tile)
 		tile.set_owner(null)
@@ -200,12 +201,18 @@ func _regenerate_grid():
 # Update the x_count parameter and regenerate the grid
 func set_x_count(new_count: int):
 	x_count = new_count
-	_update_grid_start()
-	_regenerate_grid()
+	# Check if the root node is set to prevent the creation of "duplicate"
+	# map tiles when loading in the game
+	if _root_node != null:
+		_update_grid_start()
+		_regenerate_grid()
 
 
 # Update the z_count parameter and regenerate the grid
 func set_z_count(new_count: int):
 	z_count = new_count
-	_update_grid_start()
-	_regenerate_grid()
+	# Check if the root node is set to prevent the creation of "duplicate"
+	# map tiles when loading in the game
+	if _root_node != null:
+		_update_grid_start()
+		_regenerate_grid()
