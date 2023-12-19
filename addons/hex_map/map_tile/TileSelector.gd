@@ -1,7 +1,7 @@
 extends Area
 
 # Indicates that the tile was selected
-signal tile_selected(tile_index)
+signal selected()
 
 # The material to use when the mouse hovers over the tile
 export var hover_material: SpatialMaterial
@@ -12,7 +12,7 @@ var _mouse_hover: bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_mouse_hover = false;
+	_mouse_hover = false
 	show()
 	$MeshInstance.hide()
 	$MeshInstance.set_surface_material(0, hover_material)
@@ -28,9 +28,10 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton and _mouse_hover:
+		# Signal that the tile was selected
 		if event.button_index == BUTTON_LEFT and event.is_pressed():
 			$AnimationPlayer.play("selected")
-			emit_signal("tile_selected", _get_tile_index())
+			emit_signal("selected")
 
 
 func _on_TileSelector_mouse_entered():
@@ -41,7 +42,3 @@ func _on_TileSelector_mouse_entered():
 func _on_TileSelector_mouse_exited():
 	_mouse_hover = false
 	$MeshInstance.hide()
-
-
-func _get_tile_index() -> int:
-	return get_parent().get_index()

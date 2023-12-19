@@ -17,9 +17,19 @@ config/icon="res://icon.png"
 
 enabled=PoolStringArray( "res://addons/hex_map/plugin.cfg" )
 
+[global]
+
+collision=false
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+
+[layer_names]
+
+3d_physics/layer_1="selector"
+3d_physics/layer_2="player"
+3d_physics/layer_3="mob"
 
 [physics]
 

@@ -2,6 +2,9 @@ tool
 extends Spatial
 
 
+# Indicates that the tile was selected
+signal tile_selected(tile_index)
+
 # References the MapTile nodes that are adjacent to this one
 #  0  /\  1
 #  5 |  | 2
@@ -45,3 +48,8 @@ func set_index(value: int):
 # Checks whether the Map Tile is an active element of the map
 func is_active() -> bool:
 	return visible
+
+
+# Signals which tile was selected
+func _on_TileSelector_selected():
+	emit_signal("tile_selected", _index)

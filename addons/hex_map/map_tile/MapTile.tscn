@@ -25,7 +25,7 @@ height = 0.001
 radius = 0.87
 
 [sub_resource type="Animation" id=7]
-length = 0.001
+length = 0.02
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:hover_material")
 tracks/0/interp = 1
@@ -87,6 +87,7 @@ mesh = SubResource( 1 )
 
 [node name="TileSelector" type="Area" parent="."]
 visible = false
+collision_mask = 0
 script = ExtResource( 1 )
 hover_material = SubResource( 5 )
 
@@ -115,3 +116,4 @@ material/0 = SubResource( 13 )
 
 [connection signal="mouse_entered" from="TileSelector" to="TileSelector" method="_on_TileSelector_mouse_entered"]
 [connection signal="mouse_exited" from="TileSelector" to="TileSelector" method="_on_TileSelector_mouse_exited"]
+[connection signal="selected" from="TileSelector" to="." method="_on_TileSelector_selected"]
