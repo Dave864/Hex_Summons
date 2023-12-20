@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Spatial",
+"class": "RangeFinder",
+"language": "GDScript",
+"path": "res://addons/hex_map/tiles/range_finder.gd"
+}, {
+"base": "Spatial",
+"class": "TilesManager",
+"language": "GDScript",
+"path": "res://addons/hex_map/tiles/tiles_manager.gd"
+} ]
+_global_script_class_icons={
+"RangeFinder": "",
+"TilesManager": ""
+}
+
 [application]
 
 config/name="Hex_Summons"

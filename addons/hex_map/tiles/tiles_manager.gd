@@ -1,16 +1,20 @@
 tool
+class_name TilesManager
 extends Spatial
+# TilesManager serves as a container for the map tiles
+# It is repsonsible for generating the map tiles and initializing each tile's
+# associated data
 
 
 # Reference to the scene for the map tile
-const MAP_TILE := preload("map_tile/MapTile.tscn")
+const MAP_TILE := preload("res://addons/hex_map/map_tile/MapTile.tscn")
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
 # The number of tiles along the X axis
-export(int, 1, 30) var x_count = 2 setget set_x_count
+export(int, 1, 30) var x_count = 2 setget set_x_count, get_x_count
 # The number of tiles along the Z axis
 export(int, 1, 30)  var z_count = 3 setget set_z_count
 # Referene to the scene tree root
@@ -23,11 +27,6 @@ func _ready():
 	_initial_grid_generation()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
 # Creates the intial instance of the grid map
 func _initial_grid_generation():
 	_root_node = get_tree().edited_scene_root
@@ -36,23 +35,6 @@ func _initial_grid_generation():
 		_generate_grid()
 	_set_indexes()
 	_determine_adjacencies()
-
-
-# Determine the starting point so that the middle of the generated map is center
-# to the HexMap node
-func _calculate_grid_start() -> Vector3:
-	var origin_offset = Vector3(2 * HEX_EDGE_RATIO, 0.0, 1.0)
-	origin_offset.z -= ((3.0 * z_count) + 1.0) / 4.0
-	origin_offset.x -= (
-		x_count if z_count == 2 
-		else (x_count + 1.5)
-	) * HEX_EDGE_RATIO
-	return origin_offset
-
-
-# Recalculate the grid start
-func _update_grid_start():
-	_grid_start = _calculate_grid_start()
 
 
 # Generates the hex grid map basd off of x_count and z_count
@@ -71,14 +53,16 @@ func _generate_grid():
 			_instantiate_tile(map_tile_offset)
 
 
-# Check if the grid has an even number of rows
-func _is_even_grid() -> bool:
-	return _is_even(z_count)
-
-
-# Check if number is even
-func _is_even(number) -> bool:
-	return number % 2 == 0
+# Determine the starting point so that the middle of the generated map is center
+# to the HexMap node
+func _calculate_grid_start() -> Vector3:
+	var origin_offset = Vector3(2 * HEX_EDGE_RATIO, 0.0, 1.0)
+	origin_offset.z -= ((3.0 * z_count) + 1.0) / 4.0
+	origin_offset.x -= (
+		x_count if z_count == 2 
+		else (x_count + 1.5)
+	) * HEX_EDGE_RATIO
+	return origin_offset
 
 
 # Instantiates the hex grid map tile at the specified offset with the HexMap
@@ -201,6 +185,21 @@ func _regenerate_grid():
 	_determine_adjacencies()
 
 
+# Recalculate the grid start
+func _update_grid_start():
+	_grid_start = _calculate_grid_start()
+
+
+# Check if the grid has an even number of rows
+func _is_even_grid() -> bool:
+	return _is_even(z_count)
+
+
+# Check if number is even
+func _is_even(number) -> bool:
+	return number % 2 == 0
+
+
 # Update the x_count parameter and regenerate the grid
 func set_x_count(new_count: int):
 	x_count = new_count
@@ -211,6 +210,11 @@ func set_x_count(new_count: int):
 		_regenerate_grid()
 
 
+# Get the x_count
+func get_x_count() -> int:
+	return x_count
+
+
 # Update the z_count parameter and regenerate the grid
 func set_z_count(new_count: int):
 	z_count = new_count
@@ -219,3 +223,8 @@ func set_z_count(new_count: int):
 	if _root_node != null:
 		_update_grid_start()
 		_regenerate_grid()
+
+
+# Get the z_count
+func get_z_count() -> int:
+	return z_count
