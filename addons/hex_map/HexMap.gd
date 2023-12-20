@@ -9,8 +9,8 @@ const RANGE_FINDER: String = "RangeFinder"
 
 # Referene to the scene tree root
 var _root_node: Node
-var _tiles_manager: Spatial
-var _range_finder: Spatial
+var _tiles_manager: TilesManager
+var _range_finder: RangeFinder
 
 
 # Called when the node enters the scene tree for the first time.

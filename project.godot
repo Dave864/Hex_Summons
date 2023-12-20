@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Spatial",
+"class": "MapTile",
+"language": "GDScript",
+"path": "res://addons/hex_map/map_tile/map_tile.gd"
+}, {
+"base": "Spatial",
 "class": "RangeFinder",
 "language": "GDScript",
 "path": "res://addons/hex_map/tiles/range_finder.gd"
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://addons/hex_map/tiles/tiles_manager.gd"
 } ]
 _global_script_class_icons={
+"MapTile": "",
 "RangeFinder": "",
 "TilesManager": ""
 }
