@@ -5,11 +5,6 @@ extends Spatial
 # It works off of the TileManager node
 
 
-# The ratio between 
-# the distance from the center of a hexagon to one of its vertices and 
-# the distance from the center of a hexagon to the midpoint of one of its edges
-const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
-
 var _tm: TilesManager
 
 

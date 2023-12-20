@@ -7,7 +7,7 @@ extends Spatial
 
 
 # Reference to the scene for the map tile
-const MAP_TILE := preload("res://addons/hex_map/map_tile/MapTile.tscn")
+const MAP_TILE:= preload("res://addons/hex_map/map_tile/MapTile.tscn")
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges
@@ -33,7 +33,7 @@ func _initial_grid_generation():
 	# Create the TileMap nodes if they haven't already been instanced
 	if get_child_count() == 0:
 		_generate_grid()
-	_set_indexes()
+	_set_coordinates()
 	_determine_adjacencies()
 
 
@@ -74,11 +74,12 @@ func _instantiate_tile(offset: Vector3):
 	map_tile.translate_object_local(offset + _grid_start)
 
 
-# Assign the index values of each map tile
-func _set_indexes():
+# Assign the index values of each map tile and their corresponding cube coordinates
+func _set_coordinates():
 	var index: int = 0
 	for tile in get_children():
 		tile.set_index(index)
+		tile.set_cube_coord(index_to_cube(index))
 		index += 1
 
 
@@ -181,7 +182,7 @@ func _regenerate_grid():
 		tile.queue_free()
 	
 	_generate_grid()
-	_set_indexes()
+	_set_coordinates()
 	_determine_adjacencies()
 
 
@@ -198,6 +199,17 @@ func _is_even_grid() -> bool:
 # Check if number is even
 func _is_even(number) -> bool:
 	return number % 2 == 0
+
+
+# Converts the index value to its corresponding cube cooridinate
+func index_to_cube(index: int) -> Vector3:
+	var z_pos: int = floor(index / x_count)
+	var x_pos: int = index % x_count
+	var x_cube: int = x_pos - (z_pos - (z_pos & 1))/2
+	var y_cube: int = z_pos
+	#print("z: %d, x: %d" % [z_pos, x_pos])
+	#print("q: %d, r: %d, s: %d\n" % [x_cube, y_cube, -x_cube - y_cube])
+	return Vector3(x_cube, y_cube, -x_cube - y_cube)
 
 
 # Update the x_count parameter and regenerate the grid
