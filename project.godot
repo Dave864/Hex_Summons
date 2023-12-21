@@ -10,17 +10,41 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Spatial",
+"class": "HexMap",
+"language": "GDScript",
+"path": "res://hex_map/hex_map.gd"
+}, {
+"base": "Spatial",
+"class": "MapTile",
+"language": "GDScript",
+"path": "res://hex_map/map_tile_node/map_tile.gd"
+}, {
+"base": "Spatial",
 "class": "RangeFinder",
 "language": "GDScript",
-"path": "res://addons/hex_map/tiles/range_finder.gd"
+"path": "res://hex_map/helper_nodes/range_finder.gd"
+}, {
+"base": "Spatial",
+"class": "TileHighlighter",
+"language": "GDScript",
+"path": "res://hex_map/map_tile_node/tile_highlighter.gd"
+}, {
+"base": "Area",
+"class": "TileSelector",
+"language": "GDScript",
+"path": "res://hex_map/map_tile_node/tile_selector.gd"
 }, {
 "base": "Spatial",
 "class": "TilesManager",
 "language": "GDScript",
-"path": "res://addons/hex_map/tiles/tiles_manager.gd"
+"path": "res://hex_map/helper_nodes/tiles_manager.gd"
 } ]
 _global_script_class_icons={
+"HexMap": "",
+"MapTile": "",
 "RangeFinder": "",
+"TileHighlighter": "",
+"TileSelector": "",
 "TilesManager": ""
 }
 
@@ -35,7 +59,7 @@ SignalBus="*res://autoloads/signal_bus.gd"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/hex_map/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [global]
 
