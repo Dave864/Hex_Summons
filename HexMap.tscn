@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://hex_map_base/hex_map.gd" type="Script" id=1]
+[ext_resource path="res://hex_map_base/helper_node_scripts/range_finder.gd" type="Script" id=2]
+[ext_resource path="res://hex_map_base/helper_node_scripts/tiles_manager.gd" type="Script" id=3]
+[ext_resource path="res://hex_map_base/map_tile_node/map_tile.gd" type="Script" id=5]
+[ext_resource path="res://hex_map_base/selector_node/Selector.tscn" type="PackedScene" id=6]
+[ext_resource path="res://hex_map_base/map_tile_node/MapTile.tscn" type="PackedScene" id=7]
+
+[node name="HexMap" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="RangeFinder" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="Selector" parent="." instance=ExtResource( 6 )]
+
+[node name="TilesManager" type="Spatial" parent="."]
+script = ExtResource( 3 )
+
+[node name="MapTile" type="Area" parent="TilesManager" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, -1.5 )
+script = ExtResource( 5 )
+
+[node name="MapTile2" type="Area" parent="TilesManager" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, -1.5 )
+script = ExtResource( 5 )
+
+[node name="MapTile3" type="Area" parent="TilesManager" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, 0 )
+script = ExtResource( 5 )
+
+[node name="MapTile4" type="Area" parent="TilesManager" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, 0 )
+script = ExtResource( 5 )
+
+[node name="MapTile5" type="Area" parent="TilesManager" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 1.5 )
+script = ExtResource( 5 )
+
+[node name="MapTile6" type="Area" parent="TilesManager" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 1.5 )
+script = ExtResource( 5 )

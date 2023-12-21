@@ -1,23 +1,19 @@
 tool
 class_name RangeFinder
-extends Spatial
-# RangeFinder handles calculations related to pathfinding and distance
+extends Node
+"""
+A collection of calculations and algorithms used for various map actions that
+depend on getting a range of tiles.
+"""
 
 
-var _z_count: int setget set_z_count
-var _x_count: int setget set_x_count
+var _z_count: int = 3 setget set_z_count
+var _x_count: int = 2 setget set_x_count
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-
-
-# Get the TilesManager node
-# Workaround of the TileManager node not being found when get_node() is used
-# during onready or _ready()
-#func _get_tiles_manager():
-#	_tm = get_node("../TilesManager") if _tm == null else _tm
 
 
 # Converts the cube coordinates to the corresponding index

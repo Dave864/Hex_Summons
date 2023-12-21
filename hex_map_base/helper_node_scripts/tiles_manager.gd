@@ -1,25 +1,31 @@
 tool
 class_name TilesManager
 extends Spatial
-# Tiles serves as a container for the map tiles
-# It is repsonsible for generating the map tiles and initializing each tile's
-# associated data
+"""
+A container for map tiles. Generates an array of map tiles with z rows and 
+x columns. Positions each tile and sets up the connections between them.
+"""
 
 
-# Reference to the scene for the map tile
-const MAP_TILE: PackedScene = preload("res://addons/hex_map/map_tile/MapTile.tscn")
+# Reference to the scene for the map tile.
+const MAP_TILE: PackedScene = preload(
+	"res://" + 
+	"hex_map_base/" +
+	"map_tile_node/" +
+	"MapTile.tscn"
+)
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
-# the distance from the center of a hexagon to the midpoint of one of its edges
+# the distance from the center of a hexagon to the midpoint of one of its edges.
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
-# The number of tiles along the X axis
+# The number of tiles along the X axis.
 var x_count: int = 2 setget set_x_count, get_x_count
-# The number of tiles along the Z axis
+# The number of tiles along the Z axis.
 var z_count: int = 3 setget set_z_count, get_z_count
 
-# Referene to the scene tree root
-var _root_node: Node
+# Referene to the scene tree root.
+onready var _root_node: Node = get_tree().edited_scene_root
 var _grid_start: Vector3 = _calculate_grid_start()
 
 
@@ -28,22 +34,21 @@ func _ready():
 	_initial_grid_generation()
 
 
-# Creates the intial instance of the grid map
+# Creates the intial instance of the grid map.
 func _initial_grid_generation():
-	_root_node = get_tree().edited_scene_root
-	# Create the TileMap nodes if they haven't already been instanced
+	# Create the TileMap nodes if they haven't already been instanced.
 	if get_child_count() == 0:
 		_generate_grid()
 	_set_coordinates()
 	_determine_adjacencies()
 
 
-# Generates the hex grid map basd off of x_count and z_count
+# Generates the hex grid map basd off of x_count and z_count.
 func _generate_grid():
 	var map_tile_offset: Vector3
 	
 	# Calculates the position for each tile relative to origin
-	# and adds extra tiles as needed
+	# and adds extra tiles as needed.
 	for z in z_count:
 		map_tile_offset = Vector3.ZERO
 		map_tile_offset.z = 1.5 * z
@@ -55,7 +60,7 @@ func _generate_grid():
 
 
 # Determine the starting point so that the middle of the generated map is center
-# to the HexMap node
+# to the HexMap node.
 func _calculate_grid_start() -> Vector3:
 	var origin_offset = Vector3(2 * HEX_EDGE_RATIO, 0.0, 1.0)
 	origin_offset.z -= ((3.0 * z_count) + 1.0) / 4.0
@@ -67,15 +72,16 @@ func _calculate_grid_start() -> Vector3:
 
 
 # Instantiates the hex grid map tile at the specified offset with the HexMap
-# node position being considered origin
+# node position being considered origin.
 func _instantiate_tile(offset: Vector3):
 	var map_tile = MAP_TILE.instance()
 	add_child(map_tile)
 	map_tile.set_owner(_root_node)
 	map_tile.translate_object_local(offset + _grid_start)
+	map_tile.add_to_group("map_tiles")
 
 
-# Assign the index values of each map tile and their corresponding cube coordinates
+# Assign the index values of each map tile and their corresponding cube coordinates.
 func _set_coordinates():
 	var index: int = 0
 	for tile in get_children():
@@ -84,7 +90,7 @@ func _set_coordinates():
 		index += 1
 
 
-# Goes through the Map Tiles and establishes what each one's adjacent tiles are
+# Goes through the Map Tiles and establishes what each one's adjacent tiles are.
 #  0  /\  1
 #  5 |  | 2
 #  4  \/  3
@@ -93,7 +99,7 @@ func _determine_adjacencies():
 	var z_place: int
 	var x_place: int
 	var even_z_place: bool
-	# Flags to indicate if a tile is at the edge of the map grid
+	# Flags to indicate if a tile is at the edge of the map grid.
 	var is_left: bool
 	var is_right: bool
 	var is_top: bool
@@ -110,7 +116,7 @@ func _determine_adjacencies():
 		is_top = z_place == 0
 		is_bottom = z_place == (z_count - 1)
 		
-		# Determine which tile is adjacent to the top left edge
+		# Determine which tile is adjacent to the top left edge.
 		# * /\
 		#  |  |
 		#   \/
@@ -122,7 +128,7 @@ func _determine_adjacencies():
 		)
 		tile.set_adjacent_tile(0, index_0_tile)
 		
-		# Determine which tile is adjacent to the top right edge
+		# Determine which tile is adjacent to the top right edge.
 		#   /\ *
 		#  |  |
 		#   \/
@@ -134,14 +140,14 @@ func _determine_adjacencies():
 		)
 		tile.set_adjacent_tile(1, index_1_tile)
 		
-		# Determine which tile is adjacent to the center right edge
+		# Determine which tile is adjacent to the center right edge.
 		#   /\
 		#  |  |*
 		#   \/
 		var index_2_tile: Spatial = null if is_right else get_child(index + 1)
 		tile.set_adjacent_tile(2, index_2_tile)
 		
-		# Determine which tile is adjacent to the bottom right edge
+		# Determine which tile is adjacent to the bottom right edge.
 		#   /\
 		#  |  |
 		#   \/ *
@@ -153,7 +159,7 @@ func _determine_adjacencies():
 		)
 		tile.set_adjacent_tile(3, index_3_tile)
 		
-		# Determine which tile is adjacent to the bottom left edge
+		# Determine which tile is adjacent to the bottom left edge.
 		#   /\
 		#  |  |
 		# * \/
@@ -165,7 +171,7 @@ func _determine_adjacencies():
 		)
 		tile.set_adjacent_tile(4, index_4_tile)
 		
-		# Determine which tile is adjacent to the center left edge
+		# Determine which tile is adjacent to the center left edge.
 		#   /\
 		# *|  |
 		#   \/
@@ -173,7 +179,7 @@ func _determine_adjacencies():
 		tile.set_adjacent_tile(5, index_5_tile)
 
 
-# Removes all tiles from the tiles node and regenerates the map
+# Removes all tiles from the tiles node and regenerates the map.
 func _regenerate_grid():
 	# Delete the tiles of the current map
 	var map_tiles = get_children()
@@ -187,55 +193,60 @@ func _regenerate_grid():
 	_determine_adjacencies()
 
 
-# Recalculate the grid start
+# Recalculate the grid start.
 func _update_grid_start():
 	_grid_start = _calculate_grid_start()
 
 
-# Check if the grid has an even number of rows
+# Check if the grid has an even number of rows.
 func _is_even_grid() -> bool:
 	return _is_even(z_count)
 
 
-# Check if number is even
+# Check if number is even.
 func _is_even(number) -> bool:
 	return number % 2 == 0
 
 
-# Converts the index value to its corresponding cube cooridinate
+# Update the z_count parameter and regenerate the grid.
+func set_z_count(new_count: int):
+	z_count = new_count
+	# Check if the root node is set to prevent the creation of "duplicate"
+	# map tiles when loading in the game.
+	if _root_node != null:
+		_update_grid_start()
+		_regenerate_grid()
+
+
+# Get the z_count.
+func get_z_count() -> int:
+	return z_count
+
+
+# Update the x_count parameter and regenerate the grid.
+func set_x_count(new_count: int):
+	x_count = new_count
+	# Check if the root node is set to prevent the creation of "duplicate"
+	# map tiles when loading in the game.
+	if _root_node != null:
+		_update_grid_start()
+		_regenerate_grid()
+
+
+# Get the x_count.
+func get_x_count() -> int:
+	return x_count
+
+
+# Get the tile at the specified index.
+func get_tile_at_index(index: int) -> Node:
+	return get_child(index)
+
+
+# Converts the index value to its corresponding cube cooridinate.
 func index_to_cube(index: int) -> Vector3:
 	var z_pos: int = int(floor(float(index) / float(x_count)))
 	var x_pos: int = index % x_count
 	var x_cube: int = int(x_pos - (z_pos - (z_pos & 1)) / 2.0)
 	var y_cube: int = z_pos
 	return Vector3(x_cube, y_cube, -x_cube - y_cube)
-
-
-# Update the z_count parameter and regenerate the grid
-func set_z_count(new_count: int):
-	z_count = new_count
-	# Check if the root node is set to prevent the creation of "duplicate"
-	# map tiles when loading in the game
-	if _root_node != null:
-		_update_grid_start()
-		_regenerate_grid()
-
-
-# Get the z_count
-func get_z_count() -> int:
-	return z_count
-
-
-# Update the x_count parameter and regenerate the grid
-func set_x_count(new_count: int):
-	x_count = new_count
-	# Check if the root node is set to prevent the creation of "duplicate"
-	# map tiles when loading in the game
-	if _root_node != null:
-		_update_grid_start()
-		_regenerate_grid()
-
-
-# Get the x_count
-func get_x_count() -> int:
-	return x_count
