@@ -17,5 +17,9 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	translation = $MousePosition.get_mouse_position()
+
+
+func _on_Selector_area_entered(area):
+	pass # Replace with function body.

@@ -3,7 +3,7 @@
 [ext_resource path="res://hex_map_base/map_tile_node/map_tile.gd" type="Script" id=2]
 
 [sub_resource type="CylinderShape" id=3]
-height = 1.0
+height = 0.5
 radius = 0.87
 
 [sub_resource type="CylinderMesh" id=1]
@@ -12,9 +12,11 @@ radial_segments = 6
 rings = 0
 
 [node name="MapTile" type="Area"]
+collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0 )
 shape = SubResource( 3 )
 
 [node name="TileShape" type="MeshInstance" parent="."]

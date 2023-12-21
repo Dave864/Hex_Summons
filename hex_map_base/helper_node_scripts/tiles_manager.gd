@@ -78,7 +78,6 @@ func _instantiate_tile(offset: Vector3):
 	add_child(map_tile)
 	map_tile.set_owner(_root_node)
 	map_tile.translate_object_local(offset + _grid_start)
-	map_tile.add_to_group("map_tiles")
 
 
 # Assign the index values of each map tile and their corresponding cube coordinates.

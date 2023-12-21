@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://hex_map_base/map_tile_node/map_tile.gd"
 }, {
+"base": "Position3D",
+"class": "MousePosition",
+"language": "GDScript",
+"path": "res://hex_map_base/selector_node/mouse_position.gd"
+}, {
 "base": "Node",
 "class": "RangeFinder",
 "language": "GDScript",
@@ -37,6 +42,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "HexMap": "",
 "MapTile": "",
+"MousePosition": "",
 "RangeFinder": "",
 "Selector": "",
 "TilesManager": ""
