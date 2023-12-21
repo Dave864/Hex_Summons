@@ -16,17 +16,19 @@ var _range_finder: RangeFinder
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_root_node = get_tree().edited_scene_root
-	_create_node(_range_finder, RANGE_FINDER, RANGE_FINDER_SCRIPT)
-	_create_node(_tiles_manager, TILES_MANAGER, TILES_MANAGER_SCRIPT)
+	_create_node(_range_finder, RANGE_FINDER, RANGE_FINDER_SCRIPT, false)
+	_create_node(_tiles_manager, TILES_MANAGER, TILES_MANAGER_SCRIPT, true)
 
 
 # Create a node using the given parameters
-func _create_node(var new_node, name: String, var script):
-	# Create the TilesManager nodes if it hasn't already been instanced
+func _create_node(var new_node, name: String, var script, in_editor: bool):
+	# Create the node if it hasn't already been instanced
 	if get_node_or_null(name) == null:
 		new_node = Spatial.new()
 		new_node.name = name
 		new_node.set_script(script)
 		new_node.set_process(true)
 		add_child(new_node)
-		new_node.set_owner(_root_node)
+		# Set owner to be the scene root in order to display in editor
+		if in_editor:
+			new_node.set_owner(_root_node)

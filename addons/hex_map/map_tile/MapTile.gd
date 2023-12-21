@@ -2,9 +2,6 @@ tool
 extends Spatial
 
 
-# Indicates that the tile was selected
-signal tile_selected(tile_index)
-
 # References the MapTile nodes that are adjacent to this one
 #  0  /\  1
 #  5 |  | 2
@@ -33,11 +30,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-
-
-# Signals which tile was selected
-func _on_TileSelector_selected():
-	emit_signal("tile_selected", _index)
 
 
 # Gets the adjacent tile of the specified position
@@ -73,3 +65,8 @@ func set_cube_coord(value: Vector3):
 # Checks whether the Map Tile is an active element of the map
 func is_active() -> bool:
 	return visible
+
+
+# Triggers a tile_selected signal from the signal bus autoload
+func _on_TileSelector_selected():
+	SignalBus.emit_signal("tile_selected", _index)

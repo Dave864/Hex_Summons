@@ -29,6 +29,10 @@ _global_script_class_icons={
 config/name="Hex_Summons"
 config/icon="res://icon.png"
 
+[autoload]
+
+SignalBus="*res://autoloads/signal_bus.gd"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/hex_map/plugin.cfg" )
@@ -44,8 +48,9 @@ common/drop_mouse_on_gui_input_disabled=true
 [layer_names]
 
 3d_physics/layer_1="selector"
-3d_physics/layer_2="player"
-3d_physics/layer_3="mob"
+3d_physics/layer_2="map"
+3d_physics/layer_3="player"
+3d_physics/layer_4="mob"
 
 [physics]
 

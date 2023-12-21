@@ -7,7 +7,7 @@ extends Spatial
 
 
 # Reference to the scene for the map tile
-const MAP_TILE:= preload("res://addons/hex_map/map_tile/MapTile.tscn")
+const MAP_TILE: PackedScene = preload("res://addons/hex_map/map_tile/MapTile.tscn")
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges
@@ -17,6 +17,7 @@ const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 export(int, 1, 30) var x_count = 2 setget set_x_count, get_x_count
 # The number of tiles along the Z axis
 export(int, 1, 30)  var z_count = 3 setget set_z_count
+
 # Referene to the scene tree root
 var _root_node: Node
 var _grid_start: Vector3 = _calculate_grid_start()
@@ -207,8 +208,6 @@ func index_to_cube(index: int) -> Vector3:
 	var x_pos: int = index % x_count
 	var x_cube: int = x_pos - (z_pos - (z_pos & 1))/2
 	var y_cube: int = z_pos
-	#print("z: %d, x: %d" % [z_pos, x_pos])
-	#print("q: %d, r: %d, s: %d\n" % [x_cube, y_cube, -x_cube - y_cube])
 	return Vector3(x_cube, y_cube, -x_cube - y_cube)
 
 
