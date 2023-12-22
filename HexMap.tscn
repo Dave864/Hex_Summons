@@ -36,6 +36,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 1.5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 1.5 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.693942, 0.720031, 0, -0.720031, 0.693942, -0.122948, 4.43925, 3.41315 )
+transform = Transform( 0.91292, 0.293873, -0.283225, 0, 0.693942, 0.720031, 0.408139, -0.65733, 0.633513, -0.122948, 4.43925, 3.41315 )
 projection = 1
 size = 10.0
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.373894, 0.927471, 0, -0.927471, -0.373894, 0.601745, 6.70932, -6.30497 )
+light_energy = 0.3
