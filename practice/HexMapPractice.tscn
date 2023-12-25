@@ -68,6 +68,8 @@ material/0 = SubResource( 2 )
 
 [node name="HexMap" type="Spatial" parent="."]
 script = ExtResource( 1 )
+z_count = 5
+x_count = 4
 
 [node name="RangeFinder" type="Node" parent="HexMap"]
 script = ExtResource( 3 )
@@ -76,19 +78,63 @@ script = ExtResource( 3 )
 script = ExtResource( 2 )
 
 [node name="MapTile" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, -1.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, -3 )
 
 [node name="MapTile2" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, -1.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, -3 )
 
 [node name="MapTile3" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, -3 )
 
 [node name="MapTile4" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, -3 )
 
 [node name="MapTile5" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 1.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, -1.5 )
 
 [node name="MapTile6" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 1.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, -1.5 )
+
+[node name="MapTile7" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, -1.5 )
+
+[node name="MapTile8" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, -1.5 )
+
+[node name="MapTile9" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 0 )
+
+[node name="MapTile10" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 0 )
+
+[node name="MapTile11" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 0 )
+
+[node name="MapTile12" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 0 )
+
+[node name="MapTile13" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, 1.5 )
+
+[node name="MapTile14" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, 1.5 )
+
+[node name="MapTile15" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, 1.5 )
+
+[node name="MapTile16" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, 1.5 )
+
+[node name="MapTile17" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 3 )
+
+[node name="MapTile18" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 3 )
+
+[node name="MapTile19" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 3 )
+
+[node name="MapTile20" parent="HexMap/TilesManager" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 3 )
+
+[connection signal="tile_selected" from="Selector" to="Creature" method="_on_tile_selected"]

@@ -33,8 +33,8 @@ func _set_range_finder():
 	_rf = get_node(RANGE_FINDER_PATH) if _rf == null else _rf
 
 
-func _on_tile_selected(_index: int):
-	_set_range_finder()
-	#var destination: Vector3 = _rf.get_tile_at_index(index).translation
-	#destination.y = 0.0
-	#translation = destination
+# Move the creature node to the selected tile
+func _on_tile_selected(tile: MapTile):
+	var destination: Vector3 = tile.translation
+	destination.y = 0.0
+	translation = destination

@@ -114,8 +114,6 @@ func _determine_adjacencies():
 	var is_top: bool
 	var is_bottom: bool
 	
-	print("x_count: %d, z_count: %d" % [x_count, z_count])
-	
 	for tile in get_children():
 		index = tile.get_index()
 		z_place = int(floor(float(index) / float(x_count)))

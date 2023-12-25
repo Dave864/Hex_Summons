@@ -8,6 +8,9 @@ passed over.
 
 signal tile_selected(map_tile)
 
+# Reference to the map tiles in the current scene
+export(NodePath) var _map_path = null
+
 # Indicates when the SelectorShape should lock its position to that of the
 # passed over tile.
 var _snap_to_position: bool = false

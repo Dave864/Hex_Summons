@@ -12,6 +12,7 @@ radial_segments = 6
 rings = 0
 
 [sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
 albedo_color = Color( 0.52549, 0.529412, 0.670588, 0.129412 )
 
 [sub_resource type="Animation" id=3]
@@ -83,7 +84,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.04, 0.2 ),
 "transitions": PoolRealArray( 0.307786, 1.10957, 1 ),
 "update": 0,
-"values": [ Color( 0.52549, 0.529412, 0.670588, 0.129412 ), Color( 0.796078, 0.729412, 0.435294, 0.662745 ), Color( 0.52549, 0.529412, 0.670588, 0.129412 ) ]
+"values": [ Color( 0.52549, 0.529412, 0.670588, 0.666667 ), Color( 0.803922, 0.701961, 0.254902, 0.843137 ), Color( 0.52549, 0.529412, 0.670588, 0.776471 ) ]
 }
 
 [node name="Selector" type="Area"]
