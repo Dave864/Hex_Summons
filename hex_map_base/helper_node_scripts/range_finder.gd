@@ -16,6 +16,16 @@ func _ready():
 	pass
 
 
+func _notification(what):
+	match what:
+		# When set as child of HexMap node, update the x and z counts to be the
+		# values of the x and z counts of the HexMap node.
+		NOTIFICATION_PARENTED:
+			var hex_map: Spatial = get_parent()
+			set_x_count(hex_map.x_count)
+			set_z_count(hex_map.z_count)
+
+
 # Converts the cube coordinates to the corresponding index
 func _cube_to_index(coord: Vector3) -> int:
 	var z_pos: int = int(coord.y + (coord.x - (int(coord.x) & 1)) / 2.0)

@@ -7,6 +7,8 @@
 radius = 0.001
 
 [node name="Creature" type="Area"]
+collision_layer = 4
+collision_mask = 2
 script = ExtResource( 2 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]

@@ -34,6 +34,16 @@ func _ready():
 	_initial_grid_generation()
 
 
+func _notification(what):
+	match what:
+		# When set as child of HexMap node, update the x and z counts to be the
+		# values of the x and z counts of the HexMap node.
+		NOTIFICATION_PARENTED:
+			var hex_map: Spatial = get_parent()
+			set_x_count(hex_map.x_count)
+			set_z_count(hex_map.z_count)
+
+
 # Creates the intial instance of the grid map.
 func _initial_grid_generation():
 	# Create the TileMap nodes if they haven't already been instanced.
@@ -103,6 +113,8 @@ func _determine_adjacencies():
 	var is_right: bool
 	var is_top: bool
 	var is_bottom: bool
+	
+	print("x_count: %d, z_count: %d" % [x_count, z_count])
 	
 	for tile in get_children():
 		index = tile.get_index()
