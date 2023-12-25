@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Position3D",
 "class": "MousePosition",
 "language": "GDScript",
-"path": "res://hex_map_base/selector_node/mouse_position.gd"
+"path": "res://selector_node/mouse_position.gd"
 }, {
 "base": "Node",
 "class": "RangeFinder",
@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "Area",
 "class": "Selector",
 "language": "GDScript",
-"path": "res://hex_map_base/selector_node/selector.gd"
+"path": "res://selector_node/selector.gd"
 }, {
 "base": "Spatial",
 "class": "TilesManager",

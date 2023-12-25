@@ -28,12 +28,6 @@ const RANGE_FINDER_SCRIPT: Script = preload(
 	"helper_node_scripts/" +
 	"range_finder.gd"
 )
-const SELECTOR: PackedScene = preload(
-	"res://" +
-	"hex_map_base/" +
-	"selector_node/" +
-	"Selector.tscn"
-)
 
 export(int, 1, 50) var z_count = 3 setget set_z_count
 export(int, 1, 50) var x_count = 2 setget set_x_count
@@ -46,7 +40,6 @@ onready var _root_node: Node = get_tree().edited_scene_root
 func _ready():
 	# Create the helper nodes associated with the battle map.
 	_create_range_finder_node()
-	_add_selector_node()
 	_create_tiles_manager_node()
 
 
@@ -76,14 +69,6 @@ func _set_node_properties(n: Node, name: String, script: Script):
 	n.set_script(script)
 	n.set_process(true)
 	n.set_owner(_root_node)
-
-
-# Adds a new instance of the Selector to the HexMap.
-func _add_selector_node():
-	if !has_node("Selector"):
-		var selector_node = SELECTOR.instance()
-		add_child(selector_node)
-		selector_node.set_owner(_root_node)
 
 
 func set_z_count(value: int):
