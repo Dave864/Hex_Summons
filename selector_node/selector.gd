@@ -9,7 +9,7 @@ passed over.
 signal tile_selected(map_tile)
 
 # Reference to the map tiles in the current scene
-export(NodePath) var _map_path = null
+export(NodePath) var map = null
 
 # The current mouse position
 onready var mouse_position: MousePosition = $MousePosition
@@ -26,9 +26,8 @@ var snap_position: Vector3 = Vector3.ZERO
 var tile: MapTile = null
 
 
-func _on_Selector_area_entered(map_tile):
-	if snap_to_position:
-		# Don't snap to position if map_tile is disabled or not visible
-		if map_tile.visible:
-			snap_position = map_tile.translation
-			tile = map_tile
+func _on_Selector_area_entered(map_tile: Area):
+	# Don't snap to position if map_tile is disabled or not visible
+	if snap_to_position and map_tile.visible:
+		snap_position = map_tile.translation
+		tile = map_tile

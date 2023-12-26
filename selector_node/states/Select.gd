@@ -7,16 +7,18 @@ When the input for selecting a tile is given, the Selector moves to the
 """
 
 
-# Reveal the selector shape and enable to ability to snap to tile positions
+# Reveal the selector shape and enable to ability to snap to tile positions.
 func enter(_msg: Dictionary = {}):
 	selector.snap_to_position = true
-	selector.animation_player.play("selected")
+	selector.animation_player.play("RESET")
 	selector.selector_shape.show()
 
 
 func update(_delta: float):
-	# Move the Selector to the mouse position
+	# Move the Selector to the mouse position.
 	selector.translation = selector.mouse_position.get_mouse_position()
+	
+	# Snap the position of the Selector shape mesh to the last hovered over tile.
 	var new_position: Vector3 = selector.snap_position - selector.translation
 	selector.selector_shape.translation = Vector3(
 		new_position.x,
@@ -27,8 +29,8 @@ func update(_delta: float):
 
 func handle_input(event: InputEvent):
 	if event is InputEventMouseButton:
-		# Indicate that the currently highlighted map tile was selected
-		# and move to the 'Wait' state
+		# Signal that the currently highlighted map tile was selected
+		# and move to the 'Wait' state.
 		if event.button_index == BUTTON_LEFT and event.is_pressed():
 			selector.emit_signal("tile_selected", selector.tile)
 			selector.animation_player.play("selected")
