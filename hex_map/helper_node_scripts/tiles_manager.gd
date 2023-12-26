@@ -10,7 +10,7 @@ x columns. Positions each tile and sets up the connections between them.
 # Reference to the scene for the map tile.
 const MAP_TILE: PackedScene = preload(
 	"res://" + 
-	"hex_map_base/" +
+	"hex_map/" +
 	"map_tile_node/" +
 	"MapTile.tscn"
 )

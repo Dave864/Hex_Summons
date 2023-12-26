@@ -5,12 +5,11 @@ extends Spatial
 Initializes the nodes associated with a battle map and makes them available 
 in the editor. The following hierarchy is generated:
 	HexMap
+		RangeFinder
 		TilesManager
 			MapTile
 			MapTile2
 			...
-		RangeFinder
-		Selector
 """
 
 
@@ -46,7 +45,7 @@ func _ready():
 # Creates the TilesManager node if it has not already been made
 func _create_tiles_manager_node():
 	if !has_node(TILES_MANAGER):
-		var tiles_manager = Spatial.new()
+		var tiles_manager = TilesManager.new()
 		add_child(tiles_manager)
 		_set_node_properties(tiles_manager, TILES_MANAGER, TILES_MANAGER_SCRIPT)
 	$TilesManager.set_x_count(x_count)
@@ -56,7 +55,7 @@ func _create_tiles_manager_node():
 # Creates the RangeFinder node if it has not already been made
 func _create_range_finder_node():
 	if !has_node(RANGE_FINDER):
-		var range_finder = Node.new()
+		var range_finder = RangeFinder.new()
 		add_child(range_finder)
 		_set_node_properties(range_finder, RANGE_FINDER, RANGE_FINDER_SCRIPT)
 	$RangeFinder.set_x_count(x_count)
