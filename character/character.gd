@@ -1,3 +1,4 @@
+class_name Character
 extends Area
 
 
@@ -25,6 +26,8 @@ func _on_tile_selected(tile: MapTile):
 
 func _on_Creature_area_entered(map_tile):
 	_current_index = map_tile.get_index()
+	# If the creature's start position has not been set, move it to the position
+	# of the tile it in the area of.
 	if !_start_set:
 		_start_set = true
 		translation = map_tile.translation
