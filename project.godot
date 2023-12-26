@@ -34,6 +34,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://selector_node/selector.gd"
 }, {
+"base": "State",
+"class": "SelectorState",
+"language": "GDScript",
+"path": "res://selector_node/states/selector_state.gd"
+}, {
+"base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://state.gd"
+}, {
+"base": "Node",
+"class": "StateMachine",
+"language": "GDScript",
+"path": "res://state_machine.gd"
+}, {
 "base": "Spatial",
 "class": "TilesManager",
 "language": "GDScript",
@@ -45,6 +60,9 @@ _global_script_class_icons={
 "MousePosition": "",
 "RangeFinder": "",
 "Selector": "",
+"SelectorState": "",
+"State": "",
+"StateMachine": "",
 "TilesManager": ""
 }
 

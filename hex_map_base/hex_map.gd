@@ -49,8 +49,8 @@ func _create_tiles_manager_node():
 		var tiles_manager = Spatial.new()
 		add_child(tiles_manager)
 		_set_node_properties(tiles_manager, TILES_MANAGER, TILES_MANAGER_SCRIPT)
-		tiles_manager.set_x_count(x_count)
-		tiles_manager.set_z_count(z_count)
+	$TilesManager.set_x_count(x_count)
+	$TilesManager.set_z_count(z_count)
 
 
 # Creates the RangeFinder node if it has not already been made
@@ -59,8 +59,8 @@ func _create_range_finder_node():
 		var range_finder = Node.new()
 		add_child(range_finder)
 		_set_node_properties(range_finder, RANGE_FINDER, RANGE_FINDER_SCRIPT)
-		range_finder.set_x_count(x_count)
-		range_finder.set_z_count(z_count)
+	$RangeFinder.set_x_count(x_count)
+	$RangeFinder.set_z_count(z_count)
 
 
 # Assign the name and the script of a node
