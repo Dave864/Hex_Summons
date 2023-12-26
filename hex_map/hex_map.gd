@@ -17,14 +17,14 @@ in the editor. The following hierarchy is generated:
 const TILES_MANAGER: String = "TilesManager"
 const TILES_MANAGER_SCRIPT: Script = preload(
 	"res://" +
-	"hex_map_base/" +
+	"hex_map/" +
 	"helper_node_scripts/" +
 	"tiles_manager.gd"
 )
 const RANGE_FINDER: String = "RangeFinder"
 const RANGE_FINDER_SCRIPT: Script = preload(
 	"res://" +
-	"hex_map_base/" +
+	"hex_map/" +
 	"helper_node_scripts/" +
 	"range_finder.gd"
 )
