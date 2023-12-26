@@ -9,15 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area",
+"class": "Character",
+"language": "GDScript",
+"path": "res://character/character.gd"
+}, {
 "base": "Spatial",
 "class": "HexMap",
 "language": "GDScript",
-"path": "res://hex_map_base/hex_map.gd"
+"path": "res://hex_map/hex_map.gd"
 }, {
 "base": "Area",
 "class": "MapTile",
 "language": "GDScript",
-"path": "res://hex_map_base/map_tile_node/map_tile.gd"
+"path": "res://hex_map/map_tile_node/map_tile.gd"
 }, {
 "base": "Position3D",
 "class": "MousePosition",
@@ -27,7 +32,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "RangeFinder",
 "language": "GDScript",
-"path": "res://hex_map_base/helper_node_scripts/range_finder.gd"
+"path": "res://hex_map/helper_node_scripts/range_finder.gd"
 }, {
 "base": "Area",
 "class": "Selector",
@@ -52,9 +57,10 @@ _global_script_classes=[ {
 "base": "Spatial",
 "class": "TilesManager",
 "language": "GDScript",
-"path": "res://hex_map_base/helper_node_scripts/tiles_manager.gd"
+"path": "res://hex_map/helper_node_scripts/tiles_manager.gd"
 } ]
 _global_script_class_icons={
+"Character": "",
 "HexMap": "",
 "MapTile": "",
 "MousePosition": "",
