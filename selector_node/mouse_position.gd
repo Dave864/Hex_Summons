@@ -11,11 +11,6 @@ var _position: Vector3 = Vector3.ZERO setget , get_mouse_position
 var _drop_plane: Plane = Plane.PLANE_XZ
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	_position = _screen_point_to_ray()
