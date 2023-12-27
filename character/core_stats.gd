@@ -6,14 +6,20 @@ and modifying said stats.
 """
 
 
+# Describes a resistance type
 enum ResistanceType {FIRE, EARTH, WATER, WIND}
 
+# The maximum value of a character's health
 var _base_max_hp: int = 0 setget set_max_hp, get_max_hp
-var _current_hp: int setget set_current_hp, get_current_hp
+# The strength of techniques
 var _base_atk: int = 0 setget set_atk, get_atk
+# The resistance value to techniques
 var _base_def: int = 0 setget set_def, get_def
+# The strength of spells
 var _base_magic: int = 0 setget set_magic, get_magic
+# Determines a character's initiative order
 var _base_agl: int = 0 setget set_agl, get_agl
+# The resistance value to elemental damage
 var _resistances: Dictionary = {
 	ResistanceType.FIRE: 0,
 	ResistanceType.EARTH: 0,
@@ -28,14 +34,6 @@ func set_max_hp(value: int):
 
 func get_max_hp() -> int:
 	return _base_max_hp
-
-
-func set_current_hp(value: int):
-	_current_hp = value if value >= 0 else 0
-
-
-func get_current_hp() -> int:
-	return _current_hp
 
 
 func set_atk(value: int):

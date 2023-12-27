@@ -18,4 +18,8 @@ texture = ExtResource( 2 )
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
 
+[node name="Techniques" type="Node" parent="."]
+
+[node name="Spells" type="Node" parent="."]
+
 [connection signal="area_entered" from="." to="." method="_on_Creature_area_entered"]
