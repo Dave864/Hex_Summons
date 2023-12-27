@@ -5,8 +5,6 @@ extends Area
 # The rate at which the character moves
 export(float, 1.0) var movement_time
 
-onready var _tween = $Tween
-
 # Flag that indicates whether the creature has been set to its starting location
 var _start_set: bool = false
 var _current_index: int = -1
@@ -37,14 +35,9 @@ func _on_Creature_area_entered(map_tile):
 		translation = map_tile.translation
 
 
-func follow_path(desitination: Vector3):
-	_tween.interpolate_property(
-		self, 
-		"translation", 
-		self.translation, 
-		desitination, 
-		movement_time, 
-		Tween.TRANS_LINEAR,
-		Tween.EASE_IN_OUT
-	)
-	_tween.start()
+func follow_path(path: Array):
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_LINEAR)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	for point in path:
+		tween.tween_property(self, "translation", point, movement_time)

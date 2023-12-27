@@ -13,6 +13,7 @@ albedo_color = Color( 0, 0, 0, 1 )
 
 [node name="EncounterPractice" type="Node"]
 script = ExtResource( 4 )
+hex_map_path = NodePath("HexMap")
 
 [node name="UserInterface" type="Control" parent="."]
 margin_right = 40.0
@@ -61,6 +62,7 @@ skeleton = NodePath("")
 material/0 = SubResource( 2 )
 
 [node name="Selector" parent="." instance=ExtResource( 2 )]
+map = NodePath("../HexMap")
 
 [node name="HexMap" parent="." instance=ExtResource( 3 )]
 

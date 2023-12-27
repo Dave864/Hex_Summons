@@ -129,7 +129,7 @@ func _determine_adjacencies():
 		# * /\
 		#  |  |
 		#   \/
-		var index_0_tile: Spatial = (
+		var index_0_tile: MapTile = (
 			null if is_top
 			else null if is_left and even_z_place
 			else get_child(index - x_count + 1) if even_z_place
@@ -141,7 +141,7 @@ func _determine_adjacencies():
 		#   /\ *
 		#  |  |
 		#   \/
-		var index_1_tile: Spatial = (
+		var index_1_tile: MapTile = (
 			null if is_top
 			else null if is_right and !even_z_place
 			else get_child(index - x_count) if even_z_place
@@ -153,14 +153,14 @@ func _determine_adjacencies():
 		#   /\
 		#  |  |*
 		#   \/
-		var index_2_tile: Spatial = null if is_right else get_child(index + 1)
+		var index_2_tile: MapTile = null if is_right else get_child(index + 1)
 		tile.set_adjacent_tile(2, index_2_tile)
 		
 		# Determine which tile is adjacent to the bottom right edge.
 		#   /\
 		#  |  |
 		#   \/ *
-		var index_3_tile: Spatial = (
+		var index_3_tile: MapTile = (
 			null if is_bottom 
 			else null if is_right and !even_z_place
 			else get_child(index + x_count) if even_z_place
@@ -172,7 +172,7 @@ func _determine_adjacencies():
 		#   /\
 		#  |  |
 		# * \/
-		var index_4_tile: Spatial = (
+		var index_4_tile: MapTile = (
 			null if is_bottom
 			else null if is_left and even_z_place
 			else get_child(index + x_count - 1) if even_z_place
@@ -184,7 +184,7 @@ func _determine_adjacencies():
 		#   /\
 		# *|  |
 		#   \/
-		var index_5_tile: Spatial = null if is_left else get_child(index - 1)
+		var index_5_tile: MapTile = null if is_left else get_child(index - 1)
 		tile.set_adjacent_tile(5, index_5_tile)
 
 

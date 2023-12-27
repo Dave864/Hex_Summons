@@ -10,7 +10,8 @@ Represents an individual map tile.
 #  0  /\  1
 #  5 |  | 2
 #  4  \/  3
-var _adjacent_tiles: Array = [null, null, null, null, null, null]
+var _adjacent_tiles: Array = [null, null, null, null, null, null] \
+	setget , get_adjacent
 # The index position of the map tile when it is part 
 # of a collection of tiles.
 var _index: int = -1 setget set_index, get_index
@@ -40,9 +41,14 @@ func get_adjacent_tile(position: int) -> Spatial:
 	return _adjacent_tiles[position]
 
 
-# Gets the adjacent tile of the specified position.
+# Sets the adjacent tile of the specified position.
 func set_adjacent_tile(position: int, map_tile: Area):
 	_adjacent_tiles[position] = map_tile
+
+
+# Gets the array pf all adjacent tiles.
+func get_adjacent() -> Array:
+	return _adjacent_tiles
 
 
 # Get the index value of the MapTile.

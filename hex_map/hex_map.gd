@@ -40,6 +40,7 @@ func _ready():
 	# Create the helper nodes associated with the battle map.
 	_create_range_finder_node()
 	_create_tiles_manager_node()
+	$RangeFinder.set_map_tiles($TilesManager.get_children())
 
 
 # Creates the TilesManager node if it has not already been made
