@@ -7,7 +7,7 @@ export(float, 1.0) var movement_time
 
 # Flag that indicates whether the creature has been set to its starting location
 var _start_set: bool = false
-var _current_index: int = -1
+var _current_index: int = -1 setget , get_index_at
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,9 +35,15 @@ func _on_Creature_area_entered(map_tile):
 		translation = map_tile.translation
 
 
+# Moves the character along to the points of the path.
 func follow_path(path: Array):
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_LINEAR)
 	tween.set_ease(Tween.EASE_IN_OUT)
 	for point in path:
 		tween.tween_property(self, "translation", point, movement_time)
+
+
+# Get the index of the tile the character is currently at.
+func get_index_at() -> int:
+	return _current_index

@@ -23,6 +23,9 @@ func _process(_delta):
 
 
 func _on_Selector_tile_selected(tile: MapTile):
-	var path: PoolIntArray = rf.calculate_path(character.get_index(), tile.get_index())
-	print(path)
-	character.follow_path([tile.translation])
+	character.follow_path(
+		rf.calculate_path(
+			character.get_index_at(),
+			tile.get_index()
+		)
+	)

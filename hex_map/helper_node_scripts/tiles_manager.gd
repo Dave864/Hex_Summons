@@ -132,7 +132,7 @@ func _determine_adjacencies():
 		var index_0_tile: MapTile = (
 			null if is_top
 			else null if is_left and even_z_place
-			else get_child(index - x_count + 1) if even_z_place
+			else get_child(index - x_count - 1) if even_z_place
 			else get_child(index - x_count)
 		)
 		tile.set_adjacent_tile(0, index_0_tile)

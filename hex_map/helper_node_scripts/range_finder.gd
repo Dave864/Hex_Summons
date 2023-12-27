@@ -76,34 +76,9 @@ func set_map_tiles(new_map: Array):
 					tile.get_index(), 
 					neighbor.get_index()
 				)
-	
-	for point in _astar_map.get_points():
-		print( \
-			"%s: %s" % \
-			[point, 
-			_astar_map.get_point_connections(point)] \
-		)
-	
 
 
 # Calculate the points along the path from the tile at the start index to the
 # tile at the end index. The points are returned as an array of Vector3's.
-func calculate_path(start_index: int, end_index: int) -> PoolIntArray:
-	#var frontier: Array = [start_index]
-	## Stores index paths A -> B as came_from[B] == A.
-	#var came_from: Dictionary = {start_index: null}
-	
-	## Breadth First Search.
-	#while !frontier.empty():
-	#	var current_index: int = frontier.pop_front()
-	#	if current_index != end_index:
-	#		for tile in _map_tiles[current_index].get_adjacent():
-	#			if tile != null:
-	#				var tile_index: int = tile.get_index()
-	#				if came_from.has(tile_index):
-	#					frontier.push_back(tile_index)
-	#					came_from[tile_index] = current_index
-	#	else:
-	#		frontier.clear()
-	
-	return _astar_map.get_id_path(start_index, end_index)
+func calculate_path(start_index: int, end_index: int) -> PoolVector3Array:
+	return _astar_map.get_point_path(start_index, end_index)
