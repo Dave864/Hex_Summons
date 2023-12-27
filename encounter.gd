@@ -8,7 +8,7 @@ Manages the events of an encounter.
 # Reference to the encounter hex_map
 export(NodePath) var hex_map_path = null
 
-onready var character: Character = $Character
+onready var character: Character = $PlayerCharacter
 onready var selector: Selector = $Selector
 
 var _rf: RangeFinder

@@ -7,7 +7,7 @@ position details.
 
 
 # The rate at which the character moves from one tile to another.
-export(float, 1.0) var movement_time
+export(float, 1.0) var movement_time = 0.2
 
 # Basic Stats.
 export(int, 1_000) var max_hp setget set_base_max_hp
@@ -15,6 +15,7 @@ export(int, 1_000) var atk setget set_base_atk
 export(int, 1_000) var def setget set_base_def
 export(int, 1_000) var magic setget set_base_magic
 export(int, 1_000) var agl setget set_base_agl
+export(int, 1, 20) var mvmt setget set_base_mvmt
 
 # Resistances.
 export(int, 1_000) var earth_res setget set_base_earth_res
@@ -85,6 +86,11 @@ func set_base_magic(value: int):
 func set_base_agl(value: int):
 	agl = value
 	stats.set_agl(agl)
+
+
+func set_base_mvmt(value: int):
+	mvmt = value
+	stats.set_mvmt(mvmt)
 
 
 func set_base_earth_res(value: int):

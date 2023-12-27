@@ -19,6 +19,8 @@ var _base_def: int = 0 setget set_def, get_def
 var _base_magic: int = 0 setget set_magic, get_magic
 # Determines a character's initiative order
 var _base_agl: int = 0 setget set_agl, get_agl
+# Determines how many spaces a character can move
+var _base_mvmt: int = 1 setget set_mvmt, get_mvmt
 # The resistance value to elemental damage
 var _resistances: Dictionary = {
 	ResistanceType.FIRE: 0,
@@ -66,6 +68,14 @@ func set_agl(value: int):
 
 func get_agl() -> int:
 	return _base_agl
+
+
+func set_mvmt(value: int):
+	_base_mvmt = value if value >= 1 else 1
+
+
+func get_mvmt() -> int:
+	return _base_mvmt
 
 
 func set_resistances(values: Dictionary):
