@@ -6,7 +6,6 @@
 [ext_resource path="res://hex_map/map_tile_node/MapTile.tscn" type="PackedScene" id=4]
 [ext_resource path="res://hex_map/map_tile_node/map_tile.gd" type="Script" id=5]
 
-
 [node name="HexMap" type="Spatial"]
 script = ExtResource( 1 )
 z_count = 4

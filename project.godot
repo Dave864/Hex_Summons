@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://character/character.gd"
 }, {
+"base": "Node",
+"class": "Encounter",
+"language": "GDScript",
+"path": "res://encounter.gd"
+}, {
 "base": "Spatial",
 "class": "HexMap",
 "language": "GDScript",
@@ -61,6 +66,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Character": "",
+"Encounter": "",
 "HexMap": "",
 "MapTile": "",
 "MousePosition": "",

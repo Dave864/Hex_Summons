@@ -2,10 +2,14 @@ class_name Character
 extends Area
 
 
+# The rate at which the character moves
+export(float, 1.0) var movement_time
+
+onready var _tween = $Tween
+
 # Flag that indicates whether the creature has been set to its starting location
 var _start_set: bool = false
 var _current_index: int = -1
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,10 +22,10 @@ func _ready():
 
 
 # Move the creature node to the selected tile
-func _on_tile_selected(tile: MapTile):
-	var destination: Vector3 = tile.translation
-	destination.y = 0.0
-	translation = destination
+#func _on_tile_selected(tile: MapTile):
+#	var destination: Vector3 = tile.translation
+#	destination.y = 0.0
+#	translation = destination
 
 
 func _on_Creature_area_entered(map_tile):
@@ -31,3 +35,16 @@ func _on_Creature_area_entered(map_tile):
 	if !_start_set:
 		_start_set = true
 		translation = map_tile.translation
+
+
+func follow_path(desitination: Vector3):
+	_tween.interpolate_property(
+		self, 
+		"translation", 
+		self.translation, 
+		desitination, 
+		movement_time, 
+		Tween.TRANS_LINEAR,
+		Tween.EASE_IN_OUT
+	)
+	_tween.start()
