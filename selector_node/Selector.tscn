@@ -2,9 +2,10 @@
 
 [ext_resource path="res://selector_node/selector.gd" type="Script" id=1]
 [ext_resource path="res://selector_node/mouse_position.gd" type="Script" id=2]
-[ext_resource path="res://state_machine.gd" type="Script" id=3]
-[ext_resource path="res://selector_node/states/Select.gd" type="Script" id=4]
-[ext_resource path="res://selector_node/states/Wait.gd" type="Script" id=5]
+[ext_resource path="res://states/state_machine.gd" type="Script" id=3]
+[ext_resource path="res://states/selector_node/Select.gd" type="Script" id=4]
+[ext_resource path="res://states/selector_node/Wait.gd" type="Script" id=5]
+
 
 [sub_resource type="SphereShape" id=8]
 radius = 0.05
