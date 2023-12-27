@@ -39,10 +39,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://selector_node/mouse_position.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "RangeFinder",
 "language": "GDScript",
-"path": "res://hex_map/helper_node_scripts/range_finder.gd"
+"path": "res://addons/hex_map/tiles/range_finder.gd"
 }, {
 "base": "Area",
 "class": "Selector",
@@ -65,9 +65,14 @@ _global_script_classes=[ {
 "path": "res://state_machine.gd"
 }, {
 "base": "Spatial",
+"class": "Tiles",
+"language": "GDScript",
+"path": "res://hex_map/tiles.gd"
+}, {
+"base": "Reference",
 "class": "TilesManager",
 "language": "GDScript",
-"path": "res://hex_map/helper_node_scripts/tiles_manager.gd"
+"path": "res://addons/hex_map/tiles/tiles_manager.gd"
 } ]
 _global_script_class_icons={
 "AStarHexMap": "",
@@ -81,6 +86,7 @@ _global_script_class_icons={
 "SelectorState": "",
 "State": "",
 "StateMachine": "",
+"Tiles": "",
 "TilesManager": ""
 }
 
