@@ -1,5 +1,9 @@
 class_name Character
 extends Area
+"""
+Base class for players, mobs, and bosses. Contains a character's stats and map
+position details.
+"""
 
 
 # The rate at which the character moves
@@ -9,6 +13,11 @@ export(float, 1.0) var movement_time
 var _start_set: bool = false
 var _current_index: int = -1 setget , get_index_at
 
+# References to the various attacks and spells the character has access to
+onready var _techniques: Array = $Techniques.get_children()
+onready var _spells: Array = $Spells.get_children()
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -17,13 +26,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-
-
-# Move the creature node to the selected tile
-#func _on_tile_selected(tile: MapTile):
-#	var destination: Vector3 = tile.translation
-#	destination.y = 0.0
-#	translation = destination
 
 
 func _on_Creature_area_entered(map_tile):
