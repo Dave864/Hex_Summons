@@ -10,12 +10,18 @@ export(NodePath) var hex_map_path = null
 
 onready var character: Character = $Character
 onready var selector: Selector = $Selector
-onready var rf: RangeFinder = get_node("%s/RangeFinder" % hex_map_path)
+
+var _rf: RangeFinder
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var hex_map: HexMap = get_node(hex_map_path)
+	_rf = RangeFinder.new(
+		hex_map.x_count,
+		hex_map.z_count,
+		hex_map.get_map_tiles()
+	)
 
 
 func _process(_delta):
@@ -24,7 +30,7 @@ func _process(_delta):
 
 func _on_Selector_tile_selected(tile: MapTile):
 	character.follow_path(
-		rf.calculate_path(
+		_rf.calculate_path(
 			character.get_index_at(),
 			tile.get_index()
 		)

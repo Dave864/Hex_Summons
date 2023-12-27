@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://character/Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://selector_node/Selector.tscn" type="PackedScene" id=2]
+[ext_resource path="res://practice/HexMap.tscn" type="PackedScene" id=3]
 [ext_resource path="res://encounter.gd" type="Script" id=4]
 
 [node name="EncounterPractice" type="Node"]
 script = ExtResource( 4 )
-hex_map_path = NodePath("")
+hex_map_path = NodePath("HexMap")
 
 [node name="UserInterface" type="Control" parent="."]
 margin_right = 40.0
@@ -54,5 +55,7 @@ map = NodePath("")
 [node name="Character" parent="." instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.21907, 0, -0.834379 )
 movement_time = 0.2
+
+[node name="HexMap" parent="." instance=ExtResource( 3 )]
 
 [connection signal="tile_selected" from="Selector" to="." method="_on_Selector_tile_selected"]

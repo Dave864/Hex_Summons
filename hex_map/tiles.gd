@@ -20,9 +20,9 @@ const MAP_TILE: PackedScene = preload(
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
 # The number of tiles along the X axis.
-var x_count: int = 2 setget set_x_count, get_x_count
+var x_count: int = 2 setget set_x_count
 # The number of tiles along the Z axis.
-var z_count: int = 3 setget set_z_count, get_z_count
+var z_count: int = 3 setget set_z_count
 
 # Referene to the scene tree root.
 onready var _root_node: Node = get_tree().edited_scene_root
@@ -227,11 +227,6 @@ func set_z_count(new_count: int):
 		_regenerate_grid()
 
 
-# Get the z_count.
-func get_z_count() -> int:
-	return z_count
-
-
 # Update the x_count parameter and regenerate the grid.
 func set_x_count(new_count: int):
 	x_count = new_count
@@ -240,11 +235,6 @@ func set_x_count(new_count: int):
 	if _root_node != null:
 		_update_grid_start()
 		_regenerate_grid()
-
-
-# Get the x_count.
-func get_x_count() -> int:
-	return x_count
 
 
 # Get the tile at the specified index.
