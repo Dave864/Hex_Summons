@@ -1,5 +1,8 @@
 class_name PlayerCharacter
 extends Character
+"""
+Handles actions specific to player characters.
+"""
 
 
 var level: int = 1

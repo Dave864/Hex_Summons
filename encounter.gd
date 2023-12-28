@@ -29,7 +29,8 @@ func _process(_delta):
 
 
 func _on_Selector_tile_selected(tile: MapTile):
-	character.follow_path(
+	SignalBus.emit_signal(
+		"tile_selected",
 		_rf.calculate_path(
 			character.get_index_at(),
 			tile.get_index()

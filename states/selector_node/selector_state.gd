@@ -6,7 +6,7 @@ when coding the selector's states.
 """
 
 
-# Typed reference to the Selector node
+# Typed reference to the Selector node.
 var selector: Selector
 
 

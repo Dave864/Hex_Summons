@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://character/player_characters/player_character.gd"
 }, {
+"base": "State",
+"class": "PlayerCharacterState",
+"language": "GDScript",
+"path": "res://states/player_character/player_character_state.gd"
+}, {
 "base": "AStar",
 "class": "RangeFinder",
 "language": "GDScript",
@@ -54,7 +59,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://selector_node/selector.gd"
 }, {
-"base": "Reference",
+"base": "State",
 "class": "SelectorState",
 "language": "GDScript",
 "path": "res://states/selector_node/selector_state.gd"
@@ -82,6 +87,7 @@ _global_script_class_icons={
 "MapTile": "",
 "MousePosition": "",
 "PlayerCharacter": "",
+"PlayerCharacterState": "",
 "RangeFinder": "",
 "Selector": "",
 "SelectorState": "",
@@ -97,6 +103,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+StateMachineBus="*res://autoloads/state_machine_bus.gd"
 SignalBus="*res://autoloads/signal_bus.gd"
 
 [editor_plugins]
