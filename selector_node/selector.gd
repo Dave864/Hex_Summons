@@ -11,19 +11,19 @@ signal tile_selected(map_tile)
 # Reference to the map tiles in the current scene
 export(NodePath) var map = null
 
-# The current mouse position
-onready var mouse_position: MousePosition = $MousePosition
-# The mesh that represents the Selector
-onready var selector_shape: MeshInstance = $SelectorShape
-# The Animation player for the Selector
-onready var animation_player: AnimationPlayer = $AnimationPlayer
-
 # Flag that indicates whether to snap to a new position when found
 var snap_to_position: bool = true
 # The position the SelectorShape locks to.
 var snap_position: Vector3 = Vector3.ZERO
 # The MapTile that was last passed over
 var tile: MapTile = null
+
+# The current mouse position
+onready var mouse_position: MousePosition = $MousePosition
+# The mesh that represents the Selector
+onready var selector_shape: MeshInstance = $SelectorShape
+# The Animation player for the Selector
+onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 func _on_Selector_area_entered(map_tile: Area):
