@@ -23,6 +23,7 @@ func _ready():
 	_rf = RangeFinder.new(
 		hex_map.x_count,
 		hex_map.z_count,
+		"Player",
 		hex_map.get_map_tiles()
 	)
 	
@@ -37,7 +38,7 @@ func _process(_delta):
 		_initiative_tracker[_current_initiative] == "Player" and
 		StateMachineBus.encounter_states["PlayerCharacter"] == "Wait"
 	):
-		_rf.refresh_astar_connections()
+		_rf.refresh_astar_connections("Enemy")
 		SignalBus.emit_signal(
 			"enemy_turn_started",
 			_rf.calculate_path(
@@ -53,7 +54,7 @@ func _process(_delta):
 		_initiative_tracker[_current_initiative] == "Enemy" and
 		StateMachineBus.encounter_states["EnemyCharacter"] == "Wait"
 	):
-		_rf.refresh_astar_connections()
+		_rf.refresh_astar_connections("Player")
 		SignalBus.emit_signal("player_turn_started")
 		_update_initiative()
 

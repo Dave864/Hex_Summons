@@ -10,11 +10,18 @@ depend on getting a range of tiles or paths to tiles.
 var _z_count: int setget set_z_count
 var _x_count: int setget set_x_count
 var _map_tiles: Array = [] setget set_map_tiles
+var _current_char: String
 
 
-func _init(x_value: int, z_value: int, initial_map: Array = []):
+func _init(
+	x_value: int,
+	z_value: int,
+	current_char: String,
+	initial_map: Array = []
+):
 	_x_count = x_value
 	_z_count = z_value
+	_current_char = current_char
 	set_map_tiles(initial_map)
 
 
@@ -28,11 +35,13 @@ func set_x_count(value: int):
 
 func set_map_tiles(new_map: Array):
 	_map_tiles = new_map
-	refresh_astar_connections()
+	refresh_astar_connections(_current_char)
 
 
 # Recalculates the astar connnections for the map in its current state.
-func refresh_astar_connections():
+func refresh_astar_connections(current_char: String):
+	_current_char = current_char
+	
 	# Empty out the current astar map and resize if necessary.
 	clear()
 	if get_point_capacity() < _map_tiles.size():
@@ -40,20 +49,21 @@ func refresh_astar_connections():
 	
 	# Add the tiles to the astar map.
 	for tile in _map_tiles:
-		# Do not add tile if it is occupied or inactive.
-		if tile.is_active() and tile.get_occupant() != null:
+		# Only add tile if it is active and can be passed through by the
+		# current character.
+		if tile.is_active() and tile.can_character_pass(_current_char):
 			add_point(tile.get_index(), tile.translation)
 	
 	# Set up the connections for the astar map.
 	for tile in _map_tiles:
-		# Skip over inactive or occupied tiles.
-		if tile.is_active() and tile.get_occupant() == null:
+		# Set up connections for active, passable tiles.
+		if tile.is_active() and tile.can_character_pass(_current_char):
 			for neighbor in tile.get_adjacent():
-				# Do not connect inactive or occupied tiles.
+				# Connect active and passable tiles.
 				if (
-					neighbor != null or 
-					!tile.is_active() or 
-					tile.get_occupant() != null
+					neighbor != null and 
+					neighbor.is_active() and 
+					neighbor.can_character_pass(_current_char)
 				):
 					connect_points(
 						tile.get_index(), 
