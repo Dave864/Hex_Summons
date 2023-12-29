@@ -6,25 +6,8 @@ position details.
 """
 
 
-# The rate at which the character moves from one tile to another.
-export(float, 1.0) var movement_time = 0.2
-
-# Basic Stats.
-export(int, 1_000) var max_hp setget set_base_max_hp
-export(int, 1_000) var atk setget set_base_atk
-export(int, 1_000) var def setget set_base_def
-export(int, 1_000) var magic setget set_base_magic
-export(int, 1_000) var agl setget set_base_agl
-export(int, 1, 20) var mvmt setget set_base_mvmt
-
-# Resistances.
-export(int, 1_000) var earth_res setget set_base_earth_res
-export(int, 1_000) var fire_res setget set_base_fire_res
-export(int, 1_000) var water_res setget set_base_water_res
-export(int, 1_000) var wind_res setget set_base_wind_res
-
-var stats: CoreStats = CoreStats.new()
-var current_hp: int = 0
+# The stats of the character
+export(Resource) var stats
 
 # Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false
@@ -52,53 +35,3 @@ func _on_Creature_area_entered(map_tile):
 # Get the index of the tile the character is currently at.
 func get_index_at() -> int:
 	return _current_index
-
-
-func set_base_max_hp(value: int):
-	max_hp = value
-	stats.set_max_hp(max_hp)
-
-
-func set_base_atk(value: int):
-	atk = value
-	stats.set_atk(atk)
-
-
-func set_base_def(value: int):
-	def = value
-	stats.set_def(def)
-
-
-func set_base_magic(value: int):
-	magic = value
-	stats.set_magic(magic)
-
-
-func set_base_agl(value: int):
-	agl = value
-	stats.set_agl(agl)
-
-
-func set_base_mvmt(value: int):
-	mvmt = value
-	stats.set_mvmt(mvmt)
-
-
-func set_base_earth_res(value: int):
-	earth_res = value
-	stats.set_resistances({stats.ResistanceType.EARTH: earth_res})
-
-
-func set_base_fire_res(value: int):
-	fire_res = value
-	stats.set_resistances({stats.ResistanceType.FIRE: fire_res})
-
-
-func set_base_water_res(value: int):
-	water_res = value
-	stats.set_resistances({stats.ResistanceType.WATER: water_res})
-
-
-func set_base_wind_res(value: int):
-	wind_res = value
-	stats.set_resistances({stats.ResistanceType.WIND: wind_res})
