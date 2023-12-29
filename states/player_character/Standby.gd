@@ -21,6 +21,8 @@ func enter(_msg := {}) -> void:
 		"_on_SignalBus_tile_Selected"
 	)
 	
+	# Emit error message when issue is encountered when connecting the 
+	# tile_selected SignalBus signal to the _on_SignalBus_tile_Selected method.
 	if e != OK:
 		printerr(
 			"ERROR CODE %d\n" + \
