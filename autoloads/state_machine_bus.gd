@@ -5,4 +5,5 @@ extends Node
 var encounter_states: Dictionary = {
 	"Selector": null,
 	"PlayerCharacter": null,
+	"EnemyCharacter": null,
 }

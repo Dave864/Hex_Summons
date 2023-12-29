@@ -2,7 +2,7 @@ extends SelectorState
 """
 The logic for what happens when the Selector is in the 'Wait' state.
 The selector hides its shape and disables the snap position functionality
-until the encounter is ready to recieve new selections.
+until the encounter is ready to recieve new player selections.
 """
 
 
