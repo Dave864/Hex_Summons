@@ -35,10 +35,10 @@ func enter(_msg := {}) -> void:
 # Corresponds to the `_process()` callback.
 func update(delta: float) -> void:
 	# Move the player character towards the next tile.
-	weight += delta * pc.movement_speed
+	weight += delta * pc.stats.get_mvmt_speed()
 	weight = 1.0 if weight > 1.0 else weight
 	pc.translation = start_point.linear_interpolate(
-		next_point, 
+		next_point,
 		weight
 	)
 	

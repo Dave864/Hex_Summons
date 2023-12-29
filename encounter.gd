@@ -8,10 +8,10 @@ Manages the events of an encounter.
 # Reference to the encounter hex_map
 export(NodePath) var hex_map_path = null
 
+var _rf: RangeFinder
+
 onready var character: Character = $PlayerCharacter
 onready var selector: Selector = $Selector
-
-var _rf: RangeFinder
 
 
 # Called when the node enters the scene tree for the first time.

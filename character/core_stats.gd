@@ -21,10 +21,10 @@ export(int, 1, 1_000) var _base_magic = 1 setget , get_magic
 # Determines a character's initiative order.
 export(int, 1, 1_000) var _base_agl = 1 setget , get_agl
 # Determines how many spaces a character can move.
-export(int, 1, 20) var _base_mvmt = 1 setget , get_mvmt
+export(int, 1, 20) var _base_mvmt = 3 setget , get_mvmt
 
 # The rate at which the character moves from one tile to another.
-var _mvmnt_speed: float setget , get_mvmnt_speed
+var _mvmt_speed: float setget , get_mvmt_speed
 # The resistance values to elemental damage.
 var _base_res_earth: int
 var _base_res_fire: int
@@ -38,13 +38,13 @@ func _init(
 	p_base_def: int = 1,
 	p_base_magic: int = 1,
 	p_base_agl: int = 1,
-	p_base_mvmt: int = 1,
+	p_base_mvmt: int = 3,
 	p_res_earth: int = 1,
 	p_res_fire: int = 1,
 	p_res_water: int = 1,
 	p_res_wind: int = 1
 ):
-	_mvmnt_speed = 1.0
+	_mvmt_speed = 5.0
 	_base_max_hp = p_base_max_hp
 	_base_atk = p_base_atk
 	_base_def = p_base_def
@@ -81,8 +81,8 @@ func get_mvmt() -> int:
 	return _base_mvmt
 
 
-func get_mvmnt_speed() -> float:
-	return _mvmnt_speed
+func get_mvmt_speed() -> float:
+	return _mvmt_speed
 
 
 func get_resistance(element: int) -> int:
@@ -106,7 +106,7 @@ func get_resistance(element: int) -> int:
 
 func can_property_revert(property: String) -> bool:
 	match property:
-		"_movement_speed":
+		"_mvmt_speed":
 			return true
 		"_base_res_earth":
 			return true
@@ -122,8 +122,8 @@ func can_property_revert(property: String) -> bool:
 
 func property_get_revert(property: String):
 	match property:
-		"_movement_speed":
-			return 1.0
+		"_mvmt_speed":
+			return 5.0
 		"_base_res_earth":
 			return 1
 		"_base_res_fire":
@@ -139,10 +139,10 @@ func _get_property_list():
 	
 	# Add movement speed property.
 	properties.append({
-		name = "_mvmnt_speed",
+		name = "_mvmt_speed",
 		type = TYPE_REAL,
 		hint = PROPERTY_HINT_RANGE,
-		hint_string = "1.0, 20.0, 1.0"
+		hint_string = "1.0, 10.0, 1.0"
 	})
 	
 	# Set up the Resistances parameter group.

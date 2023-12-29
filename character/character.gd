@@ -6,7 +6,7 @@ position details.
 """
 
 
-# The stats of the character
+# The stats of the character. Uses the CoreStats resource.
 export(Resource) var stats
 
 # Flag that indicates whether the creature has been set to its starting location.
