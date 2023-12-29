@@ -25,7 +25,7 @@ _base_res_wind = 1
 radius = 0.001
 
 [node name="EnemyCharacter" type="Area"]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 2
 script = ExtResource( 2 )
 stats = SubResource( 2 )
