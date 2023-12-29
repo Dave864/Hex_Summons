@@ -1,6 +1,6 @@
 extends PlayerCharacterState
 """
-The logic for what happens when a Player Character is in the 'Move' state.
+The logic for what happens when a Player Character is in the `Move` state.
 The Player Character moves from tile to tile along a preset path.
 """
 
@@ -22,14 +22,14 @@ func enter(_msg := {}) -> void:
 	StateMachineBus.encounter_states["PlayerCharacter"] = "Move"
 	travel_path = _msg["travel_path"]
 	
-	# Move to the 'Standby' state if the travel path only has one point.
+	# Move to the 'Wait' state if the travel path only has one point.
 	# This indicates that the player character's current position was 
 	# selected as the destination.
 	if travel_path.size() > 1:
 		start_point = pc.translation
 		next_point = travel_path[next_point_index]
 	else:
-		state_machine.transition_to("Standby")
+		state_machine.transition_to("Wait")
 
 
 # Corresponds to the `_process()` callback.
@@ -43,7 +43,7 @@ func update(delta: float) -> void:
 	)
 	
 	# When finished moving to next tile, check to see if path has been fully
-	# traversed. Move to the 'Standby' state when path has been fully traversed.
+	# traversed. Move to the 'Wait' state when path has been fully traversed.
 	if weight >= 1.0:
 		next_point_index += 1
 		if next_point_index < travel_path.size():
@@ -51,7 +51,7 @@ func update(delta: float) -> void:
 			start_point = pc.translation
 			next_point = travel_path[next_point_index]
 		else:
-			state_machine.transition_to("Standby")
+			state_machine.transition_to("Wait")
 
 
 # Called by the state machine before changing the active state.
