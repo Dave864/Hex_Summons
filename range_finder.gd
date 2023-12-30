@@ -48,33 +48,26 @@ func refresh_astar_connections(current_char: String):
 		reserve_space(_map_tiles.size())
 	
 	# Add the tiles to the astar map.
+	var tile_weight: float
 	for tile in _map_tiles:
-		# Only add tile if it is active and can be passed through by the
-		# current character.
-		if tile.is_active() and tile.can_character_pass(_current_char):
-			add_point(tile.get_index(), tile.translation)
+		# Only add tile if it is active
+		if tile.is_active():
+			# Set the weight to 50 if the tile is occupied by a character
+			# of the opposing faction.
+			tile_weight = 1.0 if tile.can_character_pass(_current_char) else 50.0
+			add_point(tile.get_index(), tile.translation, tile_weight)
 	
 	# Set up the connections for the astar map.
 	for tile in _map_tiles:
-		# Set up connections for active, passable tiles.
-		if tile.is_active() and tile.can_character_pass(_current_char):
+		# Set up connections for active tiles.
+		if tile.is_active():
 			for neighbor in tile.get_adjacent():
-				# Connect active and passable tiles.
-				if (
-					neighbor != null and 
-					neighbor.is_active() and 
-					neighbor.can_character_pass(_current_char)
-				):
+				# Connect non empty and active neighbors.
+				if neighbor != null and neighbor.is_active():
 					connect_points(
 						tile.get_index(), 
 						neighbor.get_index()
 					)
-
-
-# Calculate the points along the path from the tile at the start index to the
-# tile at the end index. The points are returned as an array of Vector3's.
-func calculate_path(start_index: int, end_index: int) -> PoolVector3Array:
-	return get_point_path(start_index, end_index)
 
 
 func _compute_cost(u, v):

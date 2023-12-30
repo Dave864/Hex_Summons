@@ -41,7 +41,7 @@ func _process(_delta):
 		_rf.refresh_astar_connections("Enemy")
 		SignalBus.emit_signal(
 			"enemy_turn_started",
-			_rf.calculate_path(
+			_rf.get_point_path(
 				enemy.get_index_at(),
 				character.get_index_at()
 			)
@@ -70,7 +70,7 @@ func _update_initiative():
 func _on_Selector_tile_selected(tile: MapTile):
 	SignalBus.emit_signal(
 		"tile_selected",
-		_rf.calculate_path(
+		_rf.get_point_path(
 			character.get_index_at(),
 			tile.get_index()
 		)

@@ -22,10 +22,10 @@ func enter(_msg := {}) -> void:
 	StateMachineBus.encounter_states["EnemyCharacter"] = "Move"
 	travel_path = _msg["travel_path"]
 	
-	# Move to the `Wait` state if the travel path only has one point.
-	# This indicates that the player character's current position was 
-	# selected as the destination.
-	if travel_path.size() > 1:
+	# Move to the `Wait` state if the travel path only has two points.
+	# This indicates that the enemy character's current position is adjacent
+	# to the target destination.
+	if travel_path.size() > 2:
 		start_point = ec.translation
 		next_point = travel_path[next_point_index]
 	else:
@@ -34,7 +34,7 @@ func enter(_msg := {}) -> void:
 
 # Corresponds to the `_process()` callback.
 func update(delta: float) -> void:
-	# Move the player character towards the next tile.
+	# Move the enemy character towards the next tile.
 	weight += delta * ec.stats.get_mvmt_speed()
 	weight = 1.0 if weight > 1.0 else weight
 	ec.translation = start_point.linear_interpolate(

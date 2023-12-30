@@ -99,9 +99,8 @@ func _on_MapTile_area_entered(area):
 		_occupant = PLAYER
 	elif area.name == "EnemyCharacter":
 		_occupant = ENEMY
-	else:
-		_occupant = EMPTY
 
 
 func _on_MapTile_area_exited(area):
-	_occupant = EMPTY
+	if area.name == "PlayerCharacter" or area.name == "EnemyCharacter":
+		_occupant = EMPTY
