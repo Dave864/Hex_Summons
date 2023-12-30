@@ -12,7 +12,7 @@ var enc: Encounter
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# The states are children of a `Encounter` node so their `_ready()` 
+	# The states are children of an `Encounter` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 
 	# to be ready first.
 	yield(owner, "ready")
@@ -20,7 +20,7 @@ func _ready():
 	# If the `owner` is not an `Encounter`, we'll get `null`.
 	enc = owner as Encounter
 	# This check will tell us if we inadvertently assign a derived state script
-	# in a scene other than the PlayerCharacter scene, which would be 
+	# in a scene other than the `Encounter` scene, which would be 
 	# unintended. This can help prevent some bugs that are difficult to 
 	# understand.
 	assert(enc != null)
