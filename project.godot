@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://encounter.gd"
 }, {
+"base": "State",
+"class": "EncounterState",
+"language": "GDScript",
+"path": "res://states/encounter/encounter_state.gd"
+}, {
 "base": "Character",
 "class": "EnemyCharacter",
 "language": "GDScript",
@@ -93,6 +98,7 @@ _global_script_class_icons={
 "Character": "",
 "CoreStats": "",
 "Encounter": "",
+"EncounterState": "",
 "EnemyCharacter": "",
 "EnemyCharacterState": "",
 "HexMap": "",
