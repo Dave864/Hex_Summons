@@ -10,10 +10,15 @@ export(NodePath) var hex_map_path = null
 
 var _rf: RangeFinder
 var _initiative_tracker: Array
-var _current_initiative: int = 0
+var _cur_init: int = 0
+"""
+TODO: Currently here to enable the EnemyCharacter to work. EnemyCharacter will
+eventually need logic for AI.
+"""
+var _p: PlayerCharacter =  null
 
-onready var character: PlayerCharacter = $PlayerCharacter
-onready var enemy: EnemyCharacter = $EnemyCharacter
+onready var players: Array = $Players.get_children()
+onready var enemies: Array = $Enemies.get_children()
 onready var selector: Selector = $Selector
 
 
@@ -27,51 +32,29 @@ func _ready():
 		hex_map.get_map_tiles()
 	)
 	
-	_initiative_tracker.append("Player")
-	_initiative_tracker.append("Enemy")
+	_p = players[0]
 
 
-func _process(_delta):
-	# When the Player Character enters the `Wait` state, tell the Enemy
-	# Character to start its turn.
-	if (
-		_initiative_tracker[_current_initiative] == "Player" and
-		StateMachineBus.encounter_states["PlayerCharacter"] == "Wait"
-	):
-		_rf.refresh_astar_connections("Enemy")
-		SignalBus.emit_signal(
-			"enemy_turn_started",
-			_rf.get_point_path(
-				enemy.get_index_at(),
-				character.get_index_at()
-			)
-		)
-		_update_initiative()
-	
-	# When the Enemy Character enters the `Wait` state, tell the Player
-	# Character to start its turn.
-	elif (
-		_initiative_tracker[_current_initiative] == "Enemy" and
-		StateMachineBus.encounter_states["EnemyCharacter"] == "Wait"
-	):
-		_rf.refresh_astar_connections("Player")
-		SignalBus.emit_signal("player_turn_started")
-		_update_initiative()
+# Move the initiative counter to the next index or reset it back to the start.
+func progress_initiative():
+	_cur_init += 1
+	_cur_init = 0 if _cur_init == _initiative_tracker.size() else _cur_init
 
 
-func _update_initiative():
-	_current_initiative += 1
-	_current_initiative = (
-		0 if _current_initiative == _initiative_tracker.size() 
-		else _current_initiative
+# Gets the next character in the intiative track.
+func get_next_character() -> Character:
+	var next_init: int = (
+		_cur_init + 1 if _cur_init + 1 < _initiative_tracker.size() 
+		else 0
 	)
+	return _initiative_tracker[next_init]
 
 
 func _on_Selector_tile_selected(tile: MapTile):
 	SignalBus.emit_signal(
 		"tile_selected",
 		_rf.get_point_path(
-			character.get_index_at(),
+			_initiative_tracker[_cur_init].get_index_at(),
 			tile.get_index()
 		)
 	)

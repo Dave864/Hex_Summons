@@ -95,12 +95,12 @@ func is_active() -> bool:
 
 func _on_MapTile_area_entered(area):
 	# Add entered character as this tile's occupant.
-	if area.name == "PlayerCharacter":
+	if area is PlayerCharacter:
 		_occupant = PLAYER
-	elif area.name == "EnemyCharacter":
+	elif area is EnemyCharacter:
 		_occupant = ENEMY
 
 
 func _on_MapTile_area_exited(area):
-	if area.name == "PlayerCharacter" or area.name == "EnemyCharacter":
+	if area is PlayerCharacter or area is EnemyCharacter:
 		_occupant = EMPTY
