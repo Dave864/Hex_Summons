@@ -10,13 +10,13 @@ depend on getting a range of tiles or paths to tiles.
 var _z_count: int setget set_z_count
 var _x_count: int setget set_x_count
 var _map_tiles: Array = [] setget set_map_tiles
-var _current_char: String
+var _current_char: int
 
 
 func _init(
 	x_value: int,
 	z_value: int,
-	current_char: String,
+	current_char: int,
 	initial_map: Array = []
 ):
 	_x_count = x_value
@@ -39,7 +39,7 @@ func set_map_tiles(new_map: Array):
 
 
 # Recalculates the astar connnections for the map in its current state.
-func refresh_astar_connections(current_char: String):
+func refresh_astar_connections(current_char: int):
 	_current_char = current_char
 	
 	# Empty out the current astar map and resize if necessary.

@@ -6,6 +6,12 @@ Boilerplate class to get full autocompletion and type checks for an
 """
 
 
+# The name of the states for this FSM.
+const START: String = "Start"
+const PLAYER_TURN: String = "PlayerTurn"
+const ENEMY_TURN: String = "EnemyTurn"
+const END: String = "End"
+
 # Typed reference to the Encounter node.
 var enc: Encounter
 
@@ -24,3 +30,8 @@ func _ready():
 	# unintended. This can help prevent some bugs that are difficult to 
 	# understand.
 	assert(enc != null)
+
+
+# Update the value of the state bus for the Encounter state machine.
+func _set_state_machine_bus(var state: String):
+	StateMachineBus.encounter_states[FSM.Encounter.ENCOUNTER] = state

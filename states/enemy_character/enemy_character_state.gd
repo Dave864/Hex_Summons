@@ -6,6 +6,10 @@ Boilerplate class to get full autocompletion and type checks for the
 """
 
 
+# The name of the states for this FSM.
+const MOVE: String = "Move"
+const WAIT: String = "Wait"
+
 # Typed reference to the PlayerCharacter node.
 var ec: EnemyCharacter
 
@@ -24,3 +28,8 @@ func _ready():
 	# unintended. This can help prevent some bugs that are difficult to 
 	# understand.
 	assert(ec != null)
+
+
+# Update the value of the state bus for the EnemyCharacter state machine.
+func _set_state_machine_bus(var state: String):
+	StateMachineBus.encounter_states[FSM.Encounter.ENEMY_CHARACTER] = state

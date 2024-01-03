@@ -19,7 +19,7 @@ var weight: float = 0.0
 
 # Set the starting point for the path.
 func enter(_msg := {}) -> void:
-	StateMachineBus.encounter_states["EnemyCharacter"] = "Move"
+	_set_state_machine_bus(MOVE)
 	travel_path = _msg["travel_path"]
 	
 	# Move to the `Wait` state if the travel path only has two points.
@@ -29,7 +29,7 @@ func enter(_msg := {}) -> void:
 		start_point = ec.translation
 		next_point = travel_path[next_point_index]
 	else:
-		state_machine.transition_to("Wait")
+		state_machine.transition_to(WAIT)
 
 
 # Corresponds to the `_process()` callback.
@@ -51,7 +51,7 @@ func update(delta: float) -> void:
 			start_point = ec.translation
 			next_point = travel_path[next_point_index]
 		else:
-			state_machine.transition_to("Wait")
+			state_machine.transition_to(WAIT)
 
 
 # Called by the state machine before changing the active state.

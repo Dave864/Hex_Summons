@@ -7,13 +7,13 @@ The Player Character waits until it is reenabled.
 
 # Hit when the player character is selected to take its turn.
 func _on_SignalBus_player_turn_started():
-	state_machine.transition_to("Standby")
+	state_machine.transition_to(STANDBY)
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	StateMachineBus.encounter_states["PlayerCharacter"] = "Wait"
+	_set_state_machine_bus(WAIT)
 	var e: int = SignalBus.connect(
 		"player_turn_started", 
 		self, 

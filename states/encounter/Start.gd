@@ -16,21 +16,21 @@ class InitiativeSorter:
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	StateMachineBus.encounter_states["Encounter"] = "Start"
+	_set_state_machine_bus(START)
 	_set_up_initative()
 	
-	# Goes 
+	# Goes to the state that handles the specified character type.
 	var current_character: Character = enc._initiative_tracker[enc._cur_init]
 	if current_character is PlayerCharacter:
-		state_machine.transition_to("PlayerTurn")
+		state_machine.transition_to(PLAYER_TURN)
 	elif current_character is EnemyCharacter:
-		state_machine.transition_to("EnemyTurn")
+		state_machine.transition_to(ENEMY_TURN)
 	else:
 		printerr(
 			"Starting character is not of the PlayerCharacter " + \
 			"or EnemyCharacter class."
 		)
-		state_machine.transition_to("End")
+		state_machine.transition_to(END)
 
 
 # Initializes the initiative tracker.

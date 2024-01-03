@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://character/character.gd"
 }, {
+"base": "Object",
+"class": "Constants",
+"language": "GDScript",
+"path": "res://utils/constants.gd"
+}, {
 "base": "Resource",
 "class": "CoreStats",
 "language": "GDScript",
@@ -38,6 +43,11 @@ _global_script_classes=[ {
 "class": "EnemyCharacterState",
 "language": "GDScript",
 "path": "res://states/enemy_character/enemy_character_state.gd"
+}, {
+"base": "Object",
+"class": "FSM",
+"language": "GDScript",
+"path": "res://utils/fsm.gd"
 }, {
 "base": "Spatial",
 "class": "HexMap",
@@ -67,7 +77,7 @@ _global_script_classes=[ {
 "base": "AStar",
 "class": "RangeFinder",
 "language": "GDScript",
-"path": "res://range_finder.gd"
+"path": "res://utils/range_finder.gd"
 }, {
 "base": "Area",
 "class": "Selector",
@@ -79,7 +89,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://states/selector_node/selector_state.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://states/state.gd"
@@ -96,11 +106,13 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Character": "",
+"Constants": "",
 "CoreStats": "",
 "Encounter": "",
 "EncounterState": "",
 "EnemyCharacter": "",
 "EnemyCharacterState": "",
+"FSM": "",
 "HexMap": "",
 "MapTile": "",
 "MousePosition": "",

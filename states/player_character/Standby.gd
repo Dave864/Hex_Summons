@@ -8,13 +8,13 @@ state.
 
 # Hit when the Selector selects a map tile destination.
 func _on_SignalBus_tile_selected(path):
-	state_machine.transition_to("Move", {"travel_path": path})
+	state_machine.transition_to(MOVE, {"travel_path": path})
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	StateMachineBus.encounter_states["PlayerCharacter"] = "Standby"
+	_set_state_machine_bus(STANDBY)
 	var e: int = SignalBus.connect(
 		"tile_selected", 
 		self, 

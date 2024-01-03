@@ -6,10 +6,6 @@ Represents an individual map tile.
 """
 
 
-const PLAYER = "Player"
-const ENEMY = "Enemy"
-const EMPTY = ""
-
 # References the MapTile nodes that are adjacent to this one.
 #  0  /\  1
 #  5 |  | 2
@@ -29,7 +25,7 @@ var _index: int = -1 setget set_index, get_index
 #     +z
 var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
 # The current occupant of the tile.
-var _occupant: String = EMPTY
+var _occupant: int = Constants.MapOccupants.EMPTY
 
 
 # Called when the node enters the scene tree for the first time.
@@ -78,12 +74,12 @@ func set_cube_coord(value: Vector3):
 
 
 # Check if the tile is able to be moved through by the specifed character.
-func can_character_pass(character: String) -> bool:
+func can_character_pass(character: int) -> bool:
 	match _occupant:
-		PLAYER:
-			return character == PLAYER
-		ENEMY:
-			return character == ENEMY
+		Constants.MapOccupants.PLAYER:
+			return character == Constants.MapOccupants.PLAYER
+		Constants.MapOccupants.ENEMY:
+			return character == Constants.MapOccupants.ENEMY
 		_:
 			return true
 
@@ -96,11 +92,11 @@ func is_active() -> bool:
 func _on_MapTile_area_entered(area):
 	# Add entered character as this tile's occupant.
 	if area is PlayerCharacter:
-		_occupant = PLAYER
+		_occupant = Constants.MapOccupants.PLAYER
 	elif area is EnemyCharacter:
-		_occupant = ENEMY
+		_occupant = Constants.MapOccupants.ENEMY
 
 
 func _on_MapTile_area_exited(area):
 	if area is PlayerCharacter or area is EnemyCharacter:
-		_occupant = EMPTY
+		_occupant = Constants.MapOccupants.EMPTY

@@ -8,7 +8,7 @@ until the encounter is ready to recieve new player selections.
 
 # Hide the selector shape and disable the ability to snap to tile positions
 func enter(_msg: Dictionary = {}):
-	StateMachineBus.encounter_states["Selector"] = "Wait"
+	_set_state_machine_bus(WAIT)
 	selector.snap_to_position = false
 	selector.selector_shape.hide()
 
@@ -17,5 +17,5 @@ func enter(_msg: Dictionary = {}):
 func update(_delta: float):
 	# When the player character has entered the 'Standby' state, reenable the
 	# Selector.
-	if StateMachineBus.encounter_states["PlayerCharacter"] == "Standby":
-		state_machine.transition_to("Select")
+	if StateMachineBus.encounter_states[FSM.Encounter.PLAYER_CHARACTER] == PlayerCharacterState.STANDBY:
+		state_machine.transition_to(SELECT)

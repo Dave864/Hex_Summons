@@ -28,7 +28,7 @@ func _ready():
 	_rf = RangeFinder.new(
 		hex_map.x_count,
 		hex_map.z_count,
-		"Player",
+		Constants.MapOccupants.EMPTY,
 		hex_map.get_map_tiles()
 	)
 	

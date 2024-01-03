@@ -12,25 +12,25 @@ player characters or all enemy characters are defeated.
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	StateMachineBus.encounter_states["Encounter"] = "PlayerTurn"
+	_set_state_machine_bus(PLAYER_TURN)
 	# Start the player turn.
-	enc._rf.refresh_astar_connections("Player")
+	enc._rf.refresh_astar_connections(Constants.MapOccupants.PLAYER)
 	SignalBus.emit_signal("player_turn_started")
 
 
 # Corresponds to the `_process()` callback.
 func update(_delta: float) -> void:
 	# Determine which turn to go to when the current player ends their turn.
-	if StateMachineBus.encounter_states["PlayerCharacter"] == "Wait":
+	if StateMachineBus.encounter_states[FSM.Encounter.PLAYER_CHARACTER] == PlayerCharacterState.WAIT:
 		var next_character: Character = enc.get_next_character()
 		if next_character is PlayerCharacter:
-			state_machine.transition_to("PlayerTurn")
+			state_machine.transition_to(PLAYER_TURN)
 		elif next_character is EnemyCharacter:
-			state_machine.transition_to("EnemyTurn")
+			state_machine.transition_to(ENEMY_TURN)
 	
 	# Move to the `End` State
 	if enc.enemies.size() == 0:
-		state_machine.transition_to("End")
+		state_machine.transition_to(END)
 
 
 # Called by the state machine before changing the active state.

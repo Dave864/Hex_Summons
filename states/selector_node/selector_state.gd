@@ -6,6 +6,10 @@ when coding the selector's states.
 """
 
 
+# The states the Selector can be in.
+const SELECT: String = "Select"
+const WAIT: String = "Wait"
+
 # Typed reference to the Selector node.
 var selector: Selector
 
@@ -23,3 +27,8 @@ func _ready():
 	# in a scene other than `Selector.tscn`, which would be unintended. This can
 	# help prevent some bugs that are difficult to understand.
 	assert(selector != null)
+
+
+# Update the value of the state bus for the Selector state machine.
+func _set_state_machine_bus(var state: String):
+	StateMachineBus.encounter_states[FSM.Encounter.SELECTOR] = state

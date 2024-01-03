@@ -9,7 +9,7 @@ When the input for selecting a tile is given, the Selector moves to the
 
 # Reveal the selector shape and enable to ability to snap to tile positions.
 func enter(_msg: Dictionary = {}):
-	StateMachineBus.encounter_states["Selector"] = "Select"
+	_set_state_machine_bus(SELECT)
 	selector.snap_to_position = true
 	selector.animation_player.play("RESET")
 	selector.selector_shape.show()
@@ -36,4 +36,4 @@ func handle_input(event: InputEvent):
 			selector.emit_signal("tile_selected", selector.tile)
 			selector.animation_player.play("selected")
 			yield(selector.animation_player, "animation_finished")
-			state_machine.transition_to("Wait")
+			state_machine.transition_to(WAIT)
