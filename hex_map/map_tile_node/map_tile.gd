@@ -26,6 +26,8 @@ var _index: int = -1 setget set_index, get_index
 var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
 # The current occupant of the tile.
 var _occupant: int = Constants.MapOccupants.EMPTY
+# Flag that indicates if the tile is avaiable to move to
+var _is_movement_active: bool = false setget set_movement_active, get_movement_active
 
 
 # Called when the node enters the scene tree for the first time.
@@ -34,8 +36,11 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if _is_movement_active:
+		$Highlighter.show()
+	else:
+		$Highlighter.hide()
 
 
 # Gets the adjacent tile of the specified position.
@@ -71,6 +76,16 @@ func get_cube_coord() -> Vector3:
 # Set the cube coordinates of the MapTile.
 func set_cube_coord(value: Vector3):
 	_cube_coord = value
+
+
+# Set the value of the movement flag.
+func set_movement_active(value: bool):
+	_is_movement_active = value
+
+
+# Get the value of the movement flag.
+func get_movement_active() -> bool:
+	return _is_movement_active
 
 
 # Check if the tile is able to be moved through by the specifed character.

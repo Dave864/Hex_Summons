@@ -14,7 +14,9 @@ player characters or all enemy characters are defeated.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(PLAYER_TURN)
 	# Start the player turn.
-	enc._rf.refresh_astar_connections(Constants.MapOccupants.PLAYER)
+	#enc._rf.refresh_astar_connections(Constants.MapOccupants.PLAYER)
+	enc._rf.set_char_type(Constants.MapOccupants.PLAYER)
+	enc._rf.astar_for_range(enc._initiative_tracker[enc._cur_init])
 	SignalBus.emit_signal("player_turn_started")
 
 

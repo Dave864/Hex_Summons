@@ -27,7 +27,11 @@ onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 func _on_Selector_area_entered(map_tile: Area):
-	# Don't snap to position if map_tile is disabled or not visible
-	if snap_to_position and map_tile.visible:
+	# Don't snap to position if map_tile is disabled or inactive.
+	if (
+		snap_to_position and
+		map_tile.is_active() and
+		map_tile.get_movement_active()
+	):
 		snap_position = map_tile.translation
 		tile = map_tile
