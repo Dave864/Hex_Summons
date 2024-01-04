@@ -10,7 +10,7 @@ position details.
 export(Resource) var stats
 
 # Flag that indicates whether the creature has been set to its starting location.
-var _start_set: bool = false
+var _start_set: bool = false setget , get_is_start_set
 var _current_index: int = -1 setget , get_index_at
 
 # References to the various attacks and spells the character has access to.
@@ -35,3 +35,8 @@ func _on_Creature_area_entered(map_tile):
 # Get the index of the tile the character is currently at.
 func get_index_at() -> int:
 	return _current_index
+
+
+# Get whether or not the starting location of the character has been set.
+func get_is_start_set() -> bool:
+	return _start_set

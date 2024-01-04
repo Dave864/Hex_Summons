@@ -36,7 +36,6 @@ func set_x_count(value: int):
 
 func set_map_tiles(new_map: Array):
 	_map_tiles = new_map
-	refresh_astar_connections(_char_type)
 
 
 func get_map_tiles() -> Array:
