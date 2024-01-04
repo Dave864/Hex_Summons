@@ -92,10 +92,6 @@ func refresh_astar_connections(current_char_type: int):
 
 # Determine the astar connections for a map section centered on the character.
 func astar_for_range(character: Character):
-	# Reset movement flags for previous range.
-	for tile in _current_range:
-		tile.set_movement_active(false)
-	
 	_current_range = _get_tiles_in_range(character)
 	
 	# Empty out the current astar map and resize if necessary.
@@ -148,6 +144,13 @@ func _get_tiles_in_range(character: Character) -> Array:
 					fringes[i].append(neighbor)
 	
 	return visited.values()
+
+
+# Clear the highlighted tiles.
+func clear_movement_highlight():
+	for tile in _current_range:
+		tile.set_movement_active(false)
+	clear()
 
 
 # Calculates the distance between two tiles based on their cube coordinates.

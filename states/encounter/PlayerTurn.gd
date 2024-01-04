@@ -39,3 +39,4 @@ func update(_delta: float) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	enc.progress_initiative()
+	enc._rf.clear_movement_highlight()
