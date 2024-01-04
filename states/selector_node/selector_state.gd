@@ -7,6 +7,7 @@ when coding the selector's states.
 
 
 # The states the Selector can be in.
+const START: String = "Start"
 const SELECT: String = "Select"
 const WAIT: String = "Wait"
 

@@ -7,12 +7,40 @@ When the input for selecting a tile is given, the Selector moves to the
 """
 
 
+func _on_Selector_area_entered(map_tile: Area):
+	# Don't snap to position if map_tile is disabled or inactive.
+	if (
+		selector.snap_to_position and
+		map_tile.is_active() and
+		map_tile.get_movement_active()
+	):
+		selector.snap_position = map_tile.translation
+		selector.tile = map_tile
+
+
 # Reveal the selector shape and enable to ability to snap to tile positions.
 func enter(_msg: Dictionary = {}):
 	_set_state_machine_bus(SELECT)
 	selector.snap_to_position = true
 	selector.animation_player.play("RESET")
 	selector.selector_shape.show()
+	
+	var e: int = selector.connect(
+		"area_entered", 
+		self, 
+		"_on_Selector_area_entered"
+	)
+	
+	# Emit error message when issue is encountered when connecting the 
+	# area_entered Area signal to the _on_Selector_area_entered method.
+	if e != OK:
+		printerr(
+			"ERROR CODE %d\n" + \
+			"Failed to connect `area_entered` signal from " + \
+			"Selector to its Start node method" + \
+			"`_on_Selector_area_entered`." % \
+			[e]
+		)
 
 
 func update(_delta: float):
@@ -37,3 +65,9 @@ func handle_input(event: InputEvent):
 			selector.animation_player.play("selected")
 			yield(selector.animation_player, "animation_finished")
 			state_machine.transition_to(WAIT)
+
+
+# Called by the state machine before changing the active state. Use this 
+# function to clean up the state.
+func exit() -> void:
+	selector.disconnect("area_entered", self, "_on_Selector_area_entered")
