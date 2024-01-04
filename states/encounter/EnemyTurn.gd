@@ -19,6 +19,7 @@ var current_character: EnemyCharacter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(ENEMY_TURN)
+	enc._rf.set_char_type(Constants.MapOccupants.ENEMY)
 	current_character = enc._initiative_tracker[enc._cur_init]
 	
 	# Start the enemy turn.

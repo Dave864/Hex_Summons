@@ -36,7 +36,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if _is_movement_active:
 		$Highlighter.show()
 	else:
@@ -89,12 +89,12 @@ func get_movement_active() -> bool:
 
 
 # Check if the tile is able to be moved through by the specifed character.
-func can_character_pass(character: int) -> bool:
+func can_character_pass(character_type: int) -> bool:
 	match _occupant:
 		Constants.MapOccupants.PLAYER:
-			return character == Constants.MapOccupants.PLAYER
+			return character_type == Constants.MapOccupants.PLAYER
 		Constants.MapOccupants.ENEMY:
-			return character == Constants.MapOccupants.ENEMY
+			return character_type == Constants.MapOccupants.ENEMY
 		_:
 			return true
 

@@ -11,7 +11,7 @@ var _z_count: int setget set_z_count
 var _x_count: int setget set_x_count
 var _map_tiles: Array = [] setget set_map_tiles, get_map_tiles
 var _current_range: Array = []
-var _char_type: int setget set_char_type
+var _current_char_type: int setget set_char_type
 
 
 func _init(
@@ -22,8 +22,20 @@ func _init(
 ):
 	_x_count = x_value
 	_z_count = z_value
-	_char_type = current_char
+	_current_char_type = current_char
 	set_map_tiles(initial_map)
+
+
+# Virtual Astar function. Called when computing the cost between two
+# connected points.
+func _compute_cost(u, v):
+	return _cube_dist(u, v)
+
+
+# Virtual Astar function. Called when estimating the cost between a point 
+# and the path's ending point.
+func _estimate_cost(u, v):
+	return min(0, _cube_dist(u, v) - 1)
 
 
 func set_z_count(value: int):
@@ -43,12 +55,12 @@ func get_map_tiles() -> Array:
 
 
 func set_char_type(type: int):
-	_char_type = type
+	_current_char_type = type
 
 
 # Recalculates the astar connnections for the map in its current state.
-func refresh_astar_connections(current_char: int):
-	_char_type = current_char
+func refresh_astar_connections(current_char_type: int):
+	_current_char_type = current_char_type
 	
 	# Empty out the current astar map and resize if necessary.
 	clear()
@@ -62,7 +74,7 @@ func refresh_astar_connections(current_char: int):
 		if tile.is_active():
 			# Set the weight to 50 if the tile is occupied by a character
 			# of the opposing faction.
-			tile_weight = 1.0 if tile.can_character_pass(_char_type) else 50.0
+			tile_weight = 1.0 if tile.can_character_pass(_current_char_type) else 50.0
 			add_point(tile.get_index(), tile.translation, tile_weight)
 	
 	# Set up the connections for the astar map.
@@ -96,7 +108,7 @@ func astar_for_range(character: Character):
 	for tile in _current_range:
 		# Set the weight to 50 if the tile is occupied by a character
 		# of the opposing faction.
-		tile_weight = 1.0 if tile.can_character_pass(_char_type) else 50.0
+		tile_weight = 1.0 if tile.can_character_pass(_current_char_type) else 50.0
 		add_point(tile.get_index(), tile.translation, tile_weight)
 	
 	# Set up the connections for the astar map.
@@ -109,18 +121,6 @@ func astar_for_range(character: Character):
 					tile.get_index(), 
 					neighbor.get_index()
 				)
-
-
-# Virtual Astar function. Called when computing the cost between two
-# connected points.
-func _compute_cost(u, v):
-	return _cube_dist(u, v)
-
-
-# Virtual Astar function. Called when estimating the cost between a point 
-# and the path's ending point.
-func _estimate_cost(u, v):
-	return min(0, _cube_dist(u, v) - 1)
 
 
 # Get the tiles that are within reach of the character.
@@ -140,7 +140,8 @@ func _get_tiles_in_range(character: Character) -> Array:
 				if (
 					neighbor != null and
 					!visited.has(neighbor.get_index()) and 
-					neighbor.is_active()
+					neighbor.is_active() and
+					neighbor.can_character_pass(_current_char_type)
 				):
 					visited[neighbor.get_index()] = neighbor
 					neighbor.set_movement_active(true)
