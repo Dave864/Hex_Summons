@@ -40,7 +40,13 @@ func update(_delta: float) -> void:
 	# Determine which turn to go to when an enemy character ends their turn.
 	if StateMachineBus.encounter_states[FSM.Encounter.ENEMY_CHARACTER] == EnemyCharacterState.WAIT:
 		var next_character: Character = enc.get_next_character()
-		if next_character is PlayerCharacter:
+		# Transition to `PlayerTurn` state only when Selector is also in its
+		# `Wait` state to prevent issue with Selector not showing up again when
+		# the player's current position was selected as its prior destination.
+		if (
+			next_character is PlayerCharacter and
+			StateMachineBus.encounter_states[FSM.Encounter.SELECTOR] == SelectorState.WAIT
+		):
 			state_machine.transition_to(PLAYER_TURN)
 		elif next_character is EnemyCharacter:
 			state_machine.transition_to(ENEMY_TURN)
