@@ -5,7 +5,7 @@ extends Node
 signal tile_selected(path)
 
 # Indicates that the player character's turn has started
-signal player_turn_started()
+signal player_turn_started(player)
 
 # Indicates that the enemy character's turn has started
 signal enemy_turn_started(path)

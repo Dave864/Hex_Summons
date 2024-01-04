@@ -6,7 +6,7 @@ The Player Character waits until it is reenabled.
 
 
 # Hit when the player character is selected to take its turn.
-func _on_SignalBus_player_turn_started():
+func _on_SignalBus_player_turn_started(player: PlayerCharacter):
 	state_machine.transition_to(STANDBY)
 
 

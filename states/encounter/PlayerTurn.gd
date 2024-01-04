@@ -17,7 +17,7 @@ func enter(_msg := {}) -> void:
 	#enc._rf.refresh_astar_connections(Constants.MapOccupants.PLAYER)
 	enc._rf.set_char_type(Constants.MapOccupants.PLAYER)
 	enc._rf.astar_for_range(enc._initiative_tracker[enc._cur_init])
-	SignalBus.emit_signal("player_turn_started")
+	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 
 
 # Corresponds to the `_process()` callback.

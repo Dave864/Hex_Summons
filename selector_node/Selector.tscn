@@ -112,7 +112,7 @@ anims/selected = SubResource( 4 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )
-initial_state = NodePath("Start")
+initial_state = NodePath("Wait")
 
 [node name="Start" type="Node" parent="StateMachine"]
 script = ExtResource( 6 )
