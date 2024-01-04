@@ -13,7 +13,7 @@ var starting_character: Character
 # Class that defines the sort method for the encounter _initiative_tracker.
 class InitiativeSorter:
 	static func sort(a: Character, b: Character) -> bool:
-		return a.stats.get_agl() < b.stats.get_agl()
+		return a.stats.get_agl() > b.stats.get_agl()
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
