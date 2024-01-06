@@ -146,7 +146,7 @@ func _get_tiles_in_range(character: Character) -> Array:
 	return visited.values()
 
 
-# Clear the highlighted tiles.
+# Clear the highlighted movement tiles.
 func clear_movement_highlight():
 	for tile in _current_range:
 		tile.set_movement_active(false)

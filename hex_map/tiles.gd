@@ -7,10 +7,20 @@ x columns. Positions each tile and sets up the connections between them.
 """
 
 
+<<<<<<< HEAD
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges.
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
+=======
+# Reference to the scene for the map tile.
+const MAP_TILE: PackedScene = preload(
+	"res://" + 
+	"hex_map/" +
+	"map_tile_node/" +
+	"MapTile.tscn"
+)
+>>>>>>> 8116b3d (character-technique: Moved HEX_EDGE_RATIO to Constants util script. Adjusted max values for core_stats. Refactored comments.)
 
 # The number of tiles along the X axis.
 export(int, 1, 50) var x_count = 2 setget set_x_count, get_x_count
@@ -57,21 +67,21 @@ func _generate_grid():
 		map_tile_offset = Vector3.ZERO
 		map_tile_offset.z = 1.5 * z
 		for x in x_count:
-			map_tile_offset.x = 2 * HEX_EDGE_RATIO * x
+			map_tile_offset.x = 2 * Constants.HEX_EDGE_RATIO * x
 			if !_is_even(z):
-				map_tile_offset.x += HEX_EDGE_RATIO
+				map_tile_offset.x += Constants.HEX_EDGE_RATIO
 			_instantiate_tile(map_tile_offset)
 
 
 # Determine the starting point so that the middle of the generated map is center
 # to the HexMap node.
 func _calculate_grid_start() -> Vector3:
-	var origin_offset = Vector3(2 * HEX_EDGE_RATIO, 0.0, 1.0)
+	var origin_offset = Vector3(2 * Constants.HEX_EDGE_RATIO, 0.0, 1.0)
 	origin_offset.z -= ((3.0 * z_count) + 1.0) / 4.0
 	origin_offset.x -= (
 		float(x_count) if float(z_count) == 2.0
 		else (x_count + 1.5)
-	) * HEX_EDGE_RATIO
+	) * Constants.HEX_EDGE_RATIO
 	return origin_offset
 
 
