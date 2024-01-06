@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Attack",
+"language": "GDScript",
+"path": "res://attacks/attack.gd"
+}, {
 "base": "Area",
 "class": "Character",
 "language": "GDScript",
@@ -105,6 +110,7 @@ _global_script_classes=[ {
 "path": "res://hex_map/tiles.gd"
 } ]
 _global_script_class_icons={
+"Attack": "",
 "Character": "",
 "Constants": "",
 "CoreStats": "",

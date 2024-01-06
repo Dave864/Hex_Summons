@@ -11,15 +11,15 @@ said stats.
 enum Element {FIRE, EARTH, WATER, WIND}
 
 # The maximum value of a character's health.
-export(int, 1, 1_000) var _base_max_hp = 1 setget , get_max_hp
+export(int, 1, 1000) var _base_max_hp = 1 setget , get_max_hp
 # The strength of techniques.
-export(int, 1, 1_000) var _base_atk = 1 setget , get_atk
+export(int, 1, 1000) var _base_atk = 1 setget , get_atk
 # The resistance value to techniques.
-export(int, 1, 1_000) var _base_def = 1 setget , get_def
+export(int, 1, 1000) var _base_def = 1 setget , get_def
 # The strength of spells.
-export(int, 1, 1_000) var _base_magic = 1 setget , get_magic
+export(int, 1, 1000) var _base_magic = 1 setget , get_magic
 # Determines a character's initiative order.
-export(int, 1, 1_000) var _base_agl = 1 setget , get_agl
+export(int, 1, 1000) var _base_agl = 1 setget , get_agl
 # Determines how many spaces a character can move.
 export(int, 1, 20) var _base_mvmt = 3 setget , get_mvmt
 
