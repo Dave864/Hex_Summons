@@ -119,6 +119,13 @@ func astar_for_range(character: Character):
 				)
 
 
+# Clear the highlighted movement tiles.
+func clear_movement_highlight():
+	for tile in _current_range:
+		tile.set_movement_active(false)
+	clear()
+
+
 # Get the tiles that are within reach of the character.
 # Reference: https://www.redblobgames.com/grids/hexagons/#range-obstacles
 func _get_tiles_in_range(character: Character) -> Array:
@@ -144,13 +151,6 @@ func _get_tiles_in_range(character: Character) -> Array:
 					fringes[i].append(neighbor)
 	
 	return visited.values()
-
-
-# Clear the highlighted movement tiles.
-func clear_movement_highlight():
-	for tile in _current_range:
-		tile.set_movement_active(false)
-	clear()
 
 
 # Calculates the distance between two tiles based on their cube coordinates.
