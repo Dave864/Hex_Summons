@@ -9,6 +9,7 @@ scenes.
 # The state machines used in encounter scene.
 enum Encounter {
 	ENCOUNTER,
+	UI,
 	SELECTOR,
 	PLAYER_CHARACTER,
 	ENEMY_CHARACTER,

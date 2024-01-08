@@ -91,8 +91,11 @@ func refresh_astar_connections(current_char_type: int):
 
 
 # Determine the astar connections for a map section centered on the character.
-func astar_for_range(character: Character):
-	_current_range = _get_tiles_in_range(character)
+func astar_for_range(
+	character: Character, 
+	range_type: int = Constants.RangeTypes.MOVE
+):
+	_current_range = _get_movement_range(character)
 	
 	# Empty out the current astar map and resize if necessary.
 	clear()
@@ -126,9 +129,9 @@ func clear_movement_highlight():
 	clear()
 
 
-# Get the tiles that are within reach of the character.
+# Get the tiles that are within movement reach of the character.
 # Reference: https://www.redblobgames.com/grids/hexagons/#range-obstacles
-func _get_tiles_in_range(character: Character) -> Array:
+func _get_movement_range(character: Character) -> Array:
 	var movement: int = character.stats.get_mvmt()
 	# Keeps track of which tiles have been visited.
 	var visited: Dictionary = {}

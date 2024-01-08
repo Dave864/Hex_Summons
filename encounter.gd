@@ -8,7 +8,8 @@ Manages the events of an encounter.
 # Reference to the encounter hex_map
 export(NodePath) var hex_map_path = null
 
-var _rf: RangeFinder
+var rf: RangeFinder
+
 var _initiative_tracker: Array
 var _cur_init: int = 0
 """
@@ -20,12 +21,13 @@ var _p: PlayerCharacter =  null
 onready var players: Array = $Players.get_children()
 onready var enemies: Array = $Enemies.get_children()
 onready var selector: Selector = $Selector
+onready var ui: Control = $UI
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var hex_map: HexMap = get_node(hex_map_path)
-	_rf = RangeFinder.new(
+	rf = RangeFinder.new(
 		hex_map.x_count,
 		hex_map.z_count,
 		Constants.MapOccupants.EMPTY,
@@ -55,11 +57,11 @@ func get_current_character() -> Character:
 	return _initiative_tracker[_cur_init]
 
 
-func _on_Selector_tile_selected(tile: MapTile):
-	SignalBus.emit_signal(
-		"tile_selected",
-		_rf.get_point_path(
-			_initiative_tracker[_cur_init].get_index_at(),
-			tile.get_index()
-		)
-	)
+#func _on_Selector_tile_selected(tile: MapTile):
+#	SignalBus.emit_signal(
+#		"tile_selected",
+#		rf.get_point_path(
+#			_initiative_tracker[_cur_init].get_index_at(),
+#			tile.get_index()
+#		)
+#	)

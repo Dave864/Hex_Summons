@@ -13,6 +13,14 @@ enum MapOccupants {
 	EMPTY,
 }
 
+
+# What the range finder is being used for.
+enum RangeTypes {
+	MOVE,
+	TECHNIQUE,
+	SPELL
+}
+
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges.

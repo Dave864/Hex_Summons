@@ -25,7 +25,7 @@ var _index: int = -1 setget set_index, get_index
 #     +z
 var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
 # The current occupant of the tile.
-var _occupant: int = Constants.MapOccupants.EMPTY
+var _occupant: Character = null setget , get_current_occupant
 # Flag that indicates if the tile is avaiable to move to
 var _is_movement_active: bool = false setget set_movement_active, get_movement_active
 
@@ -88,13 +88,18 @@ func get_movement_active() -> bool:
 	return _is_movement_active
 
 
+# Gets the current character occupying this tile.
+func get_current_occupant() -> Character:
+	return _occupant
+
+
 # Check if the tile is able to be moved through by the specifed character.
 func can_character_pass(character_type: int) -> bool:
-	match _occupant:
+	match character_type:
 		Constants.MapOccupants.PLAYER:
-			return character_type == Constants.MapOccupants.PLAYER
+			return _occupant is PlayerCharacter or _occupant == null
 		Constants.MapOccupants.ENEMY:
-			return character_type == Constants.MapOccupants.ENEMY
+			return _occupant is EnemyCharacter or _occupant == null
 		_:
 			return true
 
@@ -106,12 +111,10 @@ func is_active() -> bool:
 
 func _on_MapTile_area_entered(area):
 	# Add entered character as this tile's occupant.
-	if area is PlayerCharacter:
-		_occupant = Constants.MapOccupants.PLAYER
-	elif area is EnemyCharacter:
-		_occupant = Constants.MapOccupants.ENEMY
+	if area is PlayerCharacter or area is EnemyCharacter:
+		_occupant = area
 
 
 func _on_MapTile_area_exited(area):
 	if area is PlayerCharacter or area is EnemyCharacter:
-		_occupant = Constants.MapOccupants.EMPTY
+		_occupant = null

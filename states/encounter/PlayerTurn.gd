@@ -13,24 +13,54 @@ player characters or all enemy characters are defeated.
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(PLAYER_TURN)
-	# Start the player turn.
-	#enc._rf.refresh_astar_connections(Constants.MapOccupants.PLAYER)
-	enc._rf.set_char_type(Constants.MapOccupants.PLAYER)
-	enc._rf.astar_for_range(enc._initiative_tracker[enc._cur_init])
+	enc.rf.set_char_type(Constants.MapOccupants.PLAYER)
+	enc.rf.astar_for_range(enc.get_current_character())
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
+	
+	var e: int = enc.selector.connect(
+		"tile_selected",
+		self,"_on_Selector_tile_selected"
+	)
+	
+	# Emit error message when issue is encountered when connecting the 
+	# tile_selected Selector signal to the _on_Selector_tile_selected method.
+	if e != OK:
+		printerr(
+			"ERROR CODE %d\n" + \
+			"Failed to connect 'tile_selected' signal from " + \
+			"Selector node to Encounter PlayerTurn node method" + \
+			"'_on_Selector_tile_selected'." % \
+			[e]
+		)
+	
+	e = enc.ui.connect("mode_changed", self, "_on_UI_mode_changed")
+	
+	# Emit error message when issue is encountered when connecting the 
+	# mode_changed UI signal to the _on_UI_mode_changed method.
+	if e != OK:
+		printerr(
+			"ERROR CODE %d\n" + \
+			"Failed to connect 'mode_changed' signal from " + \
+			"SignalBus autoload to Encounter PlayerTurn node method" + \
+			"'_on_UI_mode_changed'." % \
+			[e]
+		)
 
 
 # Corresponds to the `_process()` callback.
 func update(_delta: float) -> void:
 	# Determine which turn to go to when the current player ends their turn.
-	if StateMachineBus.encounter_states[FSM.Encounter.PLAYER_CHARACTER] == PlayerCharacterState.WAIT:
+	if (
+		StateMachineBus.encounter_states[FSM.Encounter.PLAYER_CHARACTER] == 
+		PlayerCharacterState.WAIT
+	):
 		var next_character: Character = enc.get_next_character()
 		if next_character is PlayerCharacter:
 			state_machine.transition_to(PLAYER_TURN)
 		elif next_character is EnemyCharacter:
 			state_machine.transition_to(ENEMY_TURN)
 	
-	# Move to the `End` State
+	# Move to the `End` State when all enemies are defeated.
 	if enc.enemies.size() == 0:
 		state_machine.transition_to(END)
 
@@ -39,4 +69,29 @@ func update(_delta: float) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	enc.progress_initiative()
-	enc._rf.clear_movement_highlight()
+	enc.rf.clear_movement_highlight()
+	enc.selector.disconnect("tile_selected", self, "_on_Selector_tile_selected")
+	enc.ui.disconnect("mode_changed", self, "_on_UI_mode_changed")
+
+
+func _on_Selector_tile_selected(tile: MapTile):
+	var data
+	match StateMachineBus.encounter_states[FSM.Encounter.UI]:
+		PlayerCharacterState.ATTACK:
+			data = null
+		_:
+			data = enc.rf.get_point_path(
+				enc.get_current_character().get_index_at(),
+				tile.get_index()
+			)
+	SignalBus.emit_signal("tile_selected", data)
+
+
+func _on_UI_mode_changed():
+	match StateMachineBus.encounter_states[FSM.Encounter.UI]:
+		PlayerCharacterState.MOVE:
+			enc.rf.astar_for_range(enc.get_current_character())
+		PlayerCharacterState.ATTACK:
+			enc.rf.clear_movement_highlight()
+		_:
+			pass
