@@ -10,6 +10,7 @@ Boilerplate class to get full autocompletion and type checks for the
 const WAIT: String = "Wait"
 const STANDBY: String = "Standby"
 const MOVE: String = "Move"
+const ATTACK: String = "Attack"
 
 # Typed reference to the PlayerCharacter node.
 var pc: PlayerCharacter

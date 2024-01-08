@@ -7,8 +7,8 @@ state.
 
 
 # Hit when the Selector selects a map tile destination.
-func _on_SignalBus_tile_selected(path):
-	state_machine.transition_to(MOVE, {"travel_path": path})
+func _on_SignalBus_tile_selected(info):
+	state_machine.transition_to(MOVE, {"travel_path": info})
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
@@ -31,6 +31,16 @@ func enter(_msg := {}) -> void:
 			"'_on_SignalBus_tile_selected'." % \
 			[e]
 		)
+
+
+# Receives events from the `_unhandled_input()` callback.
+func handle_input(_event: InputEvent) -> void:
+	pass
+
+
+# Corresponds to the `_process()` callback.
+func update(_delta: float) -> void:
+	pass
 
 
 # Called by the state machine before changing the active state. 

@@ -37,10 +37,7 @@ func update(delta: float) -> void:
 	# Move the player character towards the next tile.
 	weight += delta * pc.stats.get_mvmt_speed()
 	weight = 1.0 if weight > 1.0 else weight
-	pc.translation = start_point.linear_interpolate(
-		next_point,
-		weight
-	)
+	pc.translation = start_point.linear_interpolate(next_point, weight)
 	
 	# When finished moving to next tile, check to see if path has been fully
 	# traversed. Move to the 'Wait' state when path has been fully traversed.
@@ -55,7 +52,7 @@ func update(delta: float) -> void:
 
 
 # Called by the state machine before changing the active state.
-# Resets the interpolation weight an next_point_index.
+# Resets the interpolation weight and next_point_index.
 func exit() -> void:
 	weight = 0.0
 	next_point_index = 1
