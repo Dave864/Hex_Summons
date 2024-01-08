@@ -29,3 +29,15 @@ const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 # The maximimum values for various character and attack stats.
 const MAX_STAT: int = 1000
 const MAX_MAP_DIST: int = 20
+
+# The formatted error string for when a signal fails to connect in a state machine.
+# Format [
+# error code, 
+# signal name,
+# signal source node, 
+# connecting node's parent, 
+# connecting node, 
+# signal method
+#]
+const ERROR_SIGNAL_CONNECT_FAILED: String = "ERROR CODE %d\n" + \
+	"Failed to connect %s signal from %s node to %s %s node method '%s'." 

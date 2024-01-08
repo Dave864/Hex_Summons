@@ -23,13 +23,14 @@ func enter(_msg: Dictionary = {}):
 	# Emit error message when issue is encountered when connecting the 
 	# area_entered Area signal to the _on_Selector_area_entered method.
 	if e != OK:
-		printerr(
-			"ERROR CODE %d\n" + \
-			"Failed to connect `area_entered` signal from " + \
-			"Selector to its Start node method" + \
-			"`_on_Selector_area_entered`." % \
-			[e]
-		)
+		printerr(Constants.ERROR_SIGNAL_CONNECT_FAILED % [
+			e,
+			"area_entered",
+			"Selector",
+			"PlayerCharacter",
+			"Start",
+			"_on_Selector_area_entered"
+		])
 
 
 func update(_delta: float):
@@ -71,3 +72,7 @@ func _on_Selector_area_entered(map_tile: Area):
 	):
 		selector.snap_position = map_tile.translation
 		selector.tile = map_tile
+
+
+func _on_UI_mode_changed():
+	pass

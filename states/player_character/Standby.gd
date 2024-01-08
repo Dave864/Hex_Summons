@@ -24,13 +24,14 @@ func enter(_msg := {}) -> void:
 	# Emit error message when issue is encountered when connecting the 
 	# tile_selected SignalBus signal to the _on_SignalBus_tile_selected method.
 	if e != OK:
-		printerr(
-			"ERROR CODE %d\n" + \
-			"Failed to connect 'tile_selected' signal from " + \
-			"SignalBus autoload to PlayerCharacter Standby node method" + \
-			"'_on_SignalBus_tile_selected'." % \
-			[e]
-		)
+		printerr(Constants.ERROR_SIGNAL_CONNECT_FAILED % [
+			e,
+			"tile_selected",
+			"SignalBus autoload",
+			"PlayerCharacter",
+			"Standby",
+			"_on_SignalBus_tile_selected"
+		])
 
 
 # Receives events from the `_unhandled_input()` callback.

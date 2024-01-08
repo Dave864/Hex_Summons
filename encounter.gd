@@ -55,13 +55,3 @@ func get_next_character() -> Character:
 # Gets the character currently in initiative.
 func get_current_character() -> Character:
 	return _initiative_tracker[_cur_init]
-
-
-#func _on_Selector_tile_selected(tile: MapTile):
-#	SignalBus.emit_signal(
-#		"tile_selected",
-#		rf.get_point_path(
-#			_initiative_tracker[_cur_init].get_index_at(),
-#			tile.get_index()
-#		)
-#	)
