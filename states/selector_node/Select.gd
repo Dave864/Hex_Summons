@@ -7,17 +7,6 @@ When the input for selecting a tile is given, the Selector moves to the
 """
 
 
-func _on_Selector_area_entered(map_tile: Area):
-	# Don't snap to position if map_tile is disabled or inactive.
-	if (
-		selector.snap_to_position and
-		map_tile.is_active() and
-		map_tile.get_movement_active()
-	):
-		selector.snap_position = map_tile.translation
-		selector.tile = map_tile
-
-
 # Reveal the selector shape and enable to ability to snap to tile positions.
 func enter(_msg: Dictionary = {}):
 	_set_state_machine_bus(SELECT)
@@ -71,3 +60,14 @@ func handle_input(event: InputEvent):
 # function to clean up the state.
 func exit() -> void:
 	selector.disconnect("area_entered", self, "_on_Selector_area_entered")
+
+
+func _on_Selector_area_entered(map_tile: Area):
+	# Don't snap to position if map_tile is disabled or inactive.
+	if (
+		selector.snap_to_position and
+		map_tile.is_active() and
+		map_tile.get_movement_active()
+	):
+		selector.snap_position = map_tile.translation
+		selector.tile = map_tile
