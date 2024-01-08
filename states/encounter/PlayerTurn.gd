@@ -47,6 +47,24 @@ func enter(_msg := {}) -> void:
 			"PlayerTurn",
 			"_on_UI_mode_changed"
 		])
+	
+	e = enc.ui.connect(
+		"mode_changed",
+		enc.selector.get_node("StateMachine/Select"),
+		"_on_UI_mode_changed"
+	)
+	
+	# Emit error message when issue is encountered when connecting the 
+	# mode_changed UI signal to the Selector's _on_UI_mode_changed method.
+	if e != OK:
+		printerr(Constants.ERROR_SIGNAL_CONNECT_FAILED % [
+			e,
+			"mode_changed",
+			"SignalBus",
+			"Selector",
+			"Select",
+			"_on_UI_mode_changed"
+		])
 
 
 # Corresponds to the `_process()` callback.
@@ -74,6 +92,11 @@ func exit() -> void:
 	enc.rf.clear_movement_highlight()
 	enc.selector.disconnect("tile_selected", self, "_on_Selector_tile_selected")
 	enc.ui.disconnect("mode_changed", self, "_on_UI_mode_changed")
+	enc.ui.disconnect(
+		"mode_changed",
+		enc.selector.get_node("StateMachine/Select"),
+		"_on_UI_mode_changed"
+	)
 
 
 func _on_Selector_tile_selected(tile: MapTile):
