@@ -25,26 +25,28 @@ func enter(_msg := {}) -> void:
 	# Emit error message when issue is encountered when connecting the 
 	# tile_selected Selector signal to the _on_Selector_tile_selected method.
 	if e != OK:
-		printerr(
-			"ERROR CODE %d\n" + \
-			"Failed to connect 'tile_selected' signal from " + \
-			"Selector node to Encounter PlayerTurn node method" + \
-			"'_on_Selector_tile_selected'." % \
-			[e]
-		)
+		printerr(Constants.ERROR_SIGNAL_CONNECT_FAILED % [
+			e, 
+			"tile_selected", 
+			"Selector", 
+			"Encounter",
+			"PlayerTurn", 
+			"_on_Selector_tile_selected"
+		])
 	
 	e = enc.ui.connect("mode_changed", self, "_on_UI_mode_changed")
 	
 	# Emit error message when issue is encountered when connecting the 
 	# mode_changed UI signal to the _on_UI_mode_changed method.
 	if e != OK:
-		printerr(
-			"ERROR CODE %d\n" + \
-			"Failed to connect 'mode_changed' signal from " + \
-			"SignalBus autoload to Encounter PlayerTurn node method" + \
-			"'_on_UI_mode_changed'." % \
-			[e]
-		)
+		printerr(Constants.ERROR_SIGNAL_CONNECT_FAILED % [
+			e,
+			"mode_changed",
+			"SignalBus",
+			"Encounter",
+			"PlayerTurn",
+			"_on_UI_mode_changed"
+		])
 
 
 # Corresponds to the `_process()` callback.
