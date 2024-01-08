@@ -66,13 +66,18 @@ func exit() -> void:
 func _on_Selector_area_entered(map_tile: Area):
 	# Don't snap to position if map_tile is disabled or inactive.
 	if (
+		selector.player_action_change or
 		selector.snap_to_position and
 		map_tile.is_active() and
 		map_tile.get_movement_active()
 	):
 		selector.snap_position = map_tile.translation
 		selector.tile = map_tile
+		selector.player_action_change = false
 
 
 func _on_UI_mode_changed():
-	pass
+	# Snap the selector to the position of the current player when shifting
+	# between different actions.
+	selector.player_action_change = true
+	selector.snap_to_character()
