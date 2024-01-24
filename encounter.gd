@@ -5,7 +5,8 @@ Manages the events of an encounter.
 """
 
 
-# Reference to the encounter hex_map
+# Reference to the encounter hex_map. This is to allow for differently named
+# hex map scene to be used.
 export(NodePath) var hex_map_path = null
 
 var _rf: RangeFinder
@@ -26,8 +27,8 @@ onready var selector: Selector = $Selector
 func _ready():
 	var hex_map: HexMap = get_node(hex_map_path)
 	_rf = RangeFinder.new(
-		hex_map.x_count,
-		hex_map.z_count,
+		hex_map.get_x_count(),
+		hex_map.get_z_count(),
 		Constants.MapOccupants.EMPTY,
 		hex_map.get_map_tiles()
 	)

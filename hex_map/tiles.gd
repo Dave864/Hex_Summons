@@ -7,41 +7,26 @@ x columns. Positions each tile and sets up the connections between them.
 """
 
 
-# Reference to the scene for the map tile.
-const MAP_TILE: PackedScene = preload(
-	"res://" + 
-	"hex_map/" +
-	"map_tile_node/" +
-	"MapTile.tscn"
-)
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges.
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
 # The number of tiles along the X axis.
-var x_count: int = 2 setget set_x_count
+export(int, 1, 50) var x_count = 2 setget set_x_count, get_x_count
 # The number of tiles along the Z axis.
-var z_count: int = 3 setget set_z_count
+export(int, 1, 50) var z_count = 3 setget set_z_count, get_z_count
+
+var _grid_start: Vector3 = _calculate_grid_start()
+var _map_tile: PackedScene = preload("res://hex_map/map_tile_node/MapTile.tscn")
 
 # Referene to the scene tree root.
 onready var _root_node: Node = get_tree().edited_scene_root
-var _grid_start: Vector3 = _calculate_grid_start()
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_initial_grid_generation()
-
-
-func _notification(what):
-	match what:
-		# When set as child of HexMap node, update the x and z counts to be the
-		# values of the x and z counts of the HexMap node.
-		NOTIFICATION_PARENTED:
-			var hex_map: Spatial = get_parent()
-			set_x_count(hex_map.x_count)
-			set_z_count(hex_map.z_count)
 
 
 # Creates the intial instance of the grid map.
@@ -54,6 +39,15 @@ func _initial_grid_generation():
 
 
 # Generates the hex grid map basd off of x_count and z_count.
+# The orientation of the grid has the points of the tiles oriented vertically.
+# The odd index rows are offset to the right.
+#    / \ / \ / \
+# 0 |   |   |   |
+#    \ / \ / \ / \
+# 1   |   |   |   |
+#    / \ / \ / \ /
+# 2 |   |   |   |
+#    \ / \ / \ /
 func _generate_grid():
 	var map_tile_offset: Vector3
 	
@@ -84,10 +78,10 @@ func _calculate_grid_start() -> Vector3:
 # Instantiates the hex grid map tile at the specified offset with the HexMap
 # node position being considered origin.
 func _instantiate_tile(offset: Vector3):
-	var map_tile = MAP_TILE.instance()
-	add_child(map_tile)
-	map_tile.set_owner(_root_node)
-	map_tile.translate_object_local(offset + _grid_start)
+	var tile = _map_tile.instance()
+	add_child(tile)
+	tile.set_owner(_root_node)
+	tile.translate_object_local(offset + _grid_start)
 
 
 # Assign the index values of each map tile and their corresponding cube coordinates.
@@ -100,9 +94,9 @@ func _set_coordinates():
 
 
 # Goes through the Map Tiles and establishes what each one's adjacent tiles are.
-#  0  /\  1
-#  5 |  | 2
-#  4  \/  3
+#  0  / \  1
+#  5 |   | 2
+#  4  \ /  3
 func _determine_adjacencies():
 	var index: int
 	var z_place: int
@@ -126,9 +120,9 @@ func _determine_adjacencies():
 		is_bottom = z_place == (z_count - 1)
 		
 		# Determine which tile is adjacent to the top left edge.
-		# * /\
-		#  |  |
-		#   \/
+		# * / \
+		#  |   |
+		#   \ /
 		var index_0_tile: Spatial = (
 			null if is_top
 			else null if is_left and even_z_place
@@ -138,9 +132,9 @@ func _determine_adjacencies():
 		tile.set_adjacent_tile(0, index_0_tile)
 		
 		# Determine which tile is adjacent to the top right edge.
-		#   /\ *
-		#  |  |
-		#   \/
+		#   / \ *
+		#  |   |
+		#   \ /
 		var index_1_tile: Spatial = (
 			null if is_top
 			else null if is_right and !even_z_place
@@ -150,16 +144,16 @@ func _determine_adjacencies():
 		tile.set_adjacent_tile(1, index_1_tile)
 		
 		# Determine which tile is adjacent to the center right edge.
-		#   /\
-		#  |  |*
-		#   \/
+		#   / \
+		#  |   |*
+		#   \ /
 		var index_2_tile: Spatial = null if is_right else get_child(index + 1)
 		tile.set_adjacent_tile(2, index_2_tile)
 		
 		# Determine which tile is adjacent to the bottom right edge.
-		#   /\
-		#  |  |
-		#   \/ *
+		#   / \
+		#  |   |
+		#   \ / *
 		var index_3_tile: Spatial = (
 			null if is_bottom 
 			else null if is_right and !even_z_place
@@ -169,9 +163,9 @@ func _determine_adjacencies():
 		tile.set_adjacent_tile(3, index_3_tile)
 		
 		# Determine which tile is adjacent to the bottom left edge.
-		#   /\
-		#  |  |
-		# * \/
+		#   / \
+		#  |   |
+		# * \ /
 		var index_4_tile: Spatial = (
 			null if is_bottom
 			else null if is_left and even_z_place
@@ -181,9 +175,9 @@ func _determine_adjacencies():
 		tile.set_adjacent_tile(4, index_4_tile)
 		
 		# Determine which tile is adjacent to the center left edge.
-		#   /\
-		# *|  |
-		#   \/
+		#   / \
+		# *|   |
+		#   \ /
 		var index_5_tile: Spatial = null if is_left else get_child(index - 1)
 		tile.set_adjacent_tile(5, index_5_tile)
 
@@ -227,6 +221,11 @@ func set_z_count(new_count: int):
 		_regenerate_grid()
 
 
+# Return the value of the z_count parameter.
+func get_z_count() -> int:
+	return z_count
+
+
 # Update the x_count parameter and regenerate the grid.
 func set_x_count(new_count: int):
 	x_count = new_count
@@ -235,6 +234,11 @@ func set_x_count(new_count: int):
 	if _root_node != null:
 		_update_grid_start()
 		_regenerate_grid()
+
+
+# Return the value of the x_count parameter.
+func get_x_count() -> int:
+	return x_count
 
 
 # Get the tile at the specified index.

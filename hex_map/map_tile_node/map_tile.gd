@@ -7,9 +7,9 @@ Represents an individual map tile.
 
 
 # References the MapTile nodes that are adjacent to this one.
-#  0  /\  1
-#  5 |  | 2
-#  4  \/  3
+#  0  / \  1
+#  5 |   | 2
+#  4  \ /  3
 var _adjacent_tiles: Array = [null, null, null, null, null, null] \
 	setget , get_adjacent
 # The index position of the map tile when it is part 
@@ -32,7 +32,8 @@ var _is_movement_active: bool = false setget set_movement_active, get_movement_a
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	connect("area_entered", self, "_on_MapTile_area_entered")
+	connect("area_exited", self, "_on_MapTile_area_exited")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

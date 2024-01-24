@@ -38,6 +38,3 @@ mesh = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
 visible = false
 mesh = SubResource( 6 )
-
-[connection signal="area_entered" from="." to="." method="_on_MapTile_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_MapTile_area_exited"]
