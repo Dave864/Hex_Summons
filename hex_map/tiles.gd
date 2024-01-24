@@ -12,7 +12,6 @@ x columns. Positions each tile and sets up the connections between them.
 # the distance from the center of a hexagon to the midpoint of one of its edges.
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
-
 # The number of tiles along the X axis.
 export(int, 1, 50) var x_count = 2 setget set_x_count, get_x_count
 # The number of tiles along the Z axis.
