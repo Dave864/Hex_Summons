@@ -17,5 +17,3 @@ export(int, 1, 20) var start_range = 1
 export(int, 20) var reach = 0
 # The number of tiles adjacent to the start position the attack effects.
 export(int, 1, 6) var spread = 1
-# The highlighter color used to indicate the attack's area of effect.
-export(SpatialMaterial) var highlight_color = null

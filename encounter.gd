@@ -28,15 +28,9 @@ onready var ui: Control = $UI
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var hex_map: HexMap = get_node(hex_map_path)
-<<<<<<< HEAD
-	_rf = RangeFinder.new(
+	rf = RangeFinder.new(
 		hex_map.get_x_count(),
 		hex_map.get_z_count(),
-=======
-	rf = RangeFinder.new(
-		hex_map.x_count,
-		hex_map.z_count,
->>>>>>> 6506953 (character-technique: Added prototye UI to allow for swapping between)
 		Constants.MapOccupants.EMPTY,
 		hex_map.get_map_tiles()
 	)

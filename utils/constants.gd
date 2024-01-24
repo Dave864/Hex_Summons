@@ -41,3 +41,13 @@ const MAX_MAP_DIST: int = 20
 #]
 const ERROR_SIGNAL_CONNECT_FAILED: String = "ERROR CODE %d\n" + \
 	"Failed to connect %s signal from %s node to %s %s node method '%s'." 
+
+# The formatted error string for when a node's own signal fails to connect.
+# Format [
+# error code, 
+# signal name,
+# signal source node,
+# signal method
+#]
+const ERROR_SIGNAL_CONNECT_SELF_FAILED: String = "ERROR CODE %d\n" + \
+	"Failed to connect %s own %s signal to its own method '%s'." 

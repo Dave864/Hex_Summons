@@ -7,20 +7,11 @@ x columns. Positions each tile and sets up the connections between them.
 """
 
 
-<<<<<<< HEAD
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges.
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
-=======
-# Reference to the scene for the map tile.
-const MAP_TILE: PackedScene = preload(
-	"res://" + 
-	"hex_map/" +
-	"map_tile_node/" +
-	"MapTile.tscn"
-)
->>>>>>> 8116b3d (character-technique: Moved HEX_EDGE_RATIO to Constants util script. Adjusted max values for core_stats. Refactored comments.)
+
 
 # The number of tiles along the X axis.
 export(int, 1, 50) var x_count = 2 setget set_x_count, get_x_count

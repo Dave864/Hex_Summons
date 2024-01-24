@@ -32,8 +32,29 @@ var _is_movement_active: bool = false setget set_movement_active, get_movement_a
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	connect("area_entered", self, "_on_MapTile_area_entered")
-	connect("area_exited", self, "_on_MapTile_area_exited")
+	var e = connect("area_entered", self, "_on_MapTile_area_entered")
+	
+	# Emit error message when issue is encountered when connecting the 
+	# area_entered MaptTile signal to the _on_MapTile_area_entered method.
+	if e != OK:
+		printerr(Constants.ERROR_SIGNAL_CONNECT_SELF_FAILED % [
+			e, 
+			"area_entered", 
+			"MapTile",
+			"_on_MapTile_area_entered"
+		])
+	
+	e = connect("area_exited", self, "_on_MapTile_area_exited")
+	
+	# Emit error message when issue is encountered when connecting the 
+	# area_exited MapTile signal to the _on_MapTile_area_exited method.
+	if e != OK:
+		printerr(Constants.ERROR_SIGNAL_CONNECT_SELF_FAILED % [
+			e, 
+			"area_exited", 
+			"MapTile", 
+			"_on_MapTile_area_exited"
+		])
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

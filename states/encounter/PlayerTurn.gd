@@ -19,7 +19,8 @@ func enter(_msg := {}) -> void:
 	
 	var e: int = enc.selector.connect(
 		"tile_selected",
-		self,"_on_Selector_tile_selected"
+		self,
+		"_on_Selector_tile_selected"
 	)
 	
 	# Emit error message when issue is encountered when connecting the 
