@@ -6,34 +6,62 @@
 margin_right = 1024.0
 margin_bottom = 600.0
 
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_left = 1.001
+anchor_top = 0.832
+anchor_right = 1.001
+anchor_bottom = 0.832
+margin_left = -865.024
+margin_top = -63.2
+margin_right = -0.0240479
+margin_bottom = -0.200012
+grow_horizontal = 2
+size_flags_horizontal = 5
+scroll_vertical_enabled = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+margin_right = 865.0
+margin_bottom = 63.0
+size_flags_horizontal = 7
+size_flags_vertical = 11
+alignment = 1
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -105.0
+margin_left = -864.0
+margin_top = -100.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
 
-[node name="MoveButton" parent="HBoxContainer" instance=ExtResource( 1 )]
-margin_right = 253.0
-margin_bottom = 105.0
-label = "Move"
-
 [node name="TechButton" parent="HBoxContainer" instance=ExtResource( 1 )]
-margin_left = 257.0
-margin_right = 510.0
-margin_bottom = 105.0
+margin_right = 169.0
+margin_bottom = 100.0
 label = "Technique"
 
 [node name="SpellButton" parent="HBoxContainer" instance=ExtResource( 1 )]
-margin_left = 514.0
-margin_right = 767.0
-margin_bottom = 105.0
+margin_left = 173.0
+margin_right = 343.0
+margin_bottom = 100.0
 label = "Spell"
 
 [node name="SummButton" parent="HBoxContainer" instance=ExtResource( 1 )]
-margin_left = 771.0
-margin_right = 1024.0
-margin_bottom = 105.0
+margin_left = 347.0
+margin_right = 516.0
+margin_bottom = 100.0
 label = "Summon"
+
+[node name="MoveButton" parent="HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 520.0
+margin_right = 690.0
+margin_bottom = 100.0
+label = "Move"
+
+[node name="EndButton" parent="HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 694.0
+margin_right = 864.0
+margin_bottom = 100.0
+label = "End"
