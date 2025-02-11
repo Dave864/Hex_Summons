@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://icon_bright.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://icon_dark.png" type="Texture" id=4]
+[ext_resource path="res://icon_green.png" type="Texture" id=5]
+[ext_resource path="res://user_interface/encounter/OptionButton/option_button.gd" type="Script" id=6]
+
+[node name="OptionButton" type="MarginContainer"]
+margin_right = 102.0
+margin_bottom = 126.0
+size_flags_horizontal = 7
+script = ExtResource( 6 )
+label = "Text"
+icon_normal = ExtResource( 3 )
+icon_pressed = ExtResource( 5 )
+icon_hover = ExtResource( 2 )
+icon_disabled = ExtResource( 4 )
+
+[node name="Button" type="Button" parent="."]
+margin_right = 102.0
+margin_bottom = 126.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_top = 22.0
+margin_right = 102.0
+margin_bottom = 104.0
+mouse_filter = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 102.0
+margin_bottom = 14.0
+text = "Text"
+align = 1
+
+[node name="Icon" type="TextureRect" parent="VBoxContainer"]
+margin_left = 19.0
+margin_top = 18.0
+margin_right = 83.0
+margin_bottom = 82.0
+mouse_filter = 2
+size_flags_horizontal = 4
+texture = ExtResource( 3 )
+
+[connection signal="button_down" from="Button" to="." method="_on_Button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]
+[connection signal="focus_entered" from="Button" to="." method="_on_Button_focus_entered"]
+[connection signal="focus_exited" from="Button" to="." method="_on_Button_focus_exited"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_Button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_Button_mouse_exited"]
