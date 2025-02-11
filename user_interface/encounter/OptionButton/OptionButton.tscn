@@ -1,9 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://icon_bright.png" type="Texture" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
-[ext_resource path="res://icon_dark.png" type="Texture" id=4]
-[ext_resource path="res://icon_green.png" type="Texture" id=5]
+[ext_resource path="res://art/icon.png" type="Texture" id=3]
 [ext_resource path="res://user_interface/encounter/OptionButton/option_button.gd" type="Script" id=6]
 
 [node name="OptionButton" type="MarginContainer"]
@@ -13,9 +10,6 @@ size_flags_horizontal = 7
 script = ExtResource( 6 )
 label = "Text"
 icon_normal = ExtResource( 3 )
-icon_pressed = ExtResource( 5 )
-icon_hover = ExtResource( 2 )
-icon_disabled = ExtResource( 4 )
 
 [node name="Button" type="Button" parent="."]
 margin_right = 102.0

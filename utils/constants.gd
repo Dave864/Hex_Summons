@@ -21,6 +21,9 @@ enum RangeTypes {
 	SPELL
 }
 
+# The path to a default icon.
+const DEFAULT_ICON_PATH: String = "res://art/icon.png"
+
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
 # the distance from the center of a hexagon to the midpoint of one of its edges.
@@ -51,6 +54,3 @@ const ERROR_SIGNAL_CONNECT_FAILED: String = "ERROR CODE %d\n" + \
 #]
 const ERROR_SIGNAL_CONNECT_SELF_FAILED: String = "ERROR CODE %d\n" + \
 	"Failed to connect %s own %s signal to its own method '%s'."
-
-# The path to a default icon.
-const DEFAULT_ICON_PATH: String = "res://icon.png"
