@@ -15,12 +15,18 @@ onready var icon_node: TextureRect = $VBoxContainer/Icon
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	if label != null:
+		label_node.text = label
+	if icon != null:
+		icon_node.texture = icon
 
 
 # Sets the text value of the `Label` node of the `OptionButton` scene.
-func set_label(label_text: String):
-	label_node.text = label_text
+func set_label(new_label: String):
+	if label != new_label:
+		label = new_label
+		if is_node_ready():
+			label_node.text = new_label
 
 
 # Get the current text value for `Label`.
@@ -30,8 +36,11 @@ func get_label() -> String:
 
 # Sets the icon image of the `Icon` node to the specified texture.
 # Defaults to a placeholder if no texture is given.
-func set_icon_texture(icon_texture: Texture):
-	icon_node.texture = icon_texture
+func set_icon_texture(new_icon: Texture):
+	if icon != new_icon:
+		icon = new_icon
+		if is_node_ready():
+			icon_node.texture = new_icon
 
 
 # Get the current texture for `Icon`.
