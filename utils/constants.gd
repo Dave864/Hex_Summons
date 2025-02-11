@@ -50,4 +50,7 @@ const ERROR_SIGNAL_CONNECT_FAILED: String = "ERROR CODE %d\n" + \
 # signal method
 #]
 const ERROR_SIGNAL_CONNECT_SELF_FAILED: String = "ERROR CODE %d\n" + \
-	"Failed to connect %s own %s signal to its own method '%s'." 
+	"Failed to connect %s own %s signal to its own method '%s'."
+
+# The path to a default icon.
+const DEFAULT_ICON_PATH: String = "res://icon.png"
