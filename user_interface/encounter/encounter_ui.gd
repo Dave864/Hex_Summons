@@ -15,16 +15,17 @@ enum Options {
 
 var _current_selection: int = Options.NONE setget set_current_selection, get_current_selection
 # The player character that will interface with the UI.
-var _player: PlayerCharacter = null setget set_player
+var _player: PlayerCharacter = null
 var _techniques: Array = []
 var _spells: Array = []
 
-onready var _sub_options = $SubOptions
-onready var _move_button = $Options/MoveButton
-onready var _technique_button = $Options/TechniqueButton
-onready var _spell_button = $Options/SpellButton
-onready var _summon_button = $Options/SummonButton
-onready var _end_button = $Options/EndButton
+onready var sub_options = $SubOptions
+onready var options = $Options
+onready var move_button = $Options/MoveButton
+onready var technique_button = $Options/TechniqueButton
+onready var spell_button = $Options/SpellButton
+onready var summon_button = $Options/SummonButton
+onready var end_button = $Options/EndButton
 
 
 # Called when the node enters the scene tree for the first time.
@@ -41,20 +42,13 @@ func _ready() -> void:
 func _update_sub_options() -> void:
 	match _current_selection:
 		Options.TECHNIQUE:
-			_sub_options.populate_sub_options(_techniques)
+			sub_options.populate_sub_options(_techniques)
 		Options.SPELL:
-			_sub_options.populate_sub_options(_spells)
+			sub_options.populate_sub_options(_spells)
 		Options.SUMMON:
 			pass
 		_:
 			pass
-
-
-# Sets the player that will be interacting with the UI.
-func set_player(new_player: PlayerCharacter) -> void:
-	_player = new_player
-	_techniques = _player.get_techniques()
-	_spells = _player.get_spells()
 
 
 # Sets the selection flag.
@@ -66,3 +60,11 @@ func set_current_selection(new_flag: int) -> void:
 # Gets the value of the selection flag.
 func get_current_selection() -> int:
 	return _current_selection
+
+
+# Updates the player character being focused on when the signal `player_turn_started`
+# is emitted.
+func update_focused_player(new_player: PlayerCharacter) -> void:
+	_player = new_player
+	_techniques = _player.get_techniques()
+	_spells = _player.get_spells()
