@@ -37,6 +37,19 @@ func _ready() -> void:
 #	pass
 
 
+# Update the SubOptions element with the currently selected option
+func _update_sub_options() -> void:
+	match _current_selection:
+		Options.TECHNIQUE:
+			_sub_options.populate_sub_options(_techniques)
+		Options.SPELL:
+			_sub_options.populate_sub_options(_spells)
+		Options.SUMMON:
+			pass
+		_:
+			pass
+
+
 # Sets the player that will be interacting with the UI.
 func set_player(new_player: PlayerCharacter) -> void:
 	_player = new_player
@@ -47,21 +60,9 @@ func set_player(new_player: PlayerCharacter) -> void:
 # Sets the selection flag.
 func set_current_selection(new_flag: int) -> void:
 	_current_selection = new_flag
+	_update_sub_options()
 
 
 # Gets the value of the selection flag.
 func get_current_selection() -> int:
 	return _current_selection
-
-
-# Update the SubOptions element with the currently selected option
-func getSubOptions() -> void:
-	match _current_selection:
-		Options.TECHNIQUE:
-			pass
-		Options.SPELL:
-			pass
-		Options.SUMMON:
-			pass
-		_:
-			pass
