@@ -12,7 +12,7 @@ var _drop_plane: Plane = Plane.PLANE_XZ
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(_delta) -> void:
 	_position = _screen_point_to_ray()
 
 

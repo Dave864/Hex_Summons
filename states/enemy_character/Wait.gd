@@ -6,7 +6,7 @@ The Enemy Character does nothing until it is called upon to act.
 
 
 # Hit when the enemy character is selected to take its turn.
-func _on_SignalBus_enemy_turn_started(path: PoolVector3Array):
+func _on_SignalBus_enemy_turn_started(path: PoolVector3Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": path})
 
 

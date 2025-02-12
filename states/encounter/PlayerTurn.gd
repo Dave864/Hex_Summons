@@ -100,7 +100,7 @@ func exit() -> void:
 	)
 
 
-func _on_Selector_tile_selected(tile: MapTile):
+func _on_Selector_tile_selected(tile: MapTile) -> void:
 	var data
 	match StateMachineBus.encounter_states[FSM.Encounter.UI]:
 		PlayerCharacterState.ATTACK:
@@ -113,7 +113,7 @@ func _on_Selector_tile_selected(tile: MapTile):
 	SignalBus.emit_signal("tile_selected", data)
 
 
-func _on_UI_mode_changed():
+func _on_UI_mode_changed() -> void:
 	match StateMachineBus.encounter_states[FSM.Encounter.UI]:
 		PlayerCharacterState.MOVE:
 			enc.rf.astar_for_range(enc.get_current_character())

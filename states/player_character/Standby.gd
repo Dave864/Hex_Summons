@@ -7,7 +7,7 @@ state.
 
 
 # Hit when the Selector selects a map tile destination.
-func _on_SignalBus_tile_selected(info):
+func _on_SignalBus_tile_selected(info) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": info})
 
 

@@ -8,7 +8,7 @@ When the input for selecting a tile is given, the Selector moves to the
 
 
 # Reveal the selector shape and enable to ability to snap to tile positions.
-func enter(_msg: Dictionary = {}):
+func enter(_msg: Dictionary = {}) -> void:
 	_set_state_machine_bus(SELECT)
 	selector.snap_to_position = true
 	selector.animation_player.play("RESET")
@@ -33,7 +33,7 @@ func enter(_msg: Dictionary = {}):
 		])
 
 
-func update(_delta: float):
+func update(_delta: float) -> void:
 	# Move the Selector to the mouse position.
 	selector.translation = selector.mouse_position.get_mouse_position()
 	
@@ -46,7 +46,7 @@ func update(_delta: float):
 	)
 
 
-func handle_input(event: InputEvent):
+func handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		# Signal that the currently highlighted map tile was selected
 		# and move to the 'Wait' state.
@@ -63,7 +63,7 @@ func exit() -> void:
 	selector.disconnect("area_entered", self, "_on_Selector_area_entered")
 
 
-func _on_Selector_area_entered(map_tile: Area):
+func _on_Selector_area_entered(map_tile: Area) -> void:
 	# Don't snap to position if map_tile is disabled or inactive.
 	if (
 		selector.player_action_change or
@@ -76,7 +76,7 @@ func _on_Selector_area_entered(map_tile: Area):
 		selector.player_action_change = false
 
 
-func _on_UI_mode_changed():
+func _on_UI_mode_changed() -> void:
 	# Snap the selector to the position of the current player when shifting
 	# between different actions.
 	selector.player_action_change = true

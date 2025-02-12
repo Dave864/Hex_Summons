@@ -13,13 +13,13 @@ onready var _technique_button: Button = $Technique
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	_move_button.disabled = true
 	_technique_button.disabled = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(_delta) -> void:
 	# Hide and reveal the UI when a player character starts and ends their
 	# turn respectively.
 	match StateMachineBus.encounter_states[FSM.Encounter.PLAYER_CHARACTER]:
@@ -35,7 +35,7 @@ func _process(_delta):
 			pass
 
 
-func _on_Move_pressed():
+func _on_Move_pressed() -> void:
 	_technique_button.disabled = false
 	current_phase = PlayerCharacterState.MOVE
 	StateMachineBus.encounter_states[FSM.Encounter.UI] = current_phase
@@ -43,7 +43,7 @@ func _on_Move_pressed():
 	emit_signal("mode_changed")
 
 
-func _on_Technique_pressed():
+func _on_Technique_pressed() -> void:
 	_move_button.disabled = false
 	current_phase = PlayerCharacterState.ATTACK
 	StateMachineBus.encounter_states[FSM.Encounter.UI] = current_phase

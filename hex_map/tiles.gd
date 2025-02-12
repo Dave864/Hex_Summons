@@ -25,12 +25,12 @@ onready var _root_node: Node = get_tree().edited_scene_root
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	_initial_grid_generation()
 
 
 # Creates the intial instance of the grid map.
-func _initial_grid_generation():
+func _initial_grid_generation() -> void:
 	# Create the TileMap nodes if they haven't already been instanced.
 	if get_child_count() == 0:
 		_generate_grid()
@@ -48,7 +48,7 @@ func _initial_grid_generation():
 #    / \ / \ / \ /
 # 2 |   |   |   |
 #    \ / \ / \ /
-func _generate_grid():
+func _generate_grid() -> void:
 	var map_tile_offset: Vector3
 	
 	# Calculates the position for each tile relative to origin
@@ -77,7 +77,7 @@ func _calculate_grid_start() -> Vector3:
 
 # Instantiates the hex grid map tile at the specified offset with the HexMap
 # node position being considered origin.
-func _instantiate_tile(offset: Vector3):
+func _instantiate_tile(offset: Vector3) -> void:
 	var tile = _map_tile.instance()
 	add_child(tile)
 	tile.set_owner(_root_node)
@@ -85,7 +85,7 @@ func _instantiate_tile(offset: Vector3):
 
 
 # Assign the index values of each map tile and their corresponding cube coordinates.
-func _set_coordinates():
+func _set_coordinates() -> void:
 	var index: int = 0
 	for tile in get_children():
 		tile.set_index(index)
@@ -97,7 +97,7 @@ func _set_coordinates():
 #  0  / \  1
 #  5 |   | 2
 #  4  \ /  3
-func _determine_adjacencies():
+func _determine_adjacencies() -> void:
 	var index: int
 	var z_place: int
 	var x_place: int
@@ -183,7 +183,7 @@ func _determine_adjacencies():
 
 
 # Removes all tiles from the tiles node and regenerates the map.
-func _regenerate_grid():
+func _regenerate_grid() -> void:
 	# Delete the tiles of the current map
 	var map_tiles = get_children()
 	for tile in map_tiles:
@@ -197,7 +197,7 @@ func _regenerate_grid():
 
 
 # Recalculate the grid start.
-func _update_grid_start():
+func _update_grid_start() -> void:
 	_grid_start = _calculate_grid_start()
 
 
@@ -212,7 +212,7 @@ func _is_even(number) -> bool:
 
 
 # Update the z_count parameter and regenerate the grid.
-func set_z_count(new_count: int):
+func set_z_count(new_count: int) -> void:
 	z_count = new_count
 	# Check if the root node is set to prevent the creation of "duplicate"
 	# map tiles when loading in the game.
@@ -227,7 +227,7 @@ func get_z_count() -> int:
 
 
 # Update the x_count parameter and regenerate the grid.
-func set_x_count(new_count: int):
+func set_x_count(new_count: int) -> void:
 	x_count = new_count
 	# Check if the root node is set to prevent the creation of "duplicate"
 	# map tiles when loading in the game.

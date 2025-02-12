@@ -6,7 +6,7 @@ The Selector sets its initial position before going to the `Wait` state.
 
 
 # Hit when the selector node enters a map tile.
-func _on_Selector_area_entered(map_tile: Area):
+func _on_Selector_area_entered(map_tile: Area) -> void:
 	selector.snap_position = map_tile.translation
 	selector.tile = map_tile
 

@@ -31,7 +31,7 @@ var _is_movement_active: bool = false setget set_movement_active, get_movement_a
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	var e = connect("area_entered", self, "_on_MapTile_area_entered")
 	
 	# Emit error message when issue is encountered when connecting the 
@@ -58,7 +58,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(_delta) -> void:
 	if _is_movement_active:
 		$Highlighter.show()
 	else:
@@ -96,12 +96,12 @@ func get_cube_coord() -> Vector3:
 
 
 # Set the cube coordinates of the MapTile.
-func set_cube_coord(value: Vector3):
+func set_cube_coord(value: Vector3) -> void:
 	_cube_coord = value
 
 
 # Set the value of the movement flag.
-func set_movement_active(value: bool):
+func set_movement_active(value: bool) -> void:
 	_is_movement_active = value
 
 
@@ -131,12 +131,12 @@ func is_active() -> bool:
 	return visible
 
 
-func _on_MapTile_area_entered(area):
+func _on_MapTile_area_entered(area) -> void:
 	# Add entered character as this tile's occupant.
 	if area is PlayerCharacter or area is EnemyCharacter:
 		_occupant = area
 
 
-func _on_MapTile_area_exited(area):
+func _on_MapTile_area_exited(area) -> void:
 	if area is PlayerCharacter or area is EnemyCharacter:
 		_occupant = null

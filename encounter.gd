@@ -26,7 +26,7 @@ onready var ui: Control = $UI
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	var hex_map: HexMap = get_node(hex_map_path)
 	rf = RangeFinder.new(
 		hex_map.get_x_count(),
@@ -39,7 +39,7 @@ func _ready():
 
 
 # Move the initiative counter to the next index or reset it back to the start.
-func progress_initiative():
+func progress_initiative() -> void:
 	_cur_init += 1
 	_cur_init = 0 if _cur_init == _initiative_tracker.size() else _cur_init
 

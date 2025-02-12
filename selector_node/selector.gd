@@ -33,7 +33,7 @@ onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 # Set the position of the selector to the position of the current player.
-func snap_to_character():
+func snap_to_character() -> void:
 	translation = Vector3(
 		current_player.translation.x,
 		0.125,

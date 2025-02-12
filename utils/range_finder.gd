@@ -19,7 +19,7 @@ func _init(
 	z_value: int,
 	current_char: int,
 	initial_map: Array = []
-):
+) -> void:
 	_x_count = x_value
 	_z_count = z_value
 	_current_char_type = current_char
@@ -28,25 +28,25 @@ func _init(
 
 # Virtual Astar function. Called when computing the cost between two
 # connected points.
-func _compute_cost(u, v):
+func _compute_cost(u, v) -> float:
 	return _cube_dist(u, v)
 
 
 # Virtual Astar function. Called when estimating the cost between a point 
 # and the path's ending point.
-func _estimate_cost(u, v):
+func _estimate_cost(u, v) -> float:
 	return min(0, _cube_dist(u, v) - 1)
 
 
-func set_z_count(value: int):
+func set_z_count(value: int) -> void:
 	_z_count = value
 
 
-func set_x_count(value: int):
+func set_x_count(value: int) -> void:
 	_x_count = value
 
 
-func set_map_tiles(new_map: Array):
+func set_map_tiles(new_map: Array) -> void:
 	_map_tiles = new_map
 
 
@@ -54,12 +54,12 @@ func get_map_tiles() -> Array:
 	return _map_tiles
 
 
-func set_char_type(type: int):
+func set_char_type(type: int) -> void:
 	_current_char_type = type
 
 
 # Recalculates the astar connnections for the map in its current state.
-func refresh_astar_connections(current_char_type: int):
+func refresh_astar_connections(current_char_type: int) -> void:
 	_current_char_type = current_char_type
 	
 	# Empty out the current astar map and resize if necessary.
@@ -94,7 +94,7 @@ func refresh_astar_connections(current_char_type: int):
 func astar_for_range(
 	character: Character, 
 	range_type: int = Constants.RangeTypes.MOVE
-):
+) -> void:
 	_current_range = _get_movement_range(character)
 	
 	# Empty out the current astar map and resize if necessary.
@@ -123,7 +123,7 @@ func astar_for_range(
 
 
 # Clear the highlighted movement tiles.
-func clear_movement_highlight():
+func clear_movement_highlight() -> void:
 	for tile in _current_range:
 		tile.set_movement_active(false)
 	clear()

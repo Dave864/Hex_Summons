@@ -14,16 +14,16 @@ var _start_set: bool = false setget , get_is_start_set
 var _current_index: int = -1 setget , get_index_at
 
 # References to the various attacks and spells the character has access to.
-onready var _techniques: Array = $Techniques.get_children()
-onready var _spells: Array = $Spells.get_children()
+onready var _techniques: Array = $Techniques.get_children() setget , get_techniques
+onready var _spells: Array = $Spells.get_children() setget , get_spells
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	pass
 
 
-func _on_Creature_area_entered(map_tile):
+func _on_Creature_area_entered(map_tile) -> void:
 	_current_index = map_tile.get_index()
 	# If the creature's start position has not been set, move it to the position
 	# of the tile it in the area of.
@@ -40,3 +40,13 @@ func get_index_at() -> int:
 # Get whether or not the starting location of the character has been set.
 func get_is_start_set() -> bool:
 	return _start_set
+
+
+# Get the techniques associated with the character
+func get_techniques() -> Array:
+	return _techniques
+
+
+# Get the spells associated with the character
+func get_spells() -> Array:
+	return _spells

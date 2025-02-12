@@ -43,7 +43,7 @@ func _init(
 	p_res_fire: int = 1,
 	p_res_water: int = 1,
 	p_res_wind: int = 1
-):
+) -> void:
 	_mvmt_speed = 5.0
 	_base_max_hp = p_base_max_hp
 	_base_atk = p_base_atk
@@ -120,21 +120,23 @@ func can_property_revert(property: String) -> bool:
 			return false
 
 
-func property_get_revert(property: String):
+func property_get_revert(property: String) -> float:
 	match property:
 		"_mvmt_speed":
 			return 5.0
 		"_base_res_earth":
-			return 1
+			return 1.0
 		"_base_res_fire":
-			return 1
+			return 1.0
 		"_base_res_water":
-			return 1
+			return 1.0
 		"_base_res_wind":
-			return 1
+			return 1.0
+		_:
+			return 0.0
 
 
-func _get_property_list():
+func _get_property_list() -> Array:
 	var properties: Array = []
 	
 	# Add movement speed property.

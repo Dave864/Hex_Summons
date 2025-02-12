@@ -7,7 +7,7 @@ until the encounter is ready to recieve new player selections.
 
 
 # Hide the selector shape and disable the ability to snap to tile positions
-func enter(_msg: Dictionary = {}):
+func enter(_msg: Dictionary = {}) -> void:
 	_set_state_machine_bus(WAIT)
 	selector.snap_to_position = false
 	selector.selector_shape.hide()
@@ -42,7 +42,7 @@ func exit() -> void:
 
 # Set the position of the selector to the player whose turn has started and move
 # to the `Select` state.
-func _on_SignalBus_player_turn_started(player: PlayerCharacter):
+func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
 	selector.current_player = player
 	selector.snap_to_character()
 	state_machine.transition_to(SELECT)

@@ -42,7 +42,7 @@ func update(_delta: float) -> void:
 
 
 # Initializes the initiative tracker.
-func _set_up_initative():
+func _set_up_initative() -> void:
 	enc._initiative_tracker.append_array(enc.players)
 	enc._initiative_tracker.append_array(enc.enemies)
 	enc._initiative_tracker.sort_custom(InitiativeSorter, "sort")

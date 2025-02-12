@@ -16,7 +16,7 @@ var selector: Selector
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	# The states are children of the `Selector` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 
 	# to be ready first.
@@ -31,5 +31,5 @@ func _ready():
 
 
 # Update the value of the state bus for the Selector state machine.
-func _set_state_machine_bus(var state: String):
+func _set_state_machine_bus(var state: String) -> void:
 	StateMachineBus.encounter_states[FSM.Encounter.SELECTOR] = state
