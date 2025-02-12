@@ -1,4 +1,5 @@
 tool
+class_name LabeledIconButton
 extends MarginContainer
 """
 Manages the label and icon settings of an OptionButton for encounters.
@@ -22,7 +23,7 @@ export(Texture) var icon_pressed = null setget set_icon_pressed, get_icon_presse
 export(Texture) var icon_hover = null setget set_icon_hover, get_icon_hover
 export(Texture) var icon_disabled = null setget set_icon_disabled, get_icon_disabled
 export(Texture) var icon_focused = null setget set_icon_focused, get_icon_focused
-export(bool) var disabled = false
+export(bool) var disabled = false setget set_disabled, get_disabled
 
 var is_highlighted: bool
 
@@ -36,27 +37,7 @@ func _ready():
 	is_highlighted = true
 	if label != null:
 		label_node.text = label
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	if disabled:
-		icon_node.texture = (
-				icon_disabled if icon_disabled != null
-				else icon_normal
-		)
-		label_node.modulate.a8 = 100
-		button.disabled = true
-	else:
-		icon_node.texture = (
-				icon_normal if icon_node.texture == icon_disabled 
-				else icon_node.texture
-		)
-		label_node.modulate.a8 = (
-				255 if label_node.modulate.a8 < 255 
-				else label_node.modulate.a8
-		)
-		button.disabled = false
+	_disabled_update()
 
 
 # Sets the text value of the `Label` node of the `OptionButton` scene.
@@ -135,6 +116,38 @@ func set_icon_focused(new_icon_focused: Texture):
 # Gets the current "focused" texture for the `Icon` node.
 func get_icon_focused() -> Texture:
 	return icon_focused
+
+
+# Set the disabled flag.
+func set_disabled(flag_value: bool):
+	disabled = flag_value
+	_disabled_update()
+
+
+# Get the disabled flag.
+func get_disabled() -> bool:
+	return disabled
+
+
+# Update the button based on the disabled flag
+func _disabled_update():
+	if disabled:
+		icon_node.texture = (
+				icon_disabled if icon_disabled != null
+				else icon_normal
+		)
+		label_node.modulate.a8 = 100
+		button.disabled = true
+	else:
+		icon_node.texture = (
+				icon_normal if icon_node.texture == icon_disabled 
+				else icon_node.texture
+		)
+		label_node.modulate.a8 = (
+				255 if label_node.modulate.a8 < 255 
+				else label_node.modulate.a8
+		)
+		button.disabled = false
 
 
 # Update the `Icon` to "pressed" when the button is depressed.
