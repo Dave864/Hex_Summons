@@ -21,12 +21,13 @@ func enter(_msg: Dictionary = {}) -> void:
 	# player_turn_started SignalBus signal to the 
 	# _on_SignalBus_player_turn_started method.
 	if e != OK:
-		printerr(
-			"ERROR CODE %d\n" + \
-			"Failed to connect `player_turn_started` signal from the " + \
-			"SignalBus to the Selector Wait node method" + \
-			"`_on_SignalBus_player_turn_started`." % \
-			[e]
+		ErrorMessage.signal_connect_failed(
+			e,
+			"player_turn_started",
+			"SignalBus",
+			"Selector",
+			"Wait",
+			"_on_SignalBus_player_turn_started"
 		)
 
 

@@ -3,7 +3,7 @@ extends SelectorState
 The logic for what happens when the Selector is in the 'Select' state.
 The Selector is able to pass over map tiles and highlight said tiles.
 When the input for selecting a tile is given, the Selector moves to the
-'Wait' state and a signal is emitted indicating which tile was selected.
+'Pause' state and a signal is emitted indicating which tile was selected.
 """
 
 
@@ -23,14 +23,14 @@ func enter(_msg: Dictionary = {}) -> void:
 	# Emit error message when issue is encountered when connecting the 
 	# area_entered Area signal to the _on_Selector_area_entered method.
 	if e != OK:
-		printerr(Constants.ERROR_SIGNAL_CONNECT_FAILED % [
+		ErrorMessage.signal_connect_failed(
 			e,
 			"area_entered",
 			"Selector",
 			"PlayerCharacter",
 			"Start",
 			"_on_Selector_area_entered"
-		])
+		)
 
 
 func update(_delta: float) -> void:
@@ -44,17 +44,14 @@ func update(_delta: float) -> void:
 		0.125,
 		new_position.z
 	)
-
-
-func handle_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		# Signal that the currently highlighted map tile was selected
-		# and move to the 'Wait' state.
-		if event.button_index == BUTTON_LEFT and event.is_pressed():
-			selector.emit_signal("tile_selected", selector.tile)
-			selector.animation_player.play("selected")
-			yield(selector.animation_player, "animation_finished")
-			state_machine.transition_to(WAIT)
+	
+	# Signal that the currently highlighted map tile was selected
+	# and move to the 'Pause' state.
+	if Input.is_action_pressed("ui_selector_select"):
+		selector.emit_signal("tile_selected", selector.tile)
+		selector.animation_player.play("selected")
+		yield(selector.animation_player, "animation_finished")
+		state_machine.transition_to(PAUSE)
 
 
 # Called by the state machine before changing the active state. Use this 

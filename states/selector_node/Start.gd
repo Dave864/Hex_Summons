@@ -25,12 +25,13 @@ func enter(_msg := {}) -> void:
 	# Emit error message when issue is encountered when connecting the 
 	# area_entered Area signal to the _on_Selector_area_entered method.
 	if e != OK:
-		printerr(
-			"ERROR CODE %d\n" + \
-			"Failed to connect `area_entered` signal from " + \
-			"Selector to its Start node method" + \
-			"`_on_Selector_area_entered`." % \
-			[e]
+		ErrorMessage.signal_connect_failed(
+			e,
+			"area_entered",
+			"Selector",
+			"Selector",
+			"Start",
+			"_on_Selector_area_entered"
 		)
 
 

@@ -9,6 +9,7 @@ when coding the selector's states.
 # The states the Selector can be in.
 const START: String = "Start"
 const SELECT: String = "Select"
+const PAUSE: String = "Pause"
 const WAIT: String = "Wait"
 
 # Typed reference to the Selector node.

@@ -24,14 +24,14 @@ func enter(_msg := {}) -> void:
 	# enemy_turn_started SignalBus signal to the
 	# _on_SignalBus_player_turn_started method.
 	if e != OK:
-		printerr(Constants.ERROR_SIGNAL_CONNECT_FAILED % [
+		ErrorMessage.signal_connect_failed(
 			e,
 			"enemy_turn_started",
 			"SignalBus autoload",
 			"EnemyCharacter",
 			"Wait",
 			"_on_SignalBus_enemy_turn_started"
-		])
+		)
 
 
 # Called by the state machine before changing the active state.
