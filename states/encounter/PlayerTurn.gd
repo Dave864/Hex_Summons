@@ -17,55 +17,30 @@ func enter(_msg := {}) -> void:
 	enc.rf.astar_for_range(enc.get_current_character())
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 	
-	var e: int = enc.selector.connect(
+	state_machine.connect_signal(
+		enc.selector,
 		"tile_selected",
 		self,
 		"_on_Selector_tile_selected"
 	)
 	
+	#var e: int = enc.selector.connect(
+	#	"tile_selected",
+	#	self,
+	#	"_on_Selector_tile_selected"
+	#)
+	
 	# Emit error message when issue is encountered when connecting the 
 	# tile_selected Selector signal to the _on_Selector_tile_selected method.
-	if e != OK:
-		ErrorMessage.signal_connect_failed(
-			e,
-			"tile_selected",
-			"Selector", 
-			"Encounter",
-			"PlayerTurn", 
-			"_on_Selector_tile_selected"
-		)
-	
-	e = enc.ui.connect("mode_changed", self, "_on_UI_mode_changed")
-	
-	# Emit error message when issue is encountered when connecting the 
-	# mode_changed UI signal to the _on_UI_mode_changed method.
-	if e != OK:
-		ErrorMessage.signal_connect_failed(
-			e,
-			"mode_changed",
-			"SignalBus",
-			"Encounter",
-			"PlayerTurn",
-			"_on_UI_mode_changed"
-		)
-	
-	e = enc.ui.connect(
-		"mode_changed",
-		enc.selector.get_node("StateMachine/Select"),
-		"_on_UI_mode_changed"
-	)
-	
-	# Emit error message when issue is encountered when connecting the 
-	# mode_changed UI signal to the Selector's _on_UI_mode_changed method.
-	if e != OK:
-		ErrorMessage.signal_connect_failed(
-			e,
-			"mode_changed",
-			"SignalBus",
-			"Selector",
-			"Select",
-			"_on_UI_mode_changed"
-		)
+	#if e != OK:
+	#	ErrorMessage.signal_connect_failed(
+	#		e,
+	#		"tile_selected",
+	#		"Selector", 
+	#		"Encounter",
+	#		"PlayerTurn", 
+	#		"_on_Selector_tile_selected"
+	#	)
 
 
 # Corresponds to the `_process()` callback.
@@ -92,12 +67,6 @@ func exit() -> void:
 	enc.progress_initiative()
 	enc.rf.clear_movement_highlight()
 	enc.selector.disconnect("tile_selected", self, "_on_Selector_tile_selected")
-	enc.ui.disconnect("mode_changed", self, "_on_UI_mode_changed")
-	enc.ui.disconnect(
-		"mode_changed",
-		enc.selector.get_node("StateMachine/Select"),
-		"_on_UI_mode_changed"
-	)
 
 
 func _on_Selector_tile_selected(tile: MapTile) -> void:
@@ -111,13 +80,3 @@ func _on_Selector_tile_selected(tile: MapTile) -> void:
 				tile.get_index()
 			)
 	SignalBus.emit_signal("tile_selected", data)
-
-
-func _on_UI_mode_changed() -> void:
-	match StateMachineBus.encounter_states[FSM.Encounter.UI]:
-		PlayerCharacterState.MOVE:
-			enc.rf.astar_for_range(enc.get_current_character())
-		PlayerCharacterState.ATTACK:
-			enc.rf.clear_movement_highlight()
-		_:
-			pass

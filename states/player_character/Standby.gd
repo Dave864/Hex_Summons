@@ -15,23 +15,30 @@ func _on_SignalBus_tile_selected(info) -> void:
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(STANDBY)
-	var e: int = SignalBus.connect(
+	state_machine.connect_signal(
+		SignalBus, 
 		"tile_selected", 
 		self, 
 		"_on_SignalBus_tile_selected"
 	)
 	
+	#var e: int = SignalBus.connect(
+	#	"tile_selected", 
+	#	self, 
+	#	"_on_SignalBus_tile_selected"
+	#)
+	
 	# Emit error message when issue is encountered when connecting the 
 	# tile_selected SignalBus signal to the _on_SignalBus_tile_selected method.
-	if e != OK:
-		ErrorMessage.signal_connect_failed(
-			e,
-			"tile_selected",
-			"SignalBus autoload",
-			"PlayerCharacter",
-			"Standby",
-			"_on_SignalBus_tile_selected"
-		)
+	#if e != OK:
+	#	ErrorMessage.signal_connect_failed(
+	#		e,
+	#		"tile_selected",
+	#		"SignalBus autoload",
+	#		"PlayerCharacter",
+	#		"Standby",
+	#		"_on_SignalBus_tile_selected"
+	#	)
 
 
 # Receives events from the `_unhandled_input()` callback.

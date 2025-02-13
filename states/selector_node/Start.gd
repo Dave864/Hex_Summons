@@ -16,23 +16,30 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 # initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(START)
-	var e: int = selector.connect(
-		"area_entered", 
-		self, 
+	state_machine.connect_signal(
+		selector,
+		"area_entered",
+		self,
 		"_on_Selector_area_entered"
 	)
 	
+	#var e: int = selector.connect(
+	#	"area_entered", 
+	#	self, 
+	#	"_on_Selector_area_entered"
+	#)
+	
 	# Emit error message when issue is encountered when connecting the 
 	# area_entered Area signal to the _on_Selector_area_entered method.
-	if e != OK:
-		ErrorMessage.signal_connect_failed(
-			e,
-			"area_entered",
-			"Selector",
-			"Selector",
-			"Start",
-			"_on_Selector_area_entered"
-		)
+	#if e != OK:
+	#	ErrorMessage.signal_connect_failed(
+	#		e,
+	#		"area_entered",
+	#		"Selector",
+	#		"Selector",
+	#		"Start",
+	#		"_on_Selector_area_entered"
+	#	)
 
 
 # Corresponds to the `_process()` callback.

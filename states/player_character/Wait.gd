@@ -14,24 +14,31 @@ func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(WAIT)
-	var e: int = SignalBus.connect(
-		"player_turn_started", 
-		self, 
+	state_machine.connect_signal(
+		SignalBus,
+		"player_turn_started",
+		self,
 		"_on_SignalBus_player_turn_started"
 	)
+	
+	#var e: int = SignalBus.connect(
+	#	"player_turn_started", 
+	#	self, 
+	#	"_on_SignalBus_player_turn_started"
+	#)
 	
 	# Emit error message when issue is encountered when connecting the 
 	# player_turn_started SignalBus signal to the
 	# _on_SignalBus_player_turn_started method.
-	if e != OK:
-		ErrorMessage.signal_connect_failed(
-			e, 
-			"player_turn_started",
-			"SignalBus autoload",
-			"PlayerCharacter",
-			"Wait",
-			"_on_SignalBus_player_turn_started"
-		)
+	#if e != OK:
+	#	ErrorMessage.signal_connect_failed(
+	#		e, 
+	#		"player_turn_started",
+	#		"SignalBus autoload",
+	#		"PlayerCharacter",
+	#		"Wait",
+	#		"_on_SignalBus_player_turn_started"
+	#	)
 
 
 # Called by the state machine before changing the active state. 

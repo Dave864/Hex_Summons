@@ -11,24 +11,32 @@ func enter(_msg: Dictionary = {}) -> void:
 	_set_state_machine_bus(WAIT)
 	selector.snap_to_position = false
 	selector.selector_shape.hide()
-	var e: int = SignalBus.connect(
+	
+	state_machine.connect_signal(
+		SignalBus,
 		"player_turn_started",
 		self,
 		"_on_SignalBus_player_turn_started"
 	)
 	
+	#var e: int = SignalBus.connect(
+	#	"player_turn_started",
+	#	self,
+	#	"_on_SignalBus_player_turn_started"
+	#)
+	
 	# Emit error message when issue is encountered when connecting the 
 	# player_turn_started SignalBus signal to the 
 	# _on_SignalBus_player_turn_started method.
-	if e != OK:
-		ErrorMessage.signal_connect_failed(
-			e,
-			"player_turn_started",
-			"SignalBus",
-			"Selector",
-			"Wait",
-			"_on_SignalBus_player_turn_started"
-		)
+	#if e != OK:
+	#	ErrorMessage.signal_connect_failed(
+	#		e,
+	#		"player_turn_started",
+	#		"SignalBus",
+	#		"Selector",
+	#		"Wait",
+	#		"_on_SignalBus_player_turn_started"
+	#	)
 
 
 # Called by the state machine before changing the active state. 
