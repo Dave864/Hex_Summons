@@ -17,27 +17,23 @@ func enter(_msg := {}) -> void:
 	enc.rf.astar_for_range(enc.get_current_character())
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 	
-	state_machine.connect_signal(
+	ErrorUtil.connect_signal(
 		enc.selector,
 		"tile_selected",
 		self,
 		"_on_Selector_tile_selected"
 	)
+	
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"player_turn_ended",
+		self,
+		"_on_SignalBus_player_turn_ended"
+	)
 
 
 # Corresponds to the `_process()` callback.
 func update(_delta: float) -> void:
-	# Determine which turn to go to when the current player ends their turn.
-	if (
-		StateMachineBus.encounter_states[FSM.Encounter.PLAYER_CHARACTER] == 
-		PlayerCharacterState.WAIT
-	):
-		var next_character: Character = enc.get_next_character()
-		if next_character is PlayerCharacter:
-			state_machine.transition_to(PLAYER_TURN)
-		elif next_character is EnemyCharacter:
-			state_machine.transition_to(ENEMY_TURN)
-	
 	# Move to the `End` State when all enemies are defeated.
 	if enc.enemies.size() == 0:
 		state_machine.transition_to(END)
@@ -46,10 +42,10 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	SignalBus.emit_signal("player_turn_ended", enc.get_current_character())
 	enc.progress_initiative()
 	enc.rf.clear_movement_highlight()
 	enc.selector.disconnect("tile_selected", self, "_on_Selector_tile_selected")
+	SignalBus.disconnect("player_turn_ended", self, "_on_SignalBus_player_turn_ended")
 
 
 func _on_Selector_tile_selected(tile: MapTile) -> void:
@@ -63,3 +59,11 @@ func _on_Selector_tile_selected(tile: MapTile) -> void:
 				tile.get_index()
 			)
 	SignalBus.emit_signal("tile_selected", data)
+
+
+func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
+	var next_character: Character = enc.get_next_character()
+	if next_character is PlayerCharacter:
+		state_machine.transition_to(PLAYER_TURN)
+	elif next_character is EnemyCharacter:
+		state_machine.transition_to(ENEMY_TURN)

@@ -6,16 +6,11 @@ state.
 """
 
 
-# Hit when the Selector selects a map tile destination.
-func _on_SignalBus_tile_selected(info) -> void:
-	state_machine.transition_to(MOVE, {"travel_path": info})
-
-
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(STANDBY)
-	state_machine.connect_signal(
+	ErrorUtil.connect_signal(
 		SignalBus, 
 		"tile_selected", 
 		self, 
@@ -37,3 +32,8 @@ func update(_delta: float) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	SignalBus.disconnect("tile_selected", self, "_on_SignalBus_tile_selected")
+
+
+# Hit when the Selector selects a map tile destination.
+func _on_SignalBus_tile_selected(info) -> void:
+	state_machine.transition_to(MOVE, {"travel_path": info})

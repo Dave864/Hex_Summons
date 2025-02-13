@@ -12,7 +12,7 @@ func enter(_msg: Dictionary = {}) -> void:
 	selector.snap_to_position = false
 	selector.selector_shape.hide()
 	
-	state_machine.connect_signal(
+	ErrorUtil.connect_signal(
 		SignalBus,
 		"player_turn_started",
 		self,

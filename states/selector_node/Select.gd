@@ -14,7 +14,7 @@ func enter(_msg: Dictionary = {}) -> void:
 	selector.animation_player.play("RESET")
 	selector.selector_shape.show()
 	
-	state_machine.connect_signal(
+	ErrorUtil.connect_signal(
 		selector,
 		"area_entered",
 		self,

@@ -14,7 +14,7 @@ func _on_SignalBus_enemy_turn_started(path: PoolVector3Array) -> void:
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(WAIT)
-	state_machine.connect_signal(
+	ErrorUtil.connect_signal(
 		SignalBus, 
 		"enemy_turn_started", 
 		self, 

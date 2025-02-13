@@ -16,7 +16,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 # initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(START)
-	state_machine.connect_signal(
+	ErrorUtil.connect_signal(
 		selector,
 		"area_entered",
 		self,

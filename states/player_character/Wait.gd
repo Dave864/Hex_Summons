@@ -5,16 +5,11 @@ The Player Character waits until it is reenabled.
 """
 
 
-# Hit when the player character is selected to take its turn.
-func _on_SignalBus_player_turn_started(_player: PlayerCharacter) -> void:
-	state_machine.transition_to(STANDBY)
-
-
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(WAIT)
-	state_machine.connect_signal(
+	ErrorUtil.connect_signal(
 		SignalBus,
 		"player_turn_started",
 		self,
@@ -30,3 +25,8 @@ func exit() -> void:
 		self,
 		"_on_SignalBus_player_turn_started"
 	)
+
+
+# Hit when the player character is selected to take its turn.
+func _on_SignalBus_player_turn_started(_player: PlayerCharacter) -> void:
+	state_machine.transition_to(STANDBY)

@@ -22,14 +22,14 @@ func enter(_msg := {}) -> void:
 	_set_state_machine_bus(MOVE)
 	travel_path = _msg["travel_path"]
 	
-	# Move to the 'Wait' state if the travel path only has one point.
+	# Move to the 'Standby' state if the travel path only has one point.
 	# This indicates that the player character's current position was 
 	# selected as the destination.
 	if travel_path.size() > 1:
 		start_point = pc.translation
 		next_point = travel_path[next_point_index]
 	else:
-		state_machine.transition_to(WAIT)
+		state_machine.transition_to(STANDBY)
 
 
 # Corresponds to the `_process()` callback.
@@ -48,7 +48,7 @@ func update(delta: float) -> void:
 			start_point = pc.translation
 			next_point = travel_path[next_point_index]
 		else:
-			state_machine.transition_to(WAIT)
+			state_machine.transition_to(STANDBY)
 
 
 # Called by the state machine before changing the active state.

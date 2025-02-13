@@ -10,8 +10,14 @@ turn starts.
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(WAIT)
-	encounter_ui.sub_options.visible = false
-	encounter_ui.options.visible = false
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"player_turn_started",
+		self,
+		"_on_SignalBus_player_turn_started"
+	)
+	#encounter_ui.sub_options.visible = false
+	#encounter_ui.options.visible = false
 
 
 # Corresponds to the `_process()` callback.
@@ -22,4 +28,15 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	pass
+	SignalBus.disconnect(
+		"player_turn_started",
+		self,
+		"_on_SignalBus_player_turn_started"
+	)
+
+
+# Gets the current player and moves to the 'Select' state.
+func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
+	encounter_ui.update_focused_player(player)
+	print("player %s now active" % [player.name])
+#	state_machine.transition_to(SELECT)

@@ -1,7 +1,7 @@
-class_name ErrorMessage
+class_name ErrorUtil
 extends Object
 """
-Functions that emit specific error messages.
+Functions that help catch or display errors when performing specific actions.
 """
 
 # The formatted error string for when a signal fails to connect in a state machine.
@@ -44,3 +44,32 @@ static func signal_connect_self_failed(
 			signal_method
 		]
 	)
+
+
+# This function connects a signal to the specified function in the current state
+# and emits an error message if the connection failed.
+static func connect_signal(
+	signal_source_node: Object,
+	signal_name: String,
+	target: Object,
+	function_name: String
+) -> void:
+	var e = signal_source_node.connect(signal_name, target, function_name)
+	
+	if e != OK:
+		if signal_source_node.name != target.name:
+			signal_connect_failed(
+				e,
+				signal_name,
+				signal_source_node.name,
+				signal_source_node.owner.name,
+				target.name,
+				function_name
+			)
+		else:
+			signal_connect_self_failed(
+				e,
+				signal_name,
+				target.name,
+				function_name
+			)
