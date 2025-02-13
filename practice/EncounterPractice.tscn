@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://character/player_characters/PlayerCharacter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://selector_node/Selector.tscn" type="PackedScene" id=2]
@@ -10,36 +10,10 @@
 [ext_resource path="res://states/encounter/EnemyTurn.gd" type="Script" id=8]
 [ext_resource path="res://states/encounter/Start.gd" type="Script" id=9]
 [ext_resource path="res://states/encounter/PlayerTurn.gd" type="Script" id=10]
-[ext_resource path="res://practice/UI.gd" type="Script" id=11]
 
 [node name="EncounterPractice" type="Node"]
 script = ExtResource( 4 )
 hex_map_path = NodePath("HexMap")
-
-[node name="UI" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 511.0
-margin_right = -685.0
-script = ExtResource( 11 )
-
-[node name="Move" type="Button" parent="UI"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 187.0
-margin_top = -72.0
-margin_right = 321.0
-margin_bottom = -13.0
-text = "Move"
-
-[node name="Technique" type="Button" parent="UI"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 33.0
-margin_top = -72.0
-margin_right = 167.0
-margin_bottom = -13.0
-text = "Technique"
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, -1.49184e-07, 9.11874e-08, 0, 0.521531, 0.853232, -1.74846e-07, -0.853232, 0.521531, 0, 4.21186, 3.02998 )
@@ -79,6 +53,3 @@ script = ExtResource( 8 )
 
 [node name="End" type="Node" parent="StateMachine"]
 script = ExtResource( 7 )
-
-[connection signal="pressed" from="UI/Move" to="UI" method="_on_Move_pressed"]
-[connection signal="pressed" from="UI/Technique" to="UI" method="_on_Technique_pressed"]
