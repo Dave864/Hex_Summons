@@ -22,7 +22,7 @@ var _p: PlayerCharacter =  null
 onready var players: Array = $Players.get_children()
 onready var enemies: Array = $Enemies.get_children()
 onready var selector: Selector = $Selector
-onready var ui: Control = $UI
+onready var ui: Control = $EncounterUI
 
 
 # Called when the node enters the scene tree for the first time.

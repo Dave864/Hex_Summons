@@ -13,6 +13,8 @@ enum Options {
 	NONE,
 }
 
+var rf: RangeFinder = null
+
 var _current_selection: int = Options.NONE setget set_current_selection, get_current_selection
 # The player character that will interface with the UI.
 var _player: PlayerCharacter = null
@@ -21,7 +23,6 @@ var _spells: Array = []
 
 onready var sub_options = $SubOptions
 onready var options = $Options
-onready var move_button = $Options/MoveButton
 onready var technique_button = $Options/TechniqueButton
 onready var spell_button = $Options/SpellButton
 onready var summon_button = $Options/SummonButton

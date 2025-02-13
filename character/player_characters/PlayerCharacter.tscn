@@ -9,7 +9,6 @@
 [ext_resource path="res://states/player_character/Wait.gd" type="Script" id=7]
 [ext_resource path="res://states/player_character/Attack.gd" type="Script" id=8]
 
-
 [sub_resource type="Resource" id=2]
 script = ExtResource( 6 )
 _base_max_hp = 1
