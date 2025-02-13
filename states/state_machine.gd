@@ -52,3 +52,31 @@ func transition_to(target_state_name: String, msg: Dictionary = {}) -> void:
 	state.enter(msg)
 	emit_signal("transitioned", state.name)
 
+
+# This function connects a signal to the specified function in the current state
+# and emits an error message if the connection failed.
+func connect_signal(
+	signal_source_node: Object,
+	signal_name: String,
+	target: Object,
+	function_name: String
+) -> void:
+	var e = signal_source_node.connect(signal_name, target, function_name)
+	
+	if e != OK:
+		if signal_source_node.name != target.name:
+			ErrorMessage.signal_connect_failed(
+				e,
+				signal_name,
+				signal_source_node.name,
+				owner.name,
+				target.name,
+				function_name
+			)
+		else:
+			ErrorMessage.signal_connect_self_failed(
+				e,
+				signal_name,
+				target.name,
+				function_name
+			)
