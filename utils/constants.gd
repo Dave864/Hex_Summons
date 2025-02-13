@@ -22,7 +22,7 @@ enum RangeTypes {
 }
 
 # The path to a default icon.
-const DEFAULT_ICON_PATH: String = "res://art/icon.png"
+const DEFAULT_ICON_PATH: String = "res://icon.png"
 
 # The ratio between 
 # the distance from the center of a hexagon to one of its vertices and 
