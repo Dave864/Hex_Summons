@@ -21,61 +21,27 @@ func enter(_msg: Dictionary = {}) -> void:
 		"_on_SignalBus_player_turn_ended"
 	)
 	
-	#var e: int = SignalBus.connect(
-	#	"player_turn_ended",
-	#	self,
-	#	"_on_SignalBus_player_turn_ended"
-	#)
-	
-	# Emit error message when issue is encountered when connecting the 
-	# player_turn_ended SignalBus signal to the 
-	# _on_SignalBus_player_turn_ended method.
-	#if e != OK:
-	#	ErrorMessage.signal_connect_failed(
-	#		e, 
-	#		"player_turn_ended",
-	#		"SignalBus",
-	#		"Selector",
-	#		"Pause",
-	#		"_on_SignalBus_player_turn_ended"
-	#	)
-	
 	state_machine.connect_signal(
 		SignalBus,
 		"selector_required",
 		self,
 		"_on_SignalBus_selector_required"
 	)
-	
-	#e = SignalBus.connect(
-	#	"selector_required",
-	#	self,
-	#	"_on_SignalBus_selector_required"
-	#)
-	
-	# Emit error message when issue is encountered when connecting the 
-	# selector_required SignalBus signal to the 
-	# _on_Signal_Bus_selector_required method.
-	#if e != OK:
-	#	ErrorMessage.signal_connect_failed(
-	#		e,
-	#		"selector_required",
-	#		"SignalBus",
-	#		"Selector",
-	#		"Pause",
-	#		"_on_Signal_Bus_selector_required"
-	#	)
-
-
-# Go back tp the "Select" state when the 
-func update(_delta: float) -> void:
-	pass
 
 
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	selector.disconnect("player_turn_ended", self, "_on_SignalBus_player_turn_ended")
+	SignalBus.disconnect(
+		"player_turn_ended", 
+		self, 
+		"_on_SignalBus_player_turn_ended"
+	)
+	SignalBus.disconnect(
+		"selector_required",
+		self,
+		"_on_SignalBus_selector_required"
+	)
 
 
 # Transition to the 'Wait' state when the current player's turn has ended.

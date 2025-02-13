@@ -20,24 +20,6 @@ func enter(_msg: Dictionary = {}) -> void:
 		self,
 		"_on_Selector_area_entered"
 	)
-	
-	#var e: int = selector.connect(
-	#	"area_entered", 
-	#	self, 
-	#	"_on_Selector_area_entered"
-	#)
-	
-	# Emit error message when issue is encountered when connecting the 
-	# area_entered Area signal to the _on_Selector_area_entered method.
-	#if e != OK:
-	#	ErrorMessage.signal_connect_failed(
-	#		e,
-	#		"area_entered",
-	#		"Selector",
-	#		"PlayerCharacter",
-	#		"Start",
-	#		"_on_Selector_area_entered"
-	#	)
 
 
 func update(_delta: float) -> void:

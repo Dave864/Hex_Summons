@@ -21,24 +21,6 @@ func enter(_msg := {}) -> void:
 		self, 
 		"_on_SignalBus_tile_selected"
 	)
-	
-	#var e: int = SignalBus.connect(
-	#	"tile_selected", 
-	#	self, 
-	#	"_on_SignalBus_tile_selected"
-	#)
-	
-	# Emit error message when issue is encountered when connecting the 
-	# tile_selected SignalBus signal to the _on_SignalBus_tile_selected method.
-	#if e != OK:
-	#	ErrorMessage.signal_connect_failed(
-	#		e,
-	#		"tile_selected",
-	#		"SignalBus autoload",
-	#		"PlayerCharacter",
-	#		"Standby",
-	#		"_on_SignalBus_tile_selected"
-	#	)
 
 
 # Receives events from the `_unhandled_input()` callback.

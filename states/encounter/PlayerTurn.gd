@@ -23,24 +23,6 @@ func enter(_msg := {}) -> void:
 		self,
 		"_on_Selector_tile_selected"
 	)
-	
-	#var e: int = enc.selector.connect(
-	#	"tile_selected",
-	#	self,
-	#	"_on_Selector_tile_selected"
-	#)
-	
-	# Emit error message when issue is encountered when connecting the 
-	# tile_selected Selector signal to the _on_Selector_tile_selected method.
-	#if e != OK:
-	#	ErrorMessage.signal_connect_failed(
-	#		e,
-	#		"tile_selected",
-	#		"Selector", 
-	#		"Encounter",
-	#		"PlayerTurn", 
-	#		"_on_Selector_tile_selected"
-	#	)
 
 
 # Corresponds to the `_process()` callback.
@@ -64,6 +46,7 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
+	SignalBus.emit_signal("player_turn_ended", enc.get_current_character())
 	enc.progress_initiative()
 	enc.rf.clear_movement_highlight()
 	enc.selector.disconnect("tile_selected", self, "_on_Selector_tile_selected")
