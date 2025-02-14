@@ -2,7 +2,7 @@ class_name HexMapAStar
 extends AStar
 """
 Custom AStar implementation designed to handle the calculations for hex grid
-pathfinding.
+pathfinding and area-finding.
 """
 
 
@@ -45,6 +45,30 @@ func update_astar_weights(active_character_type: int) -> void:
 	)
 
 
+# Get the indices of the tiles that are within movement range of a character.
+# Reference: https://www.redblobgames.com/grids/hexagons/#range-obstacles
+func determine_move_range(c: Character) -> Array:
+	var movement: int = c.stats.get_mvmt()
+	var visited: Dictionary = {}
+	var fringes: Array = []
+	fringes.append([_map_tiles[c.get_index_at()]])
+	
+	for i in range(1, movement + 1):
+		fringes.append([])
+		for tile in fringes[i - 1]:
+			for neighbor in tile.get_adjacent():
+				if (
+					neighbor != null and
+					!visited.has(neighbor.get_index()) and 
+					neighbor.is_active() and
+					neighbor.can_character_pass(c.get_type())
+				):
+					visited[neighbor.get_index()] = neighbor
+					fringes[i].append(neighbor)
+	
+	return visited.keys()
+
+
 func _init(
 	x_value: int,
 	z_value: int,
@@ -52,10 +76,10 @@ func _init(
 	players: Array,
 	enemies: Array
 ) -> void:
-	_x_count = x_value
-	_z_count = z_value
 	_players = players # Passed by reference
 	_enemies = enemies # Passed by reference
+	set_x_count(x_value)
+	set_z_count(z_value)
 	set_map_tiles(hex_map_tiles)
 
 

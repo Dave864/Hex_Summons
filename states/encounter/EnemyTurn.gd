@@ -13,23 +13,24 @@ player characters or all enemy characters are defeated.
 TODO: Remove this when you create the AI logic for the EnemyCharacter
 """
 var current_character: EnemyCharacter
+# The index of tiles that the enemy can move to.
+var movement_range: Array = []
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(ENEMY_TURN)
-	enc.rf.set_char_type(Constants.MapOccupants.ENEMY)
-	current_character = enc._initiative_tracker[enc._cur_init]
+	current_character = enc.get_current_character()
 	
 	# Start the enemy turn.
-	enc.rf.refresh_astar_connections(Constants.MapOccupants.ENEMY)
+	movement_range = enc.hm_astar.determine_move_range(current_character)
 	"""
 	TODO: Need to eventually add AI logic/state machine to EnemyCharacter.
 	"""
 	SignalBus.emit_signal(
 		"enemy_turn_started",
-		enc.rf.get_point_path(
+		enc.hm_astar.get_point_path(
 			current_character.get_index_at(),
 			enc._p.get_index_at()
 		)

@@ -7,7 +7,7 @@ Handles actions specific to enemy characters.
 
 # Returns the type of the character, ENEMY.
 func get_type() -> int:
-	return Constants.MapOccupants.ENEMy
+	return Constants.MapOccupants.ENEMY
 
 
 # Called when the node enters the scene tree for the first time.

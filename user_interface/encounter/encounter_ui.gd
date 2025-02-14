@@ -13,7 +13,7 @@ enum Options {
 	NONE,
 }
 
-var rf: RangeFinder = null
+var hm_astar: HexMapAStar = null
 
 var _current_selection: int = Options.NONE setget set_current_selection, get_current_selection
 # The player character that will interface with the UI.
@@ -27,6 +27,25 @@ onready var technique_button = $Options/TechniqueButton
 onready var spell_button = $Options/SpellButton
 onready var summon_button = $Options/SummonButton
 onready var end_button = $Options/EndButton
+
+
+# Sets the selection flag.
+func set_current_selection(new_flag: int) -> void:
+	_current_selection = new_flag
+	_update_sub_options()
+
+
+# Gets the value of the selection flag.
+func get_current_selection() -> int:
+	return _current_selection
+
+
+# Updates the player character being focused on when the signal `player_turn_started`
+# is emitted.
+func update_focused_player(new_player: PlayerCharacter) -> void:
+	_player = new_player
+	_techniques = _player.get_techniques()
+	_spells = _player.get_spells()
 
 
 # Called when the node enters the scene tree for the first time.
@@ -50,22 +69,3 @@ func _update_sub_options() -> void:
 			pass
 		_:
 			pass
-
-
-# Sets the selection flag.
-func set_current_selection(new_flag: int) -> void:
-	_current_selection = new_flag
-	_update_sub_options()
-
-
-# Gets the value of the selection flag.
-func get_current_selection() -> int:
-	return _current_selection
-
-
-# Updates the player character being focused on when the signal `player_turn_started`
-# is emitted.
-func update_focused_player(new_player: PlayerCharacter) -> void:
-	_player = new_player
-	_techniques = _player.get_techniques()
-	_spells = _player.get_spells()

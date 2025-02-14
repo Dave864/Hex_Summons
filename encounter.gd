@@ -9,7 +9,8 @@ Manages the events of an encounter.
 # hex map scene to be used.
 export(NodePath) var hex_map_path = null
 
-var rf: RangeFinder
+var hex_map: HexMap = null
+var hm_astar: HexMapAStar
 
 var _initiative_tracker: Array
 var _cur_init: int = 0
@@ -27,12 +28,13 @@ onready var ui: Control = $EncounterUI
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var hex_map: HexMap = get_node(hex_map_path)
-	rf = RangeFinder.new(
+	hex_map = get_node(hex_map_path)
+	hm_astar = HexMapAStar.new(
 		hex_map.get_x_count(),
 		hex_map.get_z_count(),
-		Constants.MapOccupants.EMPTY,
-		hex_map.get_map_tiles()
+		hex_map.get_map_tiles(),
+		players,
+		enemies
 	)
 	
 	_p = players[0]
@@ -41,7 +43,7 @@ func _ready() -> void:
 # Move the initiative counter to the next index or reset it back to the start.
 func progress_initiative() -> void:
 	_cur_init += 1
-	_cur_init = 0 if _cur_init == _initiative_tracker.size() else _cur_init
+	_cur_init = 0 if _cur_init >= _initiative_tracker.size() else _cur_init
 
 
 # Gets the next character in the intiative track.

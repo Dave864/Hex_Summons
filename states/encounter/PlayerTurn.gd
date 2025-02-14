@@ -9,12 +9,16 @@ player characters or all enemy characters are defeated.
 """
 
 
+# The index of tiles that the player can move to.
+var movement_range: Array = []
+
+
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(PLAYER_TURN)
-	enc.rf.set_char_type(Constants.MapOccupants.PLAYER)
-	enc.rf.astar_for_range(enc.get_current_character())
+	movement_range = enc.hm_astar.determine_move_range(enc.get_current_character())
+	enc.hex_map.highlight_tiles(movement_range)
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 	
 	ErrorUtil.connect_signal(
@@ -43,7 +47,6 @@ func update(_delta: float) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	enc.progress_initiative()
-	enc.rf.clear_movement_highlight()
 	enc.selector.disconnect("tile_selected", self, "_on_Selector_tile_selected")
 	SignalBus.disconnect("player_turn_ended", self, "_on_SignalBus_player_turn_ended")
 
@@ -54,7 +57,7 @@ func _on_Selector_tile_selected(tile: MapTile) -> void:
 		PlayerCharacterState.ATTACK:
 			data = null
 		_:
-			data = enc.rf.get_point_path(
+			data = enc.hm_astar.get_point_path(
 				enc.get_current_character().get_index_at(),
 				tile.get_index()
 			)
@@ -62,6 +65,7 @@ func _on_Selector_tile_selected(tile: MapTile) -> void:
 
 
 func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
+	enc.hex_map.clear_highlights()
 	var next_character: Character = enc.get_next_character()
 	if next_character is PlayerCharacter:
 		state_machine.transition_to(PLAYER_TURN)

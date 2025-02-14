@@ -55,7 +55,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		selector.player_action_change or
 		selector.snap_to_position and
 		map_tile.is_active() and
-		map_tile.get_movement_active()
+		map_tile.get_is_selectable()
 	):
 		selector.snap_position = map_tile.translation
 		selector.tile = map_tile
