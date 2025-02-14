@@ -30,41 +30,6 @@ var _occupant: Character = null setget , get_current_occupant
 var _is_movement_active: bool = false setget set_movement_active, get_movement_active
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	var e = connect("area_entered", self, "_on_MapTile_area_entered")
-	
-	# Emit error message when issue is encountered when connecting the 
-	# area_entered MaptTile signal to the _on_MapTile_area_entered method.
-	if e != OK:
-		printerr(Constants.ERROR_SIGNAL_CONNECT_SELF_FAILED % [
-			e, 
-			"area_entered", 
-			"MapTile",
-			"_on_MapTile_area_entered"
-		])
-	
-	e = connect("area_exited", self, "_on_MapTile_area_exited")
-	
-	# Emit error message when issue is encountered when connecting the 
-	# area_exited MapTile signal to the _on_MapTile_area_exited method.
-	if e != OK:
-		printerr(Constants.ERROR_SIGNAL_CONNECT_SELF_FAILED % [
-			e, 
-			"area_exited", 
-			"MapTile", 
-			"_on_MapTile_area_exited"
-		])
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta) -> void:
-	if _is_movement_active:
-		$Highlighter.show()
-	else:
-		$Highlighter.hide()
-
-
 # Gets the adjacent tile of the specified position.
 func get_adjacent_tile(position: int) -> Spatial:
 	return _adjacent_tiles[position]
@@ -129,6 +94,20 @@ func can_character_pass(character_type: int) -> bool:
 # Checks whether the Map Tile is an active element of the map.
 func is_active() -> bool:
 	return visible
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	ErrorUtil.connect_signal(self, "area_entered", self, "_on_MapTile_area_entered")
+	ErrorUtil.connect_signal(self, "area_exited", self, "_on_MapTile_area_exited")
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta) -> void:
+	if _is_movement_active:
+		$Highlighter.show()
+	else:
+		$Highlighter.hide()
 
 
 func _on_MapTile_area_entered(area) -> void:
