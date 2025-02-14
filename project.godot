@@ -39,6 +39,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://states/encounter/encounter_state.gd"
 }, {
+"base": "Control",
+"class": "EncounterUI",
+"language": "GDScript",
+"path": "res://user_interface/encounter/encounter_ui.gd"
+}, {
+"base": "State",
+"class": "EncounterUIState",
+"language": "GDScript",
+"path": "res://states/user_interface/encounter/encounter_ui_state.gd"
+}, {
 "base": "Character",
 "class": "EnemyCharacter",
 "language": "GDScript",
@@ -50,6 +60,11 @@ _global_script_classes=[ {
 "path": "res://states/enemy_character/enemy_character_state.gd"
 }, {
 "base": "Object",
+"class": "ErrorUtil",
+"language": "GDScript",
+"path": "res://utils/error_util.gd"
+}, {
+"base": "Object",
 "class": "FSM",
 "language": "GDScript",
 "path": "res://utils/fsm.gd"
@@ -58,6 +73,11 @@ _global_script_classes=[ {
 "class": "HexMap",
 "language": "GDScript",
 "path": "res://hex_map/hex_map.gd"
+}, {
+"base": "MarginContainer",
+"class": "LabeledIconButton",
+"language": "GDScript",
+"path": "res://user_interface/encounter/LabeledIconButton/labeled_icon_button.gd"
 }, {
 "base": "Area",
 "class": "MapTile",
@@ -99,10 +119,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://states/state.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://states/state_machine.gd"
+}, {
+"base": "ScrollContainer",
+"class": "SubOptions",
+"language": "GDScript",
+"path": "res://user_interface/encounter/sub_options.gd"
 }, {
 "base": "Spatial",
 "class": "Tiles",
@@ -116,10 +141,14 @@ _global_script_class_icons={
 "CoreStats": "",
 "Encounter": "",
 "EncounterState": "",
+"EncounterUI": "",
+"EncounterUIState": "",
 "EnemyCharacter": "",
 "EnemyCharacterState": "",
+"ErrorUtil": "",
 "FSM": "",
 "HexMap": "",
+"LabeledIconButton": "",
 "MapTile": "",
 "MousePosition": "",
 "PlayerCharacter": "",
@@ -129,6 +158,7 @@ _global_script_class_icons={
 "SelectorState": "",
 "State": "",
 "StateMachine": "",
+"SubOptions": "",
 "Tiles": ""
 }
 
@@ -154,12 +184,55 @@ collision=false
 
 common/drop_mouse_on_gui_input_disabled=true
 
+[input]
+
+ui_selector_select={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"doubleclick":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777221,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_encounter_option_1={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":49,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_encounter_option_2={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":3,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":50,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_encounter_option_3={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":51,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_encounter_4={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":52,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+
 [layer_names]
 
 3d_physics/layer_1="selector"
 3d_physics/layer_2="map"
 3d_physics/layer_3="player"
 3d_physics/layer_4="mob"
+
+[mono]
+
+project/assembly_name="Hex_Summons"
 
 [physics]
 
