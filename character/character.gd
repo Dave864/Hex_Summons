@@ -38,6 +38,11 @@ func get_spells() -> Array:
 	return _spells
 
 
+# Virtual function. Returns the type of the character.
+func get_type() -> int:
+	return Constants.MapOccupants.EMPTY
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass

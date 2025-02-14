@@ -10,6 +10,11 @@ var level: int = 1
 #var player_class
 
 
+# Returns the type of the character, PLAYER.
+func get_type() -> int:
+	return Constants.MapOccupants.PLAYER
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
