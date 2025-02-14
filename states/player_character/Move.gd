@@ -16,11 +16,14 @@ var next_point_index: int = 1
 # The current interpolation weight.
 var weight: float = 0.0
 
+var completed_path: bool = false
+
 
 # Set the starting point for the path.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(MOVE)
 	travel_path = _msg["travel_path"]
+	print(travel_path)
 	
 	# Move to the 'Standby' state if the travel path only has one point.
 	# This indicates that the player character's current position was 
@@ -28,27 +31,32 @@ func enter(_msg := {}) -> void:
 	if travel_path.size() > 1:
 		start_point = pc.translation
 		next_point = travel_path[next_point_index]
-	else:
+	elif StateMachineBus.encounter_states[FSM.Encounter.SELECTOR] == SelectorState.PAUSE:
 		state_machine.transition_to(STANDBY)
+	else:
+		completed_path = true
 
 
 # Corresponds to the `_process()` callback.
 func update(delta: float) -> void:
-	# Move the player character towards the next tile.
-	weight += delta * pc.stats.get_mvmt_speed()
-	weight = 1.0 if weight > 1.0 else weight
-	pc.translation = start_point.linear_interpolate(next_point, weight)
-	
-	# When finished moving to next tile, check to see if path has been fully
-	# traversed. Move to the 'Wait' state when path has been fully traversed.
-	if weight >= 1.0:
-		next_point_index += 1
-		if next_point_index < travel_path.size():
-			weight = 0.0
-			start_point = pc.translation
-			next_point = travel_path[next_point_index]
-		else:
-			state_machine.transition_to(STANDBY)
+	if not completed_path:
+		# Move the player character towards the next tile.
+		weight += delta * pc.stats.get_mvmt_speed()
+		weight = 1.0 if weight > 1.0 else weight
+		pc.translation = start_point.linear_interpolate(next_point, weight)
+		
+		# When finished moving to next tile, check to see if path has been fully
+		# traversed. Move to the 'Standby' state when path has been fully traversed.
+		if weight >= 1.0:
+			next_point_index += 1
+			if next_point_index < travel_path.size():
+				weight = 0.0
+				start_point = pc.translation
+				next_point = travel_path[next_point_index]
+			else:
+				completed_path = true
+	elif StateMachineBus.encounter_states[FSM.Encounter.SELECTOR] == SelectorState.PAUSE:
+		state_machine.transition_to(STANDBY)
 
 
 # Called by the state machine before changing the active state.
@@ -56,3 +64,6 @@ func update(delta: float) -> void:
 func exit() -> void:
 	weight = 0.0
 	next_point_index = 1
+	completed_path = false
+	print("Required Selector")
+	SignalBus.emit_signal("selector_required")

@@ -37,8 +37,8 @@ func update(_delta: float) -> void:
 	# Signal that the currently highlighted map tile was selected
 	# and move to the 'Pause' state.
 	if Input.is_action_pressed("ui_selector_select"):
-		selector.emit_signal("tile_selected", selector.tile)
 		selector.animation_player.play("selected")
+		selector.emit_signal("tile_selected", selector.tile)
 		yield(selector.animation_player, "animation_finished")
 		state_machine.transition_to(PAUSE)
 
@@ -52,10 +52,10 @@ func exit() -> void:
 func _on_Selector_area_entered(map_tile: Area) -> void:
 	# Don't snap to position if map_tile is disabled or inactive.
 	if (
-		selector.player_action_change or
-		selector.snap_to_position and
-		map_tile.is_active() and
-		map_tile.get_is_selectable()
+		selector.player_action_change 
+		or selector.snap_to_position 
+		and map_tile.is_active() 
+		and map_tile.get_is_selectable()
 	):
 		selector.snap_position = map_tile.translation
 		selector.tile = map_tile

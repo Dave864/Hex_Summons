@@ -68,6 +68,7 @@ func set_cube_coord(value: Vector3) -> void:
 # Set the value of the selectable flag.
 func set_is_selectable(value: bool) -> void:
 	_is_selectable = value
+	_set_highlighter()
 
 
 # Get the value of the selectable flag.
@@ -105,12 +106,12 @@ func _ready() -> void:
 
 # Runs every frame.
 func _process(_delta: float) -> void:
-	_set_highlighter()
+	pass
 
 
 # Activates the highlighter based on the _is_selectable flag.
 func _set_highlighter() -> void:
-	if _is_selectable and _occupant == null:
+	if _is_selectable:
 		$Highlighter.show()
 	else:
 		$Highlighter.hide()
