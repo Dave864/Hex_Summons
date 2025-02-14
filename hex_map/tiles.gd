@@ -24,6 +24,50 @@ var _map_tile: PackedScene = preload("res://hex_map/map_tile_node/MapTile.tscn")
 onready var _root_node: Node = get_tree().edited_scene_root
 
 
+# Update the z_count parameter and regenerate the grid.
+func set_z_count(new_count: int) -> void:
+	z_count = new_count
+	# Check if the root node is set to prevent the creation of "duplicate"
+	# map tiles when loading in the game.
+	if _root_node != null:
+		_update_grid_start()
+		_regenerate_grid()
+
+
+# Return the value of the z_count parameter.
+func get_z_count() -> int:
+	return z_count
+
+
+# Update the x_count parameter and regenerate the grid.
+func set_x_count(new_count: int) -> void:
+	x_count = new_count
+	# Check if the root node is set to prevent the creation of "duplicate"
+	# map tiles when loading in the game.
+	if _root_node != null:
+		_update_grid_start()
+		_regenerate_grid()
+
+
+# Return the value of the x_count parameter.
+func get_x_count() -> int:
+	return x_count
+
+
+# Get the tile at the specified index.
+func get_tile_at_index(index: int) -> Node:
+	return get_child(index)
+
+
+# Converts the index value to its corresponding cube cooridinate.
+func index_to_cube(index: int) -> Vector3:
+	var z_pos: int = int(floor(float(index) / float(x_count)))
+	var x_pos: int = index % x_count
+	var x_cube: int = int(x_pos - (z_pos - (z_pos & 1)) / 2.0)
+	var y_cube: int = z_pos
+	return Vector3(x_cube, y_cube, -x_cube - y_cube)
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_initial_grid_generation()
@@ -209,47 +253,3 @@ func _is_even_grid() -> bool:
 # Check if number is even.
 func _is_even(number) -> bool:
 	return number % 2 == 0
-
-
-# Update the z_count parameter and regenerate the grid.
-func set_z_count(new_count: int) -> void:
-	z_count = new_count
-	# Check if the root node is set to prevent the creation of "duplicate"
-	# map tiles when loading in the game.
-	if _root_node != null:
-		_update_grid_start()
-		_regenerate_grid()
-
-
-# Return the value of the z_count parameter.
-func get_z_count() -> int:
-	return z_count
-
-
-# Update the x_count parameter and regenerate the grid.
-func set_x_count(new_count: int) -> void:
-	x_count = new_count
-	# Check if the root node is set to prevent the creation of "duplicate"
-	# map tiles when loading in the game.
-	if _root_node != null:
-		_update_grid_start()
-		_regenerate_grid()
-
-
-# Return the value of the x_count parameter.
-func get_x_count() -> int:
-	return x_count
-
-
-# Get the tile at the specified index.
-func get_tile_at_index(index: int) -> Node:
-	return get_child(index)
-
-
-# Converts the index value to its corresponding cube cooridinate.
-func index_to_cube(index: int) -> Vector3:
-	var z_pos: int = int(floor(float(index) / float(x_count)))
-	var x_pos: int = index % x_count
-	var x_cube: int = int(x_pos - (z_pos - (z_pos & 1)) / 2.0)
-	var y_cube: int = z_pos
-	return Vector3(x_cube, y_cube, -x_cube - y_cube)
