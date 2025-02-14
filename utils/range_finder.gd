@@ -1,9 +1,8 @@
-tool
 class_name RangeFinder
-extends AStar
+extends Node
 """
-A collection of calculations and algorithms used for various map actions that
-depend on getting a range of tiles or paths to tiles.
+A collection of calculations and algorithms used for various encounter map 
+actions that depend on getting a range of tiles or paths to tiles.
 """
 
 
@@ -24,18 +23,6 @@ func _init(
 	_z_count = z_value
 	_current_char_type = current_char
 	set_map_tiles(initial_map)
-
-
-# Virtual Astar function. Called when computing the cost between two
-# connected points.
-func _compute_cost(u, v) -> float:
-	return _cube_dist(u, v)
-
-
-# Virtual Astar function. Called when estimating the cost between a point 
-# and the path's ending point.
-func _estimate_cost(u, v) -> float:
-	return min(0, _cube_dist(u, v) - 1)
 
 
 func set_z_count(value: int) -> void:
@@ -59,35 +46,35 @@ func set_char_type(type: int) -> void:
 
 
 # Recalculates the astar connnections for the map in its current state.
-func refresh_astar_connections(current_char_type: int) -> void:
-	_current_char_type = current_char_type
-	
-	# Empty out the current astar map and resize if necessary.
-	clear()
-	if get_point_capacity() < _map_tiles.size():
-		reserve_space(_map_tiles.size())
-	
-	# Add the tiles to the astar map.
-	var tile_weight: float
-	for tile in _map_tiles:
-		# Only add tile if it is active
-		if tile.is_active():
-			# Set the weight to 50 if the tile is occupied by a character
-			# of the opposing faction.
-			tile_weight = 1.0 if tile.can_character_pass(_current_char_type) else 50.0
-			add_point(tile.get_index(), tile.translation, tile_weight)
-	
-	# Set up the connections for the astar map.
-	for tile in _map_tiles:
-		# Set up connections for active tiles.
-		if tile.is_active():
-			for neighbor in tile.get_adjacent():
-				# Connect non empty and active neighbors.
-				if neighbor != null and neighbor.is_active():
-					connect_points(
-						tile.get_index(), 
-						neighbor.get_index()
-					)
+#func refresh_astar_connections(current_char_type: int) -> void:
+#	_current_char_type = current_char_type
+#
+#	# Empty out the current astar map and resize if necessary.
+#	clear()
+#	if get_point_capacity() < _map_tiles.size():
+#		reserve_space(_map_tiles.size())
+#
+#	# Add the tiles to the astar map.
+#	var tile_weight: float
+#	for tile in _map_tiles:
+#		# Only add tile if it is active
+#		if tile.is_active():
+#			# Set the weight to 50 if the tile is occupied by a character
+#			# of the opposing faction.
+#			tile_weight = 1.0 if tile.can_character_pass(_current_char_type) else 50.0
+#			add_point(tile.get_index(), tile.translation, tile_weight)
+#
+#	# Set up the connections for the astar map.
+#	for tile in _map_tiles:
+#		# Set up connections for active tiles.
+#		if tile.is_active():
+#			for neighbor in tile.get_adjacent():
+#				# Connect non empty and active neighbors.
+#				if neighbor != null and neighbor.is_active():
+#					connect_points(
+#						tile.get_index(), 
+#						neighbor.get_index()
+#					)
 
 
 # Determine the astar connections for a map section centered on the character.
@@ -98,35 +85,35 @@ func astar_for_range(
 	_current_range = _get_movement_range(character)
 	
 	# Empty out the current astar map and resize if necessary.
-	clear()
-	if get_point_capacity() < _current_range.size():
-		reserve_space(_current_range.size())
-	
-	# Add the tiles to the astar map.
-	var tile_weight: float
-	for tile in _current_range:
-		# Set the weight to 50 if the tile is occupied by a character
-		# of the opposing faction.
-		tile_weight = 1.0 if tile.can_character_pass(_current_char_type) else 50.0
-		add_point(tile.get_index(), tile.translation, tile_weight)
-	
-	# Set up the connections for the astar map.
-	for tile in _current_range:
-		# Set up connections for active tiles.
-		for neighbor in tile.get_adjacent():
-			# Connect non empty and active neighbors.
-			if neighbor != null and neighbor.get_movement_active():
-				connect_points(
-					tile.get_index(), 
-					neighbor.get_index()
-				)
+#	clear()
+#	if get_point_capacity() < _current_range.size():
+#		reserve_space(_current_range.size())
+#
+#	# Add the tiles to the astar map.
+#	var tile_weight: float
+#	for tile in _current_range:
+#		# Set the weight to 50 if the tile is occupied by a character
+#		# of the opposing faction.
+#		tile_weight = 1.0 if tile.can_character_pass(_current_char_type) else 50.0
+#		add_point(tile.get_index(), tile.translation, tile_weight)
+#
+#	# Set up the connections for the astar map.
+#	for tile in _current_range:
+#		# Set up connections for active tiles.
+#		for neighbor in tile.get_adjacent():
+#			# Connect non empty and active neighbors.
+#			if neighbor != null and neighbor.get_movement_active():
+#				connect_points(
+#					tile.get_index(), 
+#					neighbor.get_index()
+#				)
 
 
 # Clear the highlighted movement tiles.
 func clear_movement_highlight() -> void:
 	for tile in _current_range:
 		tile.set_movement_active(false)
-	clear()
+#	clear()
 
 
 # Get the tiles that are within movement reach of the character.
@@ -154,30 +141,3 @@ func _get_movement_range(character: Character) -> Array:
 					fringes[i].append(neighbor)
 	
 	return visited.values()
-
-
-# Calculates the distance between two tiles based on their cube coordinates.
-# Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
-func _cube_dist(start_index: int, end_index: int) -> float:
-	var start_pos: Vector3 = _index_to_cube(start_index)
-	var end_pos: Vector3 = _index_to_cube(end_index)
-	var diff: Vector3 = start_pos - end_pos
-	return (abs(diff.x) + abs(diff.y) + abs(diff.z)) / 2.0
-
-
-# Converts the index to the corresponding cube coordinate.
-# Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
-func _index_to_cube(index: int) -> Vector3:
-	var z_pos: int = int(floor(float(index) / float(_x_count)))
-	var x_pos: int = index % _x_count
-	var x_cube: int = int(x_pos - (z_pos - (z_pos & 1)) / 2.0)
-	var y_cube: int = z_pos
-	return Vector3(x_cube, y_cube, -x_cube - y_cube)
-
-
-# Converts the cube coordinates to the corresponding index.
-# Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
-func _cube_to_index(coord: Vector3) -> int:
-	var z_pos: int = int(coord.y + (coord.x - (int(coord.x) & 1)) / 2.0)
-	var x_pos: int = int(coord.x)
-	return (z_pos * _x_count) + x_pos

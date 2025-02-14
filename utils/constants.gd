@@ -13,7 +13,6 @@ enum MapOccupants {
 	EMPTY,
 }
 
-
 # What the range finder is being used for.
 enum RangeTypes {
 	MOVE,
@@ -32,3 +31,7 @@ const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 # The maximimum values for various character and attack stats.
 const MAX_STAT: int = 1000
 const MAX_MAP_DIST: int = 20
+
+# The value to use when adjusting the weight of a hex map astar connection point
+# to account for characters of the opposite faction of the current active character.
+const ASTAR_ADJUSTMENT_WEIGHT = 1000.0
