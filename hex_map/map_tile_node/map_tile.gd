@@ -26,8 +26,8 @@ var _index: int = -1 setget set_index, get_index
 var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
 # The current occupant of the tile.
 var _occupant: Character = null setget , get_current_occupant
-# Flag that indicates if the tile is avaiable to move to
-var _is_movement_active: bool = false setget set_movement_active, get_movement_active
+# Flag that indicates if the tile is avaiable to be selected
+var _is_selectable: bool = false setget set_is_selectable, get_is_selectable
 
 
 # Gets the adjacent tile of the specified position.
@@ -66,13 +66,14 @@ func set_cube_coord(value: Vector3) -> void:
 
 
 # Set the value of the movement flag.
-func set_movement_active(value: bool) -> void:
-	_is_movement_active = value
+func set_is_selectable(value: bool) -> void:
+	_is_selectable = value
+	_set_highlighter()
 
 
 # Get the value of the movement flag.
-func get_movement_active() -> bool:
-	return _is_movement_active
+func get_is_selectable() -> bool:
+	return _is_selectable
 
 
 # Gets the current character occupying this tile.
@@ -100,11 +101,12 @@ func is_active() -> bool:
 func _ready() -> void:
 	ErrorUtil.connect_signal(self, "area_entered", self, "_on_MapTile_area_entered")
 	ErrorUtil.connect_signal(self, "area_exited", self, "_on_MapTile_area_exited")
+	_set_highlighter()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta) -> void:
-	if _is_movement_active:
+# Activates the highlighter based on the _is_selectable flag.
+func _set_highlighter() -> void:
+	if _is_selectable:
 		$Highlighter.show()
 	else:
 		$Highlighter.hide()
