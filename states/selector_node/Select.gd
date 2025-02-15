@@ -11,8 +11,6 @@ When the input for selecting a tile is given, the Selector moves to the
 func enter(_msg: Dictionary = {}) -> void:
 	_set_state_machine_bus(SELECT)
 	selector.snap_to_position = true
-	selector.animation_player.play("RESET")
-	selector.selector_shape.show()
 	
 	ErrorUtil.connect_signal(
 		selector,
@@ -20,6 +18,9 @@ func enter(_msg: Dictionary = {}) -> void:
 		self,
 		"_on_Selector_area_entered"
 	)
+	
+	selector.animation_player.play("RESET")
+	selector.selector_shape.show()
 
 
 func update(_delta: float) -> void:
@@ -28,11 +29,7 @@ func update(_delta: float) -> void:
 	
 	# Snap the position of the Selector shape mesh to the last hovered over tile.
 	var new_position: Vector3 = selector.snap_position - selector.translation
-	selector.selector_shape.translation = Vector3(
-		new_position.x,
-		0.125,
-		new_position.z
-	)
+	selector.selector_shape.translation = selector.adjusted_position(new_position)
 
 
 # Called by the state machine before changing the active state. Use this 
@@ -42,10 +39,10 @@ func exit() -> void:
 
 
 # Handles input events
-func _input(event: InputEvent) -> void:
+func handle_input(_event: InputEvent) -> void:
 	# Signal that the currently highlighted map tile was selected
 	# and move to the 'Pause' state.
-	if event.is_action_pressed("ui_selector_select"):
+	if _event.is_action_pressed("ui_selector_select"):
 		selector.animation_player.play("selected")
 		selector.emit_signal("tile_selected", selector.tile)
 		yield(selector.animation_player, "animation_finished")
@@ -65,8 +62,8 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		selector.player_action_change = false
 
 
-func _on_UI_mode_changed() -> void:
+func _on_UI_mode_changed(player_pos: Vector3) -> void:
 	# Snap the selector to the position of the current player when shifting
 	# between different actions.
 	selector.player_action_change = true
-	selector.snap_to_character()
+	selector.set_to_position(player_pos)

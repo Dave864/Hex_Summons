@@ -38,5 +38,4 @@ func exit() -> void:
 # Gets the current player and moves to the 'Select' state.
 func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
 	encounter_ui.update_focused_player(player)
-	print("player %s now active" % [player.name])
 #	state_machine.transition_to(SELECT)

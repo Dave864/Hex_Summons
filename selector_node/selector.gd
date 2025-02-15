@@ -21,8 +21,6 @@ var player_action_change: bool = false
 var snap_position: Vector3 = Vector3.ZERO
 # The MapTile that was last passed over.
 var tile: MapTile = null
-# The player that is currently active.
-var current_player: PlayerCharacter = null
 
 # The current mouse position
 onready var mouse_position: MousePosition = $MousePosition
@@ -32,10 +30,11 @@ onready var selector_shape: MeshInstance = $SelectorShape
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
-# Set the position of the selector to the position of the current player.
-func snap_to_character() -> void:
-	translation = Vector3(
-		current_player.translation.x,
-		0.125,
-		current_player.translation.z
-	)
+# Set the position of the selector.
+func set_to_position(position: Vector3) -> void:
+	translation = adjusted_position(position)
+
+
+# Adjusts the provided position to account for the position of the selector shape. 
+func adjusted_position(position: Vector3) -> Vector3:
+	return Vector3(position.x, $SelectorShape.translation.y, position.z)

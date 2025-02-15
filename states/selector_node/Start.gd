@@ -5,12 +5,6 @@ The Selector sets its initial position before going to the `Wait` state.
 """
 
 
-# Hit when the selector node enters a map tile.
-func _on_Selector_area_entered(map_tile: Area) -> void:
-	selector.snap_position = map_tile.translation
-	selector.tile = map_tile
-
-
 # Called by the state machine upon changing the active state. The `msg` 
 # parameter is a dictionary with arbitrary data the state can use to 
 # initialize itself.
@@ -35,3 +29,9 @@ func update(_delta: float) -> void:
 # function to clean up the state.
 func exit() -> void:
 	selector.disconnect("area_entered", self, "_on_Selector_area_entered")
+
+
+# Hit when the selector node enters a map tile.
+func _on_Selector_area_entered(map_tile: Area) -> void:
+	selector.snap_position = map_tile.translation
+	selector.tile = map_tile

@@ -33,6 +33,5 @@ func exit() -> void:
 # Set the position of the selector to the player whose turn has started and move
 # to the `Select` state.
 func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
-	selector.current_player = player
-	selector.snap_to_character()
+	selector.set_to_position(player.translation)
 	state_machine.transition_to(SELECT)
