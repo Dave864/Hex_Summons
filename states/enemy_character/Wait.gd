@@ -5,11 +5,6 @@ The Enemy Character does nothing until it is called upon to act.
 """
 
 
-# Hit when the enemy character is selected to take its turn.
-func _on_SignalBus_enemy_turn_started(path: PoolVector3Array) -> void:
-	state_machine.transition_to(MOVE, {"travel_path": path})
-
-
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
@@ -29,3 +24,8 @@ func exit() -> void:
 		self,
 		"_on_SignalBus_enemy_turn_started"
 	)
+
+
+# Hit when the enemy character is selected to take its turn.
+func _on_SignalBus_enemy_turn_started(path: PoolVector3Array) -> void:
+	state_machine.transition_to(MOVE, {"travel_path": path})

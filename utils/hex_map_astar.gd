@@ -30,29 +30,16 @@ func get_map_tiles() -> Array:
 	return _map_tiles
 
 
-# Update the weight values of astar points to account for the specified
-# character type. Points that have characters of the opposite type will
-# have their weight increased, while the points occupied by the same type
-# will be reset to their original values.
-func update_astar_weights(active_character_type: int) -> void:
-	_update_character_astar_weights(
-		_enemies, 
-		active_character_type == Constants.MapOccupants.ENEMY
-	)
-	_update_character_astar_weights(
-		_players, 
-		active_character_type == Constants.MapOccupants.PLAYER
-	)
-
-
 # Get the indices of the tiles that are within movement range of a character.
 # Reference: https://www.redblobgames.com/grids/hexagons/#range-obstacles
 func determine_move_range(c: Character) -> Array:
 	var movement: int = c.stats.get_mvmt()
 	var visited: Dictionary = {}
 	var fringes: Array = []
-	fringes.append([_map_tiles[c.get_index_at()]])
-	
+	# Start with the character's position
+	fringes.append([_map_tiles[c.get_index_at()]]) 
+
+	# Get the tiles within movement range
 	for i in range(1, movement + 1):
 		fringes.append([])
 		for tile in fringes[i - 1]:
@@ -65,8 +52,40 @@ func determine_move_range(c: Character) -> Array:
 				):
 					visited[neighbor.get_index()] = neighbor
 					fringes[i].append(neighbor)
-	
 	return visited.keys()
+
+
+# Determines the path to the point closest to the specified ID for a given character.
+# Takes a character, the id of the desired destination tile, and an array of tiles
+# the character can traverse to. The array is calculated if not provided.
+func get_point_path_toward(
+	c: Character,
+	dest_id: int,
+	movement_array: Array = []
+) -> PoolVector3Array:
+	if movement_array.size() == 0:
+		movement_array = determine_move_range(c)
+	
+	_update_astar_disabled(c.get_type())
+	# reenable destination tile to allow a path to be found
+	set_point_disabled(dest_id, false)
+	
+	var path_to_dest: PoolIntArray = get_id_path(c.get_index_at(), dest_id)
+	var i: int = path_to_dest.size() - 1
+	var true_dest_id: int = dest_id
+	
+	while true and i > 0:
+		if not path_to_dest[i] in movement_array:
+			true_dest_id = path_to_dest[i - 1]
+			i -= 1
+		else:
+			break
+	
+	_disconnect_area(movement_array)
+	var point_path: PoolVector3Array = get_point_path(c.get_index_at(), true_dest_id)
+	_full_reset()
+	
+	return point_path
 
 
 func _init(
@@ -91,40 +110,74 @@ func _establish_astar_connections() -> void:
 		reserve_space(_map_tiles.size())
 	
 	# Add the tiles to the astar map.
-	var tile_weight: float
 	for tile in _map_tiles:
 		if tile.is_active():
-			var index: int = tile.get_index()
-			# TODO: weight will need to be updated when different tile types
-			# are eventually created
-			add_point(index, tile.translation, 1.0)
+			"""
+			TODO: weight will need to be updated when different tile types
+			are eventually created
+			"""
+			add_point(tile.get_index(), tile.translation, 1.0)
 	
-	# Set up the connections for the astar map.
+	_reconnect_nodes()
+
+
+# Helper for update_astar_disabled. Updates the astar disabled flag for the tiles
+# occupied by the specific character type.
+func _update_character_astar_disabled(characters: Array, is_active_type: bool) -> void:
+	for c in characters:
+		set_point_disabled(c.get_index_at(), not is_active_type)
+
+
+# Update the disabled status of astar points to account for the specified
+# character type. Points that have characters of the opposite type will
+# be disabled, while all other points are enabled.
+func _update_astar_disabled(active_character_type: int) -> void:
+	_update_character_astar_disabled(
+		_enemies, 
+		active_character_type == Constants.MapOccupants.ENEMY
+	)
+	_update_character_astar_disabled(
+		_players, 
+		active_character_type == Constants.MapOccupants.PLAYER
+	)
+
+
+# Disconnects a part of a map from the rest. The part to disconnect is represented
+# as an array of ids.
+func _disconnect_area(tiles_to_disconnect: Array) -> void:
+	for id in tiles_to_disconnect:
+		var tile: MapTile = _map_tiles[id]
+		if tile.is_active():
+			for neighbor in tile.get_adjacent():
+				if (
+						neighbor != null 
+						and not neighbor.get_index() in tiles_to_disconnect
+				):
+					disconnect_points(tile.get_index(), neighbor.get_index())
+
+
+# Reestablish the connections in the astar map.
+func _reconnect_nodes() -> void:
 	for tile in _map_tiles:
 		if tile.is_active():
 			for neighbor in tile.get_adjacent():
 				# Connect non empty and active neighbors.
 				if neighbor != null and neighbor.is_active():
-					connect_points(
-						tile.get_index(), 
-						neighbor.get_index()
-					)
+					connect_points(tile.get_index(), neighbor.get_index())
 
 
-# Helper for update_astar_weights. Updates the astar weights for the tiles
-# occupied by the specific character type.
-func _update_character_astar_weights(characters: Array, is_active_type: bool) -> void:
-	var weight: float
-	for c in characters:
-		weight = get_point_weight_scale(c.get_index_at())
-		if not is_active_type:
-			weight += Constants.ASTAR_ADJUSTMENT_WEIGHT
-		else:
-			weight -= (
-					Constants.ASTAR_ADJUSTMENT_WEIGHT if weight > Constants.ASTAR_ADJUSTMENT_WEIGHT 
-					else 0.0
-			)
-		set_point_weight_scale(c.get_index_at(), weight)
+# Reset the disabled flag for all connections in the astar map.
+func _reset_disabled() -> void:
+	for tile in _map_tiles:
+		if tile.is_active():
+			set_point_disabled(tile.get_index(), false)
+
+
+# Fully reset the connection map. This will reestablish all connections and
+# reenable all nodes.
+func _full_reset():
+	_reconnect_nodes()
+	_reset_disabled()
 
 
 # Virtual Astar function. Called when computing the cost between two

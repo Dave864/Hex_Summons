@@ -33,20 +33,23 @@ func update(_delta: float) -> void:
 		0.125,
 		new_position.z
 	)
-	
-	# Signal that the currently highlighted map tile was selected
-	# and move to the 'Pause' state.
-	if Input.is_action_pressed("ui_selector_select"):
-		selector.animation_player.play("selected")
-		selector.emit_signal("tile_selected", selector.tile)
-		yield(selector.animation_player, "animation_finished")
-		state_machine.transition_to(PAUSE)
 
 
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
 	selector.disconnect("area_entered", self, "_on_Selector_area_entered")
+
+
+# Handles input events
+func _input(event: InputEvent) -> void:
+	# Signal that the currently highlighted map tile was selected
+	# and move to the 'Pause' state.
+	if event.is_action_pressed("ui_selector_select"):
+		selector.animation_player.play("selected")
+		selector.emit_signal("tile_selected", selector.tile)
+		yield(selector.animation_player, "animation_finished")
+		state_machine.transition_to(PAUSE)
 
 
 func _on_Selector_area_entered(map_tile: Area) -> void:

@@ -57,9 +57,10 @@ func _on_Selector_tile_selected(tile: MapTile) -> void:
 		PlayerCharacterState.ATTACK:
 			data = null
 		_:
-			data = enc.hm_astar.get_point_path(
-				enc.get_current_character().get_index_at(),
-				tile.get_index()
+			data = enc.hm_astar.get_point_path_toward(
+				enc.get_current_character(),
+				tile.get_index(),
+				movement_range
 			)
 	SignalBus.emit_signal("tile_selected", data)
 

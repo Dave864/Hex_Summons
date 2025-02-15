@@ -38,3 +38,8 @@ mesh = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
 visible = false
 mesh = SubResource( 6 )
+
+[node name="Label3D" type="Label3D" parent="."]
+pixel_size = 0.05
+offset = Vector2( 0, 5 )
+modulate = Color( 0, 0, 0, 1 )

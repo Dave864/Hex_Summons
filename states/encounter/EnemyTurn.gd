@@ -22,7 +22,6 @@ var movement_range: Array = []
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(ENEMY_TURN)
 	current_character = enc.get_current_character()
-	
 	# Start the enemy turn.
 	movement_range = enc.hm_astar.determine_move_range(current_character)
 	"""
@@ -30,8 +29,8 @@ func enter(_msg := {}) -> void:
 	"""
 	SignalBus.emit_signal(
 		"enemy_turn_started",
-		enc.hm_astar.get_point_path(
-			current_character.get_index_at(),
+		enc.hm_astar.get_point_path_toward(
+			current_character,
 			enc._p.get_index_at()
 		)
 	)

@@ -23,7 +23,6 @@ var completed_path: bool = false
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(MOVE)
 	travel_path = _msg["travel_path"]
-	print(travel_path)
 	
 	# Move to the 'Standby' state if the travel path only has one point.
 	# This indicates that the player character's current position was 
@@ -65,5 +64,4 @@ func exit() -> void:
 	weight = 0.0
 	next_point_index = 1
 	completed_path = false
-	print("Required Selector")
 	SignalBus.emit_signal("selector_required")

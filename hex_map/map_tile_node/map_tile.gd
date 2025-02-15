@@ -53,6 +53,10 @@ func get_index() -> int:
 # Set the index value of the MapTile.
 func set_index(value: int):
 	_index = value
+	"""
+	TODO: Remove label.
+	"""
+	$Label3D.text = str(_index)
 
 
 # Get the cube coordinates of the MapTile.

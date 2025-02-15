@@ -21,7 +21,7 @@ class InitiativeSorter:
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(START)
 	_set_up_initative()
-	starting_character = enc._initiative_tracker[enc._cur_init]
+	starting_character = enc.initiative_tracker[enc.cur_init]
 
 
 # Corresponds to the `_process()` callback.
@@ -43,7 +43,7 @@ func update(_delta: float) -> void:
 
 # Initializes the initiative tracker.
 func _set_up_initative() -> void:
-	enc._initiative_tracker.append_array(enc.players)
-	enc._initiative_tracker.append_array(enc.enemies)
-	enc._initiative_tracker.sort_custom(InitiativeSorter, "sort")
-	enc._cur_init = 0
+	enc.initiative_tracker.append_array(enc.players)
+	enc.initiative_tracker.append_array(enc.enemies)
+	enc.initiative_tracker.sort_custom(InitiativeSorter, "sort")
+	enc.cur_init = 0

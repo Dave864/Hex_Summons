@@ -22,10 +22,9 @@ func enter(_msg := {}) -> void:
 	_set_state_machine_bus(MOVE)
 	travel_path = _msg["travel_path"]
 	
-	# Move to the `Wait` state if the travel path only has two points.
-	# This indicates that the enemy character's current position is adjacent
-	# to the target destination.
-	if travel_path.size() > 2:
+	# Move to the `Wait` state if the travel path only has one point.
+	# This indicates that the enemy character's current position is the target destination.
+	if travel_path.size() > 1:
 		start_point = ec.translation
 		next_point = travel_path[next_point_index]
 	else:
@@ -46,7 +45,7 @@ func update(delta: float) -> void:
 	# traversed. Move to the `Wait` state when path has been fully traversed.
 	if weight >= 1.0:
 		next_point_index += 1
-		if next_point_index < travel_path.size() - 1:
+		if next_point_index < travel_path.size():
 			weight = 0.0
 			start_point = ec.translation
 			next_point = travel_path[next_point_index]

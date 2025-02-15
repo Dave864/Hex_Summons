@@ -12,8 +12,8 @@ export(NodePath) var hex_map_path = null
 var hex_map: HexMap = null
 var hm_astar: HexMapAStar
 
-var _initiative_tracker: Array
-var _cur_init: int = 0
+var initiative_tracker: Array
+var cur_init: int = 0
 """
 TODO: Currently here to enable the EnemyCharacter to work. EnemyCharacter will
 eventually need logic for AI.
@@ -42,19 +42,19 @@ func _ready() -> void:
 
 # Move the initiative counter to the next index or reset it back to the start.
 func progress_initiative() -> void:
-	_cur_init += 1
-	_cur_init = 0 if _cur_init >= _initiative_tracker.size() else _cur_init
+	cur_init += 1
+	cur_init = 0 if cur_init >= initiative_tracker.size() else cur_init
 
 
 # Gets the next character in the intiative track.
 func get_next_character() -> Character:
 	var next_init: int = (
-		_cur_init + 1 if _cur_init + 1 < _initiative_tracker.size() 
+		cur_init + 1 if cur_init + 1 < initiative_tracker.size() 
 		else 0
 	)
-	return _initiative_tracker[next_init]
+	return initiative_tracker[next_init]
 
 
 # Gets the character currently in initiative.
 func get_current_character() -> Character:
-	return _initiative_tracker[_cur_init]
+	return initiative_tracker[cur_init]

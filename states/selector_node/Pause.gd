@@ -27,9 +27,6 @@ func enter(_msg: Dictionary = {}) -> void:
 		self,
 		"_on_SignalBus_selector_required"
 	)
-	
-	print("Selector ready")
-	SignalBus.emit_signal("selector_ready")
 
 
 # Called by the state machine before changing the active state. Use this 
