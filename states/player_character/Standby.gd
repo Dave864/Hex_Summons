@@ -35,5 +35,5 @@ func exit() -> void:
 
 
 # Hit when the Selector selects a map tile destination.
-func _on_SignalBus_tile_selected(info) -> void:
+func _on_SignalBus_tile_selected(info: Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": info})

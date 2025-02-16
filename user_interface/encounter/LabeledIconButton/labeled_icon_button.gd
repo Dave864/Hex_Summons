@@ -11,6 +11,7 @@ signal button_state_changed(state)
 enum ButtonStates {
 	BUTTON_DOWN,
 	BUTTON_UP,
+	PRESSED,
 	FOCUS_ENTERED,
 	FOCUS_EXITED,
 	MOUSE_ENTERED,
@@ -136,13 +137,14 @@ func _disabled_update() -> void:
 				icon_disabled if icon_disabled != null
 				else icon_normal
 		)
-		_label_node.modulate.a8 = 100
+		_label_node.modulate.a8 = 100 # Fade the button text
 		_button.disabled = true
 	else:
 		_icon_node.texture = (
 				icon_normal if _icon_node.texture == icon_disabled 
 				else _icon_node.texture
 		)
+		# Restore the button text opacity
 		_label_node.modulate.a8 = (
 				255 if _label_node.modulate.a8 < 255 
 				else _label_node.modulate.a8
@@ -152,43 +154,54 @@ func _disabled_update() -> void:
 
 # Update the `Icon` to "pressed" when the button is depressed.
 func _on_Button_button_down() -> void:
-	_icon_node.texture = icon_pressed if icon_pressed != null else icon_normal
-	emit_signal("button_state_changed", ButtonStates.BUTTON_DOWN)
+	if not disabled:
+		_icon_node.texture = icon_pressed if icon_pressed != null else icon_normal
+		emit_signal("button_state_changed", ButtonStates.BUTTON_DOWN)
 
 
 # Update the `Icon` to "normal" when the button is released.
 func _on_Button_button_up() -> void:
-	_icon_node.texture = (
-			icon_hover if icon_hover != null and _is_highlighted 
-			else icon_normal
-	)
-	emit_signal("button_state_changed", ButtonStates.BUTTON_UP)
+	if not disabled:
+		_icon_node.texture = (
+				icon_hover if icon_hover != null and _is_highlighted 
+				else icon_normal
+		)
+		emit_signal("button_state_changed", ButtonStates.BUTTON_UP)
+
+
+func _on_Button_pressed() -> void:
+	if not disabled:
+		emit_signal("button_state_changed", ButtonStates.PRESSED)
 
 
 # Update the `Icon` to "focused" when the button gains focus.
 func _on_Button_focus_entered() -> void:
-	_icon_node.texture = icon_focused if icon_focused != null else icon_normal
-	emit_signal("button_state_changed", ButtonStates.FOCUS_ENTERED)
+	if not disabled:
+		_icon_node.texture = icon_focused if icon_focused != null else icon_normal
+		emit_signal("button_state_changed", ButtonStates.FOCUS_ENTERED)
 
 
 # Update the `Icon` to "normal" when the button loses focus.
 func _on_Button_focus_exited() -> void:
-	_icon_node.texture = (
-			icon_hover if icon_hover != null and _is_highlighted
-			else icon_normal
-	)
-	emit_signal("button_state_changed", ButtonStates.FOCUS_EXITED)
+	if not disabled:
+		_icon_node.texture = (
+				icon_hover if icon_hover != null and _is_highlighted
+				else icon_normal
+		)
+		emit_signal("button_state_changed", ButtonStates.FOCUS_EXITED)
 
 
 # Update the `Icon` to "hover" when the button is hovered over by the mouse.
 func _on_Button_mouse_entered() -> void:
-	_is_highlighted = true
-	_icon_node.texture = icon_hover if icon_hover != null else icon_normal
-	emit_signal("button_state_changed", ButtonStates.MOUSE_ENTERED)
+	if not disabled:
+		_is_highlighted = true
+		_icon_node.texture = icon_hover if icon_hover != null else icon_normal
+		emit_signal("button_state_changed", ButtonStates.MOUSE_ENTERED)
 
 
 # Update the `Icon` to "normal" when the button is no longer hovered over by the mouse.
 func _on_Button_mouse_exited() -> void:
-	_is_highlighted = false
-	_icon_node.texture = icon_normal
-	emit_signal("button_state_changed", ButtonStates.MOUSE_EXITED)
+	if not disabled:
+		_is_highlighted = false
+		_icon_node.texture = icon_normal
+		emit_signal("button_state_changed", ButtonStates.MOUSE_EXITED)

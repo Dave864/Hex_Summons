@@ -17,9 +17,9 @@ var hm_astar: HexMapAStar = null
 
 var _current_selection: int = Options.NONE setget set_current_selection, get_current_selection
 # The player character that will interface with the UI.
-var _player: PlayerCharacter = null
-var _techniques: Array = []
-var _spells: Array = []
+var _player: PlayerCharacter = null setget set_focused_player, get_focused_player
+var _techniques: Array = [] setget , get_techniques
+var _spells: Array = [] setget , get_spells
 
 onready var sub_options = $SubOptions
 onready var options = $Options
@@ -40,12 +40,45 @@ func get_current_selection() -> int:
 	return _current_selection
 
 
-# Updates the player character being focused on when the signal `player_turn_started`
-# is emitted.
-func update_focused_player(new_player: PlayerCharacter) -> void:
+# Updates the player character being focused on.
+func set_focused_player(new_player: PlayerCharacter) -> void:
 	_player = new_player
 	_techniques = _player.get_techniques()
 	_spells = _player.get_spells()
+	
+	if _techniques.size() > 0:
+		technique_button.show()
+	else:
+		technique_button.hide()
+	if _spells.size() > 0:
+		spell_button.show()
+	else:
+		spell_button.hide()
+
+
+# Get the current player the UI is focused on.
+func get_focused_player() -> PlayerCharacter:
+	return _player
+
+
+# Get the techniques of the focused player.
+func get_techniques() -> Array:
+	return _techniques
+
+
+# Get the spalls of the focused player.
+func get_spells() -> Array:
+	return _spells
+
+
+# Toggle the disabled flag for options.
+func toggle_options() -> void:
+	technique_button.disabled = !technique_button.disabled
+	spell_button.disabled = !spell_button.disabled
+	end_button.disabled = !end_button.disabled
+	"""
+	TODO: summon option will depend on different logic that has yet to be implemented.
+	"""
 
 
 # Called when the node enters the scene tree for the first time.

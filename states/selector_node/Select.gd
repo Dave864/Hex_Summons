@@ -19,7 +19,6 @@ func enter(_msg: Dictionary = {}) -> void:
 		"_on_Selector_area_entered"
 	)
 	
-	selector.animation_player.play("RESET")
 	selector.selector_shape.show()
 
 
@@ -43,9 +42,7 @@ func handle_input(_event: InputEvent) -> void:
 	# Signal that the currently highlighted map tile was selected
 	# and move to the 'Pause' state.
 	if _event.is_action_pressed("ui_selector_select"):
-		selector.animation_player.play("selected")
 		selector.emit_signal("tile_selected", selector.tile)
-		yield(selector.animation_player, "animation_finished")
 		state_machine.transition_to(PAUSE)
 
 

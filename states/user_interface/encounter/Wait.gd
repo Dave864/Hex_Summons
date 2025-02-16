@@ -16,8 +16,8 @@ func enter(_msg := {}) -> void:
 		self,
 		"_on_SignalBus_player_turn_started"
 	)
-	#encounter_ui.sub_options.visible = false
-	#encounter_ui.options.visible = false
+	encounter_ui.sub_options.hide()
+	encounter_ui.options.hide()
 
 
 # Corresponds to the `_process()` callback.
@@ -35,7 +35,7 @@ func exit() -> void:
 	)
 
 
-# Gets the current player and moves to the 'Select' state.
+# Gets the current player and moves to the 'ActionSelect' state.
 func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
-	encounter_ui.update_focused_player(player)
-#	state_machine.transition_to(SELECT)
+	encounter_ui.set_focused_player(player)
+	state_machine.transition_to(STANDBY)

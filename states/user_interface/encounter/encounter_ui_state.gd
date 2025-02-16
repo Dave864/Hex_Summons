@@ -8,18 +8,10 @@ when coding the EncounterUI's states.
 
 # The states the Encounter UI can be in.
 const WAIT: String = "Wait"
-const END: String = "End"
-const SELECT: String = "Select"
-const MOVE: String = "Move"
-const EXECUTE_MOVE: String = "ExecuteMove"
-const SELECT_ACTION: String = "SelectAction"
-const CONFIRM_ACTION: String = "ConfirmAction"
-const EXECUTE_ACTION: String = "ExecuteAction"
-const FINAL_MOVE: String = "FinalMove"
-const FINAL_EXECUTE_MOVE: String = "FinalExecuteMove"
-const FINAL_SELECT_ACTION: String = "FinalSelectAction"
-const FINAL_CONFIRM_ACTION: String = "FinalConfirmAction"
-const FINAL_EXECUTE_ACTION: String = "FinalExecuteAction"
+const STANDBY: String = "Standby"
+const PAUSE: String = "Pause"
+const ACTION_SELECT: String = "ActionSelect"
+const SUB_ACTION_SELECT: String = "SubActionSelect"
 
 # Typed reference to the EncounterUI node.
 var encounter_ui: EncounterUI
