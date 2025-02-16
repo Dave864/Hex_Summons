@@ -74,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://hex_map/hex_map.gd"
 }, {
+"base": "AStar",
+"class": "HexMapAStar",
+"language": "GDScript",
+"path": "res://utils/hex_map_astar.gd"
+}, {
 "base": "MarginContainer",
 "class": "LabeledIconButton",
 "language": "GDScript",
@@ -98,11 +103,6 @@ _global_script_classes=[ {
 "class": "PlayerCharacterState",
 "language": "GDScript",
 "path": "res://states/player_character/player_character_state.gd"
-}, {
-"base": "AStar",
-"class": "RangeFinder",
-"language": "GDScript",
-"path": "res://utils/range_finder.gd"
 }, {
 "base": "Area",
 "class": "Selector",
@@ -148,12 +148,12 @@ _global_script_class_icons={
 "ErrorUtil": "",
 "FSM": "",
 "HexMap": "",
+"HexMapAStar": "",
 "LabeledIconButton": "",
 "MapTile": "",
 "MousePosition": "",
 "PlayerCharacter": "",
 "PlayerCharacterState": "",
-"RangeFinder": "",
 "Selector": "",
 "SelectorState": "",
 "State": "",
@@ -165,7 +165,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Hex_Summons"
-config/icon="res://icon.png"
+config/icon="res://art/icon.png"
 
 [autoload]
 
@@ -215,11 +215,17 @@ ui_encounter_option_3={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
-ui_encounter_4={
+ui_encounter_option_4={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":52,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
-, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":5,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+ui_encounter_player_end={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

@@ -83,15 +83,16 @@ func _on_SignalBus_tile_selected(_info: Array) -> void:
 
 
 func _on_TechniqueButton_button_state_changed(state: int) -> void:
-	print("Technique button action: %d" % [state])
+	if state == LabeledIconButton.ButtonStates.PRESSED:
+		print("Selecting a technique")
 
 
 func _on_SpellButton_button_state_changed(state: int) -> void:
-	print("Spell button action: %d" % [state])
+	if state == LabeledIconButton.ButtonStates.PRESSED:
+		print("Selecting a spell")
 
 
 func _on_EndButton_button_state_changed(state: int) -> void:
-	print("End button action: %d" % [state])
 	if state == LabeledIconButton.ButtonStates.PRESSED:
 		SignalBus.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
 		state_machine.transition_to(WAIT)
