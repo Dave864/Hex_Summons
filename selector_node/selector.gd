@@ -6,6 +6,7 @@ passed over.
 """
 
 
+# warning-ignore:unused_signal
 signal tile_selected(map_tile)
 
 # Reference to the map tiles in the current scene
