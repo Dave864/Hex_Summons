@@ -26,8 +26,6 @@ var tile: MapTile = null
 onready var mouse_position: MousePosition = $MousePosition
 # The mesh that represents the Selector
 onready var selector_shape: MeshInstance = $SelectorShape
-# The Animation player for the Selector
-onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 # Set the position of the selector.
