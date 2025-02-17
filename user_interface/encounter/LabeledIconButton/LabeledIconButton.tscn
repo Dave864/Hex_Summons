@@ -10,7 +10,7 @@ margin_right = 102.0
 margin_bottom = 126.0
 size_flags_horizontal = 7
 script = ExtResource( 6 )
-label = "Text"
+label = null
 icon_normal = ExtResource( 3 )
 icon_pressed = ExtResource( 1 )
 icon_hover = ExtResource( 2 )
@@ -49,3 +49,4 @@ texture = ExtResource( 3 )
 [connection signal="focus_exited" from="Button" to="." method="_on_Button_focus_exited"]
 [connection signal="mouse_entered" from="Button" to="." method="_on_Button_mouse_entered"]
 [connection signal="mouse_exited" from="Button" to="." method="_on_Button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
