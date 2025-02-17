@@ -12,6 +12,8 @@ func enter(_msg := {}) -> void:
 	_set_state_machine_bus(PAUSE)
 	encounter_ui.toggle_options()
 	
+	# This signal is used by other states and will be disconnected to avoid
+	# unintended behavior.
 	ErrorUtil.connect_signal(
 		SignalBus,
 		"selector_required",
@@ -29,7 +31,11 @@ func update(_delta: float) -> void:
 # state. Use this function to clean up the state.
 func exit() -> void:
 	encounter_ui.toggle_options()
-	SignalBus.disconnect("selector_required", self, "_on_SignalBus_selector_required")
+	SignalBus.disconnect(
+		"selector_required",
+		self,
+		"_on_SignalBus_selector_required"
+	)
 
 
 func _on_SignalBus_selector_required() -> void:

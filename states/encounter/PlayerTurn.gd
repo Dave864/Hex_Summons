@@ -21,18 +21,13 @@ func enter(_msg := {}) -> void:
 	enc.hex_map.highlight_tiles(movement_range)
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 	
+	# This signal is used by other states and will be disconnected to avoid
+	# unintended behavior.
 	ErrorUtil.connect_signal(
 		enc.selector,
 		"tile_selected",
 		self,
 		"_on_Selector_tile_selected"
-	)
-	
-	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_ended",
-		self,
-		"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -48,7 +43,15 @@ func update(_delta: float) -> void:
 func exit() -> void:
 	enc.progress_initiative()
 	enc.selector.disconnect("tile_selected", self, "_on_Selector_tile_selected")
-	SignalBus.disconnect("player_turn_ended", self, "_on_SignalBus_player_turn_ended")
+
+
+func _ready_connect_signals() -> void:
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"player_turn_ended",
+		self,
+		"_on_SignalBus_player_turn_ended"
+	)
 
 
 func _on_Selector_tile_selected(tile: MapTile) -> void:

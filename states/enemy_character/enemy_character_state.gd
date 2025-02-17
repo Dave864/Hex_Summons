@@ -7,6 +7,8 @@ Boilerplate class to get full autocompletion and type checks for the
 
 
 # The name of the states for this FSM.
+const THINK: String = "Think"
+const ACTION: String = "Action"
 const MOVE: String = "Move"
 const WAIT: String = "Wait"
 
@@ -28,6 +30,8 @@ func _ready() -> void:
 	# unintended. This can help prevent some bugs that are difficult to 
 	# understand.
 	assert(ec != null)
+	# Connect any unique signals the state will use.
+	_ready_connect_signals()
 
 
 # Update the value of the state bus for the EnemyCharacter state machine.

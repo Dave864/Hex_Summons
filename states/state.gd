@@ -36,3 +36,9 @@ func physics_update(_delta: float) -> void:
 # state. Use this function to clean up the state.
 func exit() -> void:
 	pass
+
+
+# Virtual function. Intended to be called in the _ready function to connect
+# signals to the state.
+func _ready_connect_signals() -> void:
+	pass

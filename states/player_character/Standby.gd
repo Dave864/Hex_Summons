@@ -10,6 +10,8 @@ state.
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(STANDBY)
+	# This signal is used by other states and will be disconnected to avoid
+	# unintended behavior.
 	ErrorUtil.connect_signal(
 		SignalBus, 
 		"tile_selected", 

@@ -71,9 +71,9 @@ func get_point_path_toward(
 	set_point_disabled(dest_id, false)
 	
 	var path_to_dest: PoolIntArray = get_id_path(c.get_index_at(), dest_id)
+	
 	var i: int = path_to_dest.size() - 1
 	var true_dest_id: int = dest_id
-	
 	while true and i > 0:
 		if not path_to_dest[i] in movement_array:
 			true_dest_id = path_to_dest[i - 1]
@@ -86,6 +86,14 @@ func get_point_path_toward(
 	_full_reset()
 	
 	return point_path
+
+
+# Calculates the distance from a given character to a specified destination.
+func calculate_distance_from_character(c: Character, dest_id: int) -> int:
+	_update_astar_disabled(c.get_type())
+	# reenable destination tile to allow a path to be found
+	set_point_disabled(dest_id, false)
+	return get_id_path(c.get_index_at(), dest_id).size()
 
 
 func _init(
@@ -195,6 +203,9 @@ func _estimate_cost(u, v) -> float:
 # Calculates the distance between two tiles based on their cube coordinates.
 # Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
 func _cube_dist(start_index: int, end_index: int) -> float:
+	"""
+	TODO: add logic to account for height difference in tiles
+	"""
 	var start_pos: Vector3 = _index_to_cube(start_index)
 	var end_pos: Vector3 = _index_to_cube(end_index)
 	var diff: Vector3 = start_pos - end_pos

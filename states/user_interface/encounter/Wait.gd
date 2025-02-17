@@ -10,12 +10,6 @@ turn starts.
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(WAIT)
-	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_started",
-		self,
-		"_on_SignalBus_player_turn_started"
-	)
 	encounter_ui.sub_options.hide()
 	encounter_ui.options.hide()
 
@@ -28,7 +22,12 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	SignalBus.disconnect(
+	pass
+
+
+func _ready_connect_signals():
+	ErrorUtil.connect_signal(
+		SignalBus,
 		"player_turn_started",
 		self,
 		"_on_SignalBus_player_turn_started"

@@ -29,6 +29,8 @@ func _ready():
 	# in a scene other than `EncounterUI.tscn`, which would be unintended. This can
 	# help prevent some bugs that are difficult to understand.
 	assert(encounter_ui != null)
+	# Connect any unique signals the state will use.
+	_ready_connect_signals()
 
 
 # Update the value of the state bus for the EncounterUI state machine.

@@ -5,6 +5,10 @@ Handles actions specific to enemy characters.
 """
 
 
+# AStar object used to determine ranges and paths for various commands
+#var hm_astar: HexMapAStar = null
+
+
 # Returns the type of the character, ENEMY.
 func get_type() -> int:
 	return Constants.MapOccupants.ENEMY

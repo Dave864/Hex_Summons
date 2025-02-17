@@ -1,7 +1,9 @@
 extends EnemyCharacterState
 """
 The logic for what happens when an Enemy Character is in the `Move` state.
-The Enemy Character moves from tile to tile along a preset path.
+The Enemy Character moves from tile to tile along a preset path and then 
+proceeds to the next command in the given chain. Goes to the 'Wait' 
+state if movement is the last command.
 """
 
 
@@ -15,12 +17,15 @@ var next_point: Vector3
 var next_point_index: int = 1
 # The current interpolation weight.
 var weight: float = 0.0
+# The list of commands the enemy will execute.
+var command_chain: Array = []
 
 
 # Set the starting point for the path.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(MOVE)
-	travel_path = _msg["travel_path"]
+	command_chain = _msg["command_chain"]
+	travel_path = command_chain.pop_back()[1]
 	
 	# Move to the `Wait` state if the travel path only has one point.
 	# This indicates that the enemy character's current position is the target destination.
@@ -28,7 +33,7 @@ func enter(_msg := {}) -> void:
 		start_point = ec.translation
 		next_point = travel_path[next_point_index]
 	else:
-		state_machine.transition_to(WAIT)
+		_move_to_next_state()
 
 
 # Corresponds to the `_process()` callback.
@@ -50,7 +55,7 @@ func update(delta: float) -> void:
 			start_point = ec.translation
 			next_point = travel_path[next_point_index]
 		else:
-			state_machine.transition_to(WAIT)
+			_move_to_next_state()
 
 
 # Called by the state machine before changing the active state.
@@ -58,3 +63,17 @@ func update(delta: float) -> void:
 func exit() -> void:
 	weight = 0.0
 	next_point_index = 1
+
+
+# Checks the command chain to determine what state to go to next.
+func _move_to_next_state() -> void:
+	if command_chain.size() > 0:
+		if command_chain.back()[0] == MOVE:
+			print("Go to move")
+#			state_machine.transition_to(MOVE, {"command_chain": command_chain})
+		elif command_chain.back()[0] == ACTION:
+			print("Go to action")
+#			state_machine.transition_to(ACTION, {"command_chain": command_chain})
+	else:
+		SignalBus.emit_signal("enemy_turn_ended", ec)
+		state_machine.transition_to(WAIT)

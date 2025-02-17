@@ -22,36 +22,17 @@ var movement_range: Array = []
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(ENEMY_TURN)
 	current_character = enc.get_current_character()
-	# Start the enemy turn.
-	movement_range = enc.hm_astar.determine_move_range(current_character)
-	"""
-	TODO: Need to eventually add AI logic/state machine to EnemyCharacter.
-	"""
+	# Send the Enemy state machine the details it needs to figure out what to do.
 	SignalBus.emit_signal(
 		"enemy_turn_started",
-		enc.hm_astar.get_point_path_toward(
-			current_character,
-			enc._p.get_index_at()
-		)
+		current_character,
+		enc.players,
+		enc.hm_astar
 	)
 
 
 # Corresponds to the `_process()` callback.
 func update(_delta: float) -> void:
-	# Determine which turn to go to when an enemy character ends their turn.
-	if StateMachineBus.encounter_states[FSM.Encounter.ENEMY_CHARACTER] == EnemyCharacterState.WAIT:
-		var next_character: Character = enc.get_next_character()
-		# Transition to `PlayerTurn` state only when Selector is also in its
-		# `Wait` state to prevent issue with Selector not showing up again when
-		# the player's current position was selected as its prior destination.
-		if (
-			next_character is PlayerCharacter and
-			StateMachineBus.encounter_states[FSM.Encounter.SELECTOR] == SelectorState.WAIT
-		):
-			state_machine.transition_to(PLAYER_TURN)
-		elif next_character is EnemyCharacter:
-			state_machine.transition_to(ENEMY_TURN)
-	
 	# Move to the `End` State
 	if enc.enemies.size() == 0:
 		state_machine.transition_to(END)
@@ -61,3 +42,20 @@ func update(_delta: float) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	enc.progress_initiative()
+
+
+func _ready_connect_signals() -> void:
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"enemy_turn_ended",
+		self,
+		"_on_SignalBus_enemy_turn_ended"
+	)
+
+
+func _on_SignalBus_enemy_turn_ended(_enemy: EnemyCharacter) -> void:
+	var next_character: Character = enc.get_next_character()
+	if next_character is PlayerCharacter:
+		state_machine.transition_to(PLAYER_TURN)
+	elif next_character is EnemyCharacter:
+		state_machine.transition_to(ENEMY_TURN)

@@ -15,14 +15,35 @@ func enter(_msg := {}) -> void:
 	_set_state_machine_bus(PAUSE)
 	encounter_ui.sub_options.show()
 	encounter_ui.options.show()
-	
+	# This signal is used by other states and will be disconnected to avoid
+	# unintended behavior.
 	ErrorUtil.connect_signal(
 			SignalBus,
 			"tile_selected",
 			self,
 			"_on_SignalBus_tile_selected"
 	)
-	
+
+
+# Virtual function. Corresponds to the `_process()` callback.
+func update(_delta: float) -> void:
+	pass
+
+
+# Virtual function. Receives events from the `_unhandled_input()` callback.
+func handle_input(_event: InputEvent) -> void:
+	if _event.is_action_pressed("ui_encounter_player_end"):
+		SignalBus.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
+		state_machine.transition_to(WAIT)
+
+
+# Virtual function. Called by the state machine before changing the active 
+# state. Use this function to clean up the state.
+func exit() -> void:
+	SignalBus.disconnect("tile_selected", self, "_on_SignalBus_tile_selected")
+
+
+func _ready_connect_signals() -> void:
 	ErrorUtil.connect_signal(
 			encounter_ui.technique_button,
 			"button_state_changed",
@@ -43,40 +64,6 @@ func enter(_msg := {}) -> void:
 			self,
 			"_on_EndButton_button_state_changed"
 	)
-
-
-# Virtual function. Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	pass
-
-
-# Virtual function. Receives events from the `_unhandled_input()` callback.
-func handle_input(_event: InputEvent) -> void:
-	if _event.is_action_pressed("ui_encounter_player_end"):
-		SignalBus.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
-		state_machine.transition_to(WAIT)
-
-
-# Virtual function. Called by the state machine before changing the active 
-# state. Use this function to clean up the state.
-func exit() -> void:
-	SignalBus.disconnect("tile_selected", self, "_on_SignalBus_tile_selected")
-	encounter_ui.technique_button.disconnect(
-			"button_state_changed",
-			self,
-			"_on_TechniqueButton_button_state_changed"
-	)
-	encounter_ui.spell_button.disconnect(
-			"button_state_changed",
-			self,
-			"_on_SpellButton_button_state_changed"
-	)
-	encounter_ui.end_button.disconnect(
-			"button_state_changed",
-			self,
-			"_on_EndButton_button_state_changed"
-	)
-
 
 func _on_SignalBus_tile_selected(_info: Array) -> void:
 	state_machine.transition_to(PAUSE)

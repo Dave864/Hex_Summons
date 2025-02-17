@@ -9,6 +9,19 @@ The Enemy Character does nothing until it is called upon to act.
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(WAIT)
+
+
+# Corresponds to the `_process()` callback.
+func update(_delta: float) -> void:
+	pass
+
+
+# Called by the state machine before changing the active state.
+func exit() -> void:
+	pass
+
+
+func _ready_connect_signals() -> void:
 	ErrorUtil.connect_signal(
 		SignalBus, 
 		"enemy_turn_started", 
@@ -17,15 +30,11 @@ func enter(_msg := {}) -> void:
 	)
 
 
-# Called by the state machine before changing the active state.
-func exit() -> void:
-	SignalBus.disconnect(
-		"enemy_turn_started",
-		self,
-		"_on_SignalBus_enemy_turn_started"
-	)
-
-
 # Hit when the enemy character is selected to take its turn.
-func _on_SignalBus_enemy_turn_started(path: PoolVector3Array) -> void:
-	state_machine.transition_to(MOVE, {"travel_path": path})
+func _on_SignalBus_enemy_turn_started(
+	enemy: EnemyCharacter,
+	players: Array,
+	range_finder: HexMapAStar
+) -> void:
+	if enemy.name == ec.name:
+		state_machine.transition_to(THINK, {"hm_astar": range_finder, "players": players})
