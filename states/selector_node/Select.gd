@@ -31,12 +31,8 @@ func enter(_msg: Dictionary = {}) -> void:
 
 
 func update(_delta: float) -> void:
-	# Move the Selector to the mouse position.
-	selector.translation = selector.mouse_position.get_mouse_position()
-	
-	# Snap the position of the Selector shape mesh to the last hovered over tile.
-	var new_position: Vector3 = selector.snap_position - selector.translation
-	selector.selector_shape.translation = selector.adjusted_position(new_position)
+	selector.move_to_mouse_position()
+	selector.position_selector_shape()
 
 
 # Called by the state machine before changing the active state. Use this 
@@ -58,21 +54,12 @@ func handle_input(_event: InputEvent) -> void:
 func _on_Selector_area_entered(map_tile: Area) -> void:
 	# Don't snap to position if map_tile is disabled or inactive.
 	if (
-		selector.player_action_change 
-		or selector.snap_to_position 
+		selector.snap_to_position 
 		and map_tile.is_active() 
 		and map_tile.get_is_selectable()
 	):
 		selector.snap_position = map_tile.translation
 		selector.tile = map_tile
-		selector.player_action_change = false
-
-
-func _on_UI_mode_changed(player_pos: Vector3) -> void:
-	# Snap the selector to the position of the current player when shifting
-	# between different actions.
-	selector.player_action_change = true
-	selector.set_to_position(player_pos)
 
 
 func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:

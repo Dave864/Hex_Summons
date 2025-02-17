@@ -1,6 +1,7 @@
 extends EncounterUIState
 """
 The logic for what happens when an EncounterUI scene is in the `Pause` state.
+Disables all interactable UI elements until they are needed.
 """
 
 

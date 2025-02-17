@@ -52,8 +52,8 @@ func update(_delta: float) -> void:
 
 # Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(_event: InputEvent) -> void:
-	if _event.is_action_pressed("ui_end"):
-		SignalBus.emit_signal("player_turn_ended", encounter_ui)
+	if _event.is_action_pressed("ui_encounter_player_end"):
+		SignalBus.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
 		state_machine.transition_to(WAIT)
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://selector_node/selector.gd" type="Script" id=1]
 [ext_resource path="res://selector_node/mouse_position.gd" type="Script" id=2]
@@ -20,78 +20,6 @@ rings = 0
 flags_transparent = true
 albedo_color = Color( 0.52549, 0.529412, 0.670588, 0.776471 )
 
-[sub_resource type="Animation" id=3]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/path = NodePath("SelectorShape:material/0:albedo_color:r")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"points": PoolRealArray( 0.52549, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
-}
-tracks/1/type = "bezier"
-tracks/1/path = NodePath("SelectorShape:material/0:albedo_color:g")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"points": PoolRealArray( 0.529412, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
-}
-tracks/2/type = "bezier"
-tracks/2/path = NodePath("SelectorShape:material/0:albedo_color:b")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"points": PoolRealArray( 0.670588, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
-}
-tracks/3/type = "bezier"
-tracks/3/path = NodePath("SelectorShape:material/0:albedo_color:a")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"points": PoolRealArray( 0.776471, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("SelectorShape:material/0:albedo_color")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 0.52549, 0.529412, 0.670588, 0.776471 ) ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "selected"
-length = 0.2
-step = 0.01
-tracks/0/type = "value"
-tracks/0/path = NodePath("SelectorShape:material/0:albedo_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.04, 0.2 ),
-"transitions": PoolRealArray( 0.307786, 1, 1 ),
-"update": 0,
-"values": [ Color( 0.52549, 0.529412, 0.670588, 0.666667 ), Color( 0.803922, 0.701961, 0.254902, 0.843137 ), Color( 0.52549, 0.529412, 0.670588, 0 ) ]
-}
-
 [node name="Selector" type="Area"]
 collision_mask = 2
 script = ExtResource( 1 )
@@ -106,10 +34,6 @@ script = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 3 )
-anims/selected = SubResource( 4 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )

@@ -31,9 +31,20 @@ onready var selector_shape: MeshInstance = $SelectorShape
 
 # Set the position of the selector.
 func set_to_position(position: Vector3) -> void:
-	translation = adjusted_position(position)
+	translation = position_relative_to_selector_shape(position)
+
+
+# Move the Selector to the mouse position.
+func move_to_mouse_position() -> void:
+	translation = mouse_position.get_mouse_position()
+
+
+# Snap the position of the Selector shape mesh to the last hovered over tile.
+func position_selector_shape() -> void:
+	var new_position: Vector3 = snap_position - translation
+	selector_shape.translation = position_relative_to_selector_shape(new_position)
 
 
 # Adjusts the provided position to account for the position of the selector shape. 
-func adjusted_position(position: Vector3) -> Vector3:
+func position_relative_to_selector_shape(position: Vector3) -> Vector3:
 	return Vector3(position.x, $SelectorShape.translation.y, position.z)

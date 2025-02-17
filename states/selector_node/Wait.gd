@@ -34,4 +34,5 @@ func exit() -> void:
 # to the `Select` state.
 func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
 	selector.set_to_position(player.translation)
+	selector.position_selector_shape()
 	state_machine.transition_to(SELECT)

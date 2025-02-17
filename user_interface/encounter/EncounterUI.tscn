@@ -24,9 +24,11 @@ anchor_bottom = 1.0
 margin_left = -743.0
 margin_top = -163.0
 margin_bottom = -97.0
+mouse_filter = 2
 script = ExtResource( 3 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SubOptions"]
+mouse_filter = 2
 
 [node name="Options" type="HBoxContainer" parent="."]
 anchor_left = 1.0
@@ -35,6 +37,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -743.0
 margin_top = -96.0
+mouse_filter = 2
 
 [node name="TechniqueButton" parent="Options" instance=ExtResource( 1 )]
 margin_right = 182.0
