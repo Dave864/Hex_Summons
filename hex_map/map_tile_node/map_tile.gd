@@ -123,10 +123,13 @@ func _set_highlighter() -> void:
 
 func _on_MapTile_area_entered(area) -> void:
 	# Add entered character as this tile's occupant.
-	if area is PlayerCharacter or area is EnemyCharacter:
+	if (
+		_occupant == null 
+		and (area is PlayerCharacter or area is EnemyCharacter)
+	):
 		_occupant = area
 
 
 func _on_MapTile_area_exited(area) -> void:
-	if area is PlayerCharacter or area is EnemyCharacter:
+	if _occupant != null and area.name == _occupant.name:
 		_occupant = null

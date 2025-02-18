@@ -9,7 +9,6 @@ The Player Character waits until it is reenabled.
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(WAIT)
-	print("%s waiting" % [pc.name])
 	ErrorUtil.connect_signal(
 		SignalBus,
 		"player_turn_started",

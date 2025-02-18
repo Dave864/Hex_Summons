@@ -68,7 +68,8 @@ func get_point_path_toward(
 		movement_array = determine_move_range(c)
 	
 	_update_astar_disabled(c.get_type())
-	# reenable destination tile to allow a path to be found
+	# reenable destination tile to allow a path to be found when target tile 
+	# has an opponent.
 	set_point_disabled(dest_id, false)
 	
 	var true_dest_id: int = dest_id
@@ -76,10 +77,15 @@ func get_point_path_toward(
 		var path_to_dest: PoolIntArray = get_id_path(c.get_index_at(), dest_id)
 		
 		# Determine the last point in the path that is within a character's
+		# movement range. A tile occupied by an opponent is not considered within
 		# movement range.
 		var i: int = path_to_dest.size() - 1
 		while true and i > 0:
-			if not path_to_dest[i] in movement_array:
+			var occupant: Character = _map_tiles[path_to_dest[i]].get_current_occupant()
+			if (
+				not path_to_dest[i] in movement_array
+				or (occupant != null and occupant.get_type() != c.get_type())
+			):
 				true_dest_id = path_to_dest[i - 1]
 				i -= 1
 			else:
@@ -108,9 +114,12 @@ func get_point_path_toward(
 # Calculates the distance from a given character to a specified destination.
 func calculate_distance_from_character(c: Character, dest_id: int) -> int:
 	_update_astar_disabled(c.get_type())
-	# reenable destination tile to allow a path to be found
+	# reenable destination tile to allow a path to be found when target tile 
+	# has an opponent.
 	set_point_disabled(dest_id, false)
-	return get_id_path(c.get_index_at(), dest_id).size()
+	var dist: int = get_id_path(c.get_index_at(), dest_id).size()
+	_reset_disabled()
+	return dist
 
 
 func _init(
@@ -147,18 +156,24 @@ func _establish_astar_connections() -> void:
 
 
 # Helper for update_astar_disabled. Updates the astar disabled flag for the tiles
-# occupied by the specific character type.
-func _update_character_astar_disabled(characters: Array, active_type: int) -> void:
+# occupied by a specific character type.
+func _update_character_astar_disabled(characters: Array, disabled: bool) -> void:
 	for c in characters:
-		set_point_disabled(c.get_index_at(), active_type != c.get_type())
+		set_point_disabled(c.get_index_at(), disabled)
 
 
 # Update the disabled status of astar points to account for the specified
 # character type. Points that have characters of the opposite type will
 # be disabled, while all other points are enabled.
 func _update_astar_disabled(active_character_type: int) -> void:
-	_update_character_astar_disabled(_enemies, active_character_type)
-	_update_character_astar_disabled(_players, active_character_type)
+	_update_character_astar_disabled(
+		_enemies, 
+		active_character_type != Constants.MapOccupants.ENEMY
+	)
+	_update_character_astar_disabled(
+		_players, 
+		active_character_type != Constants.MapOccupants.PLAYER
+	)
 
 
 # Disconnects a part of a map from the rest. The part to disconnect is represented
