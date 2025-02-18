@@ -38,8 +38,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31605, 0, -2.9794 )
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="EnemyCharacter" parent="Enemies" groups=["enemy"] instance=ExtResource( 5 )]
+[node name="EnemyCharacter1" parent="Enemies" groups=["enemy"] instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.18093, 0, 2.9573 )
+
+[node name="EnemyCharacter2" parent="Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.22421, -2.38419e-07, 1.50595 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 6 )

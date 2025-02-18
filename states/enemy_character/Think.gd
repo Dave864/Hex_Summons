@@ -33,12 +33,9 @@ func enter(_msg := {}) -> void:
 		player_distances.append(p_data)
 		
 	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
-	command_chain.push_front(
-			[
-				MOVE, 
-				hm_astar.get_point_path_toward(ec, player_distances[0][0].get_index_at())
-			]
-	)
+	var path: PoolVector3Array = hm_astar.get_point_path_toward(ec, player_distances[0][0].get_index_at())
+	print(path)
+	command_chain.push_front([MOVE, path])
 	# Pause for a little bit to give the EncounterUI a chance to get ready.
 	# Workaround for bug where not moving the player causes the UI to not appear.
 	yield(get_tree().create_timer(0.1), "timeout")
