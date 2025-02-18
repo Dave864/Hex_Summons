@@ -18,13 +18,14 @@ var cur_init: int = 0
 onready var players: Array = $Players.get_children()
 onready var enemies: Array = $Enemies.get_children()
 onready var selector: Selector = $Selector
-onready var ui: Control = $EncounterUI
+onready var ui: EncounterUI = $EncounterUI
 
 
 # Move the initiative counter to the next index or reset it back to the start.
 func progress_initiative() -> void:
 	cur_init += 1
 	cur_init = 0 if cur_init >= initiative_tracker.size() else cur_init
+	ui.initiative_tracker.update_initiative(cur_init)
 
 
 # Gets the next character in the intiative track.

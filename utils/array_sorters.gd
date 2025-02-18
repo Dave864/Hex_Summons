@@ -5,6 +5,11 @@ Collection of sorting methods.
 """
 
 
+# Sorts characters by their agility. Used when determining initiative order.
+static func sort_character_initiative(a: Character, b: Character) -> bool:
+	return a.stats.get_agl() > b.stats.get_agl()
+
+
 # Sorts characters by their distances in ascending order.
 # Takes in two arrays, each of which contains two items.
 # The first element is the character.

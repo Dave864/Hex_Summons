@@ -10,12 +10,6 @@ starting character is not a valid type.
 var starting_character: Character
 
 
-# Class that defines the sort method for the encounter _initiative_tracker.
-class InitiativeSorter:
-	static func sort(a: Character, b: Character) -> bool:
-		return a.stats.get_agl() > b.stats.get_agl()
-
-
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
@@ -45,5 +39,6 @@ func update(_delta: float) -> void:
 func _set_up_initative() -> void:
 	enc.initiative_tracker.append_array(enc.players)
 	enc.initiative_tracker.append_array(enc.enemies)
-	enc.initiative_tracker.sort_custom(InitiativeSorter, "sort")
+	enc.initiative_tracker.sort_custom(ArraySorters, "sort_character_initiative")
 	enc.cur_init = 0
+	enc.ui.initiative_tracker.populate_initiative(enc.initiative_tracker)

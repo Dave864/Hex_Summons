@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://user_interface/encounter/LabeledIconButton/LabeledIconButton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://user_interface/encounter/encounter_ui.gd" type="Script" id=2]
@@ -9,12 +9,15 @@
 [ext_resource path="res://states/user_interface/encounter/Pause.gd" type="Script" id=7]
 [ext_resource path="res://states/user_interface/encounter/SubAction.gd" type="Script" id=8]
 [ext_resource path="res://states/user_interface/encounter/Action.gd" type="Script" id=9]
+[ext_resource path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" type="PackedScene" id=10]
 
 [node name="EncounterUI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 script = ExtResource( 2 )
+
+[node name="InitiativeTracker" parent="." instance=ExtResource( 10 )]
 
 [node name="SubOptions" type="ScrollContainer" parent="."]
 anchor_left = 1.0

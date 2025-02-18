@@ -21,6 +21,7 @@ var _player: PlayerCharacter = null setget set_focused_player, get_focused_playe
 var _techniques: Array = [] setget , get_techniques
 var _spells: Array = [] setget , get_spells
 
+onready var initiative_tracker = $InitiativeTracker
 onready var sub_options = $SubOptions
 onready var options = $Options
 onready var technique_button = $Options/TechniqueButton
@@ -54,6 +55,10 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 		spell_button.show()
 	else:
 		spell_button.hide()
+	"""
+	TODO: summon option will depend on different logic that has yet to be implemented.
+	"""
+	summon_button.hide()
 
 
 # Get the current player the UI is focused on.
@@ -75,10 +80,8 @@ func get_spells() -> Array:
 func toggle_options() -> void:
 	technique_button.disabled = !technique_button.disabled
 	spell_button.disabled = !spell_button.disabled
+	summon_button.disabled = !summon_button.disabled
 	end_button.disabled = !end_button.disabled
-	"""
-	TODO: summon option will depend on different logic that has yet to be implemented.
-	"""
 
 
 # Called when the node enters the scene tree for the first time.
