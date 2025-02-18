@@ -10,13 +10,20 @@ state.
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(STANDBY)
-	# This signal is used by other states and will be disconnected to avoid
-	# unintended behavior.
+	print("%s waiting for input" % [pc.name])
+	# These signals is used by other PlayerCharacters and will be disconnected 
+	# to avoid unintended behavior.
 	ErrorUtil.connect_signal(
 		SignalBus, 
 		"tile_selected", 
 		self, 
 		"_on_SignalBus_tile_selected"
+	)
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"player_turn_ended",
+		self,
+		"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -34,8 +41,15 @@ func update(_delta: float) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	SignalBus.disconnect("tile_selected", self, "_on_SignalBus_tile_selected")
+	SignalBus.disconnect("player_turn_ended", self, "_on_SignalBus_player_turn_ended")
 
 
 # Hit when the Selector selects a map tile destination.
 func _on_SignalBus_tile_selected(info: Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": info})
+
+
+# Hit when the EncounterUI indicates that a player has finished their turn.
+func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
+	if pc.name == player.name:
+		state_machine.transition_to(WAIT)

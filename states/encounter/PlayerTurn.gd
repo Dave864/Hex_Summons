@@ -17,8 +17,9 @@ var movement_range: Array = []
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(PLAYER_TURN)
+	print("%s turn" % [enc.get_current_character().name])
 	movement_range = enc.hm_astar.determine_move_range(enc.get_current_character())
-	enc.hex_map.highlight_tiles(movement_range)
+	enc.hex_map.highlight_tiles(movement_range, enc.get_current_character())
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 	
 	# This signal is used by other states and will be disconnected to avoid
@@ -41,7 +42,6 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	enc.progress_initiative()
 	enc.selector.disconnect("tile_selected", self, "_on_Selector_tile_selected")
 
 
@@ -71,7 +71,11 @@ func _on_Selector_tile_selected(tile: MapTile) -> void:
 func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	enc.hex_map.clear_highlights()
 	var next_character: Character = enc.get_next_character()
+	enc.progress_initiative()
 	if next_character is PlayerCharacter:
+		# Pause for a little bit to give the EncounterUI a chance to get ready.
+		# Workaround for bug where the UI does not show up when the player did nothing prior.
+		yield(get_tree().create_timer(0.1), "timeout")
 		state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:
 		state_machine.transition_to(ENEMY_TURN)

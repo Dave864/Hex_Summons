@@ -25,15 +25,17 @@ func get_map_tiles() -> Array:
 	return _map_tiles
 
 
-# Highlight the tiles at the specified indexes. Will not highlight tiles that 
-# are occupied by allies.
+# Highlight the specified tiles.
 func highlight_tiles(
-	tile_indexes: Array, 
-	current_character_type: int = Constants.MapOccupants.EMPTY
+	tile_indexes: Array,
+	pc: PlayerCharacter
 ) -> void:
 	for i in tile_indexes:
 		var tile: MapTile = _map_tiles[i]
-		tile.set_is_selectable(tile.can_character_pass(current_character_type))
+		tile.set_is_selectable(
+			tile.get_current_occupant() == null
+			or tile.get_current_occupant().name == pc.name
+		)
 
 
 # Clear the higlights from all tiles.
