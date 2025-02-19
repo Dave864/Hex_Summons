@@ -45,7 +45,10 @@ func get_type() -> int:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	"""
+	TODO: Temporarily sets current hp to max for testing purposes
+	"""
+	stats.set_current_hp(stats.get_max_hp())
 
 
 func _on_Creature_area_entered(map_tile) -> void:

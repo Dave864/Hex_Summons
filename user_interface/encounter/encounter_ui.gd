@@ -22,6 +22,7 @@ var _techniques: Array = [] setget , get_techniques
 var _spells: Array = [] setget , get_spells
 
 onready var initiative_tracker = $InitiativeTracker
+onready var active_player_stats = $ActivePlayerStats
 onready var sub_options = $SubOptions
 onready var options = $Options
 onready var technique_button = $Options/TechniqueButton
@@ -46,6 +47,9 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	_player = new_player
 	_techniques = _player.get_techniques()
 	_spells = _player.get_spells()
+	
+	active_player_stats.set_stats(_player)
+	active_player_stats.show()
 	
 	if _techniques.size() > 0:
 		technique_button.show()

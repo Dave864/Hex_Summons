@@ -12,6 +12,7 @@ func enter(_msg := {}) -> void:
 	_set_state_machine_bus(WAIT)
 	encounter_ui.sub_options.hide()
 	encounter_ui.options.hide()
+	encounter_ui.active_player_stats.hide()
 
 
 # Corresponds to the `_process()` callback.
