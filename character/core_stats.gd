@@ -8,6 +8,8 @@ TODO: update to only include relevant stats
 """
 
 
+signal hp_changed(new_hp, max_hp)
+
 # Describes a resistance type.
 enum Element {FIRE, EARTH, WATER, WIND}
 
@@ -69,6 +71,7 @@ func set_current_hp(new_hp: int) -> void:
 		_current_hp = 0
 	else:
 		_current_hp = new_hp
+	emit_signal("hp_changed", _current_hp, _base_max_hp)
 
 
 func get_current_hp() -> int:
