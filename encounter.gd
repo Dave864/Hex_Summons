@@ -50,3 +50,9 @@ func _ready() -> void:
 		players,
 		enemies
 	)
+	
+	for p in players:
+		ui.track_party_member(p)
+	
+	for e in enemies:
+		ui.track_enemy(e)

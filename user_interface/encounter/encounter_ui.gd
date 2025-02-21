@@ -15,6 +15,10 @@ enum Options {
 
 var hm_astar: HexMapAStar = null
 
+"""
+TODO: Currently loading CharacterSummary scene to visualize the hp values of characters
+"""
+var _character_summary: PackedScene = preload("res://user_interface/encounter/test_labels/CharacterSummary/CharacterSummary.tscn")
 var _current_selection: int = Options.NONE setget set_current_selection, get_current_selection
 # The player character that will interface with the UI.
 var _player: PlayerCharacter = null setget set_focused_player, get_focused_player
@@ -23,6 +27,8 @@ var _spells: Array = [] setget , get_spells
 
 onready var initiative_tracker = $InitiativeTracker
 onready var active_player_stats = $ActivePlayerStats
+onready var enemy_stats = $EnemyStats
+onready var party_stats = $PartyStats
 onready var sub_options = $SubOptions
 onready var options = $Options
 onready var technique_button = $Options/TechniqueButton
@@ -86,6 +92,24 @@ func toggle_options() -> void:
 	spell_button.disabled = !spell_button.disabled
 	summon_button.disabled = !summon_button.disabled
 	end_button.disabled = !end_button.disabled
+
+
+func track_party_member(p: PlayerCharacter) -> void:
+	var p_label: CharacterSummary = _character_summary.instance()
+	p_label.set_name(p.name)
+	p_label.set_hp(p.stats.get_current_hp(), p.stats.get_max_hp())
+	p_label.set_text_alignment(Label.ALIGN_LEFT)
+	p.stats.connect("hp_changed", p_label, "_on_Character_hp_changed")
+	party_stats.add_child(p_label)
+
+
+func track_enemy(e: EnemyCharacter) -> void:
+	var e_label: CharacterSummary = _character_summary.instance()
+	e_label.set_name(e.name)
+	e_label.set_hp(e.stats.get_current_hp(), e.stats.get_max_hp())
+	e_label.set_text_alignment(Label.ALIGN_RIGHT)
+	e.stats.connect("hp_changed", e_label, "_on_Character_hp_changed")
+	enemy_stats.add_child(e_label)
 
 
 # Called when the node enters the scene tree for the first time.

@@ -14,7 +14,7 @@ var _active_character_ref: ReferenceRect = null
 # Populates the initiative tracker with display labels and positions the reference
 func populate_initiative(character_initiative: Array) -> void:
 	for character in character_initiative:
-		var display_label = _character_label.instance()
+		var display_label: DisplayPanel = _character_label.instance()
 		display_label.set_text(character.name)
 		add_child(display_label)
 		_initiative_list.append(display_label)
