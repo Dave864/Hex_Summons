@@ -31,7 +31,7 @@ const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 # The "radius" of a hexagon drawn for the purposes of illustrating an action's
 # area range and effect range. The radius is the distance from the center to
 # a vertex of a hexagon
-const DISPLAY_HEX_RADIUS: float = 30.0
+const DISPLAY_HEX_RADIUS: float = 5.0
 
 # The maximimum values for various character and attack stats.
 const MAX_STAT: int = 1000
@@ -40,3 +40,10 @@ const MAX_MAP_DIST: int = 100
 # The value to use when adjusting the weight of a hex map astar connection point
 # to account for characters of the opposite faction of the current active character.
 const ASTAR_ADJUSTMENT_WEIGHT = 1000.0
+
+# A collection of colorsset for various indicators.
+const AREA_RANGE_COLOR: Color = Color.blue
+const CHARACTER_ORIGIN_COLOR: Color = Color.aqua
+const EFFECT_RANGE_COLOR: Color = Color.yellow
+const EFFECT_ORIGIN_COLOR: Color = Color.orangered
+const TARGET_SELECT_COLOR: Color = Color.red

@@ -122,6 +122,50 @@ func calculate_distance_from_character(c: Character, dest_id: int) -> int:
 	return dist
 
 
+# Get the indices of the tiles that are within the specified cardinal range
+# of the character.
+# https://www.redblobgames.com/grids/hexagons/#neighbors
+func determine_cardinal_action_range(c: Character, r: CardinalRange) -> PoolIntArray:
+	var tile_indices: PoolIntArray = []
+	# Set initial size to maximum possible amount
+	tile_indices.resize((r.area_distance - r.dead_distance) * 6)
+	var cube_origin: Vector3 = _index_to_cube(c.get_index_at())
+	
+	for i in range(1, r.area_distance - r.dead_distance + 1):
+		var step: float = float(r.dead_distance + i)
+		#  0 /\
+		#   |  |
+		#    \/ 3
+		var n_0: int = _cube_to_index(cube_origin + Vector3(0.0, -step, step))
+		var n_3: int = _cube_to_index(cube_origin + Vector3(0.0, step, -step))
+		if _map_tiles[n_0] != null and _map_tiles[n_0].is_active():
+			tile_indices.append(n_0)
+		if _map_tiles[n_3] != null and _map_tiles[n_3].is_active():
+			tile_indices.append(n_3)
+		
+		#    /\ 1
+		#   |  |
+		#  4 \/
+		var n_1: int = _cube_to_index(cube_origin + Vector3(step, -step, 0.0))
+		var n_4: int = _cube_to_index(cube_origin + Vector3(-step, step, 0.0))
+		if _map_tiles[n_1] != null and _map_tiles[n_0].is_active():
+			tile_indices.append(n_1)
+		if _map_tiles[n_4] != null and _map_tiles[n_3].is_active():
+			tile_indices.append(n_4)
+		
+		#    /\
+		# 5 |  | 2
+		#    \/
+		var n_2: int = _cube_to_index(cube_origin + Vector3(step, 0.0, -step))
+		var n_5: int = _cube_to_index(cube_origin + Vector3(-step, 0.0, step))
+		if _map_tiles[n_2] != null and _map_tiles[n_0].is_active():
+			tile_indices.append(n_2)
+		if _map_tiles[n_5] != null and _map_tiles[n_3].is_active():
+			tile_indices.append(n_5)
+	
+	return tile_indices
+
+
 func _init(
 	x_value: int,
 	z_value: int,
@@ -251,6 +295,8 @@ func _index_to_cube(index: int) -> Vector3:
 # Converts the cube coordinates to the corresponding index.
 # Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
 func _cube_to_index(coord: Vector3) -> int:
+	# Use bitwise and to detect whether something is even (0) or odd (1), 
+	# in order to catch negative numbers too.
 	var z_pos: int = int(coord.y + (coord.x - (int(coord.x) & 1)) / 2.0)
 	var x_pos: int = int(coord.x)
 	return (z_pos * _x_count) + x_pos

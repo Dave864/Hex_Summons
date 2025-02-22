@@ -10,8 +10,8 @@ when coding the EncounterUI's states.
 const WAIT: String = "Wait"
 const STANDBY: String = "Standby"
 const PAUSE: String = "Pause"
-const ACTION_SELECT: String = "ActionSelect"
-const SUB_ACTION_SELECT: String = "SubActionSelect"
+const ACTION: String = "Action"
+const SUB_ACTION: String = "SubAction"
 
 # Typed reference to the EncounterUI node.
 var encounter_ui: EncounterUI

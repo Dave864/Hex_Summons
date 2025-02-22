@@ -71,7 +71,10 @@ func _on_SignalBus_tile_selected(_info: Array) -> void:
 
 func _on_TechniqueButton_button_state_changed(state: int) -> void:
 	if state == LabeledIconButton.ButtonStates.PRESSED:
-		print("Selecting a technique")
+		state_machine.transition_to(
+			ACTION, 
+			{"option_flag": encounter_ui.Options.TECHNIQUE}
+		)
 
 
 func _on_SpellButton_button_state_changed(state: int) -> void:

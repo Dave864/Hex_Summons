@@ -23,23 +23,26 @@ script = ExtResource( 2 )
 
 [node name="SubOptions" type="ScrollContainer" parent="."]
 anchor_left = 0.202
-anchor_top = 0.838
+anchor_top = 0.728
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.838
 margin_left = 0.151993
-margin_top = -65.8
-margin_bottom = -97.0
+margin_top = 0.199982
+margin_bottom = 0.199951
 mouse_filter = 2
 script = ExtResource( 3 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SubOptions"]
+margin_bottom = 66.0
 mouse_filter = 2
+size_flags_horizontal = 5
+size_flags_vertical = 3
 
 [node name="ActivePlayerStats" type="PanelContainer" parent="."]
-anchor_top = 1.0
+anchor_top = 0.767
 anchor_right = 0.199
 anchor_bottom = 1.0
-margin_top = -140.0
+margin_top = -0.200012
 margin_right = 0.223984
 script = ExtResource( 12 )
 
