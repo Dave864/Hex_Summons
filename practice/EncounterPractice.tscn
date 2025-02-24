@@ -1,77 +1,18 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://character/player_characters/PlayerCharacter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://character/player_characters/TestPlayer2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://selector_node/Selector.tscn" type="PackedScene" id=2]
 [ext_resource path="res://practice/HexMap.tscn" type="PackedScene" id=3]
 [ext_resource path="res://encounter.gd" type="Script" id=4]
-[ext_resource path="res://character/mobs/EnemyCharacter.tscn" type="PackedScene" id=5]
+[ext_resource path="res://character/player_characters/TestPlayer1.tscn" type="PackedScene" id=5]
 [ext_resource path="res://states/state_machine.gd" type="Script" id=6]
 [ext_resource path="res://states/encounter/End.gd" type="Script" id=7]
 [ext_resource path="res://states/encounter/EnemyTurn.gd" type="Script" id=8]
 [ext_resource path="res://states/encounter/Start.gd" type="Script" id=9]
 [ext_resource path="res://states/encounter/PlayerTurn.gd" type="Script" id=10]
 [ext_resource path="res://user_interface/encounter/EncounterUI.tscn" type="PackedScene" id=11]
-[ext_resource path="res://character/core_stats.gd" type="Script" id=15]
-
-[sub_resource type="Resource" id=1]
-resource_local_to_scene = true
-script = ExtResource( 15 )
-_base_max_hp = 10
-_base_atk = 1
-_base_def = 1
-_base_magic = 1
-_base_agl = 1
-_base_mvmt = 2
-_mvmt_speed = 5.0
-_base_res_earth = 1
-_base_res_fire = 1
-_base_res_water = 1
-_base_res_wind = 1
-
-[sub_resource type="Resource" id=2]
-resource_local_to_scene = true
-script = ExtResource( 15 )
-_base_max_hp = 8
-_base_atk = 1
-_base_def = 1
-_base_magic = 1
-_base_agl = 1
-_base_mvmt = 2
-_mvmt_speed = 5.0
-_base_res_earth = 1
-_base_res_fire = 1
-_base_res_water = 1
-_base_res_wind = 1
-
-[sub_resource type="Resource" id=3]
-resource_local_to_scene = true
-script = ExtResource( 15 )
-_base_max_hp = 4
-_base_atk = 1
-_base_def = 1
-_base_magic = 1
-_base_agl = 3
-_base_mvmt = 3
-_mvmt_speed = 5.0
-_base_res_earth = 1
-_base_res_fire = 1
-_base_res_water = 1
-_base_res_wind = 1
-
-[sub_resource type="Resource" id=4]
-resource_local_to_scene = true
-script = ExtResource( 15 )
-_base_max_hp = 6
-_base_atk = 1
-_base_def = 1
-_base_magic = 1
-_base_agl = 3
-_base_mvmt = 3
-_mvmt_speed = 5.0
-_base_res_earth = 1
-_base_res_fire = 1
-_base_res_water = 1
-_base_res_wind = 1
+[ext_resource path="res://character/mobs/TestEnemy1.tscn" type="PackedScene" id=12]
+[ext_resource path="res://character/mobs/TestEnemy2.tscn" type="PackedScene" id=13]
 
 [node name="EncounterPractice" type="Node"]
 script = ExtResource( 4 )
@@ -94,23 +35,19 @@ map = NodePath("")
 
 [node name="Players" type="Node" parent="."]
 
-[node name="PlayerCharacter1" parent="Players" groups=["player"] instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31605, 0, -2.9794 )
-stats = SubResource( 1 )
+[node name="TestPlayer1" parent="Players" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3425, 0, -1.54733 )
 
-[node name="PlayerCharacter2" parent="Players" groups=["player"] instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26408, 4.76837e-07, -1.52794 )
-stats = SubResource( 2 )
+[node name="TestPlayer2" parent="Players" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.34318, 0, -3.05277 )
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="EnemyCharacter1" parent="Enemies" groups=["enemy"] instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.18093, 0, 2.9573 )
-stats = SubResource( 3 )
+[node name="TestEnemy1" parent="Enemies" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5181, 0, 1.58334 )
 
-[node name="EnemyCharacter2" parent="Enemies" groups=["enemy"] instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38191, 0, 1.41637 )
-stats = SubResource( 4 )
+[node name="TestEnemy2" parent="Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1238, 0, 3.05344 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 6 )
