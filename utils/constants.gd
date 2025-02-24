@@ -28,6 +28,9 @@ const DEFAULT_ICON_PATH: String = "res://art/icon.png"
 # the distance from the center of a hexagon to the midpoint of one of its edges.
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
+# The length value of a unit of height for an encounter map hex tile.
+const HEX_TILE_UNIT_HEIGHT: float = 0.25
+
 # The "radius" of a hexagon drawn for the purposes of illustrating an action's
 # area range and effect range. The radius is the distance from the center to
 # a vertex of a hexagon
