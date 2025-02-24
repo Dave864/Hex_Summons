@@ -15,13 +15,32 @@ func enter(_msg := {}) -> void:
 	_set_state_machine_bus(STANDBY)
 	encounter_ui.sub_options.show()
 	encounter_ui.options.show()
-	# This signal is used by other states and will be disconnected to avoid
+	
+	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
 	ErrorUtil.connect_signal(
 			SignalBus,
 			"tile_selected",
 			self,
 			"_on_SignalBus_tile_selected"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.technique_button,
+			"button_state_changed",
+			self,
+			"_on_TechniqueButton_button_state_changed"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.spell_button,
+			"button_state_changed",
+			self,
+			"_on_SpellButton_button_state_changed"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.end_button,
+			"button_state_changed",
+			self,
+			"_on_EndButton_button_state_changed"
 	)
 
 
@@ -41,29 +60,22 @@ func handle_input(_event: InputEvent) -> void:
 # state. Use this function to clean up the state.
 func exit() -> void:
 	SignalBus.disconnect("tile_selected", self, "_on_SignalBus_tile_selected")
+	encounter_ui.technique_button.disconnect(
+		"button_state_changed",
+		self,
+		"_on_TechniqueButton_button_state_changed"
+	)
+	encounter_ui.spell_button.disconnect(
+		"button_state_changed",
+		self,
+		"_on_SpellButton_button_state_changed"
+	)
+	encounter_ui.end_button.disconnect(
+		"button_state_changed",
+		self,
+		"_on_EndButton_button_state_changed"
+	)
 
-
-func _ready_connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			encounter_ui.technique_button,
-			"button_state_changed",
-			self,
-			"_on_TechniqueButton_button_state_changed"
-	)
-	
-	ErrorUtil.connect_signal(
-			encounter_ui.spell_button,
-			"button_state_changed",
-			self,
-			"_on_SpellButton_button_state_changed"
-	)
-	
-	ErrorUtil.connect_signal(
-			encounter_ui.end_button,
-			"button_state_changed",
-			self,
-			"_on_EndButton_button_state_changed"
-	)
 
 func _on_SignalBus_tile_selected(_info: Array) -> void:
 	state_machine.transition_to(PAUSE)
