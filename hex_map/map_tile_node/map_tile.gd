@@ -6,6 +6,16 @@ Represents an individual map tile.
 """
 
 
+enum SelectionType {
+	NONE,
+	PLAYER,
+	ALLY,
+	RANGE,
+	EFFECT_RANGE,
+	EFFECT_ORIGIN,
+	TARGET,
+}
+
 # References the MapTile nodes that are adjacent to this one.
 #  0  / \  1
 #  5 |   | 2
@@ -27,7 +37,7 @@ var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
 # The current occupant of the tile.
 var _occupant: Character = null setget , get_current_occupant
 # Flag that indicates if the tile is avaiable to be selected
-var _is_selectable: bool = false setget set_is_selectable, get_is_selectable
+var _selection_type: int = false setget set_selection_type, get_selection_type
 
 
 # Gets the adjacent tile of the specified position.
@@ -70,14 +80,14 @@ func set_cube_coord(value: Vector3) -> void:
 
 
 # Set the value of the selectable flag.
-func set_is_selectable(value: bool) -> void:
-	_is_selectable = value
+func set_selection_type(value: int) -> void:
+	_selection_type = value
 	_set_highlighter()
 
 
 # Get the value of the selectable flag.
-func get_is_selectable() -> bool:
-	return _is_selectable
+func get_selection_type() -> int:
+	return _selection_type
 
 
 # Gets the current character occupying this tile.
@@ -115,10 +125,34 @@ func _process(_delta: float) -> void:
 
 # Activates the highlighter based on the _is_selectable flag.
 func _set_highlighter() -> void:
-	if _is_selectable:
-		$Highlighter.show()
-	else:
-		$Highlighter.hide()
+	match _selection_type:
+		SelectionType.PLAYER:
+			_set_highlighter_color(Constants.COLOR_CHARACTER_ORIGIN)
+			$Highlighter.show()
+		SelectionType.ALLY:
+			_set_highlighter_color(Constants.COLOR_ALLY_ORIGIN)
+			$Highlighter.show()
+		SelectionType.RANGE:
+			_set_highlighter_color(Constants.COLOR_AREA_RANGE)
+			$Highlighter.show()
+		SelectionType.EFFECT_ORIGIN:
+			_set_highlighter_color(Constants.COLOR_EFFECT_ORIGIN)
+			$Highlighter.show()
+		SelectionType.EFFECT_RANGE:
+			_set_highlighter_color(Constants.COLOR_EFFECT_RANGE)
+			$Highlighter.show()
+		SelectionType.TARGET:
+			_set_highlighter_color(Constants.COLOR_TARGET_SELECT)
+			$Highlighter.show()
+		_:
+			$Highlighter.hide()
+
+
+# Changes the color of the tile highlighter
+func _set_highlighter_color(color: Color) -> void:
+	var m: Material = $Highlighter.get_surface_material(0)
+	m.albedo_color = color
+	$Highlighter.set_surface_material(0, m)
 
 
 func _on_MapTile_area_entered(area) -> void:

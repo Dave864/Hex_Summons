@@ -41,9 +41,24 @@ const MAX_MAP_DIST: int = 100
 # to account for characters of the opposite faction of the current active character.
 const ASTAR_ADJUSTMENT_WEIGHT = 1000.0
 
-# A collection of colorsset for various indicators.
-const AREA_RANGE_COLOR: Color = Color.blue
-const CHARACTER_ORIGIN_COLOR: Color = Color.aqua
-const EFFECT_RANGE_COLOR: Color = Color.yellow
-const EFFECT_ORIGIN_COLOR: Color = Color.orangered
-const TARGET_SELECT_COLOR: Color = Color.red
+# A collection of colors set for various indicators.
+const COLOR_AREA_RANGE: Color = Color.blue
+const COLOR_CHARACTER_ORIGIN: Color = Color.dodgerblue
+const COLOR_ALLY_ORIGIN: Color = Color.aqua
+const COLOR_EFFECT_RANGE: Color = Color.yellow
+const COLOR_EFFECT_ORIGIN: Color = Color.orangered
+const COLOR_TARGET_SELECT: Color = Color.red
+
+# Defines the positions of a unit circle that correspond to the vertices of
+# a hexagon.
+#    0
+# 5 / \ 1
+#  |   |
+# 4 \ / 2
+#    3
+const HV_0_COORD: Vector2 = Vector2(0.0, 1.0)
+const HV_1_COORD: Vector2 = Vector2(HEX_EDGE_RATIO, 0.5)
+const HV_2_COORD: Vector2 = Vector2(HEX_EDGE_RATIO, -0.5)
+const HV_3_COORD: Vector2 = Vector2(0.0, -1.0)
+const HV_4_COORD: Vector2 = Vector2(-HEX_EDGE_RATIO, -0.5)
+const HV_5_COORD: Vector2 = Vector2(-HEX_EDGE_RATIO, 0.5)

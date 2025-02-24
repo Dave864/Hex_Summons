@@ -18,7 +18,7 @@ var movement_range: Array = []
 func enter(_msg := {}) -> void:
 	_set_state_machine_bus(PLAYER_TURN)
 	movement_range = enc.hm_astar.determine_move_range(enc.get_current_character())
-	enc.hex_map.highlight_tiles(movement_range, enc.get_current_character())
+	enc.hex_map.highlight_character_movement(movement_range, enc.get_current_character())
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 	
 	# This signal is used by other states and will be disconnected to avoid

@@ -25,20 +25,22 @@ func get_map_tiles() -> Array:
 	return _map_tiles
 
 
-# Highlight the specified tiles.
-func highlight_tiles(
+# Highlight the specified tiles as movement for the given player character.
+func highlight_character_movement(
 	tile_indexes: Array,
 	pc: PlayerCharacter
 ) -> void:
 	for i in tile_indexes:
 		var tile: MapTile = _map_tiles[i]
-		tile.set_is_selectable(
-			tile.get_current_occupant() == null
-			or tile.get_current_occupant().name == pc.name
-		)
+		if tile.get_current_occupant() == null:
+			tile.set_selection_type(MapTile.SelectionType.RANGE)
+		elif tile.get_current_occupant().name == pc.name:
+			tile.set_selection_type(MapTile.SelectionType.PLAYER)
+		else:
+			tile.set_selection_type(MapTile.SelectionType.ALLY)
 
 
 # Clear the higlights from all tiles.
 func clear_highlights() -> void:
 	for tile in _map_tiles:
-		tile.set_is_selectable(false)
+		tile.set_selection_type(MapTile.SelectionType.NONE)
