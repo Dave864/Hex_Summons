@@ -9,15 +9,40 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
-"class": "Attack",
+"base": "Reference",
+"class": "Action",
 "language": "GDScript",
-"path": "res://attacks/attack.gd"
+"path": "res://actions/scripts/action.gd"
+}, {
+"base": "Node",
+"class": "ActionRange",
+"language": "GDScript",
+"path": "res://actions/scripts/action_range.gd"
+}, {
+"base": "PanelContainer",
+"class": "ActivePlayerStats",
+"language": "GDScript",
+"path": "res://user_interface/encounter/active_player_stats.gd"
+}, {
+"base": "Object",
+"class": "ArraySorters",
+"language": "GDScript",
+"path": "res://utils/array_sorters.gd"
+}, {
+"base": "ActionRange",
+"class": "CardinalRange",
+"language": "GDScript",
+"path": "res://actions/scripts/cardinal_range.gd"
 }, {
 "base": "Area",
 "class": "Character",
 "language": "GDScript",
 "path": "res://character/character.gd"
+}, {
+"base": "VBoxContainer",
+"class": "CharacterSummary",
+"language": "GDScript",
+"path": "res://user_interface/encounter/test_labels/CharacterSummary/character_summary.gd"
 }, {
 "base": "Object",
 "class": "Constants",
@@ -28,6 +53,11 @@ _global_script_classes=[ {
 "class": "CoreStats",
 "language": "GDScript",
 "path": "res://character/core_stats.gd"
+}, {
+"base": "PanelContainer",
+"class": "DisplayPanel",
+"language": "GDScript",
+"path": "res://user_interface/encounter/DisplayPanel/display_panel.gd"
 }, {
 "base": "Node",
 "class": "Encounter",
@@ -79,6 +109,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://utils/hex_map_astar.gd"
 }, {
+"base": "HBoxContainer",
+"class": "InitiativeTracker",
+"language": "GDScript",
+"path": "res://user_interface/encounter/InitiativeTracker/initiative_tracker.gd"
+}, {
 "base": "MarginContainer",
 "class": "LabeledIconButton",
 "language": "GDScript",
@@ -103,6 +138,11 @@ _global_script_classes=[ {
 "class": "PlayerCharacterState",
 "language": "GDScript",
 "path": "res://states/player_character/player_character_state.gd"
+}, {
+"base": "ActionRange",
+"class": "RingRange",
+"language": "GDScript",
+"path": "res://actions/scripts/ring_range.gd"
 }, {
 "base": "Area",
 "class": "Selector",
@@ -135,10 +175,16 @@ _global_script_classes=[ {
 "path": "res://hex_map/tiles.gd"
 } ]
 _global_script_class_icons={
-"Attack": "",
+"Action": "",
+"ActionRange": "",
+"ActivePlayerStats": "",
+"ArraySorters": "",
+"CardinalRange": "",
 "Character": "",
+"CharacterSummary": "",
 "Constants": "",
 "CoreStats": "",
+"DisplayPanel": "",
 "Encounter": "",
 "EncounterState": "",
 "EncounterUI": "",
@@ -149,11 +195,13 @@ _global_script_class_icons={
 "FSM": "",
 "HexMap": "",
 "HexMapAStar": "",
+"InitiativeTracker": "",
 "LabeledIconButton": "",
 "MapTile": "",
 "MousePosition": "",
 "PlayerCharacter": "",
 "PlayerCharacterState": "",
+"RingRange": "",
 "Selector": "",
 "SelectorState": "",
 "State": "",
@@ -226,6 +274,26 @@ ui_encounter_player_end={
 "deadzone": 0.5,
 "events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_selector_l={
+"deadzone": 0.2,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":-1.0,"script":null)
+ ]
+}
+ui_selector_r={
+"deadzone": 0.2,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":1.0,"script":null)
+ ]
+}
+ui_selector_u={
+"deadzone": 0.2,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":-1.0,"script":null)
+ ]
+}
+ui_selector_d={
+"deadzone": 0.2,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":1.0,"script":null)
  ]
 }
 
