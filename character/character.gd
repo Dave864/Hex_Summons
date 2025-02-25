@@ -57,4 +57,6 @@ func _on_Creature_area_entered(map_tile) -> void:
 	# of the tile it in the area of.
 	if !_start_set:
 		_start_set = true
-		translation = map_tile.translation
+		var tile_pos: Vector3 = map_tile.translation
+		tile_pos.y = Constants.HEX_TILE_UNIT_HEIGHT * map_tile.height
+		translation = tile_pos

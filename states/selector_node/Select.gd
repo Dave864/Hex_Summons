@@ -133,6 +133,8 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		)
 	):
 		selector.snap_position = map_tile.translation
+		# Account for tile's height
+		selector.snap_position.y = map_tile.height * Constants.HEX_TILE_UNIT_HEIGHT
 		selector.tile = map_tile
 
 

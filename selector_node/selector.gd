@@ -47,4 +47,4 @@ func position_selector_shape() -> void:
 
 # Adjusts the provided position to account for the position of the selector shape. 
 func position_relative_to_selector_shape(position: Vector3) -> Vector3:
-	return Vector3(position.x, $SelectorShape.translation.y, position.z)
+	return Vector3(position.x, position.y + Constants.SELECTOR_DISPLACEMENT, position.z)

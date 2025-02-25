@@ -194,7 +194,10 @@ func _establish_astar_connections() -> void:
 			TODO: weight will need to be updated when different tile types
 			are eventually created
 			"""
-			add_point(tile.get_index(), tile.translation, 1.0)
+			# Account for height
+			var tile_position: Vector3 = tile.translation
+			tile_position.y = tile.height * Constants.HEX_TILE_UNIT_HEIGHT
+			add_point(tile.get_index(), tile_position, 1.0)
 	
 	_reconnect_nodes()
 
@@ -273,13 +276,13 @@ func _estimate_cost(u, v) -> float:
 # Calculates the distance between two tiles based on their cube coordinates.
 # Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
 func _cube_dist(start_index: int, end_index: int) -> float:
-	"""
-	TODO: add logic to account for height difference in tiles
-	"""
+	var height_diff: int = _map_tiles[end_index].height - _map_tiles[start_index].height
+	# Height differences of 1 are seen as the same height
+	height_diff -= 1 if height_diff > 0 else 0
 	var start_pos: Vector3 = _index_to_cube(start_index)
 	var end_pos: Vector3 = _index_to_cube(end_index)
 	var diff: Vector3 = start_pos - end_pos
-	return (abs(diff.x) + abs(diff.y) + abs(diff.z)) / 2.0
+	return (abs(diff.x) + abs(diff.y) + abs(diff.z) + abs(height_diff)) / 2.0
 
 
 # Converts the index to the corresponding cube coordinate.
