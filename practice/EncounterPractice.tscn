@@ -36,15 +36,15 @@ map = NodePath("")
 [node name="Players" type="Node" parent="."]
 
 [node name="TestPlayer1" parent="Players" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3425, 0, -1.54733 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.99469, -0.126864, -3.26045 )
 
 [node name="TestPlayer2" parent="Players" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.34318, 0, -3.05277 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4128, 0.382735, 1.48049 )
 
 [node name="Enemies" type="Node" parent="."]
 
 [node name="TestEnemy1" parent="Enemies" instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5181, 0, 1.58334 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55945, -0.104309, 3.01675 )
 
 [node name="TestEnemy2" parent="Enemies" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1238, 0, 3.05344 )

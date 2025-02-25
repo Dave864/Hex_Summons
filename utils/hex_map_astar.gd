@@ -40,7 +40,7 @@ func determine_move_range(c: Character) -> Array:
 	fringes.append([_map_tiles[c.get_index_at()]]) 
 	visited[c.get_index_at()] = _map_tiles[c.get_index_at()]
 
-	# Get the tiles within movement range
+	# Get all possible tiles within movement range
 	for i in range(1, movement + 1):
 		fringes.append([])
 		for tile in fringes[i - 1]:
@@ -53,7 +53,19 @@ func determine_move_range(c: Character) -> Array:
 				):
 					visited[neighbor.get_index()] = neighbor
 					fringes[i].append(neighbor)
-	return visited.keys()
+	
+	# Get the tiles that are reachable when considering heights
+	var tiles_in_range: Array = []
+	_disconnect_area(visited.keys())
+	for tile_index in visited.keys():
+		var path: PoolIntArray = get_id_path(c.get_index_at(), tile_index)
+		var dist: float = 0.0
+		for i in range(1, path.size()):
+			dist += _compute_cost(path[i - 1], path[i])
+		if dist <= movement:
+			tiles_in_range.append(tile_index)
+	_reconnect_nodes()
+	return tiles_in_range
 
 
 # Determines the path to the point closest to the specified ID for a given character.
@@ -194,7 +206,9 @@ func _establish_astar_connections() -> void:
 			TODO: weight will need to be updated when different tile types
 			are eventually created
 			"""
-			# Account for height
+			# Set the y-position to be a factor of the tile height to allow
+			# for pathfinding to return the coordinates that need to be traveled
+			# to.
 			var tile_position: Vector3 = tile.translation
 			tile_position.y = tile.height * Constants.HEX_TILE_UNIT_HEIGHT
 			add_point(tile.get_index(), tile_position, 1.0)
@@ -276,13 +290,13 @@ func _estimate_cost(u, v) -> float:
 # Calculates the distance between two tiles based on their cube coordinates.
 # Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
 func _cube_dist(start_index: int, end_index: int) -> float:
-	var height_diff: int = _map_tiles[end_index].height - _map_tiles[start_index].height
+	var height_diff: float = abs(_map_tiles[end_index].height - _map_tiles[start_index].height)
 	# Height differences of 1 are seen as the same height
-	height_diff -= 1 if height_diff > 0 else 0
+	height_diff = 0.0 if height_diff <= 1.0 else height_diff
 	var start_pos: Vector3 = _index_to_cube(start_index)
 	var end_pos: Vector3 = _index_to_cube(end_index)
 	var diff: Vector3 = start_pos - end_pos
-	return (abs(diff.x) + abs(diff.y) + abs(diff.z) + abs(height_diff)) / 2.0
+	return ((abs(diff.x) + abs(diff.y) + abs(diff.z)) / 2.0) + height_diff
 
 
 # Converts the index to the corresponding cube coordinate.
