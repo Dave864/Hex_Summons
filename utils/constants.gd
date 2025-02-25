@@ -29,7 +29,7 @@ const DEFAULT_ICON_PATH: String = "res://art/icon.png"
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
 # The length value of a unit of height for an encounter map hex tile.
-const HEX_TILE_UNIT_HEIGHT: float = 0.25
+const HEX_TILE_UNIT_HEIGHT: float = 0.5
 
 # The "radius" of a hexagon drawn for the purposes of illustrating an action's
 # area range and effect range. The radius is the distance from the center to

@@ -16,6 +16,8 @@ enum SelectionType {
 	TARGET,
 }
 
+# The height of the tile.
+export(int, 0, 20) var height = 0 setget set_height
 # References the MapTile nodes that are adjacent to this one.
 #  0  / \  1
 #  5 |   | 2
@@ -38,6 +40,13 @@ var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
 var _occupant: Character = null setget , get_current_occupant
 # Flag that indicates if the tile is avaiable to be selected
 var _selection_type: int = false setget set_selection_type, get_selection_type
+
+# Updates the height of the map tile.
+func set_height(value: int) -> void:
+	height = value
+	_update_tile_shape_height()
+	_update_collision_shape_height()
+	_update_highlighter_position()
 
 
 # Gets the adjacent tile of the specified position.
@@ -115,6 +124,7 @@ func is_active() -> bool:
 func _ready() -> void:
 	ErrorUtil.connect_signal(self, "area_entered", self, "_on_MapTile_area_entered")
 	ErrorUtil.connect_signal(self, "area_exited", self, "_on_MapTile_area_exited")
+	
 	_set_highlighter()
 
 
@@ -146,6 +156,33 @@ func _set_highlighter() -> void:
 			$Highlighter.show()
 		_:
 			$Highlighter.hide()
+
+
+# Updates the shape mesh so that it reflects the current height.
+func _update_tile_shape_height() -> void:
+	$TileShape.mesh.set_height(Constants.HEX_TILE_UNIT_HEIGHT * (1 + height))
+	# Move the shape so that the bottom is always at -0.25
+	var y_translate: float = (Constants.HEX_TILE_UNIT_HEIGHT / 2) * (height - 1)
+	$TileShape.set_translation(Vector3(0.0, y_translate, 0.0))
+
+
+# Updates the collision shape mesh so that it reflects the current height.
+func _update_collision_shape_height() -> void:
+	var points: PoolVector3Array = $CollisionShape.shape.get_points()
+	for i in range(6):
+		var h: float = 0.25 + (Constants.HEX_TILE_UNIT_HEIGHT * height)
+		points[i] = Vector3(points[i].x, h, points[i].z)
+	$CollisionShape.shape.set_points(points)
+
+
+# Update the position of the tile highlighter so that it is on top of the tile.
+func _update_highlighter_position() -> void:
+	var y_translate: float = 0.01 + (height * Constants.HEX_TILE_UNIT_HEIGHT)
+	$Highlighter.translation = Vector3(0.0, y_translate, 0.0)
+	"""
+	TODO: remove label
+	"""
+	$Label3D.translation = Vector3(0.0, y_translate, 0.0)
 
 
 # Changes the color of the tile highlighter
