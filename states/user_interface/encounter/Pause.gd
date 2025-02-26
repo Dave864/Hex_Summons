@@ -38,5 +38,5 @@ func exit() -> void:
 	)
 
 
-func _on_SignalBus_selector_required() -> void:
+func _on_SignalBus_selector_required(_ip: Vector3) -> void:
 	state_machine.transition_to(STANDBY)

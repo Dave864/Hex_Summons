@@ -8,6 +8,9 @@ If a player turn ends, go to the 'Wait' state.
 """
 
 
+var mouse_active: bool = false
+
+
 # Reveal the selector shape and enable to ability to snap to tile positions.
 func enter(_msg: Dictionary = {}) -> void:
 	_set_state_machine_bus(SELECT)
@@ -27,11 +30,15 @@ func enter(_msg: Dictionary = {}) -> void:
 		"_on_SignalBus_player_turn_ended"
 	)
 	
+	selector.snap_position = _msg["initial_position"]
+	selector.set_to_position(_msg["initial_position"])
+	selector.position_selector_shape()
 	selector.selector_shape.show()
 
 
 func update(_delta: float) -> void:
-	selector.move_to_mouse_position()
+	if mouse_active:
+		selector.move_to_mouse_position()
 	selector.position_selector_shape()
 
 
@@ -44,6 +51,7 @@ func exit() -> void:
 
 # Handles input events
 func handle_input(_event: InputEvent) -> void:
+	mouse_active = _event is InputEventMouse
 	# Signal that the currently highlighted map tile was selected
 	# and move to the 'Pause' state.
 	if _event.is_action_pressed("ui_selector_select"):
@@ -53,6 +61,7 @@ func handle_input(_event: InputEvent) -> void:
 	_handle_joystick_input()
 
 
+# Handles the joystick input from a gamepad controller.
 func _handle_joystick_input() -> void:
 	var dir_vel: Vector2 = Input.get_vector(
 		"ui_selector_l",
@@ -60,7 +69,8 @@ func _handle_joystick_input() -> void:
 		"ui_selector_d",
 		"ui_selector_u"
 	)
-	#  /\ 0
+	
+	#  /\*
 	# |  |
 	#  \/
 	# Move to the upper-right neighbor
@@ -70,8 +80,9 @@ func _handle_joystick_input() -> void:
 		and dir_vel.y > 0.0
 	):
 		print("move upper-right")
+		_resolve_joystick_direction(MapTile.NeighborPosition.UPPER_RIGHT)
 	#  /\
-	# |  | 1
+	# |  |*
 	#  \/
 	# Move to the true-right neighbor
 	elif (
@@ -80,9 +91,10 @@ func _handle_joystick_input() -> void:
 		and dir_vel.y > Constants.HV_2_COORD.y
 	):
 		print("move right")
+		_resolve_joystick_direction(MapTile.NeighborPosition.RIGHT)
 	#  /\
 	# |  |
-	#  \/ 2
+	#  \/*
 	# Move to the bottom-right neighbor
 	elif(
 		dir_vel.x > Constants.HV_3_COORD.x
@@ -90,9 +102,10 @@ func _handle_joystick_input() -> void:
 		and dir_vel.y < 0.0
 	):
 		print("move bottom-right")
-	#   /\
-	#  |  |
-	# 3 \/
+		_resolve_joystick_direction(MapTile.NeighborPosition.BOTTOM_RIGHT)
+	#  /\
+	# |  |
+	# *\/
 	# Move to the botton-left neighbor
 	elif(
 		dir_vel.x > Constants.HV_4_COORD.x
@@ -100,9 +113,10 @@ func _handle_joystick_input() -> void:
 		and dir_vel.y < 0.0
 	):
 		print("move bottom-left")
-	#    /\
-	# 4 |  |
-	#    \/
+		_resolve_joystick_direction(MapTile.NeighborPosition.BOTTOM_LEFT)
+	#   /\
+	# *|  |
+	#   \/
 	# Move to the true-left neighbor
 	elif(
 		dir_vel.x < 0.0
@@ -110,9 +124,10 @@ func _handle_joystick_input() -> void:
 		and dir_vel.y < Constants.HV_5_COORD.y
 	):
 		print("move left")
-	# 5 /\
-	#  |  |
-	#   \/
+		_resolve_joystick_direction(MapTile.NeighborPosition.LEFT)
+	# */\
+	# |  |
+	#  \/
 	# Move to the upper-left neighbor
 	elif(
 		dir_vel.x < Constants.HV_0_COORD.x
@@ -120,6 +135,15 @@ func _handle_joystick_input() -> void:
 		and dir_vel.y > 0.0
 	):
 		print("move upper-left")
+		_resolve_joystick_direction(MapTile.NeighborPosition.UPPER_LEFT)
+
+
+# Determines if the selector is able to move to the adjacent tile in the
+# given direction (0 - 5) and does so if able.
+func _resolve_joystick_direction(direction: int) -> void:
+	var adjacent_tile: MapTile = selector.tile.get_adjacent_tile(direction)
+	if adjacent_tile != null:
+		selector.set_to_position(adjacent_tile.character_position())
 
 
 func _on_Selector_area_entered(map_tile: Area) -> void:
@@ -132,9 +156,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 			or map_tile.get_selection_type() == MapTile.SelectionType.PLAYER
 		)
 	):
-		selector.snap_position = map_tile.translation
-		# Account for tile's height
-		selector.snap_position.y = map_tile.height * Constants.HEX_TILE_UNIT_HEIGHT
+		selector.snap_position = map_tile.character_position()
 		selector.tile = map_tile
 
 

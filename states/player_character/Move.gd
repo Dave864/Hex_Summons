@@ -31,6 +31,7 @@ func enter(_msg := {}) -> void:
 		start_point = pc.translation
 		next_point = travel_path[next_point_index]
 	elif StateMachineBus.encounter_states[FSM.Encounter.SELECTOR] == SelectorState.PAUSE:
+		next_point = travel_path[0]
 		state_machine.transition_to(STANDBY)
 	else:
 		completed_path = true
@@ -53,6 +54,7 @@ func update(delta: float) -> void:
 				start_point = pc.translation
 				next_point = travel_path[next_point_index]
 			else:
+				next_point = travel_path[-1]
 				completed_path = true
 	elif StateMachineBus.encounter_states[FSM.Encounter.SELECTOR] == SelectorState.PAUSE:
 		state_machine.transition_to(STANDBY)
@@ -64,4 +66,4 @@ func exit() -> void:
 	weight = 0.0
 	next_point_index = 1
 	completed_path = false
-	SignalBus.emit_signal("selector_required")
+	SignalBus.emit_signal("selector_required", next_point)

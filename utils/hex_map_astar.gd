@@ -206,12 +206,7 @@ func _establish_astar_connections() -> void:
 			TODO: weight will need to be updated when different tile types
 			are eventually created
 			"""
-			# Set the y-position to be a factor of the tile height to allow
-			# for pathfinding to return the coordinates that need to be traveled
-			# to.
-			var tile_position: Vector3 = tile.translation
-			tile_position.y = tile.height * Constants.HEX_TILE_UNIT_HEIGHT
-			add_point(tile.get_index(), tile_position, 1.0)
+			add_point(tile.get_index(), tile.character_position(), 1.0)
 	
 	_reconnect_nodes()
 

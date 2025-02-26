@@ -16,6 +16,15 @@ enum SelectionType {
 	TARGET,
 }
 
+enum NeighborPosition {
+	UPPER_LEFT,
+	UPPER_RIGHT,
+	RIGHT,
+	BOTTOM_RIGHT,
+	BOTTOM_LEFT,
+	LEFT,
+}
+
 # The height of the tile.
 export(int, 0, 20) var height = 0 setget set_height
 # References the MapTile nodes that are adjacent to this one.
@@ -104,7 +113,7 @@ func get_current_occupant() -> Character:
 	return _occupant
 
 
-# Check if the tile is able to be moved through by the specifed character.
+# Check if the tile is able to be moved through by the specifed character type.
 func can_character_pass(character_type: int) -> bool:
 	match character_type:
 		Constants.MapOccupants.PLAYER:
@@ -118,6 +127,14 @@ func can_character_pass(character_type: int) -> bool:
 # Checks whether the Map Tile is an active element of the map.
 func is_active() -> bool:
 	return visible
+
+
+# Return the coordinate that a character will be placed at when moving onto the
+# tile.
+func character_position() -> Vector3:
+	var cp: Vector3 = translation
+	cp.y = Constants.HEX_TILE_UNIT_HEIGHT * height
+	return cp
 
 
 # Called when the node enters the scene tree for the first time.
