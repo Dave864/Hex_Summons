@@ -50,8 +50,8 @@ const ASTAR_ADJUSTMENT_WEIGHT = 1000.0
 
 # A collection of colors set for various indicators.
 const COLOR_AREA_RANGE: Color = Color.blue
-const COLOR_CHARACTER_ORIGIN: Color = Color.dodgerblue
-const COLOR_ALLY_ORIGIN: Color = Color.aqua
+const COLOR_CHARACTER_ORIGIN: Color = Color.aqua
+const COLOR_ALLY_ORIGIN: Color = Color.dodgerblue
 const COLOR_EFFECT_RANGE: Color = Color.yellow
 const COLOR_EFFECT_ORIGIN: Color = Color.orangered
 const COLOR_TARGET_SELECT: Color = Color.red

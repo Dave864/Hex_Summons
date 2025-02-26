@@ -63,7 +63,7 @@ func handle_input(_event: InputEvent) -> void:
 
 # Handles the joystick input from a gamepad controller.
 func _handle_joystick_input() -> void:
-	var dir_vel: Vector2 = Input.get_vector(
+	var dir_vec: Vector2 = Input.get_vector(
 		"ui_selector_l",
 		"ui_selector_r",
 		"ui_selector_d",
@@ -75,66 +75,60 @@ func _handle_joystick_input() -> void:
 	#  \/
 	# Move to the upper-right neighbor
 	if (
-		dir_vel.x > Constants.HV_0_COORD.x
-		and dir_vel.x < Constants.HV_1_COORD.x
-		and dir_vel.y > 0.0
+		dir_vec.x > Constants.HV_0_COORD.x
+		and dir_vec.x < Constants.HV_1_COORD.x
+		and dir_vec.y > 0.0
 	):
-		print("move upper-right")
 		_resolve_joystick_direction(MapTile.NeighborPosition.UPPER_RIGHT)
 	#  /\
 	# |  |*
 	#  \/
 	# Move to the true-right neighbor
 	elif (
-		dir_vel.x > 0.0
-		and dir_vel.y < Constants.HV_1_COORD.y
-		and dir_vel.y > Constants.HV_2_COORD.y
+		dir_vec.x > 0.0
+		and dir_vec.y < Constants.HV_1_COORD.y
+		and dir_vec.y > Constants.HV_2_COORD.y
 	):
-		print("move right")
 		_resolve_joystick_direction(MapTile.NeighborPosition.RIGHT)
 	#  /\
 	# |  |
 	#  \/*
 	# Move to the bottom-right neighbor
 	elif(
-		dir_vel.x > Constants.HV_3_COORD.x
-		and dir_vel.x < Constants.HV_2_COORD.x
-		and dir_vel.y < 0.0
+		dir_vec.x > Constants.HV_3_COORD.x
+		and dir_vec.x < Constants.HV_2_COORD.x
+		and dir_vec.y < 0.0
 	):
-		print("move bottom-right")
 		_resolve_joystick_direction(MapTile.NeighborPosition.BOTTOM_RIGHT)
 	#  /\
 	# |  |
 	# *\/
 	# Move to the botton-left neighbor
 	elif(
-		dir_vel.x > Constants.HV_4_COORD.x
-		and dir_vel.x < Constants.HV_3_COORD.x
-		and dir_vel.y < 0.0
+		dir_vec.x > Constants.HV_4_COORD.x
+		and dir_vec.x < Constants.HV_3_COORD.x
+		and dir_vec.y < 0.0
 	):
-		print("move bottom-left")
 		_resolve_joystick_direction(MapTile.NeighborPosition.BOTTOM_LEFT)
 	#   /\
 	# *|  |
 	#   \/
 	# Move to the true-left neighbor
 	elif(
-		dir_vel.x < 0.0
-		and dir_vel.y > Constants.HV_4_COORD.y
-		and dir_vel.y < Constants.HV_5_COORD.y
+		dir_vec.x < 0.0
+		and dir_vec.y > Constants.HV_4_COORD.y
+		and dir_vec.y < Constants.HV_5_COORD.y
 	):
-		print("move left")
 		_resolve_joystick_direction(MapTile.NeighborPosition.LEFT)
 	# */\
 	# |  |
 	#  \/
 	# Move to the upper-left neighbor
 	elif(
-		dir_vel.x < Constants.HV_0_COORD.x
-		and dir_vel.x > Constants.HV_5_COORD.x
-		and dir_vel.y > 0.0
+		dir_vec.x < Constants.HV_0_COORD.x
+		and dir_vec.x > Constants.HV_5_COORD.x
+		and dir_vec.y > 0.0
 	):
-		print("move upper-left")
 		_resolve_joystick_direction(MapTile.NeighborPosition.UPPER_LEFT)
 
 

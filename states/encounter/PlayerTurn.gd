@@ -2,7 +2,7 @@ extends EncounterState
 """
 The logic for what happens when an Encounter scene is in the `PlayerTurn` state.
 Handles the encounter logic needed to allow the player character to properly
-run during their turn. Remains in the `PlayerTurn` state if the next character
+run during their turn. Goes to the `PlayerTurn` state if the next character
 in initiative is also a player character. Goes to the `EnemyTurn` state if an
 enemy character is next in intiative. Goes to the `End` state if either all
 player characters or all enemy characters are defeated. 
@@ -11,6 +11,8 @@ player characters or all enemy characters are defeated.
 
 # The index of tiles that the player can move to.
 var movement_range: Array = []
+# The index of tiles in reach of an action. 
+var action_range: Dictionary = {"type": null, "tiles": null}
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
@@ -36,6 +38,9 @@ func update(_delta: float) -> void:
 	# Move to the `End` State when all enemies are defeated.
 	if enc.enemies.size() == 0:
 		state_machine.transition_to(END)
+	"""
+	TODO: Add logic to check if all players are defeated
+	"""
 
 
 # Called by the state machine before changing the active state.
