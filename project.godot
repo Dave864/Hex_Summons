@@ -9,30 +9,30 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
+"base": "Node",
 "class": "Action",
 "language": "GDScript",
 "path": "res://actions/scripts/action.gd"
-}, {
-"base": "Node",
-"class": "ActionRange",
-"language": "GDScript",
-"path": "res://actions/scripts/action_range.gd"
 }, {
 "base": "PanelContainer",
 "class": "ActivePlayerStats",
 "language": "GDScript",
 "path": "res://user_interface/encounter/active_player_stats.gd"
 }, {
+"base": "Area",
+"class": "AreaRange",
+"language": "GDScript",
+"path": "res://actions/range_type/action_range.gd"
+}, {
 "base": "Object",
 "class": "ArraySorters",
 "language": "GDScript",
 "path": "res://utils/array_sorters.gd"
 }, {
-"base": "ActionRange",
+"base": "AreaRange",
 "class": "CardinalRange",
 "language": "GDScript",
-"path": "res://actions/scripts/cardinal_range.gd"
+"path": "res://actions/range_type/cardinal_range.gd"
 }, {
 "base": "Area",
 "class": "Character",
@@ -139,10 +139,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://states/player_character/player_character_state.gd"
 }, {
-"base": "ActionRange",
+"base": "AreaRange",
 "class": "RingRange",
 "language": "GDScript",
-"path": "res://actions/scripts/ring_range.gd"
+"path": "res://actions/range_type/ring_range.gd"
 }, {
 "base": "Area",
 "class": "Selector",
@@ -176,8 +176,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Action": "",
-"ActionRange": "",
 "ActivePlayerStats": "",
+"AreaRange": "",
 "ArraySorters": "",
 "CardinalRange": "",
 "Character": "",
@@ -303,6 +303,7 @@ ui_selector_d={
 3d_physics/layer_2="map"
 3d_physics/layer_3="player"
 3d_physics/layer_4="mob"
+3d_physics/layer_5="action"
 
 [mono]
 

@@ -1,12 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://actions/scripts/cardinal_range.gd" type="Script" id=1]
 [ext_resource path="res://actions/scripts/action.gd" type="Script" id=2]
 
 [node name="Sweep" type="Node"]
 script = ExtResource( 2 )
 
 [node name="Range" type="Node" parent="."]
-script = ExtResource( 1 )
-fixed_to_character = true
-spread = 2

@@ -1,0 +1,87 @@
+tool
+class_name CardinalRange
+extends AreaRange
+"""
+Describes an action range whose area is constrained by the six directions of a hexagon.
+"""
+
+
+enum EffectType {
+	CONE,
+	COLUMN,
+}
+
+# The "width" of the effect area.
+export(int, 0, 6) var spread = 0 setget set_spread
+# How many tiles out from the cast point the action will affect.
+export(int, 1, 1000) var distance = 1 setget set_distance
+export(EffectType) var effect_type setget set_effect_type
+
+
+func set_spread(value: int) -> void:
+	spread = value
+	_update_collision_shape()
+
+
+func set_distance(val: int) -> void:
+	distance = val
+	_update_collision_shape()
+
+
+func set_effect_type(type: int) -> void:
+	effect_type = type
+	_update_collision_shape()
+
+
+# Virtual function. Updates the collision shape to fit the dimensions of the
+# effect range.
+func _update_collision_shape() -> void:
+	if spread == 0 and distance == 1:
+		_cs_as_point()
+		# Position the point collision to be on the adjacent tile
+		$CollisionPolygon.translation = Vector3(_tile_distance, 0.0, 0.0)
+	elif spread == 0:
+		_cs_as_line(((2 * distance) - 2) * Constants.HEX_EDGE_RATIO)
+	else:
+		var cs_points: PoolVector2Array = []
+		$CollisionPolygon.set_depth(_cs_height)
+		match effect_type:
+			EffectType.CONE:
+				cs_points.resize(2 * spread + 2)
+				for i in range(spread + 1):
+					var p0: Vector2 = Vector2(_tile_distance, 0.0)
+					# Set distance to be small to represent a line around a spread
+					var d: float = distance + 1 if distance > 1 else _cs_height + 1
+					var p1: Vector2 = Vector2(_tile_distance * d, 0.0)
+					# Prevent issues with convex decomposing
+					var deg: float = 60 * i if i < 6 else 359
+					p0 = p0.rotated(deg2rad(deg))
+					p1 = p1.rotated(deg2rad(deg))
+					cs_points[i] = p0
+					# Place second point from the end of the array to have the
+					# resulting collision shape be drawn correctly
+					cs_points[(2 * spread + 2) - i - 1] = p1
+				$CollisionPolygon.set_polygon(cs_points)
+			EffectType.COLUMN:
+				pass
+		$CollisionPolygon.rotation_degrees = Vector3(90.0, 0.0, 0.0)
+		$CollisionPolygon.translation = Vector3.ZERO
+
+
+# Draw the collision shape as a line, represented as a long cube.
+func _cs_as_line(length: float) -> void:
+	var cube_points: PoolVector2Array = []
+	cube_points.resize(4)
+	cube_points[0] = Vector2(-_cs_height / 2, 0)
+	cube_points[1] = Vector2(_cs_height / 2, 0)
+	cube_points[2] = Vector2(-_cs_height / 2, length)
+	cube_points[3] = Vector2(_cs_height / 2, length)
+	$CollisionPolygon.set_depth(_cs_height)
+	$CollisionPolygon.set_polygon(cube_points)
+	$CollisionPolygon.rotation_degrees = Vector3(0.0, 0.0, 90.0)
+	# Position the line collision to start on an adjacent tile
+	$CollisionPolygon.translation = Vector3(
+		(length / 2) + _tile_distance,
+		0.0,
+		0.0
+	)

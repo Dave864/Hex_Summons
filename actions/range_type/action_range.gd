@@ -1,10 +1,9 @@
 tool
-class_name ActionRange
-extends Node
+class_name AreaRange
+extends Area
 """
-Describes the common parameters for all actions, which are split into the 
-catergories of either `CardinalActoin` or `RingAction`. Defines the attack bonus 
-and area range.
+Describes the common parameters for area ranges of all actions, which are split
+into the catergories of either `CardinalActoin` or `RingAction`.
 """
 
 
@@ -16,6 +15,11 @@ export(int, 0, 1000) var dead_distance = 0 setget set_dead_distance, get_dead_di
 # Indicates if the action's cast point is fixed to the character's position
 # or is able to be defined within the action area.
 export(bool) var fixed_to_character
+
+# The height of the collision shape
+var _cs_height: float = 0.01
+# The distance from the center of one tile to the center of another
+var _tile_distance: float = 2 * Constants.HEX_EDGE_RATIO
 
 
 func set_area_distance(ad: int) -> void:
@@ -35,16 +39,38 @@ func get_dead_distance() -> int:
 	return dead_distance
 
 
-func _center_offset() -> Vector2:
-	var x_offset: float = (
-		(Constants.DISPLAY_HEX_RADIUS * Constants.HEX_EDGE_RATIO * area_distance * 2.0)
-		+ Constants.DISPLAY_HEX_RADIUS
-	)
-	var y_offset: float = (
-		(Constants.DISPLAY_HEX_RADIUS * area_distance * 1.5)
-		+ Constants.DISPLAY_HEX_RADIUS
-	)
-	return Vector2(x_offset, y_offset)
+func _ready() -> void:
+	pass
+
+
+# Virtual function. Updates the collision shape to fit the dimensions of the
+# effect range.
+func _update_collision_shape() -> void:
+	pass
+
+
+# Draw the collision shape as a point, represented as a cube.
+func _cs_as_point() -> void:
+	var cube_points: PoolVector2Array = []
+	cube_points.resize(4)
+	cube_points[0] = Vector2(-_cs_height / 2, _cs_height / 2)
+	cube_points[1] = Vector2(_cs_height / 2, _cs_height / 2)
+	cube_points[2] = Vector2(_cs_height / 2, -_cs_height / 2)
+	cube_points[3] = Vector2(-_cs_height / 2, -_cs_height / 2)
+	$CollisionPolygon.set_depth(_cs_height)
+	$CollisionPolygon.set_polygon(cube_points)
+
+
+#func _center_offset() -> Vector2:
+#	var x_offset: float = (
+#		(Constants.DISPLAY_HEX_RADIUS * Constants.HEX_EDGE_RATIO * area_distance * 2.0)
+#		+ Constants.DISPLAY_HEX_RADIUS
+#	)
+#	var y_offset: float = (
+#		(Constants.DISPLAY_HEX_RADIUS * area_distance * 1.5)
+#		+ Constants.DISPLAY_HEX_RADIUS
+#	)
+#	return Vector2(x_offset, y_offset)
 
 
 ## Draw a hex tile reference in the editor.
