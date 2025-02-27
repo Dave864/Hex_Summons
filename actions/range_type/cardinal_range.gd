@@ -47,23 +47,10 @@ func _update_collision_shape() -> void:
 		$CollisionPolygon.set_depth(_cs_height)
 		match effect_type:
 			EffectType.CONE:
-				cs_points.resize(2 * spread + 2)
-				for i in range(spread + 1):
-					var p0: Vector2 = Vector2(_tile_distance, 0.0)
-					# Set distance to be small to represent a line around a spread
-					var d: float = distance + 1 if distance > 1 else _cs_height + 1
-					var p1: Vector2 = Vector2(_tile_distance * d, 0.0)
-					# Prevent issues with convex decomposing
-					var deg: float = 60 * i if i < 6 else 359
-					p0 = p0.rotated(deg2rad(deg))
-					p1 = p1.rotated(deg2rad(deg))
-					cs_points[i] = p0
-					# Place second point from the end of the array to have the
-					# resulting collision shape be drawn correctly
-					cs_points[(2 * spread + 2) - i - 1] = p1
-				$CollisionPolygon.set_polygon(cs_points)
+				cs_points = _cs_as_cone()
 			EffectType.COLUMN:
-				pass
+				cs_points = _cs_as_column()
+		$CollisionPolygon.set_polygon(cs_points)
 		$CollisionPolygon.rotation_degrees = Vector3(90.0, 0.0, 0.0)
 		$CollisionPolygon.translation = Vector3.ZERO
 
@@ -85,3 +72,61 @@ func _cs_as_line(length: float) -> void:
 		0.0,
 		0.0
 	)
+
+
+# Draw a cone collision shape
+func _cs_as_cone() -> PoolVector2Array:
+	var cs_points: PoolVector2Array = []
+	cs_points.resize(2 * spread + 2)
+	for i in range(spread + 1):
+		var p0: Vector2 = Vector2(_tile_distance, 0.0)
+		# Set distance to be small to represent a line around a spread
+		var d: float = distance + 1 if distance > 1 else _cs_height + 1
+		var p1: Vector2 = Vector2(_tile_distance * d, 0.0)
+		# Prevent issues with convex decomposing
+		var deg: float = 60 * i if i < 6 else 359
+		p0 = p0.rotated(deg2rad(deg))
+		p1 = p1.rotated(deg2rad(deg))
+		cs_points[i] = p0
+		# Place second point from the end of the array to have the
+		# resulting collision shape be drawn correctly
+		cs_points[(2 * spread + 2) - i - 1] = p1
+	return cs_points
+
+
+# Draw a "column" collision shape
+func _cs_as_column() -> PoolVector2Array:
+	var cs_points: PoolVector2Array = []
+	if spread == 1:
+		cs_points.resize(6)
+		#  5 ----- 4
+		#   \  dist \
+		#    0       3
+		#   /  dist  /
+		#  1 ----- 2
+		cs_points[0] = Vector2(_tile_distance, 0)
+		cs_points[1] = Vector2(_tile_distance, 0).rotated(deg2rad(60))
+		cs_points[5] = Vector2(_tile_distance, 0).rotated(deg2rad(-60))
+		cs_points[3] = Vector2(_tile_distance * (distance + spread), 0)
+		cs_points[2] = cs_points[1] + Vector2(_tile_distance * distance, 0)
+		cs_points[4] = cs_points[5] + Vector2(_tile_distance * distance, 0)
+	else:
+		cs_points.resize(8)
+		#   6 ------ 5
+		#  /   dist   \
+		# 7            \
+		#  \            \
+		#   0            4
+		#  /            /
+		# 1            /
+		#  \   dist   /
+		#   2 ------ 3
+		cs_points[0] = Vector2(_tile_distance, 0)
+		cs_points[1] = Vector2(_tile_distance, 0).rotated(deg2rad(60))
+		cs_points[7] = Vector2(_tile_distance, 0).rotated(deg2rad(-60))
+		cs_points[2] = Vector2(_tile_distance * spread, 0).rotated(deg2rad(60))
+		cs_points[3] = cs_points[2] + Vector2(_tile_distance * distance, 0)
+		cs_points[4] = Vector2(_tile_distance * (distance + spread), 0)
+		cs_points[6] = Vector2(_tile_distance * spread, 0).rotated(deg2rad(-60))
+		cs_points[5] = cs_points[6] + Vector2(_tile_distance * distance, 0)
+	return cs_points
