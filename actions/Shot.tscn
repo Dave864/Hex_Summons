@@ -1,8 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://actions/scripts/action.gd" type="Script" id=2]
+[ext_resource path="res://actions/range_type/RingRange.tscn" type="PackedScene" id=1]
+[ext_resource path="res://actions/action.gd" type="Script" id=2]
+[ext_resource path="res://actions/range_type/EmissionPoint.tscn" type="PackedScene" id=3]
 
 [node name="Shot" type="Node"]
 script = ExtResource( 2 )
 
-[node name="Range" type="Node" parent="."]
+[node name="EmissionPoint" parent="." instance=ExtResource( 3 )]
+
+[node name="Range" parent="EmissionPoint" instance=ExtResource( 1 )]
+area_distance = 3
+dead_distance = 1
+effect_ignore_height = true

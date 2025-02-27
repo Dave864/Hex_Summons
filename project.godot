@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Action",
 "language": "GDScript",
-"path": "res://actions/scripts/action.gd"
+"path": "res://actions/action.gd"
 }, {
 "base": "PanelContainer",
 "class": "ActivePlayerStats",
@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Area",
 "class": "AreaRange",
 "language": "GDScript",
-"path": "res://actions/range_type/action_range.gd"
+"path": "res://actions/range_type/area_range.gd"
 }, {
 "base": "Object",
 "class": "ArraySorters",
@@ -58,6 +58,11 @@ _global_script_classes=[ {
 "class": "DisplayPanel",
 "language": "GDScript",
 "path": "res://user_interface/encounter/DisplayPanel/display_panel.gd"
+}, {
+"base": "Position3D",
+"class": "EmissionPoint",
+"language": "GDScript",
+"path": "res://actions/range_type/emmision_point.gd"
 }, {
 "base": "Node",
 "class": "Encounter",
@@ -185,6 +190,7 @@ _global_script_class_icons={
 "Constants": "",
 "CoreStats": "",
 "DisplayPanel": "",
+"EmissionPoint": "",
 "Encounter": "",
 "EncounterState": "",
 "EncounterUI": "",
