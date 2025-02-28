@@ -99,11 +99,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://utils/error_util.gd"
 }, {
-"base": "Object",
-"class": "FSM",
-"language": "GDScript",
-"path": "res://utils/fsm.gd"
-}, {
 "base": "Spatial",
 "class": "HexMap",
 "language": "GDScript",
@@ -198,7 +193,6 @@ _global_script_class_icons={
 "EnemyCharacter": "",
 "EnemyCharacterState": "",
 "ErrorUtil": "",
-"FSM": "",
 "HexMap": "",
 "HexMapAStar": "",
 "InitiativeTracker": "",
@@ -223,7 +217,6 @@ config/icon="res://art/icon.png"
 
 [autoload]
 
-StateMachineBus="*res://autoloads/state_machine_bus.gd"
 SignalBus="*res://autoloads/signal_bus.gd"
 
 [editor_plugins]

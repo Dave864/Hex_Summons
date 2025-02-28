@@ -23,7 +23,6 @@ var command_chain: Array = []
 
 # Set the starting point for the path.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(MOVE)
 	command_chain = _msg["command_chain"]
 	travel_path = command_chain.pop_back()[1]
 	

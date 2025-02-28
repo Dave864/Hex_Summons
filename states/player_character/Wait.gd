@@ -8,7 +8,6 @@ The Player Character waits until it is reenabled.
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(WAIT)
 	ErrorUtil.connect_signal(
 		SignalBus,
 		"player_turn_started",

@@ -15,7 +15,6 @@ var action_details = null
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(ACTION)
 	command_chain = _msg["command_chain"]
 	action_details = command_chain.pop_back()[1]
 

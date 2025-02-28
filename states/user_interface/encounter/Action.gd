@@ -10,7 +10,6 @@ var option_flag: int
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(ACTION)
 	option_flag = _msg["option_flag"]
 	encounter_ui.set_current_selection(option_flag)
 	_toggle_option()

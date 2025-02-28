@@ -8,7 +8,7 @@ The Enemy Character does nothing until it is called upon to act.
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(WAIT)
+	pass
 
 
 # Corresponds to the `_process()` callback.

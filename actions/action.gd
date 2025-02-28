@@ -9,7 +9,7 @@ export(int, 1, 1000) var power
 
 var targeted_tiles: Array = []
 
-onready var range_data: AreaRange = $EmmisionPoint/Range
+onready var range_data: AreaRange = $EmissionPoint/Range
 onready var emission_pt: EmissionPoint = $EmissionPoint
 
 
@@ -19,12 +19,12 @@ func clear_targets() -> void:
 
 
 func enable_collision() -> void:
-	emission_pt.Area.set_monitoring(true)
+	emission_pt.get_node("Area").set_monitoring(true)
 	range_data.set_monitoring(true)
 
 
 func disable_collision() -> void:
-	emission_pt.Area.set_monitoring(false)
+	emission_pt.get_node("Area").set_monitoring(false)
 	range_data.set_monitoring(false)
 	clear_targets()
 
@@ -45,8 +45,8 @@ func align_to_point(point: Vector3) -> void:
 
 
 func _ready() -> void:
-	range_data.connect("area_entered", self, "_on_Range_area_entered")
-	range_data.connect("area_exited", self, "_on_Range_area_exited")
+	$EmissionPoint/Range.connect("area_entered", self, "_on_Range_area_entered")
+	$EmissionPoint/Range.connect("area_exited", self, "_on_Range_area_exited")
 	disable_collision()
 
 

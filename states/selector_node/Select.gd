@@ -13,7 +13,6 @@ var mouse_active: bool = false
 
 # Reveal the selector shape and enable to ability to snap to tile positions.
 func enter(_msg: Dictionary = {}) -> void:
-	_set_state_machine_bus(SELECT)
 	selector.snap_to_position = true
 	
 	ErrorUtil.connect_signal(
@@ -55,7 +54,7 @@ func handle_input(_event: InputEvent) -> void:
 	# Signal that the currently highlighted map tile was selected
 	# and move to the 'Pause' state.
 	if _event.is_action_pressed("ui_selector_select"):
-		selector.emit_signal("tile_selected", selector.tile)
+		selector.emit_signal("move_tile_selected", selector.tile)
 		state_machine.transition_to(PAUSE)
 	
 	_handle_joystick_input()

@@ -20,7 +20,6 @@ var movement_range: Array = []
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(ENEMY_TURN)
 	current_character = enc.get_current_character()
 	# Send the Enemy state machine the details it needs to figure out what to do.
 	SignalBus.emit_signal(

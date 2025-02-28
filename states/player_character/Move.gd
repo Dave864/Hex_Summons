@@ -17,12 +17,19 @@ var next_point_index: int = 1
 var weight: float = 0.0
 
 var completed_path: bool = false
+var selector_paused: bool = false
 
 
 # Set the starting point for the path.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(MOVE)
 	travel_path = _msg["travel_path"]
+	
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"selector_paused",
+		self, 
+		"_on_SignalBus_selector_paused"
+	)
 	
 	# Move to the 'Standby' state if the travel path only has one point.
 	# This indicates that the player character's current position was 
@@ -30,7 +37,7 @@ func enter(_msg := {}) -> void:
 	if travel_path.size() > 1:
 		start_point = pc.translation
 		next_point = travel_path[next_point_index]
-	elif StateMachineBus.encounter_states[FSM.Encounter.SELECTOR] == SelectorState.PAUSE:
+	elif selector_paused:
 		next_point = travel_path[0]
 		state_machine.transition_to(STANDBY)
 	else:
@@ -56,7 +63,7 @@ func update(delta: float) -> void:
 			else:
 				next_point = travel_path[-1]
 				completed_path = true
-	elif StateMachineBus.encounter_states[FSM.Encounter.SELECTOR] == SelectorState.PAUSE:
+	elif selector_paused:
 		state_machine.transition_to(STANDBY)
 
 
@@ -66,4 +73,10 @@ func exit() -> void:
 	weight = 0.0
 	next_point_index = 1
 	completed_path = false
+	selector_paused = false
+	SignalBus.disconnect("selector_paused", self, "_on_SignalBus_selector_paused")
 	SignalBus.emit_signal("selector_required", next_point)
+
+
+func _on_SignalBus_selector_paused() -> void:
+	selector_paused = true

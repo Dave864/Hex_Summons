@@ -32,8 +32,3 @@ func _ready() -> void:
 	assert(enc != null)
 	# Connect any unique signals the state will use.
 	_ready_connect_signals()
-
-
-# Update the value of the state bus for the Encounter state machine.
-func _set_state_machine_bus(var state: String) -> void:
-	StateMachineBus.encounter_states[FSM.Encounter.ENCOUNTER] = state

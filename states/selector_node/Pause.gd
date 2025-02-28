@@ -10,7 +10,7 @@ something, it goes back to the 'Select' state.
 
 # Connect to the player_turn_ended signal to see if the player turn ends.
 func enter(_msg: Dictionary = {}) -> void:
-	_set_state_machine_bus(PAUSE)
+	SignalBus.emit_signal("selector_paused")
 	selector.snap_to_position = true
 	selector.selector_shape.hide()
 	

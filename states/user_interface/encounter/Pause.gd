@@ -9,7 +9,6 @@ Disables all interactable UI elements until they are needed.
 # The `msg` parameter is a dictionary with arbitrary data the state can use to 
 # initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(PAUSE)
 	encounter_ui.toggle_options()
 	
 	# This signal is used by other states and will be disconnected to avoid

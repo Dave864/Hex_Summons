@@ -18,7 +18,6 @@ var action_range: Dictionary = {"type": null, "tiles": null}
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(PLAYER_TURN)
 	movement_range = enc.hm_astar.determine_move_range(enc.get_current_character())
 	enc.hex_map.highlight_character_movement(movement_range, enc.get_current_character())
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
@@ -27,9 +26,9 @@ func enter(_msg := {}) -> void:
 	# unintended behavior.
 	ErrorUtil.connect_signal(
 		enc.selector,
-		"tile_selected",
+		"move_tile_selected",
 		self,
-		"_on_Selector_tile_selected"
+		"_on_Selector_move_tile_selected"
 	)
 
 
@@ -46,7 +45,7 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	enc.selector.disconnect("tile_selected", self, "_on_Selector_tile_selected")
+	enc.selector.disconnect("move_tile_selected", self, "_on_Selector_move_tile_selected")
 
 
 func _ready_connect_signals() -> void:
@@ -58,17 +57,12 @@ func _ready_connect_signals() -> void:
 	)
 
 
-func _on_Selector_tile_selected(tile: MapTile) -> void:
-	var data
-	match StateMachineBus.encounter_states[FSM.Encounter.UI]:
-		PlayerCharacterState.ATTACK:
-			data = null
-		_:
-			data = enc.hm_astar.get_point_path_toward(
-				enc.get_current_character(),
-				tile.get_index(),
-				movement_range
-			)
+func _on_Selector_move_tile_selected(tile: MapTile) -> void:
+	var data: PoolVector3Array = enc.hm_astar.get_point_path_toward(
+		enc.get_current_character(),
+		tile.get_index(),
+		movement_range
+	)
 	SignalBus.emit_signal("tile_selected", data)
 
 

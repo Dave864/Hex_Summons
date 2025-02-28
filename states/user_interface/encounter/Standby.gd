@@ -12,7 +12,6 @@ to the `Wait` state when the user chooses to end their turn. Moves to the
 # The `msg` parameter is a dictionary with arbitrary data the state can use to 
 # initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(STANDBY)
 	encounter_ui.sub_options.show()
 	encounter_ui.options.show()
 	

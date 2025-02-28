@@ -9,7 +9,6 @@ The Selector sets its initial position before going to the `Wait` state.
 # parameter is a dictionary with arbitrary data the state can use to 
 # initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(START)
 	ErrorUtil.connect_signal(
 		selector,
 		"area_entered",

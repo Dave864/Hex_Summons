@@ -7,7 +7,9 @@ passed over.
 
 
 # warning-ignore:unused_signal
-signal tile_selected(map_tile)
+signal move_tile_selected(map_tile)
+# warning-ignore:unused_signal
+signal target_selected(selection_area)
 
 # Reference to the map tiles in the current scene
 export(NodePath) var map = null

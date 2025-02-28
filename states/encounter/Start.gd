@@ -13,7 +13,6 @@ var starting_character: Character
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(START)
 	_set_up_initative()
 	starting_character = enc.initiative_tracker[enc.cur_init]
 

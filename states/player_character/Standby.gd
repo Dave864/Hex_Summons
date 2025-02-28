@@ -9,7 +9,6 @@ state.
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	_set_state_machine_bus(STANDBY)
 	# These signals is used by other PlayerCharacters and will be disconnected 
 	# to avoid unintended behavior.
 	ErrorUtil.connect_signal(

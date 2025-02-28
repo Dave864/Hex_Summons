@@ -8,7 +8,6 @@ until the encounter is ready to recieve new player selections.
 
 # Hide the selector shape and disable the ability to snap to tile positions
 func enter(_msg: Dictionary = {}) -> void:
-	_set_state_machine_bus(WAIT)
 	selector.snap_to_position = false
 	selector.selector_shape.hide()
 	
