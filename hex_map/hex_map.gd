@@ -7,7 +7,14 @@ from the child nodes that are needed for other nodes to interact with the map.
 """
 
 
-onready var _map_tiles: Array = $Tiles.get_children() setget , get_map_tiles
+var _tiles_node: Tiles = null
+var _floor_mesh: PlaneMesh = preload("res://hex_map/hex_map_floor.tres")
+var _floor_mesh_node: MeshInstance = null
+
+
+onready var _map_tiles: Array = [] setget , get_map_tiles
+# Reference to the scene tree root.
+onready var _root_node: Node = get_tree().edited_scene_root
 
 
 # Get the number of tiles along the X axis.
@@ -44,3 +51,33 @@ func highlight_character_movement(
 func clear_highlights() -> void:
 	for tile in _map_tiles:
 		tile.set_selection_type(MapTile.SelectionType.NONE)
+
+
+func _ready() -> void:
+	_create_floor_mesh()
+	_create_tiles_node()
+
+
+# Creates a Tiles node if not already present.
+func _create_tiles_node() -> void:
+	if _tiles_node == null:
+		_tiles_node = Tiles.new()
+		_tiles_node.name = "Tiles"
+		add_child(_tiles_node)
+		_tiles_node.set_owner(_root_node)
+		_map_tiles = _tiles_node.get_children()
+	else:
+		_tiles_node = $Tiles
+
+
+# Create a floor mesh node and position it if not already present.
+func _create_floor_mesh() -> void:
+	if _floor_mesh_node == null:
+		_floor_mesh_node = MeshInstance.new()
+		_floor_mesh_node.name = "FloorMesh"
+		_floor_mesh_node.set_mesh(_floor_mesh)
+		add_child(_floor_mesh_node)
+		_floor_mesh_node.set_owner(_root_node)
+		_floor_mesh_node.translation.y = -Constants.HEX_TILE_UNIT_HEIGHT
+	else:
+		_floor_mesh_node = $FloorMesh
