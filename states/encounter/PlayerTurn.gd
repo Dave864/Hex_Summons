@@ -18,7 +18,7 @@ var action_range: Dictionary = {"type": null, "tiles": null}
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	movement_range = enc.hm_astar.determine_move_range(enc.get_current_character())
+	movement_range = enc.hm_astar.get_move_area(enc.get_current_character())
 	enc.hex_map.highlight_character_movement(movement_range, enc.get_current_character())
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 	

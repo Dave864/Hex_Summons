@@ -32,40 +32,91 @@ func get_map_tiles() -> Array:
 
 # Get the indices of the tiles that are within movement range of a character.
 # Reference: https://www.redblobgames.com/grids/hexagons/#range-obstacles
-func determine_move_range(c: Character) -> Array:
+func get_move_area(c: Character) -> Array:
 	var movement: int = c.stats.get_mvmt()
-	var visited: Dictionary = {}
-	var fringes: Array = []
-	# Start with the character's position
-	fringes.append([_map_tiles[c.get_index_at()]]) 
-	visited[c.get_index_at()] = _map_tiles[c.get_index_at()]
+	var map_area: Array = get_tiles_in_area(c.get_index_at(), movement, c.get_type())
+	return get_traversable_tiles(c.get_index_at(), movement, map_area)
 
-	# Get all possible tiles within movement range
-	for i in range(1, movement + 1):
-		fringes.append([])
-		for tile in fringes[i - 1]:
-			for neighbor in tile.get_adjacent():
-				if (
-					neighbor != null and
-					!visited.has(neighbor.get_index()) and 
-					neighbor.is_active() and
-					neighbor.can_character_pass(c.get_type())
-				):
-					visited[neighbor.get_index()] = neighbor
-					fringes[i].append(neighbor)
+
+# Get the indices of the tiles that are within the specified cardinal range
+# of the character.
+func get_cardinal_area(
+	c: Character,
+	r: CardinalRange,
+	ignore_heights: bool = false
+) -> PoolIntArray:
+	var tile_indices: PoolIntArray = []
+	var td: PoolRealArray = []
+	# Set initial size to maximum possible amount
+	tile_indices.resize((r.area_distance - r.dead_distance) * 6)
+	td.resize(6)
+	td.fill(0.0)
+	var cube_origin: Vector3 = _index_to_cube(c.get_index_at())
 	
-	# Get the tiles that are reachable when considering heights
-	var tiles_in_range: Array = []
-	_disconnect_area(visited.keys())
-	for tile_index in visited.keys():
-		var path: PoolIntArray = get_id_path(c.get_index_at(), tile_index)
-		var dist: float = 0.0
-		for i in range(1, path.size()):
-			dist += _compute_cost(path[i - 1], path[i])
-		if dist <= movement:
-			tiles_in_range.append(tile_index)
-	_reconnect_nodes()
-	return tiles_in_range
+	for i in range(1, r.area_distance - r.dead_distance + 1):
+		var step: float = float(r.dead_distance + i)
+		var n_0: int = _get_cardinal_area_helper(
+			cube_origin,
+			step,
+			MapTile.NeighborPosition.UPPER_LEFT,
+			c.stats.movement,
+			td,
+			ignore_heights
+		)
+		var n_1: int = _get_cardinal_area_helper(
+			cube_origin,
+			step,
+			MapTile.NeighborPosition.UPPER_RIGHT,
+			c.stats.movement,
+			td,
+			ignore_heights
+		)
+		var n_2: int = _get_cardinal_area_helper(
+			cube_origin,
+			step,
+			MapTile.NeighborPosition.RIGHT,
+			c.stats.movement,
+			td,
+			ignore_heights
+		)
+		var n_3: int = _get_cardinal_area_helper(
+			cube_origin,
+			step,
+			MapTile.NeighborPosition.BOTTOM_RIGHT,
+			c.stats.movement,
+			td,
+			ignore_heights
+		)
+		var n_4: int = _get_cardinal_area_helper(
+			cube_origin,
+			step,
+			MapTile.NeighborPosition.BOTTOM_LEFT,
+			c.stats.movement,
+			td,
+			ignore_heights
+		)
+		var n_5: int = _get_cardinal_area_helper(
+			cube_origin,
+			step,
+			MapTile.NeighborPosition.LEFT,
+			c.stats.movement,
+			td,
+			ignore_heights
+		)
+		if n_0 >= 0:
+			tile_indices.append(n_0)
+		if n_1 >= 0:
+			tile_indices.append(n_1)
+		if n_2 >= 0:
+			tile_indices.append(n_2)
+		if n_3 >= 0:
+			tile_indices.append(n_3)
+		if n_4 >= 0:
+			tile_indices.append(n_4)
+		if n_5 >= 0:
+			tile_indices.append(n_5)
+	
+	return tile_indices
 
 
 # Determines the path to the point closest to the specified ID for a given character.
@@ -77,7 +128,7 @@ func get_point_path_toward(
 	movement_array: Array = []
 ) -> PoolVector3Array:
 	if movement_array.size() == 0:
-		movement_array = determine_move_range(c)
+		movement_array = get_move_area(c)
 	
 	_update_astar_disabled(c.get_type())
 	# reenable destination tile to allow a path to be found when target tile 
@@ -134,48 +185,51 @@ func calculate_distance_from_character(c: Character, dest_id: int) -> int:
 	return dist
 
 
-# Get the indices of the tiles that are within the specified cardinal range
-# of the character.
-# https://www.redblobgames.com/grids/hexagons/#neighbors
-func determine_cardinal_action_range(c: Character, r: CardinalRange) -> PoolIntArray:
-	var tile_indices: PoolIntArray = []
-	# Set initial size to maximum possible amount
-	tile_indices.resize((r.area_distance - r.dead_distance) * 6)
-	var cube_origin: Vector3 = _index_to_cube(c.get_index_at())
-	
-	for i in range(1, r.area_distance - r.dead_distance + 1):
-		var step: float = float(r.dead_distance + i)
-		#  0 /\
-		#   |  |
-		#    \/ 3
-		var n_0: int = _cube_to_index(cube_origin + Vector3(0.0, -step, step))
-		var n_3: int = _cube_to_index(cube_origin + Vector3(0.0, step, -step))
-		if _map_tiles[n_0] != null and _map_tiles[n_0].is_active():
-			tile_indices.append(n_0)
-		if _map_tiles[n_3] != null and _map_tiles[n_3].is_active():
-			tile_indices.append(n_3)
-		
-		#    /\ 1
-		#   |  |
-		#  4 \/
-		var n_1: int = _cube_to_index(cube_origin + Vector3(step, -step, 0.0))
-		var n_4: int = _cube_to_index(cube_origin + Vector3(-step, step, 0.0))
-		if _map_tiles[n_1] != null and _map_tiles[n_0].is_active():
-			tile_indices.append(n_1)
-		if _map_tiles[n_4] != null and _map_tiles[n_3].is_active():
-			tile_indices.append(n_4)
-		
-		#    /\
-		# 5 |  | 2
-		#    \/
-		var n_2: int = _cube_to_index(cube_origin + Vector3(step, 0.0, -step))
-		var n_5: int = _cube_to_index(cube_origin + Vector3(-step, 0.0, step))
-		if _map_tiles[n_2] != null and _map_tiles[n_0].is_active():
-			tile_indices.append(n_2)
-		if _map_tiles[n_5] != null and _map_tiles[n_3].is_active():
-			tile_indices.append(n_5)
-	
-	return tile_indices
+# Get the map section that is in a specified "radius" from a given point.
+# This is the same as determining all tiles that can be reached when all
+# tiles are the same height.
+func get_tiles_in_area(
+	start_index: int,
+	radius: int,
+	c_type: int = Constants.MapOccupants.EMPTY
+) -> Array:
+	var visited: Dictionary = {}
+	var fringes: Array = []
+	# Start with the character's position
+	fringes.append([_map_tiles[start_index]]) 
+	visited[start_index] = _map_tiles[start_index]
+
+	# Get all possible tiles within the radius
+	for i in range(1, radius + 1):
+		fringes.append([])
+		for tile in fringes[i - 1]:
+			for neighbor in tile.get_adjacent():
+				if (
+					neighbor != null and
+					!visited.has(neighbor.get_index()) and 
+					neighbor.is_active() and
+					neighbor.can_character_pass(c_type)
+				):
+					visited[neighbor.get_index()] = neighbor
+					fringes[i].append(neighbor)
+	return visited.keys()
+
+
+# Get the area that can be reached in a specific map section starting from a
+# given point in said section. This takes into account the tile heights.
+# Will return an empty array if the start tile is not in the map section.
+func get_traversable_tiles(start_tile: int, movement: int, map_section: Array) -> Array:
+	var tiles_in_range: Array = []
+	_disconnect_area(map_section)
+	for tile_index in map_section:
+		var path: PoolIntArray = get_id_path(start_tile, tile_index)
+		var total_distance: float = 0.0
+		for i in range(1, path.size()):
+			total_distance += _compute_cost(path[i - 1], path[i])
+		if total_distance <= movement:
+			tiles_in_range.append(tile_index)
+	_reconnect_nodes()
+	return tiles_in_range
 
 
 func _init(
@@ -190,6 +244,31 @@ func _init(
 	set_x_count(x_value)
 	set_z_count(z_value)
 	set_map_tiles(hex_map_tiles)
+
+
+# Helper function for get_cardinal_area. 
+# Determines the index of the map tile that is a number of steps away from a 
+# given tile at the specified cube coordinates. Determines if the located tile
+# is within traversal range based on the provided max_distance when taking into 
+# account tile heights. Returns -1 if the found index is invalid.
+func _get_cardinal_area_helper(
+	cube_origin: Vector3,
+	step: float,
+	dir: int,
+	max_distance: float,
+	travel_distances: Array,
+	ignore_heights: bool
+) -> int:
+	var index: int = _cube_to_index(_cube_at_distance(cube_origin, step, dir))
+	if _map_tiles[index] != null and _map_tiles[index].is_active():
+		if not ignore_heights:
+			var prev: int = _cube_to_index(_cube_at_distance(cube_origin, step - 1, dir))
+			travel_distances[dir] += _compute_cost(prev, index)
+			if travel_distances[dir] > max_distance:
+				index = -1
+	else:
+		index = -1
+	return index
 
 
 # Determines the astar connnections for the current set of map tiles.
@@ -273,25 +352,54 @@ func _full_reset():
 # Virtual Astar function. Called when computing the cost between two
 # connected points.
 func _compute_cost(u, v) -> float:
-	return _cube_dist(u, v)
+	var height_diff: float = abs(_map_tiles[v].height - _map_tiles[u].height)
+	# Height differences of 1 are seen as the same height
+	height_diff = 0.0 if height_diff <= 1.0 else height_diff
+	return _cube_dist(u, v) + height_diff
 
 
 # Virtual Astar function. Called when estimating the cost between a point 
 # and the path's ending point.
 func _estimate_cost(u, v) -> float:
-	return min(0, _cube_dist(u, v) - 1)
+	var height_diff: float = abs(_map_tiles[v].height - _map_tiles[u].height)
+	# Height differences of 1 are seen as the same height
+	height_diff = 0.0 if height_diff <= 1.0 else height_diff
+	return min(0, _cube_dist(u, v) + height_diff - 1)
 
 
 # Calculates the distance between two tiles based on their cube coordinates.
 # Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
 func _cube_dist(start_index: int, end_index: int) -> float:
-	var height_diff: float = abs(_map_tiles[end_index].height - _map_tiles[start_index].height)
-	# Height differences of 1 are seen as the same height
-	height_diff = 0.0 if height_diff <= 1.0 else height_diff
 	var start_pos: Vector3 = _index_to_cube(start_index)
 	var end_pos: Vector3 = _index_to_cube(end_index)
 	var diff: Vector3 = start_pos - end_pos
-	return ((abs(diff.x) + abs(diff.y) + abs(diff.z)) / 2.0) + height_diff
+	return (abs(diff.x) + abs(diff.y) + abs(diff.z)) / 2.0
+
+
+# Get the cube coordinates of the tile a specified distance away from an origin
+# point in a specific hexagonal cardinal direction.
+# 0  /\  1
+# 5 |  | 2
+# 4  \/  3
+# Reference: # https://www.redblobgames.com/grids/hexagons/#neighbors
+func _cube_at_distance(origin: Vector3, distance: float, direction: int) -> Vector3:
+	var dest: Vector3
+	match direction:
+		MapTile.NeighborPosition.UPPER_LEFT:
+			dest = origin + Vector3(0.0, -distance, distance)
+		MapTile.NeighborPosition.UPPER_RIGHT:
+			dest = origin + Vector3(distance, -distance, 0.0)
+		MapTile.NeighborPosition.RIGHT:
+			dest = origin + Vector3(0.0, distance, -distance)
+		MapTile.NeighborPosition.BOTTOM_RIGHT:
+			dest = origin + Vector3(distance, 0.0, -distance)
+		MapTile.NeighborPosition.BOTTOM_LEFT:
+			dest = origin + Vector3(-distance, distance, 0.0)
+		MapTile.NeighborPosition.LEFT:
+			dest = origin + Vector3(-distance, 0.0, distance)
+		_:
+			dest = origin
+	return dest
 
 
 # Converts the index to the corresponding cube coordinate.
