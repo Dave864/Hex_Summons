@@ -6,6 +6,7 @@ A container for map tiles. Generates an array of map tiles with z rows and
 x columns. Positions each tile and sets up the connections between them.
 """
 
+const MAP_TILE = "MapTile"
 
 # The number of tiles along the X axis.
 export(int, 1, 50) var x_count = 2 setget set_x_count, get_x_count
@@ -131,6 +132,7 @@ func _instantiate_tile(offset: Vector3) -> void:
 func _set_coordinates() -> void:
 	var index: int = 0
 	for tile in get_children():
+#		tile.name = MAP_TILE + String(index)
 		tile.set_index(index)
 		tile.set_cube_coord(index_to_cube(index))
 		index += 1
@@ -243,13 +245,17 @@ func _update_grid_x(old_x: int) -> void:
 		# Delete old tiles
 		var tiles: Array = get_children()
 		for i in old_x - x_count:
-			var x: int = x_count - i - 1
+			var x: int = old_x - i - 1
 			for z in z_count:
-				var index: int = (z + 1) * x
-#				print(index)
-#				_delete_tile(tiles[index])
-#		_set_coordinates()
-#		_determine_adjacencies()
+				var index: int = (z * old_x) + x
+				_delete_tile(tiles[index])
+		_set_coordinates()
+		_determine_adjacencies()
+		# Shift all tiles right to account for size change
+		for t in get_children():
+			var offset = Constants.HEX_EDGE_RATIO * (old_x - x_count)
+			offset += 0 if (old_x - x_count) == 1 or _is_even_grid() else 0.5
+			t.translate_object_local(Vector3(offset, 0.0, 0.0))
 	elif old_x < x_count:
 		# Add new tiles
 		_regenerate_grid()
