@@ -4,5 +4,6 @@
 albedo_color = Color( 0, 0, 0, 1 )
 
 [resource]
+resource_local_to_scene = true
 material = SubResource( 1 )
 size = Vector2( 50, 50 )

@@ -7,10 +7,12 @@ from the child nodes that are needed for other nodes to interact with the map.
 """
 
 
+const TILES = "Tiles"
+const FLOOR_MESH = "FloorMesh"
+
 var _tiles_node: Tiles = null
 var _floor_mesh: PlaneMesh = preload("res://hex_map/hex_map_floor.tres")
 var _floor_mesh_node: MeshInstance = null
-
 
 onready var _map_tiles: Array = [] setget , get_map_tiles
 # Reference to the scene tree root.
@@ -60,9 +62,9 @@ func _ready() -> void:
 
 # Creates a Tiles node if not already present.
 func _create_tiles_node() -> void:
-	if _tiles_node == null:
+	if get_node_or_null(TILES) == null:
 		_tiles_node = Tiles.new()
-		_tiles_node.name = "Tiles"
+		_tiles_node.name = TILES
 		add_child(_tiles_node)
 		_tiles_node.set_owner(_root_node)
 		_map_tiles = _tiles_node.get_children()
@@ -72,10 +74,11 @@ func _create_tiles_node() -> void:
 
 # Create a floor mesh node and position it if not already present.
 func _create_floor_mesh() -> void:
-	if _floor_mesh_node == null:
+	if get_node_or_null(FLOOR_MESH) == null:
 		_floor_mesh_node = MeshInstance.new()
-		_floor_mesh_node.name = "FloorMesh"
+		_floor_mesh_node.name = FLOOR_MESH
 		_floor_mesh_node.set_mesh(_floor_mesh)
+		_floor_mesh_node.mesh.resource_local_to_scene = true
 		add_child(_floor_mesh_node)
 		_floor_mesh_node.set_owner(_root_node)
 		_floor_mesh_node.translation.y = -Constants.HEX_TILE_UNIT_HEIGHT

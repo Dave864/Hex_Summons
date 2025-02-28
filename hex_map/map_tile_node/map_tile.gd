@@ -56,6 +56,10 @@ func set_height(value: int) -> void:
 	_update_tile_shape_height()
 	_update_collision_shape_height()
 	_update_highlighter_position()
+	"""
+	TODO: Remove label.
+	"""
+	$Label3D.text = str("%d:%d" % [_index, height])
 
 
 # Gets the adjacent tile of the specified position.
@@ -84,7 +88,7 @@ func set_index(value: int):
 	"""
 	TODO: Remove label.
 	"""
-	$Label3D.text = str(_index)
+	$Label3D.text = str("%d:%d" % [_index, height])
 
 
 # Get the cube coordinates of the MapTile.
@@ -199,7 +203,7 @@ func _update_highlighter_position() -> void:
 	"""
 	TODO: remove label
 	"""
-	$Label3D.translation = Vector3(0.0, y_translate, 0.0)
+	$Label3D.translation = Vector3(0.0, y_translate, 0.2)
 
 
 # Changes the color of the tile highlighter

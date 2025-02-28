@@ -43,7 +43,8 @@ mesh = SubResource( 10 )
 material/0 = SubResource( 7 )
 
 [node name="Label3D" type="Label3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
-pixel_size = 0.05
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.01, 0.18 )
+pixel_size = 0.03
 offset = Vector2( 0, 5 )
 modulate = Color( 0, 0, 0, 1 )
+text = "-1:0"
