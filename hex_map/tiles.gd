@@ -21,12 +21,14 @@ onready var _root_node: Node = get_tree().edited_scene_root
 
 # Update the z_count parameter and regenerate the grid.
 func set_z_count(new_count: int) -> void:
+	var old_z: int = z_count
 	z_count = new_count
 	# Check if the root node is set to prevent the creation of "duplicate"
 	# map tiles when loading in the game.
 	if _root_node != null:
 		_update_grid_start()
-		_regenerate_grid()
+		_update_grid_z(old_z)
+#		_regenerate_grid()
 
 
 # Return the value of the z_count parameter.
@@ -36,12 +38,14 @@ func get_z_count() -> int:
 
 # Update the x_count parameter and regenerate the grid.
 func set_x_count(new_count: int) -> void:
+	var old_x: int = x_count
 	x_count = new_count
 	# Check if the root node is set to prevent the creation of "duplicate"
 	# map tiles when loading in the game.
 	if _root_node != null:
 		_update_grid_start()
-		_regenerate_grid()
+		_update_grid_x(old_x)
+#		_regenerate_grid()
 
 
 # Return the value of the x_count parameter.
@@ -226,18 +230,65 @@ func _regenerate_grid() -> void:
 	# Delete the tiles of the current map
 	var map_tiles = get_children()
 	for tile in map_tiles:
-		remove_child(tile)
-		tile.set_owner(null)
-		tile.queue_free()
+		_delete_tile(tile)
 	
 	_generate_grid()
 	_set_coordinates()
 	_determine_adjacencies()
 
 
+# Updates the set of map tiles when the x count of the map is updated
+func _update_grid_x(old_x: int) -> void:
+	if old_x > x_count:
+		# Delete old tiles
+		var tiles: Array = get_children()
+		for i in old_x - x_count:
+			var x: int = x_count - i - 1
+			for z in z_count:
+				var index: int = (z + 1) * x
+#				print(index)
+#				_delete_tile(tiles[index])
+#		_set_coordinates()
+#		_determine_adjacencies()
+	elif old_x < x_count:
+		# Add new tiles
+		_regenerate_grid()
+#	_set_coordinates()
+#	_determine_adjacencies()
+
+
+# Updates the set of map tiles when the z count of the map is updated
+func _update_grid_z(old_z: int) -> void:
+	if old_z > z_count:
+		# Delete old tiles
+		var tiles: Array = get_children()
+		for i in range(old_z - z_count):
+			var z: int = old_z - i - 1
+			for x in x_count:
+				var index: int = (z * x_count) + x
+				_delete_tile(tiles[index])
+		_set_coordinates()
+		_determine_adjacencies()
+		# Shift all tiles up to account for size change
+		for t in get_children():
+			t.translate_object_local(Vector3(0.0, 0.0, (old_z - z_count) * 0.75))
+	elif old_z < z_count:
+		# Add new tiles
+		_regenerate_grid()
+#	_set_coordinates()
+#	_determine_adjacencies()
+
+
 # Recalculate the grid start.
 func _update_grid_start() -> void:
 	_grid_start = _calculate_grid_start()
+
+
+# Deletes the tile from the scene.
+func _delete_tile(tile: MapTile) -> void:
+	remove_child(tile)
+	tile.set_owner(null)
+	tile.queue_free()
 
 
 # Check if the grid has an even number of rows.
