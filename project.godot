@@ -219,10 +219,6 @@ config/icon="res://art/icon.png"
 
 SignalBus="*res://autoloads/signal_bus.gd"
 
-[editor_plugins]
-
-enabled=PoolStringArray(  )
-
 [global]
 
 collision=false

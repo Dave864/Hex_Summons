@@ -12,6 +12,9 @@ const MAP_TILE = "MapTile"
 export(int, 1, 50) var x_count = 2 setget set_x_count, get_x_count
 # The number of tiles along the Z axis.
 export(int, 1, 50) var z_count = 3 setget set_z_count, get_z_count
+# Indicates that the map tiles are to be regenerated. Workaround for creating
+# an Inspector plugin.
+export(bool) var regenerate = false setget regenerate_grid
 
 var _grid_start: Vector3 = _calculate_grid_start()
 var _map_tile: PackedScene = preload("res://hex_map/map_tile_node/MapTile.tscn")
@@ -29,7 +32,6 @@ func set_z_count(new_count: int) -> void:
 	if _root_node != null:
 		_update_grid_start()
 		_update_grid_z(old_z)
-#		_regenerate_grid()
 
 
 # Return the value of the z_count parameter.
@@ -46,7 +48,6 @@ func set_x_count(new_count: int) -> void:
 	if _root_node != null:
 		_update_grid_start()
 		_update_grid_x(old_x)
-#		_regenerate_grid()
 
 
 # Return the value of the x_count parameter.
@@ -66,6 +67,18 @@ func index_to_cube(index: int) -> Vector3:
 	var x_cube: int = int(x_pos - (z_pos - (z_pos & 1)) / 2.0)
 	var y_cube: int = z_pos
 	return Vector3(x_cube, y_cube, -x_cube - y_cube)
+
+
+# Removes all tiles from the tiles node and regenerates the map.
+func regenerate_grid(r: bool) -> void:
+	if Engine.is_editor_hint() and r:
+		# Delete the tiles of the current map
+		var map_tiles = get_children()
+		for tile in map_tiles:
+			_delete_tile(tile)
+		_generate_grid()
+		_set_coordinates()
+		_determine_adjacencies()
 
 
 # Called when the node enters the scene tree for the first time.
@@ -105,18 +118,6 @@ func _generate_grid() -> void:
 			if !_is_even(z):
 				map_tile_offset.x += Constants.HEX_EDGE_RATIO
 			_instantiate_tile(map_tile_offset)
-
-
-# Determine the starting point so that the middle of the generated map is center
-# to the HexMap node.
-func _calculate_grid_start() -> Vector3:
-	var origin_offset = Vector3(2 * Constants.HEX_EDGE_RATIO, 0.0, 1.0)
-	origin_offset.z -= ((3.0 * z_count) + 1.0) / 4.0
-	origin_offset.x -= (
-		float(x_count) if float(z_count) == 2.0
-		else (x_count + 1.5)
-	) * Constants.HEX_EDGE_RATIO
-	return origin_offset
 
 
 # Instantiates the hex grid map tile at the specified offset with the HexMap
@@ -227,18 +228,6 @@ func _determine_adjacencies() -> void:
 		tile.set_adjacent_tile(5, index_5_tile)
 
 
-# Removes all tiles from the tiles node and regenerates the map.
-func _regenerate_grid() -> void:
-	# Delete the tiles of the current map
-	var map_tiles = get_children()
-	for tile in map_tiles:
-		_delete_tile(tile)
-	
-	_generate_grid()
-	_set_coordinates()
-	_determine_adjacencies()
-
-
 # Updates the set of map tiles when the x count of the map is updated
 func _update_grid_x(old_x: int) -> void:
 	if old_x > x_count:
@@ -258,17 +247,35 @@ func _update_grid_x(old_x: int) -> void:
 				offset += 0.5
 			t.translate_object_local(Vector3(offset, 0.0, 0.0))
 	elif old_x < x_count:
-		# Add new tiles
-		var new_tiles: Array = []
-		new_tiles.resize(z_count * x_count)
-		for i in new_tiles.size():
-			if i < old_x:
-				pass
-			else:
-				pass
-		_regenerate_grid()
-#	_set_coordinates()
-#	_determine_adjacencies()
+		# Shift current tiles left to account for size change
+		var old_tiles: Array = get_children()
+		for t in old_tiles:
+			var offset = Constants.HEX_EDGE_RATIO * (old_x - x_count)
+			if (old_x - x_count) > 1 and not _is_even_grid():
+				offset -= 0.5
+			t.translate_object_local(Vector3(offset, 0.0, 0.0))
+		# Calculates the position for each new tile relative to origin
+		# and adds extra tiles as needed.
+		var map_tile_offset: Vector3
+		for z in z_count:
+			map_tile_offset = Vector3.ZERO
+			map_tile_offset.z = 1.5 * z
+			for x in x_count:
+				if x >= old_x:
+					map_tile_offset.x = 2 * Constants.HEX_EDGE_RATIO * x
+					if !_is_even(z):
+						map_tile_offset.x += Constants.HEX_EDGE_RATIO
+					_instantiate_tile(map_tile_offset)
+					# Change the child index of the tile to match its map index.
+					move_child(get_child(get_child_count() - 1), (z * x_count) + x)
+				else:
+					# Change the child index of old tiles to match their new
+					# map index.
+					var i: int = (z * old_x) + x
+					move_child(old_tiles[i], (z * x_count) + x)
+#		regenerate_grid(true)
+	_set_coordinates()
+	_determine_adjacencies()
 
 
 # Updates the set of map tiles when the z count of the map is updated
@@ -301,6 +308,15 @@ func _update_grid_z(old_z: int) -> void:
 				_instantiate_tile(map_tile_offset)
 	_set_coordinates()
 	_determine_adjacencies()
+
+
+# Determine the starting point so that the middle of the generated map is center
+# to the HexMap node.
+func _calculate_grid_start() -> Vector3:
+	var origin_offset = Vector3(2 * Constants.HEX_EDGE_RATIO, 0.0, 1.0)
+	origin_offset.z -= ((3.0 * z_count) + 1.0) / 4.0
+	origin_offset.x -= (x_count + 1.5) * Constants.HEX_EDGE_RATIO
+	return origin_offset
 
 
 # Recalculate the grid start.
