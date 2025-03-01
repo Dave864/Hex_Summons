@@ -240,19 +240,19 @@ func _update_grid_x(old_x: int) -> void:
 				var index: int = (z * old_x) + x
 				_delete_tile(tiles[index])
 		# Move remaining tiles to the right
-		var offset: float = (old_x - x_count) * Constants.HEX_EDGE_RATIO
+		var x_offset: float = (old_x - x_count) * Constants.HEX_EDGE_RATIO
 		for t in get_children():
-			t.translate_object_local(Vector3(offset, 0.0, 0.0))
+			t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
 	elif old_x < x_count:
-		# Set current tiles to be relative to origin.
+		# Move the current tiles to the left
 		var old_tiles: Array = get_children()
-		var offset: Vector3 = old_tiles[0].translation
-		for t in old_tiles:
-			t.translate_object_local(-offset)
+		var x_offset: float = (old_x - x_count) * Constants.HEX_EDGE_RATIO
+		for t in get_children():
+			t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
 		# Calculates the position for each tile so that the grid is centered to
 		# origin and adds new tiles.
 		for z in z_count:
-			offset = Vector3.ZERO
+			var offset: Vector3 = Vector3.ZERO
 			offset.z = 1.5 * z
 			for x in x_count:
 				if x >= old_x:
