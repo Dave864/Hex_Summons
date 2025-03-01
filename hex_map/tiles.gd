@@ -25,13 +25,14 @@ onready var _root_node: Node = get_tree().edited_scene_root
 
 # Update the z_count parameter and regenerate the grid.
 func set_z_count(new_count: int) -> void:
-	var old_z: int = z_count
-	z_count = new_count
-	# Check if the root node is set to prevent the creation of "duplicate"
-	# map tiles when loading in the game.
-	if _root_node != null:
-		_update_grid_start()
-		_update_grid_z(old_z)
+	if Engine.is_editor_hint():
+		var old_z: int = z_count
+		z_count = new_count
+		# Check if the root node is set to prevent the creation of "duplicate"
+		# map tiles when loading in the game.
+		if _root_node != null:
+			_update_grid_start()
+			_update_grid_z(old_z)
 
 
 # Return the value of the z_count parameter.
@@ -41,13 +42,14 @@ func get_z_count() -> int:
 
 # Update the x_count parameter and regenerate the grid.
 func set_x_count(new_count: int) -> void:
-	var old_x: int = x_count
-	x_count = new_count
-	# Check if the root node is set to prevent the creation of "duplicate"
-	# map tiles when loading in the game.
-	if _root_node != null:
-		_update_grid_start()
-		_update_grid_x(old_x)
+	if Engine.is_editor_hint():
+		var old_x: int = x_count
+		x_count = new_count
+		# Check if the root node is set to prevent the creation of "duplicate"
+		# map tiles when loading in the game.
+		if _root_node != null:
+			_update_grid_start()
+			_update_grid_x(old_x)
 
 
 # Return the value of the x_count parameter.
@@ -107,7 +109,6 @@ func _initial_grid_generation() -> void:
 #    \ / \ / \ /
 func _generate_grid() -> void:
 	var map_tile_offset: Vector3
-	
 	# Calculates the position for each tile relative to origin
 	# and adds extra tiles as needed.
 	for z in z_count:
@@ -238,42 +239,34 @@ func _update_grid_x(old_x: int) -> void:
 			for z in z_count:
 				var index: int = (z * old_x) + x
 				_delete_tile(tiles[index])
-		_set_coordinates()
-		_determine_adjacencies()
-		# Shift all tiles right to account for size change
+		# Move remaining tiles to the right
+		var offset: float = (old_x - x_count) * Constants.HEX_EDGE_RATIO
 		for t in get_children():
-			var offset = Constants.HEX_EDGE_RATIO * (old_x - x_count)
-			if (old_x - x_count) > 1 and not _is_even_grid():
-				offset += 0.5
 			t.translate_object_local(Vector3(offset, 0.0, 0.0))
 	elif old_x < x_count:
-		# Shift current tiles left to account for size change
+		# Set current tiles to be relative to origin.
 		var old_tiles: Array = get_children()
+		var offset: Vector3 = old_tiles[0].translation
 		for t in old_tiles:
-			var offset = Constants.HEX_EDGE_RATIO * (old_x - x_count)
-			if (old_x - x_count) > 1 and not _is_even_grid():
-				offset -= 0.5
-			t.translate_object_local(Vector3(offset, 0.0, 0.0))
-		# Calculates the position for each new tile relative to origin
-		# and adds extra tiles as needed.
-		var map_tile_offset: Vector3
+			t.translate_object_local(-offset)
+		# Calculates the position for each tile so that the grid is centered to
+		# origin and adds new tiles.
 		for z in z_count:
-			map_tile_offset = Vector3.ZERO
-			map_tile_offset.z = 1.5 * z
+			offset = Vector3.ZERO
+			offset.z = 1.5 * z
 			for x in x_count:
 				if x >= old_x:
-					map_tile_offset.x = 2 * Constants.HEX_EDGE_RATIO * x
+					offset.x = 2 * Constants.HEX_EDGE_RATIO * x
 					if !_is_even(z):
-						map_tile_offset.x += Constants.HEX_EDGE_RATIO
-					_instantiate_tile(map_tile_offset)
-					# Change the child index of the tile to match its map index.
+						offset.x += Constants.HEX_EDGE_RATIO
+					_instantiate_tile(offset)
+					# Change the child index of the new tile to match its map index.
 					move_child(get_child(get_child_count() - 1), (z * x_count) + x)
 				else:
 					# Change the child index of old tiles to match their new
 					# map index.
 					var i: int = (z * old_x) + x
 					move_child(old_tiles[i], (z * x_count) + x)
-#		regenerate_grid(true)
 	_set_coordinates()
 	_determine_adjacencies()
 
