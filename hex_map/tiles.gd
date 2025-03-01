@@ -254,10 +254,18 @@ func _update_grid_x(old_x: int) -> void:
 		# Shift all tiles right to account for size change
 		for t in get_children():
 			var offset = Constants.HEX_EDGE_RATIO * (old_x - x_count)
-			offset += 0 if (old_x - x_count) == 1 or _is_even_grid() else 0.5
+			if (old_x - x_count) > 1 and not _is_even_grid():
+				offset += 0.5
 			t.translate_object_local(Vector3(offset, 0.0, 0.0))
 	elif old_x < x_count:
 		# Add new tiles
+		var new_tiles: Array = []
+		new_tiles.resize(z_count * x_count)
+		for i in new_tiles.size():
+			if i < old_x:
+				pass
+			else:
+				pass
 		_regenerate_grid()
 #	_set_coordinates()
 #	_determine_adjacencies()
@@ -265,24 +273,34 @@ func _update_grid_x(old_x: int) -> void:
 
 # Updates the set of map tiles when the z count of the map is updated
 func _update_grid_z(old_z: int) -> void:
+	var tiles: Array = get_children()
 	if old_z > z_count:
 		# Delete old tiles
-		var tiles: Array = get_children()
 		for i in range(old_z - z_count):
 			var z: int = old_z - i - 1
 			for x in x_count:
 				var index: int = (z * x_count) + x
 				_delete_tile(tiles[index])
-		_set_coordinates()
-		_determine_adjacencies()
 		# Shift all tiles up to account for size change
 		for t in get_children():
 			t.translate_object_local(Vector3(0.0, 0.0, (old_z - z_count) * 0.75))
 	elif old_z < z_count:
-		# Add new tiles
-		_regenerate_grid()
-#	_set_coordinates()
-#	_determine_adjacencies()
+		# Shift all tiles up to account for size change
+		for t in get_children():
+			t.translate_object_local(Vector3(0.0, 0.0, (old_z - z_count) * 0.75))
+		# Calculates the position for each tile relative to origin
+		# and adds extra tiles as needed.
+		var map_tile_offset: Vector3
+		for z in range(old_z, z_count):
+			map_tile_offset = Vector3.ZERO
+			map_tile_offset.z = 1.5 * z
+			for x in x_count:
+				map_tile_offset.x = 2 * Constants.HEX_EDGE_RATIO * x
+				if !_is_even(z):
+					map_tile_offset.x += Constants.HEX_EDGE_RATIO
+				_instantiate_tile(map_tile_offset)
+	_set_coordinates()
+	_determine_adjacencies()
 
 
 # Recalculate the grid start.
