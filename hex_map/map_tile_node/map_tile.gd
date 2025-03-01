@@ -59,7 +59,7 @@ func set_height(value: int) -> void:
 	"""
 	TODO: Remove label.
 	"""
-	$Label3D.text = str("%d:%d" % [_index, height])
+	_update_label_display()
 
 
 # Gets the adjacent tile of the specified position.
@@ -70,6 +70,10 @@ func get_adjacent_tile(position: int) -> Spatial:
 # Sets the adjacent tile of the specified position.
 func set_adjacent_tile(position: int, map_tile: Area):
 	_adjacent_tiles[position] = map_tile
+	"""
+	TODO: Remove label.
+	"""
+	_update_label_display()
 
 
 # Gets the array pf all adjacent tiles.
@@ -88,7 +92,7 @@ func set_index(value: int):
 	"""
 	TODO: Remove label.
 	"""
-	$Label3D.text = str("%d:%d" % [_index, height])
+	_update_label_display()
 
 
 # Get the cube coordinates of the MapTile.
@@ -225,3 +229,18 @@ func _on_MapTile_area_entered(area) -> void:
 func _on_MapTile_area_exited(area) -> void:
 	if _occupant != null and area.name == _occupant.name:
 		_occupant = null
+
+
+"""
+TODO: Label is here for debugging purposes. Will need to be removed.
+"""
+func _update_label_display() -> void:
+	var format: String = "[%d:%d]\n%s %s\n%s    %s\n%s %s"
+	var n0: String = String(_adjacent_tiles[0].get_index()) if _adjacent_tiles[0] != null else "N"
+	var n1: String = String(_adjacent_tiles[1].get_index()) if _adjacent_tiles[1] != null else "N"
+	var n2: String = String(_adjacent_tiles[2].get_index()) if _adjacent_tiles[2] != null else "N"
+	var n3: String = String(_adjacent_tiles[3].get_index()) if _adjacent_tiles[3] != null else "N"
+	var n4: String = String(_adjacent_tiles[4].get_index()) if _adjacent_tiles[4] != null else "N"
+	var n5: String = String(_adjacent_tiles[5].get_index()) if _adjacent_tiles[5] != null else "N"
+	
+	$Label3D.text = str(format % [_index, height, n0, n1, n5, n2, n4, n3])
