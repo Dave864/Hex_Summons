@@ -28,7 +28,12 @@ var tile: MapTile = null
 # The current mouse position
 onready var mouse_position: MousePosition = $MousePosition
 # The mesh that represents the Selector
-onready var selector_shape: MeshInstance = $SelectorShape
+onready var selector_shape: MeshInstance = $HexHighlighter
+
+
+func _ready() -> void:
+	$HexHighlighter.set_option(HexHighlighter.Option.PLAYER)
+	$HexHighlighter.set_transparency(0.5)
 
 
 # Set the position of the selector.
