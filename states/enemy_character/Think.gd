@@ -33,8 +33,8 @@ func enter(_msg := {}) -> void:
 	
 	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
 	var path: PoolVector3Array = hm_astar.get_point_path_toward(
-		ec, 
-		player_distances[0][0].get_index_at()
+		ec.get_index_at(), 
+		player_distances[0][0].get_map_index_at()
 	)
 	command_chain.push_front([MOVE, path])
 	# Pause for a little bit to give the EncounterUI a chance to get ready.
