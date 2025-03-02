@@ -6,16 +6,6 @@ Represents an individual map tile.
 """
 
 
-enum SelectionType {
-	NONE,
-	PLAYER,
-	ALLY,
-	RANGE,
-	EFFECT_RANGE,
-	EFFECT_ORIGIN,
-	TARGET,
-}
-
 enum NeighborPosition {
 	UPPER_LEFT,
 	UPPER_RIGHT,
@@ -49,6 +39,14 @@ var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
 var _occupant: Character = null setget , get_current_occupant
 # Flag that indicates if the tile is avaiable to be selected
 var _selection_type: int = false setget set_selection_type, get_selection_type
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	ErrorUtil.connect_signal(self, "area_entered", self, "_on_MapTile_area_entered")
+	ErrorUtil.connect_signal(self, "area_exited", self, "_on_MapTile_area_exited")
+	$HexHighlighter.set_option(HexHighlighter.Option.NONE)
+
 
 # Updates the height of the map tile.
 func set_height(value: int) -> void:
@@ -108,12 +106,12 @@ func set_cube_coord(value: Vector3) -> void:
 # Set the value of the selectable flag.
 func set_selection_type(value: int) -> void:
 	_selection_type = value
-	_set_highlighter()
+	$HexHighlighter.set_option(_selection_type)
 
 
 # Get the value of the selectable flag.
 func get_selection_type() -> int:
-	return _selection_type
+	return $HexHighlighter.get_option()
 
 
 # Gets the current character occupying this tile.
@@ -145,44 +143,6 @@ func character_position() -> Vector3:
 	return cp
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	ErrorUtil.connect_signal(self, "area_entered", self, "_on_MapTile_area_entered")
-	ErrorUtil.connect_signal(self, "area_exited", self, "_on_MapTile_area_exited")
-	
-	_set_highlighter()
-
-
-# Runs every frame.
-func _process(_delta: float) -> void:
-	pass
-
-
-# Activates the highlighter based on the _is_selectable flag.
-func _set_highlighter() -> void:
-	match _selection_type:
-		SelectionType.PLAYER:
-			_set_highlighter_color(Constants.COLOR_CHARACTER_ORIGIN)
-			$Highlighter.show()
-		SelectionType.ALLY:
-			_set_highlighter_color(Constants.COLOR_ALLY_ORIGIN)
-			$Highlighter.show()
-		SelectionType.RANGE:
-			_set_highlighter_color(Constants.COLOR_AREA_RANGE)
-			$Highlighter.show()
-		SelectionType.EFFECT_ORIGIN:
-			_set_highlighter_color(Constants.COLOR_EFFECT_ORIGIN)
-			$Highlighter.show()
-		SelectionType.EFFECT_RANGE:
-			_set_highlighter_color(Constants.COLOR_EFFECT_RANGE)
-			$Highlighter.show()
-		SelectionType.TARGET:
-			_set_highlighter_color(Constants.COLOR_TARGET_SELECT)
-			$Highlighter.show()
-		_:
-			$Highlighter.hide()
-
-
 # Updates the shape mesh so that it reflects the current height.
 func _update_tile_shape_height() -> void:
 	$TileShape.mesh.set_height(Constants.HEX_TILE_UNIT_HEIGHT * (1 + height))
@@ -203,18 +163,11 @@ func _update_collision_shape_height() -> void:
 # Update the position of the tile highlighter so that it is on top of the tile.
 func _update_highlighter_position() -> void:
 	var y_translate: float = 0.01 + (height * Constants.HEX_TILE_UNIT_HEIGHT)
-	$Highlighter.translation = Vector3(0.0, y_translate, 0.0)
+	$HexHighlighter.translation = Vector3(0.0, y_translate, 0.0)
 	"""
 	TODO: remove label
 	"""
 	$Label3D.translation = Vector3(0.0, y_translate, 0.2)
-
-
-# Changes the color of the tile highlighter
-func _set_highlighter_color(color: Color) -> void:
-	var m: Material = $Highlighter.get_surface_material(0)
-	m.albedo_color = color
-	$Highlighter.set_surface_material(0, m)
 
 
 func _on_MapTile_area_entered(area) -> void:
@@ -244,3 +197,4 @@ func _update_label_display() -> void:
 	var n5: String = String(_adjacent_tiles[5].get_index()) if _adjacent_tiles[5] != null else "N"
 	
 	$Label3D.text = str(format % [_index, height, n0, n1, n5, n2, n4, n3])
+	
