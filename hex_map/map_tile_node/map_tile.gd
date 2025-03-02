@@ -25,7 +25,7 @@ var _adjacent_tiles: Array = [null, null, null, null, null, null] \
 	setget , get_adjacent
 # The index position of the map tile when it is part 
 # of a collection of tiles.
-var _index: int = -1 setget set_index, get_index
+var _map_index: int = -1 setget set_map_index, get_map_index
 # The cube coordinates of the map tile.
 #     -z
 # +y   |  +x
@@ -45,7 +45,6 @@ var _selection_type: int = false setget set_selection_type, get_selection_type
 func _ready() -> void:
 	ErrorUtil.connect_signal(self, "area_entered", self, "_on_MapTile_area_entered")
 	ErrorUtil.connect_signal(self, "area_exited", self, "_on_MapTile_area_exited")
-	$HexHighlighter.set_option(HexHighlighter.Option.NONE)
 
 
 # Updates the height of the map tile.
@@ -80,13 +79,13 @@ func get_adjacent() -> Array:
 
 
 # Get the index value of the MapTile.
-func get_index() -> int:
-	return _index
+func get_map_index() -> int:
+	return _map_index
 
 
 # Set the index value of the MapTile.
-func set_index(value: int):
-	_index = value
+func set_map_index(value: int):
+	_map_index = value
 	"""
 	TODO: Remove label.
 	"""
@@ -196,5 +195,5 @@ func _update_label_display() -> void:
 	var n4: String = String(_adjacent_tiles[4].get_index()) if _adjacent_tiles[4] != null else "N"
 	var n5: String = String(_adjacent_tiles[5].get_index()) if _adjacent_tiles[5] != null else "N"
 	
-	$Label3D.text = str(format % [_index, height, n0, n1, n5, n2, n4, n3])
+	$Label3D.text = str(format % [_map_index, height, n0, n1, n5, n2, n4, n3])
 	

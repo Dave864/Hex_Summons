@@ -30,9 +30,9 @@ func _ready() -> void:
 
 # Update the z_count parameter and regenerate the grid.
 func set_z_count(new_count: int) -> void:
+	var old_z: int = z_count
+	z_count = new_count
 	if Engine.is_editor_hint():
-		var old_z: int = z_count
-		z_count = new_count
 		# Check if the root node is set to prevent the creation of "duplicate"
 		# map tiles when loading in the game.
 		if _root_node != null:
@@ -47,9 +47,9 @@ func get_z_count() -> int:
 
 # Update the x_count parameter and regenerate the grid.
 func set_x_count(new_count: int) -> void:
+	var old_x: int = x_count
+	x_count = new_count
 	if Engine.is_editor_hint():
-		var old_x: int = x_count
-		x_count = new_count
 		# Check if the root node is set to prevent the creation of "duplicate"
 		# map tiles when loading in the game.
 		if _root_node != null:
@@ -134,8 +134,8 @@ func _instantiate_tile(offset: Vector3) -> void:
 func _set_coordinates() -> void:
 	var index: int = 0
 	for tile in get_children():
-#		tile.name = MAP_TILE + String(index)
-		tile.set_index(index)
+		tile.name = MAP_TILE + String(index)
+		tile.set_map_index(index)
 		tile.set_cube_coord(index_to_cube(index))
 		index += 1
 
@@ -156,7 +156,7 @@ func _determine_adjacencies() -> void:
 	var is_bottom: bool
 	
 	for tile in get_children():
-		index = tile.get_index()
+		index = tile.get_map_index()
 		z_place = int(floor(float(index) / float(x_count)))
 		x_place = index % x_count
 		even_z_place = _is_even(z_place)

@@ -15,17 +15,14 @@ enum Option {
 	TARGET,
 }
 
-var hl_option: int = Option.NONE setget set_option
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	set_option(Option.NONE)
 
 
-# Activates the highlighter based on the _is_selectable flag.
-func set_option(o: int) -> void:
-	hl_option = o
+# Sets the color based on the option. Hides the highlighter if the option is NONE.
+func set_option(hl_option: int) -> void:
 	match hl_option:
 		Option.PLAYER:
 			_set_highlighter_color(Constants.COLOR_CHARACTER_ORIGIN)
@@ -49,8 +46,17 @@ func set_option(o: int) -> void:
 			hide()
 
 
+# Sets the transparency value of the highlighter. Accepts a value between 0 and 1.0.
+func set_transparency(f: float) -> void:
+	var m: SpatialMaterial = get_surface_material(0)
+	m.flags_transparent = true
+	f = 0.0 if f < 0.0 else 1.0 if f > 1.0 else f
+	m.albedo_color.a = f
+	set_surface_material(0, m)
+
+
 # Changes the color of the tile highlighter
 func _set_highlighter_color(color: Color) -> void:
-	var m: Material = $Highlighter.get_surface_material(0)
+	var m: SpatialMaterial = get_surface_material(0)
 	m.albedo_color = color
-	$Highlighter.set_surface_material(0, m)
+	set_surface_material(0, m)
