@@ -23,6 +23,11 @@ var _map_tile: PackedScene = preload("res://hex_map/map_tile_node/MapTile.tscn")
 onready var _root_node: Node = get_tree().edited_scene_root
 
 
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_initial_grid_generation()
+
+
 # Update the z_count parameter and regenerate the grid.
 func set_z_count(new_count: int) -> void:
 	if Engine.is_editor_hint():
@@ -81,11 +86,6 @@ func regenerate_grid(r: bool) -> void:
 		_generate_grid()
 		_set_coordinates()
 		_determine_adjacencies()
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_initial_grid_generation()
 
 
 # Creates the intial instance of the grid map.

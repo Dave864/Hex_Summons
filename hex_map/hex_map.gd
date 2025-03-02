@@ -10,13 +10,24 @@ from the child nodes that are needed for other nodes to interact with the map.
 const TILES = "Tiles"
 const FLOOR_MESH = "FloorMesh"
 
-var _tiles_node: Tiles = null
+var hm_astar: HexMapAStar = null
 var _floor_mesh: PlaneMesh = preload("res://hex_map/hex_map_floor.tres")
 var _floor_mesh_node: MeshInstance = null
+var _tiles_node: Tiles = null
 
 onready var _map_tiles: Array = [] setget , get_map_tiles
 # Reference to the scene tree root.
 onready var _root_node: Node = get_tree().edited_scene_root
+
+
+func _ready() -> void:
+	_create_floor_mesh()
+	_create_tiles_node()
+	hm_astar = HexMapAStar.new(
+		_map_tiles,
+		$Tiles.get_x_count(),
+		$Tiles.get_z_count()
+	)
 
 
 # Get the number of tiles along the X axis.
@@ -53,11 +64,6 @@ func highlight_character_movement(
 func clear_highlights() -> void:
 	for tile in _map_tiles:
 		tile.set_selection_type(MapTile.SelectionType.NONE)
-
-
-func _ready() -> void:
-	_create_floor_mesh()
-	_create_tiles_node()
 
 
 # Creates a Tiles node if not already present.
