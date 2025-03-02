@@ -44,7 +44,7 @@ func _cs_as_cardinal() -> PoolVector2Array:
 	cs_points.resize(12)
 	for i in range(0, 12, 2):
 		var p0: Vector2 = Vector2(_tile_distance * distance, 0.0)
-		var p1: Vector2 = Vector2(0.1, 0.1)
+		var p1: Vector2 = Vector2(0.05, 0.05)
 		# Prevent issues with convex decomposing
 		var deg: float = 60 * (i / 2.0)
 		p0 = p0.rotated(deg2rad(deg))

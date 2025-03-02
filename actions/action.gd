@@ -51,8 +51,8 @@ func _ready() -> void:
 
 
 func _on_Range_area_entered(tile: Area) -> void:
-	targeted_tiles.append(tile)
+	targeted_tiles.append(tile.get_map_index())
 
 
 func _on_Range_area_exited(tile: Area) -> void:
-	targeted_tiles.erase(tile)
+	targeted_tiles.erase(tile.get_map_index())

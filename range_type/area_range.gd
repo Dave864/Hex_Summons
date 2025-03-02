@@ -14,8 +14,7 @@ var _tile_distance: float = 2 * Constants.HEX_EDGE_RATIO
 
 
 func _ready() -> void:
-	connect("area_entered", self, "_on_Area_area_entered")
-	connect("area_exited", self, "_on_Area_area_exited")
+	pass
 
 
 # Virtual function. Updates the collision shape to fit the dimensions of the
@@ -55,9 +54,9 @@ func _cs_as_line(length: float) -> void:
 	)
 
 
-func _on_Area_area_entered(map_tile: Area) -> void:
+func _on_AreaRange_area_entered(map_tile: Area) -> void:
 	tile_ids.append(map_tile.get_index())
 
 
-func _on_Area_area_exited(map_tile: Area) -> void:
+func _on_AreaRange_area_exited(map_tile: Area) -> void:
 	tile_ids.erase(map_tile.get_index())
