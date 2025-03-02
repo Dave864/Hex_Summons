@@ -1,29 +1,24 @@
 tool
-class_name RingRange
+class_name RingArea
 extends AreaRange
 """
-Describes an action range whose area encompasses all hexes within the defined distance.
+Describes a range whose area encompasses all hexes within a defined distance.
 """
 
 
-# How many tiles out from the cast point the action will affect.
-export(int, 0, 1000) var effect_distance = 0 setget set_distance
+# How many tiles out from the cast point the area will reach.
+export(int, 0, 1000) var radius = 0 setget set_radius
 
 
-func set_distance(val: int) -> void:
-	effect_distance = val
+func set_radius(val: int) -> void:
+	radius = val
 	_update_collision_shape()
 
 
-# Virtual function. Gets the details of the effect range.
-func get_effect_range() -> Dictionary:
-	return {"area_type": AreaType.RING, "distance": effect_distance}
-
-
 # Virtual function. Updates the collision shape to fit the dimensions of the
-# effect range.
+# area.
 func _update_collision_shape() -> void:
-	if effect_distance == 0:
+	if radius == 0:
 		_cs_as_point()
 		$CollisionPolygon.translation = Vector3.ZERO
 	else:
@@ -38,5 +33,5 @@ func _cs_as_ring() -> PoolVector2Array:
 	var cs_shape: PoolVector2Array = []
 	cs_shape.resize(6)
 	for i in range(6):
-		cs_shape[i] = Vector2(_tile_distance * effect_distance, 0.0).rotated(deg2rad(60 * i))
+		cs_shape[i] = Vector2(_tile_distance * radius, 0.0).rotated(deg2rad(60 * i))
 	return cs_shape
