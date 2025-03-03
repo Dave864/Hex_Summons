@@ -6,6 +6,8 @@ position details.
 """
 
 
+var level: int = 1
+var stats: CharacterStats
 # Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false setget , get_is_start_set
 var _current_index: int = -1 setget , get_map_index_at

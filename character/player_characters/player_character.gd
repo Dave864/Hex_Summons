@@ -5,18 +5,23 @@ Handles actions specific to player characters.
 """
 
 
-var level: int = 1
 # The current player class; determines stat adjusters and abilities.
-#var player_class
-
+var _player_class: PlayerClass
 # References to the various attacks and spells the character has access to.
-onready var _techniques: Array = $Techniques.get_children() setget , get_techniques
-onready var _spells: Array = $Spells.get_children() setget , get_spells
+var _techniques: Array
+var _spells: Array
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	"""
+	TODO: Implement logic for loading the details of the currently set player class
+	from data outside of encounter scene.
+	"""
+	_player_class = $Class
+	_techniques = _player_class.techniques
+	_spells = _player_class.spells
+	stats = _player_class.stats
 
 
 # Get the techniques associated with the character

@@ -61,16 +61,31 @@ func disable_effect_collision() -> void:
 	effect_range.set_monitoring(false)
 
 
-# Rotates the emission along the y-axis to align it with specified point.
+# Rotates the emission along the y-axis to align it with a specified point.
 # Will only affect cardinal_range areas.
-func align_to_point(point: Vector3) -> void:
+func rotate_to_point(point: Vector3, inverse: bool = false) -> void:
 	if _area_range is CardinalRange:
 		point.y = 0.0
-		var emission_pos: Vector3 = emission_pt.translation
+		var emission_pos: Vector3 = emission_pt.global_translation
 		emission_pos.y = 0.0
 		var direction: Vector3 = (point - emission_pos).normalized()
+		direction = -direction if inverse else direction
 		var rotation: Vector3 = Vector3.RIGHT.rotated(
 			Vector3.UP,
 			Vector3.RIGHT.angle_to(direction)
 		)
 		emission_pt.rotation_degrees = rotation
+
+
+# Resets the position of the emittor position.
+func reset_emittor_position() -> void:
+	emission_pt.translation = Vector3.ZERO
+
+
+# Positions the emittor at the tile.
+func _on_Selector_tile_hovered(tile: Area) -> void:
+	if emit_from_center:
+		rotate_to_point(tile.global_translation, true)
+	else:
+		emission_pt.global_translation = tile.global_translation
+		rotate_to_point(_area_range.global_translation)

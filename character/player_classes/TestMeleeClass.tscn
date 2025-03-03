@@ -1,0 +1,48 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://character/player_classes/player_class.gd" type="Script" id=1]
+[ext_resource path="res://stats/character_stats.gd" type="Script" id=2]
+[ext_resource path="res://range_type/RingArea.tscn" type="PackedScene" id=3]
+[ext_resource path="res://stats/agility.gd" type="Script" id=4]
+[ext_resource path="res://stats/defense.gd" type="Script" id=5]
+[ext_resource path="res://stats/attack.gd" type="Script" id=6]
+[ext_resource path="res://stats/health.gd" type="Script" id=7]
+[ext_resource path="res://actions/Strike.tscn" type="PackedScene" id=8]
+[ext_resource path="res://actions/Sweep.tscn" type="PackedScene" id=9]
+
+[node name="TestMeleeClass" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource( 2 )
+movement_node = NodePath("Movement")
+health_node = NodePath("Health")
+attack_node = NodePath("Attack")
+defense_node = NodePath("Defense")
+agility_node = NodePath("Agility")
+
+[node name="Movement" parent="Stats" instance=ExtResource( 3 )]
+radius = 3
+
+[node name="Health" type="Node" parent="Stats"]
+script = ExtResource( 7 )
+max_value = 5
+
+[node name="Attack" type="Node" parent="Stats"]
+script = ExtResource( 6 )
+value = 2
+
+[node name="Defense" type="Node" parent="Stats"]
+script = ExtResource( 5 )
+
+[node name="Agility" type="Node" parent="Stats"]
+script = ExtResource( 4 )
+
+[node name="Techniques" type="Node" parent="."]
+
+[node name="Strike" parent="Techniques" instance=ExtResource( 8 )]
+power = 2
+
+[node name="Sweep" parent="Techniques" instance=ExtResource( 9 )]
+
+[node name="Spells" type="Node" parent="."]
