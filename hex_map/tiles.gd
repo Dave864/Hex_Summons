@@ -145,162 +145,151 @@ func _set_coordinates() -> void:
 #  5 |   | 2
 #  4  \ /  3
 func _determine_adjacencies() -> void:
-	var index: int
-	var z_place: int
-	var x_place: int
-	var even_z_place: bool
-	# Flags to indicate if a tile is at the edge of the map grid.
-	var is_left: bool
-	var is_right: bool
-	var is_top: bool
-	var is_bottom: bool
-	
 	for tile in get_children():
-		index = tile.get_map_index()
-		z_place = int(floor(float(index) / float(x_count)))
-		x_place = index % x_count
-		even_z_place = _is_even(z_place)
+		var index: int = tile.get_map_index()
+		var z_place: int = int(floor(float(index) / float(x_count)))
+		var x_place: int = index % x_count
+		var even_z_place: bool = _is_even(z_place)
 		
-		is_left = x_place == 0
-		is_right = x_place == (x_count - 1)
-		is_top = z_place == 0
-		is_bottom = z_place == (z_count - 1)
+		var is_left: bool = x_place == 0
+		var is_right: bool = x_place == (x_count - 1)
+		var is_top: bool = z_place == 0
+		var is_bottom: bool = z_place == (z_count - 1)
 		
 		# Determine which tile is adjacent to the top left edge.
-		# * / \
-		#  |   |
-		#   \ /
 		var index_0_tile: Spatial = (
 			null if is_top
 			else null if is_left and even_z_place
 			else get_child(index - x_count - 1) if even_z_place
 			else get_child(index - x_count)
 		)
-		tile.set_adjacent_tile(0, index_0_tile)
+		tile.set_adjacent_tile(MapTile.NeighborPosition.UPPER_LEFT, index_0_tile)
 		
 		# Determine which tile is adjacent to the top right edge.
-		#   / \ *
-		#  |   |
-		#   \ /
 		var index_1_tile: Spatial = (
 			null if is_top
 			else null if is_right and !even_z_place
 			else get_child(index - x_count) if even_z_place
 			else get_child(index - x_count + 1)
 		)
-		tile.set_adjacent_tile(1, index_1_tile)
+		tile.set_adjacent_tile(MapTile.NeighborPosition.UPPER_RIGHT, index_1_tile)
 		
 		# Determine which tile is adjacent to the center right edge.
-		#   / \
-		#  |   |*
-		#   \ /
 		var index_2_tile: Spatial = null if is_right else get_child(index + 1)
-		tile.set_adjacent_tile(2, index_2_tile)
+		tile.set_adjacent_tile(MapTile.NeighborPosition.RIGHT, index_2_tile)
 		
 		# Determine which tile is adjacent to the bottom right edge.
-		#   / \
-		#  |   |
-		#   \ / *
 		var index_3_tile: Spatial = (
 			null if is_bottom 
 			else null if is_right and !even_z_place
 			else get_child(index + x_count) if even_z_place
 			else get_child(index + x_count + 1)
 		)
-		tile.set_adjacent_tile(3, index_3_tile)
+		tile.set_adjacent_tile(MapTile.NeighborPosition.BOTTOM_RIGHT, index_3_tile)
 		
 		# Determine which tile is adjacent to the bottom left edge.
-		#   / \
-		#  |   |
-		# * \ /
 		var index_4_tile: Spatial = (
 			null if is_bottom
 			else null if is_left and even_z_place
 			else get_child(index + x_count - 1) if even_z_place
 			else get_child(index + x_count)
 		)
-		tile.set_adjacent_tile(4, index_4_tile)
+		tile.set_adjacent_tile(MapTile.NeighborPosition.BOTTOM_LEFT, index_4_tile)
 		
 		# Determine which tile is adjacent to the center left edge.
-		#   / \
-		# *|   |
-		#   \ /
 		var index_5_tile: Spatial = null if is_left else get_child(index - 1)
-		tile.set_adjacent_tile(5, index_5_tile)
+		tile.set_adjacent_tile(MapTile.NeighborPosition.LEFT, index_5_tile)
 
 
 # Updates the set of map tiles when the x count of the map is updated
 func _update_grid_x(old_x: int) -> void:
 	if old_x > x_count:
-		# Delete old tiles
-		var tiles: Array = get_children()
-		for i in old_x - x_count:
-			var x: int = old_x - i - 1
-			for z in z_count:
-				var index: int = (z * old_x) + x
-				_delete_tile(tiles[index])
-		# Move remaining tiles to the right
-		var x_offset: float = (old_x - x_count) * Constants.HEX_EDGE_RATIO
-		for t in get_children():
-			t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
+		_shrink_x(old_x)
 	elif old_x < x_count:
-		# Move the current tiles to the left
-		var old_tiles: Array = get_children()
-		var x_offset: float = (old_x - x_count) * Constants.HEX_EDGE_RATIO
-		for t in get_children():
-			t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
-		# Calculates the position for each tile so that the grid is centered to
-		# origin and adds new tiles.
-		for z in z_count:
-			var offset: Vector3 = Vector3.ZERO
-			offset.z = 1.5 * z
-			for x in x_count:
-				if x >= old_x:
-					offset.x = 2 * Constants.HEX_EDGE_RATIO * x
-					if !_is_even(z):
-						offset.x += Constants.HEX_EDGE_RATIO
-					_instantiate_tile(offset)
-					# Change the child index of the new tile to match its map index.
-					move_child(get_child(get_child_count() - 1), (z * x_count) + x)
-				else:
-					# Change the child index of old tiles to match their new
-					# map index.
-					var i: int = (z * old_x) + x
-					move_child(old_tiles[i], (z * x_count) + x)
+		_grow_x(old_x)
 	_set_coordinates()
 	_determine_adjacencies()
+
+
+# Add new tiles to account for an increase in the value of x_count.
+func _grow_x(old_x: int) -> void:
+	var old_tiles: Array = get_children()
+	var x_offset: float = (old_x - x_count) * Constants.HEX_EDGE_RATIO
+	for t in get_children():
+		t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
+	# Calculates the position for each tile so that the grid is centered to
+	# origin and adds new tiles.
+	for z in z_count:
+		var offset: Vector3 = Vector3.ZERO
+		offset.z = 1.5 * z
+		for x in x_count:
+			if x >= old_x:
+				offset.x = 2 * Constants.HEX_EDGE_RATIO * x
+				if !_is_even(z):
+					offset.x += Constants.HEX_EDGE_RATIO
+				_instantiate_tile(offset)
+				# Change the child index of the new tile to match its map index.
+				move_child(get_child(get_child_count() - 1), (z * x_count) + x)
+			else:
+				# Change the child index of old tiles to match their new
+				# map index.
+				var i: int = (z * old_x) + x
+				move_child(old_tiles[i], (z * x_count) + x)
+
+
+# Remove tiles to account for a decrease in the value of x_count.
+func _shrink_x(old_x: int) -> void:
+	var tiles: Array = get_children()
+	for i in old_x - x_count:
+		var x: int = old_x - i - 1
+		for z in z_count:
+			var index: int = (z * old_x) + x
+			_delete_tile(tiles[index])
+	# Move remaining tiles to the right
+	var x_offset: float = (old_x - x_count) * Constants.HEX_EDGE_RATIO
+	for t in get_children():
+		t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
 
 
 # Updates the set of map tiles when the z count of the map is updated
 func _update_grid_z(old_z: int) -> void:
-	var tiles: Array = get_children()
 	if old_z > z_count:
-		# Delete old tiles
-		for i in range(old_z - z_count):
-			var z: int = old_z - i - 1
-			for x in x_count:
-				var index: int = (z * x_count) + x
-				_delete_tile(tiles[index])
-		# Shift all tiles up to account for size change
-		for t in get_children():
-			t.translate_object_local(Vector3(0.0, 0.0, (old_z - z_count) * 0.75))
+		_shrink_z(old_z)
 	elif old_z < z_count:
-		# Shift all tiles up to account for size change
-		for t in get_children():
-			t.translate_object_local(Vector3(0.0, 0.0, (old_z - z_count) * 0.75))
-		# Calculates the position for each tile relative to origin
-		# and adds extra tiles as needed.
-		var map_tile_offset: Vector3
-		for z in range(old_z, z_count):
-			map_tile_offset = Vector3.ZERO
-			map_tile_offset.z = 1.5 * z
-			for x in x_count:
-				map_tile_offset.x = 2 * Constants.HEX_EDGE_RATIO * x
-				if !_is_even(z):
-					map_tile_offset.x += Constants.HEX_EDGE_RATIO
-				_instantiate_tile(map_tile_offset)
+		_grow_z(old_z)
 	_set_coordinates()
 	_determine_adjacencies()
+
+
+# Add new tiles to account for an increase in the value of z_count.
+func _grow_z(old_z: int) -> void:
+	# Shift all tiles up to account for size change
+	for t in get_children():
+		t.translate_object_local(Vector3(0.0, 0.0, (old_z - z_count) * 0.75))
+	# Calculates the position for each tile relative to origin
+	# and adds extra tiles as needed.
+	var map_tile_offset: Vector3
+	for z in range(old_z, z_count):
+		map_tile_offset = Vector3.ZERO
+		map_tile_offset.z = 1.5 * z
+		for x in x_count:
+			map_tile_offset.x = 2 * Constants.HEX_EDGE_RATIO * x
+			if !_is_even(z):
+				map_tile_offset.x += Constants.HEX_EDGE_RATIO
+			_instantiate_tile(map_tile_offset)
+
+
+# Remove tiles to account for a decrease in the value of z_count.
+func _shrink_z(old_z: int) -> void:
+	var tiles: Array = get_children()
+	for i in range(old_z - z_count):
+		var z: int = old_z - i - 1
+		for x in x_count:
+			var index: int = (z * x_count) + x
+			_delete_tile(tiles[index])
+	# Shift all tiles up to account for size change
+	for t in get_children():
+		t.translate_object_local(Vector3(0.0, 0.0, (old_z - z_count) * 0.75))
 
 
 # Determine the starting point so that the middle of the generated map is center
