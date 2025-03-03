@@ -58,3 +58,34 @@ func _on_SignalBus_enemy_turn_ended(_enemy: EnemyCharacter) -> void:
 		state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:
 		state_machine.transition_to(ENEMY_TURN)
+
+
+# Determines the actions that the enemy character should take given the current
+# state of the encounter. Emits the enemy_actions_confirmed.
+func _determine_action_chain() -> void:
+	"""
+	TODO: Implement logic for determining what actions to take.
+	For now, the enemy character moves as close as it can to the closest player
+	character.
+	"""
+	var action_chain: Array = []
+	var player_distances: Array = []
+	for p in enc.players:
+		var p_data: Array = [
+			p, 
+			enc.hex_map.hm_astar.calculate_distance(
+				current_character.get_index_at(),
+				p.get_index_at()
+			)
+		]
+		player_distances.append(p_data)
+	
+	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
+	var path: PoolVector3Array = enc.hex_map.hm_astar.get_point_path_toward(
+		current_character.get_index_at(), 
+		player_distances[0][0].get_map_index_at()
+	)
+	action_chain.push_front([EnemyCharacterState.MOVE, path])
+	# Pause for a little bit to give the EncounterUI a chance to get ready.
+	# Workaround for bug where not moving the player causes the UI to not appear.
+	yield(get_tree().create_timer(0.1), "timeout")
