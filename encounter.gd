@@ -10,7 +10,6 @@ Manages the events of an encounter.
 export(NodePath) var hex_map_path = null
 
 var hex_map: HexMap = null
-var hm_astar: HexMapAStar
 
 var initiative_tracker: Array
 var cur_init: int = 0
@@ -43,13 +42,15 @@ func get_current_character() -> Character:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hex_map = get_node(hex_map_path)
-	hm_astar = HexMapAStar.new(
-		hex_map.get_x_count(),
-		hex_map.get_z_count(),
-		hex_map.get_map_tiles(),
-		players,
-		enemies
-	)
+	
+	"""
+	TODO: implement logic to load the HexMap, based on some details determined
+	out of scene.
+	"""
+	"""
+	TODO: implement logic to load the players and enemies, placing them at
+	appropriate spots on the HexMap.
+	"""
 	
 	for p in players:
 		ui.track_party_member(p)
