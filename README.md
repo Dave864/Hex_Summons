@@ -2,22 +2,37 @@
 
 ## Overview
 
-This project is an RPG where combat encounters are rendered as tactics battles that take place on a hexagonal grid. The user assumes control of a party of up to four player characters, whose stats and abilities are determined by how many different elemental "spirits" are attached to them.
+This project is an RPG where combat encounters are rendered as tactics battles that take place on a hexagonal grid. The user assumes control of a party of up to four player characters, whose stats and abilities are determined by how many different elemental wisps are attached to them.
 
 ## Story
 
-(To Be Written)
+*(To be Further Written)*
+
 The game follows the story of two friends as they embark on a journey across the world. Along the way, they will team up with two others. The journey will have the party encounter various researchers studying the ruins and remnants of lost civilizations, as well as the growing threat of monsters.
 
 The game starts with the two starting characters fending off an animal attack against a visitor to their town. This will prompt them to delve deeper into the wilds surrounding the town to investigate why the animals are so aggressive. This will culminate in a boss battle against a monster that is the result of the unrest.
+
+### World
+
+*(To be Further Written)*
+
+The world of this game is one of tumultuous magic, where the fundamental forces of fire, earth, water, and wind give rise to phenomena both beatiful and destructive. The peoples and creatures of this world are at the mercy of these capricious forces, on their own powerless to adapt. Yet, where magic flows, the wisps follow. Avatars of these fundamental forces, wisps are elemental spirits that have the ability to channel the flow of magic. By befriending and bonding with these wisps, one too can share in their peculliar ability.
+
+Out of survival instinct, animals were the first to bond with wisps. It was by their whims that stable environments arose. From observation did people too learn to bond with wisps. From this the art of spellcraft arose, and the dawn of civilization with it. As societies rose and fell, and spellcraft practiced and refined, different philosophies on the nature of the arcane forces took shape. All observed that the elements could be aligned with light or darkness. For some, the deep caves and abyss of the sea aligned earth and water as aspects of dark, while the windy heavens and brilliant sun aligned fire and wind to light. Others posited, what is darkness but a shadow cast by an obstruction, and thus fire could be used with all to harness the stygian forces. And others still found new ways to align the forces with light and dark. With this, polarity was given to the fundamental four.
+
+*NEEDS FLUFF REWRITE:* Societies rise and fall, yet the stories they tell of their heroes, gods, and mythic beasts endure beyond their cities, becoming myths and legends. The wisps, nigh immortal, have born witness it all. (Essentially, wisps saw or heard tales about the exploits of creatures or people that inspired society's myths. Some of these tales resonate with them and this results in these mythic figures being able to be called forth as summons given enough knowledge of the myth along with the right set of wisps.)
+
+*NEEDS FLUFF REWRITE:* (At some point a catastrophe occurs that results in a big chunk of the world getting reduced to a wasteland. This catastrophe was so bad that even the flow of magic was affected, resulting in it bunching up to the point where it coalesces into an unnatural being. This is where monsters come from. From this point on, monsters are a constant threat to both the wilds and to civilization.)
+
+*NEEDS FLUFF REWRITE:* (As the ages pass, monsters have ravaged many of the great civilizations of eld. While the world is not on the brink, much has been lost to ravages of time and aberration. People are ever stubborn, and the current day sees many a guild and society dedicated to reclaiming some of what was lost. And there are others still looking dangerously close at a secret that should stay hidden.)
 
 ### Characters
 
 #### Player Characters
 
 - StartingCharacter1
-  - **Overview:** An amateur ecologist who was apprenticing for the starting town's apothecary who teams up with the other starting protagonist on their adventure. They have a long love of animals and the natural world, and have made friends with an elemental spirit that enables them to use magic.
-  - **Personality:** Reserved and quiet. More comfortable around animals and spirits than they are around people.
+  - **Overview:** An amateur ecologist who was apprenticing for the starting town's apothecary who teams up with the other starting protagonist on their adventure. They have a long love of animals and the natural world, and have made friends with a wisp that enables them to use magic.
+  - **Personality:** Reserved and quiet. More comfortable around animals and wisps than they are around people.
 - StartingCharacter2
   - **Overview:** A town guard of the starting area who teams up with the other starting protagonist on their adventure. They once had dreams of becoming a heroic warrior, inspired by sagas and legends of old. In addition to providing martial aid to their friend, they hope to perhaps fulfill that dream by learning the martial disciplines of the places they visit.
   - **Personality:** Friendly and warm. Believes that strength should be used to defend those who cannot. Stubborn to the point of self-destructive.
@@ -137,7 +152,20 @@ A menu that provides full descriptions about the stats and abilities of both pla
 
 #### Elemental Alignment
 
-(To Be Explained.)
+Spells, summons, even some techniques are dependent on the elemental alignment of a player character. A player character's elemental alignment is determined by the number of spirits set to them of a specific element, as well as their original elemental alignment. For example, a player character of wind alignment that has 3 earth, 2 water, and 1 wind spirit set to them has an elemental alignment of 3 earth, 2 water, 2 wind, and 0 fire.
+- *Note: A player's base alignment will probably be worth more than one.*
+
+Similarly, the summon pool's elemental alignment is determined by the number of spirits of the associated element.
+
+The elemental alignment of player characters, the summon pool, and other elementally affected aspects is indicated by a specific GUI element. These are some examples of what the GUI might look like.
+- *Note: The GUI element should use a hexagram as a key component of its design.*
+
+![Element_Alignment_Display](https://github.com/user-attachments/assets/d91d9ee7-6797-439e-ad62-b8a15a9629da)
+
+There are six elements that the game uses in its magic system: four primary and two polar. The four primary elements are earth, fire, water, and wind. The polar elements are light and dark. Half of the four primary elements match the light polarity, while the other half match the dark polarity. Certain spells and techniques can shift the polarity clockwise or counter-clockwise by either 90 or 180 degrees.
+
+![Element_Alignment_Shift](https://github.com/user-attachments/assets/71150dd2-a0a6-41f5-93e9-66ab0796bdee)
+- Polarity element alignment is determined by the combined count of the matching primary elements. A polarity alignment of 1 means that each primary element has an alignment of 1.
 
 ##### Spells & Techniques
 
