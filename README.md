@@ -11,8 +11,6 @@ The game follows the story of two friends as they embark on a journey across the
 
 The game starts with the two starting characters fending off an animal attack against a visitor to their town. This will prompt them to delve deeper into the wilds surrounding the town to investigate why the animals are so aggressive. This will culminate in a boss battle against a monster that is the result of the unrest.
 
-
-
 ### Characters
 
 #### Player Characters
@@ -75,17 +73,30 @@ The interface the user will interact with when playing a combat encounter.
 
 ##### Character Details
 
-A menu that provides full descriptions about the stats and abilities of both players and enemies. It is split into two interfaces, one for player characters and one for enemy characters.
+A menu that provides full descriptions about the stats and abilities of both players and enemies. It is split into two interfaces, one for player characters and one for enemy characters. The interface swaps between player and enemy detail menus.
 
 ###### Player Details
 
-1. **Player Character Selector**
-2. **Enemy Character Selector**
+![Player_Details_UI](https://github.com/user-attachments/assets/06d525b7-ef88-405a-97fb-c04b184f0dc3)
+
+1. **Player Character Selector:** Area for selecting other player characters for detailed view.
+2. **Player Sprite Display:** Detailed Player sprite.
+3. **Spirit Pool:** The currently allocated spirits and their set status. Can hover over to select specific spirit to see popup of benefits granted.
+4. **Spells & Techniques:** Lists of spells and techniques the player currently has access to.
+5. **Player Statistics:** Collection of all player stats.
+6. **Item Pouch:** List of items allocated to the player.
+7. **Enemy Character Selector:** Area for selecting enemy characters for detailed view.
 
 ###### Enemy Details
 
-1. **Player Character Selector**
-2. **Enemy Character Selector**
+![Enemy_Details_UI](https://github.com/user-attachments/assets/70b35bcc-3fa8-476f-a965-395abf23502b)
+
+1. **Enemy Character Selector:** Area for selecting other enemy characters for detailed view.
+2. **Enemy Sprite Display:** Detailed Enemy sprite.
+3. **Enemy Bio Display:** Flavor text describing the enemy.
+4. **Enemy Statistics:** Collection of all enemy stats.
+5. **Enemy Actions:** Collection of actions the enemy is able to execute. Listed in inverse order of priority.
+6. **Player Character Selector:** Area for selecting player characters for detailed view.
 
 #### Gameplay Loop
 
@@ -122,7 +133,56 @@ A menu that provides full descriptions about the stats and abilities of both pla
     - If Player Character defeated, remove the character from the initiative tracker and set their status to "unconscious".
  5. Check if one side, Players or Enemies, have all been defeated:
     - If all enemies defeated, combat ends and user obtains rewards.
-    - If all players defeated, combat ends and game over is instanced. 
+    - If all players defeated, combat ends and game over is instanced.
+
+#### Elemental Alignment
+
+(To Be Explained.)
+
+##### Spells & Techniques
+
+Range and Effect Areas
+- Both spells and techniques are comprised of stats, an area range, and effect range.
+- Area range determines which tiles are available as the start point for the effect range.
+  - Area ranges can be either cardinal or ring.
+![Range_Types](https://github.com/user-attachments/assets/ddfa3dc8-5a05-418e-a34e-8b5ee852913d)
+  - Area ranges can have a "dead zone", which is an area from the start point that is considered invalid for selection.
+![Area_range](https://github.com/user-attachments/assets/40730557-bd90-4ad8-8a6f-1d0c92ca39e6)
+- Effect range determines the tiles that the spell or technique affects.
+  - Effect ranges can be ring, column, or cone.
+  - Column and cone effect ranges are restricted to cardinal area ranges.
+  - Ring effect ranges are restricted to ring area ranges.
+  - Points and lines can be created by specific dimensions of effect ranges.
+![Effect_Area](https://github.com/user-attachments/assets/e5cfe865-a680-4313-a708-2f2234f1f53e)
+
+Spells
+- Represents abiliities that are manifested by the channeling of a spirit, in otherwords magic.
+- A spell requires a specific number of elemental spirits to be set to the player in order for it to be cast.
+- Casting a spell channels a spirit (or spirits, not sure yet), adding them to the summon pool.
+
+Techniques
+- Represents physical or martial abilities, such as swinging a sword in an arc or causing a small quake by slamming the ground.
+- Usually bound to a cardinal range.
+- Some techniques may be granted by specific set spirits (not sure yet).
+- Using a technique sets it on a cooldown (not sure if techniques should just always be active).
+
+##### Summoning
+
+This action calls to the field a powerful entity, allowing the user to tap into their abilities. 
+- Each summon has an elemental cost that is paid by spirits in the summon pool.
+  - Some summons require "light" or "dark" elements. This means that for each such element, one spirit from each of the aligned elements is required.
+    - EX: A summon that specifies 1 light element could require 1 water spirit and 1 fire spirit be in the pool depending on elemental alignment.
+- When a summon is executed, the player selects an area on the map where the summon will be placed, and an initial effect is executed, be it action or otherwise.
+- *Not sure if the summon replaces the turn of the player character who summoned it or if it should be added as a separate character to the intiative track*.
+- When on the field, the player determines the actions a summon takes, similarly to how a player character's actions are determined.
+  - The actions a summon can take are determined by the spirits used to summon them. These spirits form a well that the summon uses to power its abilities.
+  - When a summon uses an action, the required number and element of the spirits are released from the well, sending them back to the player character they were originally set to.
+  - When a summon uses an action that would empty its well, the summon disappates and leaves the field.
+
+##### Items
+
+Items are consumables that fully replenish after a combat encounter has ended.
+(To Be Expanded Upon.)
 
 ### World Traversal
 
