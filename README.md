@@ -212,6 +212,67 @@ This action calls to the field a powerful entity, allowing the user to tap into 
 Items are consumables that fully replenish after a combat encounter has ended.
 (To Be Expanded Upon.)
 
+### Enemy & Player Character Stats
+
+Both enemy and player characters have a collection of stats that determine their strength and capabilities in combat:
+- Affinity: Indicates the primary elemental affinity of the character. Can be earth, fire, water, wind, or some combination of the four.
+- Level: A value that determines the value of all other stats.
+- Health: The maximum vitality of the character.
+  - Current Health: The current vitality of the character. When this drops to 0, the character is considered defeated.
+  - Base: The value at level 1.
+  - Growth Factor: By how much the stat grows per level.
+- Attack: Determines the strength of offensive actions.
+  - Base: The value at level 1.
+  - Growth Factor: By how much the stat grows per level.
+- Defense: Determines the amount of damage that is mitigated from offensive actions.
+  - Base: The value at level 1.
+  - Growth Factor: By how much the stat grows per level.
+- Agility: The primary stat for determining a character's order in initiative.
+  - Base: The value at level 1.
+  - Growth Factor: By how much the stat grows per level.
+- Magic: Determines the bonus strength of an action based off the action's elemental alignment.
+  - This stat is further broken down into four aspects: earth, fire, water, and air. Each aspect has its own distinct value.
+  - Base: The value at level 1. Each element has its own distinct value.
+  - Growth Factor: By how much the stat grows per level. Each element has its own distinct value.
+- Resistance: Determines the amount of damage mitigated from the bonus strength of offensive actions.
+  - This stat is further broken down into four aspects: earth, fire, water, and air. Each aspect has its own distinct value.
+  - Base: The value at level 1. Each element has its own distinct value.
+  - Growth Factor: By how much the stat grows per level. Each element has its own distinct value.
+
+#### Action Potency Calculation
+
+Actions have a potency value that determines what percentage of the character's attack the action uses to determine its strength. For example, the "Strike" action could have a potency of 50, meaning that if this action was used by a character with 500 attack (factored in for level), the action would have a strength of 250.
+
+All actions have an elemental affinity that is determined by a variety of factors. An action can have multiple elemental affinities of different values. For example, an action "Torrent" could have an elemental affinity of 2 water while an action "Dust Devil" could have an elemental affinity of 1 earth and 2 wind. By default, all actions have an elemental affinity of 1, with the element being the affinity of the character using the action. These affinity values determine the potency of the element, which defines the percentage value of the corresponding magic stat to add to the strength of the action.
+
+| Affinity value | Bonus Potency |
+| --- | --- |
+| 1 | 100 |
+| 2 | 150 |
+| 3 | 200 |
+| 4 | 233 |
+| 5 | 263 |
+| 6 | 300 |
+
+Defense is subtracted from the strength of the action, while each resistance type is subtracted from the relevant bonus strength. The resulting values are then added together to determine the amount of damage that is dealt.
+
+#### Enemy
+
+Enemy characters have a predefined set of stats. The level is able to be adjusted as necessary to fit the needs of an area.
+
+#### Player
+
+Player characters only have the level and affinity stat by default. All other stats are defined by a class which is set to them. A player character always has a class. The class is determined by the number and element of the wisps that are set to the character. For example, a player with the earth affinity and no other wisps set to them would be assigned the "Guard" class, which has its own set of stats. When that same character has a water wisp set to them, their class then changes to the "Herbalist" class. While this introduces the potential for a multitude of classes, in reality there are class chains that each player character can bet set to that can be determined by the elemental alignment of the character as determined by the wisps set. Since a player character has an initial affinity, these class chains can be further reduced to a more manageable number.
+
+- core
+- core + element_1
+- core + element_2
+- core + element_3
+- core + element_1 + element_2
+- core + element_1 + element_3
+- core + element_2 + element_3
+- core + element_1 + element_2 + element_3
+
 ### World Traversal
 
 #### User Interface
