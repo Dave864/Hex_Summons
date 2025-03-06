@@ -16,7 +16,7 @@ The game starts with the two starting characters fending off an animal attack ag
 
 *(To be Further Written)*
 
-The world of this game is one of tumultuous magic, where the fundamental forces of fire, earth, water, and wind give rise to phenomena both beatiful and destructive. The peoples and creatures of this world are at the mercy of these capricious forces, on their own powerless to adapt. Yet, where magic flows, the wisps follow. Avatars of these fundamental forces, wisps are elemental spirits that have the ability to channel the flow of magic. By befriending and bonding with these wisps, one too can share in their peculliar ability.
+The world of this game is one of tumultuous magic, where the fundamental forces of fire, earth, water, and wind give rise to phenomena both beatiful and destructive. The peoples and creatures of this world are at the mercy of these capricious forces, on their own powerless to adapt. Yet, where magic flows, the wisps follow. Avatars of these fundamental forces, wisps are elemental wisps that have the ability to channel the flow of magic. By befriending and bonding with these wisps, one too can share in their peculliar ability.
 
 Out of survival instinct, animals were the first to bond with wisps. It was by their whims that stable environments arose. From observation did people too learn to bond with wisps. From this the art of spellcraft arose, and the dawn of civilization with it. As societies rose and fell, and spellcraft practiced and refined, different philosophies on the nature of the arcane forces took shape. All observed that the elements could be aligned with light or darkness. For some, the deep caves and abyss of the sea aligned earth and water as aspects of dark, while the windy heavens and brilliant sun aligned fire and wind to light. Others posited, what is darkness but a shadow cast by an obstruction, and thus fire could be used with all to harness the stygian forces. And others still found new ways to align the forces with light and dark. With this, polarity was given to the fundamental four.
 
@@ -78,9 +78,9 @@ The interface the user will interact with when playing a combat encounter.
 ![Combat_UI](https://github.com/user-attachments/assets/7d3b50dc-61e3-49c7-8eb1-dfe9d04cf0f8)
 
 1. **Initiative Tracker:** Keeps track of the order the characters will take their turn in. Also indicates the current active character.
-2. **Summon Pool:** Indicates the amount of spirits on standby that are available to be used for summoning.
-3. **Player Characters Summary:** Displays the current health of all player characters (May want to include some statuses and spirit pool).
-4. **Active Player Details:** Displays the current active player character along with their health and spirit pool.
+2. **Summon Pool:** Indicates the amount of wisps on standby that are available to be used for summoning.
+3. **Player Characters Summary:** Displays the current health of all player characters (May want to include some statuses and wisp pool).
+4. **Active Player Details:** Displays the current active player character along with their health and wisp pool.
 5. **Enemy Summary:** Displays the health and portrait of the enemy that is being highlighted by the Tile Selector. Only appears when an enemy is highlighted.
 6. **Player Options:** Only active during a player character's turn. Displays a set of options the user can take for the player. These options are "Technique", "Spell", "Summon", "Item", and "End".
 7. **Action Options:** Only active during a player character's turn. Displays a set of options for a selected "Technique", "Spell", "Summon", or "Item" action.
@@ -96,7 +96,7 @@ A menu that provides full descriptions about the stats and abilities of both pla
 
 1. **Player Character Selector:** Area for selecting other player characters for detailed view.
 2. **Player Sprite Display:** Detailed Player sprite.
-3. **Spirit Pool:** The currently allocated spirits and their set status. Can hover over to select specific spirit to see popup of benefits granted.
+3. **Wisp Pool:** The currently allocated wisps and their set status. Can hover over to select specific wisp to see popup of benefits granted.
 4. **Spells & Techniques:** Lists of spells and techniques the player currently has access to.
 5. **Player Statistics:** Collection of all player stats.
 6. **Item Pouch:** List of items allocated to the player.
@@ -152,10 +152,10 @@ A menu that provides full descriptions about the stats and abilities of both pla
 
 #### Elemental Alignment
 
-Spells, summons, even some techniques are dependent on the elemental alignment of a player character. A player character's elemental alignment is determined by the number of spirits set to them of a specific element, as well as their original elemental alignment. For example, a player character of wind alignment that has 3 earth, 2 water, and 1 wind spirit set to them has an elemental alignment of 3 earth, 2 water, 2 wind, and 0 fire.
+Spells, summons, even some techniques are dependent on the elemental alignment of a player character. A player character's elemental alignment is determined by the number of wisps set to them of a specific element, as well as their original elemental alignment. For example, a player character of wind alignment that has 3 earth, 2 water, and 1 wind wisp set to them has an elemental alignment of 3 earth, 2 water, 2 wind, and 0 fire.
 - *Note: A player's base alignment will probably be worth more than one.*
 
-Similarly, the summon pool's elemental alignment is determined by the number of spirits of the associated element.
+Similarly, the summon pool's elemental alignment is determined by the number of wisps of the associated element.
 
 The elemental alignment of player characters, the summon pool, and other elementally affected aspects is indicated by a specific GUI element. These are some examples of what the GUI might look like.
 - *Note: The GUI element should use a hexagram as a key component of its design.*
@@ -173,38 +173,39 @@ Range and Effect Areas
 - Both spells and techniques are comprised of stats, an area range, and effect range.
 - Area range determines which tiles are available as the start point for the effect range.
   - Area ranges can be either cardinal or ring.
-![Range_Types](https://github.com/user-attachments/assets/ddfa3dc8-5a05-418e-a34e-8b5ee852913d)
+![Range_Types](https://github.com/user-attachments/assets/4d5ccf04-0fa5-451a-838e-44bb057450e8)
   - Area ranges can have a "dead zone", which is an area from the start point that is considered invalid for selection.
-![Area_range](https://github.com/user-attachments/assets/40730557-bd90-4ad8-8a6f-1d0c92ca39e6)
+![Area_range](https://github.com/user-attachments/assets/6dec3b08-7fad-4229-94bd-cfdec4df7137)
 - Effect range determines the tiles that the spell or technique affects.
   - Effect ranges can be ring, column, or cone.
   - Column and cone effect ranges are restricted to cardinal area ranges.
   - Ring effect ranges are restricted to ring area ranges.
   - Points and lines can be created by specific dimensions of effect ranges.
-![Effect_Area](https://github.com/user-attachments/assets/e5cfe865-a680-4313-a708-2f2234f1f53e)
+  ![Effect_Area](https://github.com/user-attachments/assets/3b204af0-634e-4107-a19d-04748155f16c) 
 
 Spells
-- Represents abiliities that are manifested by the channeling of a spirit, in otherwords magic.
-- A spell requires a specific number of elemental spirits to be set to the player in order for it to be cast.
-- Casting a spell channels a spirit (or spirits, not sure yet), adding them to the summon pool.
+- Represents abiliities that are manifested by the channeling of a wisp, in otherwords magic.
+- A spell requires a specific number of elemental wisps to be set to the player in order for it to be cast.
+- Casting a spell channels a wisp (or wisps, not sure yet), adding it to the summon pool.
 
 Techniques
 - Represents physical or martial abilities, such as swinging a sword in an arc or causing a small quake by slamming the ground.
 - Usually bound to a cardinal range.
-- Some techniques may be granted by specific set spirits (not sure yet).
-- Using a technique sets it on a cooldown (not sure if techniques should just always be active).
+- Some techniques may be granted by specific set wisps (not sure yet).
+- Using a technique sets it on a cooldown.
+  - The cooldown can be reset by channeling a wisp, adding it to the summon pool.
 
 ##### Summoning
 
 This action calls to the field a powerful entity, allowing the user to tap into their abilities. 
-- Each summon has an elemental cost that is paid by spirits in the summon pool.
-  - Some summons require "light" or "dark" elements. This means that for each such element, one spirit from each of the aligned elements is required.
-    - EX: A summon that specifies 1 light element could require 1 water spirit and 1 fire spirit be in the pool depending on elemental alignment.
+- Each summon has an elemental cost that is paid by wisps in the summon pool.
+  - Some summons require "light" or "dark" elements. This means that for each such element, one wisp from each of the aligned elements is required.
+    - EX: A summon that specifies 1 light element could require 1 water wisp and 1 fire wisp be in the pool depending on elemental alignment.
 - When a summon is executed, the player selects an area on the map where the summon will be placed, and an initial effect is executed, be it action or otherwise.
 - *Not sure if the summon replaces the turn of the player character who summoned it or if it should be added as a separate character to the intiative track*.
 - When on the field, the player determines the actions a summon takes, similarly to how a player character's actions are determined.
-  - The actions a summon can take are determined by the spirits used to summon them. These spirits form a well that the summon uses to power its abilities.
-  - When a summon uses an action, the required number and element of the spirits are released from the well, sending them back to the player character they were originally set to.
+  - The actions a summon can take are determined by the wisps used to summon them. These wisps form a well that the summon uses to power its abilities.
+  - When a summon uses an action, the required number and element of the wisps are released from the well, sending them back to the player character they were originally set to.
   - When a summon uses an action that would empty its well, the summon disappates and leaves the field.
 
 ##### Items
@@ -262,8 +263,9 @@ Enemy characters have a predefined set of stats. The level is able to be adjuste
 
 #### Player
 
-Player characters only have the level and affinity stat by default. All other stats are defined by a class which is set to them. A player character always has a class. The class is determined by the number and element of the wisps that are set to the character. For example, a player with the earth affinity and no other wisps set to them would be assigned the "Guard" class, which has its own set of stats. When that same character has a water wisp set to them, their class then changes to the "Herbalist" class. While this introduces the potential for a multitude of classes, in reality there are class chains that each player character can bet set to that can be determined by the elemental alignment of the character as determined by the wisps set. Since a player character has an initial affinity, these class chains can be further reduced to a more manageable number.
+Player characters only have the level and affinity stat by default. All other stats are defined by a class which is set to them. A player character always has a class. The class is determined by the number and element of the wisps that are set to the character. For example, a player with the earth affinity and no other wisps set to them would be assigned the "Guard" class, which has its own set of stats. When that same character has a water wisp set to them, their class then changes to the "Herbalist" class. While this introduces the potential for an unmanageable number of classes, in reality individual classes can be condensed into class chains that each player character can bet set to that can be determined by the elemental alignment of the character as determined by the wisps set. Since a player character has an initial affinity, these class chains can be further reduced to a more manageable number.
 
+Class Chain Grouping:
 - core
 - core + element_1
 - core + element_2
@@ -272,6 +274,9 @@ Player characters only have the level and affinity stat by default. All other st
 - core + element_1 + element_3
 - core + element_2 + element_3
 - core + element_1 + element_2 + element_3
+
+Player classes/class chains determine what spells a player has access to. Some classes/class chains may also grant techniques, though that is primarily determined by the weapon (and possible other equipment) a player character wields.
+- Currently, the idea is to have individual wisps grant additional buffs to spells (possibly techniques) when they are channeled. Wisps can be assigned to individual spells when a character class is set. 
 
 ### World Traversal
 
