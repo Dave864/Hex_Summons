@@ -88,10 +88,6 @@ func get_point_path_toward(
 	dest_id: int,
 	movement_area: Array
 ) -> PoolVector3Array:
-	# reenable destination tile to allow a path to be found when target tile 
-	# has an opponent.
-	_hm_astar.set_point_disabled(dest_id, false)
-	
 	var true_dest_id: int = dest_id
 	var path_to_dest: PoolIntArray = _hm_astar.get_id_path(start_id, dest_id)
 	
@@ -114,7 +110,11 @@ func get_point_path_toward_for_character(
 	enemies: Array,
 	players: Array
 ) -> PoolVector3Array:
-	var movement_area: Array = character.stats.get_movement_area()
+	var movement_area: Array = _hm_astar.get_traversable_tiles(
+		character.get_map_index_at(),
+		character.stats.get_movement_range(),
+		_get_tiles_from_ids(character.stats.get_movement_area())
+	)
 	var start_id: int = character.get_map_index_at()
 	var true_dest_id: int = dest_id
 	
@@ -122,16 +122,18 @@ func get_point_path_toward_for_character(
 	# from being able to move into those spaces
 	update_astar_disabled_for_characters(
 		enemies,
-		character.get_type() != Constants.MapOccupants.ENEMY
+		character.get_type() == Constants.MapOccupants.PLAYER
 	)
 	update_astar_disabled_for_characters(
 		players,
-		character.get_type() != Constants.MapOccupants.PLAYER
+		character.get_type() == Constants.MapOccupants.ENEMY
 	)
+	# reenable destination tile to allow a path to be found when target tile 
+	# has an opponent.
+	_hm_astar.set_point_disabled(dest_id, false)
 	
 	while true:
 		var path_to_dest: PoolIntArray = _hm_astar.get_id_path(start_id, dest_id)
-		
 		# Determine the last point in the path that is within the movement 
 		# range. A tile occupied by an opponent is not considered within
 		# movement range.
@@ -142,7 +144,6 @@ func get_point_path_toward_for_character(
 				or (occupant != null and occupant.get_type() != character.get_type())
 			):
 				true_dest_id = path_to_dest[i - 1]
-	
 		# Check if the true destination, the last tile in the available move, is
 		# occupied by an ally other than itself. If so, disable that tile and 
 		# recalculate the shortest path.

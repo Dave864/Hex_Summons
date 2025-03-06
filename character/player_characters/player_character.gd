@@ -44,6 +44,7 @@ func get_type() -> int:
 # Virtual function. Moves all collision objects, player position, movement node,
 # and all action collisions.
 func move_collisions(p: Vector3) -> void:
+	translation = p
 	var adjusted_p: Vector3 = Vector3(p.x, 0.0, p.z)
 	_movement_node.translation = adjusted_p
 	for tech in _techniques:

@@ -48,7 +48,7 @@ func enter(_msg := {}) -> void:
 func update(delta: float) -> void:
 	if not completed_path:
 		# Move the player character towards the next tile.
-		weight += delta * pc.stats.get_mvmt_speed()
+		weight += delta * Constants.MOVE_SPEED
 		weight = 1.0 if weight > 1.0 else weight
 		var li: Vector3 = start_point.linear_interpolate(next_point, weight)
 		pc.move_collisions(li)

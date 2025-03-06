@@ -68,7 +68,7 @@ func disconnect_area(tiles_to_disconnect: Array) -> void:
 			for neighbor in tile.get_adjacent():
 				if (
 						neighbor != null 
-						and not neighbor.get_map_index() in tiles_to_disconnect
+						and not neighbor in tiles_to_disconnect
 				):
 					disconnect_points(tile.get_map_index(), neighbor.get_map_index())
 

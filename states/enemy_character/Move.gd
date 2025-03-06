@@ -38,7 +38,7 @@ func enter(_msg := {}) -> void:
 # Corresponds to the `_process()` callback.
 func update(delta: float) -> void:
 	# Move the enemy character towards the next tile.
-	weight += delta * ec.stats.get_mvmt_speed()
+	weight += delta * Constants.MOVE_SPEED
 	weight = 1.0 if weight > 1.0 else weight
 	var li: Vector3 = start_point.linear_interpolate(
 		next_point,

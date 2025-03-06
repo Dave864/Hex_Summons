@@ -97,6 +97,7 @@ func _determine_action_chain() -> void:
 		enc.enemies,
 		enc.players
 	)
+	print(path)
 	
 	action_chain.push_front([EnemyCharacterState.MOVE, path])
 	# Pause for a little bit to give the EncounterUI a chance to get ready.
