@@ -18,6 +18,8 @@ signal player_turn_ended(player)
 # warning-ignore:unused_signal
 signal enemy_turn_started(enemy)
 # warning-ignore:unused_signal
+signal enemy_actions_required()
+# warning-ignore:unused_signal
 signal enemy_actions_confirmed(action_chain)
 # warning-ignore:unused_signal
 signal enemy_turn_ended(enemy)

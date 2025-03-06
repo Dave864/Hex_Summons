@@ -13,8 +13,9 @@ func enter(_msg := {}) -> void:
 		SignalBus,
 		"enemy_actions_confirmed",
 		self,
-		"_on_SignalBus_on_enemy_actions_confirmed"
+		"_on_SignalBus_enemy_actions_confirmed"
 	)
+	SignalBus.emit_signal("enemy_actions_required")
 
 
 # Corresponds to the `_process()` callback.

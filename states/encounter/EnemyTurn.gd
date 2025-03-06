@@ -21,6 +21,13 @@ var movement_range: Array = []
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	current_character = enc.get_current_character()
+	movement_range = current_character.stats.get_movement_area()
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"enemy_actions_required",
+		self,
+		"_on_SignalBus_enemy_actions_required"
+	)
 	SignalBus.emit_signal("enemy_turn_started", current_character)
 
 
@@ -34,6 +41,11 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
+	SignalBus.disconnect(
+		"enemy_actions_required",
+		self,
+		"_on_SignalBus_enemy_actions_required"
+	)
 	enc.progress_initiative()
 
 
@@ -44,6 +56,10 @@ func _ready_connect_signals() -> void:
 		self,
 		"_on_SignalBus_enemy_turn_ended"
 	)
+
+
+func _on_SignalBus_enemy_actions_required() -> void:
+	_determine_action_chain()
 
 
 func _on_SignalBus_enemy_turn_ended(_enemy: EnemyCharacter) -> void:
@@ -68,18 +84,22 @@ func _determine_action_chain() -> void:
 		var p_data: Array = [
 			p, 
 			enc.hex_map.calculate_distance(
-				current_character.get_index_at(),
-				p.get_index_at()
+				current_character.get_map_index_at(),
+				p.get_map_index_at()
 			)
 		]
 		player_distances.append(p_data)
 	
 	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
-	var path: PoolVector3Array = enc.hex_map.get_point_path_toward(
-		current_character.get_index_at(), 
-		player_distances[0][0].get_map_index_at()
+	var path: PoolVector3Array = enc.hex_map.get_point_path_toward_for_character(
+		current_character, 
+		player_distances[0][0].get_map_index_at(),
+		enc.enemies,
+		enc.players
 	)
+	
 	action_chain.push_front([EnemyCharacterState.MOVE, path])
 	# Pause for a little bit to give the EncounterUI a chance to get ready.
 	# Workaround for bug where not moving the player causes the UI to not appear.
 	yield(get_tree().create_timer(0.1), "timeout")
+	SignalBus.emit_signal("enemy_actions_confirmed", action_chain)
