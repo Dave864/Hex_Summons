@@ -31,9 +31,9 @@ func _init(hex_map_tiles: Array, x_count: int, z_count: int) -> void:
 			TODO: weight will need to be updated when different tile types
 			are eventually created
 			"""
-			add_point(tile.get_index(), tile.character_position(), 1.0)
+			add_point(tile.get_map_index(), tile.character_position(), 1.0)
 	
-	_reconnect_nodes(hex_map_tiles)
+	reconnect_area(hex_map_tiles)
 
 
 ## Get the indices of the tiles that are within movement range of a character.
@@ -125,40 +125,40 @@ func _init(hex_map_tiles: Array, x_count: int, z_count: int) -> void:
 #	return tile_indices
 
 
-# Determines the path to the point within an area closest to the start.
-func get_point_path_toward(
-	start_id: int,
-	dest_id: int,
-	movement_area: Array = []
-) -> PoolVector3Array:
-	# reenable destination tile to allow a path to be found when target tile 
-	# has an opponent.
-	set_point_disabled(dest_id, false)
-	
-	var tile_indices: PoolIntArray = []
-	tile_indices.resize(movement_area.size())
-	for t in movement_area.size():
-		tile_indices[t] = movement_area[t].get_index()
-	
-	var true_dest_id: int = dest_id
-	while true:
-		var path_to_dest: PoolIntArray = get_id_path(start_id, dest_id)
-		
-		# Determine the last point in the path that is within the movement 
-		# range. A tile occupied by an opponent is not considered within
-		# movement range.
-		var i: int = path_to_dest.size() - 1
-		while true and i > 0:
-#			var occupant: Character = _map_tiles[path_to_dest[i]].get_current_occupant()
-			if (
-				not path_to_dest[i] in movement_area
-#				or (occupant != null and occupant.get_type() != c.get_type())
-			):
-				true_dest_id = path_to_dest[i - 1]
-				i -= 1
-			else:
-				break
-		
+## Determines the path to the point within an area closest to the start.
+#func get_point_path_toward(
+#	start_id: int,
+#	dest_id: int,
+#	movement_area: Array = []
+#) -> PoolVector3Array:
+#	# reenable destination tile to allow a path to be found when target tile 
+#	# has an opponent.
+#	set_point_disabled(dest_id, false)
+#
+#	var tile_indices: PoolIntArray = []
+#	tile_indices.resize(movement_area.size())
+#	for t in movement_area.size():
+#		tile_indices[t] = movement_area[t].get_map_index()
+#
+#	var true_dest_id: int = dest_id
+#	while true:
+#		var path_to_dest: PoolIntArray = get_id_path(start_id, dest_id)
+#
+#		# Determine the last point in the path that is within the movement 
+#		# range. A tile occupied by an opponent is not considered within
+#		# movement range.
+#		var i: int = path_to_dest.size() - 1
+#		while true and i > 0:
+##			var occupant: Character = _map_tiles[path_to_dest[i]].get_current_occupant()
+#			if (
+#				not path_to_dest[i] in movement_area
+##				or (occupant != null and occupant.get_type() != c.get_type())
+#			):
+#				true_dest_id = path_to_dest[i - 1]
+#				i -= 1
+#			else:
+#				break
+#
 #		# Check if the true destination, the last tile in the available move, is
 #		# occupied by an ally other than itself. Disable that tile and recalculate
 #		# the shortest path if so.
@@ -171,17 +171,17 @@ func get_point_path_toward(
 #			set_point_disabled(true_dest_id, true)
 #		else:
 #			break
-	
-	_disconnect_area(movement_area)
-	var point_path: PoolVector3Array = get_point_path(start_id, true_dest_id)
-	_full_reset(movement_area)
-	
-	return point_path
+#
+#	_disconnect_area(movement_area)
+#	var point_path: PoolVector3Array = get_point_path(start_id, true_dest_id)
+#	_full_reset(movement_area)
+#
+#	return point_path
 
 
-# Calculates the distance from a given start to a specified destination.
-func calculate_distance(start_id: int, dest_id: int) -> int:
-	return get_id_path(start_id, dest_id).size()
+## Calculates the distance from a given start to a specified destination.
+#func calculate_distance(start_id: int, dest_id: int) -> int:
+#	return get_id_path(start_id, dest_id).size()
 
 
 ## Get the map section that is in a specified "radius" from a given point.
@@ -214,22 +214,22 @@ func calculate_distance(start_id: int, dest_id: int) -> int:
 #	return visited.keys()
 
 
-## Get the area that can be reached in a specific map section starting from a
-## given point in said section. This takes into account the tile heights.
-## Will return an empty array if the start tile is not in the map section.
-#func get_traversable_tiles(start_tile: int, movement: int, map_section: Array) -> Array:
-#	var tiles_in_range: Array = []
-#	_disconnect_area(map_section)
-#	for tiles in map_section:
-#		var tile_index: int = tiles.get_index()
-#		var path: PoolIntArray = get_id_path(start_tile, tile_index)
-#		var total_distance: float = 0.0
-#		for i in range(1, path.size()):
-#			total_distance += _compute_cost(path[i - 1], path[i])
-#		if total_distance <= movement:
-#			tiles_in_range.append(tile_index)
-#	_reconnect_nodes()
-#	return tiles_in_range
+# Get the area that can be reached in a specific map section starting from a
+# given point in said section. This takes into account the tile heights.
+# Will return an empty array if the start tile is not in the map section.
+func get_traversable_tiles(start_tile: int, reach: int, map_section: Array) -> Array:
+	var tiles_in_range: Array = []
+	disconnect_area(map_section)
+	for tiles in map_section:
+		var tile_index: int = tiles.get_index()
+		var path: PoolIntArray = get_id_path(start_tile, tile_index)
+		var total_distance: float = 0.0
+		for i in range(1, path.size()):
+			total_distance += _compute_cost(path[i - 1], path[i])
+		if total_distance <= reach:
+			tiles_in_range.append(tile_index)
+	reconnect_area(map_section)
+	return tiles_in_range
 
 
 ## Helper function for get_cardinal_area. 
@@ -276,9 +276,8 @@ func calculate_distance(start_id: int, dest_id: int) -> int:
 #	_reconnect_nodes()
 
 
-# Helper for update_astar_disabled. Updates the astar disabled flag for the tiles
-# occupied by a specific character type.
-func _update_character_astar_disabled(characters: Array, disabled: bool) -> void:
+# Updates the astar disabled flag for the tiles occupied by the specified characters.
+func update_astar_disabled_for_characters(characters: Array, disabled: bool) -> void:
 	for c in characters:
 		set_point_disabled(c.get_index_at(), disabled)
 
@@ -286,12 +285,12 @@ func _update_character_astar_disabled(characters: Array, disabled: bool) -> void
 ## Update the disabled status of astar points to account for the specified
 ## character type. Points that have characters of the opposite type will
 ## be disabled, while all other points are enabled.
-#func _update_astar_disabled(active_character_type: int) -> void:
-#	_update_character_astar_disabled(
+#func update_astar_disabled(active_character_type: int) -> void:
+#	update_character_astar_disabled(
 #		_enemies, 
 #		active_character_type != Constants.MapOccupants.ENEMY
 #	)
-#	_update_character_astar_disabled(
+#	update_character_astar_disabled(
 #		_players, 
 #		active_character_type != Constants.MapOccupants.PLAYER
 #	)
@@ -299,39 +298,38 @@ func _update_character_astar_disabled(characters: Array, disabled: bool) -> void
 
 # Disconnects a part of a map from the rest. The part to disconnect is an array
 # of MapTiles.
-func _disconnect_area(tiles_to_disconnect: Array) -> void:
+func disconnect_area(tiles_to_disconnect: Array) -> void:
 	for tile in tiles_to_disconnect:
 		if tile.is_active():
 			for neighbor in tile.get_adjacent():
 				if (
 						neighbor != null 
-						and not neighbor.get_index() in tiles_to_disconnect
+						and not neighbor.get_map_index() in tiles_to_disconnect
 				):
-					disconnect_points(tile.get_index(), neighbor.get_index())
+					disconnect_points(tile.get_map_index(), neighbor.get_map_index())
 
 
-# Reestablish the connections in the astar map.
-func _reconnect_nodes(map_tiles: Array) -> void:
+# Fully reset the connection map for the given section of map.
+func full_reset(map_tiles: Array):
+	reconnect_area(map_tiles)
+	_reset_disabled(map_tiles)
+
+
+# Reestablish the connections in the astar map for the specified area.
+func reconnect_area(map_tiles: Array) -> void:
 	for tile in map_tiles:
 		if tile.is_active():
 			for neighbor in tile.get_adjacent():
 				# Connect non empty and active neighbors.
 				if neighbor != null and neighbor.is_active():
-					connect_points(tile.get_index(), neighbor.get_index())
+					connect_points(tile.get_map_index(), neighbor.get_map_index())
 
 
-# Reset the disabled flag for all connections in the astar map.
+# Reset the disabled flag for the specified connections in the astar map.
 func _reset_disabled(map_tiles: Array) -> void:
 	for tile in map_tiles:
 		if tile.is_active():
-			set_point_disabled(tile.get_index(), false)
-
-
-# Fully reset the connection map. This will reestablish all connections and
-# reenable all nodes.
-func _full_reset(map_tiles: Array):
-	_reconnect_nodes(map_tiles)
-	_reset_disabled(map_tiles)
+			set_point_disabled(tile.get_map_index(), false)
 
 
 # Virtual Astar function. Called when computing the cost between two

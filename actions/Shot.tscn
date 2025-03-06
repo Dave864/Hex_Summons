@@ -7,8 +7,11 @@
 [node name="Shot" type="Node"]
 script = ExtResource( 2 )
 
-[node name="AreaRange" parent="." instance=ExtResource( 1 )]
+[node name="AreaPoint" type="Position3D" parent="."]
+
+[node name="AreaRange" parent="AreaPoint" instance=ExtResource( 1 )]
 collision_layer = 32
+radius = 3
 
 [node name="EmissionPoint" parent="." instance=ExtResource( 3 )]
 

@@ -21,13 +21,7 @@ var movement_range: Array = []
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	current_character = enc.get_current_character()
-	# Send the Enemy state machine the details it needs to figure out what to do.
-	SignalBus.emit_signal(
-		"enemy_turn_started",
-		current_character,
-		enc.players,
-		enc.hm_astar
-	)
+	SignalBus.emit_signal("enemy_turn_started", current_character)
 
 
 # Corresponds to the `_process()` callback.
@@ -73,7 +67,7 @@ func _determine_action_chain() -> void:
 	for p in enc.players:
 		var p_data: Array = [
 			p, 
-			enc.hex_map.hm_astar.calculate_distance(
+			enc.hex_map.calculate_distance(
 				current_character.get_index_at(),
 				p.get_index_at()
 			)
@@ -81,7 +75,7 @@ func _determine_action_chain() -> void:
 		player_distances.append(p_data)
 	
 	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
-	var path: PoolVector3Array = enc.hex_map.hm_astar.get_point_path_toward(
+	var path: PoolVector3Array = enc.hex_map.get_point_path_toward(
 		current_character.get_index_at(), 
 		player_distances[0][0].get_map_index_at()
 	)

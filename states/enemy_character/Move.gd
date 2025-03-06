@@ -44,12 +44,7 @@ func update(delta: float) -> void:
 		next_point,
 		weight
 	)
-	
-	# Only move the sprite up and down to allow collision shapes to work
-	# properly.
-	ec.translation = Vector3(li.x, ec.translation.y, li.z)
-	li.y += 0.15
-	ec.character_sprite.set_global_translation(li)
+	ec.move_collisions(li)
 	
 	# When finished moving to next tile, check to see if path has been fully
 	# traversed. Move to the `Wait` state when path has been fully traversed.

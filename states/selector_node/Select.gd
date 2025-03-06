@@ -69,9 +69,6 @@ func _handle_joystick_input() -> void:
 		"ui_selector_u"
 	)
 	
-	#  /\*
-	# |  |
-	#  \/
 	# Move to the upper-right neighbor
 	if (
 		dir_vec.x > Constants.HV_0_COORD.x
@@ -79,9 +76,6 @@ func _handle_joystick_input() -> void:
 		and dir_vec.y > 0.0
 	):
 		_resolve_joystick_direction(MapTile.NeighborPosition.UPPER_RIGHT)
-	#  /\
-	# |  |*
-	#  \/
 	# Move to the true-right neighbor
 	elif (
 		dir_vec.x > 0.0
@@ -89,9 +83,6 @@ func _handle_joystick_input() -> void:
 		and dir_vec.y > Constants.HV_2_COORD.y
 	):
 		_resolve_joystick_direction(MapTile.NeighborPosition.RIGHT)
-	#  /\
-	# |  |
-	#  \/*
 	# Move to the bottom-right neighbor
 	elif(
 		dir_vec.x > Constants.HV_3_COORD.x
@@ -99,9 +90,6 @@ func _handle_joystick_input() -> void:
 		and dir_vec.y < 0.0
 	):
 		_resolve_joystick_direction(MapTile.NeighborPosition.BOTTOM_RIGHT)
-	#  /\
-	# |  |
-	# *\/
 	# Move to the botton-left neighbor
 	elif(
 		dir_vec.x > Constants.HV_4_COORD.x
@@ -109,9 +97,6 @@ func _handle_joystick_input() -> void:
 		and dir_vec.y < 0.0
 	):
 		_resolve_joystick_direction(MapTile.NeighborPosition.BOTTOM_LEFT)
-	#   /\
-	# *|  |
-	#   \/
 	# Move to the true-left neighbor
 	elif(
 		dir_vec.x < 0.0
@@ -119,9 +104,6 @@ func _handle_joystick_input() -> void:
 		and dir_vec.y < Constants.HV_5_COORD.y
 	):
 		_resolve_joystick_direction(MapTile.NeighborPosition.LEFT)
-	# */\
-	# |  |
-	#  \/
 	# Move to the upper-left neighbor
 	elif(
 		dir_vec.x < Constants.HV_0_COORD.x
@@ -145,8 +127,8 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		selector.snap_to_position 
 		and map_tile.is_active() 
 		and (
-			map_tile.get_selection_type() == MapTile.SelectionType.RANGE
-			or map_tile.get_selection_type() == MapTile.SelectionType.PLAYER
+			map_tile.get_selection_type() == HexHighlighter.Option.RANGE
+			or map_tile.get_selection_type() == HexHighlighter.Option.PLAYER
 		)
 	):
 		selector.snap_position = map_tile.character_position()

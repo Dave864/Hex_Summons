@@ -31,10 +31,6 @@ func _ready_connect_signals() -> void:
 
 
 # Hit when the enemy character is selected to take its turn.
-func _on_SignalBus_enemy_turn_started(
-	enemy: EnemyCharacter,
-	players: Array,
-	range_finder: HexMapAStar
-) -> void:
+func _on_SignalBus_enemy_turn_started(enemy: EnemyCharacter) -> void:
 	if enemy.name == ec.name:
-		state_machine.transition_to(THINK, {"hm_astar": range_finder, "players": players})
+		state_machine.transition_to(THINK)

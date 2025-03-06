@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Area",
 "class": "AreaRange",
 "language": "GDScript",
-"path": "res://actions/range_type/area_range.gd"
+"path": "res://range_type/area_range.gd"
 }, {
 "base": "Object",
 "class": "ArraySorters",
@@ -32,17 +32,32 @@ _global_script_classes=[ {
 "base": "AreaRange",
 "class": "CardinalRange",
 "language": "GDScript",
-"path": "res://actions/range_type/cardinal_range.gd"
+"path": "res://range_type/cardinal_area.gd"
 }, {
-"base": "Area",
+"base": "Spatial",
 "class": "Character",
 "language": "GDScript",
 "path": "res://character/character.gd"
+}, {
+"base": "Node",
+"class": "CharacterStats",
+"language": "GDScript",
+"path": "res://stats/character_stats.gd"
 }, {
 "base": "VBoxContainer",
 "class": "CharacterSummary",
 "language": "GDScript",
 "path": "res://user_interface/encounter/test_labels/CharacterSummary/character_summary.gd"
+}, {
+"base": "AreaRange",
+"class": "ColumnArea",
+"language": "GDScript",
+"path": "res://range_type/column_area.gd"
+}, {
+"base": "AreaRange",
+"class": "ConeArea",
+"language": "GDScript",
+"path": "res://range_type/cone_area.gd"
 }, {
 "base": "Object",
 "class": "Constants",
@@ -59,10 +74,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://user_interface/encounter/DisplayPanel/display_panel.gd"
 }, {
+"base": "Stat",
+"class": "ElementalStat",
+"language": "GDScript",
+"path": "res://stats/elemental_stat.gd"
+}, {
 "base": "Position3D",
 "class": "EmissionPoint",
 "language": "GDScript",
-"path": "res://actions/range_type/emmision_point.gd"
+"path": "res://range_type/emission_point.gd"
 }, {
 "base": "Node",
 "class": "Encounter",
@@ -99,6 +119,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://utils/error_util.gd"
 }, {
+"base": "MeshInstance",
+"class": "HexHighlighter",
+"language": "GDScript",
+"path": "res://hex_map/hex_highlighter.gd"
+}, {
 "base": "Spatial",
 "class": "HexMap",
 "language": "GDScript",
@@ -107,7 +132,7 @@ _global_script_classes=[ {
 "base": "AStar",
 "class": "HexMapAStar",
 "language": "GDScript",
-"path": "res://utils/hex_map_astar.gd"
+"path": "res://hex_map/hex_map_astar.gd"
 }, {
 "base": "HBoxContainer",
 "class": "InitiativeTracker",
@@ -139,10 +164,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://states/player_character/player_character_state.gd"
 }, {
-"base": "AreaRange",
-"class": "RingRange",
+"base": "Node",
+"class": "PlayerClass",
 "language": "GDScript",
-"path": "res://actions/range_type/ring_range.gd"
+"path": "res://character/player_classes/player_class.gd"
+}, {
+"base": "AreaRange",
+"class": "RingArea",
+"language": "GDScript",
+"path": "res://range_type/ring_area.gd"
 }, {
 "base": "Area",
 "class": "Selector",
@@ -153,6 +183,11 @@ _global_script_classes=[ {
 "class": "SelectorState",
 "language": "GDScript",
 "path": "res://states/selector_node/selector_state.gd"
+}, {
+"base": "Node",
+"class": "Stat",
+"language": "GDScript",
+"path": "res://stats/stat.gd"
 }, {
 "base": "Node",
 "class": "State",
@@ -181,10 +216,14 @@ _global_script_class_icons={
 "ArraySorters": "",
 "CardinalRange": "",
 "Character": "",
+"CharacterStats": "",
 "CharacterSummary": "",
+"ColumnArea": "",
+"ConeArea": "",
 "Constants": "",
 "CoreStats": "",
 "DisplayPanel": "",
+"ElementalStat": "",
 "EmissionPoint": "",
 "Encounter": "",
 "EncounterState": "",
@@ -193,6 +232,7 @@ _global_script_class_icons={
 "EnemyCharacter": "",
 "EnemyCharacterState": "",
 "ErrorUtil": "",
+"HexHighlighter": "",
 "HexMap": "",
 "HexMapAStar": "",
 "InitiativeTracker": "",
@@ -201,9 +241,11 @@ _global_script_class_icons={
 "MousePosition": "",
 "PlayerCharacter": "",
 "PlayerCharacterState": "",
-"RingRange": "",
+"PlayerClass": "",
+"RingArea": "",
 "Selector": "",
 "SelectorState": "",
+"Stat": "",
 "State": "",
 "StateMachine": "",
 "SubOptions": "",
@@ -298,7 +340,9 @@ ui_selector_d={
 3d_physics/layer_2="map"
 3d_physics/layer_3="player"
 3d_physics/layer_4="mob"
-3d_physics/layer_5="action"
+3d_physics/layer_5="move_range"
+3d_physics/layer_6="action_range"
+3d_physics/layer_7="effect_range"
 
 [mono]
 

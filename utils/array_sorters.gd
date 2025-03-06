@@ -7,7 +7,7 @@ Collection of sorting methods.
 
 # Sorts characters by their agility. Used when determining initiative order.
 static func sort_character_initiative(a: Character, b: Character) -> bool:
-	return a.stats.get_agl() > b.stats.get_agl()
+	return a.stats.get_agility() > b.stats.get_agility()
 
 
 # Sorts characters by their distances in ascending order.
@@ -21,6 +21,6 @@ static func sort_distance_to_character_asc(c1: Array, c2: Array) -> bool:
 # Sorts characters by their distances in descending order.
 # Takes in two arrays, each of which contains two items.
 # The first element is the character.
-# The seconf element is the distance.
+# The second element is the distance.
 static func sort_distance_to_character_desc(c1: Array, c2: Array) -> bool:
 	return not sort_distance_to_character_asc(c1, c2)

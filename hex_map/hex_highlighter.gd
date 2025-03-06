@@ -15,6 +15,8 @@ enum Option {
 	TARGET,
 }
 
+var _hl_option: int setget set_option, get_option
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -44,6 +46,10 @@ func set_option(hl_option: int) -> void:
 			show()
 		_:
 			hide()
+
+
+func get_option() -> int:
+	return _hl_option
 
 
 # Sets the transparency value of the highlighter. Accepts a value between 0 and 1.0.

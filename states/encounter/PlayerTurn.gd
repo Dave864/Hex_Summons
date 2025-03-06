@@ -18,8 +18,8 @@ var action_range: Dictionary = {"type": null, "tiles": null}
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	movement_range = enc.hm_astar.get_move_area(enc.get_current_character())
-	enc.hex_map.highlight_character_movement(movement_range, enc.get_current_character())
+	movement_range = enc.get_current_character().stats.get_movement_area()
+	enc.hex_map.highlight_player_movement(movement_range, enc.get_current_character())
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 	
 	# This signal is used by other states and will be disconnected to avoid
@@ -58,9 +58,9 @@ func _ready_connect_signals() -> void:
 
 
 func _on_Selector_move_tile_selected(tile: MapTile) -> void:
-	var data: PoolVector3Array = enc.hm_astar.get_point_path_toward(
-		enc.get_current_character(),
-		tile.get_index(),
+	var data: PoolVector3Array = enc.hex_map.get_point_path_toward(
+		enc.get_current_character().get_map_index_at(),
+		tile.get_map_index(),
 		movement_range
 	)
 	SignalBus.emit_signal("tile_selected", data)

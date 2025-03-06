@@ -19,6 +19,8 @@ var _dead_range: AreaRange
 # The area specifying the possible tiles for effect emmision.
 var _area_range: AreaRange
 
+# The point the area range collisions are located at.
+onready var area_pt: Position3D = $AreaPoint
 # The area specifying the tiles affected by the effect.
 onready var effect_range: AreaRange = $EmissionPoint/EffectRange
 # The point the effect is emitted from.
@@ -27,11 +29,12 @@ onready var emission_pt: EmissionPoint = $EmissionPoint
 
 func _ready() -> void:
 	# No DeadRange node indicates no dead range.
-	_dead_range = get_node_or_null("DeadRange")
-	_area_range = get_node("AreaRange")
+	_dead_range = get_node_or_null("AreaPoint/DeadRange")
+	_area_range = get_node("AreaPoint/AreaRange")
 
 
 func _process(_delta) -> void:
+	# Get the tiles in the area range, accounting for the dead range.
 	area_tiles.clear()
 	area_tiles = _area_range.tile_ids.duplicate(true)
 	if _dead_range:

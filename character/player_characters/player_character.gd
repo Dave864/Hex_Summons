@@ -22,6 +22,8 @@ func _ready() -> void:
 	_techniques = _player_class.techniques
 	_spells = _player_class.spells
 	stats = _player_class.stats
+	_movement_node = $Class/Stats/Movement
+	_movement_node.translation = Vector3(translation.x, 0.0, translation.z)
 
 
 # Get the techniques associated with the character
@@ -37,3 +39,15 @@ func get_spells() -> Array:
 # Returns the type of the character, PLAYER.
 func get_type() -> int:
 	return Constants.MapOccupants.PLAYER
+
+
+# Virtual function. Moves all collision objects, player position, movement node,
+# and all action collisions.
+func move_collisions(p: Vector3) -> void:
+	var adjusted_p: Vector3 = Vector3(p.x, 0.0, p.z)
+	_movement_node.translation = adjusted_p
+	for tech in _techniques:
+		tech.area_pt.translation = adjusted_p
+	for spell in _spells:
+		spell.area_pt.translation = adjusted_p
+	

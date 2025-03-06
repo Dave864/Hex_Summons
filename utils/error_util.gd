@@ -73,3 +73,10 @@ static func connect_signal(
 				target.name,
 				function_name
 			)
+
+
+# The formatted error string for when a required stat has not been assigned to
+# a specified node.
+static func missing_stat_for_node(node_name: String, stat_name: String) -> void:
+	var message_template: String = "ERROR: %s node is missing from the %s node."
+	printerr(message_template % [node_name, stat_name])

@@ -51,12 +51,7 @@ func update(delta: float) -> void:
 		weight += delta * pc.stats.get_mvmt_speed()
 		weight = 1.0 if weight > 1.0 else weight
 		var li: Vector3 = start_point.linear_interpolate(next_point, weight)
-		
-		# Only move the sprite up and down to allow collision shapes to work
-		# properly.
-		pc.translation = Vector3(li.x, pc.translation.y, li.z)
-		li.y += 0.15
-		pc.character_sprite.set_global_translation(li)
+		pc.move_collisions(li)
 		
 		# When finished moving to next tile, check to see if path has been fully
 		# traversed. Move to the 'Standby' state when path has been fully traversed.
