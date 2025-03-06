@@ -86,69 +86,86 @@ func calculate_distance(start_id: int, dest_id: int) -> int:
 func get_point_path_toward(
 	start_id: int,
 	dest_id: int,
-	movement_area: Array = []
+	movement_area: Array
 ) -> PoolVector3Array:
 	# reenable destination tile to allow a path to be found when target tile 
 	# has an opponent.
 	_hm_astar.set_point_disabled(dest_id, false)
 	
-	var tile_indices: PoolIntArray = []
-	tile_indices.resize(movement_area.size())
-	for t in movement_area.size():
-		tile_indices[t] = movement_area[t].get_map_index()
-	
 	var true_dest_id: int = dest_id
-	while true:
-		var path_to_dest: PoolIntArray = _hm_astar.get_id_path(start_id, dest_id)
-		
-		# Determine the last point in the path that is within the movement 
-		# range. A tile occupied by an opponent is not considered within
-		# movement range.
-		var i: int = path_to_dest.size() - 1
-		while true and i > 0:
-#			var occupant: Character = _map_tiles[path_to_dest[i]].get_current_occupant()
-			if (
-				not path_to_dest[i] in movement_area
-#				or (occupant != null and occupant.get_type() != c.get_type())
-			):
-				true_dest_id = path_to_dest[i - 1]
-				i -= 1
-			else:
-				break
-		
-#		# Check if the true destination, the last tile in the available move, is
-#		# occupied by an ally other than itself. Disable that tile and recalculate
-#		# the shortest path if so.
-#		var dest_occupant: Character = _map_tiles[true_dest_id].get_current_occupant()
-#		if (
-#			dest_occupant != null
-#			and dest_occupant.name != c.name
-#			and dest_occupant.get_type() == c.get_type()
-#		):
-#			set_point_disabled(true_dest_id, true)
-#		else:
-#			break
+	var path_to_dest: PoolIntArray = _hm_astar.get_id_path(start_id, dest_id)
 	
-	_hm_astar.disconnect_area(movement_area)
+	# Determine the last point in the path that is within the movement range.
+	for i in range(path_to_dest.size() - 1, 0, -1):
+		if (not path_to_dest[i] in movement_area):
+			true_dest_id = path_to_dest[i - 1]
+	
+	_hm_astar.disconnect_area(_get_tiles_from_ids(movement_area))
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(start_id, true_dest_id)
 	_hm_astar.full_reset(movement_area)
 	
 	return point_path
 
 
-## Determines the path to the point within a character's movement area.
-#func get_point_path_toward_for_character(
-#	character: Character,
-#	dest_id: int
-#) -> PoolVector3Array:
-#	var movement_area: Array = character
-#	return PoolVector3Array[]
+# Determines the path to the point within a character's movement area.
+func get_point_path_toward_for_character(
+	character: Character,
+	dest_id: int,
+	enemies: Array,
+	players: Array
+) -> PoolVector3Array:
+	var movement_area: Array = character.stats.get_movement_area()
+	var start_id: int = character.get_map_index_at()
+	var true_dest_id: int = dest_id
+	
+	# Disable connection points of the opposite character type to prevent character
+	# from being able to move into those spaces
+	update_astar_disabled_for_characters(
+		enemies,
+		character.get_type() != Constants.MapOccupants.ENEMY
+	)
+	update_astar_disabled_for_characters(
+		players,
+		character.get_type() != Constants.MapOccupants.PLAYER
+	)
+	
+	while true:
+		var path_to_dest: PoolIntArray = _hm_astar.get_id_path(start_id, dest_id)
+		
+		# Determine the last point in the path that is within the movement 
+		# range. A tile occupied by an opponent is not considered within
+		# movement range.
+		for i in range(path_to_dest.size() - 1, 0, -1):
+			var occupant: Character = _map_tiles[path_to_dest[i]].get_current_occupant()
+			if (
+				not path_to_dest[i] in movement_area
+				or (occupant != null and occupant.get_type() != character.get_type())
+			):
+				true_dest_id = path_to_dest[i - 1]
+	
+		# Check if the true destination, the last tile in the available move, is
+		# occupied by an ally other than itself. If so, disable that tile and 
+		# recalculate the shortest path.
+		var dest_occupant: Character = _map_tiles[true_dest_id].get_current_occupant()
+		if (
+			dest_occupant != null
+			and dest_occupant.name != character.name
+			and dest_occupant.get_type() == character.get_type()
+		):
+			_hm_astar.set_point_disabled(true_dest_id, true)
+		else:
+			break
+	
+	_hm_astar.disconnect_area(_get_tiles_from_ids(movement_area))
+	var point_path: PoolVector3Array = _hm_astar.get_point_path(start_id, true_dest_id)
+	_hm_astar.full_reset(_map_tiles)
+	return point_path
 
 
 # Updates the astar disabled flag for the tiles occupied by the specified characters.
 func update_astar_disabled_for_characters(characters: Array, disabled: bool) -> void:
 	for c in characters:
-		_hm_astar.set_point_disabled(c.get_index_at(), disabled)
+		_hm_astar.set_point_disabled(c.get_map_index_at(), disabled)
 
 
 # Creates a Tiles node if not already present.
@@ -174,3 +191,11 @@ func _create_floor_mesh() -> void:
 		_floor_mesh_node.translation.y = -Constants.HEX_TILE_UNIT_HEIGHT
 	else:
 		_floor_mesh_node = $FloorMesh
+
+
+# Gets the MapTiles of the specified ids.
+func _get_tiles_from_ids(ids: Array) -> Array:
+	var tiles: Array = []
+	for i in ids:
+		tiles.append(_map_tiles[i])
+	return tiles
