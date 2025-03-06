@@ -54,6 +54,7 @@ func handle_input(_event: InputEvent) -> void:
 	# Signal that the currently highlighted map tile was selected
 	# and move to the 'Pause' state.
 	if _event.is_action_pressed("ui_selector_select"):
+		print(selector.tile)
 		selector.emit_signal("move_tile_selected", selector.tile)
 		state_machine.transition_to(PAUSE)
 	
