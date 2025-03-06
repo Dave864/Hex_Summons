@@ -17,6 +17,8 @@ radius = 0.001
 script = ExtResource( 2 )
 
 [node name="Position" type="Area" parent="."]
+collision_layer = 8
+collision_mask = 2
 
 [node name="Sprite3D" type="Sprite3D" parent="Position"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.15, 0 )
