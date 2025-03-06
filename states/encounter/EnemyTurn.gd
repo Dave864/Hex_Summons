@@ -92,12 +92,12 @@ func _determine_action_chain() -> void:
 	
 	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
 	var path: PoolVector3Array = enc.hex_map.get_point_path_toward_for_character(
-		current_character, 
+		current_character,
+		movement_range,
 		player_distances[0][0].get_map_index_at(),
 		enc.enemies,
 		enc.players
 	)
-	print(path)
 	
 	action_chain.push_front([EnemyCharacterState.MOVE, path])
 	# Pause for a little bit to give the EncounterUI a chance to get ready.

@@ -98,7 +98,7 @@ func get_point_path_toward(
 	
 	_hm_astar.disconnect_area(_get_tiles_from_ids(movement_area))
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(start_id, true_dest_id)
-	_hm_astar.full_reset(movement_area)
+	_hm_astar.full_reset(_get_tiles_from_ids(movement_area))
 	
 	return point_path
 
@@ -106,15 +106,16 @@ func get_point_path_toward(
 # Determines the path to the point within a character's movement area.
 func get_point_path_toward_for_character(
 	character: Character,
+	movement_area: Array,
 	dest_id: int,
 	enemies: Array,
 	players: Array
 ) -> PoolVector3Array:
-	var movement_area: Array = _hm_astar.get_traversable_tiles(
-		character.get_map_index_at(),
-		character.stats.get_movement_range(),
-		_get_tiles_from_ids(character.stats.get_movement_area())
-	)
+#	var movement_area: Array = _hm_astar.get_traversable_tiles(
+#		character.get_map_index_at(),
+#		character.stats.get_movement_range(),
+#		_get_tiles_from_ids(character.stats.get_movement_area())
+#	)
 	var start_id: int = character.get_map_index_at()
 	var true_dest_id: int = dest_id
 	

@@ -110,7 +110,7 @@ func set_selection_type(value: int) -> void:
 
 # Get the value of the selectable flag.
 func get_selection_type() -> int:
-	return $HexHighlighter.get_option()
+	return _selection_type
 
 
 # Gets the current character occupying this tile.

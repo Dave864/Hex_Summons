@@ -58,10 +58,12 @@ func _ready_connect_signals() -> void:
 
 
 func _on_Selector_move_tile_selected(tile: MapTile) -> void:
-	var data: PoolVector3Array = enc.hex_map.get_point_path_toward(
-		enc.get_current_character().get_map_index_at(),
+	var data: PoolVector3Array = enc.hex_map.get_point_path_toward_for_character(
+		enc.get_current_character(),
+		movement_range,
 		tile.get_map_index(),
-		movement_range
+		enc.enemies,
+		enc.players
 	)
 	SignalBus.emit_signal("tile_selected", data)
 
