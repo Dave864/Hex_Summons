@@ -110,6 +110,11 @@ func set_cur_health(val: int) -> void:
 	emit_signal("health_changed", _current_health)
 
 
+# Set current health to the maximum value.
+func max_cur_health() -> void:
+	_current_health = get_max_health()
+
+
 func get_cur_health() -> int:
 	return _current_health
 

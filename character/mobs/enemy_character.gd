@@ -8,6 +8,7 @@ Handles actions specific to enemy characters.
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	stats = $Stats
+	stats.max_cur_health()
 	_movement_node = $Stats/Movement
 	_movement_node.translation = Vector3(translation.x, 0.0, translation.z)
 

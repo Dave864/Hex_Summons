@@ -53,6 +53,10 @@ func _ready() -> void:
 	"""
 	
 	for p in players:
+		"""
+		TODO: Implement logic to load player stats from out of scene details.
+		"""
+		p.stats.max_cur_health()
 		ui.track_party_member(p)
 	
 	for e in enemies:
