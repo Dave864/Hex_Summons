@@ -1,3 +1,4 @@
+tool
 extends Node
 class_name CharacterStats
 """
@@ -23,40 +24,44 @@ const RES_WD: String = "ResistanceWind"
 
 var _level: int = 1 setget set_level, get_level
 var _movement_node: RingArea = null
+# Core stat values
 var _current_health: int = 0
 var _health_node: Stat = null
 var _attack_node: Stat = null
 var _defense_node: Stat = null
 var _agility_node: Stat = null
-# Magic values
+# Magic stat values
 var _magic_earth_node: ElementalStat = null
 var _magic_fire_node: ElementalStat = null
 var _magic_water_node: ElementalStat = null
 var _magic_wind_node: ElementalStat = null
-# Resistance values
+# Resistance stat values
 var _res_earth_node: ElementalStat = null
 var _res_fire_node: ElementalStat = null
 var _res_water_node: ElementalStat = null
 var _res_wind_node: ElementalStat = null
 
+# Referene to the scene tree root.
+onready var _root_node: Node = get_tree().edited_scene_root
+
 
 func _ready() -> void:
-	# Movement, health, attack, defense, and agility are all required stats for
-	# a character.
-	_movement_node = get_node(MOVEMENT)
-	_health_node = get_node(HEALTH)
-	_attack_node = get_node(ATTACK)
-	_defense_node = get_node(DEFENSE)
-	_agility_node = get_node(AGILITY)
-	# Magic and resistance are not strictly required for all characters.
-	_magic_earth_node = get_node_or_null(MAGIC_E)
-	_magic_fire_node = get_node_or_null(MAGIC_F)
-	_magic_water_node = get_node_or_null(MAGIC_WT)
-	_magic_wind_node = get_node_or_null(MAGIC_WD)
-	_res_earth_node = get_node_or_null(RES_E)
-	_res_fire_node = get_node_or_null(RES_F)
-	_res_water_node = get_node_or_null(RES_WT)
-	_res_wind_node = get_node_or_null(RES_WD)
+	_set_movement_node()
+	# Core stats.
+	_health_node = _set_stat_node(HEALTH)
+	_attack_node = _set_stat_node(ATTACK)
+	_defense_node = _set_stat_node(DEFENSE)
+	_agility_node = _set_stat_node(AGILITY)
+	# Magic stats.
+	_magic_earth_node = _set_elemental_stat_node(MAGIC_E, ElementalStat.Element.EARTH)
+	_magic_fire_node = _set_elemental_stat_node(MAGIC_F, ElementalStat.Element.FIRE)
+	_magic_water_node = _set_elemental_stat_node(MAGIC_WT, ElementalStat.Element.WATER)
+	_magic_wind_node = _set_elemental_stat_node(MAGIC_WD, ElementalStat.Element.WIND)
+	# Resistance stats.
+	_res_earth_node = _set_elemental_stat_node(RES_E, ElementalStat.Element.EARTH)
+	_res_fire_node = _set_elemental_stat_node(RES_F, ElementalStat.Element.FIRE)
+	_res_water_node = _set_elemental_stat_node(RES_WT, ElementalStat.Element.WATER)
+	_res_wind_node = _set_elemental_stat_node(RES_WD, ElementalStat.Element.WIND)
 
 
 func set_level(val: int) -> void:
@@ -110,27 +115,27 @@ func get_cur_health() -> int:
 
 
 func get_attack() -> int:
-	return _get_stat(_attack_node, ATTACK)
+	return _get_calculated_stat(_attack_node, ATTACK)
 
 
 func get_defense() -> int:
-	return _get_stat(_defense_node, DEFENSE)
+	return _get_calculated_stat(_defense_node, DEFENSE)
 
 
 func get_agility() -> int:
-	return _get_stat(_agility_node, AGILITY)
+	return _get_calculated_stat(_agility_node, AGILITY)
 
 
 func get_magic(type: int) -> int:
 	match type:
 		ElementalStat.Element.EARTH:
-			return _get_elemental_stat(_magic_earth_node)
+			return _get_calculated_elemental_stat(_magic_earth_node)
 		ElementalStat.Element.FIRE:
-			return _get_elemental_stat(_magic_fire_node)
+			return _get_calculated_elemental_stat(_magic_fire_node)
 		ElementalStat.Element.WATER:
-			return _get_elemental_stat(_magic_water_node)
+			return _get_calculated_elemental_stat(_magic_water_node)
 		ElementalStat.Element.WIND:
-			return _get_elemental_stat(_magic_wind_node)
+			return _get_calculated_elemental_stat(_magic_wind_node)
 		_:
 			return 0
 
@@ -138,13 +143,13 @@ func get_magic(type: int) -> int:
 func get_resistance(type: int) -> int:
 	match type:
 		ElementalStat.Element.EARTH:
-			return _get_elemental_stat(_res_earth_node)
+			return _get_calculated_elemental_stat(_res_earth_node)
 		ElementalStat.Element.FIRE:
-			return _get_elemental_stat(_res_fire_node)
+			return _get_calculated_elemental_stat(_res_fire_node)
 		ElementalStat.Element.WATER:
-			return _get_elemental_stat(_res_water_node)
+			return _get_calculated_elemental_stat(_res_water_node)
 		ElementalStat.Element.WIND:
-			return _get_elemental_stat(_res_wind_node)
+			return _get_calculated_elemental_stat(_res_wind_node)
 		_:
 			return 0
 
@@ -171,8 +176,42 @@ func get_all() -> Dictionary:
 	}
 
 
+# Assign the movement node or create it if not present.
+func _set_movement_node() -> void:
+	var move_node: RingArea = get_node_or_null(MOVEMENT)
+	if move_node == null and Engine.is_editor_hint():
+		var ring_area: PackedScene = load("res://range_type/RingArea.tscn")
+		_movement_node = ring_area.instance()
+		_movement_node.set_owner(_root_node)
+		add_child(_movement_node)
+	_movement_node = move_node
+
+
+# Assign the specified stat node or create it if not present.
+func _set_stat_node(name: String) -> Stat:
+	var s_node: Stat = get_node_or_null(name)
+	if s_node == null and Engine.is_editor_hint():
+		s_node = Stat.new()
+		s_node.name = name
+		add_child(s_node)
+		s_node.set_owner(_root_node)
+	return s_node
+
+
+# Assign the specified elemental stat node or create it if not present.
+func _set_elemental_stat_node(name: String, type: int) -> ElementalStat:
+	var es_node: ElementalStat = get_node_or_null(name)
+	if es_node == null and Engine.is_editor_hint():
+		es_node = ElementalStat.new()
+		es_node.name = name
+		es_node.type = type
+		add_child(es_node)
+		es_node.set_owner(_root_node)
+	return es_node
+
+
 # Obtains the calculated value for a given stat.
-func _get_stat(stat_node: Stat, stat_name: String) -> int:
+func _get_calculated_stat(stat_node: Stat, stat_name: String) -> int:
 	var v: int
 	if stat_node != null:
 		v = stat_node.base_value + (stat_node.growth_rate * _level)
@@ -182,7 +221,7 @@ func _get_stat(stat_node: Stat, stat_name: String) -> int:
 	return v
 
 
-func _get_elemental_stat(stat_node: ElementalStat) -> int:
+func _get_calculated_elemental_stat(stat_node: ElementalStat) -> int:
 	var v: int
 	v = stat_node.base_value + (stat_node.growth_rate * _level) if stat_node != null else 0
 	return v

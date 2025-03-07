@@ -74,7 +74,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://user_interface/encounter/DisplayPanel/display_panel.gd"
 }, {
-"base": "Stat",
+"base": "Node",
 "class": "ElementalStat",
 "language": "GDScript",
 "path": "res://stats/elemental_stat.gd"
