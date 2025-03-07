@@ -88,7 +88,7 @@ func get_movement_range() -> int:
 func get_movement_area() -> Array:
 	var area: Array
 	if _movement_node != null:
-		area = _movement_node.tile_ids
+		area = _movement_node.tile_ids.duplicate(true)
 	else:
 		ErrorUtil.missing_stat_for_node(get_parent().name, MOVEMENT)
 		area = []
