@@ -25,6 +25,7 @@ radial_segments = 6
 rings = 0
 
 [sub_resource type="SpatialMaterial" id=11]
+resource_local_to_scene = true
 
 [node name="MapTile" type="Area"]
 collision_layer = 2

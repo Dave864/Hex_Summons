@@ -122,9 +122,9 @@ func get_current_occupant() -> Character:
 func can_character_pass(character_type: int) -> bool:
 	match character_type:
 		Constants.MapOccupants.PLAYER:
-			return _occupant is PlayerCharacter or _occupant == null
+			return _occupant == null or _occupant.get_type() == Constants.MapOccupants.PLAYER
 		Constants.MapOccupants.ENEMY:
-			return _occupant is EnemyCharacter or _occupant == null
+			return _occupant == null or _occupant.get_type() == Constants.MapOccupants.ENEMY
 		_:
 			return true
 

@@ -65,6 +65,8 @@ func highlight_player_movement(
 		var tile: MapTile = _map_tiles[i]
 		if tile.get_current_occupant() == null:
 			tile.set_selection_type(HexHighlighter.Option.RANGE)
+		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
+			tile.set_selection_type(HexHighlighter.Option.NONE)
 		elif tile.get_current_occupant().name == pc.name:
 			tile.set_selection_type(HexHighlighter.Option.PLAYER)
 		else:
@@ -106,16 +108,19 @@ func get_point_path_toward(
 # Determines the path to the point within a character's movement area.
 func get_point_path_toward_for_character(
 	character: Character,
-	movement_area: Array,
 	dest_id: int,
 	enemies: Array,
-	players: Array
+	players: Array,
+	movement_area: Array = []
 ) -> PoolVector3Array:
-#	var movement_area: Array = _hm_astar.get_traversable_tiles(
-#		character.get_map_index_at(),
-#		character.stats.get_movement_range(),
-#		_get_tiles_from_ids(character.stats.get_movement_area())
-#	)
+	# Get the currently traversible tiles for the character if movement is not
+	# provided.
+	if movement_area.size() == 0:
+		movement_area = _hm_astar.get_traversable_tiles(
+			character.get_map_index_at(),
+			character.stats.get_movement_range(),
+			_get_tiles_from_ids(character.stats.get_movement_area())
+		)
 	var start_id: int = character.get_map_index_at()
 	var true_dest_id: int = dest_id
 	
@@ -168,6 +173,24 @@ func get_point_path_toward_for_character(
 func update_astar_disabled_for_characters(characters: Array, disabled: bool) -> void:
 	for c in characters:
 		_hm_astar.set_point_disabled(c.get_map_index_at(), disabled)
+
+
+# Get the area that can be reached by a character. Takes in an array of the
+# opposing characters for determining the tiles to disable.
+func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Array:
+	update_astar_disabled_for_characters(opponents, true)
+	var t_tiles: Array = _hm_astar.get_traversable_tiles(
+		c.get_map_index_at(),
+		c.stats.get_movement_range(),
+		_get_tiles_from_ids(c.stats.get_movement_area())
+	)
+	var opponent_tiles: Array = []
+	for oc in opponents:
+		opponent_tiles.append(_map_tiles[oc.get_map_index_at()])
+	# Reset connections and disabled tiles for next pathfinding calculation
+	_hm_astar.reconnect_area(opponent_tiles)
+	update_astar_disabled_for_characters(opponents, false)
+	return t_tiles
 
 
 # Creates a Tiles node if not already present.

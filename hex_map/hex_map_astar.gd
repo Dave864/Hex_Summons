@@ -99,28 +99,25 @@ func reset_disabled(map_tiles: Array) -> void:
 # Virtual Astar function. Called when computing the cost between two
 # connected points.
 func _compute_cost(u: int, v: int) -> float:
-	var height_diff: float = abs(_heights[v] - _heights[u])
-	# Height differences of 1 are seen as the same height
-	height_diff = 0.0 if height_diff <= 1.0 else height_diff
-	return _cube_dist(u, v) + height_diff
+	return _cube_dist(u, v)
 
 
 # Virtual Astar function. Called when estimating the cost between a point 
 # and the path's ending point.
 func _estimate_cost(u: int, v: int) -> float:
-	var height_diff: float = abs(_heights[v] - _heights[u])
-	# Height differences of 1 are seen as the same height
-	height_diff = 0.0 if height_diff <= 1.0 else height_diff
-	return min(0, _cube_dist(u, v) + height_diff - 1)
+	return min(0, _cube_dist(u, v) - 1)
 
 
 # Calculates the distance between two tiles based on their cube coordinates.
 # Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
 func _cube_dist(start_index: int, end_index: int) -> float:
+	var height_diff: float = abs(_heights[start_index] - _heights[end_index])
+	# Height differences of 1 are seen as the same height
+	height_diff = 0.0 if height_diff <= 1.0 else height_diff
 	var start_pos: Vector3 = _index_to_cube(start_index)
 	var end_pos: Vector3 = _index_to_cube(end_index)
 	var diff: Vector3 = start_pos - end_pos
-	return (abs(diff.x) + abs(diff.y) + abs(diff.z)) / 2.0
+	return (abs(diff.x) + abs(diff.y) + abs(diff.z) + abs(height_diff)) / 2.0
 
 
 # Get the cube coordinates of the tile a specified distance away from an origin

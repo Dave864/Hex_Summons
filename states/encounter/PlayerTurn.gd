@@ -10,7 +10,7 @@ player characters or all enemy characters are defeated.
 
 
 # The index of tiles that the player can move to.
-var movement_range: Array = []
+var movement_area: Array = []
 # The index of tiles in reach of an action. 
 var action_range: Dictionary = {"type": null, "tiles": null}
 
@@ -18,8 +18,11 @@ var action_range: Dictionary = {"type": null, "tiles": null}
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	movement_range = enc.get_current_character().stats.get_movement_area()
-	enc.hex_map.highlight_player_movement(movement_range, enc.get_current_character())
+	movement_area = enc.hex_map.get_traversible_tiles_for_character(
+		enc.get_current_character(),
+		enc.enemies
+	)
+	enc.hex_map.highlight_player_movement(movement_area, enc.get_current_character())
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 	
 	# This signal is used by other states and will be disconnected to avoid
@@ -60,10 +63,10 @@ func _ready_connect_signals() -> void:
 func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 	var data: PoolVector3Array = enc.hex_map.get_point_path_toward_for_character(
 		enc.get_current_character(),
-		movement_range,
 		tile.get_map_index(),
 		enc.enemies,
-		enc.players
+		enc.players,
+		movement_area
 	)
 	SignalBus.emit_signal("tile_selected", data)
 
