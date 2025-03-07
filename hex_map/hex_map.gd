@@ -84,6 +84,26 @@ func calculate_distance(start_id: int, dest_id: int) -> int:
 	return _hm_astar.get_id_path(start_id, dest_id).size()
 
 
+# Determines the path to the point wihtin a defines area for a player character.
+func get_point_path_for_player(
+	pc: PlayerCharacter,
+	dest_id: int,
+	enemies: Array,
+	movement_area: Array
+) -> PoolVector3Array:	
+	# Disable connection points of the opposite character type to prevent character
+	# from being able to move into those spaces
+	update_astar_disabled_for_characters(enemies, true)
+	
+	_hm_astar.disconnect_area(_get_tiles_from_ids(movement_area))
+	var point_path: PoolVector3Array = _hm_astar.get_point_path(
+		pc.get_map_index_at(),
+		dest_id
+	)
+	_hm_astar.full_reset(_get_tiles_from_ids(movement_area))
+	return point_path
+
+
 # Determines the path to the point within an area closest to the start.
 func get_point_path_toward(
 	start_id: int,
