@@ -14,7 +14,7 @@ var _current_index: int = -1 setget , get_map_index_at
 var _movement_node: RingArea = null
 
 # Reference to the Character sprite.
-onready var character_sprite: Sprite3D = $Position/Sprite3D
+onready var character_sprite: Sprite3D = $Sprite3D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -46,13 +46,13 @@ func move_collisions(p: Vector3) -> void:
 	_movement_node.translation = Vector3(p.x, 0.0, p.z)
 
 
-func _on_Position_area_entered(map_tile) -> void:
+func _on_Character_area_entered(map_tile) -> void:
 	_current_index = map_tile.get_index()
 	# If the creature's start position has not been set, move it to the position
 	# of the tile it in the area of.
 	if !_start_set:
 		_start_set = true
-		var tile_pos: Vector3 = map_tile.translation
-		move_collisions(tile_pos)
-		tile_pos.y = Constants.HEX_TILE_UNIT_HEIGHT * map_tile.height + 0.15
+#		var tile_pos: Vector3 = map_tile.translation
+		move_collisions(map_tile.translation)
+#		tile_pos.y = Constants.HEX_TILE_UNIT_HEIGHT * map_tile.height + 0.15
 #		character_sprite.set_global_translation(tile_pos)

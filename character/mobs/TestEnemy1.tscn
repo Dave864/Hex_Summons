@@ -13,17 +13,15 @@
 [sub_resource type="SphereShape" id=1]
 radius = 0.001
 
-[node name="TestEnemy1" type="Spatial"]
-script = ExtResource( 2 )
-
-[node name="Position" type="Area" parent="."]
+[node name="TestEnemy1" type="Area"]
 collision_layer = 8
 collision_mask = 2
+script = ExtResource( 2 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Position"]
+[node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
 
-[node name="Sprite3D" type="Sprite3D" parent="Position"]
+[node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.15, 0 )
 modulate = Color( 1, 0, 0, 1 )
 texture = ExtResource( 1 )
@@ -53,4 +51,4 @@ script = ExtResource( 7 )
 [node name="Action" type="Node" parent="StateMachine"]
 script = ExtResource( 8 )
 
-[connection signal="area_entered" from="Position" to="." method="_on_Position_area_entered"]
+[connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
