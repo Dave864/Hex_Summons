@@ -13,9 +13,9 @@ func enter(_msg := {}) -> void:
 	# to avoid unintended behavior.
 	ErrorUtil.connect_signal(
 		SignalBus, 
-		"tile_selected", 
+		"move_tile_selected", 
 		self, 
-		"_on_SignalBus_tile_selected"
+		"_on_SignalBus_move_tile_selected"
 	)
 	ErrorUtil.connect_signal(
 		SignalBus,
@@ -38,12 +38,12 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state. 
 # Use this function to clean up the state.
 func exit() -> void:
-	SignalBus.disconnect("tile_selected", self, "_on_SignalBus_tile_selected")
+	SignalBus.disconnect("move_tile_selected", self, "_on_SignalBus_move_tile_selected")
 	SignalBus.disconnect("player_turn_ended", self, "_on_SignalBus_player_turn_ended")
 
 
 # Hit when the Selector selects a map tile destination.
-func _on_SignalBus_tile_selected(info: Array) -> void:
+func _on_SignalBus_move_tile_selected(info: Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": info})
 
 

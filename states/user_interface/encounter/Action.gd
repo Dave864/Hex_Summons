@@ -1,6 +1,10 @@
 extends EncounterUIState
 """
 The logic for what happens when an EncounterUI scene is in the `Action` state.
+Populates the SubOptions node with buttons descrbing available choices. Selecting
+the button for the currently active action will clear the SubOptions node and
+allow for movement. Selecting a different button will transition the the `Action`
+state using the features of the new option.
 """
 
 
@@ -12,7 +16,7 @@ var option_flag: int
 func enter(_msg := {}) -> void:
 	option_flag = _msg["option_flag"]
 	encounter_ui.set_current_selection(option_flag)
-	_toggle_option()
+#	_toggle_option()
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
 	ErrorUtil.connect_signal(
@@ -43,7 +47,7 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	_toggle_option()
+#	_toggle_option()
 	encounter_ui.sub_options.clear_sub_options()
 	encounter_ui.technique_button.disconnect(
 		"button_state_changed",
@@ -72,6 +76,16 @@ func _toggle_option() -> void:
 			encounter_ui.summon_button.disbled = !encounter_ui.summon_button.disbled
 		_:
 			pass
+
+
+# Connect the signals for the 
+func _connect_sub_option_button_signals() -> void:
+	pass
+
+
+# 
+func _on_ActionButton_mouse_entered() -> void:
+	pass
 
 
 func _on_TechniqueButton_button_state_changed(state: int) -> void:

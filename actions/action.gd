@@ -12,8 +12,6 @@ export(int, 1, 1000) var power
 # Flag that denotes if the emission is fixed to the center of the area
 export(bool) var emit_from_center
 
-# The tiles that are possible for a effect emission.
-var area_tiles: Array = []
 # The area that is ignored when determining the possible tiles for effect emmision.
 var _dead_range: AreaRange
 # The area specifying the possible tiles for effect emmision.
@@ -34,12 +32,16 @@ func _ready() -> void:
 
 
 func _process(_delta) -> void:
-	# Get the tiles in the area range, accounting for the dead range.
-	area_tiles.clear()
-	area_tiles = _area_range.tile_ids.duplicate(true)
+	pass
+
+
+# Get the tiles in the area range, accounting for the dead range.
+func get_area_tiles() -> Array:
+	var area_tiles: Array = _area_range.tile_ids.duplicate(true)
 	if _dead_range:
 		for i in _dead_range.tile_ids:
 			area_tiles.erase(i)
+	return area_tiles
 
 
 func enable_area_collision() -> void:
