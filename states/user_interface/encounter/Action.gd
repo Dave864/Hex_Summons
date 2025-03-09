@@ -16,26 +16,23 @@ var option_flag: int
 func enter(_msg := {}) -> void:
 	option_flag = _msg["option_flag"]
 	encounter_ui.set_current_selection(option_flag)
-#	_toggle_option()
+	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
-	ErrorUtil.connect_signal(
-			encounter_ui.technique_button,
-			"button_state_changed",
-			self,
-			"_on_TechniqueButton_button_state_changed"
+	encounter_ui.technique_button.connect_button_signal(
+		self,
+		"pressed",
+		"_on_TechniqueButton_button_pressed"
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.spell_button,
-			"button_state_changed",
-			self,
-			"_on_SpellButton_button_state_changed"
+	encounter_ui.spell_button.connect_button_signal(
+		self,
+		"pressed",
+		"_on_SpellButton_button_pressed"
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.end_button,
-			"button_state_changed",
-			self,
-			"_on_EndButton_button_state_changed"
+	encounter_ui.end_button.connect_button_signal(
+		self,
+		"pressed",
+		"_on_EndButton_button_pressed"
 	)
 
 
@@ -44,54 +41,79 @@ func update(_delta: float) -> void:
 	pass
 
 
+# Virtual function. Receives events from the `_unhandled_input()` callback.
+func handle_input(_event: InputEvent) -> void:
+	if _event.is_action_pressed("ui_encounter_player_end"):
+		SignalBus.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
+		state_machine.transition_to(WAIT)
+	if _event.is_action_pressed("ui_encounter_option_1"):
+		_option_selected(EncounterUI.Options.TECHNIQUE)
+	if _event.is_action_pressed("ui_encounter_option_2"):
+		_option_selected(EncounterUI.Options.SPELL)
+	if _event.is_action_pressed("ui_encounter_option_3"):
+		"""
+		TODO: Eventually add button for items.
+		"""
+		pass
+	if _event.is_action_pressed("ui_encounter_option_4"):
+		"""
+		TODO: Eventually add functionality for summons.
+		"""
+		pass
+
+
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-#	_toggle_option()
 	encounter_ui.sub_options.clear_sub_options()
-	encounter_ui.technique_button.disconnect(
-		"button_state_changed",
+	
+	encounter_ui.technique_button.disconnect_button_signal(
 		self,
-		"_on_TechniqueButton_button_state_changed"
+		"pressed",
+		"_on_TechniqueButton_button_pressed"
 	)
-	encounter_ui.spell_button.disconnect(
-		"button_state_changed",
+	encounter_ui.spell_button.disconnect_button_signal(
 		self,
-		"_on_SpellButton_button_state_changed"
+		"pressed",
+		"_on_SpellButton_button_pressed"
 	)
-	encounter_ui.end_button.disconnect(
-		"button_state_changed",
+	encounter_ui.end_button.disconnect_button_signal(
 		self,
-		"_on_EndButton_button_state_changed"
+		"pressed",
+		"_on_EndButton_button_pressed"
 	)
 
 
-func _toggle_option() -> void:
-	match option_flag:
-		encounter_ui.Options.TECHNIQUE:
-			encounter_ui.technique_button.disabled = !encounter_ui.technique_button.disabled
-		encounter_ui.Options.SPELL:
-			encounter_ui.spell_button.disabled = !encounter_ui.spell_button.disabled
-		encounter_ui.Options.SUMMON:
-			encounter_ui.summon_button.disbled = !encounter_ui.summon_button.disbled
-		_:
-			pass
+# Logic for when a specified option is selected.
+func _option_selected(option: int) -> void:
+	if option_flag == option:
+		_action_type_canceled()
+	else:
+		state_machine.transition_to(ACTION, {"option_flag": option})
 
 
-func _on_TechniqueButton_button_state_changed(state: int) -> void:
-	if state == LabeledIconButton.ButtonStates.PRESSED:
-		state_machine.transition_to(
-			ACTION, 
-			{"option_flag": encounter_ui.Options.TECHNIQUE}
-		)
+# Signal that an action type is no longer being looked at before transitioning
+# to the 'Standby` state.
+func _action_type_canceled() -> void:
+	SignalBus.emit_signal("player_action_type_canceled")
+	state_machine.transition_to(STANDBY)
 
 
-func _on_SpellButton_button_state_changed(state: int) -> void:
-	if state == LabeledIconButton.ButtonStates.PRESSED:
-		print("Selecting a spell")
+func _end_selected() -> void:
+	SignalBus.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
+	state_machine.transition_to(WAIT)
 
 
-func _on_EndButton_button_state_changed(state: int) -> void:
-	if state == LabeledIconButton.ButtonStates.PRESSED:
-		SignalBus.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
-		state_machine.transition_to(WAIT)
+# Logic for what happens when the Technique button is pressed.
+func _on_TechniqueButton_button_pressed() -> void:
+	_option_selected(EncounterUI.Options.TECHNIQUE)
+
+
+# Logic for what happens when the Spell button is pressed.
+func _on_SpellButton_button_pressed() -> void:
+	_option_selected(EncounterUI.Options.SPELL)
+
+
+# Logic for what happens when the End button is pressed.
+func _on_EndButton_button_pressed() -> void:
+	_end_selected()

@@ -23,23 +23,20 @@ func enter(_msg := {}) -> void:
 			self,
 			"_on_SignalBus_move_tile_selected"
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.technique_button,
-			"button_state_changed",
-			self,
-			"_on_TechniqueButton_button_state_changed"
+	encounter_ui.technique_button.connect_button_signal(
+		self,
+		"pressed",
+		"_on_TechniqueButton_button_pressed"
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.spell_button,
-			"button_state_changed",
-			self,
-			"_on_SpellButton_button_state_changed"
+	encounter_ui.spell_button.connect_button_signal(
+		self,
+		"pressed",
+		"_on_SpellButton_button_pressed"
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.end_button,
-			"button_state_changed",
-			self,
-			"_on_EndButton_button_state_changed"
+	encounter_ui.end_button.connect_button_signal(
+		self,
+		"pressed",
+		"_on_EndButton_button_pressed"
 	)
 
 
@@ -53,47 +50,70 @@ func handle_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("ui_encounter_player_end"):
 		SignalBus.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
 		state_machine.transition_to(WAIT)
+	if _event.is_action_pressed("ui_encounter_option_1"):
+		_technique_selected()
+	if _event.is_action_pressed("ui_encounter_option_2"):
+		_spell_selected()
+	if _event.is_action_pressed("ui_encounter_option_3"):
+		"""
+		TODO: Eventually add button for items.
+		"""
+		pass
+	if _event.is_action_pressed("ui_encounter_option_4"):
+		"""
+		TODO: Eventually add functionality for summons.
+		"""
+		pass
 
 
 # Virtual function. Called by the state machine before changing the active 
 # state. Use this function to clean up the state.
 func exit() -> void:
 	SignalBus.disconnect("move_tile_selected", self, "_on_SignalBus_move_tile_selected")
-	encounter_ui.technique_button.disconnect(
-		"button_state_changed",
+	encounter_ui.technique_button.disconnect_button_signal(
 		self,
-		"_on_TechniqueButton_button_state_changed"
+		"pressed",
+		"_on_TechniqueButton_button_pressed"
 	)
-	encounter_ui.spell_button.disconnect(
-		"button_state_changed",
+	encounter_ui.spell_button.disconnect_button_signal(
 		self,
-		"_on_SpellButton_button_state_changed"
+		"pressed",
+		"_on_SpellButton_button_pressed"
 	)
-	encounter_ui.end_button.disconnect(
-		"button_state_changed",
+	encounter_ui.end_button.disconnect_button_signal(
 		self,
-		"_on_EndButton_button_state_changed"
+		"pressed",
+		"_on_EndButton_button_pressed"
 	)
+
+
+func _technique_selected() -> void:
+	state_machine.transition_to(
+		ACTION, 
+		{"option_flag": encounter_ui.Options.TECHNIQUE}
+	)
+
+
+func _spell_selected() -> void:
+	print("Selecting a spell")
+
+
+func _end_selected() -> void:
+	SignalBus.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
+	state_machine.transition_to(WAIT)
 
 
 func _on_SignalBus_move_tile_selected(_info: Array) -> void:
 	state_machine.transition_to(PAUSE)
 
 
-func _on_TechniqueButton_button_state_changed(state: int) -> void:
-	if state == LabeledIconButton.ButtonStates.PRESSED:
-		state_machine.transition_to(
-			ACTION, 
-			{"option_flag": encounter_ui.Options.TECHNIQUE}
-		)
+func _on_TechniqueButton_button_pressed() -> void:
+	_technique_selected()
 
 
-func _on_SpellButton_button_state_changed(state: int) -> void:
-	if state == LabeledIconButton.ButtonStates.PRESSED:
-		print("Selecting a spell")
+func _on_SpellButton_button_pressed() -> void:
+	_spell_selected()
 
 
-func _on_EndButton_button_state_changed(state: int) -> void:
-	if state == LabeledIconButton.ButtonStates.PRESSED:
-		SignalBus.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
-		state_machine.transition_to(WAIT)
+func _on_EndButton_button_pressed() -> void:
+	_end_selected()

@@ -51,8 +51,6 @@ func exit() -> void:
 # Handles input events
 func handle_input(_event: InputEvent) -> void:
 	mouse_active = _event is InputEventMouse
-	# Signal that the currently highlighted map tile was selected
-	# and move to the 'Pause' state.
 	if _event.is_action_pressed("ui_selector_select"):
 		selector.emit_signal("move_tile_selected", selector.tile)
 		state_machine.transition_to(PAUSE)
@@ -121,8 +119,8 @@ func _resolve_joystick_direction(direction: int) -> void:
 		selector.set_to_position(adjacent_tile.character_position())
 
 
+# Snap the selector highlighter to the map tile's position if able to.
 func _on_Selector_area_entered(map_tile: Area) -> void:
-	# Don't snap to position if map_tile is disabled or inactive.
 	if (
 		selector.snap_to_position 
 		and map_tile.is_active() 
@@ -135,5 +133,6 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		selector.tile = map_tile
 
 
+# Go to the "WAIT" state when a player has signaled that their turn is ended.
 func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	state_machine.transition_to(WAIT)

@@ -18,7 +18,9 @@ var hm_astar: HexMapAStar = null
 """
 TODO: Currently loading CharacterSummary scene to visualize the hp values of characters
 """
-var _character_summary: PackedScene = preload("res://user_interface/encounter/test_labels/CharacterSummary/CharacterSummary.tscn")
+var _character_summary: PackedScene = preload(
+	"res://user_interface/encounter/test_labels/CharacterSummary/CharacterSummary.tscn"
+)
 var _current_selection: int = Options.NONE setget set_current_selection, get_current_selection
 # The player character that will interface with the UI.
 var _player: PlayerCharacter = null setget set_focused_player, get_focused_player

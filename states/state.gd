@@ -38,7 +38,7 @@ func exit() -> void:
 	pass
 
 
-# Virtual function. Intended to be called in the _ready function to connect
-# signals to the state.
+# Virtual function. To be called in the _ready function to connect signals to 
+# the state. The signals connected here should not be required by other states.
 func _ready_connect_signals() -> void:
 	pass
