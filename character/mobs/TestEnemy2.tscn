@@ -2,16 +2,17 @@
 
 [ext_resource path="res://art/icon.png" type="Texture" id=1]
 [ext_resource path="res://character/mobs/enemy_character.gd" type="Script" id=2]
-[ext_resource path="res://states/state_machine.gd" type="Script" id=3]
-[ext_resource path="res://states/enemy_character/Move.gd" type="Script" id=4]
-[ext_resource path="res://states/enemy_character/Wait.gd" type="Script" id=5]
+[ext_resource path="res://fsm/state_machine.gd" type="Script" id=3]
+[ext_resource path="res://fsm/enemy_character/EnemyCharacterMove.gd" type="Script" id=4]
+[ext_resource path="res://fsm/enemy_character/EnemyCharacterWait.gd" type="Script" id=5]
 [ext_resource path="res://range_type/RingArea.tscn" type="PackedScene" id=6]
-[ext_resource path="res://states/enemy_character/Think.gd" type="Script" id=7]
-[ext_resource path="res://states/enemy_character/Action.gd" type="Script" id=8]
+[ext_resource path="res://fsm/enemy_character/EnemyCharacterThink.gd" type="Script" id=7]
+[ext_resource path="res://fsm/enemy_character/EnemyCharacterAction.gd" type="Script" id=8]
 [ext_resource path="res://actions/Shot.tscn" type="PackedScene" id=9]
 [ext_resource path="res://stats/character_stats.gd" type="Script" id=10]
 [ext_resource path="res://stats/stat.gd" type="Script" id=11]
 [ext_resource path="res://stats/elemental_stat.gd" type="Script" id=12]
+
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.001
