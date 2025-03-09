@@ -28,13 +28,25 @@ func enter(_msg := {}) -> void:
 	enc.hex_map.highlight_player_movement(movement_area, enc.get_current_character())
 	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
 	
-	# This signal is used by other states and will be disconnected to avoid
+	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
 	ErrorUtil.connect_signal(
 		enc.selector,
 		"move_tile_selected",
 		self,
 		"_on_Selector_move_tile_selected"
+	)
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"player_action_hovered",
+		self,
+		"_on_SignalBus_player_action_hovered"
+	)
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"player_action_type_canceled",
+		self,
+		"_on_SignalBus_player_action_type_canceled"
 	)
 
 
@@ -52,6 +64,8 @@ func update(_delta: float) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	enc.selector.disconnect("move_tile_selected", self, "_on_Selector_move_tile_selected")
+	SignalBus.disconnect("player_action_hovered", self, "_on_SignalBus_player_action_hovered")
+	SignalBus.disconnect("player_action_type_canceled", self, "_on_SignalBus_player_action_type_canceled")
 
 
 func _ready_connect_signals() -> void:
@@ -92,7 +106,17 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 
 # Updates the tile highlights to show the area range of the action.
-func _on_SignalBus_player_action_selected(action: Action) -> void:
+func _on_SignalBus_player_action_confirmed(action: Action) -> void:
+	enc.hex_map.clear_highlights()
+	var area_tiles: Array = action.get_area_tiles()
+	enc.hex_map.highlight_player_action_area(
+		area_tiles,
+		enc.get_current_character()
+	)
+
+
+# Updates the tile highlights to show the area range of the action.
+func _on_SignalBus_player_action_hovered(action: Action) -> void:
 	enc.hex_map.clear_highlights()
 	var area_tiles: Array = action.get_area_tiles()
 	enc.hex_map.highlight_player_action_area(

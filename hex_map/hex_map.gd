@@ -98,7 +98,7 @@ func highlight_player_action_area(tile_indexes: Array, pc: PlayerCharacter) -> v
 		var tile: MapTile = _map_tiles[i]
 		if i == pc.get_map_index_at():
 			tile.set_selection_type(HexHighlighter.Option.PLAYER)
-		elif tile.get_current_occupant == null:
+		elif tile.get_current_occupant() == null:
 			tile.set_selection_type(HexHighlighter.Option.RANGE)
 		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
 			tile.set_selection_type(HexHighlighter.Option.TARGET)

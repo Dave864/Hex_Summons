@@ -12,7 +12,5 @@ script = ExtResource( 1 )
 margin_right = 1024.0
 margin_bottom = 57.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 57.0
-size_flags_horizontal = 5
+[connection signal="mouse_entered" from="Button" to="." method="_on_Button_mouse_entered"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

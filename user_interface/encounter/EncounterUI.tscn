@@ -29,12 +29,12 @@ anchor_bottom = 0.838
 margin_left = 0.151993
 margin_top = 0.199982
 margin_bottom = 0.199951
-mouse_filter = 2
+mouse_filter = 1
+follow_focus = true
 script = ExtResource( 3 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SubOptions"]
 margin_bottom = 66.0
-mouse_filter = 2
 size_flags_horizontal = 5
 size_flags_vertical = 3
 

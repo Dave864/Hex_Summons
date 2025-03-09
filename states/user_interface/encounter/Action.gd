@@ -78,16 +78,6 @@ func _toggle_option() -> void:
 			pass
 
 
-# Connect the signals for the 
-func _connect_sub_option_button_signals() -> void:
-	pass
-
-
-# 
-func _on_ActionButton_mouse_entered() -> void:
-	pass
-
-
 func _on_TechniqueButton_button_state_changed(state: int) -> void:
 	if state == LabeledIconButton.ButtonStates.PRESSED:
 		state_machine.transition_to(
