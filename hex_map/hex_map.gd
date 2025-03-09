@@ -74,7 +74,7 @@ func highlight_player_movement(
 		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
 			tile.set_selection_type(HexHighlighter.Option.NONE)
 		elif tile.get_current_occupant().name == pc.name:
-			if start_id < 0:
+			if start_id < 0 or start_id == pc.get_map_index_at():
 				tile.set_selection_type(HexHighlighter.Option.PLAYER)
 			else:
 				tile.set_selection_type(HexHighlighter.Option.RANGE)

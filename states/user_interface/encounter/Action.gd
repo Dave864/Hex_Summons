@@ -16,6 +16,7 @@ var option_flag: int
 func enter(_msg := {}) -> void:
 	option_flag = _msg["option_flag"]
 	encounter_ui.set_current_selection(option_flag)
+	SignalBus.emit_signal("player_action_hovered", encounter_ui.get_sub_option())
 	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.

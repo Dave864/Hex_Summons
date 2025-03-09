@@ -27,16 +27,16 @@ var _player: PlayerCharacter = null setget set_focused_player, get_focused_playe
 var _techniques: Array = [] setget , get_techniques
 var _spells: Array = [] setget , get_spells
 
-onready var initiative_tracker = $InitiativeTracker
-onready var active_player_stats = $ActivePlayerStats
-onready var enemy_stats = $EnemyStats
-onready var party_stats = $PartyStats
-onready var sub_options = $SubOptions
-onready var options = $Options
-onready var technique_button = $Options/TechniqueButton
-onready var spell_button = $Options/SpellButton
-onready var summon_button = $Options/SummonButton
-onready var end_button = $Options/EndButton
+onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
+onready var active_player_stats: ActivePlayerStats = $ActivePlayerStats
+onready var enemy_stats: VBoxContainer = $EnemyStats
+onready var party_stats: VBoxContainer = $PartyStats
+onready var options: HBoxContainer = $Options
+onready var sub_options: SubOptions = $SubOptions
+onready var technique_button: LabeledIconButton = $Options/TechniqueButton
+onready var spell_button: LabeledIconButton = $Options/SpellButton
+onready var summon_button: LabeledIconButton = $Options/SummonButton
+onready var end_button: LabeledIconButton = $Options/EndButton
 
 
 # Sets the selection flag.
@@ -88,6 +88,21 @@ func get_spells() -> Array:
 	return _spells
 
 
+# Get an action from the currently active sub-options selection.
+func get_sub_option(index: int = 0) -> Action:
+	var a: Action
+	match _current_selection:
+		Options.TECHNIQUE:
+			a = sub_options.get_action_at_index(index)
+		Options.SPELL:
+			a = sub_options.get_action_at_index(index)
+		Options.SUMMON:
+			a = null
+		_:
+			a = null
+	return a
+
+
 # Toggle the disabled flag for options.
 func toggle_options() -> void:
 	technique_button.disabled = !technique_button.disabled
@@ -96,6 +111,7 @@ func toggle_options() -> void:
 	end_button.disabled = !end_button.disabled
 
 
+# Adds the player character details to the UI.
 func track_party_member(p: PlayerCharacter) -> void:
 	var p_label: CharacterSummary = _character_summary.instance()
 	p_label.set_name(p.name)
@@ -105,6 +121,7 @@ func track_party_member(p: PlayerCharacter) -> void:
 	party_stats.add_child(p_label)
 
 
+# Adds the enemy character details to the UI.
 func track_enemy(e: EnemyCharacter) -> void:
 	var e_label: CharacterSummary = _character_summary.instance()
 	e_label.set_name(e.name)
