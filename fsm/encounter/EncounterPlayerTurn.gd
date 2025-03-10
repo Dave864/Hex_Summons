@@ -37,6 +37,12 @@ func enter(_msg := {}) -> void:
 		"_on_Selector_move_tile_selected"
 	)
 	ErrorUtil.connect_signal(
+		enc.selector,
+		"effect_selector_required",
+		self,
+		"_on_Selector_effect_selector_required"
+	)
+	ErrorUtil.connect_signal(
 		SignalBus,
 		"player_action_hovered",
 		self,
@@ -64,6 +70,7 @@ func update(_delta: float) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	enc.selector.disconnect("move_tile_selected", self, "_on_Selector_move_tile_selected")
+	enc.selector.disconnect("effect_selector_required", self, "_on_Selector_effect_selector_required")
 	SignalBus.disconnect("player_action_hovered", self, "_on_SignalBus_player_action_hovered")
 	SignalBus.disconnect("player_action_type_canceled", self, "_on_SignalBus_player_action_type_canceled")
 
@@ -126,14 +133,19 @@ func _on_SignalBus_player_action_hovered(action: Action) -> void:
 
 
 # Updates the tile selectors to show the effect range of an action
-func _on_Selector_effect_selector_required(effect_area: Array) -> void:
-	pass
+func _on_Selector_effect_selector_required(
+	effect_area: Array,
+	ignore_heights: bool
+) -> void:
+	enc.hex_map.clear_selector_highlights()
+	enc.hex_map.highlight_effect_area(effect_area, ignore_heights)
 
 
 # Called when the user backs out from an action type menu. Resets the tile highlights
 # to indicate player movement.
 func _on_SignalBus_player_action_type_canceled() -> void:
 	enc.hex_map.clear_highlights()
+	enc.hex_map.clear_selector_highlights()
 	enc.hex_map.highlight_player_movement(
 		movement_area,
 		enc.get_current_character(),

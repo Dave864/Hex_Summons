@@ -123,7 +123,7 @@ func get_highlight_type() -> int:
 func set_selector_type(value: int) -> void:
 	_selector_type = value
 	$SelectorHighlighter.set_option(_selector_type)
-	$SelectorHighlighter.set_transparency(Constants.OPACITY_HALF)
+	$SelectorHighlighter.set_transparency(Constants.OPACITY_FULL)
 
 
 # Get the values of the selector flag.

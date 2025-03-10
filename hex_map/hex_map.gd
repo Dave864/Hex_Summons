@@ -84,9 +84,7 @@ func highlight_player_movement(
 
 # Highlight the specified tiles as being within the area range of an action.
 func highlight_player_action_area(tile_indexes: Array, pc: PlayerCharacter) -> void:
-	var map_section: Array = []
-	for i in tile_indexes:
-		map_section.append(_map_tiles[i])
+	var map_section: Array = _get_tiles_from_ids(tile_indexes)
 	
 	var area_range_indices: Array = _hm_astar.get_traversable_tiles(
 		pc.get_map_index_at(),
@@ -106,10 +104,33 @@ func highlight_player_action_area(tile_indexes: Array, pc: PlayerCharacter) -> v
 			tile.set_highlight_type(HexHighlighter.Option.ALLY)
 
 
+# Highlight the selector for the specified tiles to represent the effect area
+# of an action.
+func highlight_effect_area(tile_indexes: Array, ignore_heights: bool) -> void:
+	var map_section: Array = _get_tiles_from_ids(tile_indexes)
+	
+	if !ignore_heights:
+		pass
+	
+	for tile in map_section:
+		if tile.get_current_occupant() == null:
+			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)
+		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
+			tile.set_selector_type(HexHighlighter.Option.TARGET)
+		else:
+			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)
+
+
 # Clear the higlights from all tiles.
 func clear_highlights() -> void:
 	for tile in _map_tiles:
 		tile.set_highlight_type(HexHighlighter.Option.NONE)
+
+
+# Clear selector highlights from all tiles.
+func clear_selector_highlights() -> void:
+	for tile in _map_tiles:
+		tile.set_selector_type(HexHighlighter.Option.NONE)
 
 
 # Calculates the distance from a given start to a specified destination.

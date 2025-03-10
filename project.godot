@@ -99,7 +99,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://user_interface/encounter/encounter_ui.gd"
 }, {
-"base": "Reference",
+"base": "State",
 "class": "EncounterUIState",
 "language": "GDScript",
 "path": "res://fsm/user_interface/encounter/encounter_ui_state.gd"
@@ -109,7 +109,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://character/mobs/enemy_character.gd"
 }, {
-"base": "Reference",
+"base": "State",
 "class": "EnemyCharacterState",
 "language": "GDScript",
 "path": "res://fsm/enemy_character/enemy_character_state.gd"
@@ -159,7 +159,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://character/player_characters/player_character.gd"
 }, {
-"base": "Reference",
+"base": "State",
 "class": "PlayerCharacterState",
 "language": "GDScript",
 "path": "res://fsm/player_character/player_character_state.gd"
@@ -174,12 +174,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://range_type/ring_area.gd"
 }, {
-"base": "Area",
+"base": "Node",
 "class": "Selector",
 "language": "GDScript",
 "path": "res://selector_node/selector.gd"
 }, {
-"base": "Reference",
+"base": "State",
 "class": "SelectorState",
 "language": "GDScript",
 "path": "res://fsm/selector_node/selector_state.gd"
@@ -194,7 +194,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://fsm/state.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://fsm/state_machine.gd"

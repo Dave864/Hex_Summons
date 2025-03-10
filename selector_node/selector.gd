@@ -40,3 +40,57 @@ func move_to_mouse_position() -> void:
 # Move the collision area to the specified position.
 func move_to_position(position: Vector3) -> void:
 	collision_area.translation = position
+
+
+# Converts joystick input to a hexagonal direction
+func joystick_to_hex_direction() -> int:
+	var dir_vec: Vector2 = Input.get_vector(
+		"ui_selector_l",
+		"ui_selector_r",
+		"ui_selector_d",
+		"ui_selector_u"
+	)
+	var hex_direction: int = -1
+	# Move to the upper-right neighbor
+	if (
+		dir_vec.x > Constants.HV_0_COORD.x
+		and dir_vec.x < Constants.HV_1_COORD.x
+		and dir_vec.y > 0.0
+	):
+		hex_direction = MapTile.NeighborPosition.UPPER_RIGHT
+	# Move to the true-right neighbor
+	elif (
+		dir_vec.x > 0.0
+		and dir_vec.y < Constants.HV_1_COORD.y
+		and dir_vec.y > Constants.HV_2_COORD.y
+	):
+		hex_direction = MapTile.NeighborPosition.RIGHT
+	# Move to the bottom-right neighbor
+	elif(
+		dir_vec.x > Constants.HV_3_COORD.x
+		and dir_vec.x < Constants.HV_2_COORD.x
+		and dir_vec.y < 0.0
+	):
+		hex_direction = MapTile.NeighborPosition.BOTTOM_RIGHT
+	# Move to the botton-left neighbor
+	elif(
+		dir_vec.x > Constants.HV_4_COORD.x
+		and dir_vec.x < Constants.HV_3_COORD.x
+		and dir_vec.y < 0.0
+	):
+		hex_direction = MapTile.NeighborPosition.BOTTOM_LEFT
+	# Move to the true-left neighbor
+	elif(
+		dir_vec.x < 0.0
+		and dir_vec.y > Constants.HV_4_COORD.y
+		and dir_vec.y < Constants.HV_5_COORD.y
+	):
+		hex_direction = MapTile.NeighborPosition.LEFT
+	# Move to the upper-left neighbor
+	elif(
+		dir_vec.x < Constants.HV_0_COORD.x
+		and dir_vec.x > Constants.HV_5_COORD.x
+		and dir_vec.y > 0.0
+	):
+		hex_direction = MapTile.NeighborPosition.UPPER_LEFT
+	return hex_direction

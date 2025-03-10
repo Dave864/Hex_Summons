@@ -4,7 +4,8 @@ The logic for what happens when the Selector is in the 'SelectMove' state.
 The Selector is able to pass over map tiles and highlight said tiles.
 When the input for selecting a tile is given, the Selector moves to the
 'Pause' state and a signal is emitted indicating which tile was selected.
-If a player turn ends, go to the 'Wait' state.
+If an action is hovered over in the UI, the Selector moves to the 'SelectAction'
+state. If a player turn ends, go to the 'Wait' state.
 """
 
 
@@ -22,6 +23,12 @@ func enter(_msg: Dictionary = {}) -> void:
 	)
 	ErrorUtil.connect_signal(
 		SignalBus,
+		"player_action_hovered",
+		self,
+		"_on_SignalBus_player_action_hovered"
+	)
+	ErrorUtil.connect_signal(
+		SignalBus,
 		"player_turn_ended",
 		self,
 		"_on_SignalBus_player_turn_ended"
@@ -36,8 +43,21 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	selector.collision_area.disconnect("area_entered", self, "_on_Selector_area_entered")
-	SignalBus.disconnect("player_turn_ended", self, "_on_SignalBus_player_turn_ended")
+	selector.collision_area.disconnect(
+		"area_entered",
+		self,
+		"_on_Selector_area_entered"
+	)
+	SignalBus.disconnect(
+		"player_action_hovered",
+		self,
+		"_on_SignalBus_player_action_hovered"
+	)
+	SignalBus.disconnect(
+		"player_turn_ended",
+		self,
+		"_on_SignalBus_player_turn_ended"
+	)
 
 
 # Handles input events
@@ -47,68 +67,16 @@ func handle_input(_event: InputEvent) -> void:
 		selector.emit_signal("move_tile_selected", selector.tile_hovered)
 		state_machine.transition_to(PAUSE)
 	
-	_handle_joystick_input()
-
-
-# Handles the joystick input from a gamepad controller.
-func _handle_joystick_input() -> void:
-	var dir_vec: Vector2 = Input.get_vector(
-		"ui_selector_l",
-		"ui_selector_r",
-		"ui_selector_d",
-		"ui_selector_u"
-	)
-	
-	# Move to the upper-right neighbor
-	if (
-		dir_vec.x > Constants.HV_0_COORD.x
-		and dir_vec.x < Constants.HV_1_COORD.x
-		and dir_vec.y > 0.0
-	):
-		_resolve_joystick_direction(MapTile.NeighborPosition.UPPER_RIGHT)
-	# Move to the true-right neighbor
-	elif (
-		dir_vec.x > 0.0
-		and dir_vec.y < Constants.HV_1_COORD.y
-		and dir_vec.y > Constants.HV_2_COORD.y
-	):
-		_resolve_joystick_direction(MapTile.NeighborPosition.RIGHT)
-	# Move to the bottom-right neighbor
-	elif(
-		dir_vec.x > Constants.HV_3_COORD.x
-		and dir_vec.x < Constants.HV_2_COORD.x
-		and dir_vec.y < 0.0
-	):
-		_resolve_joystick_direction(MapTile.NeighborPosition.BOTTOM_RIGHT)
-	# Move to the botton-left neighbor
-	elif(
-		dir_vec.x > Constants.HV_4_COORD.x
-		and dir_vec.x < Constants.HV_3_COORD.x
-		and dir_vec.y < 0.0
-	):
-		_resolve_joystick_direction(MapTile.NeighborPosition.BOTTOM_LEFT)
-	# Move to the true-left neighbor
-	elif(
-		dir_vec.x < 0.0
-		and dir_vec.y > Constants.HV_4_COORD.y
-		and dir_vec.y < Constants.HV_5_COORD.y
-	):
-		_resolve_joystick_direction(MapTile.NeighborPosition.LEFT)
-	# Move to the upper-left neighbor
-	elif(
-		dir_vec.x < Constants.HV_0_COORD.x
-		and dir_vec.x > Constants.HV_5_COORD.x
-		and dir_vec.y > 0.0
-	):
-		_resolve_joystick_direction(MapTile.NeighborPosition.UPPER_LEFT)
+	_resolve_joystick_direction(selector.joystick_to_hex_direction())
 
 
 # Determines if the selector is able to move to the adjacent tile in the
 # given direction (0 - 5) and does so if able.
 func _resolve_joystick_direction(direction: int) -> void:
-	var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(direction)
-	if adjacent_tile != null:
-		selector.move_to_position(adjacent_tile.character_position())
+	if direction >= 0 and direction <= 5:
+		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(direction)
+		if adjacent_tile != null:
+			selector.move_to_position(adjacent_tile.character_position())
 
 
 # Activate the selector for the hovered tile.
@@ -124,6 +92,12 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 			selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 		selector.tile_hovered = map_tile
 		map_tile.set_selector_type(HexHighlighter.Option.MOVE)
+
+
+# Go to the "SelectAction" state when the UI signals that an action was hovered
+# over.
+func _on_SignalBus_player_action_hovered(action: Action) -> void:
+	state_machine.transition_to(SELECT_ACTION, {"action": action})
 
 
 # Go to the "WAIT" state when a player has signaled that their turn is ended.
