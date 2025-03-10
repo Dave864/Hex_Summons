@@ -9,7 +9,6 @@
 [ext_resource path="res://fsm/player_character/PlayerCharacterWait.gd" type="Script" id=7]
 [ext_resource path="res://fsm/player_character/PlayerCharacterAttack.gd" type="Script" id=8]
 
-
 [sub_resource type="SphereShape" id=1]
 radius = 0.001
 
