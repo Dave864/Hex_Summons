@@ -49,4 +49,4 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 # Transition to the 'Select' state when the selector is needed again.
 func _on_SignalBus_selector_required(initial_position: Vector3) -> void:
-	state_machine.transition_to(SELECT, {"initial_position": initial_position})
+	state_machine.transition_to(SELECT_MOVE, {"initial_position": initial_position})
