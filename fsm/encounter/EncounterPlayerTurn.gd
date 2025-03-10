@@ -125,6 +125,11 @@ func _on_SignalBus_player_action_hovered(action: Action) -> void:
 	)
 
 
+# Updates the tile selectors to show the effect range of an action
+func _on_Selector_effect_selector_required(effect_area: Array) -> void:
+	pass
+
+
 # Called when the user backs out from an action type menu. Resets the tile highlights
 # to indicate player movement.
 func _on_SignalBus_player_action_type_canceled() -> void:

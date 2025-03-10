@@ -6,6 +6,10 @@ passed over.
 """
 
 
+# Signal for the encounter node that specifies which area of tiles to highlight.
+# warning-ignore:unused_signal
+signal effect_selector_required(effect_area, ignore_height)
+# Signal that indicates a move tile has been selected.
 # warning-ignore:unused_signal
 signal move_tile_selected(map_tile)
 # warning-ignore:unused_signal
