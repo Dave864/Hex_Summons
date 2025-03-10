@@ -68,18 +68,18 @@ func highlight_player_movement(
 		var tile: MapTile = _map_tiles[i]
 		if tile.get_current_occupant() == null:
 			if i == start_id:
-				tile.set_selection_type(HexHighlighter.Option.PLAYER)
+				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 			else:
-				tile.set_selection_type(HexHighlighter.Option.RANGE)
+				tile.set_highlight_type(HexHighlighter.Option.RANGE)
 		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
-			tile.set_selection_type(HexHighlighter.Option.NONE)
+			tile.set_highlight_type(HexHighlighter.Option.NONE)
 		elif tile.get_current_occupant().name == pc.name:
 			if start_id < 0 or start_id == pc.get_map_index_at():
-				tile.set_selection_type(HexHighlighter.Option.PLAYER)
+				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 			else:
-				tile.set_selection_type(HexHighlighter.Option.RANGE)
+				tile.set_highlight_type(HexHighlighter.Option.RANGE)
 		else:
-			tile.set_selection_type(HexHighlighter.Option.ALLY)
+			tile.set_highlight_type(HexHighlighter.Option.ALLY)
 
 
 # Highlight the specified tiles as being within the area range of an action.
@@ -97,19 +97,19 @@ func highlight_player_action_area(tile_indexes: Array, pc: PlayerCharacter) -> v
 	for i in area_range_indices:
 		var tile: MapTile = _map_tiles[i]
 		if i == pc.get_map_index_at():
-			tile.set_selection_type(HexHighlighter.Option.PLAYER)
+			tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 		elif tile.get_current_occupant() == null:
-			tile.set_selection_type(HexHighlighter.Option.RANGE)
+			tile.set_highlight_type(HexHighlighter.Option.RANGE)
 		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
-			tile.set_selection_type(HexHighlighter.Option.TARGET)
+			tile.set_highlight_type(HexHighlighter.Option.TARGET)
 		else:
-			tile.set_selection_type(HexHighlighter.Option.ALLY)
+			tile.set_highlight_type(HexHighlighter.Option.ALLY)
 
 
 # Clear the higlights from all tiles.
 func clear_highlights() -> void:
 	for tile in _map_tiles:
-		tile.set_selection_type(HexHighlighter.Option.NONE)
+		tile.set_highlight_type(HexHighlighter.Option.NONE)
 
 
 # Calculates the distance from a given start to a specified destination.

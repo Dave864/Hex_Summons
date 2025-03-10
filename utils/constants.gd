@@ -51,13 +51,12 @@ const MOVE_SPEED: float = 5.0
 # to account for characters of the opposite faction of the current active character.
 const ASTAR_ADJUSTMENT_WEIGHT = 1000.0
 
-# A collection of colors set for various indicators.
-const COLOR_AREA_RANGE: Color = Color.blue
-const COLOR_CHARACTER_ORIGIN: Color = Color.aqua
-const COLOR_ALLY_ORIGIN: Color = Color.dodgerblue
-const COLOR_EFFECT_RANGE: Color = Color.yellow
-const COLOR_EFFECT_ORIGIN: Color = Color.orangered
-const COLOR_TARGET_SELECT: Color = Color.red
+# Common transparency values for materials, defined by opacity.
+const OPACITY_FULL: float = 1.0
+const OPACITY_THREE_QUARTER: float = 0.75
+const OPACITY_HALF: float = 0.5
+const OPACITY_QUARTER: float = 0.25
+const OPACITY_NONE: float = 0.0
 
 # Defines the positions of a unit circle that correspond to the vertices of
 # a hexagon.

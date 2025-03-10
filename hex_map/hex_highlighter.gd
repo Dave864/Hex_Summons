@@ -13,7 +13,16 @@ enum Option {
 	EFFECT_RANGE,
 	EFFECT_ORIGIN,
 	TARGET,
+	MOVE,
 }
+
+const COLOR_AREA_RANGE: Color = Color.blue
+const COLOR_CHARACTER_ORIGIN: Color = Color.aqua
+const COLOR_ALLY_ORIGIN: Color = Color.dodgerblue
+const COLOR_EFFECT_RANGE: Color = Color.orange
+const COLOR_EFFECT_ORIGIN: Color = Color.orangered
+const COLOR_TARGET_SELECT: Color = Color.red
+const COLOR_MOVE_SELECT: Color = Color.yellow
 
 var _hl_option: int setget set_option, get_option
 
@@ -27,22 +36,25 @@ func _ready():
 func set_option(hl_option: int) -> void:
 	match hl_option:
 		Option.PLAYER:
-			_set_highlighter_color(Constants.COLOR_CHARACTER_ORIGIN)
+			_set_highlighter_color(COLOR_CHARACTER_ORIGIN)
 			show()
 		Option.ALLY:
-			_set_highlighter_color(Constants.COLOR_ALLY_ORIGIN)
+			_set_highlighter_color(COLOR_ALLY_ORIGIN)
 			show()
 		Option.RANGE:
-			_set_highlighter_color(Constants.COLOR_AREA_RANGE)
+			_set_highlighter_color(COLOR_AREA_RANGE)
 			show()
 		Option.EFFECT_ORIGIN:
-			_set_highlighter_color(Constants.COLOR_EFFECT_ORIGIN)
+			_set_highlighter_color(COLOR_EFFECT_ORIGIN)
 			show()
 		Option.EFFECT_RANGE:
-			_set_highlighter_color(Constants.COLOR_EFFECT_RANGE)
+			_set_highlighter_color(COLOR_EFFECT_RANGE)
 			show()
 		Option.TARGET:
-			_set_highlighter_color(Constants.COLOR_TARGET_SELECT)
+			_set_highlighter_color(COLOR_TARGET_SELECT)
+			show()
+		Option.MOVE:
+			_set_highlighter_color(COLOR_MOVE_SELECT)
 			show()
 		_:
 			hide()
@@ -55,7 +67,6 @@ func get_option() -> int:
 # Sets the transparency value of the highlighter. Accepts a value between 0 and 1.0.
 func set_transparency(f: float) -> void:
 	var m: SpatialMaterial = get_surface_material(0)
-	m.flags_transparent = true
 	f = 0.0 if f < 0.0 else 1.0 if f > 1.0 else f
 	m.albedo_color.a = f
 	set_surface_material(0, m)

@@ -15,6 +15,9 @@ enum NeighborPosition {
 	LEFT,
 }
 
+const HIGHLIGHTER_Y_OFFSET = 0.01
+const SELECTOR_Y_OFFSET = 0.125
+
 # The height of the tile.
 export(int, 0, 20) var height = 0 setget set_height
 # References the MapTile nodes that are adjacent to this one.
@@ -37,8 +40,10 @@ var _map_index: int = -1 setget set_map_index, get_map_index
 var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
 # The current occupant of the tile.
 var _occupant: Character = null setget , get_current_occupant
-# Flag that indicates if the tile is avaiable to be selected
-var _selection_type: int = false setget set_selection_type, get_selection_type
+# Flag that indicates the highlight of the tile.
+var _highlight_type: int = HexHighlighter.Option.NONE setget set_highlight_type, get_highlight_type
+# Flag that indicates the selector of the tile.
+var _selector_type: int = HexHighlighter.Option.NONE setget set_selector_type, get_selector_type
 
 
 # Called when the node enters the scene tree for the first time.
@@ -102,15 +107,28 @@ func set_cube_coord(value: Vector3) -> void:
 	_cube_coord = value
 
 
-# Set the value of the selectable flag.
-func set_selection_type(value: int) -> void:
-	_selection_type = value
-	$HexHighlighter.set_option(_selection_type)
+# Set the value of the highlight flag.
+func set_highlight_type(value: int) -> void:
+	_highlight_type = value
+	$HexHighlighter.set_option(_highlight_type)
+	$HexHighlighter.set_transparency(Constants.OPACITY_FULL)
 
 
-# Get the value of the selectable flag.
-func get_selection_type() -> int:
-	return _selection_type
+# Get the value of the highlight flag.
+func get_highlight_type() -> int:
+	return _highlight_type
+
+
+# Set the value of the selector flag.
+func set_selector_type(value: int) -> void:
+	_selector_type = value
+	$SelectorHighlighter.set_option(_selector_type)
+	$SelectorHighlighter.set_transparency(Constants.OPACITY_HALF)
+
+
+# Get the values of the selector flag.
+func get_selector_type() -> int:
+	return _selector_type
 
 
 # Gets the current character occupying this tile.
@@ -159,10 +177,12 @@ func _update_collision_shape_height() -> void:
 	$CollisionShape.shape.set_points(points)
 
 
-# Update the position of the tile highlighter so that it is on top of the tile.
+# Update the position of the tile highlighters so that they are on top of the tile.
 func _update_highlighter_position() -> void:
-	var y_translate: float = 0.01 + (height * Constants.HEX_TILE_UNIT_HEIGHT)
+	var y_translate: float = HIGHLIGHTER_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
 	$HexHighlighter.translation = Vector3(0.0, y_translate, 0.0)
+	y_translate = SELECTOR_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
+	$SelectorHighlighter.translation = Vector3(0.0, y_translate, 0.0)
 	"""
 	TODO: remove label
 	"""

@@ -29,7 +29,6 @@ size = 10.0
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.48444, 0 )
 
 [node name="Selector" parent="." instance=ExtResource( 2 )]
-map = NodePath("")
 
 [node name="HexMap" parent="." instance=ExtResource( 3 )]
 
