@@ -16,7 +16,7 @@ signal player_turn_started(player)
 # warning-ignore:unused_signal
 signal player_action_type_canceled()
 # warning-ignore:unused_signal
-signal player_action_hovered(action)
+signal player_action_selected(action)
 # warning-ignore:unused_signal
 signal player_action_confirmed(action)
 # warning-ignore:unused_signal

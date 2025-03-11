@@ -44,9 +44,9 @@ func enter(_msg := {}) -> void:
 	)
 	ErrorUtil.connect_signal(
 		SignalBus,
-		"player_action_hovered",
+		"player_action_selected",
 		self,
-		"_on_SignalBus_player_action_hovered"
+		"_on_SignalBus_player_action_selected"
 	)
 	ErrorUtil.connect_signal(
 		SignalBus,
@@ -71,7 +71,7 @@ func update(_delta: float) -> void:
 func exit() -> void:
 	enc.selector.disconnect("move_tile_selected", self, "_on_Selector_move_tile_selected")
 	enc.selector.disconnect("effect_selector_required", self, "_on_Selector_effect_selector_required")
-	SignalBus.disconnect("player_action_hovered", self, "_on_SignalBus_player_action_hovered")
+	SignalBus.disconnect("player_action_selected", self, "_on_SignalBus_player_action_selected")
 	SignalBus.disconnect("player_action_type_canceled", self, "_on_SignalBus_player_action_type_canceled")
 
 
@@ -123,7 +123,7 @@ func _on_SignalBus_player_action_confirmed(action: Action) -> void:
 
 
 # Updates the tile highlights to show the area range of the action.
-func _on_SignalBus_player_action_hovered(action: Action) -> void:
+func _on_SignalBus_player_action_selected(action: Action) -> void:
 	enc.hex_map.clear_highlights()
 	var area_tiles: Array = action.get_area_tiles()
 	enc.hex_map.highlight_player_action_area(

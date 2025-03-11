@@ -89,7 +89,7 @@ func get_spells() -> Array:
 
 
 # Get an action from the currently active sub-options selection.
-func get_sub_option(index: int = 0) -> Action:
+func get_sub_option_at_index(index: int) -> Action:
 	var a: Action
 	match _current_selection:
 		Options.TECHNIQUE:
@@ -101,6 +101,11 @@ func get_sub_option(index: int = 0) -> Action:
 		_:
 			a = null
 	return a
+
+
+# Sets the focus to the specified index for sub options.
+func grab_focus_for_sub_option_at_index(index: int) -> void:
+	sub_options.grab_focus_at_index(index)
 
 
 # Toggle the disabled flag for options.

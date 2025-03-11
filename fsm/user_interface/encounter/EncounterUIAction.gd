@@ -16,7 +16,11 @@ var option_flag: int
 func enter(_msg := {}) -> void:
 	option_flag = _msg["option_flag"]
 	encounter_ui.set_current_selection(option_flag)
-	SignalBus.emit_signal("player_action_hovered", encounter_ui.get_sub_option())
+	encounter_ui.grab_focus_for_sub_option_at_index(0)
+	SignalBus.emit_signal(
+		"player_action_selected",
+		encounter_ui.get_sub_option_at_index(0)
+	)
 	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
@@ -50,7 +54,8 @@ func handle_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("ui_encounter_option_1"):
 		_option_selected(EncounterUI.Options.TECHNIQUE)
 	if _event.is_action_pressed("ui_encounter_option_2"):
-		_option_selected(EncounterUI.Options.SPELL)
+		print("Spell option selected")
+#		_option_selected(EncounterUI.Options.SPELL)
 	if _event.is_action_pressed("ui_encounter_option_3"):
 		"""
 		TODO: Eventually add button for items.
@@ -112,7 +117,8 @@ func _on_TechniqueButton_button_pressed() -> void:
 
 # Logic for what happens when the Spell button is pressed.
 func _on_SpellButton_button_pressed() -> void:
-	_option_selected(EncounterUI.Options.SPELL)
+	print("Spell option selected")
+#	_option_selected(EncounterUI.Options.SPELL)
 
 
 # Logic for what happens when the End button is pressed.

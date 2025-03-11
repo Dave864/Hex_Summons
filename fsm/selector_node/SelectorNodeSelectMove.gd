@@ -23,9 +23,9 @@ func enter(_msg: Dictionary = {}) -> void:
 	)
 	ErrorUtil.connect_signal(
 		SignalBus,
-		"player_action_hovered",
+		"player_action_selected",
 		self,
-		"_on_SignalBus_player_action_hovered"
+		"_on_SignalBus_player_action_selected"
 	)
 	ErrorUtil.connect_signal(
 		SignalBus,
@@ -49,9 +49,9 @@ func exit() -> void:
 		"_on_Selector_area_entered"
 	)
 	SignalBus.disconnect(
-		"player_action_hovered",
+		"player_action_selected",
 		self,
-		"_on_SignalBus_player_action_hovered"
+		"_on_SignalBus_player_action_selected"
 	)
 	SignalBus.disconnect(
 		"player_turn_ended",
@@ -96,7 +96,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 
 # Go to the "SelectAction" state when the UI signals that an action was hovered
 # over.
-func _on_SignalBus_player_action_hovered(action: Action) -> void:
+func _on_SignalBus_player_action_selected(action: Action) -> void:
 	state_machine.transition_to(SELECT_ACTION, {"action": action})
 
 
