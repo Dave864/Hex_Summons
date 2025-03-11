@@ -1,8 +1,8 @@
 class_name Selector
 extends Node
 """
-Moves around the map based on mouse movement and detects when a MapTile has been
-passed over.
+Moves around the map based on mouse movement or joystick input and detects
+when a MapTile has been passed over.
 """
 
 
@@ -15,10 +15,6 @@ signal move_tile_selected(map_tile)
 # warning-ignore:unused_signal
 signal target_selected(selection_area)
 
-# Flag that indicates when the player is changing to a new action mode.
-# Used to override the snap position behavior to allow for the selector
-# to be moved to the current player's position when changing player actions.
-var player_action_change: bool = false
 # The MapTile that was last passed over.
 var tile_hovered: MapTile = null
 

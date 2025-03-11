@@ -16,12 +16,6 @@ var action: Action = null
 func enter(_msg: Dictionary = {}) -> void:
 	action = _msg["action"]
 	action.emission_pt.translation = action.area_pt.translation
-	print(action.get_effect_tiles())
-#	selector.emit_signal(
-#		"effect_selector_required",
-#		action.get_effect_tiles(),
-#		false
-#	)
 	
 	ErrorUtil.connect_signal(
 		selector.collision_area,
@@ -40,6 +34,12 @@ func enter(_msg: Dictionary = {}) -> void:
 		"player_action_type_canceled",
 		self,
 		"_on_SignalBus_player_action_type_canceled"
+	)
+	
+	selector.emit_signal(
+		"effect_selector_required",
+		action.get_effect_tiles(),
+		false
 	)
 
 
