@@ -50,8 +50,18 @@ func get_map_tiles() -> Array:
 
 # Determines which map tiles are in the ring area positioned at the start index.
 # Does not account for tile heights. Returns the indexes of the tiles.
+# Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
 func determine_ring_area(start: int, ra: RingArea) -> Array:
-	return []
+	var distance: int = ra.radius
+	var tile_indices: Array = []
+	var start_coord: Vector3 = _map_tiles[start].get_cub_coord()
+	for x in range(-distance, distance + 1):
+		var x_upper: int = max(-distance, -x - distance)
+		var x_lower: int = min(distance, -x + distance)
+		for y in range(x_lower, x_upper + 1):
+			var coord: Vector3 = Vector3(x, y, -x - y) + start_coord
+			tile_indices.append(HexUtil.cube_to_index(coord, get_x_count()))
+	return tile_indices
 
 
 # Determines which map tiles are in the cardinal area positioned at the start index.
@@ -60,15 +70,17 @@ func determine_cardinal_area(start: int, ca: CardinalArea) -> Array:
 	return []
 
 
-# Determines which map tiles are in the cone area position at the start index.
-# Does not account for tile heights. Returns the indexes of the tiles.
-func determine_cone_area(start: int, ca: ConeArea) -> Array:
+# Determines which map tiles are in the cone area position at the start index,
+# oriented to face the specified direction (0 - 5). Does not account for tile
+# heights. Returns the indexes of the tiles.
+func determine_cone_area(start: int, dir: int, ca: ConeArea) -> Array:
 	return []
 
 
-# Determines which map tiles are in the column area positioned at the start index.
-# Does not account for tile heights. Returns the indexes of the tiles.
-func determine_column_area(start: int, ca: ColumnArea) -> Array:
+# Determines which map tiles are in the column area positioned at the start index,
+# oriented to face the specified direction (0 - 5). Does not account for tile
+# heights. Returns the indexes of the tiles.
+func determine_column_area(start: int, dir: int, ca: ColumnArea) -> Array:
 	return []
 
 
