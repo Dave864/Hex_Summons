@@ -114,53 +114,7 @@ func _cube_dist(start_index: int, end_index: int) -> float:
 	var height_diff: float = abs(_heights[start_index] - _heights[end_index])
 	# Height differences of 1 are seen as the same height
 	height_diff = 0.0 if height_diff <= 1.0 else height_diff
-	var start_pos: Vector3 = _index_to_cube(start_index)
-	var end_pos: Vector3 = _index_to_cube(end_index)
+	var start_pos: Vector3 = HexUtil.index_to_cube(start_index, _x_count)
+	var end_pos: Vector3 = HexUtil.index_to_cube(end_index, _x_count)
 	var diff: Vector3 = start_pos - end_pos
 	return (abs(diff.x) + abs(diff.y) + abs(diff.z) + abs(height_diff)) / 2.0
-
-
-# Get the cube coordinates of the tile a specified distance away from an origin
-# point in a specific hexagonal cardinal direction.
-# 0  /\  1
-# 5 |  | 2
-# 4  \/  3
-# Reference: # https://www.redblobgames.com/grids/hexagons/#neighbors
-func _cube_at_distance(origin: Vector3, distance: float, direction: int) -> Vector3:
-	var dest: Vector3
-	match direction:
-		MapTile.NeighborPosition.UPPER_LEFT:
-			dest = origin + Vector3(0.0, -distance, distance)
-		MapTile.NeighborPosition.UPPER_RIGHT:
-			dest = origin + Vector3(distance, -distance, 0.0)
-		MapTile.NeighborPosition.RIGHT:
-			dest = origin + Vector3(0.0, distance, -distance)
-		MapTile.NeighborPosition.BOTTOM_RIGHT:
-			dest = origin + Vector3(distance, 0.0, -distance)
-		MapTile.NeighborPosition.BOTTOM_LEFT:
-			dest = origin + Vector3(-distance, distance, 0.0)
-		MapTile.NeighborPosition.LEFT:
-			dest = origin + Vector3(-distance, 0.0, distance)
-		_:
-			dest = origin
-	return dest
-
-
-# Converts the index to the corresponding cube coordinate.
-# Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
-func _index_to_cube(index: int) -> Vector3:
-	var z_pos: int = int(floor(float(index) / float(_x_count)))
-	var x_pos: int = index % _x_count
-	var x_cube: int = int(x_pos - (z_pos - (z_pos & 1)) / 2.0)
-	var y_cube: int = z_pos
-	return Vector3(x_cube, y_cube, -x_cube - y_cube)
-
-
-# Converts the cube coordinates to the corresponding index.
-# Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
-func _cube_to_index(coord: Vector3) -> int:
-	# Use bitwise and to detect whether something is even (0) or odd (1), 
-	# in order to catch negative numbers too.
-	var z_pos: int = int(coord.y + (coord.x - (int(coord.x) & 1)) / 2.0)
-	var x_pos: int = int(coord.x)
-	return (z_pos * _x_count) + x_pos
