@@ -9,6 +9,8 @@ player characters or all enemy characters are defeated.
 """
 
 
+# The player character currently active
+var active_char: PlayerCharacter = null
 # The index of tiles that the player can move to.
 var movement_area: Array = []
 # The index of the tile the player starts from.
@@ -20,13 +22,14 @@ var action_range: Dictionary = {"type": null, "tiles": null}
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	start_index = enc.get_current_character().get_map_index_at()
+	active_char = enc.get_current_character()
+	start_index = active_char.get_map_index_at()
 	movement_area = enc.hex_map.get_traversible_tiles_for_character(
-		enc.get_current_character(),
+		active_char,
 		enc.enemies
 	)
-	enc.hex_map.highlight_player_movement(movement_area, enc.get_current_character())
-	SignalBus.emit_signal("player_turn_started", enc.get_current_character())
+	enc.hex_map.highlight_player_movement(movement_area, active_char)
+	SignalBus.emit_signal("player_turn_started", active_char)
 	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
@@ -88,7 +91,7 @@ func _ready_connect_signals() -> void:
 # the movement tile has been selected.
 func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 	var data: PoolVector3Array = enc.hex_map.get_point_path_for_player(
-		enc.get_current_character(),
+		active_char,
 		tile.get_map_index(),
 		enc.enemies,
 		movement_area
@@ -116,29 +119,23 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 func _on_SignalBus_player_action_confirmed(action: Action) -> void:
 	enc.hex_map.clear_highlights()
 	var area_tiles: Array = action.get_area_tiles()
-	enc.hex_map.highlight_player_action_area(
-		area_tiles,
-		enc.get_current_character()
-	)
+	enc.hex_map.highlight_player_action_area(area_tiles, active_char)
 
 
 # Updates the tile highlights to show the area range of the action.
 func _on_SignalBus_player_action_selected(action: Action) -> void:
 	enc.hex_map.clear_highlights()
 	var area_tiles: Array = action.get_area_tiles()
-	enc.hex_map.highlight_player_action_area(
-		area_tiles,
-		enc.get_current_character()
-	)
+	enc.hex_map.highlight_player_action_area(area_tiles, active_char)
 
 
 # Updates the tile selectors to show the effect range of an action
 func _on_Selector_effect_selector_required(
-	effect_area: Array,
+	effect_area_tiles: Array,
 	ignore_heights: bool
 ) -> void:
 	enc.hex_map.clear_selector_highlights()
-	enc.hex_map.highlight_effect_area(effect_area, ignore_heights)
+	enc.hex_map.highlight_effect_area(effect_area_tiles, ignore_heights)
 
 
 # Called when the user backs out from an action type menu. Resets the tile highlights
@@ -146,8 +143,4 @@ func _on_Selector_effect_selector_required(
 func _on_SignalBus_player_action_type_canceled() -> void:
 	enc.hex_map.clear_highlights()
 	enc.hex_map.clear_selector_highlights()
-	enc.hex_map.highlight_player_movement(
-		movement_area,
-		enc.get_current_character(),
-		start_index
-	)
+	enc.hex_map.highlight_player_movement(movement_area, active_char, start_index)

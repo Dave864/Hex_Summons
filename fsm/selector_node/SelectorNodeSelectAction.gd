@@ -99,13 +99,12 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 			action.emission_pt.translation = action.area_pt.translation
 		else:
 			action.emission_pt.translation = map_tile.translation
-		
-		if action.get_is_cardinal():
-			if action.emit_from_center:
-				action.rotate_to_point(map_tile.translation)
-			else:
-				action.rotate_to_point(action.area_pt.translation, true)
-		
+#		if action.get_is_cardinal():
+#			if action.emit_from_center:
+#				action.rotate_to_point(map_tile.translation)
+#			else:
+#				action.rotate_to_point(action.area_pt.translation, true)
+
 		selector.emit_signal(
 			"effect_selector_required",
 			action.get_effect_tiles(),

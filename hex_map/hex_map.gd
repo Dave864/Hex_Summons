@@ -304,7 +304,7 @@ func get_point_path_toward(
 
 # Determines the path to the point within a character's movement area.
 func get_point_path_toward_for_character(
-	character: Character,
+	c: Character,
 	dest_id: int,
 	enemies: Array,
 	players: Array,
@@ -314,22 +314,22 @@ func get_point_path_toward_for_character(
 	# provided.
 	if movement_area.size() == 0:
 		movement_area = _hm_astar.get_traversable_tiles(
-			character.get_map_index_at(),
-			character.stats.get_movement_range(),
-			_get_tiles_from_ids(character.stats.get_movement_area())
+			c.get_map_index_at(),
+			c.stats.get_movement_range(),
+			determine_area(c.stats.get_movement_area(), c.get_map_index_at())
 		)
-	var start_id: int = character.get_map_index_at()
+	var start_id: int = c.get_map_index_at()
 	var true_dest_id: int = dest_id
 	
 	# Disable connection points of the opposite character type to prevent character
 	# from being able to move into those spaces
 	update_astar_disabled_for_characters(
 		enemies,
-		character.get_type() == Constants.MapOccupants.PLAYER
+		c.get_type() == Constants.MapOccupants.PLAYER
 	)
 	update_astar_disabled_for_characters(
 		players,
-		character.get_type() == Constants.MapOccupants.ENEMY
+		c.get_type() == Constants.MapOccupants.ENEMY
 	)
 	# reenable destination tile to allow a path to be found when target tile 
 	# has an opponent.
@@ -344,7 +344,7 @@ func get_point_path_toward_for_character(
 			var occupant: Character = _map_tiles[path_to_dest[i]].get_current_occupant()
 			if (
 				not path_to_dest[i] in movement_area
-				or (occupant != null and occupant.get_type() != character.get_type())
+				or (occupant != null and occupant.get_type() != c.get_type())
 			):
 				true_dest_id = path_to_dest[i - 1]
 		# Check if the true destination, the last tile in the available move, is
@@ -353,8 +353,8 @@ func get_point_path_toward_for_character(
 		var dest_occupant: Character = _map_tiles[true_dest_id].get_current_occupant()
 		if (
 			dest_occupant != null
-			and dest_occupant.name != character.name
-			and dest_occupant.get_type() == character.get_type()
+			and dest_occupant.name != c.name
+			and dest_occupant.get_type() == c.get_type()
 		):
 			_hm_astar.set_point_disabled(true_dest_id, true)
 		else:
@@ -379,7 +379,7 @@ func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Arra
 	var t_tiles: Array = _hm_astar.get_traversable_tiles(
 		c.get_map_index_at(),
 		c.stats.get_movement_range(),
-		_get_tiles_from_ids(c.stats.get_movement_area())
+		determine_area(c.stats.get_movement_area(), c.get_map_index_at())
 	)
 	var opponent_tiles: Array = []
 	for oc in opponents:

@@ -9,10 +9,8 @@ player characters or all enemy characters are defeated.
 """
 
 
-"""
-TODO: Remove this when you create the AI logic for the EnemyCharacter
-"""
-var current_character: EnemyCharacter
+# The enemy character currently active
+var active_char: EnemyCharacter = null
 # The index of tiles that the enemy can move to.
 var movement_range: Array = []
 
@@ -20,9 +18,9 @@ var movement_range: Array = []
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	current_character = enc.get_current_character()
+	active_char = enc.get_current_character()
 	movement_range = enc.hex_map.get_traversible_tiles_for_character(
-		current_character,
+		active_char,
 		enc.players
 	)
 	ErrorUtil.connect_signal(
@@ -31,7 +29,7 @@ func enter(_msg := {}) -> void:
 		self,
 		"_on_SignalBus_enemy_actions_required"
 	)
-	SignalBus.emit_signal("enemy_turn_started", current_character)
+	SignalBus.emit_signal("enemy_turn_started", active_char)
 
 
 # Corresponds to the `_process()` callback.
@@ -87,7 +85,7 @@ func _determine_action_chain() -> void:
 		var p_data: Array = [
 			p, 
 			enc.hex_map.calculate_distance(
-				current_character.get_map_index_at(),
+				active_char.get_map_index_at(),
 				p.get_map_index_at()
 			)
 		]
@@ -95,7 +93,7 @@ func _determine_action_chain() -> void:
 	
 	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
 	var path: PoolVector3Array = enc.hex_map.get_point_path_toward_for_character(
-		current_character,
+		active_char,
 		player_distances[0][0].get_map_index_at(),
 		enc.enemies,
 		enc.players

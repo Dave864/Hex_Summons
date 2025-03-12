@@ -90,14 +90,8 @@ func get_movement_range() -> int:
 
 
 # Get the indexes of the tiles within movement range.
-func get_movement_area() -> Array:
-	var area: Array
-	if _movement_node != null:
-		area = _movement_node.tile_ids.duplicate(true)
-	else:
-		ErrorUtil.missing_stat_for_node(get_parent().name, MOVEMENT)
-		area = []
-	return area
+func get_movement_area() -> AreaRange:
+	return _movement_node
 
 
 func get_max_health() -> int:
