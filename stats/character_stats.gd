@@ -23,7 +23,7 @@ const RES_WT: String = "ResistanceWater"
 const RES_WD: String = "ResistanceWind"
 
 var _level: int = 1 setget set_level, get_level
-var _movement_node: RingArea = null
+var _movement_node: AreaRange = null
 # Core stat values
 var _current_health: int = 0
 var _health_node: Stat = null
@@ -183,7 +183,7 @@ func get_all() -> Dictionary:
 
 # Assign the movement node or create it if not present.
 func _set_movement_node() -> void:
-	var move_node: RingArea = get_node_or_null(MOVEMENT)
+	var move_node: AreaRange = get_node_or_null(MOVEMENT)
 	if move_node == null and Engine.is_editor_hint():
 		var ring_area: PackedScene = load("res://range_type/RingArea.tscn")
 		_movement_node = ring_area.instance()

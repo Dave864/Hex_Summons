@@ -9,8 +9,10 @@ Describes the range and effects of an action.
 TODO: Implement logic to use stats nodes to define action effect
 """
 export(int, 1, 1000) var power
-# Flag that denotes if the emission is fixed to the center of the area
+# Flag that denotes if the emission is fixed to the center of the area.
 export(bool) var emit_from_center
+# Flag that denotes if the emission ignores tile heights.
+export(bool) var ignore_heights
 
 # The area that is ignored when determining the possible tiles for effect emmision.
 var _dead_range: AreaRange
@@ -29,9 +31,9 @@ onready var emission_pt: EmissionPoint = $EmissionPoint
 
 func _ready() -> void:
 	# No DeadRange node indicates no dead range.
-	_dead_range = get_node_or_null("AreaPoint/DeadRange")
-	_area_range = get_node("AreaPoint/AreaRange")
-	_effect_range = get_node("EmissionPoint/EffectRange")
+	_dead_range = get_node_or_null("DeadRange")
+	_area_range = get_node("AreaRange")
+	_effect_range = get_node("EffectRange")
 	_is_cardinal = _area_range is CardinalRange
 
 

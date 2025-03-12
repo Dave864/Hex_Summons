@@ -1,23 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://range_type/CardinalArea.tscn" type="PackedScene" id=1]
 [ext_resource path="res://actions/action.gd" type="Script" id=2]
 [ext_resource path="res://range_type/EmissionPoint.tscn" type="PackedScene" id=3]
-[ext_resource path="res://range_type/ConeArea.tscn" type="PackedScene" id=4]
 
 [node name="Strike" type="Node"]
 script = ExtResource( 2 )
 emit_from_center = true
 
-[node name="AreaPoint" type="Position3D" parent="."]
-
-[node name="AreaRange" parent="AreaPoint" instance=ExtResource( 1 )]
-collision_layer = 32
-
 [node name="EmissionPoint" parent="." instance=ExtResource( 3 )]
-
-[node name="EffectRange" parent="EmissionPoint" instance=ExtResource( 4 )]
-collision_layer = 64
-
-[connection signal="area_entered" from="EmissionPoint/EffectRange" to="EmissionPoint/EffectRange" method="_on_AreaRange_area_entered"]
-[connection signal="area_exited" from="EmissionPoint/EffectRange" to="EmissionPoint/EffectRange" method="_on_AreaRange_area_exited"]

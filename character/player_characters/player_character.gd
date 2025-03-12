@@ -48,9 +48,7 @@ func move_collisions(p: Vector3) -> void:
 	var adjusted_p: Vector3 = Vector3(p.x, 0.0, p.z)
 	_movement_node.translation = adjusted_p
 	for tech in _techniques:
-		tech.area_pt.translation = adjusted_p
 		tech.emission_pt.translation = adjusted_p
 	for spell in _spells:
-		spell.area_pt.translation = adjusted_p
 		spell.emission_pt.translation = adjusted_p
 	

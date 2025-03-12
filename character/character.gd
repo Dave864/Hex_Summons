@@ -11,7 +11,7 @@ var stats: CharacterStats
 var _start_set: bool = false setget , get_is_start_set
 var _current_index: int = -1 setget , get_map_index_at
 # Reference to movement node of Stats node to allow for easy movement.
-var _movement_node: RingArea = null
+var _movement_node: AreaRange = null
 
 # Reference to the Character sprite.
 onready var character_sprite: Sprite3D = $Sprite3D

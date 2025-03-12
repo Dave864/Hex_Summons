@@ -13,5 +13,5 @@ func _ready():
 	pass # Replace with function body.
 
 
-func _on_Area_area_entered(map_tile: Area) -> void:
+func _on_EmissionPoint_area_entered(map_tile: Area) -> void:
 	emission_tile = map_tile

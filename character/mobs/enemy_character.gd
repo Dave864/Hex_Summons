@@ -25,4 +25,4 @@ func move_collisions(p: Vector3) -> void:
 	var adjusted_p: Vector3 = Vector3(p.x, 0.0, p.z)
 	_movement_node.translation = adjusted_p
 	for action in get_node("Actions").get_children():
-		action.area_pt.translation = adjusted_p
+		action.emission_pt.translation = adjusted_p
