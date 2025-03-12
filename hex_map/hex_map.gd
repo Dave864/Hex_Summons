@@ -85,7 +85,7 @@ func determine_cone_area(start: int, dir: int, ca: ConeArea) -> Array:
 	var spread: int = ca.spread
 	var tile_indices: Array = []
 	var start_coord: Vector3 = _map_tiles[start].get_cub_coord()
-	tile_indices.append(start_coord)
+	tile_indices.append(start)
 	for s in range(spread + 1):
 		var cur_dir: int = dir + s
 		# Keep the direction witin the bounds of 0 - 5.
@@ -108,7 +108,34 @@ func determine_cone_area(start: int, dir: int, ca: ConeArea) -> Array:
 # oriented to face the specified direction (0 - 5). Does not account for tile
 # heights. Returns the indexes of the tiles.
 func determine_column_area(start: int, dir: int, ca: ColumnArea) -> Array:
-	return []
+	var distance: int = ca.distance
+	var spread: int = ca.spread
+	var left_dir: int = dir - 1 if dir > 0 else 5
+	var right_dir: int = dir + 1 if dir < 5 else 0
+	var tile_indices: Array = []
+	var start_coord: Vector3 = _map_tiles[start].get_cub_coord()
+	tile_indices.append(start)
+	for s in range(spread + 1):
+		var left_coord: Vector3 = HexUtil.cube_at_distance(start_coord, left_dir, s)
+		var right_coord: Vector3 = HexUtil.cube_at_distance(start_coord, right_dir, s)
+		# Don't add adjacent tiles if the spread is 0.
+		if s > 0:
+			tile_indices.append(HexUtil.cube_to_index(left_coord, get_x_count()))
+			tile_indices.append(HexUtil.cube_to_index(right_coord, get_x_count()))
+		# Add additional tiles to fully fill in the "column" shape. Without the
+		# extra tiles, the shape is a chevron.
+		for d in range(distance + spread - s):
+			# Only cast ray from starting point when spread is at 0.
+			if s == 0:
+				var ray_coord: Vector3 = HexUtil.cube_at_distance(start_coord, dir, d)
+				tile_indices.append(HexUtil.cube_to_index(ray_coord, get_x_count()))
+			# Cast rays from both left and right points.
+			else:
+				var ray_coord_l: Vector3 = HexUtil.cube_at_distance(left_coord, dir, d)
+				var ray_coord_r: Vector3 = HexUtil.cube_at_distance(right_coord, dir, d)
+				tile_indices.append(HexUtil.cube_to_index(left_coord, get_x_count()))
+				tile_indices.append(HexUtil.cube_to_index(right_coord, get_x_count()))
+	return tile_indices
 
 
 # Highlight the specified tiles as movement for the given player character.
