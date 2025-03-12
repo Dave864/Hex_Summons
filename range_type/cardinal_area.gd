@@ -1,4 +1,4 @@
-class_name CardinalRange
+class_name CardinalArea
 extends AreaRange
 """
 Describes an area whose area is constrained by the six directions of a hexagon.

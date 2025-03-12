@@ -48,6 +48,30 @@ func get_map_tiles() -> Array:
 	return _map_tiles
 
 
+# Determines which map tiles are in the ring area positioned at the start index.
+# Does not account for tile heights. Returns the indexes of the tiles.
+func determine_ring_area(start: int, ra: RingArea) -> Array:
+	return []
+
+
+# Determines which map tiles are in the cardinal area positioned at the start index.
+# Does not account for tile heights. Returns the indexes of the tiles.
+func determine_cardinal_area(start: int, ca: CardinalArea) -> Array:
+	return []
+
+
+# Determines which map tiles are in the cone area position at the start index.
+# Does not account for tile heights. Returns the indexes of the tiles.
+func determine_cone_area(start: int, ca: ConeArea) -> Array:
+	return []
+
+
+# Determines which map tiles are in the column area positioned at the start index.
+# Does not account for tile heights. Returns the indexes of the tiles.
+func determine_column_area(start: int, ca: ColumnArea) -> Array:
+	return []
+
+
 # Highlight the specified tiles as movement for the given player character.
 # Setting start_id to -1 indicates that we want to use the current player position
 # to determine where to set the Player highlight.
@@ -153,13 +177,13 @@ func calculate_distance(start_id: int, dest_id: int) -> int:
 	return _hm_astar.get_id_path(start_id, dest_id).size()
 
 
-# Determines the path to the point wihtin a defines area for a player character.
+# Determines the path to the point within a defined area for a player character.
 func get_point_path_for_player(
 	pc: PlayerCharacter,
 	dest_id: int,
 	enemies: Array,
 	movement_area: Array
-) -> PoolVector3Array:	
+) -> PoolVector3Array:
 	# Disable connection points of the opposite character type to prevent character
 	# from being able to move into those spaces
 	update_astar_disabled_for_characters(enemies, true)
