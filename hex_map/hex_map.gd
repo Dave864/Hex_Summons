@@ -14,8 +14,8 @@ var _hm_astar: HexMapAStar = null
 var _floor_mesh: PlaneMesh = preload("res://hex_map/hex_map_floor.tres")
 var _floor_mesh_node: MeshInstance = null
 var _tiles_node: Tiles = null
-var _highlighted_tiles: Array = []
-var _selectable_tiles: Array = []
+var _highlighted_map_indexes: Array = []
+var _selectable_map_indexes: Array = []
 
 onready var _map_tiles: Array = [] setget , get_map_tiles
 # Reference to the scene tree root.
@@ -73,19 +73,19 @@ func highlight_player_movement(
 				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 			else:
 				tile.set_highlight_type(HexHighlighter.Option.RANGE)
-			_highlighted_tiles.append(tile.get_map_index())
+			_highlighted_map_indexes.append(tile.get_map_index())
 		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
 			tile.set_highlight_type(HexHighlighter.Option.NONE)
-			_highlighted_tiles.append(tile.get_map_index())
+			_highlighted_map_indexes.append(tile.get_map_index())
 		elif tile.get_current_occupant().name == pc.name:
 			if start_id < 0 or start_id == pc.get_map_index_at():
 				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 			else:
 				tile.set_highlight_type(HexHighlighter.Option.RANGE)
-			_highlighted_tiles.append(tile.get_map_index())
+			_highlighted_map_indexes.append(tile.get_map_index())
 		else:
 			tile.set_highlight_type(HexHighlighter.Option.ALLY)
-			_highlighted_tiles.append(tile.get_map_index())
+			_highlighted_map_indexes.append(tile.get_map_index())
 
 
 # Highlight the specified tiles as being within the area range of an action.
@@ -102,16 +102,16 @@ func highlight_player_action_area(tile_indexes: Array, pc: PlayerCharacter) -> v
 		var tile: MapTile = _map_tiles[i]
 		if i == pc.get_map_index_at():
 			tile.set_highlight_type(HexHighlighter.Option.PLAYER)
-			_highlighted_tiles.append(tile.get_map_index())
+			_highlighted_map_indexes.append(tile.get_map_index())
 		elif tile.get_current_occupant() == null:
 			tile.set_highlight_type(HexHighlighter.Option.RANGE)
-			_highlighted_tiles.append(tile.get_map_index())
+			_highlighted_map_indexes.append(tile.get_map_index())
 		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
 			tile.set_highlight_type(HexHighlighter.Option.TARGET)
-			_highlighted_tiles.append(tile.get_map_index())
+			_highlighted_map_indexes.append(tile.get_map_index())
 		else:
 			tile.set_highlight_type(HexHighlighter.Option.ALLY)
-			_highlighted_tiles.append(tile.get_map_index())
+			_highlighted_map_indexes.append(tile.get_map_index())
 
 
 # Highlight the selector for the specified tiles to represent the effect area
@@ -125,27 +125,27 @@ func highlight_effect_area(tile_indexes: Array, ignore_heights: bool) -> void:
 	for tile in map_section:
 		if tile.get_current_occupant() == null:
 			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)
-			_selectable_tiles.append(tile.get_map_index())
+			_selectable_map_indexes.append(tile.get_map_index())
 		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
 			tile.set_selector_type(HexHighlighter.Option.TARGET)
-			_selectable_tiles.append(tile.get_map_index())
+			_selectable_map_indexes.append(tile.get_map_index())
 		else:
 			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)
-			_selectable_tiles.append(tile.get_map_index())
+			_selectable_map_indexes.append(tile.get_map_index())
 
 
 # Clear the higlights from all tiles.
 func clear_highlights() -> void:
-	for tile in _highlighted_tiles:
-		tile.set_highlight_type(HexHighlighter.Option.NONE)
-	_highlighted_tiles.clear()
+	for i in _highlighted_map_indexes:
+		_map_tiles[i].set_highlight_type(HexHighlighter.Option.NONE)
+	_highlighted_map_indexes.clear()
 
 
 # Clear selector highlights from all tiles.
 func clear_selector_highlights() -> void:
-	for tile in _selectable_tiles:
-		tile.set_selector_type(HexHighlighter.Option.NONE)
-	_selectable_tiles.clear()
+	for i in _selectable_map_indexes:
+		_map_tiles[i].set_selector_type(HexHighlighter.Option.NONE)
+	_selectable_map_indexes.clear()
 
 
 # Calculates the distance from a given start to a specified destination.
