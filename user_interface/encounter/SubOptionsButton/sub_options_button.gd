@@ -27,6 +27,8 @@ func get_action_details() -> Action:
 # Sets the right focus neighbor for controller support.
 func set_focus_neighbor_right(neighbor: SubOptionsButton) -> void:
 	$Button.set_focus_neighbour(MARGIN_RIGHT, neighbor.get_button().get_path())
+	# Prevents the action buttons from being reached whil sub options are open.
+	$Button.set_focus_neighbor(MARGIN_BOTTOM, null)
 	neighbor.set_focus_neighbour(MARGIN_LEFT, $Button.get_path())
 
 
