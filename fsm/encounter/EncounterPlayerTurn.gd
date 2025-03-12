@@ -129,12 +129,12 @@ func _on_SignalBus_player_action_confirmed(action: Action) -> void:
 # Updates the tile highlights to show the area range of the action.
 func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
 	var emission_index: int = action.get_emission_map_index()
-	var area_tiles: Array = enc.hex_map.determine_area(
+	var area_indexes: Array = enc.hex_map.determine_area_indexes(
 		action.get_area_range(),
 		emission_index
 	)
 	enc.hex_map.clear_highlights()
-	enc.hex_map.highlight_player_action_area(area_tiles, active_char)
+	enc.hex_map.highlight_player_action_area(area_indexes, active_char)
 
 
 # Updates the tile selectors to show the effect range of an action
@@ -143,11 +143,11 @@ func _on_Selector_effect_selector_required(
 	ignore_heights: bool
 ) -> void:
 	enc.hex_map.clear_selector_highlights()
-	var effect_area_tiles: Array = enc.hex_map.determine_area(
+	var effect_area_indexes: Array = enc.hex_map.determine_area_indexes(
 		action.get_effect_range(),
 		action.get_emission_map_index()
 	)
-	enc.hex_map.highlight_effect_area(effect_area_tiles, ignore_heights)
+	enc.hex_map.highlight_effect_area(effect_area_indexes, ignore_heights)
 
 
 # Called when the user backs out from an action type menu. Resets the tile highlights
