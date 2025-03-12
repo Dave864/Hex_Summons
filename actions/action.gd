@@ -23,8 +23,6 @@ var _effect_range: AreaRange
 # Whether the area range is cardinal or ring.
 var _is_cardinal: bool = false setget , get_is_cardinal
 
-# The point the area range collisions are located at.
-onready var area_pt: Position3D = $AreaPoint
 # The point the effect is emitted from.
 onready var emission_pt: EmissionPoint = $EmissionPoint
 
@@ -34,7 +32,7 @@ func _ready() -> void:
 	_dead_range = get_node_or_null("DeadRange")
 	_area_range = get_node("AreaRange")
 	_effect_range = get_node("EffectRange")
-	_is_cardinal = _area_range is CardinalRange
+	_is_cardinal = _area_range is CardinalArea
 
 
 func _process(_delta) -> void:
@@ -85,7 +83,7 @@ func disable_effect_collision() -> void:
 # Rotates the emission along the y-axis to align it with a specified point.
 # Will only affect cardinal_range areas.
 func rotate_to_point(point: Vector3, inverse: bool = false) -> void:
-	if _area_range is CardinalRange:
+	if _is_cardinal:
 		point.y = 0.0
 		var emission_pos: Vector3 = emission_pt.global_translation
 		emission_pos.y = 0.0
