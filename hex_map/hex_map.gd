@@ -56,8 +56,8 @@ func determine_ring_area(start: int, ra: RingArea) -> Array:
 	var tile_indices: Array = []
 	var start_coord: Vector3 = _map_tiles[start].get_cub_coord()
 	for x in range(-radius, radius + 1):
-		var x_upper: int = max(-radius, -x - radius)
-		var x_lower: int = min(radius, -x + radius)
+		var x_upper: int = max(-radius, -x - radius) as int
+		var x_lower: int = min(radius, -x + radius) as int
 		for y in range(x_lower, x_upper + 1):
 			var coord: Vector3 = Vector3(x, y, -x - y) + start_coord
 			tile_indices.append(HexUtil.cube_to_index(coord, get_x_count()))
@@ -81,7 +81,27 @@ func determine_cardinal_area(start: int, ca: CardinalArea) -> Array:
 # oriented to face the specified direction (0 - 5). Does not account for tile
 # heights. Returns the indexes of the tiles.
 func determine_cone_area(start: int, dir: int, ca: ConeArea) -> Array:
-	return []
+	var distance: int = ca.distance
+	var spread: int = ca.spread
+	var tile_indices: Array = []
+	var start_coord: Vector3 = _map_tiles[start].get_cub_coord()
+	tile_indices.append(start_coord)
+	for s in range(spread + 1):
+		var cur_dir: int = dir + s
+		# Keep the direction witin the bounds of 0 - 5.
+		cur_dir -= 0 if cur_dir < 6 else 6
+		for d in range(distance):
+			var cur_coord: Vector3 = HexUtil.cube_at_distance(start_coord, cur_dir, d)
+			tile_indices.append(HexUtil.cube_to_index(cur_coord, get_x_count()))
+			# Don't cast ray if there is no spread or if this is the last origin
+			# line to add.
+			if spread > 0 and s < spread:
+				for i in range(d - 1):
+					# The ray is cast two positions clockwise from the origin direction
+					var ray_dir: int = cur_dir + 2 if cur_dir < 4 else cur_dir - 4
+					var ray_coord: Vector3 = HexUtil.cube_at_distance(cur_coord, ray_dir, i)
+					tile_indices.append(HexUtil.cube_to_index(ray_coord, get_x_count()))
+	return tile_indices
 
 
 # Determines which map tiles are in the column area positioned at the start index,
