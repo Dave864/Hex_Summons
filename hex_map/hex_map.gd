@@ -60,7 +60,7 @@ func determine_ring_area(start: int, ra: RingArea) -> Array:
 		var x_lower: int = min(radius, -x + radius) as int
 		for y in range(x_lower, x_upper + 1):
 			var coord: Vector3 = Vector3(x, y, -x - y) + start_coord
-			tile_indices.append(HexUtil.cube_to_index(coord, get_x_count()))
+			_add_valid_cube(tile_indices, coord)
 	return tile_indices
 
 
@@ -73,7 +73,8 @@ func determine_cardinal_area(start: int, ca: CardinalArea) -> Array:
 	tile_indices.append(start)
 	for d in range(1, distance + 1):
 		for n in range(6):
-			tile_indices.append(HexUtil.cube_at_distance(start_coord, d, n))
+			var coord: Vector3 = HexUtil.cube_at_distance(start_coord, d, n)
+			_add_valid_cube(tile_indices, coord)
 	return tile_indices
 
 
@@ -92,7 +93,7 @@ func determine_cone_area(start: int, dir: int, ca: ConeArea) -> Array:
 		cur_dir -= 0 if cur_dir < 6 else 6
 		for d in range(distance):
 			var cur_coord: Vector3 = HexUtil.cube_at_distance(start_coord, cur_dir, d)
-			tile_indices.append(HexUtil.cube_to_index(cur_coord, get_x_count()))
+			_add_valid_cube(tile_indices, cur_coord)
 			# Don't cast ray if there is no spread or if this is the last origin
 			# line to add.
 			if spread > 0 and s < spread:
@@ -100,7 +101,7 @@ func determine_cone_area(start: int, dir: int, ca: ConeArea) -> Array:
 					# The ray is cast two positions clockwise from the origin direction
 					var ray_dir: int = cur_dir + 2 if cur_dir < 4 else cur_dir - 4
 					var ray_coord: Vector3 = HexUtil.cube_at_distance(cur_coord, ray_dir, i)
-					tile_indices.append(HexUtil.cube_to_index(ray_coord, get_x_count()))
+					_add_valid_cube(tile_indices, ray_coord)
 	return tile_indices
 
 
@@ -120,21 +121,38 @@ func determine_column_area(start: int, dir: int, ca: ColumnArea) -> Array:
 		var right_coord: Vector3 = HexUtil.cube_at_distance(start_coord, right_dir, s)
 		# Don't add adjacent tiles if the spread is 0.
 		if s > 0:
-			tile_indices.append(HexUtil.cube_to_index(left_coord, get_x_count()))
-			tile_indices.append(HexUtil.cube_to_index(right_coord, get_x_count()))
+			_add_valid_cube(tile_indices, left_coord)
+			_add_valid_cube(tile_indices, right_coord)
 		# Add additional tiles to fully fill in the "column" shape. Without the
 		# extra tiles, the shape is a chevron.
 		for d in range(distance + spread - s):
 			# Only cast ray from starting point when spread is at 0.
 			if s == 0:
 				var ray_coord: Vector3 = HexUtil.cube_at_distance(start_coord, dir, d)
-				tile_indices.append(HexUtil.cube_to_index(ray_coord, get_x_count()))
+				_add_valid_cube(tile_indices, ray_coord)
 			# Cast rays from both left and right points.
 			else:
 				var ray_coord_l: Vector3 = HexUtil.cube_at_distance(left_coord, dir, d)
 				var ray_coord_r: Vector3 = HexUtil.cube_at_distance(right_coord, dir, d)
-				tile_indices.append(HexUtil.cube_to_index(left_coord, get_x_count()))
-				tile_indices.append(HexUtil.cube_to_index(right_coord, get_x_count()))
+				_add_valid_cube(tile_indices, ray_coord_l)
+				_add_valid_cube(tile_indices, ray_coord_r)
+	return tile_indices
+
+
+# Gets the map tiles of the specified area. Determines which calculation method
+# based on the type of the area.
+func determine_area(area: AreaRange, start: int, dir: int = -1) -> Array:
+	var tile_indices: Array
+	if area is RingArea:
+		tile_indices = determine_ring_area(start, area)
+	elif area is CardinalArea:
+		tile_indices = determine_cardinal_area(start, area)
+	elif area is ConeArea:
+		tile_indices = determine_cone_area(start, dir, area)
+	elif area is ColumnArea:
+		tile_indices = determine_column_area(start, dir, area)
+	else:
+		tile_indices = []
 	return tile_indices
 
 
@@ -403,3 +421,16 @@ func _get_tiles_from_ids(ids: Array) -> Array:
 	for i in ids:
 		tiles.append(_map_tiles[i])
 	return tiles
+
+
+# Adds the index to the provided array if the index is within the bounds of
+# the hex map.
+func _add_valid_index(a: Array, index: int) -> void:
+	if index >= 0 and index < (get_x_count() * get_z_count()):
+		a.append(index)
+
+
+# Adds the index value of the provided cube coordinate if the index is within
+# the bounds of the hex map.
+func _add_valid_cube(a: Array, cube: Vector3) -> void:
+	_add_valid_index(a, HexUtil.cube_to_index(cube, get_x_count()))
