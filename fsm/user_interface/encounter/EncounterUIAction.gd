@@ -19,6 +19,7 @@ func enter(_msg := {}) -> void:
 	encounter_ui.grab_focus_for_sub_option_at_index(0)
 	SignalBus.emit_signal(
 		"player_action_selected",
+		encounter_ui.get_focused_player(),
 		encounter_ui.get_sub_option_at_index(0)
 	)
 	

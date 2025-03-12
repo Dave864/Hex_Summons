@@ -24,10 +24,11 @@ func _ready() -> void:
 
 
 # Populate the sub-options container.
-func populate_sub_options(player_actions: Array) -> void:
+func populate_sub_options(player: PlayerCharacter, player_actions: Array) -> void:
 	for pa in player_actions:
 		var new_button: SubOptionsButton = _sub_options_button.instance()
 		new_button.set_action_details(pa)
+		new_button.set_player(player)
 		_actions.append(pa)
 		_sub_options_container.add_child(new_button)
 	for i in range(_sub_options_container.get_child_count() - 1):

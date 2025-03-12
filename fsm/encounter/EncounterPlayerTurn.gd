@@ -117,24 +117,36 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 # Updates the tile highlights to show the area range of the action.
 func _on_SignalBus_player_action_confirmed(action: Action) -> void:
+	var emission_index: int = action.get_emission_map_index()
+	var area_tiles: Array = enc.hex_map.determine_area(
+		action.get_area_range(),
+		emission_index
+	)
 	enc.hex_map.clear_highlights()
-	var area_tiles: Array = action.get_area_tiles()
 	enc.hex_map.highlight_player_action_area(area_tiles, active_char)
 
 
 # Updates the tile highlights to show the area range of the action.
-func _on_SignalBus_player_action_selected(action: Action) -> void:
+func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
+	var emission_index: int = action.get_emission_map_index()
+	var area_tiles: Array = enc.hex_map.determine_area(
+		action.get_area_range(),
+		emission_index
+	)
 	enc.hex_map.clear_highlights()
-	var area_tiles: Array = action.get_area_tiles()
 	enc.hex_map.highlight_player_action_area(area_tiles, active_char)
 
 
 # Updates the tile selectors to show the effect range of an action
 func _on_Selector_effect_selector_required(
-	effect_area_tiles: Array,
+	action: Action,
 	ignore_heights: bool
 ) -> void:
 	enc.hex_map.clear_selector_highlights()
+	var effect_area_tiles: Array = enc.hex_map.determine_area(
+		action.get_effect_range(),
+		action.get_emission_map_index()
+	)
 	enc.hex_map.highlight_effect_area(effect_area_tiles, ignore_heights)
 
 

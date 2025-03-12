@@ -6,6 +6,7 @@ Button that describes a possible sub-option for a given option.
 
 
 var _action_details: Action = null setget set_action_details, get_action_details
+var _player: PlayerCharacter = null setget set_player
 
 
 # Called when the node enters the scene tree for the first time.
@@ -24,11 +25,17 @@ func get_action_details() -> Action:
 	return _action_details
 
 
+# Set the player character reference for the owner of the action this UI element
+# describes.
+func set_player(p: PlayerCharacter) -> void:
+	_player = p
+
+
 # Sets the right focus neighbor for controller support.
 func set_focus_neighbor_right(neighbor: SubOptionsButton) -> void:
 	$Button.set_focus_neighbour(MARGIN_RIGHT, neighbor.get_button().get_path())
 	# Prevents the action buttons from being reached whil sub options are open.
-	$Button.set_focus_neighbor(MARGIN_BOTTOM, null)
+	$Button.set_focus_neighbour(MARGIN_BOTTOM, "")
 	neighbor.set_focus_neighbour(MARGIN_LEFT, $Button.get_path())
 
 
@@ -39,7 +46,7 @@ func get_button() -> Node:
 
 # Emit a signal indicating that the button was pressed.
 func _on_Button_pressed() -> void:
-	SignalBus.emit_signal("player_action_selected", _action_details)
+	SignalBus.emit_signal("player_action_selected", _player, _action_details)
 
 
 # Emit a signal indicating that the button was hovered over.

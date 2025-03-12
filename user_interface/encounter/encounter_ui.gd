@@ -150,9 +150,9 @@ func _ready() -> void:
 func _update_sub_options() -> void:
 	match _current_selection:
 		Options.TECHNIQUE:
-			sub_options.populate_sub_options(_techniques)
+			sub_options.populate_sub_options(_player, _techniques)
 		Options.SPELL:
-			sub_options.populate_sub_options(_spells)
+			sub_options.populate_sub_options(_player, _spells)
 		Options.SUMMON:
 			pass
 		_:

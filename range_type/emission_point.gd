@@ -1,5 +1,5 @@
 class_name EmissionPoint
-extends Position3D
+extends Area
 """
 Defines the tile the action will be emmited from.
 """

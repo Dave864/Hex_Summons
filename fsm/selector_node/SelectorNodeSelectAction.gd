@@ -11,11 +11,13 @@ been canceled.
 var mouse_active: bool = false
 # The action to display the effect area for.
 var action: Action = null
+# The location of the player that is using the action.
+var player_pos: Vector3 = Vector3.ZERO
 
 
 func enter(_msg: Dictionary = {}) -> void:
 	action = _msg["action"]
-	action.emission_pt.translation = action.area_pt.translation
+	player_pos = _msg["player_pos"]
 	
 	ErrorUtil.connect_signal(
 		selector.collision_area,
@@ -38,7 +40,7 @@ func enter(_msg: Dictionary = {}) -> void:
 	
 	selector.emit_signal(
 		"effect_selector_required",
-		action.get_effect_tiles(),
+		action,
 		false
 	)
 
@@ -96,7 +98,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		selector.tile_hovered = map_tile
 		
 		if action.emit_from_center:
-			action.emission_pt.translation = action.area_pt.translation
+			action.emission_pt.translation = player_pos
 		else:
 			action.emission_pt.translation = map_tile.translation
 #		if action.get_is_cardinal():
@@ -105,21 +107,23 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 #			else:
 #				action.rotate_to_point(action.area_pt.translation, true)
 
-		selector.emit_signal(
-			"effect_selector_required",
-			action.get_effect_tiles(),
-			false
-		)
+		selector.emit_signal("effect_selector_required", action, false)
 
 
 # Go to the "SelectAction" state with the new action.
-func _on_SignalBus_player_action_selected(new_action: Action) -> void:
-	state_machine.transition_to(SELECT_ACTION, {"action": new_action})
+func _on_SignalBus_player_action_selected(
+	player: PlayerCharacter,
+	new_action: Action
+) -> void:
+	state_machine.transition_to(
+		SELECT_ACTION,
+		{"action": new_action, "player_pos": player.translation}
+	)
 
 
 # Go to the "SelectMove" state when the player action selection is canceled.
 func _on_SignalBus_player_action_type_canceled() -> void:
 	state_machine.transition_to(
 		SELECT_MOVE,
-		{"initial_position": action.area_pt.translation}
+		{"initial_position": player_pos}
 	)

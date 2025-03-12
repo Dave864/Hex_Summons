@@ -19,7 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://user_interface/encounter/active_player_stats.gd"
 }, {
-"base": "Area",
+"base": "Node",
 "class": "AreaRange",
 "language": "GDScript",
 "path": "res://range_type/area_range.gd"
@@ -30,7 +30,7 @@ _global_script_classes=[ {
 "path": "res://utils/array_sorters.gd"
 }, {
 "base": "AreaRange",
-"class": "CardinalRange",
+"class": "CardinalArea",
 "language": "GDScript",
 "path": "res://range_type/cardinal_area.gd"
 }, {
@@ -79,7 +79,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://stats/elemental_stat.gd"
 }, {
-"base": "Position3D",
+"base": "Area",
 "class": "EmissionPoint",
 "language": "GDScript",
 "path": "res://range_type/emission_point.gd"
@@ -133,6 +133,11 @@ _global_script_classes=[ {
 "class": "HexMapAStar",
 "language": "GDScript",
 "path": "res://hex_map/hex_map_astar.gd"
+}, {
+"base": "Object",
+"class": "HexUtil",
+"language": "GDScript",
+"path": "res://utils/hex_util.gd"
 }, {
 "base": "HBoxContainer",
 "class": "InitiativeTracker",
@@ -219,7 +224,7 @@ _global_script_class_icons={
 "ActivePlayerStats": "",
 "AreaRange": "",
 "ArraySorters": "",
-"CardinalRange": "",
+"CardinalArea": "",
 "Character": "",
 "CharacterStats": "",
 "CharacterSummary": "",
@@ -240,6 +245,7 @@ _global_script_class_icons={
 "HexHighlighter": "",
 "HexMap": "",
 "HexMapAStar": "",
+"HexUtil": "",
 "InitiativeTracker": "",
 "LabeledIconButton": "",
 "MapTile": "",

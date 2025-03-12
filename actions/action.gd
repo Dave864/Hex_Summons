@@ -15,7 +15,7 @@ export(bool) var emit_from_center
 export(bool) var ignore_heights
 
 # The area that is ignored when determining the possible tiles for effect emmision.
-var _dead_range: AreaRange
+var _dead_range: AreaRange setget , get_dead_range
 # The area specifying the possible tiles for effect emmision.
 var _area_range: AreaRange
 # The area specifying the tiles affected by the effect.
@@ -39,18 +39,19 @@ func _process(_delta) -> void:
 	pass
 
 
-# Get the tile ids in the area range, accounting for the dead range.
-func get_area_tiles() -> Array:
-	var area_tiles: Array = _area_range.tile_ids.duplicate(true)
-	if _dead_range:
-		for i in _dead_range.tile_ids:
-			area_tiles.erase(i)
-	return area_tiles
+# Get the details of the dead range.
+func get_dead_range() -> AreaRange:
+	return _dead_range
 
 
-# Get the tile ids in the effect range.
-func get_effect_tiles() -> Array:
-	return _effect_range.tile_ids.duplicate(true)
+# Get the details of the area range.
+func get_area_range() -> AreaRange:
+	return _area_range
+
+
+# Get the details of the effect range.
+func get_effect_range() -> AreaRange:
+	return _effect_range
 	
 
 # Returns if the area range is bound cardinally or not.
@@ -58,42 +59,9 @@ func get_is_cardinal() -> bool:
 	return _is_cardinal
 
 
-func enable_area_collision() -> void:
-	_area_range.set_monitoring(true)
-	if _dead_range:
-		_dead_range.set_monitoring(true)
-
-
-func disable_area_collision() -> void:
-	_area_range.set_monitoring(false)
-	if _dead_range:
-		_dead_range.set_monitoring(false)
-
-
-func enable_effect_collision() -> void:
-	emission_pt.get_node("Area").set_monitoring(true)
-	_effect_range.set_monitoring(true)
-
-
-func disable_effect_collision() -> void:
-	emission_pt.get_node("Area").set_monitoring(false)
-	_effect_range.set_monitoring(false)
-
-
-# Rotates the emission along the y-axis to align it with a specified point.
-# Will only affect cardinal_range areas.
-func rotate_to_point(point: Vector3, inverse: bool = false) -> void:
-	if _is_cardinal:
-		point.y = 0.0
-		var emission_pos: Vector3 = emission_pt.global_translation
-		emission_pos.y = 0.0
-		var direction: Vector3 = (point - emission_pos).normalized()
-		direction = -direction if inverse else direction
-		var rotation: Vector3 = Vector3.RIGHT.rotated(
-			Vector3.UP,
-			Vector3.RIGHT.angle_to(direction)
-		)
-		emission_pt.rotation_degrees = rotation
+# Return the index of the map tile the emission point is at.
+func get_emission_map_index() -> int:
+	return emission_pt.emission_tile.get_map_index()
 
 
 # Resets the position of the emittor.

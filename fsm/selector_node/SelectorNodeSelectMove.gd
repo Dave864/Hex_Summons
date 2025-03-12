@@ -94,10 +94,15 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		map_tile.set_selector_type(HexHighlighter.Option.MOVE)
 
 
-# Go to the "SelectAction" state when the UI signals that an action was hovered
-# over.
-func _on_SignalBus_player_action_selected(action: Action) -> void:
-	state_machine.transition_to(SELECT_ACTION, {"action": action})
+# Go to the "SelectAction" state when the UI signals that an action was selected.
+func _on_SignalBus_player_action_selected(
+	player: PlayerCharacter,
+	action: Action
+) -> void:
+	state_machine.transition_to(
+		SELECT_ACTION,
+		{"action": action, "player_pos": player.translation}
+	)
 
 
 # Go to the "WAIT" state when a player has signaled that their turn is ended.

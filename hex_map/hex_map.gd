@@ -54,7 +54,7 @@ func get_map_tiles() -> Array:
 func determine_ring_area(start: int, ra: RingArea) -> Array:
 	var radius: int = ra.radius
 	var tile_indices: Array = []
-	var start_coord: Vector3 = _map_tiles[start].get_cub_coord()
+	var start_coord: Vector3 = _map_tiles[start].get_cube_coord()
 	for x in range(-radius, radius + 1):
 		var x_upper: int = max(-radius, -x - radius) as int
 		var x_lower: int = min(radius, -x + radius) as int
@@ -69,7 +69,7 @@ func determine_ring_area(start: int, ra: RingArea) -> Array:
 func determine_cardinal_area(start: int, ca: CardinalArea) -> Array:
 	var distance: int = ca.distance
 	var tile_indices: Array = []
-	var start_coord: Vector3 = _map_tiles[start].get_cub_coord()
+	var start_coord: Vector3 = _map_tiles[start].get_cube_coord()
 	tile_indices.append(start)
 	for d in range(1, distance + 1):
 		for n in range(6):
@@ -85,7 +85,7 @@ func determine_cone_area(start: int, dir: int, ca: ConeArea) -> Array:
 	var distance: int = ca.distance
 	var spread: int = ca.spread
 	var tile_indices: Array = []
-	var start_coord: Vector3 = _map_tiles[start].get_cub_coord()
+	var start_coord: Vector3 = _map_tiles[start].get_cube_coord()
 	tile_indices.append(start)
 	for s in range(spread + 1):
 		var cur_dir: int = dir + s
@@ -114,7 +114,7 @@ func determine_column_area(start: int, dir: int, ca: ColumnArea) -> Array:
 	var left_dir: int = dir - 1 if dir > 0 else 5
 	var right_dir: int = dir + 1 if dir < 5 else 0
 	var tile_indices: Array = []
-	var start_coord: Vector3 = _map_tiles[start].get_cub_coord()
+	var start_coord: Vector3 = _map_tiles[start].get_cube_coord()
 	tile_indices.append(start)
 	for s in range(spread + 1):
 		var left_coord: Vector3 = HexUtil.cube_at_distance(start_coord, left_dir, s)
