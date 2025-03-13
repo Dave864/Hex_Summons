@@ -24,6 +24,8 @@ var _effect_range: AreaRange
 var _is_cardinal: bool = false setget , get_is_cardinal
 # The index of the tile the effect is emitted from.
 var _emission_map_index: int = -1 setget set_emission_map_index, get_emission_map_index
+# The direction the effect is emitted. Only updated if the action is cardinal.
+var _emission_direction: int = -1 setget set_emission_direction, get_emission_direction
 
 
 func _ready() -> void:
@@ -65,6 +67,20 @@ func set_emission_map_index(index: int) -> void:
 # Return the index of the map tile the emission point is at.
 func get_emission_map_index() -> int:
 	return _emission_map_index
+
+
+# Set the direction of the emission (0 - 5). Only updates the direction if the action
+# is cardinal.
+func set_emission_direction(dir: int) -> void:
+	if _is_cardinal:
+		_emission_direction = 0 if dir < 0 else 5 if dir > 5 else dir
+	else:
+		_emission_direction = -1
+
+
+# Get the direction of the emission. Returns -1 if the action is not cardinal.
+func get_emission_direction() -> int:
+	return _emission_direction
 
 
 # Resets the position of the emittor.

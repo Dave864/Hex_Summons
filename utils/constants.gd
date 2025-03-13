@@ -52,17 +52,3 @@ const OPACITY_THREE_QUARTER: float = 0.75
 const OPACITY_HALF: float = 0.5
 const OPACITY_QUARTER: float = 0.25
 const OPACITY_NONE: float = 0.0
-
-# Defines the positions of a unit circle that correspond to the vertices of
-# a hexagon.
-#    0
-# 5 / \ 1
-#  |   |
-# 4 \ / 2
-#    3
-const HV_0_COORD: Vector2 = Vector2(0.0, 1.0)
-const HV_1_COORD: Vector2 = Vector2(HexUtil.HEX_EDGE_RATIO, 0.5)
-const HV_2_COORD: Vector2 = Vector2(HexUtil.HEX_EDGE_RATIO, -0.5)
-const HV_3_COORD: Vector2 = Vector2(0.0, -1.0)
-const HV_4_COORD: Vector2 = Vector2(-HexUtil.HEX_EDGE_RATIO, -0.5)
-const HV_5_COORD: Vector2 = Vector2(-HexUtil.HEX_EDGE_RATIO, 0.5)

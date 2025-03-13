@@ -116,11 +116,11 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 			action.set_emission_map_index(player_map_index)
 		else:
 			action.set_emission_map_index(map_tile.get_map_index())
-#		if action.get_is_cardinal():
-#			if action.emit_from_center:
-#				action.rotate_to_point(map_tile.translation)
-#			else:
-#				action.rotate_to_point(action.area_pt.translation, true)
+		if action.get_is_cardinal():
+			var player_pt: Vector2 = Vector2(player_pos.x, player_pos.z)
+			var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
+			var dir: Vector2 = (tile_pt - player_pt).normalized()
+			action.set_emission_direction(HexUtil.get_hex_direction(dir))
 		selector.emit_signal("effect_selector_required", action, false)
 
 

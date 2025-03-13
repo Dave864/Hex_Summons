@@ -32,6 +32,20 @@ const CUBE_DIRECTION_VECTORS: Dictionary = {
 # the distance from the center of a hexagon to the midpoint of one of its edges.
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
+# Defines the positions of a unit circle that correspond to the vertices of
+# a hexagon.
+#    0
+# 5 / \ 1
+#  |   |
+# 4 \ / 2
+#    3
+const HV_0_COORD: Vector2 = Vector2(0.0, -1.0)
+const HV_1_COORD: Vector2 = Vector2(HEX_EDGE_RATIO, -0.5)
+const HV_2_COORD: Vector2 = Vector2(HEX_EDGE_RATIO, 0.5)
+const HV_3_COORD: Vector2 = Vector2(0.0, 1.0)
+const HV_4_COORD: Vector2 = Vector2(-HEX_EDGE_RATIO, 0.5)
+const HV_5_COORD: Vector2 = Vector2(-HEX_EDGE_RATIO, -0.5)
+
 
 # Converts the index to the corresponding cube coordinate.
 # Requires the number of tiles in a map along the x-axis.
@@ -76,11 +90,46 @@ static func cube_at_distance(origin: Vector3, distance: float, direction: int) -
 	return dest
 
 
-# Determines the hexagonal direction a tile position is at relative to a source
-# position.
+# Determines the hexagonal direction of a given unit vector.
 # 0  /\  1
 # 5 |  | 2
 # 4  \/  3
-static func get_hex_direction(tile_from: Vector3, tile_to: Vector3) -> int:
-	
-	return 0
+static func get_hex_direction(dir_vec: Vector2) -> int:
+	var dir: int = -1
+	if (
+		dir_vec.x > HV_0_COORD.x
+		and dir_vec.x < HV_1_COORD.x
+		and dir_vec.y < 0.0
+	):
+		dir = Direction.UPPER_RIGHT
+	elif (
+		dir_vec.x > 0.0
+		and dir_vec.y > HV_1_COORD.y
+		and dir_vec.y < HV_2_COORD.y
+	):
+		dir = Direction.RIGHT
+	elif(
+		dir_vec.x > HV_3_COORD.x
+		and dir_vec.x < HV_2_COORD.x
+		and dir_vec.y > 0.0
+	):
+		dir = Direction.BOTTOM_RIGHT
+	elif(
+		dir_vec.x > HV_4_COORD.x
+		and dir_vec.x < HV_3_COORD.x
+		and dir_vec.y > 0.0
+	):
+		dir = Direction.BOTTOM_LEFT
+	elif(
+		dir_vec.x < 0.0
+		and dir_vec.y < HV_4_COORD.y
+		and dir_vec.y > HV_5_COORD.y
+	):
+		dir = Direction.LEFT
+	elif(
+		dir_vec.x < HV_0_COORD.x
+		and dir_vec.x > HV_5_COORD.x
+		and dir_vec.y < 0.0
+	):
+		dir = Direction.UPPER_LEFT
+	return dir
