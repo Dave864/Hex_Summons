@@ -14,11 +14,13 @@ radial_segments = 6
 rings = 0
 
 [sub_resource type="CylinderMesh" id=12]
+resource_local_to_scene = true
 height = 0.25
 radial_segments = 6
 rings = 0
 
 [sub_resource type="SpatialMaterial" id=13]
+resource_local_to_scene = true
 render_priority = 1
 flags_transparent = true
 
