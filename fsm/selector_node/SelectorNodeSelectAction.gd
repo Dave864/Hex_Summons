@@ -14,41 +14,44 @@ var mouse_active: bool = false
 var action: Action = null
 # The location of the player that is using the action.
 var player_pos: Vector3 = Vector3.ZERO
+# The tile index of the player that is using the action.
+var player_map_index: int = -1
 
 
 func enter(_msg: Dictionary = {}) -> void:
 	action = _msg["action"]
 	player_pos = _msg["player_pos"]
+	player_map_index = _msg["player_map_index"]
 	
 	ErrorUtil.connect_signal(
-		selector.collision_area,
-		"area_entered",
-		self,
-		"_on_Selector_area_entered"
+			selector.collision_area,
+			"area_entered",
+			self,
+			"_on_Selector_area_entered"
 	)
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_action_selected",
-		self,
-		"_on_SignalBus_player_action_selected"
+			SignalBus,
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
 	)
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_action_type_canceled",
-		self,
-		"_on_SignalBus_player_action_type_canceled"
+			SignalBus,
+			"player_action_type_canceled",
+			self,
+			"_on_SignalBus_player_action_type_canceled"
 	)
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_ended",
-		self,
-		"_on_SignalBus_player_turn_ended"
+			SignalBus,
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
 	)
 	
 	selector.emit_signal(
-		"effect_selector_required",
-		action,
-		false
+			"effect_selector_required",
+			action,
+			false
 	)
 
 
@@ -61,24 +64,24 @@ func update(_delta: float) -> void:
 # function to clean up the state.
 func exit() -> void:
 	selector.collision_area.disconnect(
-		"area_entered",
-		self,
-		"_on_Selector_area_entered"
+			"area_entered",
+			self,
+			"_on_Selector_area_entered"
 	)
 	SignalBus.disconnect(
-		"player_action_selected",
-		self,
-		"_on_SignalBus_player_action_selected"
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
 	)
 	SignalBus.disconnect(
-		"player_action_type_canceled",
-		self,
-		"_on_SignalBus_player_action_type_canceled"
+			"player_action_type_canceled",
+			self,
+			"_on_SignalBus_player_action_type_canceled"
 	)
 	SignalBus.disconnect(
-		"player_turn_ended",
-		self,
-		"_on_SignalBus_player_turn_ended"
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -110,15 +113,14 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		selector.tile_hovered = map_tile
 		
 		if action.emit_from_center:
-			action.emission_pt.translation = player_pos
+			action.set_emission_map_index(player_map_index)
 		else:
-			action.emission_pt.translation = map_tile.translation
+			action.set_emission_map_index(map_tile.get_map_index())
 #		if action.get_is_cardinal():
 #			if action.emit_from_center:
 #				action.rotate_to_point(map_tile.translation)
 #			else:
 #				action.rotate_to_point(action.area_pt.translation, true)
-
 		selector.emit_signal("effect_selector_required", action, false)
 
 
@@ -128,16 +130,20 @@ func _on_SignalBus_player_action_selected(
 	new_action: Action
 ) -> void:
 	state_machine.transition_to(
-		SELECT_ACTION,
-		{"action": new_action, "player_pos": player.translation}
+			SELECT_ACTION,
+			{
+				"action": new_action,
+				"player_pos": player.translation,
+				"player_map_index": player.get_map_index_at()
+			}
 	)
 
 
 # Go to the "SelectMove" state when the player action selection is canceled.
 func _on_SignalBus_player_action_type_canceled() -> void:
 	state_machine.transition_to(
-		SELECT_MOVE,
-		{"initial_position": player_pos}
+			SELECT_MOVE,
+			{"initial_position": player_pos}
 	)
 
 

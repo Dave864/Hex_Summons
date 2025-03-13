@@ -9,10 +9,10 @@ The Player Character waits until it is reenabled.
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_started",
-		self,
-		"_on_SignalBus_player_turn_started"
+			SignalBus,
+			"player_turn_started",
+			self,
+			"_on_SignalBus_player_turn_started"
 	)
 
 
@@ -20,9 +20,9 @@ func enter(_msg := {}) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	SignalBus.disconnect(
-		"player_turn_started",
-		self,
-		"_on_SignalBus_player_turn_started"
+			"player_turn_started",
+			self,
+			"_on_SignalBus_player_turn_started"
 	)
 
 

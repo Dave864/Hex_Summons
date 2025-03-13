@@ -24,19 +24,19 @@ func enter(_msg := {}) -> void:
 			"_on_SignalBus_move_tile_selected"
 	)
 	encounter_ui.technique_button.connect_button_signal(
-		self,
-		"pressed",
-		"_on_TechniqueButton_button_pressed"
+			self,
+			"pressed",
+			"_on_TechniqueButton_button_pressed"
 	)
 	encounter_ui.spell_button.connect_button_signal(
-		self,
-		"pressed",
-		"_on_SpellButton_button_pressed"
+			self,
+			"pressed",
+			"_on_SpellButton_button_pressed"
 	)
 	encounter_ui.end_button.connect_button_signal(
-		self,
-		"pressed",
-		"_on_EndButton_button_pressed"
+			self,
+			"pressed",
+			"_on_EndButton_button_pressed"
 	)
 
 
@@ -71,26 +71,26 @@ func handle_input(_event: InputEvent) -> void:
 func exit() -> void:
 	SignalBus.disconnect("move_tile_selected", self, "_on_SignalBus_move_tile_selected")
 	encounter_ui.technique_button.disconnect_button_signal(
-		self,
-		"pressed",
-		"_on_TechniqueButton_button_pressed"
+			self,
+			"pressed",
+			"_on_TechniqueButton_button_pressed"
 	)
 	encounter_ui.spell_button.disconnect_button_signal(
-		self,
-		"pressed",
-		"_on_SpellButton_button_pressed"
+			self,
+			"pressed",
+			"_on_SpellButton_button_pressed"
 	)
 	encounter_ui.end_button.disconnect_button_signal(
-		self,
-		"pressed",
-		"_on_EndButton_button_pressed"
+			self,
+			"pressed",
+			"_on_EndButton_button_pressed"
 	)
 
 
 func _technique_selected() -> void:
 	state_machine.transition_to(
-		ACTION, 
-		{"option_flag": encounter_ui.Options.TECHNIQUE}
+			ACTION, 
+			{"option_flag": encounter_ui.Options.TECHNIQUE}
 	)
 
 

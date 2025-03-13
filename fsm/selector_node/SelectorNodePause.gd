@@ -13,17 +13,17 @@ func enter(_msg: Dictionary = {}) -> void:
 	SignalBus.emit_signal("selector_paused")
 	
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_ended",
-		self,
-		"_on_SignalBus_player_turn_ended"
+			SignalBus,
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
 	)
 	
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"selector_required",
-		self,
-		"_on_SignalBus_selector_required"
+			SignalBus,
+			"selector_required",
+			self,
+			"_on_SignalBus_selector_required"
 	)
 
 
@@ -31,14 +31,14 @@ func enter(_msg: Dictionary = {}) -> void:
 # function to clean up the state.
 func exit() -> void:
 	SignalBus.disconnect(
-		"player_turn_ended", 
-		self, 
-		"_on_SignalBus_player_turn_ended"
+			"player_turn_ended", 
+			self, 
+			"_on_SignalBus_player_turn_ended"
 	)
 	SignalBus.disconnect(
-		"selector_required",
-		self,
-		"_on_SignalBus_selector_required"
+			"selector_required",
+			self,
+			"_on_SignalBus_selector_required"
 	)
 
 

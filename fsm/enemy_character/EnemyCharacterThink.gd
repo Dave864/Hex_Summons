@@ -10,10 +10,10 @@ take and then starts the logic chain.
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"enemy_actions_confirmed",
-		self,
-		"_on_SignalBus_enemy_actions_confirmed"
+			SignalBus,
+			"enemy_actions_confirmed",
+			self,
+			"_on_SignalBus_enemy_actions_confirmed"
 	)
 	SignalBus.emit_signal("enemy_actions_required")
 

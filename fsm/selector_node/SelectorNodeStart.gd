@@ -10,10 +10,10 @@ The Selector sets its initial position before going to the `Wait` state.
 # initialize itself.
 func enter(_msg := {}) -> void:
 	ErrorUtil.connect_signal(
-		selector,
-		"area_entered",
-		self,
-		"_on_Selector_area_entered"
+			selector,
+			"area_entered",
+			self,
+			"_on_Selector_area_entered"
 	)
 
 

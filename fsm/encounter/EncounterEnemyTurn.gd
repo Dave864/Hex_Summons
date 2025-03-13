@@ -24,10 +24,10 @@ func enter(_msg := {}) -> void:
 		enc.players
 	)
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"enemy_actions_required",
-		self,
-		"_on_SignalBus_enemy_actions_required"
+			SignalBus,
+			"enemy_actions_required",
+			self,
+			"_on_SignalBus_enemy_actions_required"
 	)
 	SignalBus.emit_signal("enemy_turn_started", active_char)
 
@@ -43,19 +43,19 @@ func update(_delta: float) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	SignalBus.disconnect(
-		"enemy_actions_required",
-		self,
-		"_on_SignalBus_enemy_actions_required"
+			"enemy_actions_required",
+			self,
+			"_on_SignalBus_enemy_actions_required"
 	)
 	enc.progress_initiative()
 
 
 func _ready_connect_signals() -> void:
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"enemy_turn_ended",
-		self,
-		"_on_SignalBus_enemy_turn_ended"
+			SignalBus,
+			"enemy_turn_ended",
+			self,
+			"_on_SignalBus_enemy_turn_ended"
 	)
 
 

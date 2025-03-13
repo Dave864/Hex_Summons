@@ -27,10 +27,10 @@ func exit() -> void:
 
 func _ready_connect_signals():
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_started",
-		self,
-		"_on_SignalBus_player_turn_started"
+			SignalBus,
+			"player_turn_started",
+			self,
+			"_on_SignalBus_player_turn_started"
 	)
 
 

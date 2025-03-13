@@ -12,16 +12,16 @@ func enter(_msg := {}) -> void:
 	# These signals is used by other PlayerCharacters and will be disconnected 
 	# to avoid unintended behavior.
 	ErrorUtil.connect_signal(
-		SignalBus, 
-		"move_tile_selected", 
-		self, 
-		"_on_SignalBus_move_tile_selected"
+			SignalBus, 
+			"move_tile_selected", 
+			self, 
+			"_on_SignalBus_move_tile_selected"
 	)
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_ended",
-		self,
-		"_on_SignalBus_player_turn_ended"
+			SignalBus,
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
 	)
 
 

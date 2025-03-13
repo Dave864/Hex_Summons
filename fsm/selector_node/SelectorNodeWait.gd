@@ -9,10 +9,10 @@ until the encounter is ready to recieve new player selections.
 # Hide the selector shape and disable the ability to snap to tile positions
 func enter(_msg: Dictionary = {}) -> void:
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_started",
-		self,
-		"_on_SignalBus_player_turn_started"
+			SignalBus,
+			"player_turn_started",
+			self,
+			"_on_SignalBus_player_turn_started"
 	)
 
 
@@ -20,9 +20,9 @@ func enter(_msg: Dictionary = {}) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	SignalBus.disconnect(
-		"player_turn_started",
-		self,
-		"_on_SignalBus_player_turn_started"
+			"player_turn_started",
+			self,
+			"_on_SignalBus_player_turn_started"
 	)
 
 

@@ -16,22 +16,22 @@ var mouse_active: bool = false
 func enter(_msg: Dictionary = {}) -> void:
 	selector.move_to_position(_msg["initial_position"])
 	ErrorUtil.connect_signal(
-		selector.collision_area,
-		"area_entered",
-		self,
-		"_on_Selector_area_entered"
+			selector.collision_area,
+			"area_entered",
+			self,
+			"_on_Selector_area_entered"
 	)
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_action_selected",
-		self,
-		"_on_SignalBus_player_action_selected"
+			SignalBus,
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
 	)
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_ended",
-		self,
-		"_on_SignalBus_player_turn_ended"
+			SignalBus,
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -44,19 +44,19 @@ func update(_delta: float) -> void:
 # function to clean up the state.
 func exit() -> void:
 	selector.collision_area.disconnect(
-		"area_entered",
-		self,
-		"_on_Selector_area_entered"
+			"area_entered",
+			self,
+			"_on_Selector_area_entered"
 	)
 	SignalBus.disconnect(
-		"player_action_selected",
-		self,
-		"_on_SignalBus_player_action_selected"
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
 	)
 	SignalBus.disconnect(
-		"player_turn_ended",
-		self,
-		"_on_SignalBus_player_turn_ended"
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -101,8 +101,12 @@ func _on_SignalBus_player_action_selected(
 ) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(
-		SELECT_ACTION,
-		{"action": action, "player_pos": player.translation}
+			SELECT_ACTION,
+			{
+				"action": action,
+				"player_pos": player.translation,
+				"player_map_index": player.get_map_index_at()
+			}
 	)
 
 

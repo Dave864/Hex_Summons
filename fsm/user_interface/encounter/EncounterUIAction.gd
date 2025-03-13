@@ -18,27 +18,27 @@ func enter(_msg := {}) -> void:
 	encounter_ui.set_current_selection(option_flag)
 	encounter_ui.grab_focus_for_sub_option_at_index(0)
 	SignalBus.emit_signal(
-		"player_action_selected",
-		encounter_ui.get_focused_player(),
-		encounter_ui.get_sub_option_at_index(0)
+			"player_action_selected",
+			encounter_ui.get_focused_player(),
+			encounter_ui.get_sub_option_at_index(0)
 	)
 	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
 	encounter_ui.technique_button.connect_button_signal(
-		self,
-		"pressed",
-		"_on_TechniqueButton_button_pressed"
+			self,
+			"pressed",
+			"_on_TechniqueButton_button_pressed"
 	)
 	encounter_ui.spell_button.connect_button_signal(
-		self,
-		"pressed",
-		"_on_SpellButton_button_pressed"
+			self,
+			"pressed",
+			"_on_SpellButton_button_pressed"
 	)
 	encounter_ui.end_button.connect_button_signal(
-		self,
-		"pressed",
-		"_on_EndButton_button_pressed"
+			self,
+			"pressed",
+			"_on_EndButton_button_pressed"
 	)
 
 
@@ -75,19 +75,19 @@ func exit() -> void:
 	encounter_ui.sub_options.clear_sub_options()
 	
 	encounter_ui.technique_button.disconnect_button_signal(
-		self,
-		"pressed",
-		"_on_TechniqueButton_button_pressed"
+			self,
+			"pressed",
+			"_on_TechniqueButton_button_pressed"
 	)
 	encounter_ui.spell_button.disconnect_button_signal(
-		self,
-		"pressed",
-		"_on_SpellButton_button_pressed"
+			self,
+			"pressed",
+			"_on_SpellButton_button_pressed"
 	)
 	encounter_ui.end_button.disconnect_button_signal(
-		self,
-		"pressed",
-		"_on_EndButton_button_pressed"
+			self,
+			"pressed",
+			"_on_EndButton_button_pressed"
 	)
 
 

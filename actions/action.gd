@@ -22,9 +22,8 @@ var _area_range: AreaRange
 var _effect_range: AreaRange
 # Whether the area range is cardinal or ring.
 var _is_cardinal: bool = false setget , get_is_cardinal
-
-# The point the effect is emitted from.
-onready var emission_pt: EmissionPoint = $EmissionPoint
+# The index of the tile the effect is emitted from.
+var _emission_map_index: int = -1 setget set_emission_map_index, get_emission_map_index
 
 
 func _ready() -> void:
@@ -59,11 +58,15 @@ func get_is_cardinal() -> bool:
 	return _is_cardinal
 
 
+# Set the tile index the effect is emitted from.
+func set_emission_map_index(index: int) -> void:
+	_emission_map_index = index
+
 # Return the index of the map tile the emission point is at.
 func get_emission_map_index() -> int:
-	return emission_pt.emission_tile.get_map_index()
+	return _emission_map_index
 
 
 # Resets the position of the emittor.
 func reset_emittor_position() -> void:
-	emission_pt.translation = Vector3.ZERO
+	_emission_map_index = -1

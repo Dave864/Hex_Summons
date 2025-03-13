@@ -23,10 +23,10 @@ func exit() -> void:
 
 func _ready_connect_signals() -> void:
 	ErrorUtil.connect_signal(
-		SignalBus, 
-		"enemy_turn_started", 
-		self, 
-		"_on_SignalBus_enemy_turn_started"
+			SignalBus, 
+			"enemy_turn_started", 
+			self, 
+			"_on_SignalBus_enemy_turn_started"
 	)
 
 

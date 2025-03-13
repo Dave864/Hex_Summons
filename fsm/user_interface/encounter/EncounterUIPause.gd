@@ -14,10 +14,10 @@ func enter(_msg := {}) -> void:
 	# This signal is used by other states and will be disconnected to avoid
 	# unintended behavior.
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"selector_required",
-		self,
-		"_on_SignalBus_selector_required"
+			SignalBus,
+			"selector_required",
+			self,
+			"_on_SignalBus_selector_required"
 	)
 
 
@@ -31,9 +31,9 @@ func update(_delta: float) -> void:
 func exit() -> void:
 	encounter_ui.toggle_options()
 	SignalBus.disconnect(
-		"selector_required",
-		self,
-		"_on_SignalBus_selector_required"
+			"selector_required",
+			self,
+			"_on_SignalBus_selector_required"
 	)
 
 
