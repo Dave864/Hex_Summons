@@ -27,6 +27,11 @@ const CUBE_DIRECTION_VECTORS: Dictionary = {
 	Direction.LEFT: Vector3(-1.0, 0.0, 1.0),
 }
 
+# The ratio between 
+# the distance from the center of a hexagon to one of its vertices and 
+# the distance from the center of a hexagon to the midpoint of one of its edges.
+const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
+
 
 # Converts the index to the corresponding cube coordinate.
 # Requires the number of tiles in a map along the x-axis.

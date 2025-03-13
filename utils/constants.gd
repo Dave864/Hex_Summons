@@ -23,11 +23,6 @@ enum RangeTypes {
 # The path to a default icon.
 const DEFAULT_ICON_PATH: String = "res://art/icon.png"
 
-# The ratio between 
-# the distance from the center of a hexagon to one of its vertices and 
-# the distance from the center of a hexagon to the midpoint of one of its edges.
-const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
-
 # The length value of a unit of height for an encounter map hex tile.
 const HEX_TILE_UNIT_HEIGHT: float = 0.5
 
@@ -66,8 +61,8 @@ const OPACITY_NONE: float = 0.0
 # 4 \ / 2
 #    3
 const HV_0_COORD: Vector2 = Vector2(0.0, 1.0)
-const HV_1_COORD: Vector2 = Vector2(HEX_EDGE_RATIO, 0.5)
-const HV_2_COORD: Vector2 = Vector2(HEX_EDGE_RATIO, -0.5)
+const HV_1_COORD: Vector2 = Vector2(HexUtil.HEX_EDGE_RATIO, 0.5)
+const HV_2_COORD: Vector2 = Vector2(HexUtil.HEX_EDGE_RATIO, -0.5)
 const HV_3_COORD: Vector2 = Vector2(0.0, -1.0)
-const HV_4_COORD: Vector2 = Vector2(-HEX_EDGE_RATIO, -0.5)
-const HV_5_COORD: Vector2 = Vector2(-HEX_EDGE_RATIO, 0.5)
+const HV_4_COORD: Vector2 = Vector2(-HexUtil.HEX_EDGE_RATIO, -0.5)
+const HV_5_COORD: Vector2 = Vector2(-HexUtil.HEX_EDGE_RATIO, 0.5)

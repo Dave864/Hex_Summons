@@ -106,9 +106,9 @@ func _generate_grid() -> void:
 		map_tile_offset = Vector3.ZERO
 		map_tile_offset.z = 1.5 * z
 		for x in x_count:
-			map_tile_offset.x = 2 * Constants.HEX_EDGE_RATIO * x
+			map_tile_offset.x = 2 * HexUtil.HEX_EDGE_RATIO * x
 			if !_is_even(z):
-				map_tile_offset.x += Constants.HEX_EDGE_RATIO
+				map_tile_offset.x += HexUtil.HEX_EDGE_RATIO
 			_instantiate_tile(map_tile_offset)
 
 
@@ -205,7 +205,7 @@ func _update_grid_x(old_x: int) -> void:
 # Add new tiles to account for an increase in the value of x_count.
 func _grow_x(old_x: int) -> void:
 	var old_tiles: Array = get_children()
-	var x_offset: float = (old_x - x_count) * Constants.HEX_EDGE_RATIO
+	var x_offset: float = (old_x - x_count) * HexUtil.HEX_EDGE_RATIO
 	for t in get_children():
 		t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
 	# Calculates the position for each tile so that the grid is centered to
@@ -215,9 +215,9 @@ func _grow_x(old_x: int) -> void:
 		offset.z = 1.5 * z
 		for x in x_count:
 			if x >= old_x:
-				offset.x = 2 * Constants.HEX_EDGE_RATIO * x
+				offset.x = 2 * HexUtil.HEX_EDGE_RATIO * x
 				if !_is_even(z):
-					offset.x += Constants.HEX_EDGE_RATIO
+					offset.x += HexUtil.HEX_EDGE_RATIO
 				_instantiate_tile(offset)
 				# Change the child index of the new tile to match its map index.
 				move_child(get_child(get_child_count() - 1), (z * x_count) + x)
@@ -237,7 +237,7 @@ func _shrink_x(old_x: int) -> void:
 			var index: int = (z * old_x) + x
 			_delete_tile(tiles[index])
 	# Move remaining tiles to the right
-	var x_offset: float = (old_x - x_count) * Constants.HEX_EDGE_RATIO
+	var x_offset: float = (old_x - x_count) * HexUtil.HEX_EDGE_RATIO
 	for t in get_children():
 		t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
 
@@ -264,9 +264,9 @@ func _grow_z(old_z: int) -> void:
 		map_tile_offset = Vector3.ZERO
 		map_tile_offset.z = 1.5 * z
 		for x in x_count:
-			map_tile_offset.x = 2 * Constants.HEX_EDGE_RATIO * x
+			map_tile_offset.x = 2 * HexUtil.HEX_EDGE_RATIO * x
 			if !_is_even(z):
-				map_tile_offset.x += Constants.HEX_EDGE_RATIO
+				map_tile_offset.x += HexUtil.HEX_EDGE_RATIO
 			_instantiate_tile(map_tile_offset)
 
 
@@ -286,9 +286,9 @@ func _shrink_z(old_z: int) -> void:
 # Determine the starting point so that the middle of the generated map is center
 # to the HexMap node.
 func _calculate_grid_start() -> Vector3:
-	var origin_offset = Vector3(2 * Constants.HEX_EDGE_RATIO, 0.0, 1.0)
+	var origin_offset = Vector3(2 * HexUtil.HEX_EDGE_RATIO, 0.0, 1.0)
 	origin_offset.z -= ((3.0 * z_count) + 1.0) / 4.0
-	origin_offset.x -= (x_count + 1.5) * Constants.HEX_EDGE_RATIO
+	origin_offset.x -= (x_count + 1.5) * HexUtil.HEX_EDGE_RATIO
 	return origin_offset
 
 
