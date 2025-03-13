@@ -6,15 +6,6 @@ Represents an individual map tile.
 """
 
 
-enum NeighborPosition {
-	UPPER_LEFT,
-	UPPER_RIGHT,
-	RIGHT,
-	BOTTOM_RIGHT,
-	BOTTOM_LEFT,
-	LEFT,
-}
-
 const HIGHLIGHTER_Y_OFFSET = 0.01
 const SELECTOR_Y_OFFSET = 0.125
 

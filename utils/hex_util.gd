@@ -1,20 +1,30 @@
 class_name HexUtil
 extends Object
 """
-Collection of functions useful for calculating on a hexagonal grid.
+Collection of functions useful for calculations on a hexagonal grid.
 """
 
+
+# Represents the possible directions for a hex tile.
+enum Direction {
+	UPPER_LEFT,
+	UPPER_RIGHT,
+	RIGHT,
+	BOTTOM_RIGHT,
+	BOTTOM_LEFT,
+	LEFT,
+}
 
 # Collection of vectors that represent the direction for a hex tile described
 # in cube coordinates.
 # Reference: https://www.redblobgames.com/grids/hexagons/#neighbors-cube
 const CUBE_DIRECTION_VECTORS: Dictionary = {
-	MapTile.NeighborPosition.UPPER_LEFT: Vector3(0.0, -1.0, 1.0),
-	MapTile.NeighborPosition.UPPER_RIGHT: Vector3(1.0, -1.0, 0.0),
-	MapTile.NeighborPosition.RIGHT: Vector3(1.0, 0.0, -1.0),
-	MapTile.NeighborPosition.BOTTOM_RIGHT: Vector3(0.0, 1.0, -1.0),
-	MapTile.NeighborPosition.BOTTOM_LEFT: Vector3(-1.0, 1.0, 0.0),
-	MapTile.NeighborPosition.LEFT: Vector3(-1.0, 0.0, 1.0),
+	Direction.UPPER_LEFT: Vector3(0.0, -1.0, 1.0),
+	Direction.UPPER_RIGHT: Vector3(1.0, -1.0, 0.0),
+	Direction.RIGHT: Vector3(1.0, 0.0, -1.0),
+	Direction.BOTTOM_RIGHT: Vector3(0.0, 1.0, -1.0),
+	Direction.BOTTOM_LEFT: Vector3(-1.0, 1.0, 0.0),
+	Direction.LEFT: Vector3(-1.0, 0.0, 1.0),
 }
 
 
@@ -59,3 +69,13 @@ static func cube_at_distance(origin: Vector3, distance: float, direction: int) -
 	if CUBE_DIRECTION_VECTORS.has(direction):
 		dest += distance * CUBE_DIRECTION_VECTORS[direction]
 	return dest
+
+
+# Determines the hexagonal direction a tile position is at relative to a source
+# position.
+# 0  /\  1
+# 5 |  | 2
+# 4  \/  3
+static func get_hex_direction(tile_from: Vector3, tile_to: Vector3) -> int:
+	
+	return 0

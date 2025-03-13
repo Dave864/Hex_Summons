@@ -54,40 +54,40 @@ func joystick_to_hex_direction() -> int:
 		and dir_vec.x < Constants.HV_1_COORD.x
 		and dir_vec.y > 0.0
 	):
-		hex_direction = MapTile.NeighborPosition.UPPER_RIGHT
+		hex_direction = HexUtil.Direction.UPPER_RIGHT
 	# Move to the true-right neighbor
 	elif (
 		dir_vec.x > 0.0
 		and dir_vec.y < Constants.HV_1_COORD.y
 		and dir_vec.y > Constants.HV_2_COORD.y
 	):
-		hex_direction = MapTile.NeighborPosition.RIGHT
+		hex_direction = HexUtil.Direction.RIGHT
 	# Move to the bottom-right neighbor
 	elif(
 		dir_vec.x > Constants.HV_3_COORD.x
 		and dir_vec.x < Constants.HV_2_COORD.x
 		and dir_vec.y < 0.0
 	):
-		hex_direction = MapTile.NeighborPosition.BOTTOM_RIGHT
+		hex_direction = HexUtil.Direction.BOTTOM_RIGHT
 	# Move to the botton-left neighbor
 	elif(
 		dir_vec.x > Constants.HV_4_COORD.x
 		and dir_vec.x < Constants.HV_3_COORD.x
 		and dir_vec.y < 0.0
 	):
-		hex_direction = MapTile.NeighborPosition.BOTTOM_LEFT
+		hex_direction = HexUtil.Direction.BOTTOM_LEFT
 	# Move to the true-left neighbor
 	elif(
 		dir_vec.x < 0.0
 		and dir_vec.y > Constants.HV_4_COORD.y
 		and dir_vec.y < Constants.HV_5_COORD.y
 	):
-		hex_direction = MapTile.NeighborPosition.LEFT
+		hex_direction = HexUtil.Direction.LEFT
 	# Move to the upper-left neighbor
 	elif(
 		dir_vec.x < Constants.HV_0_COORD.x
 		and dir_vec.x > Constants.HV_5_COORD.x
 		and dir_vec.y > 0.0
 	):
-		hex_direction = MapTile.NeighborPosition.UPPER_LEFT
+		hex_direction = HexUtil.Direction.UPPER_LEFT
 	return hex_direction
