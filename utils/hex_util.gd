@@ -29,15 +29,23 @@ static func index_to_cube(index: int, x_count: int) -> Vector3:
 	return Vector3(x_cube, y_cube, -x_cube - y_cube)
 
 
+# Converts the cube coordinates to offset coordinates. The offset coordinates
+# have the origin centered at the upper leftmost tile of the hex map.
+# Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
+static func cube_to_offset(coord: Vector3) -> Vector2:
+	# Use bitwise and to detect whether something is even (0) or odd (1), 
+	# in order to catch negative numbers too.
+	var x_pos: int = int(coord.x + (coord.y - (int(coord.y) & 1)) / 2.0)
+	var z_pos: int = int(coord.y)
+	return Vector2(x_pos, z_pos)
+
+
 # Converts the cube coordinates to the corresponding index.
 # Requires the number of tiles in a map along the x-axis.
 # Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
 static func cube_to_index(coord: Vector3, x_count: int) -> int:
-	# Use bitwise and to detect whether something is even (0) or odd (1), 
-	# in order to catch negative numbers too.
-	var z_pos: int = int(coord.y + (coord.x - (int(coord.x) & 1)) / 2.0)
-	var x_pos: int = int(coord.x)
-	return (z_pos * x_count) + x_pos
+	var offset_coord: Vector2 = cube_to_offset(coord)
+	return int((offset_coord.y * x_count) + offset_coord.x)
 
 
 # Get the cube coordinates of the tile a specified distance away from an origin

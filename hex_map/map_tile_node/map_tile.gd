@@ -207,13 +207,7 @@ func _on_MapTile_area_exited(area) -> void:
 TODO: Label is here for debugging purposes. Will need to be removed.
 """
 func _update_label_display() -> void:
-	var format: String = "[%d:%d]\n%s %s\n%s    %s\n%s %s"
-	var n0: String = String(_adjacent_tiles[0].get_index()) if _adjacent_tiles[0] != null else "N"
-	var n1: String = String(_adjacent_tiles[1].get_index()) if _adjacent_tiles[1] != null else "N"
-	var n2: String = String(_adjacent_tiles[2].get_index()) if _adjacent_tiles[2] != null else "N"
-	var n3: String = String(_adjacent_tiles[3].get_index()) if _adjacent_tiles[3] != null else "N"
-	var n4: String = String(_adjacent_tiles[4].get_index()) if _adjacent_tiles[4] != null else "N"
-	var n5: String = String(_adjacent_tiles[5].get_index()) if _adjacent_tiles[5] != null else "N"
+	var format: String = "[%d:%d]\n%s  \n    %s\n%s  "
 	
-	$Label3D.text = str(format % [_map_index, height, n0, n1, n5, n2, n4, n3])
+	$Label3D.text = str(format % [_map_index, height, _cube_coord.x, _cube_coord.y, _cube_coord.z])
 	

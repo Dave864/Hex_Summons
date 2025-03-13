@@ -55,12 +55,14 @@ func determine_ring_area_indexes(start: int, ra: RingArea) -> Array:
 	var radius: int = ra.radius
 	var tiles: Array = []
 	var start_coord: Vector3 = _map_tiles[start].get_cube_coord()
+	print("start: %d, %s" % [start, start_coord])
 	for x in range(-radius, radius + 1):
 		var x_lower: int = max(-radius, -x - radius) as int
-		var x_upper: int = min(radius, -x + radius) as int
+		var x_upper: int = min(radius, radius - x) as int
 		for y in range(x_lower, x_upper + 1):
 			var coord: Vector3 = Vector3(x, y, -x - y) + start_coord
 			_add_valid_cube(tiles, coord)
+	print(tiles)
 	return tiles
 
 
@@ -164,17 +166,17 @@ func highlight_player_movement(
 	pc: PlayerCharacter,
 	start_id: int = -1
 ) -> void:
-	var map_section: Array = []
+#	var map_section: Array = []
+#	for i in tile_indexes:
+#		map_section.append(_map_tiles[i])
+#
+#	var traversable_indices: Array = _hm_astar.get_traversable_tiles(
+#		pc.get_map_index_at() if start_id < 0 else start_id,
+#		pc.stats.get_movement_range(),
+#		map_section
+#	)
+	
 	for i in tile_indexes:
-		map_section.append(_map_tiles[i])
-	
-	var traversable_indices: Array = _hm_astar.get_traversable_tiles(
-		pc.get_map_index_at() if start_id < 0 else start_id,
-		pc.stats.get_movement_range(),
-		map_section
-	)
-	
-	for i in traversable_indices:
 		var tile: MapTile = _map_tiles[i]
 		if tile.get_current_occupant() == null:
 			if i == start_id:
@@ -389,11 +391,11 @@ func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Arra
 		c.stats.get_movement_range(),
 		_get_tiles_from_ids(c_move_indexes)
 	)
-	var opponent_tiles: Array = []
-	for oc in opponents:
-		opponent_tiles.append(_map_tiles[oc.get_map_index_at()])
-	# Reset connections and disabled tiles for next pathfinding calculation
-	_hm_astar.reconnect_area(opponent_tiles)
+#	var opponent_tiles: Array = []
+#	for op in opponents:
+#		opponent_tiles.append(_map_tiles[op.get_map_index_at()])
+#	# Reset connections and disabled tiles for next pathfinding calculation
+#	_hm_astar.reconnect_area(opponent_tiles)
 	update_astar_disabled_for_characters(opponents, false)
 	return t_tiles
 
@@ -431,14 +433,14 @@ func _get_tiles_from_ids(ids: Array) -> Array:
 	return tiles
 
 
-# Adds the tile at the index to the provided array if the index is within the
-# bounds of the hex map.
-func _add_valid_index(a: Array, index: int) -> void:
-	if index >= 0 and index < (get_x_count() * get_z_count()):
-		a.append(index)
-
-
 # Adds the tile at the provided cube coordinate if it is within the bounds 
 # of the hex map.
 func _add_valid_cube(a: Array, cube: Vector3) -> void:
-	_add_valid_index(a, HexUtil.cube_to_index(cube, get_x_count()))
+	var offset: Vector2 = HexUtil.cube_to_offset(cube)
+	if (
+		offset.x >= 0 
+		and offset.x < get_x_count()
+		and offset.y >= 0 
+		and offset.y < get_z_count()
+	):
+		a.append(HexUtil.cube_to_index(cube, get_x_count()))

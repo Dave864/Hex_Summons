@@ -96,7 +96,8 @@ func _determine_action_chain() -> void:
 		active_char,
 		player_distances[0][0].get_map_index_at(),
 		enc.enemies,
-		enc.players
+		enc.players,
+		movement_range
 	)
 	
 	action_chain.push_front([EnemyCharacterState.MOVE, path])

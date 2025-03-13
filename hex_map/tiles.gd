@@ -67,15 +67,6 @@ func get_tile_at_index(index: int) -> Node:
 	return get_child(index)
 
 
-# Converts the index value to its corresponding cube cooridinate.
-func index_to_cube(index: int) -> Vector3:
-	var z_pos: int = int(floor(float(index) / float(x_count)))
-	var x_pos: int = index % x_count
-	var x_cube: int = int(x_pos - (z_pos - (z_pos & 1)) / 2.0)
-	var y_cube: int = z_pos
-	return Vector3(x_cube, y_cube, -x_cube - y_cube)
-
-
 # Removes all tiles from the tiles node and regenerates the map.
 func regenerate_grid(r: bool) -> void:
 	if Engine.is_editor_hint() and r:
@@ -136,7 +127,7 @@ func _set_coordinates() -> void:
 	for tile in get_children():
 		tile.name = MAP_TILE + String(index)
 		tile.set_map_index(index)
-		tile.set_cube_coord(index_to_cube(index))
+		tile.set_cube_coord(HexUtil.index_to_cube(index, get_x_count()))
 		index += 1
 
 

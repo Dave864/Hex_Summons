@@ -104,6 +104,7 @@ func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 # on the next character.
 func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	enc.hex_map.clear_highlights()
+	enc.hex_map.clear_selector_highlights()
 	var next_character: Character = enc.get_next_character()
 	enc.progress_initiative()
 	if next_character is PlayerCharacter:
