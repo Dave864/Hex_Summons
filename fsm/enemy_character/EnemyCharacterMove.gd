@@ -40,11 +40,8 @@ func update(delta: float) -> void:
 	# Move the enemy character towards the next tile.
 	weight += delta * Constants.MOVE_SPEED
 	weight = 1.0 if weight > 1.0 else weight
-	var li: Vector3 = start_point.linear_interpolate(
-		next_point,
-		weight
-	)
-	ec.move_collisions(li)
+	var li: Vector3 = start_point.linear_interpolate(next_point, weight)
+	ec.translation = li
 	
 	# When finished moving to next tile, check to see if path has been fully
 	# traversed. Move to the `Wait` state when path has been fully traversed.

@@ -5,10 +5,15 @@ Handles actions specific to enemy characters.
 """
 
 
+# Contains the actions associated with the enemy character.
+var _actions: Array
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	stats = $Stats
 	stats.max_cur_health()
+	_actions = $Actions.get_children()
 
 
 # Returns the type of the character, ENEMY.
@@ -16,10 +21,7 @@ func get_type() -> int:
 	return Constants.MapOccupants.ENEMY
 
 
-# Virtual function. Moves all collision objects, enemy position, movement node,
-# and all action collisions.
-func move_collisions(p: Vector3) -> void:
-	translation = p
-	var adjusted_p: Vector3 = Vector3(p.x, 0.0, p.z)
-	for action in get_node("Actions").get_children():
-		action.emission_pt.translation = adjusted_p
+# Virtual function. Updates emission points for all actions of the chracter.
+func _update_emission_index(_index: int) -> void:
+	for action in _actions:
+		action.set_emission_map_index(_index)

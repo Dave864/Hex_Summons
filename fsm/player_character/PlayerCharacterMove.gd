@@ -51,7 +51,7 @@ func update(delta: float) -> void:
 		weight += delta * Constants.MOVE_SPEED
 		weight = 1.0 if weight > 1.0 else weight
 		var li: Vector3 = start_point.linear_interpolate(next_point, weight)
-		pc.move_collisions(li)
+		pc.translation = li
 		
 		# When finished moving to next tile, check to see if path has been fully
 		# traversed. Move to the 'Standby' state when path has been fully traversed.

@@ -39,13 +39,9 @@ func get_type() -> int:
 	return Constants.MapOccupants.PLAYER
 
 
-# Virtual function. Moves all collision objects, player position, movement node,
-# and all action collisions.
-func move_collisions(p: Vector3) -> void:
-	translation = p
-	var adjusted_p: Vector3 = Vector3(p.x, 0.0, p.z)
-	for tech in _techniques:
-		tech.emission_pt.translation = adjusted_p
+# Virtual function. Updates emission points for all actions of the chracter.
+func _update_emission_index(_index: int) -> void:
+	for technique in _techniques:
+		technique.set_emission_map_index(_index)
 	for spell in _spells:
-		spell.emission_pt.translation = adjusted_p
-	
+		spell.set_emission_map_index(_index)
