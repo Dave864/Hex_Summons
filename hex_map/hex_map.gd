@@ -55,14 +55,12 @@ func determine_ring_area_indexes(start: int, ra: RingArea) -> Array:
 	var radius: int = ra.radius
 	var tiles: Array = []
 	var start_coord: Vector3 = _map_tiles[start].get_cube_coord()
-	print("start: %d, %s" % [start, start_coord])
 	for x in range(-radius, radius + 1):
 		var x_lower: int = max(-radius, -x - radius) as int
 		var x_upper: int = min(radius, radius - x) as int
 		for y in range(x_lower, x_upper + 1):
 			var coord: Vector3 = Vector3(x, y, -x - y) + start_coord
 			_add_valid_cube(tiles, coord)
-	print(tiles)
 	return tiles
 
 
@@ -166,16 +164,6 @@ func highlight_player_movement(
 	pc: PlayerCharacter,
 	start_id: int = -1
 ) -> void:
-#	var map_section: Array = []
-#	for i in tile_indexes:
-#		map_section.append(_map_tiles[i])
-#
-#	var traversable_indices: Array = _hm_astar.get_traversable_tiles(
-#		pc.get_map_index_at() if start_id < 0 else start_id,
-#		pc.stats.get_movement_range(),
-#		map_section
-#	)
-	
 	for i in tile_indexes:
 		var tile: MapTile = _map_tiles[i]
 		if tile.get_current_occupant() == null:
@@ -391,11 +379,6 @@ func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Arra
 		c.stats.get_movement_range(),
 		_get_tiles_from_ids(c_move_indexes)
 	)
-#	var opponent_tiles: Array = []
-#	for op in opponents:
-#		opponent_tiles.append(_map_tiles[op.get_map_index_at()])
-#	# Reset connections and disabled tiles for next pathfinding calculation
-#	_hm_astar.reconnect_area(opponent_tiles)
 	update_astar_disabled_for_characters(opponents, false)
 	return t_tiles
 

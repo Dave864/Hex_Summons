@@ -4,7 +4,8 @@ The logic for what happens when the Selector is in the 'SelectAction' state.
 Retrieves the tile ids of the effect area whenever the selector moves.
 Goes to the 'SelectAction' state when a new action is hovered over.
 Goes to the 'SelectMove' state when the UI signals that the action type has
-been canceled.
+been canceled. Goes to the 'Wait' state when the UI signals that the player
+turn has been terminated.
 """
 
 
@@ -37,6 +38,12 @@ func enter(_msg: Dictionary = {}) -> void:
 		self,
 		"_on_SignalBus_player_action_type_canceled"
 	)
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"player_turn_ended",
+		self,
+		"_on_SignalBus_player_turn_ended"
+	)
 	
 	selector.emit_signal(
 		"effect_selector_required",
@@ -67,6 +74,11 @@ func exit() -> void:
 		"player_action_type_canceled",
 		self,
 		"_on_SignalBus_player_action_type_canceled"
+	)
+	SignalBus.disconnect(
+		"player_turn_ended",
+		self,
+		"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -127,3 +139,9 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 		SELECT_MOVE,
 		{"initial_position": player_pos}
 	)
+
+
+# Go to the "WAIT" state when a player has signaled that their turn is ended.
+func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
+	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	state_machine.transition_to(WAIT)

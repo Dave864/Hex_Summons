@@ -99,6 +99,7 @@ func _on_SignalBus_player_action_selected(
 	player: PlayerCharacter,
 	action: Action
 ) -> void:
+	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(
 		SELECT_ACTION,
 		{"action": action, "player_pos": player.translation}
