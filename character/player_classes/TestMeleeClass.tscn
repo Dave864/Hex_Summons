@@ -1,74 +1,166 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://character/player_classes/player_class.gd" type="Script" id=1]
-[ext_resource path="res://stats/character_stats.gd" type="Script" id=2]
-[ext_resource path="res://range_type/ring_area.gd" type="Script" id=3]
-[ext_resource path="res://stats/stat.gd" type="Script" id=4]
-[ext_resource path="res://stats/elemental_stat.gd" type="Script" id=5]
+[ext_resource path="res://stats/scripts/character_stats.gd" type="Script" id=2]
+[ext_resource path="res://range_type/scripts/ring_area.gd" type="Script" id=3]
+[ext_resource path="res://range_type/scripts/cone_area.gd" type="Script" id=4]
+[ext_resource path="res://range_type/scripts/cardinal_area.gd" type="Script" id=5]
+[ext_resource path="res://stats/scripts/stat.gd" type="Script" id=6]
+[ext_resource path="res://stats/scripts/elemental_stat.gd" type="Script" id=7]
 [ext_resource path="res://actions/Strike.tscn" type="PackedScene" id=8]
 [ext_resource path="res://actions/Sweep.tscn" type="PackedScene" id=9]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+resource_name = "Ring_Area"
+script = ExtResource( 3 )
+radius = 3
+
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+resource_name = "Health"
+script = ExtResource( 6 )
+base_value = 10
+growth_rate = 1
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+resource_name = "Attack"
+script = ExtResource( 6 )
+base_value = 2
+growth_rate = 1
+
+[sub_resource type="Resource" id=4]
+resource_local_to_scene = true
+resource_name = "Defense"
+script = ExtResource( 6 )
+base_value = 2
+growth_rate = 1
+
+[sub_resource type="Resource" id=5]
+resource_local_to_scene = true
+resource_name = "Agility"
+script = ExtResource( 6 )
+base_value = 3
+growth_rate = 1
+
+[sub_resource type="Resource" id=6]
+resource_local_to_scene = true
+resource_name = "Magic_Earth"
+script = ExtResource( 7 )
+base_value = 0
+growth_rate = 0
+type = 1
+
+[sub_resource type="Resource" id=7]
+resource_local_to_scene = true
+resource_name = "Magic_Fire"
+script = ExtResource( 7 )
+base_value = 0
+growth_rate = 0
+type = 0
+
+[sub_resource type="Resource" id=8]
+resource_local_to_scene = true
+resource_name = "Magic_Water"
+script = ExtResource( 7 )
+base_value = 0
+growth_rate = 0
+type = 2
+
+[sub_resource type="Resource" id=9]
+resource_local_to_scene = true
+resource_name = "Magic_Wind"
+script = ExtResource( 7 )
+base_value = 0
+growth_rate = 0
+type = 3
+
+[sub_resource type="Resource" id=10]
+resource_local_to_scene = true
+resource_name = "Res_Earth"
+script = ExtResource( 7 )
+base_value = 0
+growth_rate = 0
+type = 1
+
+[sub_resource type="Resource" id=11]
+resource_local_to_scene = true
+resource_name = "Res_Fire"
+script = ExtResource( 7 )
+base_value = 0
+growth_rate = 0
+type = 0
+
+[sub_resource type="Resource" id=12]
+resource_local_to_scene = true
+resource_name = "Res_Water"
+script = ExtResource( 7 )
+base_value = 0
+growth_rate = 0
+type = 2
+
+[sub_resource type="Resource" id=13]
+resource_local_to_scene = true
+resource_name = "Res_Wind"
+script = ExtResource( 7 )
+base_value = 0
+growth_rate = 0
+type = 3
+
+[sub_resource type="Resource" id=14]
+resource_local_to_scene = true
+resource_name = "Cardinal_Area"
+script = ExtResource( 5 )
+distance = 1
+
+[sub_resource type="Resource" id=15]
+resource_local_to_scene = true
+resource_name = "Ring_Area"
+script = ExtResource( 3 )
+radius = 0
+
+[sub_resource type="Resource" id=16]
+resource_local_to_scene = true
+resource_name = "Cardinal_Area"
+script = ExtResource( 5 )
+distance = 1
+
+[sub_resource type="Resource" id=17]
+resource_local_to_scene = true
+resource_name = "Cone_Area"
+script = ExtResource( 4 )
+spread = 2
+distance = 1
 
 [node name="TestMeleeClass" type="Node"]
 script = ExtResource( 1 )
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource( 2 )
-
-[node name="Movement" type="Node" parent="Stats"]
-script = ExtResource( 3 )
-radius = 3
-
-[node name="Health" type="Node" parent="Stats"]
-script = ExtResource( 4 )
-base_value = 10
-
-[node name="Attack" type="Node" parent="Stats"]
-script = ExtResource( 4 )
-base_value = 2
-
-[node name="Defense" type="Node" parent="Stats"]
-script = ExtResource( 4 )
-base_value = 3
-
-[node name="Agility" type="Node" parent="Stats"]
-script = ExtResource( 4 )
-base_value = 4
-
-[node name="MagicEarth" type="Node" parent="Stats"]
-script = ExtResource( 5 )
-type = 1
-
-[node name="MagicFire" type="Node" parent="Stats"]
-script = ExtResource( 5 )
-
-[node name="MagicWater" type="Node" parent="Stats"]
-script = ExtResource( 5 )
-type = 2
-
-[node name="MagicWind" type="Node" parent="Stats"]
-script = ExtResource( 5 )
-type = 3
-
-[node name="ResistanceEarth" type="Node" parent="Stats"]
-script = ExtResource( 5 )
-type = 1
-
-[node name="ResistanceFire" type="Node" parent="Stats"]
-script = ExtResource( 5 )
-
-[node name="ResistanceWater" type="Node" parent="Stats"]
-script = ExtResource( 5 )
-type = 2
-
-[node name="ResistanceWind" type="Node" parent="Stats"]
-script = ExtResource( 5 )
-type = 3
+movement_area = SubResource( 1 )
+health = SubResource( 2 )
+attack = SubResource( 3 )
+defense = SubResource( 4 )
+agility = SubResource( 5 )
+magic_earth = SubResource( 6 )
+magic_fire = SubResource( 7 )
+magic_water = SubResource( 8 )
+magic_wind = SubResource( 9 )
+res_earth = SubResource( 10 )
+res_fire = SubResource( 11 )
+res_water = SubResource( 12 )
+res_wind = SubResource( 13 )
 
 [node name="Techniques" type="Node" parent="."]
 
 [node name="Strike" parent="Techniques" instance=ExtResource( 8 )]
 power = 2
+area_range = SubResource( 14 )
+effect_range = SubResource( 15 )
 
 [node name="Sweep" parent="Techniques" instance=ExtResource( 9 )]
+area_range = SubResource( 16 )
+effect_range = SubResource( 17 )
 
 [node name="Spells" type="Node" parent="."]

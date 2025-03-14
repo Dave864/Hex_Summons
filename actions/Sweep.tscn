@@ -1,16 +1,24 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://range_type/cone_area.gd" type="Script" id=1]
+[ext_resource path="res://range_type/scripts/cone_area.gd" type="Script" id=1]
 [ext_resource path="res://actions/action.gd" type="Script" id=2]
-[ext_resource path="res://range_type/cardinal_area.gd" type="Script" id=4]
+[ext_resource path="res://range_type/scripts/cardinal_area.gd" type="Script" id=4]
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+resource_name = "Cardinal_Area"
+script = ExtResource( 4 )
+distance = 1
+
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+resource_name = "Cone_Area"
+script = ExtResource( 1 )
+spread = 2
+distance = 1
 
 [node name="Sweep" type="Node"]
 script = ExtResource( 2 )
+area_range = SubResource( 3 )
+effect_range = SubResource( 2 )
 emit_from_center = true
-
-[node name="AreaRange" type="Node" parent="."]
-script = ExtResource( 4 )
-
-[node name="EffectRange" type="Node" parent="."]
-script = ExtResource( 1 )
-spread = 2

@@ -9,17 +9,17 @@ Describes the range and effects of an action.
 TODO: Implement logic to use stats nodes to define action effect
 """
 export(int, 1, 1000) var power
+# The area specifying the possible tiles for effect emmision.
+export var area_range: Resource = null
+# The area that is ignored when determining the possible tiles for effect emmision.
+export var dead_range: Resource = null
+# The area specifying the tiles affected by the effect.
+export var effect_range: Resource = null
 # Flag that denotes if the emission is fixed to the center of the area.
 export(bool) var emit_from_center
 # Flag that denotes if the emission ignores tile heights.
 export(bool) var ignore_heights
 
-# The area that is ignored when determining the possible tiles for effect emmision.
-var _dead_range: AreaRange setget , get_dead_range
-# The area specifying the possible tiles for effect emmision.
-var _area_range: AreaRange
-# The area specifying the tiles affected by the effect.
-var _effect_range: AreaRange
 # Whether the area range is cardinal or ring.
 var _is_cardinal: bool = false setget , get_is_cardinal
 # The index of the tile the effect is emitted from.
@@ -30,30 +30,12 @@ var _emission_direction: int = -1 setget set_emission_direction, get_emission_di
 
 func _ready() -> void:
 	# No DeadRange node indicates no dead range.
-	_dead_range = get_node_or_null("DeadRange")
-	_area_range = get_node("AreaRange")
-	_effect_range = get_node("EffectRange")
-	_is_cardinal = _area_range is CardinalArea
+	_is_cardinal = area_range is CardinalArea
 
 
 func _process(_delta) -> void:
 	pass
 
-
-# Get the details of the dead range.
-func get_dead_range() -> AreaRange:
-	return _dead_range
-
-
-# Get the details of the area range.
-func get_area_range() -> AreaRange:
-	return _area_range
-
-
-# Get the details of the effect range.
-func get_effect_range() -> AreaRange:
-	return _effect_range
-	
 
 # Returns if the area range is bound cardinally or not.
 func get_is_cardinal() -> bool:
