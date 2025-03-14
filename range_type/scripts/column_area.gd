@@ -1,6 +1,5 @@
-tool
-extends AreaRange
 class_name ColumnArea
+extends AreaRange
 """
 Describes a range whose area starts from a point and reaches out in a diamond
 shape.

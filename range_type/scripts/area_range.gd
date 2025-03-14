@@ -1,9 +1,5 @@
 class_name AreaRange
-extends Node
+extends Resource
 """
 Describes the common parameters for area ranges.
 """
-
-
-func _ready() -> void:
-	pass

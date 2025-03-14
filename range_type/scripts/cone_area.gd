@@ -1,5 +1,5 @@
-extends AreaRange
 class_name ConeArea
+extends AreaRange
 """
 Describes a range whose area can be described as a cone.
 """
