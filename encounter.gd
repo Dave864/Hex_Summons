@@ -20,25 +20,6 @@ onready var selector: Selector = $Selector
 onready var ui: EncounterUI = $EncounterUI
 
 
-# Move the initiative counter to the next index or reset it back to the start.
-func progress_initiative() -> void:
-	cur_init += 1
-	cur_init = 0 if cur_init >= initiative_tracker.size() else cur_init
-	ui.initiative_tracker.update_initiative(cur_init)
-
-
-# Gets the next character in the intiative track.
-func get_next_character() -> Character:
-	var next_init: int = cur_init + 1
-	next_init = 0 if next_init >= initiative_tracker.size() else next_init
-	return initiative_tracker[next_init]
-
-
-# Gets the character currently in initiative.
-func get_current_character() -> Character:
-	return initiative_tracker[cur_init]
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hex_map = get_node(hex_map_path)
@@ -61,3 +42,22 @@ func _ready() -> void:
 	
 	for e in enemies:
 		ui.track_enemy(e)
+
+
+# Move the initiative counter to the next index or reset it back to the start.
+func progress_initiative() -> void:
+	cur_init += 1
+	cur_init = 0 if cur_init >= initiative_tracker.size() else cur_init
+	ui.initiative_tracker.update_initiative(cur_init)
+
+
+# Gets the next character in the intiative track.
+func get_next_character() -> Character:
+	var next_init: int = cur_init + 1
+	next_init = 0 if next_init >= initiative_tracker.size() else next_init
+	return initiative_tracker[next_init]
+
+
+# Gets the character currently in initiative.
+func get_current_character() -> Character:
+	return initiative_tracker[cur_init]
