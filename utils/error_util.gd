@@ -80,3 +80,10 @@ static func connect_signal(
 static func missing_stat_for_node(node_name: String, stat_name: String) -> void:
 	var message_template: String = "ERROR: %s node is missing from the %s node."
 	printerr(message_template % [node_name, stat_name])
+
+
+# The formatted error string for when a given direction falls outside the bounds
+# of a hexagon.
+static func hex_direction_out_of_bounds(direction: int) -> void:
+	var message_template: String = "The given direction falls outside the bounds of a hex: %d."
+	printerr(message_template % [direction])
