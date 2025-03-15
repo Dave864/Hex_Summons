@@ -12,16 +12,16 @@ func enter(_msg := {}) -> void:
 	# These signals is used by other PlayerCharacters and will be disconnected 
 	# to avoid unintended behavior.
 	ErrorUtil.connect_signal(
-			SignalBus, 
+			SignalBusEncounter, 
 			"move_tile_selected", 
 			self, 
-			"_on_SignalBus_move_tile_selected"
+			"_on_SignalBusEncounter_move_tile_selected"
 	)
 	ErrorUtil.connect_signal(
-			SignalBus,
+			SignalBusEncounter,
 			"player_turn_ended",
 			self,
-			"_on_SignalBus_player_turn_ended"
+			"_on_SignalBusEncounter_player_turn_ended"
 	)
 
 
@@ -38,16 +38,24 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state. 
 # Use this function to clean up the state.
 func exit() -> void:
-	SignalBus.disconnect("move_tile_selected", self, "_on_SignalBus_move_tile_selected")
-	SignalBus.disconnect("player_turn_ended", self, "_on_SignalBus_player_turn_ended")
+	SignalBusEncounter.disconnect(
+		"move_tile_selected",
+		self,
+		"_on_SignalBusEncounter_move_tile_selected"
+	)
+	SignalBusEncounter.disconnect(
+		"player_turn_ended",
+		self,
+		"_on_SignalBusEncounter_player_turn_ended"
+	)
 
 
 # Hit when the Selector selects a map tile destination.
-func _on_SignalBus_move_tile_selected(info: Array) -> void:
+func _on_SignalBusEncounter_move_tile_selected(info: Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": info})
 
 
 # Hit when the EncounterUI indicates that a player has finished their turn.
-func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
+func _on_SignalBusEncounter_player_turn_ended(player: PlayerCharacter) -> void:
 	if pc.name == player.name:
 		state_machine.transition_to(WAIT)

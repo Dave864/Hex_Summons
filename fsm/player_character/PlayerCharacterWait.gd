@@ -9,24 +9,24 @@ The Player Character waits until it is reenabled.
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	ErrorUtil.connect_signal(
-			SignalBus,
+			SignalBusEncounter,
 			"player_turn_started",
 			self,
-			"_on_SignalBus_player_turn_started"
+			"_on_SignalBusEncounter_player_turn_started"
 	)
 
 
 # Called by the state machine before changing the active state. 
 # Use this function to clean up the state.
 func exit() -> void:
-	SignalBus.disconnect(
+	SignalBusEncounter.disconnect(
 			"player_turn_started",
 			self,
-			"_on_SignalBus_player_turn_started"
+			"_on_SignalBusEncounter_player_turn_started"
 	)
 
 
 # Hit when the player character is selected to take its turn.
-func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
+func _on_SignalBusEncounter_player_turn_started(player: PlayerCharacter) -> void:
 	if player.name == pc.name:
 		state_machine.transition_to(STANDBY)

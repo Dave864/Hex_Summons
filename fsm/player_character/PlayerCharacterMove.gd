@@ -25,10 +25,10 @@ func enter(_msg := {}) -> void:
 	travel_path = _msg["travel_path"]
 	
 	ErrorUtil.connect_signal(
-			SignalBus,
+			SignalBusEncounter,
 			"selector_paused",
 			self, 
-			"_on_SignalBus_selector_paused"
+			"_on_SignalBusEncounter_selector_paused"
 	)
 	
 	# Move to the 'Standby' state if the travel path only has one point.
@@ -75,9 +75,13 @@ func exit() -> void:
 	next_point_index = 1
 	completed_path = false
 	selector_paused = false
-	SignalBus.disconnect("selector_paused", self, "_on_SignalBus_selector_paused")
-	SignalBus.emit_signal("selector_required", next_point)
+	SignalBusEncounter.disconnect(
+		"selector_paused",
+		self,
+		"_on_SignalBusEncounter_selector_paused"
+	)
+	SignalBusEncounter.emit_signal("selector_required", next_point)
 
 
-func _on_SignalBus_selector_paused() -> void:
+func _on_SignalBusEncounter_selector_paused() -> void:
 	selector_paused = true

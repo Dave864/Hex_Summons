@@ -27,14 +27,14 @@ func exit() -> void:
 
 func _ready_connect_signals():
 	ErrorUtil.connect_signal(
-			SignalBus,
+			SignalBusEncounter,
 			"player_turn_started",
 			self,
-			"_on_SignalBus_player_turn_started"
+			"_on_SignalBusEncounter_player_turn_started"
 	)
 
 
 # Gets the current player and moves to the 'ActionSelect' state.
-func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
+func _on_SignalBusEncounter_player_turn_started(player: PlayerCharacter) -> void:
 	encounter_ui.set_focused_player(player)
 	state_machine.transition_to(STANDBY)

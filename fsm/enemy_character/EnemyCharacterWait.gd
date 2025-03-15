@@ -23,14 +23,14 @@ func exit() -> void:
 
 func _ready_connect_signals() -> void:
 	ErrorUtil.connect_signal(
-			SignalBus, 
+			SignalBusEncounter, 
 			"enemy_turn_started", 
 			self, 
-			"_on_SignalBus_enemy_turn_started"
+			"_on_SignalBusEncounter_enemy_turn_started"
 	)
 
 
 # Hit when the enemy character is selected to take its turn.
-func _on_SignalBus_enemy_turn_started(enemy: EnemyCharacter) -> void:
+func _on_SignalBusEncounter_enemy_turn_started(enemy: EnemyCharacter) -> void:
 	if enemy.name == ec.name:
 		state_machine.transition_to(THINK)

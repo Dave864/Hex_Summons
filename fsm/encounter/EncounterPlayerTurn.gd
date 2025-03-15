@@ -29,7 +29,7 @@ func enter(_msg := {}) -> void:
 		enc.enemies
 	)
 	enc.hex_map.highlight_player_movement(movement_area, active_char)
-	SignalBus.emit_signal("player_turn_started", active_char)
+	SignalBusEncounter.emit_signal("player_turn_started", active_char)
 	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
@@ -46,16 +46,16 @@ func enter(_msg := {}) -> void:
 		"_on_Selector_effect_selector_required"
 	)
 	ErrorUtil.connect_signal(
-		SignalBus,
+		SignalBusEncounter,
 		"player_action_selected",
 		self,
-		"_on_SignalBus_player_action_selected"
+		"_on_SignalBusEncounter_player_action_selected"
 	)
 	ErrorUtil.connect_signal(
-		SignalBus,
+		SignalBusEncounter,
 		"player_action_type_canceled",
 		self,
-		"_on_SignalBus_player_action_type_canceled"
+		"_on_SignalBusEncounter_player_action_type_canceled"
 	)
 
 
@@ -72,18 +72,34 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	enc.selector.disconnect("move_tile_selected", self, "_on_Selector_move_tile_selected")
-	enc.selector.disconnect("effect_selector_required", self, "_on_Selector_effect_selector_required")
-	SignalBus.disconnect("player_action_selected", self, "_on_SignalBus_player_action_selected")
-	SignalBus.disconnect("player_action_type_canceled", self, "_on_SignalBus_player_action_type_canceled")
+	enc.selector.disconnect(
+		"move_tile_selected",
+		self,
+		"_on_Selector_move_tile_selected"
+	)
+	enc.selector.disconnect(
+		"effect_selector_required",
+		self,
+		"_on_Selector_effect_selector_required"
+	)
+	SignalBusEncounter.disconnect(
+		"player_action_selected",
+		self,
+		"_on_SignalBusEncounter_player_action_selected"
+	)
+	SignalBusEncounter.disconnect(
+		"player_action_type_canceled",
+		self,
+		"_on_SignalBusEncounter_player_action_type_canceled"
+	)
 
 
 func _ready_connect_signals() -> void:
 	ErrorUtil.connect_signal(
-		SignalBus,
+		SignalBusEncounter,
 		"player_turn_ended",
 		self,
-		"_on_SignalBus_player_turn_ended"
+		"_on_SignalBusEncounter_player_turn_ended"
 	)
 
 
@@ -96,13 +112,13 @@ func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 		enc.enemies,
 		movement_area
 	)
-	SignalBus.emit_signal("move_tile_selected", data)
+	SignalBusEncounter.emit_signal("move_tile_selected", data)
 
 
 # Clear the tile movement highlights, update the initiative tracker and
 # transition to either the PlayerTurn state or the EnemyTurn state depending 
 # on the next character.
-func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
+func _on_SignalBusEncounter_player_turn_ended(_player: PlayerCharacter) -> void:
 	enc.hex_map.clear_highlights()
 	enc.hex_map.clear_selector_highlights()
 	var next_character: Character = enc.get_next_character()
@@ -117,17 +133,7 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 
 # Updates the tile highlights to show the area range of the action.
-func _on_SignalBus_player_action_confirmed(action: Action) -> void:
-	var area_tiles: Array = enc.hex_map.determine_area(
-		action.area_range,
-		action.get_emission_map_index()
-	)
-	enc.hex_map.clear_highlights()
-	enc.hex_map.highlight_player_action_area(area_tiles, active_char)
-
-
-# Updates the tile highlights to show the area range of the action.
-func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
+func _on_SignalBusEncounter_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
 	var area_indexes: Array = enc.hex_map.determine_area_indexes(
 		action.area_range,
 		action.get_emission_map_index()
@@ -151,7 +157,7 @@ func _on_Selector_effect_selector_required(
 
 # Called when the user backs out from an action type menu. Resets the tile highlights
 # to indicate player movement.
-func _on_SignalBus_player_action_type_canceled() -> void:
+func _on_SignalBusEncounter_player_action_type_canceled() -> void:
 	enc.hex_map.clear_highlights()
 	enc.hex_map.clear_selector_highlights()
 	enc.hex_map.highlight_player_movement(movement_area, active_char, start_index)

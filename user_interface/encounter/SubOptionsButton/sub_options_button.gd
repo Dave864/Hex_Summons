@@ -46,7 +46,7 @@ func get_button() -> Node:
 
 # Emit a signal indicating that the button was pressed.
 func _on_Button_pressed() -> void:
-	SignalBus.emit_signal("player_action_selected", _player, _action_details)
+	SignalBusEncounter.emit_signal("player_action_selected", _player, _action_details)
 
 
 # Emit a signal indicating that the button was hovered over.

@@ -9,24 +9,24 @@ until the encounter is ready to recieve new player selections.
 # Hide the selector shape and disable the ability to snap to tile positions
 func enter(_msg: Dictionary = {}) -> void:
 	ErrorUtil.connect_signal(
-			SignalBus,
+			SignalBusEncounter,
 			"player_turn_started",
 			self,
-			"_on_SignalBus_player_turn_started"
+			"_on_SignalBusEncounter_player_turn_started"
 	)
 
 
 # Called by the state machine before changing the active state. 
 # Use this function to clean up the state.
 func exit() -> void:
-	SignalBus.disconnect(
+	SignalBusEncounter.disconnect(
 			"player_turn_started",
 			self,
-			"_on_SignalBus_player_turn_started"
+			"_on_SignalBusEncounter_player_turn_started"
 	)
 
 
 # Set the position of the selector to the player whose turn has started and move
 # to the `SelectMove` state.
-func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
+func _on_SignalBusEncounter_player_turn_started(player: PlayerCharacter) -> void:
 	state_machine.transition_to(SELECT_MOVE, {"initial_position": player.translation})

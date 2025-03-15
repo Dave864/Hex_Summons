@@ -265,7 +265,7 @@ config/icon="res://art/icon.png"
 
 [autoload]
 
-SignalBus="*res://autoloads/signal_bus.gd"
+SignalBusEncounter="*res://autoloads/signal_bus_encounter.gd"
 
 [global]
 

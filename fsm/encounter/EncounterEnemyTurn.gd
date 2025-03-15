@@ -24,12 +24,12 @@ func enter(_msg := {}) -> void:
 		enc.players
 	)
 	ErrorUtil.connect_signal(
-			SignalBus,
+			SignalBusEncounter,
 			"enemy_actions_required",
 			self,
-			"_on_SignalBus_enemy_actions_required"
+			"_on_SignalBusEncounter_enemy_actions_required"
 	)
-	SignalBus.emit_signal("enemy_turn_started", active_char)
+	SignalBusEncounter.emit_signal("enemy_turn_started", active_char)
 
 
 # Corresponds to the `_process()` callback.
@@ -42,28 +42,28 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	SignalBus.disconnect(
+	SignalBusEncounter.disconnect(
 			"enemy_actions_required",
 			self,
-			"_on_SignalBus_enemy_actions_required"
+			"_on_SignalBusEncounter_enemy_actions_required"
 	)
 	enc.progress_initiative()
 
 
 func _ready_connect_signals() -> void:
 	ErrorUtil.connect_signal(
-			SignalBus,
+			SignalBusEncounter,
 			"enemy_turn_ended",
 			self,
-			"_on_SignalBus_enemy_turn_ended"
+			"_on_SignalBusEncounter_enemy_turn_ended"
 	)
 
 
-func _on_SignalBus_enemy_actions_required() -> void:
+func _on_SignalBusEncounter_enemy_actions_required() -> void:
 	_determine_action_chain()
 
 
-func _on_SignalBus_enemy_turn_ended(_enemy: EnemyCharacter) -> void:
+func _on_SignalBusEncounter_enemy_turn_ended(_enemy: EnemyCharacter) -> void:
 	var next_character: Character = enc.get_next_character()
 	if next_character is PlayerCharacter:
 		state_machine.transition_to(PLAYER_TURN)
@@ -104,4 +104,4 @@ func _determine_action_chain() -> void:
 	# Pause for a little bit to give the EncounterUI a chance to get ready.
 	# Workaround for bug where not moving the player causes the UI to not appear.
 	yield(get_tree().create_timer(0.1), "timeout")
-	SignalBus.emit_signal("enemy_actions_confirmed", action_chain)
+	SignalBusEncounter.emit_signal("enemy_actions_confirmed", action_chain)

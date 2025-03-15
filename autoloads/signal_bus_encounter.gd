@@ -1,6 +1,7 @@
 extends Node
 """
-A collection of signals that need to be referenced by multiple disjointed nodes.
+A collection of signals that need to be referenced by multiple disjointed nodes
+in the Encounter scene.
 """
 
 
