@@ -17,8 +17,7 @@ export(int, 0, 20) var height = 0 setget set_height
 #  4  \ /  3
 var _adjacent_tiles: Array = [null, null, null, null, null, null] \
 	setget , get_adjacent
-# The index position of the map tile when it is part 
-# of a collection of tiles.
+# The index position of the map tile when it is part of a collection of tiles.
 var _map_index: int = -1 setget set_map_index, get_map_index
 # The cube coordinates of the map tile.
 #     -z

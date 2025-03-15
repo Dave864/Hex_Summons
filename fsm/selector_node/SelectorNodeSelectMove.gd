@@ -64,8 +64,9 @@ func exit() -> void:
 func handle_input(_event: InputEvent) -> void:
 	mouse_active = _event is InputEventMouse
 	if _event.is_action_pressed("ui_selector_select"):
-		selector.emit_signal("move_tile_selected", selector.tile_hovered)
-		state_machine.transition_to(PAUSE)
+		if selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY:
+			selector.emit_signal("move_tile_selected", selector.tile_hovered)
+			state_machine.transition_to(PAUSE)
 	
 	_resolve_joystick_direction(selector.joystick_to_hex_direction())
 
@@ -81,17 +82,23 @@ func _resolve_joystick_direction(direction: int) -> void:
 
 # Activate the selector for the hovered tile.
 func _on_Selector_area_entered(map_tile: Area) -> void:
+	if !map_tile.is_active():
+		return
+	
+	# Turn off previous selector indicator to indicate a new tile is being
+	# hovered over.
+	if selector.tile_hovered != null:
+		selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	selector.tile_hovered = map_tile
+	
+	var highlight: int = map_tile.get_highlight_type()
 	if (
-		map_tile.is_active() 
-		and (
-			map_tile.get_highlight_type() == HexHighlighter.Option.RANGE
-			or map_tile.get_highlight_type() == HexHighlighter.Option.PLAYER
-		)
+		highlight == HexHighlighter.Option.RANGE
+		or highlight == HexHighlighter.Option.PLAYER
 	):
-		if selector.tile_hovered != null:
-			selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
-		selector.tile_hovered = map_tile
 		map_tile.set_selector_type(HexHighlighter.Option.MOVE)
+	else:
+		map_tile.set_selector_type(HexHighlighter.Option.GRAY)
 
 
 # Go to the "SelectAction" state when the UI signals that an action was selected.

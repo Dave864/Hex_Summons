@@ -119,7 +119,6 @@ func determine_column_area_indexes(start: int, dir: int, ca: ColumnArea) -> Arra
 	for s in range(spread + 1):
 		var left_coord: Vector3 = HexUtil.cube_at_distance(start_coord, left_dir, s)
 		var right_coord: Vector3 = HexUtil.cube_at_distance(start_coord, right_dir, s)
-		# Don't add adjacent tiles if the spread is 0.
 		if s > 0:
 			_add_valid_cube(tiles, left_coord)
 			_add_valid_cube(tiles, right_coord)

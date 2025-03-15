@@ -14,6 +14,7 @@ enum Option {
 	EFFECT_ORIGIN,
 	TARGET,
 	MOVE,
+	GRAY,
 }
 
 const COLOR_AREA_RANGE: Color = Color.blue
@@ -23,6 +24,7 @@ const COLOR_EFFECT_RANGE: Color = Color.orange
 const COLOR_EFFECT_ORIGIN: Color = Color.orangered
 const COLOR_TARGET_SELECT: Color = Color.red
 const COLOR_MOVE_SELECT: Color = Color.yellow
+const COLOR_GRAY_SELECT: Color = Color.gray
 
 var _hl_option: int setget set_option, get_option
 
@@ -55,6 +57,9 @@ func set_option(hl_option: int) -> void:
 			show()
 		Option.MOVE:
 			_set_highlighter_color(COLOR_MOVE_SELECT)
+			show()
+		Option.GRAY:
+			_set_highlighter_color(COLOR_GRAY_SELECT)
 			show()
 		_:
 			hide()
