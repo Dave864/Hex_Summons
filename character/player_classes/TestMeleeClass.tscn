@@ -125,7 +125,7 @@ distance = 1
 resource_local_to_scene = true
 resource_name = "Cone_Area"
 script = ExtResource( 4 )
-spread = 1
+spread = 2
 distance = 1
 
 [node name="TestMeleeClass" type="Node"]

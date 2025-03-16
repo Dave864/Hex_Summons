@@ -1,0 +1,324 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://hex_map/tiles.gd" type="Script" id=1]
+[ext_resource path="res://hex_map/hex_map.gd" type="Script" id=3]
+[ext_resource path="res://hex_map/map_tile_node/MapTile.tscn" type="PackedScene" id=4]
+[ext_resource path="res://hex_map/hex_map_floor.tres" type="PlaneMesh" id=5]
+
+[node name="TestMap" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="FloorMesh" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+mesh = ExtResource( 5 )
+
+[node name="Tiles" type="Spatial" parent="."]
+script = ExtResource( 1 )
+x_count = 10
+z_count = 9
+
+[node name="MapTile0" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22724, 0, -6 )
+
+[node name="MapTile1" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, -6 )
+
+[node name="MapTile2" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, -6 )
+
+[node name="MapTile3" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, -6 )
+
+[node name="MapTile4" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, -6 )
+
+[node name="MapTile5" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, -6 )
+
+[node name="MapTile6" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, -6 )
+
+[node name="MapTile7" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, -6 )
+
+[node name="MapTile8" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, -6 )
+
+[node name="MapTile9" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, -6 )
+height = 3
+
+[node name="MapTile10" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36122, 0, -4.5 )
+
+[node name="MapTile11" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62916, 0, -4.5 )
+
+[node name="MapTile12" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, -4.5 )
+
+[node name="MapTile13" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, -4.5 )
+
+[node name="MapTile14" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, -4.5 )
+height = 1
+
+[node name="MapTile15" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, -4.5 )
+
+[node name="MapTile16" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, -4.5 )
+
+[node name="MapTile17" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76314, 0, -4.5 )
+height = 1
+
+[node name="MapTile18" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49519, 0, -4.5 )
+height = 4
+
+[node name="MapTile19" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22724, 0, -4.5 )
+height = 3
+
+[node name="MapTile20" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22724, 0, -3 )
+
+[node name="MapTile21" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, -3 )
+
+[node name="MapTile22" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, -3 )
+
+[node name="MapTile23" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, -3 )
+height = 1
+
+[node name="MapTile24" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, -3 )
+height = 2
+
+[node name="MapTile25" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, -3 )
+height = 2
+
+[node name="MapTile26" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, -3 )
+height = 1
+
+[node name="MapTile27" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, -3 )
+
+[node name="MapTile28" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, -3 )
+height = 2
+
+[node name="MapTile29" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, -3 )
+height = 2
+
+[node name="MapTile30" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36122, 0, -1.5 )
+
+[node name="MapTile31" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62917, 0, -1.5 )
+
+[node name="MapTile32" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, -1.5 )
+
+[node name="MapTile33" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, -1.5 )
+height = 2
+
+[node name="MapTile34" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, -1.5 )
+height = 2
+
+[node name="MapTile35" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, -1.5 )
+height = 2
+
+[node name="MapTile36" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, -1.5 )
+
+[node name="MapTile37" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76314, 0, -1.5 )
+
+[node name="MapTile38" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49519, 0, -1.5 )
+
+[node name="MapTile39" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22724, 0, -1.5 )
+
+[node name="MapTile40" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22724, 0, 0 )
+height = 1
+
+[node name="MapTile41" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, 0 )
+height = 1
+
+[node name="MapTile42" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, 0 )
+
+[node name="MapTile43" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 0 )
+height = 1
+
+[node name="MapTile44" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 0 )
+height = 2
+
+[node name="MapTile45" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 0 )
+height = 2
+
+[node name="MapTile46" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 0 )
+height = 1
+
+[node name="MapTile47" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, 0 )
+
+[node name="MapTile48" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, 0 )
+
+[node name="MapTile49" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, 0 )
+
+[node name="MapTile50" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36122, 0, 1.5 )
+height = 1
+
+[node name="MapTile51" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62917, 0, 1.5 )
+
+[node name="MapTile52" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, 1.5 )
+
+[node name="MapTile53" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, 1.5 )
+height = 3
+
+[node name="MapTile54" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, 1.5 )
+height = 3
+
+[node name="MapTile55" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, 1.5 )
+
+[node name="MapTile56" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, 1.5 )
+
+[node name="MapTile57" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76314, 0, 1.5 )
+height = 2
+
+[node name="MapTile58" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49519, 0, 1.5 )
+height = 2
+
+[node name="MapTile59" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22724, 0, 1.5 )
+
+[node name="MapTile60" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22724, 0, 3 )
+height = 1
+
+[node name="MapTile61" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, 3 )
+height = 1
+
+[node name="MapTile62" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, 3 )
+
+[node name="MapTile63" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 3 )
+
+[node name="MapTile64" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 3 )
+height = 3
+
+[node name="MapTile65" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 3 )
+height = 2
+
+[node name="MapTile66" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 3 )
+
+[node name="MapTile67" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, 3 )
+
+[node name="MapTile68" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, 3 )
+height = 2
+
+[node name="MapTile69" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, 3 )
+height = 2
+
+[node name="MapTile70" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36122, 0, 4.5 )
+height = 1
+
+[node name="MapTile71" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62917, 0, 4.5 )
+height = 1
+
+[node name="MapTile72" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, 4.5 )
+
+[node name="MapTile73" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, 4.5 )
+
+[node name="MapTile74" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, 4.5 )
+height = 2
+
+[node name="MapTile75" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, 4.5 )
+height = 1
+
+[node name="MapTile76" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, 4.5 )
+
+[node name="MapTile77" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76314, 0, 4.5 )
+
+[node name="MapTile78" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49519, 0, 4.5 )
+
+[node name="MapTile79" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22724, 0, 4.5 )
+
+[node name="MapTile80" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22724, 0, 6 )
+
+[node name="MapTile81" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, 6 )
+height = 1
+
+[node name="MapTile82" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, 6 )
+
+[node name="MapTile83" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 6 )
+
+[node name="MapTile84" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 6 )
+
+[node name="MapTile85" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 6 )
+
+[node name="MapTile86" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 6 )
+
+[node name="MapTile87" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, 6 )
+
+[node name="MapTile88" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, 6 )
+
+[node name="MapTile89" parent="Tiles" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, 6 )

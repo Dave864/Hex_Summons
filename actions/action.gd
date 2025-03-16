@@ -25,12 +25,13 @@ var _is_cardinal: bool = false setget , get_is_cardinal
 # The index of the tile the effect is emitted from.
 var _emission_map_index: int = -1 setget set_emission_map_index, get_emission_map_index
 # The direction the effect is emitted. Only updated if the action is cardinal.
-var _emission_direction: int = -1 setget set_emission_direction, get_emission_direction
+var _emission_direction: int setget set_emission_direction, get_emission_direction
 
 
 func _ready() -> void:
 	# No DeadRange node indicates no dead range.
 	_is_cardinal = area_range is CardinalArea
+	set_emission_direction(HexUtil.Direction.UPPER_LEFT)
 
 
 func _process(_delta) -> void:

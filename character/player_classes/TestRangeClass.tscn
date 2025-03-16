@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://character/player_classes/player_class.gd" type="Script" id=1]
 [ext_resource path="res://stats/scripts/character_stats.gd" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://range_type/cone_area.tres" type="Resource" id=7]
 [ext_resource path="res://actions/Strike.tscn" type="PackedScene" id=8]
 [ext_resource path="res://actions/Shot.tscn" type="PackedScene" id=9]
+[ext_resource path="res://range_type/scripts/column_area.gd" type="Script" id=10]
+[ext_resource path="res://actions/Beam.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
@@ -126,6 +128,19 @@ resource_name = "Ring_Area"
 script = ExtResource( 3 )
 radius = 0
 
+[sub_resource type="Resource" id=18]
+resource_local_to_scene = true
+resource_name = "Cardinal_Area"
+script = ExtResource( 4 )
+distance = 1
+
+[sub_resource type="Resource" id=19]
+resource_local_to_scene = true
+resource_name = "Column_Area"
+script = ExtResource( 10 )
+spread = 1
+distance = 3
+
 [node name="TestRangeClass" type="Node"]
 script = ExtResource( 1 )
 
@@ -154,5 +169,9 @@ effect_range = ExtResource( 7 )
 [node name="Shot" parent="Techniques" instance=ExtResource( 9 )]
 area_range = SubResource( 16 )
 effect_range = SubResource( 17 )
+
+[node name="Beam" parent="Techniques" instance=ExtResource( 11 )]
+area_range = SubResource( 18 )
+effect_range = SubResource( 19 )
 
 [node name="Spells" type="Node" parent="."]

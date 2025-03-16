@@ -6,5 +6,5 @@
 resource_local_to_scene = true
 resource_name = "Column_Area"
 script = ExtResource( 1 )
-spread = 0
-distance = 1
+spread = 1
+distance = 3
