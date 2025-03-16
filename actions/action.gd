@@ -29,6 +29,14 @@ var _emission_direction: int setget set_emission_direction, get_emission_directi
 
 
 func _ready() -> void:
+	assert(
+		area_range != null,
+		ErrorUtil.missing_required_parameter(name, "area_range")
+	)
+	assert(
+		effect_range != null,
+		ErrorUtil.missing_required_parameter(name, "effect_range")
+	)
 	# No DeadRange node indicates no dead range.
 	_is_cardinal = area_range is CardinalArea
 	set_emission_direction(HexUtil.Direction.UPPER_LEFT)

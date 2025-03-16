@@ -124,8 +124,8 @@ func determine_column_area_indexes(start: int, dir: int, ca: ColumnArea) -> Arra
 	var start_coord: Vector3 = _map_tiles[start].get_cube_coord()
 	tiles.append(start)
 	for s in range(spread + 1):
-		var left_coord: Vector3 = HexUtil.cube_at_distance(start_coord, left_dir, s)
-		var right_coord: Vector3 = HexUtil.cube_at_distance(start_coord, right_dir, s)
+		var left_coord: Vector3 = HexUtil.cube_at_distance(start_coord, s, left_dir)
+		var right_coord: Vector3 = HexUtil.cube_at_distance(start_coord, s, right_dir)
 		if s > 0:
 			_add_valid_cube(tiles, left_coord)
 			_add_valid_cube(tiles, right_coord)
@@ -134,12 +134,12 @@ func determine_column_area_indexes(start: int, dir: int, ca: ColumnArea) -> Arra
 		for d in range(distance + spread - s):
 			# Only cast ray from starting point when spread is at 0.
 			if s == 0:
-				var ray_coord: Vector3 = HexUtil.cube_at_distance(start_coord, dir, d)
+				var ray_coord: Vector3 = HexUtil.cube_at_distance(start_coord, d, dir)
 				_add_valid_cube(tiles, ray_coord)
 			# Cast rays from both left and right points.
 			else:
-				var ray_coord_l: Vector3 = HexUtil.cube_at_distance(left_coord, dir, d)
-				var ray_coord_r: Vector3 = HexUtil.cube_at_distance(right_coord, dir, d)
+				var ray_coord_l: Vector3 = HexUtil.cube_at_distance(left_coord, d, dir)
+				var ray_coord_r: Vector3 = HexUtil.cube_at_distance(right_coord, d, dir)
 				_add_valid_cube(tiles, ray_coord_l)
 				_add_valid_cube(tiles, ray_coord_r)
 	return tiles
