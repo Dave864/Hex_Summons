@@ -11,7 +11,7 @@ const TILES = "Tiles"
 const FLOOR_MESH = "FloorMesh"
 
 var _hm_astar: HexMapAStar = null
-var _floor_mesh: PlaneMesh = preload("res://hex_map/hex_map_floor.tres")
+var _floor_mesh: PlaneMesh = preload("res://hex_map/resources/hex_map_floor.tres")
 var _floor_mesh_node: MeshInstance = null
 var _tiles_node: Tiles = null
 var _highlighted_map_indexes: Array = []
