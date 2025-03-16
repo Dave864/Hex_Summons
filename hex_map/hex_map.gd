@@ -92,15 +92,22 @@ func determine_cone_area_indexes(start: int, dir: int, ca: ConeArea) -> Array:
 		# Keep the direction witin the bounds of 0 - 5.
 		cur_dir -= 0 if cur_dir < 6 else 6
 		for d in range(distance):
-			var cur_coord: Vector3 = HexUtil.cube_at_distance(start_coord, cur_dir, d)
+			var cur_coord: Vector3 = HexUtil.cube_at_distance(
+					start_coord,
+					d + 1,
+					cur_dir
+			)
 			_add_valid_cube(tiles, cur_coord)
-			# Don't cast ray if there is no spread or if this is the last origin
-			# line to add.
-			if spread > 0 and s < spread:
-				for i in range(d - 1):
+			# Don't cast ray if this is the last origin line to add.
+			if s < spread:
+				for i in range(d):
 					# The ray is cast two positions clockwise from the origin direction
 					var ray_dir: int = cur_dir + 2 if cur_dir < 4 else cur_dir - 4
-					var ray_coord: Vector3 = HexUtil.cube_at_distance(cur_coord, ray_dir, i)
+					var ray_coord: Vector3 = HexUtil.cube_at_distance(
+							cur_coord,
+							i + 1,
+							ray_dir
+					)
 					_add_valid_cube(tiles, ray_coord)
 	return tiles
 

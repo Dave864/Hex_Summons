@@ -6,6 +6,7 @@
 [ext_resource path="res://range_type/scripts/cardinal_area.gd" type="Script" id=4]
 [ext_resource path="res://stats/scripts/stat.gd" type="Script" id=5]
 [ext_resource path="res://stats/scripts/elemental_stat.gd" type="Script" id=6]
+[ext_resource path="res://range_type/cone_area.tres" type="Resource" id=7]
 [ext_resource path="res://actions/Strike.tscn" type="PackedScene" id=8]
 [ext_resource path="res://actions/Shot.tscn" type="PackedScene" id=9]
 
@@ -113,12 +114,6 @@ resource_name = "Cardinal_Area"
 script = ExtResource( 4 )
 distance = 1
 
-[sub_resource type="Resource" id=15]
-resource_local_to_scene = true
-resource_name = "Ring_Area"
-script = ExtResource( 3 )
-radius = 0
-
 [sub_resource type="Resource" id=16]
 resource_local_to_scene = true
 resource_name = "Ring_Area"
@@ -154,7 +149,7 @@ res_wind = SubResource( 13 )
 
 [node name="Strike" parent="Techniques" instance=ExtResource( 8 )]
 area_range = SubResource( 14 )
-effect_range = SubResource( 15 )
+effect_range = ExtResource( 7 )
 
 [node name="Shot" parent="Techniques" instance=ExtResource( 9 )]
 area_range = SubResource( 16 )

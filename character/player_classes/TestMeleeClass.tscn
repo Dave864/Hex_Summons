@@ -9,6 +9,7 @@
 [ext_resource path="res://stats/scripts/elemental_stat.gd" type="Script" id=7]
 [ext_resource path="res://actions/Strike.tscn" type="PackedScene" id=8]
 [ext_resource path="res://actions/Sweep.tscn" type="PackedScene" id=9]
+[ext_resource path="res://range_type/cone_area.tres" type="Resource" id=10]
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
@@ -114,12 +115,6 @@ resource_name = "Cardinal_Area"
 script = ExtResource( 5 )
 distance = 1
 
-[sub_resource type="Resource" id=15]
-resource_local_to_scene = true
-resource_name = "Ring_Area"
-script = ExtResource( 3 )
-radius = 0
-
 [sub_resource type="Resource" id=16]
 resource_local_to_scene = true
 resource_name = "Cardinal_Area"
@@ -130,7 +125,7 @@ distance = 1
 resource_local_to_scene = true
 resource_name = "Cone_Area"
 script = ExtResource( 4 )
-spread = 2
+spread = 1
 distance = 1
 
 [node name="TestMeleeClass" type="Node"]
@@ -157,7 +152,7 @@ res_wind = SubResource( 13 )
 [node name="Strike" parent="Techniques" instance=ExtResource( 8 )]
 power = 2
 area_range = SubResource( 14 )
-effect_range = SubResource( 15 )
+effect_range = ExtResource( 10 )
 
 [node name="Sweep" parent="Techniques" instance=ExtResource( 9 )]
 area_range = SubResource( 16 )

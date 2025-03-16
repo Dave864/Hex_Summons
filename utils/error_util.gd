@@ -34,8 +34,8 @@ static func signal_connect_self_failed(
 	signal_source_node: String, 
 	signal_method: String
 ) -> void:
-	var message_template: String = "ERROR CODE %d\n" + \
-			"Failed to connect %s own %s signal to its own method '%s'."
+	var message_template: String = "ERROR CODE %d\n" \
+			+ "Failed to connect %s own %s signal to its own method '%s'."
 	printerr(
 		message_template % [
 			error_code,
@@ -77,13 +77,22 @@ static func connect_signal(
 
 # The formatted error string for when a required stat has not been assigned to
 # a specified node.
-static func missing_stat_for_node(node_name: String, stat_name: String) -> void:
+static func missing_stat_for_node(node_name: String, stat_name: String) -> String:
 	var message_template: String = "ERROR: %s node is missing from the %s node."
-	printerr(message_template % [node_name, stat_name])
+	return message_template % [node_name, stat_name]
 
 
 # The formatted error string for when a given direction falls outside the bounds
 # of a hexagon.
-static func hex_direction_out_of_bounds(direction: int) -> void:
-	var message_template: String = "The given direction falls outside the bounds of a hex: %d."
-	printerr(message_template % [direction])
+static func hex_direction_out_of_bounds(direction: int) -> String:
+	var message_template: String = "ERROR: The given direction falls outside the " \
+			+ "bounds of a hex: %d."
+	return message_template % [direction]
+
+
+# The formatted error string for when a given node does not have a 
+# required parameter set.
+static func missing_required_parameter(node_name: String, parameter: String) -> String:
+	var message_template: String = "ERROR: %s node does not have the " \
+			+ "required %s parameter set."
+	return message_template % [node_name, parameter]

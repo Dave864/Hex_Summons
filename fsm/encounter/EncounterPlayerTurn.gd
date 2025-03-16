@@ -150,7 +150,8 @@ func _on_Selector_effect_selector_required(
 	enc.hex_map.clear_selector_highlights()
 	var effect_area_indexes: Array = enc.hex_map.determine_area_indexes(
 		action.effect_range,
-		action.get_emission_map_index()
+		action.get_emission_map_index(),
+		action.get_emission_direction()
 	)
 	enc.hex_map.highlight_effect_area(effect_area_indexes, ignore_heights)
 

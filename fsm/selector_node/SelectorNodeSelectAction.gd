@@ -48,11 +48,8 @@ func enter(_msg: Dictionary = {}) -> void:
 			"_on_SignalBusEncounter_player_turn_ended"
 	)
 	
-	selector.emit_signal(
-			"effect_selector_required",
-			action,
-			false
-	)
+	action.set_emission_map_index(player_map_index)
+	selector.emit_signal("effect_selector_required", action, false)
 
 
 func update(_delta: float) -> void:
@@ -112,10 +109,10 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 	):
 		selector.tile_hovered = map_tile
 		
-		if action.emit_from_center:
-			action.set_emission_map_index(player_map_index)
-		else:
-			action.set_emission_map_index(map_tile.get_map_index())
+		action.set_emission_map_index(
+				player_map_index if action.emit_from_center 
+				else map_tile.get_map_index()
+		)
 		if action.get_is_cardinal():
 			var player_pt: Vector2 = Vector2(player_pos.x, player_pos.z)
 			var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
