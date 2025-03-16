@@ -133,3 +133,14 @@ static func get_hex_direction(dir_vec: Vector2) -> int:
 	):
 		dir = Direction.UPPER_LEFT
 	return dir
+
+
+# Converts joystick input to a hexagonal direction
+static func joystick_to_hex_direction() -> int:
+	var dir_vec: Vector2 = Input.get_vector(
+			"ui_selector_l",
+			"ui_selector_r",
+			"ui_selector_u",
+			"ui_selector_d"
+	)
+	return get_hex_direction(dir_vec)

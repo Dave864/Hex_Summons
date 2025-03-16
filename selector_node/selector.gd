@@ -37,14 +37,3 @@ func move_to_mouse_position() -> void:
 # Move the collision area to the specified position.
 func move_to_position(position: Vector3) -> void:
 	collision_area.translation = position
-
-
-# Converts joystick input to a hexagonal direction
-func joystick_to_hex_direction() -> int:
-	var dir_vec: Vector2 = Input.get_vector(
-			"ui_selector_l",
-			"ui_selector_r",
-			"ui_selector_u",
-			"ui_selector_d"
-	)
-	return HexUtil.get_hex_direction(dir_vec)

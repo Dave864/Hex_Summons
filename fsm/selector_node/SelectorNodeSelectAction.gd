@@ -85,7 +85,7 @@ func exit() -> void:
 # Handles input events
 func handle_input(_event: InputEvent) -> void:
 	mouse_active = _event is InputEventMouse
-	_resolve_joystick_direction(selector.joystick_to_hex_direction())
+	_resolve_joystick_direction(HexUtil.joystick_to_hex_direction())
 
 
 # Determines if the selector is able to move to the adjacent tile in the

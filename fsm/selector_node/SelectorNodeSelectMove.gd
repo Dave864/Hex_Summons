@@ -68,7 +68,7 @@ func handle_input(_event: InputEvent) -> void:
 			selector.emit_signal("move_tile_selected", selector.tile_hovered)
 			state_machine.transition_to(PAUSE)
 	
-	_resolve_joystick_direction(selector.joystick_to_hex_direction())
+	_resolve_joystick_direction(HexUtil.joystick_to_hex_direction())
 
 
 # Determines if the selector is able to move to the adjacent tile in the
