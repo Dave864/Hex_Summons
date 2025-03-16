@@ -22,6 +22,7 @@ onready var ui: EncounterUI = $EncounterUI
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_check_for_required_parameters()
 	hex_map = get_node(hex_map_path)
 	
 	"""
@@ -61,3 +62,18 @@ func get_next_character() -> Character:
 # Gets the character currently in initiative.
 func get_current_character() -> Character:
 	return initiative_tracker[cur_init]
+
+
+# Check that all required parameters are set.
+func _check_for_required_parameters() -> void:
+	assert(
+		hex_map_path != null,
+		"Encounter has not set the path for the hex_map."
+	)
+	assert(players.size() > 0, "No players are present.")
+	assert(enemies.size() > 0, "No enemies are present.")
+	assert(
+		selector != null,
+		ErrorUtil.missing_required_parameter(name, selector.name)
+	)
+	assert(ui != null, ErrorUtil.missing_required_parameter(name, ui.name))

@@ -11,6 +11,12 @@ var _cur_init: int = 0
 var _active_character_ref: ReferenceRect = null
 
 
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_active_character_ref = ReferenceRect.new()
+	_active_character_ref.editor_only = false
+
+
 # Populates the initiative tracker with display labels and positions the reference
 func populate_initiative(character_initiative: Array) -> void:
 	for character in character_initiative:
@@ -26,9 +32,3 @@ func update_initiative(new_initiative: int) -> void:
 	_initiative_list[_cur_init].remove_child(_active_character_ref)
 	_initiative_list[new_initiative].add_child(_active_character_ref)
 	_cur_init = new_initiative
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_active_character_ref = ReferenceRect.new()
-	_active_character_ref.editor_only = false

@@ -72,6 +72,6 @@ pixel_size = 0.02
 offset = Vector2( 0, 5 )
 modulate = Color( 0, 0, 0, 1 )
 text = "[-1:0]
-N N
-N    N
-N N"
+0  
+    0
+0  "

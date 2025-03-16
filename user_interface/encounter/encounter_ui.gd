@@ -10,6 +10,7 @@ enum Options {
 	TECHNIQUE,
 	SPELL,
 	SUMMON,
+	ITEM,
 	NONE,
 }
 
@@ -36,7 +37,18 @@ onready var sub_options: SubOptions = $SubOptions
 onready var technique_button: LabeledIconButton = $Options/TechniqueButton
 onready var spell_button: LabeledIconButton = $Options/SpellButton
 onready var summon_button: LabeledIconButton = $Options/SummonButton
+#onready var item_button: LabeledIconButton = $Options/ItemButton
 onready var end_button: LabeledIconButton = $Options/EndButton
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
 
 
 # Sets the selection flag.
@@ -134,16 +146,6 @@ func track_enemy(e: EnemyCharacter) -> void:
 	e_label.set_text_alignment(Label.ALIGN_RIGHT)
 #	e.stats.connect("hp_changed", e_label, "_on_Character_hp_changed")
 	enemy_stats.add_child(e_label)
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 
 # Update the SubOptions element with the currently selected option

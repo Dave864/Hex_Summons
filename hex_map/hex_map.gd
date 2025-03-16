@@ -28,19 +28,19 @@ func _ready() -> void:
 	_map_tiles = _tiles_node.get_children()
 	_hm_astar = HexMapAStar.new(
 		_map_tiles,
-		$Tiles.get_x_count(),
-		$Tiles.get_z_count()
+		_tiles_node.get_x_count(),
+		_tiles_node.get_z_count()
 	)
 
 
 # Get the number of tiles along the X axis.
 func get_x_count() -> int:
-	return $Tiles.get_x_count()
+	return _tiles_node.get_x_count()
 
 
 # Get the number of tiles along the Z axis.
 func get_z_count() -> int:
-	return $Tiles.get_z_count()
+	return _tiles_node.get_z_count()
 
 
 # Retrieve the map tiles of this hex map.
@@ -397,7 +397,7 @@ func _create_tiles_node() -> void:
 		add_child(_tiles_node)
 		_tiles_node.set_owner(_root_node)
 	else:
-		_tiles_node = $Tiles
+		_tiles_node = get_node(TILES)
 
 
 # Create a floor mesh node and position it if not already present.
@@ -411,7 +411,7 @@ func _create_floor_mesh() -> void:
 		_floor_mesh_node.set_owner(_root_node)
 		_floor_mesh_node.translation.y = -Constants.HEX_TILE_UNIT_HEIGHT
 	else:
-		_floor_mesh_node = $FloorMesh
+		_floor_mesh_node = get_node(FLOOR_MESH)
 
 
 # Gets the MapTiles of the specified ids.

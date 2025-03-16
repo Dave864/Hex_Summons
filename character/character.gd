@@ -43,6 +43,7 @@ func _update_emission_index(_index: int) -> void:
 	pass
 
 
+# Update the character's position index when passing over a MapTile.
 func _on_Character_area_entered(map_tile: Area) -> void:
 	_current_index = map_tile.get_map_index()
 	_update_emission_index(map_tile.get_map_index())

@@ -49,7 +49,10 @@ func _on_Button_pressed() -> void:
 	SignalBusEncounter.emit_signal("player_action_selected", _player, _action_details)
 
 
-# Emit a signal indicating that the button was hovered over.
-func _on_Button_mouse_entered() -> void:
-	pass
-#	SignalBus.emit_signal("player_action_hovered", _action_details)
+# Checks that all required parameters are set.
+func _check_for_required_parameters() -> void:
+	var button_node: Button = get_node_or_null("Button")
+	assert(
+			button_node != null,
+			"SubOptions node does not have a Button node."
+	)
