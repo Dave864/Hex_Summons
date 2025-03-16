@@ -82,7 +82,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Encounter",
 "language": "GDScript",
-"path": "res://encounter.gd"
+"path": "res://encounter/encounter.gd"
 }, {
 "base": "State",
 "class": "EncounterState",
@@ -117,17 +117,17 @@ _global_script_classes=[ {
 "base": "MeshInstance",
 "class": "HexHighlighter",
 "language": "GDScript",
-"path": "res://hex_map/hex_highlighter.gd"
+"path": "res://hex_map/scripts/hex_highlighter.gd"
 }, {
 "base": "Spatial",
 "class": "HexMap",
 "language": "GDScript",
-"path": "res://hex_map/hex_map.gd"
+"path": "res://hex_map/scripts/hex_map.gd"
 }, {
 "base": "AStar",
 "class": "HexMapAStar",
 "language": "GDScript",
-"path": "res://hex_map/hex_map_astar.gd"
+"path": "res://hex_map/scripts/hex_map_astar.gd"
 }, {
 "base": "Object",
 "class": "HexUtil",
@@ -212,7 +212,7 @@ _global_script_classes=[ {
 "base": "Spatial",
 "class": "Tiles",
 "language": "GDScript",
-"path": "res://hex_map/tiles.gd"
+"path": "res://hex_map/scripts/tiles.gd"
 } ]
 _global_script_class_icons={
 "Action": "",

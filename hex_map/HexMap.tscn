@@ -1,10 +1,11 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://hex_map/hex_map.gd" type="Script" id=1]
-[ext_resource path="res://hex_map/tiles.gd" type="Script" id=2]
+[ext_resource path="res://hex_map/scripts/hex_map.gd" type="Script" id=1]
+[ext_resource path="res://hex_map/scripts/tiles.gd" type="Script" id=2]
 [ext_resource path="res://hex_map/map_tile_node/MapTile.tscn" type="PackedScene" id=3]
-[ext_resource path="res://hex_map/hex_map_floor.tres" type="PlaneMesh" id=4]
+[ext_resource path="res://hex_map/resources/hex_map_floor.tres" type="PlaneMesh" id=4]
 [ext_resource path="res://hex_map/map_tile_node/map_tile.gd" type="Script" id=5]
+
 
 [node name="HexMap" type="Spatial"]
 script = ExtResource( 1 )

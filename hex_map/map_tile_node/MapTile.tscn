@@ -1,7 +1,8 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://hex_map/map_tile_node/map_tile.gd" type="Script" id=1]
-[ext_resource path="res://hex_map/hex_highlighter.gd" type="Script" id=2]
+[ext_resource path="res://hex_map/scripts/hex_highlighter.gd" type="Script" id=2]
+
 
 [sub_resource type="ConvexPolygonShape" id=8]
 resource_local_to_scene = true
