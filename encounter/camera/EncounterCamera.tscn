@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://encounter/camera/encounter_camera.gd" type="Script" id=1]
+
+[node name="EncounterCamera" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="FocusPoint" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.737276, 0.675589, 0, -0.675589, 0.737276, 0, 0, 0 )
+
+[node name="Camera" type="Camera" parent="FocusPoint"]
+transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 10 )
+projection = 1
+size = 15.0
