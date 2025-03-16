@@ -4,13 +4,11 @@
 [ext_resource path="res://actions/action.gd" type="Script" id=2]
 
 [sub_resource type="Resource" id=1]
-resource_local_to_scene = true
 resource_name = "Ring_Area"
 script = ExtResource( 1 )
 radius = 3
 
 [sub_resource type="Resource" id=2]
-resource_local_to_scene = true
 resource_name = "Ring_Area"
 script = ExtResource( 1 )
 radius = 0
@@ -19,3 +17,5 @@ radius = 0
 script = ExtResource( 2 )
 area_range = SubResource( 1 )
 effect_range = SubResource( 2 )
+emit_from_center = false
+ignore_casting_character = true

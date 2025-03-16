@@ -5,7 +5,6 @@
 [ext_resource path="res://range_type/scripts/ring_area.gd" type="Script" id=4]
 
 [sub_resource type="Resource" id=3]
-resource_local_to_scene = true
 resource_name = "Cardinal_Area"
 script = ExtResource( 1 )
 distance = 1
@@ -20,4 +19,4 @@ radius = 0
 script = ExtResource( 2 )
 area_range = SubResource( 3 )
 effect_range = SubResource( 2 )
-emit_from_center = true
+ignore_casting_character = true

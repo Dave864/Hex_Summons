@@ -5,7 +5,6 @@
 [ext_resource path="res://range_type/column_area.tres" type="Resource" id=3]
 
 [sub_resource type="Resource" id=1]
-resource_local_to_scene = true
 resource_name = "Cardinal_Area"
 script = ExtResource( 2 )
 distance = 1
@@ -14,5 +13,5 @@ distance = 1
 script = ExtResource( 1 )
 area_range = SubResource( 1 )
 effect_range = ExtResource( 3 )
-emit_from_center = true
+ignore_casting_character = true
 ignore_heights = true

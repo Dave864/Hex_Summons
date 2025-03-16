@@ -16,9 +16,11 @@ export var dead_range: Resource = null
 # The area specifying the tiles affected by the effect.
 export var effect_range: Resource = null
 # Flag that denotes if the emission is fixed to the center of the area.
-export(bool) var emit_from_center
+export(bool) var emit_from_center = true
+# Flag that denotes if the emission should include the casting character tile.
+export(bool) var ignore_casting_character = false
 # Flag that denotes if the emission ignores tile heights.
-export(bool) var ignore_heights
+export(bool) var ignore_heights = false
 
 # Whether the area range is cardinal or ring.
 var _is_cardinal: bool = false setget , get_is_cardinal
@@ -77,6 +79,10 @@ func _check_for_required_parameters() -> void:
 	assert(
 		area_range != null,
 		ErrorUtil.missing_required_parameter(name, "area_range")
+	)
+	assert(
+		area_range is CardinalArea or area_range is RingArea,
+		"Action %s area_range is not either a CardinalArea or RingArea." % [name]
 	)
 	assert(
 		effect_range != null,
