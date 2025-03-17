@@ -90,6 +90,11 @@ _global_script_classes=[ {
 "path": "res://encounter/camera/encounter_camera.gd"
 }, {
 "base": "State",
+"class": "EncounterCameraState",
+"language": "GDScript",
+"path": "res://fsm/encounter/camera/encounter_camera_state.gd"
+}, {
+"base": "State",
 "class": "EncounterState",
 "language": "GDScript",
 "path": "res://fsm/encounter/encounter_state.gd"
@@ -236,6 +241,7 @@ _global_script_class_icons={
 "EmissionPoint": "",
 "Encounter": "",
 "EncounterCamera": "",
+"EncounterCameraState": "",
 "EncounterState": "",
 "EncounterUI": "",
 "EncounterUIState": "",
