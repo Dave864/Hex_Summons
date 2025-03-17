@@ -13,7 +13,7 @@ joystick_lateral_pan_speed = 200.0
 transform = Transform( 1, 0, 0, 0, 0.60876, 0.793352, 0, -0.793352, 0.60876, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="FocusPoint"]
-transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 10 )
+transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 15 )
 projection = 1
 size = 15.0
 

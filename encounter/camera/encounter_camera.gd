@@ -56,6 +56,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _mouse_active and _pan_camera:
 		_vertical_pan_mouse()
 		_lateral_pan_mouse()
+	if event.is_action_pressed("ui_camera_reset"):
+		print("reset camera")
 
 
 # Sets the value of the default distance.
