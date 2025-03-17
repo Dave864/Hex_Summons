@@ -14,6 +14,8 @@ export (float, 0.0, 90.0) var vert_panning_u_bound = 75.0 setget set_vert_pannin
 export (float, 0.0, 90.0) var vert_panning_l_bound = 30.0 setget set_vert_panning_l_bound
 # The threshold of mouse movement required to trigger a rotation change.
 export (float, 1.0, 5.0) var mouse_drag_threshold = 1.0
+# The percentage of lateral mouse movement to use when updating the camera.
+export (float, 0.1, 2.0) var mouse_lateral_multiplier = 0.8
 
 var _vert_pan_midpoint: float = _panning_vertical_midpoint()
 var _mouse_active: bool
@@ -33,17 +35,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if _mouse_active and _pan_camera and abs(_mouse_motion.y) > mouse_drag_threshold:
-		var rotation: float = rad2deg(_focus_pt.rotation.x)
-		# Vertical rotation should be negative to position the camera above
-		# the encounter map.
-		rotation += -_mouse_motion.y
-		rotation = (
-			-vert_panning_u_bound if rotation < -vert_panning_u_bound
-			else -vert_panning_l_bound if rotation > -vert_panning_l_bound
-			else rotation
-		)
-		_focus_pt.rotation.x = deg2rad(rotation)
+	pass
 
 
 # Handles mouse and joystick input.
@@ -55,6 +47,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_pan_camera = false
 	if event is InputEventMouseMotion:
 		_mouse_motion = event.relative
+	if _mouse_active and _pan_camera:
+		_vertical_pan_mouse()
+		_lateral_pan_mouse()
 	
 	if !Engine.is_editor_hint():
 		var vertical_move: float = Input.get_axis("ui_camera_d", "ui_camera_u")
@@ -89,8 +84,40 @@ func set_camera_distance(distance: float) -> void:
 	_camera.translation.z = distance
 
 
+# Calculates the midpoint between the vertical bounds.
 func _panning_vertical_midpoint() -> float:
 	return (vert_panning_u_bound + vert_panning_l_bound) / -2.0
+
+
+# Handles vertical camera panning from mouse drag.
+func _vertical_pan_mouse() -> void:
+	if abs(_mouse_motion.y) < mouse_drag_threshold:
+		return
+	var rotation: float = rad2deg(_focus_pt.rotation.x)
+	# Vertical rotation should be negative to position the camera above
+	# the encounter map.
+	rotation += -_mouse_motion.y
+	rotation = (
+		-vert_panning_u_bound if rotation < -vert_panning_u_bound
+		else -vert_panning_l_bound if rotation > -vert_panning_l_bound
+		else rotation
+	)
+	_focus_pt.rotation.x = deg2rad(rotation)
+
+
+# Handles lateral camera panning from mouse drag.
+func _lateral_pan_mouse() -> void:
+	_focus_pt.rotation.y -= deg2rad(_mouse_motion.x * mouse_lateral_multiplier)
+
+
+# Handles vertical camera panning from joystick input.
+func _vertical_pan_joystick() -> void:
+	pass
+
+
+# Handles lateral camera panning from joystick input.
+func _lateral_pan_joystick() -> void:
+	pass
 
 
 # Checks that all required parameters are set.
