@@ -16,8 +16,10 @@ export (float, 0.0, 90.0) var vert_panning_l_bound = 30.0 setget set_vert_pannin
 export (float, 1.0, 5.0) var mouse_drag_threshold = 1.0
 # The percentage of lateral mouse movement to use when updating the camera.
 export (float, 0.1, 2.0) var mouse_lateral_multiplier = 0.3
-# The speed the camera pans when using joystick input, expressed in degrees.
-export (float, 1.0, 50.0) var joystick_pan_speed = 10.0
+# The speed the camera vertically pans when using joystick input.
+export (float, 50.0, 500.0) var joystick_vert_pan_speed = 100.0
+# The speed the camera horizontally pans when using joystick input.
+export (float, 50.0, 500.0) var joystick_lateral_pan_speed = 100.0
 
 var _vert_pan_midpoint: float = _panning_vertical_midpoint()
 var _mouse_active: bool
@@ -36,8 +38,10 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
+func _process(delta):
+	if !Engine.is_editor_hint():
+		_vertical_pan_joystick(delta)
+		_lateral_pan_joystick(delta)
 
 
 # Handles mouse and joystick input.
@@ -52,10 +56,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _mouse_active and _pan_camera:
 		_vertical_pan_mouse()
 		_lateral_pan_mouse()
-	
-	if !Engine.is_editor_hint():
-		_vertical_pan_joystick()
-#		_lateral_pan_joystick()
 
 
 # Sets the value of the default distance.
@@ -113,12 +113,14 @@ func _lateral_pan_mouse() -> void:
 
 
 # Handles vertical camera panning from joystick input.
-func _vertical_pan_joystick() -> void:
+func _vertical_pan_joystick(delta: float) -> void:
 	var vertical_move: float = Input.get_axis("ui_camera_d", "ui_camera_u")
+	if abs(vertical_move) == 0.0:
+		return
 	var rotation: float = rad2deg(_focus_pt.rotation.x)
 	# Vertical rotation should be negative to position the camera above
 	# the encounter map.
-	rotation += -vertical_move * joystick_pan_speed
+	rotation += -vertical_move * joystick_vert_pan_speed * delta
 	rotation = (
 		-vert_panning_u_bound if rotation < -vert_panning_u_bound
 		else -vert_panning_l_bound if rotation > -vert_panning_l_bound
@@ -128,8 +130,11 @@ func _vertical_pan_joystick() -> void:
 
 
 # Handles lateral camera panning from joystick input.
-func _lateral_pan_joystick() -> void:
+func _lateral_pan_joystick(delta: float) -> void:
 	var horizontal_move: float = Input.get_axis("ui_camera_l", "ui_camera_r")
+	if abs(horizontal_move) == 0.0:
+		return
+	_focus_pt.rotation.y -= deg2rad(horizontal_move * joystick_lateral_pan_speed * delta)
 
 
 # Checks that all required parameters are set.
