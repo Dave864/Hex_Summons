@@ -7,9 +7,13 @@ resizing camera dimensions.
 """
 
 
-export (float, 0.0, 20.0) var default_distance = 10.0 setget set_default_distance
+# The default distance the camera is to be set from the focus point.
+export (float, 0.0, 50.0) var default_distance = 15.0 setget set_default_distance
+# The boundaries for vertical rotation.
 export (float, 0.0, 90.0) var vert_panning_u_bound = 75.0 setget set_vert_panning_u_bound
-export (float, 0.0, 90.0) var vert_panning_l_bound = 10.0 setget set_vert_panning_l_bound
+export (float, 0.0, 90.0) var vert_panning_l_bound = 30.0 setget set_vert_panning_l_bound
+# The threshold of mouse movement required to trigger a rotation change.
+export (float, 1.0, 5.0) var mouse_drag_threshold = 1.0
 
 var _vert_pan_midpoint: float = _panning_vertical_midpoint()
 var _mouse_active: bool
@@ -28,9 +32,18 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):	
-	if _mouse_active and _pan_camera:
-		print(_mouse_motion)
+func _process(_delta):
+	if _mouse_active and _pan_camera and abs(_mouse_motion.y) > mouse_drag_threshold:
+		var rotation: float = rad2deg(_focus_pt.rotation.x)
+		# Vertical rotation should be negative to position the camera above
+		# the encounter map.
+		rotation += -_mouse_motion.y
+		rotation = (
+			-vert_panning_u_bound if rotation < -vert_panning_u_bound
+			else -vert_panning_l_bound if rotation > -vert_panning_l_bound
+			else rotation
+		)
+		_focus_pt.rotation.x = deg2rad(rotation)
 
 
 # Handles mouse and joystick input.
