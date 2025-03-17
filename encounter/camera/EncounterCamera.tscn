@@ -6,7 +6,6 @@
 
 [node name="EncounterCamera" type="Spatial"]
 script = ExtResource( 1 )
-mouse_lateral_multiplier = 0.3
 
 [node name="FocusPoint" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.60876, 0.793352, 0, -0.793352, 0.60876, 0, 0, 0 )
