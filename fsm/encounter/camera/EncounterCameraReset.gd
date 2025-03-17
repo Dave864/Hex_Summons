@@ -6,15 +6,26 @@ Goes to the 'Pan' state when repositioning is finished.
 """
 
 
+# The original rotation of the encounter camera focus point.
+var original_orientation: Vector3 = Vector3.ZERO
+# The current interpolation weight.
+var weight: float = 0.0
+
+
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	pass
+	original_orientation = enc_camera.get_focus_point_orientation()
+	weight = 0.0
 
 
 # Virtual function. Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	pass
+func update(delta: float) -> void:
+	weight += delta * enc_camera.reset_speed
+	weight = 1.0 if weight > 1.0 else weight
+	enc_camera.interpolate_camera_reset(original_orientation, weight)
+	if weight >= 1.0:
+		state_machine.transition_to(PAN)
 
 
 # Called by the state machine before changing the active state.

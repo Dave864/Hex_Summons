@@ -20,10 +20,22 @@ export (float, 0.1, 2.0) var mouse_lateral_multiplier = 0.3
 export (float, 50.0, 500.0) var joystick_vert_pan_speed = 100.0
 # The speed the camera horizontally pans when using joystick input.
 export (float, 50.0, 500.0) var joystick_lateral_pan_speed = 100.0
+# The speed the camera moves to the default position.
+export (float, 1.0, 30.0) var reset_speed = 10.0
 
 # The midpoint between the vertical rotation bounds. Considered the default rotation
 # for the camera.
 var _vert_pan_midpoint: float = _panning_vertical_midpoint() setget , get_vert_pan_midpoint
+# The index position of a hex tile that is considered to be the top, relative
+# to the camera position.
+#    0
+# 5 / \ 1
+#  |   |
+# 4 \ / 2
+#    3
+var _relative_top_vertex: int = 0 setget , get_relative_top_vertex
+# The default orientation of the camera
+var _default_orientation: Vector3
 
 onready var _focus_pt: Position3D = $FocusPoint
 onready var _camera: Camera = $FocusPoint/Camera
@@ -32,7 +44,8 @@ onready var _camera: Camera = $FocusPoint/Camera
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
-	_focus_pt.rotation.x = deg2rad(_vert_pan_midpoint)
+	_focus_pt.rotation = Vector3(deg2rad(_vert_pan_midpoint), 0.0, 0.0)
+	_default_orientation = _focus_pt.rotation
 	set_camera_distance(default_distance)
 
 
@@ -57,6 +70,30 @@ func set_vert_panning_l_bound(bound: float) -> void:
 	_vert_pan_midpoint = _panning_vertical_midpoint()
 	if Engine.is_editor_hint():
 		_focus_pt.rotation.x = deg2rad(_vert_pan_midpoint)
+
+
+# Get the vertical pan midpoint.
+func get_vert_pan_midpoint() -> float:
+	return _vert_pan_midpoint
+
+
+# Set the relative top vertex.
+func set_relative_top_vertex(new_top: int) -> void:
+	assert(
+			new_top >= 0 and new_top < 6,
+			"New relative vertex for EncounterCamera is out of bounds for a hex."
+	)
+	_relative_top_vertex = new_top
+
+
+# Gets the orientation of the focus point.
+func get_focus_point_orientation() -> Vector3:
+	return _focus_pt.rotation
+
+
+# Get the relative top vertex.
+func get_relative_top_vertex() -> int:
+	return _relative_top_vertex
 
 
 # Handles vertical camera panning from mouse drag.
@@ -110,9 +147,12 @@ func set_camera_distance(distance: float) -> void:
 	_camera.translation.z = distance
 
 
-# Get the vertical pan midpoint.
-func get_vert_pan_midpoint() -> float:
-	return _vert_pan_midpoint
+# Reorients the camera to the default orientation by a certain amount.
+func interpolate_camera_reset(original_o: Vector3, weight: float):
+	_focus_pt.rotation = original_o.linear_interpolate(
+			_default_orientation,
+			weight
+	)
 
 
 # Calculates the midpoint between the vertical bounds.
