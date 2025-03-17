@@ -101,20 +101,16 @@ func vertical_pan_mouse(vert_motion: float) -> void:
 	if abs(vert_motion) < mouse_drag_threshold:
 		return
 	var rotation: float = rad2deg(_focus_pt.rotation.x)
-	# Vertical rotation should be negative to position the camera above
+	# Vertical rotation is negative to position the camera above
 	# the encounter map.
 	rotation += -vert_motion
-	rotation = (
-		-vert_panning_u_bound if rotation < -vert_panning_u_bound
-		else -vert_panning_l_bound if rotation > -vert_panning_l_bound
-		else rotation
-	)
-	_focus_pt.rotation.x = deg2rad(rotation)
+	_focus_pt.rotation.x = deg2rad(_bind_vertical_rotation(rotation))
 
 
 # Handles lateral camera panning from mouse drag.
 func lateral_pan_mouse(lateral_motion: float) -> void:
 	_focus_pt.rotation.y -= deg2rad(lateral_motion * mouse_lateral_multiplier)
+	_focus_pt.rotation.y = _normalize_lateral_rotation(_focus_pt.rotation.y)
 
 
 # Handles vertical camera panning from joystick input.
@@ -123,15 +119,10 @@ func vertical_pan_joystick(delta: float) -> void:
 	if abs(vertical_move) == 0.0:
 		return
 	var rotation: float = rad2deg(_focus_pt.rotation.x)
-	# Vertical rotation should be negative to position the camera above
+	# Vertical rotation is negative to position the camera above
 	# the encounter map.
 	rotation += -vertical_move * joystick_vert_pan_speed * delta
-	rotation = (
-		-vert_panning_u_bound if rotation < -vert_panning_u_bound
-		else -vert_panning_l_bound if rotation > -vert_panning_l_bound
-		else rotation
-	)
-	_focus_pt.rotation.x = deg2rad(rotation)
+	_focus_pt.rotation.x = deg2rad(_bind_vertical_rotation(rotation))
 
 
 # Handles lateral camera panning from joystick input.
@@ -140,6 +131,7 @@ func lateral_pan_joystick(delta: float) -> void:
 	if abs(horizontal_move) == 0.0:
 		return
 	_focus_pt.rotation.y -= deg2rad(horizontal_move * joystick_lateral_pan_speed * delta)
+	_focus_pt.rotation.y = _normalize_lateral_rotation(_focus_pt.rotation.y)
 
 
 # Positions the camera at a given distance away from the focus point.
@@ -158,6 +150,27 @@ func interpolate_camera_reset(original_o: Vector3, weight: float):
 # Calculates the midpoint between the vertical bounds.
 func _panning_vertical_midpoint() -> float:
 	return (vert_panning_u_bound + vert_panning_l_bound) / -2.0
+
+
+
+# Binds the provided vertical rotation wihtin the upper and lower bounds.
+# Rotation is in degrees.
+func _bind_vertical_rotation(rotation: float) -> float:
+	return (
+		-vert_panning_u_bound if rotation < -vert_panning_u_bound
+		else -vert_panning_l_bound if rotation > -vert_panning_l_bound
+		else rotation
+	)
+
+
+# Normalizes the provided lateral rotation to be within the allowed degrees
+# for a circle. Rotation is in radians.
+func _normalize_lateral_rotation(rotation: float) -> float:
+	return (
+		rotation - 2.0 * PI if rotation > PI
+		else rotation + 2.0 * PI if rotation < -PI
+		else rotation
+	)
 
 
 # Checks that all required parameters are set.
