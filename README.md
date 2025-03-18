@@ -1,20 +1,101 @@
 # Hex Summons (Name Pending)
 
-## Overview
+# Table of Contents
 
-This project is an RPG where combat encounters are rendered as tactics battles that take place on a hexagonal grid. The user assumes control of a party of up to four player characters, whose stats and abilities are determined by how many different elemental wisps are attached to them.
+1. [Introduction](#introduction)
+    1. [Summary](#summary)
+    2. [Inspirations](#inspirations)
+    3. [Player Experience](#player-experience)
+    4. [Platform](#platform)
+    5. [Software](#software)
+    6. [Genre](#genre)
+    7. [Target Audience](#target-audience)
+2. [Concept](#concept)
+    1. [Core Loop](#core-loop)
+    2. [Themes](#themes)
+    3. [Primary Mechanics](#primary-mechanics)
+    4. [Secondary Mechanics](#secondary-mechanics)
+    5. [Tertiary Mechanics](#tertiary-mechanics)
+    6. [Combat](#combat)
+    7. [Puzzles](#puzzles)
+    8. [Quests](#quests)
+    9. [AI / NPCs](#ai--npcs)
+    10. [Special Systems](#special-systems)
+    11. [Progression](#progression)
+3. [Story](#story)
+    1. [Setting](#setting)
+    2. [Narrative](#narrative)
+    3. [Characters](#characters)
+        1. [Player Characters](#player-characters)
+        2. [Important NPCs](#important-npcs)
+    4. [Dialogue](#dialogue)
+    5. [Storyboards](#storyboards)
+4. [Art](#art)
+5. [Audio](#audio)
+6. [Game Experience](#game-experience)
+7. [Market Requirements](#market-requirements)
+8. [Technical Requirements](#technical-requirements)
 
-## Story
+# Introduction
 
-*(To be Further Written)*
+## Summary
 
-The game follows the story of two friends as they embark on a journey across the world. Along the way, they will team up with two others. The journey will have the party encounter various researchers studying the ruins and remnants of lost civilizations, as well as the growing threat of monsters.
+*Working Title* is an RPG where combat encounters are tactics battles that take place on a hexagonal grid. The player commands a party of four, wielding martial techniques, spells, and powerful summons to fend off beasts and vanquish monsters. Explore ancient ruins and forgotten dungeons, harnessing the power of elemental wisps to command the forces of earth, fire, water, and wind to manipulate the world to your advantage.
 
-The game starts with the two starting characters fending off an animal attack against a visitor to their town. This will prompt them to delve deeper into the wilds surrounding the town to investigate why the animals are so aggressive. This will culminate in a boss battle against a monster that is the result of the unrest.
+## Inspirations
 
-### World
+*Working Title* takes heavy inspiration from the *Golden Sun* franchise of RPGs, replicating the class mechanics and adapting the summon system for tactics battles. The gamme has its combat encounters rendered as tactics battles, with game feel being similar to *South Park: The Fractured But Whole*, the *Fire Emblem* series, and *Final Fantasy Tactics Advance*. The narrative of the game explores the ideas of exploration, specifically in the context of archeology and general scientific discovery.
 
-*(To be Further Written)*
+## Player Experience
+
+The game is intended to invoke feelings of wonder and curiosity. The world holds many mysteries, ancient ruins of ancient civilzations, strange phenomena rooted in magic, bizzare creatures that make home the most hostile of places, and the emergence of monsters. The player is invited to explore these mysteries, following the party as they help researchers decipher these mysteries. Some will remain mysteries, but the ones that are revealed are intended to instill wonder. And when new rumors come along, the player will be hopefully curious about where this exploration will lead.
+
+## Platform
+
+This game is intended for PC release, with focus on Windows OS. Console support is dependent on ease of porting, as the game will be designed for controller support.
+
+## Software
+
+*Working Title* will be developed using the Godot engine. 
+Art will be generated using Paint.net. Aseprite is under consideration due to its focus on pixel art. No premade art assets have been decided upon, but will be investigated.
+Premade sound Godot sound libraries will be looked into.
+Music will have to be sourced from libraries that offer affordable music licenses.
+
+## Genre
+
+*Working Title* is an RPG with tactics-style combat set in a fantasy world that has entered its own Renaissance equivalent.
+
+## Target Audience
+
+This game is intended for people from their mid teens to the mid 30's. It is intended for people who are fans of high fantasy, where magic is a fundamental aspect of the world. People who are a fan of tactics games like *Fire Emblem* or *Final Fantasy Tactics Advance* will find the tactics combat of *Working Title* appealing. *Working Title* will interst players seeking a fantasy story where learning of the history and nature of the world is the focus.
+
+# Concept
+
+## Core Loop
+
+## Themes
+
+## Primary Mechanics
+
+## Secondary Mechanics
+
+## Tertiary Mechanics
+
+## Combat
+
+## Puzzles
+
+## Quests
+
+## AI / NPCs
+
+## Special Systems
+
+## Progression
+
+# Story
+
+## Setting
 
 The world of this game is one of tumultuous magic, where the fundamental forces of fire, earth, water, and wind give rise to phenomena both beatiful and destructive. The peoples and creatures of this world are at the mercy of these capricious forces, on their own powerless to adapt. Yet, where magic flows, the wisps follow. Avatars of these fundamental forces, wisps are elemental wisps that have the ability to channel the flow of magic. By befriending and bonding with these wisps, one too can share in their peculliar ability.
 
@@ -26,9 +107,17 @@ Out of survival instinct, animals were the first to bond with wisps. It was by t
 
 *NEEDS FLUFF REWRITE:* (As the ages pass, monsters have ravaged many of the great civilizations of eld. While the world is not on the brink, much has been lost to ravages of time and aberration. People are ever stubborn, and the current day sees many a guild and society dedicated to reclaiming some of what was lost. And there are others still looking dangerously close at a secret that should stay hidden.)
 
-### Characters
+## Narrative
 
-#### Player Characters
+*(To be Further Written)*
+
+The game follows the story of two friends as they embark on a journey across the world. Along the way, they will team up with two others. The journey will have the party encounter various researchers studying the ruins and remnants of lost civilizations, as well as the growing threat of monsters.
+
+The game starts with the two starting characters fending off an animal attack against a visitor to their town. This will prompt them to delve deeper into the wilds surrounding the town to investigate why the animals are so aggressive. This will culminate in a boss battle against a monster that is the result of the unrest.
+
+## Characters
+
+### Player Characters
 
 - StartingCharacter1
   - **Overview:** An amateur ecologist who was apprenticing for the starting town's apothecary who teams up with the other starting protagonist on their adventure. They have a long love of animals and the natural world, and have made friends with a wisp that enables them to use magic.
@@ -43,11 +132,28 @@ Out of survival instinct, animals were the first to bond with wisps. It was by t
   - **Overview:** An archeologist.
   - **Personality:** Curious.
 
-#### Important NPCs
+### Important NPCs
 
 - MonsterEcologist
   - A researcher who has been traveling across the world, cataloging the presence of monsters and how they affect the environments within.
   - They are part of a larger order that is dedicated to tracking and culling monster populations across the world.
+
+## Dialogue
+
+## Storyboards
+
+# Art
+
+(To Be Refined)
+A hybrid style, using pxiel art sprites in a 3d environment.
+
+# Audio
+
+# Game Experience
+
+# Market Requirements
+
+# Technical Requirements
 
 ## Gameplay
 
@@ -299,29 +405,3 @@ Player classes/class chains determine what spells a player has access to. Some c
   - A successful random encounter with Monster creatures will lower the Monster percentage.
 - The enemy characters and tile map used for the encounter will be determined as the user traverses the world map.
   - The encounter will use a random tile map from a predifined set specific to the biome.
-
-### Towns
-
-(To Be Determined)
-
-### Dungeons
-
-(To Be Determined)
-
-## Art Style
-
-(To Be Refined)
-A hybrid style, using pxiel art sprites in a 3d environment.
-
-## Sound Effects
-
-(To Be Determined)
-
-## Platforms
-
-- **PC:** Windows and Linux
-- **Console:** Currently there are not plans to develop console versions. If I can easily acquire the resources for it, I will consider developing a Switch port.
-
-### Audience
-
-This game is intended for people from their mid to late 20's to the mid 30's. It is designed to emulate and expand upon the Golden Sun series of games, and is intended for people who enjoy turn-based RPGs or tactics-lite games.
