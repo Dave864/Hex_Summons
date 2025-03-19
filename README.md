@@ -58,7 +58,17 @@
 
 ## Inspirations
 
-*Working Title* takes heavy inspiration from the *Golden Sun* franchise of RPGs, replicating the class mechanics and adapting the summon system for tactics battles. The game has its combat encounters rendered as tactics battles, with game feel being similar to *South Park: The Fractured But Whole*, the *Fire Emblem* series, and *Final Fantasy Tactics Advance*. The narrative of the game explores the ideas of exploration, specifically in the context of archeology and general scientific discovery.
+*Working Title* takes heavy inspiration from the *Golden Sun* franchise of RPGs, replicating the class mechanics and adapting the summon system for tactics battles. The game has its combat encounters rendered as tactics battles, with game feel being similar to the *Fire Emblem* series, *Final Fantasy Tactics Advance*, and *South Park: The Fractured But Whole*. The narrative of the game explores the ideas of exploration, specifically in the context of archeology and general scientific discovery.
+
+![DarkDawnPsynergy](https://github.com/user-attachments/assets/09d58165-122f-40e6-9ae8-59a16fab78c4)
+
+![Mixing_djinni](https://github.com/user-attachments/assets/b618c702-cdbf-4e1d-b309-3976714effbc)
+
+![FinalFantasyTacticsAdvanceGBAScreenshot](https://github.com/user-attachments/assets/e98da52e-f0b9-4fa9-8c87-5870f7a3df48)
+
+![Fire-Emblem-Battle](https://github.com/user-attachments/assets/8db59045-05ca-4c2a-9e00-ae94ec89fc54)
+
+![Fractured_But_Whole_Combat](https://github.com/user-attachments/assets/3a8e8755-2005-4d18-9936-d6bdca75fb23)
 
 ## Player Experience
 
