@@ -30,6 +30,7 @@
     11. [AI / NPCs](#ai--npcs)
     12. [Special Systems](#special-systems)
         1. [Player Character Classes ](#player-character-classes)
+        2. [Status Effects](#status-effects)
     13. [Progression](#progression)
 3. [Story](#story)
     1. [Setting](#setting)
@@ -56,10 +57,12 @@
     4. [Marketing](#marketing)
     5. [Post-Launch](#post-launch)
 8. [Technical Requirements](#technical-requirements) 
-    1. [Random Encounter Map Generation](#random-encounter-map-generation)
-    2. [Items](#items)
-    3. [Character Stats](#character-stats)
-    4. [Action Potency](#action-potency)
+    1. [Items](#items)
+    2. [Weapon Mastery](#weapon-mastery)
+    3. [Spell and Technique Costs](#spell-and-technique-costs)
+    4. [Random Encounter Map Generation](#random-encounter-map-generation)
+    5. [Character Stats](#character-stats)
+    6. [Action Potency](#action-potency)
 
 # Introduction
 
@@ -193,9 +196,10 @@ Spells
 Techniques
 - Represents physical or martial abilities, such as swinging a sword in an arc or causing a small quake by slamming the ground.
 - Usually bound to a cardinal range.
-- Some techniques may be granted by specific set wisps (not sure yet).
+- Techniques are determined by weapon type and class.
 - Using a technique sets it on a cooldown.
   - The cooldown could be reset by channeling a wisp, adding it to the summon pool.
+  - Using special techniques could require the channeling of a wisp as well.
 
 ### Summoning
 
@@ -262,9 +266,13 @@ Class Chain Grouping:
 - core + element_2 + element_3
 - core + element_1 + element_2 + element_3
 
-Player classes/class chains determine what spells a player has access to. Some classes/class chains may also grant techniques, though that is primarily determined by the weapon (and possible other equipment) a player character wields.
+Player classes/class chains determine what spells a player has access to. Some classes/class chains may also grant techniques.
+
+### Status Effects
 
 ## Progression
+
+Player characters will gain experience and level up after hitting certain experience thresholds. Still need to decide if the party shares a level, or if each level up independently. Levels will unlock new spells and techniques that characters can use in combat. Throughout the game, players will encounter rogue wisps that can be obtained through a variety of different means. Some wisps require the player to beat them in a fight. Other wisps require a puzzle to be solved. These wisps can be set to characters to unlock different classes which provide different gameplay options in battle.
 
 # Story
 
@@ -274,19 +282,23 @@ The world of this game is one of tumultuous magic, where the fundamental forces 
 
 Out of survival instinct, animals were the first to bond with wisps. It was by their whims that stable environments arose. From observation did people too learn to bond with wisps. From this the art of spellcraft arose, and the dawn of civilization with it. As societies rose and fell, and spellcraft practiced and refined, different philosophies on the nature of the arcane forces took shape. All observed that the elements could be aligned with light or darkness. For some, the deep caves and abyss of the sea aligned earth and water as aspects of dark, while the windy heavens and brilliant sun aligned fire and wind to light. Others posited, what is darkness but a shadow cast by an obstruction, and thus fire could be used with all to harness the stygian forces. And others still found new ways to align the forces with light and dark. With this, polarity was given to the fundamental four.
 
-*NEEDS FLUFF REWRITE:* Societies rise and fall, yet the stories they tell of their heroes, gods, and mythic beasts endure beyond their cities, becoming myths and legends. The wisps, nigh immortal, have born witness it all. (Essentially, wisps saw or heard tales about the exploits of creatures or people that inspired society's myths. Some of these tales resonate with them and this results in these mythic figures being able to be called forth as summons given enough knowledge of the myth along with the right set of wisps.)
+*CONSIDERING FLUFF REWRITE:* Societies rise and fall, yet the stories they tell of their heroes, gods, and mythic beasts endure beyond their cities, becoming myths and legends. The wisps, nigh immortal, have born witness it all. (Essentially, wisps saw or heard tales about the exploits of creatures or people that inspired society's myths. Some of these tales resonate with them and this results in these mythic figures being able to be called forth as summons given enough knowledge of the myth along with the right set of wisps.)
 
-*NEEDS FLUFF REWRITE:* (At some point a catastrophe occurs that results in a big chunk of the world getting reduced to a wasteland. This catastrophe was so bad that even the flow of magic was affected, resulting in it bunching up to the point where it coalesces into an unnatural being. This is where monsters come from. From this point on, monsters are a constant threat to both the wilds and to civilization.)
+*CONSIDERING FLUFF REWRITE:* (At some point a catastrophe occurs that results in a big chunk of the world getting reduced to a wasteland. This catastrophe was so bad that even the flow of magic was affected, resulting in it bunching up to the point where it coalesces into an unnatural being. This is where monsters come from. From this point on, monsters are a constant threat to both the wilds and to civilization.)
 
-*NEEDS FLUFF REWRITE:* (As the ages pass, monsters have ravaged many of the great civilizations of eld. While the world is not on the brink, much has been lost to ravages of time and aberration. People are ever stubborn, and the current day sees many a guild and society dedicated to reclaiming some of what was lost. And there are others still looking dangerously close at a secret that should stay hidden.)
+*CONSIDERING FLUFF REWRITE:* (As the ages pass, monsters have ravaged many of the great civilizations of eld. While the world is not on the brink, much has been lost to ravages of time and aberration. People are ever stubborn, and the current day sees many a guild and society dedicated to reclaiming some of what was lost. And there are others still looking dangerously close at a secret that should stay hidden.)
 
 ## Narrative
-
-*(To be Further Written)*
 
 The game follows the story of two friends as they embark on a journey across the world. Along the way, they will team up with two others. The journey will have the party encounter various researchers studying the ruins and remnants of lost civilizations, as well as the growing threat of monsters.
 
 The game starts with the two starting characters fending off an animal attack against a visitor to their town. This will prompt them to delve deeper into the wilds surrounding the town to investigate why the animals are so aggressive. This will culminate in a boss battle against a monster that is the result of the unrest.
+
+The vistor turns out to be a researcher of monsters who has been traveling back to the base of his organization to report his findings and receive his next orders. This researcher will join the party as the other two agree to help escort them to deliver their findings.
+
+Along the way the group come across other settlements that have been subject to monster attacks. The party resolves these issues for a myriad of reasons, some altruistic, others more self serving. These encounters provide additional data for the researcher, which they comment on from time to time.
+
+***To Be Continued***
 
 ## Characters
 
@@ -299,7 +311,7 @@ The game starts with the two starting characters fending off an animal attack ag
   - **Overview:** A town guard of the starting area who teams up with the other starting protagonist on their adventure. They once had dreams of becoming a heroic warrior, inspired by sagas and legends of old. In addition to providing martial aid to their friend, they hope to perhaps fulfill that dream by learning the martial disciplines of the places they visit.
   - **Personality:** Friendly and warm. Believes that strength should be used to defend those who cannot. Stubborn to the point of self-destructive.
 - PartyCharacter3
-  - **Overview:** A scholar of magic.
+  - **Overview:** A researcher who has been traveling across the world, cataloging the presence of monsters and how they affect the environments within. They are part of a larger order that is dedicated to tracking and culling monster populations across the world.
   - **Personality:** Haughty.
 - PartyCharacter4
   - **Overview:** An archeologist.
@@ -307,13 +319,13 @@ The game starts with the two starting characters fending off an animal attack ag
 
 ### Important NPCs
 
-- MonsterEcologist
-  - A researcher who has been traveling across the world, cataloging the presence of monsters and how they affect the environments within.
-  - They are part of a larger order that is dedicated to tracking and culling monster populations across the world.
+***Will be Expanded Upon as the Narrative is Developed***
 
 ## Dialogue
 
 ## Storyboards
+
+***Will be Expanded Upon as the Narrative is Developed***
 
 # Art
 
@@ -394,6 +406,19 @@ The elemental alignment of player characters, the summon pool, and other element
 # Technical Requirements
 
 ## Items
+
+Items are not fully "consumable" as they are intended to refresh after a combat encounter. Need to decide how acquiring new consumable items works.
+
+An upgrade system is needed to allow for the expanding of the use of items.
+- Increasing the number of items that a player can bring in (increasing item slots).
+- Incresing the number of a single item a player can place in a single item slot.
+- Unlocking new items that can be brought in to battle.
+
+## Weapon Mastery
+
+## Spell and Technique Costs
+
+## Status Effects
 
 ## Random Encounter Map Generation
 
