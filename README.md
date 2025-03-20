@@ -15,18 +15,21 @@
     2. [Themes](#themes)
     3. [Exploration](#exploration)
         1. [Landmarks](#landmarks)
-        2. [Biomes and Random Encounters](#biomes-and-random-encounters) 
+        2. [Towns](#towns)
+        3. [Dungeons](#dungeons)
+        4. [Biomes and Random Encounters](#biomes-and-random-encounters) 
     8. [Combat](#combat)
         1. [Wisps & Elements](#wisps--elements)
-        2. [Range and Effect Areas](#range-and-effect-areas)
-        3. [Spells & Techniques](#spells--techniques)
-        4. [Summoning](#summoning)
-        5. [Items](#items)
+        2. [Equipment & Items](#equipment--items)
+        3. [Range and Effect Areas](#range-and-effect-areas)
+        4. [Spells & Techniques](#spells--techniques)
+        5. [Summoning](#summoning)
         6. [Victory and Defeat](#victory-and-defeat)
     9. [Puzzles](#puzzles)
     10. [Quests](#quests)
     11. [AI / NPCs](#ai--npcs)
     12. [Special Systems](#special-systems)
+        1. [Player Character Classes ](#player-character-classes)
     13. [Progression](#progression)
 3. [Story](#story)
     1. [Setting](#setting)
@@ -44,11 +47,19 @@
     3. [Menus](#menus)
         1. [Primary Combat Map](#primary-combat-map)
         2. [Character Details](#character-details)
+    4. [Diegetics](#diegetics)
+    5. [Integration](#integration)
 7. [Market Requirements](#market-requirements)
-8. [Technical Requirements](#technical-requirements)
-   1. [Player Character Classes ](#player-character-classes)
-   2. [Character Stats](#character-stats)
-   3. [Action Potency Calculation](#action-potency-calculation)
+    1. [Priorities](#priorities)
+    2. [Minimum Viable Product](#minimum-viable-product)
+    3. [Delivery](#delivery)
+    4. [Marketing](#marketing)
+    5. [Post-Launch](#post-launch)
+8. [Technical Requirements](#technical-requirements) 
+    1. [Random Encounter Map Generation](#random-encounter-map-generation)
+    2. [Items](#items)
+    3. [Character Stats](#character-stats)
+    4. [Action Potency](#action-potency)
 
 # Introduction
 
@@ -91,7 +102,7 @@ Music will have to be sourced from libraries that offer affordable music license
 
 ## Target Audience
 
-This game is intended for people from their mid teens to the mid 30's. It is intended for people who are fans of high fantasy, where magic is a fundamental aspect of the world. People who are a fan of tactics games like *Fire Emblem* or *Final Fantasy Tactics Advance* will find the tactics combat of *Working Title* appealing. *Working Title* will interst players seeking a fantasy story where learning of the history and nature of the world is the focus.
+This game is intended for people from their mid teens to the mid 30's. It is intended for people who are fans of high fantasy, where magic is a fundamental aspect of the world. People who are a fan of tactics games like *Fire Emblem* or *Final Fantasy Tactics Advance* will find the tactics combat of *Working Title* appealing. *Working Title* will interest players seeking a fantasy story where learning of the history and nature of the world is the focus.
 
 # Concept
 
@@ -122,6 +133,14 @@ The player can talk with NPCs to obtain various benefits. Talking with NPCs can 
 - The world will be comprised of landmarks that represent a town or dungeon area that will be loaded when the world avatar makes contact with it.
 - The landmarks will be scattered across a traversible landmass where the user will randomly enter combat encounters.
 
+### Towns
+
+Throughout the world the player will find towns that serve as rest stop and save haven from the combat encounters. Towns are often the starting point of a new narrative beat, making them useful visual shorthand for where the player should go when exploring the overworld. Towns will often have shops where the player can buy new gear or special items that affect consumables. Towns also serve as a gathering point for NPCs that can provide useful hints for out of the way landmarks or strategies for fighting upcoming bosses.
+
+### Dungeons
+
+Dungeons are dangerous areas that contain random encounters and puzzles that the player must overcome to progress to the next narrative beat. Dungeons could be part of the critical path or optional. All dungeons will have a central theme that they are designed around. For some, it is the focus on a new enviromental mechanic. For others, it is a visual motif. Dungeons could be ancient ruins, sprawling forests, or even hideaways.
+
 ### Biomes and Random Encounters
 
 - The landmass will be separated into distinct "biomes", each having their own distinct set of creatures to draw from for the purposes of determining random encounters.
@@ -144,6 +163,10 @@ Elements are the key component that determines the abilities of a character. The
 
 Spells and some techniques are dependent on the elemental alignment of a player character. A player character's elemental alignment is determined by the number of wisps set to them of a specific element, as well as their original elemental alignment.
 - *Note: A player's base alignment will probably be worth more than one.*
+
+### Equipment & Items
+
+Items are consumables that fully replenish after a combat encounter has ended. These include health restoration, status curing, or damaging actions.
 
 ### Range and Effect Areas
 
@@ -187,10 +210,6 @@ This action calls to the field a powerful entity, allowing the user to tap into 
   - When a summon uses an action, the required number and element of the wisps are released from the well, sending them back to the player character they were originally set to.
   - When a summon uses an action that would empty its well, the summon disappates and leaves the field.
 
-### Items
-
-Items are consumables that fully replenish after a combat encounter has ended. These include health restoration, status curing, or damaging actions.
-
 ### Victory and Defeat
 
 - An enemy character is defeated when either their health reaches zero, or they retreat from battle.
@@ -203,11 +222,47 @@ Items are consumables that fully replenish after a combat encounter has ended. T
 
 ## Puzzles
 
+The game will include puzzles in towns and dungeons that involve the manipulation of environmental elements to move forward. These elements can be interacted with directly or by using elemental magic to alter the them in some way.
+
+The player character will be able to directly interact with the environment in specific ways:
+- Certain environment objects, like blocks or statues, can be physically pushed by the player.
+- Some surfaces have special properties that cause the player to move in different ways.
+    - Icy floors could cause the player to slide until they hit an obstacle.
+    - Muddy areas could slow player movement down, making them vulnerable to hazards.
+- The player is able to jump over small gaps.
+- There are climbable elements, such as ladders and vines, that allow the player to ascend or descend to different elevations.
+
+The player character will have access to different elemental magics that allow for the manipulation of the environment in creative ways:
+- Earth magic can be used to move stone pillars that are too far out of reach.
+- Fire magic could be used to burn away obstructing foliage.
+- Ice magic could be used to freeze a watery surface, opening up previously inaccessible areas.
+- Wind magic could be used to turn a windmill. 
+
 ## Quests
+
+The critical path for the game's narrative is essentially a sequence of quests. The player is informed of where they need to go, what actions need to be undertaken, and are then rewarded upon completion of those actions. The rewards for critical path quests could include special items or abilities, but those would usually be rewarded during the completion of the quest.
+
+Some quests are optional, given to the players by NPCs in towns or hinted at by environmental clues. These quests can be used to flesh out the world by exposing the character to more niche aspects that may not come up during the critical path. Side quest rewards can include unique weapons, new summons, or upgrade materials for items.
 
 ## AI / NPCs
 
 ## Special Systems
+
+### Player Character Classes
+
+Player characters only have the level and affinity stat by default. All other stats are defined by a class which is set to them. A player character always has a class. The class is determined by the number and element of the wisps that are set to the character. For example, a player with the earth affinity and no other wisps set to them would be assigned the "Guard" class, which has its own set of stats. When that same character has a water wisp set to them, their class then changes to the "Herbalist" class. While this introduces the potential for an unmanageable number of classes, in reality individual classes can be condensed into class chains that each player character can bet set to that can be determined by the elemental alignment of the character as determined by the wisps set. Since a player character has an initial affinity, these class chains can be further reduced to a more manageable number.
+
+Class Chain Grouping:
+- core
+- core + element_1
+- core + element_2
+- core + element_3
+- core + element_1 + element_2
+- core + element_1 + element_3
+- core + element_2 + element_3
+- core + element_1 + element_2 + element_3
+
+Player classes/class chains determine what spells a player has access to. Some classes/class chains may also grant techniques, though that is primarily determined by the weapon (and possible other equipment) a player character wields.
 
 ## Progression
 
@@ -320,25 +375,27 @@ The elemental alignment of player characters, the summon pool, and other element
 
 ![Element_Alignment_Display](https://github.com/user-attachments/assets/d91d9ee7-6797-439e-ad62-b8a15a9629da)
 
+## Diegetics
+
+## Integration
+
 # Market Requirements
+
+## Priorities
+
+## Minimum Viable Product
+
+## Delivery
+
+## Marketing
+
+## Post-Launch
 
 # Technical Requirements
 
-## Player Character Classes
+## Items
 
-Player characters only have the level and affinity stat by default. All other stats are defined by a class which is set to them. A player character always has a class. The class is determined by the number and element of the wisps that are set to the character. For example, a player with the earth affinity and no other wisps set to them would be assigned the "Guard" class, which has its own set of stats. When that same character has a water wisp set to them, their class then changes to the "Herbalist" class. While this introduces the potential for an unmanageable number of classes, in reality individual classes can be condensed into class chains that each player character can bet set to that can be determined by the elemental alignment of the character as determined by the wisps set. Since a player character has an initial affinity, these class chains can be further reduced to a more manageable number.
-
-Class Chain Grouping:
-- core
-- core + element_1
-- core + element_2
-- core + element_3
-- core + element_1 + element_2
-- core + element_1 + element_3
-- core + element_2 + element_3
-- core + element_1 + element_2 + element_3
-
-Player classes/class chains determine what spells a player has access to. Some classes/class chains may also grant techniques, though that is primarily determined by the weapon (and possible other equipment) a player character wields.
+## Random Encounter Map Generation
 
 ## Character Stats
 
@@ -367,7 +424,7 @@ Both enemy and player characters have a collection of stats that determine their
   - Base: The value at level 1. Each element has its own distinct value.
   - Growth Factor: By how much the stat grows per level. Each element has its own distinct value.
 
-## Action Potency Calculation
+## Action Potency
 
 Actions have a potency value that determines what percentage of the character's attack the action uses to determine its strength. For example, the "Strike" action could have a potency of 50, meaning that if this action was used by a character with 500 attack (factored in for level), the action would have a strength of 250.
 
