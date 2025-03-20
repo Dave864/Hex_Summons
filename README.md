@@ -17,10 +17,9 @@
         1. [Landmarks](#landmarks)
         2. [Towns](#towns)
         3. [Dungeons](#dungeons)
-        4. [Biomes and Random Encounters](#biomes-and-random-encounters) 
     8. [Combat](#combat)
         1. [Wisps & Elements](#wisps--elements)
-        2. [Equipment & Items](#equipment--items)
+        2. [Items](#items)
         3. [Range and Effect Areas](#range-and-effect-areas)
         4. [Spells & Techniques](#spells--techniques)
         5. [Summoning](#summoning)
@@ -59,9 +58,10 @@
 8. [Technical Requirements](#technical-requirements) 
     1. [Items](#items)
     2. [Weapon Mastery](#weapon-mastery)
-    3. [Random Encounter Map Generation](#random-encounter-map-generation)
-    4. [Character Stats](#character-stats)
-    5. [Action Potency](#action-potency)
+    3. [Status Effects](#status-effects)
+    4. [Biomes and Random Encounters](#biomes-and-random-encounters) 
+    5. [Character Stats](#character-stats)
+    6. [Action Potency](#action-potency)
 
 # Introduction
 
@@ -143,17 +143,6 @@ Throughout the world the player will find towns that serve as rest stop and save
 
 Dungeons are dangerous areas that contain random encounters and puzzles that the player must overcome to progress to the next narrative beat. Dungeons could be part of the critical path or optional. All dungeons will have a central theme that they are designed around. For some, it is the focus on a new enviromental mechanic. For others, it is a visual motif. Dungeons could be ancient ruins, sprawling forests, or even hideaways.
 
-### Biomes and Random Encounters
-
-- The landmass will be separated into distinct "biomes", each having their own distinct set of creatures to draw from for the purposes of determining random encounters.
-- The creatures associated with each biome will be categorized as either "Predator", "Prey" or "Monster".
-- A biome will passively track the percentage distribution of each creature category, simulating an ecosystem.
-  - Prey percentage will grow inversly to Predator percentage.
-  - Monster percentage increase will lower both Predator and Prey.
-  - A successful random encounter with Monster creatures will lower the Monster percentage.
-- The enemy characters and map used for the encounter will be determined as the user traverses the world map.
-  - The encounter will use a random tile map from a predifined set specific to the biome.
-
 ## Combat
 
 ### Wisps & Elements
@@ -166,7 +155,7 @@ Elements are the key component that determines the abilities of a character. The
 Spells and some techniques are dependent on the elemental alignment of a player character. A player character's elemental alignment is determined by the number of wisps set to them of a specific element, as well as their original elemental alignment.
 - *Note: A player's base alignment will probably be worth more than one.*
 
-### Equipment & Items
+### Items
 
 Items are consumables that fully replenish after a combat encounter has ended. These include health restoration, status curing, or damaging actions.
 
@@ -239,7 +228,7 @@ The player character will have access to different elemental magics that allow f
 - Earth magic can be used to move stone pillars that are too far out of reach.
 - Fire magic could be used to burn away obstructing foliage.
 - Ice magic could be used to freeze a watery surface, opening up previously inaccessible areas.
-- Wind magic could be used to turn a windmill. 
+- Wind magic could be used to turn a windmill.
 
 ## Quests
 
@@ -268,6 +257,10 @@ Class Chain Grouping:
 Player classes/class chains determine what spells a player has access to. Some classes/class chains may also grant techniques.
 
 ### Status Effects
+
+Characters can be afflicted with status effects that can provide boons or banes to the afflicted character. Map tiles in a combat encounter can also be afflicted with a status effect, which will trigger when a character stops on the tile. Status effects on tiles could also effect how easy it is for a character to traverse the tile.
+
+Status effects could also be used to represent a "stance" for a given character, changing the available techniques or actions that a player or enemy character respectively can use. In the same way, status effects can change the behavior of an enemy character.
 
 ## Progression
 
@@ -421,7 +414,22 @@ Weapons can be mastered by characters, which will allow for special techniques l
 
 ## Status Effects
 
-## Random Encounter Map Generation
+Need to build a system that allows for status effects to be applied by actions.
+- Needs to be able to specify if characters or tiles are affected.
+- Needs to be able to describe if an afflicted enemy character should use a different behaviour.
+- Needs to allow for the modular customization of status effects.
+    - Most status effects should be created by the changing of parameters instead of implementing specialized logic for each status.
+
+## Biomes and Random Encounters
+
+Areas of the overworld map will be separated into distinct "biomes", each having their own distinct set of creatures to draw from for the purposes of determining random encounters.
+- The creatures associated with each biome will be categorized as either "Predator", "Prey" or "Monster".
+- A biome will passively track the percentage distribution of each creature category, simulating an ecosystem.
+  - Prey percentage will grow inversly to Predator percentage.
+  - Monster percentage increase will lower both Predator and Prey.
+  - A successful random encounter with Monster creatures will lower the Monster percentage.
+- The enemy characters and map used for the encounter will be determined as the user traverses the world map.
+  - The encounter will use a random tile map from a predifined set specific to the biome.
 
 ## Character Stats
 
