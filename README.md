@@ -59,10 +59,9 @@
 8. [Technical Requirements](#technical-requirements) 
     1. [Items](#items)
     2. [Weapon Mastery](#weapon-mastery)
-    3. [Spell and Technique Costs](#spell-and-technique-costs)
-    4. [Random Encounter Map Generation](#random-encounter-map-generation)
-    5. [Character Stats](#character-stats)
-    6. [Action Potency](#action-potency)
+    3. [Random Encounter Map Generation](#random-encounter-map-generation)
+    4. [Character Stats](#character-stats)
+    5. [Action Potency](#action-potency)
 
 # Introduction
 
@@ -416,7 +415,9 @@ An upgrade system is needed to allow for the expanding of the use of items.
 
 ## Weapon Mastery
 
-## Spell and Technique Costs
+Weapons can be mastered by characters, which will allow for special techniques locked to specific weapons to be able to be used when a character wields a different weapon of the same type. Need to determine what other benefits weapon mastery grants.
+- Allowing for "general" techniques to be used across all weapons.
+- Increasing weapon damage or adding a crit chance.
 
 ## Status Effects
 
@@ -428,26 +429,13 @@ Both enemy and player characters have a collection of stats that determine their
 - Affinity: Indicates the primary elemental affinity of the character. Can be earth, fire, water, wind, or some combination of the four.
 - Level: A value that determines the value of all other stats.
 - Health: The maximum vitality of the character.
-  - Current Health: The current vitality of the character. When this drops to 0, the character is considered defeated.
-  - Base: The value at level 1.
-  - Growth Factor: By how much the stat grows per level.
 - Attack: Determines the strength of offensive actions.
-  - Base: The value at level 1.
-  - Growth Factor: By how much the stat grows per level.
 - Defense: Determines the amount of damage that is mitigated from offensive actions.
-  - Base: The value at level 1.
-  - Growth Factor: By how much the stat grows per level.
 - Agility: The primary stat for determining a character's order in initiative.
-  - Base: The value at level 1.
-  - Growth Factor: By how much the stat grows per level.
 - Magic: Determines the bonus strength of an action based off the action's elemental alignment.
   - This stat is further broken down into four aspects: earth, fire, water, and air. Each aspect has its own distinct value.
-  - Base: The value at level 1. Each element has its own distinct value.
-  - Growth Factor: By how much the stat grows per level. Each element has its own distinct value.
 - Resistance: Determines the amount of damage mitigated from the bonus strength of offensive actions.
   - This stat is further broken down into four aspects: earth, fire, water, and air. Each aspect has its own distinct value.
-  - Base: The value at level 1. Each element has its own distinct value.
-  - Growth Factor: By how much the stat grows per level. Each element has its own distinct value.
 
 ## Action Potency
 
