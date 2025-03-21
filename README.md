@@ -330,9 +330,82 @@ A hybrid style, using pxiel art sprites in a 3d environment.
 
 ## UI / UX
 
+The game revolves around navigating menus to select actions or options. Menu navigation should be intuitive and quick, with different menus being opened using different buttons as opposed to navigating to them using directional input. The use of directional input for menu navigation should be limited, but reasonable. Sometimes it would be more confusing to have a player remember which input opens what menu when just having the player navigate among a list of options would be easier.
+
 ## Controls
 
-The game is intended to be played using a gamepad controller. This game will provide support for mouse and keyboard along with gamepad controllers.
+Keyboard & Mouse
+
+- Combat
+    - **Mouse Left Button:** Select tile or hovered action.
+    - Camera 
+        - **Mouse Right Button:** Rotate the camera while moving the mouse.
+            - Moving the mouse while the camera is still allows for the selection of map elements.
+        - **Mouse Center Button:** Reset the camera to a default orientation.
+    - Menus & Options
+        - **Esc:** Game Options
+        - **Tab:** Party Stats (able to navigate to enemy stats from here as well)
+        - **1:** Techniques
+        - **2:** Spells
+        - **3:** Summons
+        - **4:** Items
+        - **Backspace** End Turn
+        - *Note: Techniques, Spells, Summons, Items, and End Turn options can also be selected using the mouse.*
+- Exploration
+    - Movement 
+        - **W:** Up
+        - **A:** Left
+        - **S:** Down
+        - **D:** Right
+    - Interact
+        - **Enter:** Confirm
+        - **Backspace:** Cancel
+        - **Q:** Shortcut 1
+        - **E:** Shortcut 2
+        - *Note: Mouse left click can be used to confirm, while mouse right click can be used to cancel.*
+    - Menus
+        - **Esc:** Game Options 
+        - **Tab:** Player Status (Allows for navigation to other menus)
+        - **I:** Equipment & Items
+        - **P:** Wisps
+        - *Note: Mouse can be used within the menus to navigate.*
+
+Controller
+- Combat
+    - **Left Joystick:** Select map tile. 
+    - Camera
+        - **Right Joystick:** Rotate camera.
+        - **Right Joystick 3:** Reset the camera to a default orientation.
+    - Menus & Options
+        - **Start:** Game Options
+        - **Select:** Party Stats (able to navigate to enemy stats from here as well)
+        - **Face Button Left:** Techniques
+        - **Face Button Up:** Spells
+        - **Right Bumper:** Summons
+        - **Face Button Right:** Items
+        - **Left Bumper:** End Turn (will need to hold)
+        - Navigate Options (Techniques, Spells, Summons, Items)
+            - **D Pad Up:** Move selection up
+            - **D Pad Left:** Move selection left
+            - **D Pad Down:** Move selection down
+            - **D Pad Right:** Move selection right
+            - **Face Button Bottom:** Confirm selection
+            - *Note: Selecting another menu or pressing the button for the open menu will close it.*
+- Exploration
+    - Movement
+        - **Left Joystick:** Determines direction.
+    - Interact
+        - **Face Button Bottom:** Confirm
+        - **Face Button Right:** Cancel
+        - **Left Bumper:** Shortcut 1
+        - **Right Bumper:** Shortcut 2
+    - Menus
+        - **Start:** Game Options
+        - **Select:** Player Status (Allows for navigation to other menus)
+        - **Face Button Left:** Equipment & Items
+        - **Face Button Right:** Wisps
+
+Button remapping will be implemented.
 
 ## Menus
 
@@ -390,6 +463,8 @@ Vendors and shops in towns or other areas should use common symbols or designs t
 - Vendors that offer special services could visually resemble each other.
 
 ## Integration
+
+Will look into incorporating tools for easy modding.
 
 # Market Requirements
 
