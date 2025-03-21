@@ -385,6 +385,10 @@ When outside of combat, environmental elements that the player can interact with
 - Interactable elements could follow the same visual patterns, or just be the same object.
 - Elements could have visual cues, such as movement or particle effects, that draw the player's attention.
 
+Vendors and shops in towns or other areas should use common symbols or designs to clearly indicate what they are and where they are.
+- Shops that sell a category of item (equipment, weapons, etc.) should use the same icon for their sign, regardless of where the shop is.
+- Vendors that offer special services could visually resemble each other.
+
 ## Integration
 
 # Market Requirements
