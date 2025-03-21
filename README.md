@@ -381,6 +381,10 @@ The elemental alignment of player characters, the summon pool, and other element
 
 ## Diegetics
 
+When outside of combat, environmental elements that the player can interact with should be obvious.
+- Interactable elements could follow the same visual patterns, or just be the same object.
+- Elements could have visual cues, such as movement or particle effects, that draw the player's attention.
+
 ## Integration
 
 # Market Requirements
