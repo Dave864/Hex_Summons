@@ -238,6 +238,10 @@ Some quests are optional, given to the players by NPCs in towns or hinted at by 
 
 ## AI / NPCs
 
+NPCs in towns and other such areas will have a set of limited behaviors, primarily they will have a predefined path that they travel along, if at all. Certain narrative beats will result in NPCs adopting new behaviors as befitting of the narrative.
+
+NPCs in combat will use a conditional system for determining what actions to take. Each action will have a priority value that determines which action the character will attempt to execute first. Some actions will also have conditions attached to them, allowing for further control of how the NPC will act. Priorities are considered before conditions.
+
 ## Special Systems
 
 ### Player Character Classes
