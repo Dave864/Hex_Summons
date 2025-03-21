@@ -41,6 +41,9 @@
     5. [Storyboards](#storyboards)
 4. [Art](#art)
 5. [Audio](#audio)
+    1. [Music](#music)
+    2. [Sound Effects](#sound-effects)
+    3. [Voice Acting](#voice-acting)
 6. [Game Experience](#game-experience)
     1. [UI / UX](#ui--ux)
     2. [Controls](#controls)
@@ -319,6 +322,8 @@ Along the way the group come across other settlements that have been subject to 
 
 ## Dialogue
 
+***Will be Expanded Upon as the Narrative is Developed***
+
 ## Storyboards
 
 ***Will be Expanded Upon as the Narrative is Developed***
@@ -329,6 +334,22 @@ Along the way the group come across other settlements that have been subject to 
 A hybrid style, using pxiel art sprites in a 3d environment.
 
 # Audio
+
+## Music
+
+The music should evoke ideas of fantasy and history.
+
+***Needs Further Thought***
+
+## Sound Effects
+
+Navigating through the menu will play small sound bites when menus are navigated. The menu sound effects will be constant across combat and exploration.
+
+Actions executed by characters in combat will have associated sound bites that play.
+
+## Voice Acting
+
+There will be no voice acting in this game. Character dialogue will be accompanied by babble sounds similar to *Animal Crossing*.
 
 # Game Experience
 
@@ -452,7 +473,7 @@ A menu that provides full descriptions about the stats and abilities of both pla
 6. **Player Character Selector:** Area for selecting player characters for detailed view.
 
 The elemental alignment of player characters, the summon pool, and other elementally affected aspects is indicated by a specific GUI element. These are some examples of what the GUI might look like.
-- *Note: The GUI element should use a hexagram as a key component of its design.*
+- *Note: The GUI element should use a hexagon as a key component of its design.*
 
 ![Element_Alignment_Display](https://github.com/user-attachments/assets/d91d9ee7-6797-439e-ad62-b8a15a9629da)
 
