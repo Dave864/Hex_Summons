@@ -59,12 +59,15 @@
     4. [Marketing](#marketing)
     5. [Post-Launch](#post-launch)
 8. [Technical Requirements](#technical-requirements) 
-    1. [Items](#items)
-    2. [Weapon Mastery](#weapon-mastery)
-    3. [Status Effects](#status-effects)
-    4. [Biomes and Random Encounters](#biomes-and-random-encounters) 
-    5. [Character Stats](#character-stats)
-    6. [Action Potency](#action-potency)
+    1. [Systems](#systems)
+        1. [Items](#items)
+        2. [Weapon Mastery](#weapon-mastery)
+        3. [Equipment](#equipment)
+        4. [Status Effects](#status-effects)
+        5. [Biomes and Random Encounters](#biomes-and-random-encounters) 
+        6. [Character Stats](#character-stats)
+        7. [Action Potency](#action-potency)
+    2. [Activities](#activities)
 
 # Introduction
 
@@ -491,6 +494,8 @@ Vendors and shops in towns or other areas should use common symbols or designs t
 
 Will look into incorporating tools for easy modding.
 
+Will include options for different languages.
+
 # Market Requirements
 
 ## Priorities
@@ -505,7 +510,13 @@ Will look into incorporating tools for easy modding.
 
 # Technical Requirements
 
-## Items
+## Systems
+
+### File saving
+
+The game will include a system for saving player progress. Whether saves can be done at any time or only at specific locations will need to be investigated.
+
+### Items
 
 Items are not fully "consumable" as they are intended to refresh after a combat encounter. Need to decide how acquiring new consumable items works.
 
@@ -514,13 +525,17 @@ An upgrade system is needed to allow for the expanding of the use of items.
 - Incresing the number of a single item a player can place in a single item slot.
 - Unlocking new items that can be brought in to battle.
 
-## Weapon Mastery
+### Equipment
+
+Characters will be able to equip various pieces of gear, increasing their stats and providing other buffs.
+
+### Weapon Mastery
 
 Weapons can be mastered by characters, which will allow for special techniques locked to specific weapons to be able to be used when a character wields a different weapon of the same type. Need to determine what other benefits weapon mastery grants.
 - Allowing for "general" techniques to be used across all weapons.
 - Increasing weapon damage or adding a crit chance.
 
-## Status Effects
+### Status Effects
 
 Need to build a system that allows for status effects to be applied by actions.
 - Needs to be able to specify if characters or tiles are affected.
@@ -528,7 +543,7 @@ Need to build a system that allows for status effects to be applied by actions.
 - Needs to allow for the modular customization of status effects.
     - Most status effects should be created by the changing of parameters instead of implementing specialized logic for each status.
 
-## Biomes and Random Encounters
+### Biomes and Random Encounters
 
 Areas of the overworld map will be separated into distinct "biomes", each having their own distinct set of creatures to draw from for the purposes of determining random encounters.
 - The creatures associated with each biome will be categorized as either "Predator", "Prey" or "Monster".
@@ -539,7 +554,7 @@ Areas of the overworld map will be separated into distinct "biomes", each having
 - The enemy characters and map used for the encounter will be determined as the user traverses the world map.
   - The encounter will use a random tile map from a predifined set specific to the biome.
 
-## Character Stats
+### Character Stats
 
 Both enemy and player characters have a collection of stats that determine their strength and capabilities in combat:
 - Affinity: Indicates the primary elemental affinity of the character. Can be earth, fire, water, wind, or some combination of the four.
@@ -553,7 +568,7 @@ Both enemy and player characters have a collection of stats that determine their
 - Resistance: Determines the amount of damage mitigated from the bonus strength of offensive actions.
   - This stat is further broken down into four aspects: earth, fire, water, and air. Each aspect has its own distinct value.
 
-## Action Potency
+### Action Potency
 
 Actions have a potency value that determines what percentage of the character's attack the action uses to determine its strength. For example, the "Strike" action could have a potency of 50, meaning that if this action was used by a character with 500 attack (factored in for level), the action would have a strength of 250.
 
@@ -569,3 +584,44 @@ All actions have an elemental affinity that is determined by a variety of factor
 | 6 | 300 |
 
 Defense is subtracted from the strength of the action, while each resistance type is subtracted from the relevant bonus strength. The resulting values are then added together to determine the amount of damage that is dealt.
+
+## Activities
+
+Development will first focus on buidling the systems needed to build the minimum viable product. Each system will be integrated into a prototype as they are built. This prototype will be hosted on Itch.io for people to interact with and give feedback on:
+
+Combat Encounter
+- Map creation and customization
+- Tools for creating different actions
+- Enemy AI
+- Action interaction with characters
+- Resource system for Techniques and Spells
+- Summoning
+
+Equipment
+- Items
+- Weapon mastery
+- Other gear
+
+Overworld
+- Random encounters
+- Transitioning from one area to the next
+
+Dungeons
+- Environment interaction
+- Event triggers
+- Random encounters
+
+Towns
+- Vendors
+- NPC AI
+
+Narrative
+- Dialogue tree
+
+Focus will then shift on addressing any bugs found during playtesting, as well as beginning work on incorporating the game narrative.
+
+Development on player tools for running the game will be worked on in tandem with other phases:
+
+- Saving and Loading
+- System Options
+- Language Selection
