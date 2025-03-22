@@ -56,8 +56,7 @@
     1. [Priorities](#priorities)
     2. [Minimum Viable Product](#minimum-viable-product)
     3. [Delivery](#delivery)
-    4. [Marketing](#marketing)
-    5. [Post-Launch](#post-launch)
+    4. [Post-Launch](#post-launch)
 8. [Technical Requirements](#technical-requirements) 
     1. [Systems](#systems)
         1. [Items](#items)
@@ -500,13 +499,55 @@ Will include options for different languages.
 
 ## Priorities
 
+Must Have
+- Combat encounters that take place on a grid of hexagonal tiles.
+- Players being able to choose from different options while in combat, with each option having different effects.
+- Enemy AI.
+- An overworld that the player can travel around in.
+- Different locations in the overworld the player can travel to.
+    - Towns for healing and vendors
+    - Dungeons for bosses and treasure
+- Boss encounters in dungeons
+
+Should Have
+- Character options being broken down into techniques, spells, and items.
+- The summoning system.
+- Random encounters in the overworld.
+- Fixed encounters in dungeons (not boss fights).
+- Town NPC AI.
+
+Could Have
+- Overworld random encounters are represented by roving NPCs.
+- Specific side quests that unlock new summons.
+
+Want to Have
+- Different weapons each have their own unique sprites that are shown when equipped.
+- Overworld random encounters are represented by roving NPCs.
+
 ## Minimum Viable Product
+
+The minimum that the game requires to be considered a viable product is a single overworld zone that includes one town and one dungeon. 
+- The overworld will include random encounters with three different enemy types.
+- The Town will include one vendor that sells weapons and provides healing for a fee.
+- The player will control a party of two characters.
+    - The player will have two wisps they can allocate to these characters.
+- The Dungeon will be comprised of three areas:
+    - Puzzle room
+    - "Secret" room
+        - Contains an obtainable wisp
+    - Boss fight room
 
 ## Delivery
 
-## Marketing
+As the game is developed and reaches different stages of completion, the game will be posted to Itch.io. The first time the game is posted will be accompanied by the creation of various social media accounts to allow for official communication with players.
+
+Each new version of the game will have the narrative be a vignette set in a different area of the world.
+
+The game is intended to eventually be released on Steam. The game will have a single upfront price.
 
 ## Post-Launch
+
+Frequent reviews of player feedback will be conducted to identify any bugs or other issues that the playerbase has discovered (at least weekly). This will be done for the latest version of the game. Will be looking online for people who are streaming the game or have posted videos once the game has been released. 
 
 # Technical Requirements
 
@@ -616,7 +657,7 @@ Towns
 - NPC AI
 
 Narrative
-- Dialogue tree
+- Dialogue tracking
 
 Focus will then shift on addressing any bugs found during playtesting, as well as beginning work on incorporating the game narrative.
 
