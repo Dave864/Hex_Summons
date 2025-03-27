@@ -7,6 +7,21 @@ resizing camera dimensions.
 """
 
 
+signal top_vertex_changed(vertex)
+
+# Defines the radians values that correspond to the vertices of a hexagon.
+#    0
+# 5 / \ 1
+#  |   |
+# 4 \ / 2
+#    3
+const HV_RAD_0: float = PI
+const HV_RAD_1: float = 2.0 * PI / 3.0
+const HV_RAD_2: float = PI / 3.0
+const HV_RAD_3: float = 0.0
+const HV_RAD_4: float = -HV_RAD_2
+const HV_RAD_5: float = -HV_RAD_1
+
 # The default distance the camera is to be set from the focus point.
 export (float, 0.0, 50.0) var default_distance = 15.0 setget set_default_distance
 # The boundaries for vertical rotation.
@@ -33,7 +48,7 @@ var _vert_pan_midpoint: float = _panning_vertical_midpoint() setget , get_vert_p
 #  |   |
 # 4 \ / 2
 #    3
-var _relative_top_vertex: int = 0 setget , get_relative_top_vertex
+var _relative_top_vertex: int = 0 setget set_relative_top_vertex, get_relative_top_vertex
 # The default orientation of the camera
 var _default_orientation: Vector3
 
@@ -84,6 +99,7 @@ func set_relative_top_vertex(new_top: int) -> void:
 			"New relative vertex for EncounterCamera is out of bounds for a hex."
 	)
 	_relative_top_vertex = new_top
+	emit_signal("top_vertex_changed", new_top)
 
 
 # Gets the orientation of the focus point.
