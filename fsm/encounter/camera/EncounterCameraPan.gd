@@ -27,6 +27,7 @@ func handle_input(event: InputEvent) -> void:
 		pan_camera = true
 	if event.is_action_released("ui_camera_pan"):
 		pan_camera = false
+		state_machine.transition_to(NORMALIZE)
 	if event is InputEventMouseMotion:
 		mouse_motion = event.relative
 	if mouse_active and pan_camera:

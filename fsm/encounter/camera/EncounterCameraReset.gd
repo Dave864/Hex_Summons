@@ -23,7 +23,7 @@ func enter(_msg := {}) -> void:
 func update(delta: float) -> void:
 	weight += delta * enc_camera.reset_speed
 	weight = 1.0 if weight > 1.0 else weight
-	enc_camera.interpolate_camera_reset(original_orientation, weight)
+	enc_camera.interpolate_camera_rotation(original_orientation, weight)
 	if weight >= 1.0:
 		state_machine.transition_to(PAN)
 

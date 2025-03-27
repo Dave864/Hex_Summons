@@ -15,12 +15,14 @@ signal top_vertex_changed(vertex)
 #  |   |
 # 4 \ / 2
 #    3
-const HV_RAD_0: float = PI
-const HV_RAD_1: float = 2.0 * PI / 3.0
-const HV_RAD_2: float = PI / 3.0
-const HV_RAD_3: float = 0.0
-const HV_RAD_4: float = -HV_RAD_2
-const HV_RAD_5: float = -HV_RAD_1
+const HEX_VERTEX_RADIANS: Array = [
+	PI,
+	2.0 * PI / 3.0,
+	PI / 3.0,
+	0.0,
+	-PI / 3.0,
+	-2.0 * PI / 3.0
+]
 
 # The default distance the camera is to be set from the focus point.
 export (float, 0.0, 50.0) var default_distance = 15.0 setget set_default_distance
@@ -155,18 +157,42 @@ func set_camera_distance(distance: float) -> void:
 	_camera.translation.z = distance
 
 
-# Reorients the camera to the default orientation by a certain amount.
-func interpolate_camera_reset(original_o: Vector3, weight: float):
+# Reorients the camera to the target orientation by a certain amount. If no
+# target orientation is specified, defaults to the default orientation.
+func interpolate_camera_rotation(
+	original_o: Vector3,
+	weight: float,
+	target_o: Vector3 = _default_orientation
+):
 	_focus_pt.rotation = original_o.linear_interpolate(
-			_default_orientation,
+			target_o,
 			weight
 	)
+
+
+# Determines which radian rotation is closest to the camera's current rotation.
+func get_closest_vertex_radian() -> float:
+	var vertex_radian: float = 0.0
+	for v in range(HEX_VERTEX_RADIANS.size()):
+		var next_v: int = v + 1 if v < 5 else 0
+		var v_radian: float = HEX_VERTEX_RADIANS[v]
+		var next_v_radian: float = (
+			-HEX_VERTEX_RADIANS[next_v] if next_v == 0 and v == 5 
+			else HEX_VERTEX_RADIANS
+		)
+		var mid_radian: float = (v_radian + next_v_radian) / 2.0
+		if v_radian > _focus_pt.rotation.y and mid_radian < _focus_pt.rotation.y:
+			vertex_radian = HEX_VERTEX_RADIANS[v]
+			set_relative_top_vertex(v)
+		elif next_v_radian < _focus_pt.rotation.y and mid_radian > _focus_pt.rotation.y:
+			vertex_radian = HEX_VERTEX_RADIANS[next_v]
+			set_relative_top_vertex(next_v)
+	return vertex_radian
 
 
 # Calculates the midpoint between the vertical bounds.
 func _panning_vertical_midpoint() -> float:
 	return (vert_panning_u_bound + vert_panning_l_bound) / -2.0
-
 
 
 # Binds the provided vertical rotation wihtin the upper and lower bounds.
