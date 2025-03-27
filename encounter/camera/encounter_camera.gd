@@ -178,14 +178,14 @@ func get_closest_vertex_radian() -> float:
 		var v_radian: float = HEX_VERTEX_RADIANS[v]
 		var next_v_radian: float = (
 			-HEX_VERTEX_RADIANS[next_v] if next_v == 0 and v == 5 
-			else HEX_VERTEX_RADIANS
+			else HEX_VERTEX_RADIANS[next_v]
 		)
 		var mid_radian: float = (v_radian + next_v_radian) / 2.0
 		if v_radian > _focus_pt.rotation.y and mid_radian < _focus_pt.rotation.y:
-			vertex_radian = HEX_VERTEX_RADIANS[v]
+			vertex_radian = v_radian
 			set_relative_top_vertex(v)
 		elif next_v_radian < _focus_pt.rotation.y and mid_radian > _focus_pt.rotation.y:
-			vertex_radian = HEX_VERTEX_RADIANS[next_v]
+			vertex_radian = next_v_radian
 			set_relative_top_vertex(next_v)
 	return vertex_radian
 
