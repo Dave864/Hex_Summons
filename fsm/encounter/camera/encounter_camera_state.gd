@@ -8,6 +8,7 @@ Boilerplate class to get full autocompletion and type checks for an
 
 # The name of the states for this FSM.
 var PAN: String = "Pan"
+var NORMALIZE: String = "Normalize"
 var RESET: String = "Reset"
 
 # Typed reference to the EncounterCamera node.
