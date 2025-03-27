@@ -40,6 +40,7 @@
     4. [Dialogue](#dialogue)
     5. [Storyboards](#storyboards)
 4. [Art](#art)
+    1. [Wisp Concept](#wisp-concept)
 5. [Audio](#audio)
     1. [Music](#music)
     2. [Sound Effects](#sound-effects)
@@ -334,6 +335,20 @@ Along the way the group come across other settlements that have been subject to 
 
 (To Be Refined)
 A hybrid style, using pxiel art sprites in a 3d environment.
+
+## Wisp Concept
+
+![Earth 1](https://github.com/user-attachments/assets/5ce4256b-3e55-46e5-91f7-869e7c25976f)
+![Earth 2](https://github.com/user-attachments/assets/5cff500d-05e3-490d-a966-d553fa00ae06)
+
+![Fire 1](https://github.com/user-attachments/assets/6b14977e-3587-44f9-9ede-fb87df38d7fa)
+![Fire 2](https://github.com/user-attachments/assets/46d0495e-8192-47ba-8018-45a516eb5501)
+
+![Water 1](https://github.com/user-attachments/assets/7f66a1b3-f1dd-4700-bc2d-abcefb40262a)
+![Water 2](https://github.com/user-attachments/assets/dfc27796-daa6-4ce3-a3e4-b2c39de0b0cd)
+
+![Wind 1](https://github.com/user-attachments/assets/8dbbf8f7-4517-4e96-bbc2-9a23ebb44458)
+![Wind 2](https://github.com/user-attachments/assets/1f8b7676-335a-47c1-9cc9-11829b0962d2)
 
 # Audio
 
