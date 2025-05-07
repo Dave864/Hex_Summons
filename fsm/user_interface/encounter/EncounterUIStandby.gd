@@ -18,10 +18,10 @@ func enter(_msg := {}) -> void:
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
 	ErrorUtil.connect_signal(
-			SignalBusEncounter,
-			"move_tile_selected",
-			self,
-			"_on_SignalBusEncounter_move_tile_selected"
+		encounter_ui,
+		"set_FSM_to_pause",
+		self,
+		"_on_EncounterUI_set_FSM_to_pause"
 	)
 	encounter_ui.technique_button.connect_button_signal(
 			self,
@@ -48,8 +48,7 @@ func update(_delta: float) -> void:
 # Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("ui_encounter_player_end"):
-		SignalBusEncounter.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
-		state_machine.transition_to(WAIT)
+		_end_selected()
 	if _event.is_action_pressed("ui_encounter_option_1"):
 		_technique_selected()
 	if _event.is_action_pressed("ui_encounter_option_2"):
@@ -69,10 +68,10 @@ func handle_input(_event: InputEvent) -> void:
 # Virtual function. Called by the state machine before changing the active 
 # state. Use this function to clean up the state.
 func exit() -> void:
-	SignalBusEncounter.disconnect(
-		"move_tile_selected",
+	encounter_ui.disconnect(
+		"set_FSM_to_pause",
 		self,
-		"_on_SignalBusEncounter_move_tile_selected"
+		"_on_EncounterUI_set_FSM_to_pause"
 	)
 	encounter_ui.technique_button.disconnect_button_signal(
 			self,
@@ -103,11 +102,11 @@ func _spell_selected() -> void:
 
 
 func _end_selected() -> void:
-	SignalBusEncounter.emit_signal("player_turn_ended", encounter_ui.get_focused_player())
+	encounter_ui.emit_player_turn_ended()
 	state_machine.transition_to(WAIT)
 
 
-func _on_SignalBusEncounter_move_tile_selected(_info: Array) -> void:
+func _on_EncounterUI_set_FSM_to_pause() -> void:
 	state_machine.transition_to(PAUSE)
 
 

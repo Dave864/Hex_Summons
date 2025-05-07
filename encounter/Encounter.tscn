@@ -61,3 +61,8 @@ script = ExtResource( 12 )
 
 [node name="End" type="Node" parent="StateMachine"]
 script = ExtResource( 11 )
+
+[connection signal="player_turn_started" from="." to="EncounterUI" method="_on_Encounter_player_turn_started"]
+[connection signal="player_action_selected" from="EncounterUI" to="StateMachine/PlayerTurn" method="_on_EncounterUI_player_action_selected"]
+[connection signal="player_action_type_canceled" from="EncounterUI" to="StateMachine/PlayerTurn" method="_on_EncounterUI_player_action_type_canceled"]
+[connection signal="player_turn_ended" from="EncounterUI" to="StateMachine/PlayerTurn" method="_on_EncounterUI_player_turn_ended"]

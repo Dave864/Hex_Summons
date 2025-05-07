@@ -5,6 +5,17 @@ Manages the various UI elements of an encounter.
 """
 
 
+# Used to indicate that the FSM should be set to the 'Standby' state.
+signal set_FSM_to_standby()
+# Indicates that the FSM should be set to the 'Pause' state.
+signal set_FSM_to_pause()
+# Indicates when a player turn has ended.
+signal player_turn_ended(player_info)
+# Indicates when a player action has been selected.
+signal player_action_selected(player_info, action_info)
+# Indicates that an action type selection (Technique, Spell, etc.) has been canceled.
+signal player_action_type_canceled()
+
 enum Options {
 	MOVE,
 	TECHNIQUE,
@@ -148,6 +159,21 @@ func track_enemy(e: EnemyCharacter) -> void:
 	enemy_stats.add_child(e_label)
 
 
+# Emits the 'player_turn_ended' signal.
+func emit_player_turn_ended() -> void:
+	emit_signal("player_turn_ended", get_focused_player())
+
+
+# Emits the 'player_action_selected' signal.
+func emit_player_action_selected(action_info: Action) -> void:
+	emit_signal("player_action_selected", get_focused_player(), action_info)
+
+
+# Emits the 'player_action_type_canceled' signal.
+func emit_player_action_type_canceled() -> void:
+	emit_signal("player_action_type_canceled")
+
+
 # Update the SubOptions element with the currently selected option
 func _update_sub_options() -> void:
 	match _current_selection:
@@ -159,3 +185,22 @@ func _update_sub_options() -> void:
 			pass
 		_:
 			pass
+
+
+# Triggered when a player character is the current active character in the
+# turn order. Causes the EncounterUI FSM to go to 'Standby'.
+func _on_Encounter_player_turn_started(player_info: PlayerCharacter) -> void:
+	set_focused_player(player_info)
+	emit_signal("set_FSM_to_standby")
+
+
+# Triggered when a move tile has been selected.
+# Causes the EncounterUI FSM to go to 'Pause'.
+func _on_Encounter_move_tile_selected() -> void:
+	emit_signal("set_FSM_to_pause")
+
+
+# Triggered when a player character indicates that the selector is needed.
+# Causes the EncounterUI FSM to go to `Pause`.
+func _on_PlayerCharacter_selector_required() -> void:
+	emit_signal("set_FSM_to_standby")

@@ -14,10 +14,10 @@ func enter(_msg := {}) -> void:
 	# This signal is used by other states and will be disconnected to avoid
 	# unintended behavior.
 	ErrorUtil.connect_signal(
-			SignalBusEncounter,
-			"selector_required",
+			encounter_ui,
+			"set_FSM_to_standby",
 			self,
-			"_on_SignalBusEncounter_selector_required"
+			"_on_EncounterUI_set_FSM_to_standby"
 	)
 
 
@@ -30,12 +30,13 @@ func update(_delta: float) -> void:
 # state. Use this function to clean up the state.
 func exit() -> void:
 	encounter_ui.toggle_options()
-	SignalBusEncounter.disconnect(
-			"selector_required",
+	encounter_ui.disconnect(
+			"set_FSM_to_standby",
 			self,
-			"_on_SignalBusEncounter_selector_required"
+			"_on_EncounterUI_set_FSM_to_standby"
 	)
 
 
-func _on_SignalBusEncounter_selector_required(_ip: Vector3) -> void:
+# Wait for the EncounterUI object to recieve signal that the selector is required.
+func _on_EncounterUI_set_FSM_to_standby() -> void:
 	state_machine.transition_to(STANDBY)

@@ -12,6 +12,15 @@ func enter(_msg := {}) -> void:
 	encounter_ui.sub_options.hide()
 	encounter_ui.options.hide()
 	encounter_ui.active_player_stats.hide()
+	
+	# These signals are used by other states and will be disconnected to avoid
+	# unintended behavior.
+	ErrorUtil.connect_signal(
+		encounter_ui,
+		"set_FSM_to_standby",
+		self,
+		"_on_EncounterUI_set_FSM_to_standby"
+	)
 
 
 # Corresponds to the `_process()` callback.
@@ -22,19 +31,14 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	pass
-
-
-func _ready_connect_signals():
-	ErrorUtil.connect_signal(
-			SignalBusEncounter,
-			"player_turn_started",
-			self,
-			"_on_SignalBusEncounter_player_turn_started"
+	encounter_ui.disconnect(
+		"set_FSM_to_standby",
+		self,
+		"_on_EncounterUI_set_FSM_to_standby"
 	)
 
 
-# Gets the current player and moves to the 'ActionSelect' state.
-func _on_SignalBusEncounter_player_turn_started(player: PlayerCharacter) -> void:
-	encounter_ui.set_focused_player(player)
+# Wait for the EncounterUI object to recieve signal that user input needs to
+# be obtained.
+func _on_EncounterUI_set_FSM_to_standby() -> void:
 	state_machine.transition_to(STANDBY)

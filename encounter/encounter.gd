@@ -5,6 +5,17 @@ Manages the events of an encounter.
 """
 
 
+# Indicates when a player character starts their turn.
+signal player_turn_started(player_info)
+# Inidicates when an enemy character starts their turn.
+signal enemy_turn_started(enemy_info)
+# Indicates that an enemy character has ended their turn.
+signal enemy_turn_ended(enemy_info)
+# Indicates that the action chain for an enemy character has been determined.
+signal enemy_actions_confirmed(action_chain)
+# Indicates that a map tile has been selected for movement.
+signal move_tile_selected(path_info)
+
 # Reference to the encounter hex_map. This is to allow for differently named
 # hex map scene to be used.
 export(NodePath) var hex_map_path = null
@@ -62,6 +73,16 @@ func get_next_character() -> Character:
 # Gets the character currently in initiative.
 func get_current_character() -> Character:
 	return initiative_tracker[cur_init]
+
+
+# Emits the 'player_turn_started' signal.
+func emit_player_turn_started() -> void:
+	emit_signal("player_turn_started", get_current_character())
+
+
+# Emits the 'move_tile_selected' signal.
+func emit_move_tile_selected(path_info: PoolVector3Array) -> void:
+	emit_signal("move_tile_selected", path_info)
 
 
 # Check that all required parameters are set.
