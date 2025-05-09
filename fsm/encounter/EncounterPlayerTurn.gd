@@ -31,32 +31,8 @@ func enter(_msg := {}) -> void:
 	enc.hex_map.highlight_player_movement(movement_area, active_char)
 	enc.emit_player_turn_started()
 	
-	# These signals are used by other states and will be disconnected to avoid
-	# unintended behavior.
-	ErrorUtil.connect_signal(
-		enc.selector,
-		"move_tile_selected",
-		self,
-		"_on_Selector_move_tile_selected"
-	)
-	ErrorUtil.connect_signal(
-		enc.selector,
-		"effect_selector_required",
-		self,
-		"_on_Selector_effect_selector_required"
-	)
-#	ErrorUtil.connect_signal(
-#		enc.ui,
-#		"player_action_selected",
-#		self,
-#		"_on_EncounterUI_player_action_selected"
-#	)
-#	ErrorUtil.connect_signal(
-#		enc.ui,
-#		"player_action_type_canceled",
-#		self,
-#		"_on_EncounterUI_player_action_type_canceled"
-#	)
+	_connect_signals()
+	_connect_other_node_signals()
 
 
 # Corresponds to the `_process()` callback.
@@ -72,26 +48,99 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
+	_disconnect_signals()
+	_disconnect_other_node_signals()
+
+
+func _ready_connect_signals() -> void:
+	ErrorUtil.connect_signal(
+			enc.ui,
+			"player_action_selected",
+			self,
+			"_on_EncounterUI_player_action_selected"
+	)
+	ErrorUtil.connect_signal(
+			enc.ui,
+			"player_action_type_canceled",
+			self,
+			"_on_EncounterUI_player_action_type_canceled"
+	)
+
+
+# Connect the relevant signals to this node.
+# These signals are used by other states and will be disconnected to avoid
+# unintended behavior.
+func _connect_signals() -> void:
+	ErrorUtil.connect_signal(
+			enc.selector,
+			"move_tile_selected",
+			self,
+			"_on_Selector_move_tile_selected"
+	)
+	ErrorUtil.connect_signal(
+			enc.selector,
+			"effect_selector_required",
+			self,
+			"_on_Selector_effect_selector_required"
+	)
+
+
+# Connect the signals of the other nodes that are active during the
+# PlayerTurn state. These signals are used by other states and will be 
+# disconnected to avoid unintended behavior.
+func _connect_other_node_signals() -> void:
+	ErrorUtil.connect_signal(
+			active_char,
+			"selector_required",
+			enc.selector.fsm.state_nodes["Pause"],
+			"_on_PlayerCharacter_selector_required"
+	)
+	ErrorUtil.connect_signal(
+			enc.ui,
+			"player_action_selected",
+			enc.selector.fsm.state_nodes["SelectMove"],
+			"_on_EncounterUI_player_action_selected"
+	)
+	ErrorUtil.connect_signal(
+			enc.ui,
+			"player_turn_ended",
+			enc.selector.fsm.state_nodes["SelectMove"],
+			"_on_EncounterUI_player_turn_ended"
+	)
+
+
+# Disconnect the signals connected to this node.
+func _disconnect_signals() -> void:
 	enc.selector.disconnect(
-		"move_tile_selected",
-		self,
-		"_on_Selector_move_tile_selected"
+			"move_tile_selected",
+			self,
+			"_on_Selector_move_tile_selected"
 	)
 	enc.selector.disconnect(
-		"effect_selector_required",
-		self,
-		"_on_Selector_effect_selector_required"
+			"effect_selector_required",
+			self,
+			"_on_Selector_effect_selector_required"
 	)
-#	enc.ui.disconnect(
-#		"player_action_selected",
-#		self,
-#		"_on_SignalBusEncounter_player_action_selected"
-#	)
-#	enc.ui.disconnect(
-#		"player_action_type_canceled",
-#		self,
-#		"_on_SignalBusEncounter_player_action_type_canceled"
-#	)
+
+
+# Disconnect the signals of the other nodes that are active during the
+# PlayerTurn state.
+func _disconnect_other_node_signals() -> void:
+	active_char.disconnect(
+			"selector_required",
+			enc.selector.fsm.state_nodes["Pause"],
+			"_on_PlayerCharacter_selector_required"
+	)
+	enc.ui.disconnect(
+			"player_action_selected",
+			enc.selector.fsm.state_nodes["SelectMove"],
+			"_on_EncounterUI_player_action_selected"
+	)
+	enc.ui.disconnect(
+			"player_turn_ended",
+			enc.selector.fsm.state_nodes["SelectMove"],
+			"_on_EncounterUI_player_turn_ended"
+	)
 
 
 # Determine the path to the selected tile for character movement and signal that

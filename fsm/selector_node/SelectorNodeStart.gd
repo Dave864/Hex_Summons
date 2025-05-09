@@ -17,13 +17,6 @@ func enter(_msg := {}) -> void:
 	)
 
 
-# Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	# If the starting position has been selected, move to the `Wait` state.
-	if selector.snap_position != null:
-		state_machine.transition_to(WAIT)
-
-
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:

@@ -21,18 +21,6 @@ func enter(_msg: Dictionary = {}) -> void:
 			self,
 			"_on_Selector_area_entered"
 	)
-	ErrorUtil.connect_signal(
-			SignalBusEncounter,
-			"player_action_selected",
-			self,
-			"_on_SignalBusEncounter_player_action_selected"
-	)
-	ErrorUtil.connect_signal(
-			SignalBusEncounter,
-			"player_turn_ended",
-			self,
-			"_on_SignalBusEncounter_player_turn_ended"
-	)
 
 
 func update(_delta: float) -> void:
@@ -47,16 +35,6 @@ func exit() -> void:
 			"area_entered",
 			self,
 			"_on_Selector_area_entered"
-	)
-	SignalBusEncounter.disconnect(
-			"player_action_selected",
-			self,
-			"_on_SignalBusEncounter_player_action_selected"
-	)
-	SignalBusEncounter.disconnect(
-			"player_turn_ended",
-			self,
-			"_on_SignalBusEncounter_player_turn_ended"
 	)
 
 
@@ -102,7 +80,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 
 
 # Go to the "SelectAction" state when the UI signals that an action was selected.
-func _on_SignalBusEncounter_player_action_selected(
+func _on_EncounterUI_player_action_selected(
 	player: PlayerCharacter,
 	action: Action
 ) -> void:
@@ -117,7 +95,7 @@ func _on_SignalBusEncounter_player_action_selected(
 	)
 
 
-# Go to the "WAIT" state when a player has signaled that their turn is ended.
-func _on_SignalBusEncounter_player_turn_ended(_player: PlayerCharacter) -> void:
+# Go to the "WAIT" state when the UI has signaled that a player turn has ended.
+func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(WAIT)
