@@ -8,15 +8,11 @@ when a MapTile has been passed over.
 
 # Signal for the encounter node that specifies which tiles to highlight for effect
 # range selection.
-# warning-ignore:unused_signal
-signal effect_selector_required(effect_range_tiles, ignore_height)
+signal effect_selector_required(action_info, ignore_height)
 # Signal that indicates a move tile has been selected.
-# warning-ignore:unused_signal
 signal move_tile_selected(map_tile)
-# warning-ignore:unused_signal
 signal target_selected(selection_area)
 # Indicates that the selector is being paused.
-# warning-ignore:unused_signal
 signal selector_paused()
 
 # Reference to this node's FSM
@@ -45,6 +41,26 @@ func move_to_mouse_position() -> void:
 # Move the collision area to the specified position.
 func move_to_position(position: Vector3) -> void:
 	collision_area.translation = position
+
+
+# Emits the 'effect_selector_required' signal.
+func emit_effect_selector_required(action_info: Action, ignore_height: bool) -> void:
+	emit_signal("effect_selector_required", action_info, ignore_height)
+
+
+# Emits the 'move_tile_selected' signal.
+func emit_move_tile_selected(move_tile: MapTile) -> void:
+	emit_signal("move_tile_selected", move_tile)
+
+
+# Emits the 'target_selected' signal.
+func emit_target_selected(selected_area: Array) -> void:
+	emit_signal("target_selected", selected_area)
+
+
+# Emits the 'selector_paused' signal.
+func emit_selector_paused() -> void:
+	emit_signal("selector_paused")
 
 
 # Check that all required parameters are set.

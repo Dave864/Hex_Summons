@@ -43,7 +43,7 @@ func handle_input(_event: InputEvent) -> void:
 	mouse_active = _event is InputEventMouse
 	if _event.is_action_pressed("ui_selector_select"):
 		if selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY:
-			selector.emit_signal("move_tile_selected", selector.tile_hovered)
+			selector.emit_move_tile_selected(selector.tile_hovered)
 			state_machine.transition_to(PAUSE)
 	
 	_resolve_joystick_direction(HexUtil.joystick_to_hex_direction())
