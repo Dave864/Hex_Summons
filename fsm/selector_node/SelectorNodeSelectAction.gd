@@ -122,7 +122,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 
 
 # Go to the "SelectAction" state with the new action.
-func _on_SignalBusEncounter_player_action_selected(
+func _on_EncounterUI_player_action_selected(
 	player: PlayerCharacter,
 	new_action: Action
 ) -> void:
@@ -137,7 +137,7 @@ func _on_SignalBusEncounter_player_action_selected(
 
 
 # Go to the "SelectMove" state when the player action selection is canceled.
-func _on_SignalBusEncounter_player_action_type_canceled() -> void:
+func _on_EncounterUI_player_action_type_canceled() -> void:
 	state_machine.transition_to(
 			SELECT_MOVE,
 			{"initial_position": player_pos}
@@ -145,6 +145,6 @@ func _on_SignalBusEncounter_player_action_type_canceled() -> void:
 
 
 # Go to the "WAIT" state when a player has signaled that their turn is ended.
-func _on_SignalBusEncounter_player_turn_ended(_player: PlayerCharacter) -> void:
+func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(WAIT)

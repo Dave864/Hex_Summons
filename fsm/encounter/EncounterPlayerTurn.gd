@@ -89,12 +89,14 @@ func _connect_signals() -> void:
 # PlayerTurn state. These signals are used by other states and will be 
 # disconnected to avoid unintended behavior.
 func _connect_other_node_signals() -> void:
+	# Connect current player to selector 'Pause'
 	ErrorUtil.connect_signal(
 			active_char,
 			"selector_required",
 			enc.selector.fsm.state_nodes["Pause"],
 			"_on_PlayerCharacter_selector_required"
 	)
+	# Connect encounter UI to selector 'SelectMove'
 	ErrorUtil.connect_signal(
 			enc.ui,
 			"player_action_selected",
@@ -105,6 +107,25 @@ func _connect_other_node_signals() -> void:
 			enc.ui,
 			"player_turn_ended",
 			enc.selector.fsm.state_nodes["SelectMove"],
+			"_on_EncounterUI_player_turn_ended"
+	)
+	# Connect encounter UI to selector 'SelectAction'
+	ErrorUtil.connect_signal(
+			enc.ui,
+			"player_action_selected",
+			enc.selector.fsm.state_nodes["SelectAction"],
+			"_on_EncounterUI_player_action_selected"
+	)
+	ErrorUtil.connect_signal(
+			enc.ui,
+			"player_action_type_canceled",
+			enc.selector.fsm.state_nodes["SelectAction"],
+			"_on_EncounterUI_player_action_type_canceled"
+	)
+	ErrorUtil.connect_signal(
+			enc.ui,
+			"player_turn_ended",
+			enc.selector.fsm.state_nodes["SelectAction"],
 			"_on_EncounterUI_player_turn_ended"
 	)
 
@@ -126,11 +147,13 @@ func _disconnect_signals() -> void:
 # Disconnect the signals of the other nodes that are active during the
 # PlayerTurn state.
 func _disconnect_other_node_signals() -> void:
+	# Disconnect current player from selector 'Pause'
 	active_char.disconnect(
 			"selector_required",
 			enc.selector.fsm.state_nodes["Pause"],
 			"_on_PlayerCharacter_selector_required"
 	)
+	# Disconnect encounter UI from selector 'SelectMove'
 	enc.ui.disconnect(
 			"player_action_selected",
 			enc.selector.fsm.state_nodes["SelectMove"],
@@ -139,6 +162,22 @@ func _disconnect_other_node_signals() -> void:
 	enc.ui.disconnect(
 			"player_turn_ended",
 			enc.selector.fsm.state_nodes["SelectMove"],
+			"_on_EncounterUI_player_turn_ended"
+	)
+	# Disconnect encounter UI from selector 'SelectAction'
+	enc.ui.disconnect(
+			"player_action_selected",
+			enc.selector.fsm.state_nodes["SelectAction"],
+			"_on_EncounterUI_player_action_selected"
+	)
+	enc.ui.disconnect(
+			"player_action_type_canceled",
+			enc.selector.fsm.state_nodes["SelectAction"],
+			"_on_EncounterUI_player_action_type_canceled"
+	)
+	enc.ui.disconnect(
+			"player_turn_ended",
+			enc.selector.fsm.state_nodes["SelectAction"],
 			"_on_EncounterUI_player_turn_ended"
 	)
 
