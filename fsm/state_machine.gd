@@ -12,6 +12,9 @@ signal transitioned(state_name)
 # Path to the initial active state. We export it to be able to pick the initial state in the inspector.
 export var initial_state := NodePath()
 
+# Collection of the state nodes. Used for connecting signals between different FSMs.
+var state_nodes: Dictionary = {}
+
 # The current active state. At the start of the game, we get the `initial_state`.
 onready var state: State = get_node(initial_state)
 
@@ -21,6 +24,7 @@ func _ready() -> void:
 	# The state machine assigns itself to the State objects' state_machine property.
 	for child in get_children():
 		child.state_machine = self
+		state_nodes[child.name] = child
 	state.enter()
 
 

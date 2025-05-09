@@ -15,7 +15,14 @@ signal effect_selector_required(effect_range_tiles, ignore_height)
 signal move_tile_selected(map_tile)
 # warning-ignore:unused_signal
 signal target_selected(selection_area)
+# Indicates that the selector is being paused.
+# warning-ignore:unused_signal
+signal selector_paused()
 
+# Reference to this node's FSM
+export(NodePath) var fsm_path = null
+
+var fsm: StateMachine = null
 # The MapTile that was last passed over.
 var tile_hovered: MapTile = null
 
@@ -26,7 +33,8 @@ onready var collision_area: Area = $CollisionArea
 
 
 func _ready() -> void:
-	pass
+	_check_for_required_parameters()
+	fsm = get_node(fsm_path)
 
 
 # Move the collision area to the mouse position.
@@ -37,3 +45,11 @@ func move_to_mouse_position() -> void:
 # Move the collision area to the specified position.
 func move_to_position(position: Vector3) -> void:
 	collision_area.translation = position
+
+
+# Check that all required parameters are set.
+func _check_for_required_parameters() -> void:
+	assert(
+		fsm_path != null,
+		"EncounterUI has not set the path for the FSM."
+	)

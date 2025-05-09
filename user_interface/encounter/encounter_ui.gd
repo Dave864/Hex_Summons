@@ -25,6 +25,10 @@ enum Options {
 	NONE,
 }
 
+# Reference to this node's FSM
+export(NodePath) var fsm_path = null
+
+var fsm: StateMachine = null
 var hm_astar: HexMapAStar = null
 
 """
@@ -54,7 +58,8 @@ onready var end_button: LabeledIconButton = $Options/EndButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	_check_for_required_parameters()
+	fsm = get_node(fsm_path)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -185,6 +190,14 @@ func _update_sub_options() -> void:
 			pass
 		_:
 			pass
+
+
+# Check that all required parameters are set.
+func _check_for_required_parameters() -> void:
+	assert(
+		fsm_path != null,
+		"EncounterUI has not set the path for the FSM."
+	)
 
 
 # Triggered when a player character is the current active character in the
