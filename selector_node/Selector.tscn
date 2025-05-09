@@ -14,6 +14,7 @@ radius = 0.05
 
 [node name="Selector" type="Node"]
 script = ExtResource( 1 )
+fsm_path = NodePath("StateMachine")
 
 [node name="MousePosition" type="Position3D" parent="."]
 script = ExtResource( 2 )
