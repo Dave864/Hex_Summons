@@ -5,6 +5,10 @@ Handles actions specific to enemy characters.
 """
 
 
+# Indicates that the action chain for an enemy character needs to be determined.
+# warning-ignore:unused_signal
+signal enemy_actions_required()
+
 # Contains the actions associated with the enemy character.
 var _actions: Array
 

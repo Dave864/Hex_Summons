@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://art/icon.png" type="Texture" id=1]
 [ext_resource path="res://character/mobs/enemy_character.gd" type="Script" id=2]
@@ -114,10 +114,17 @@ base_value = 0
 growth_rate = 0
 type = 3
 
+[sub_resource type="Resource" id=15]
+resource_local_to_scene = true
+resource_name = "Ring_Area"
+script = ExtResource( 6 )
+radius = 0
+
 [node name="TestEnemy1" type="Area"]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 2 )
+fsm_path = NodePath("StateMachine")
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
@@ -146,6 +153,7 @@ res_wind = SubResource( 14 )
 [node name="Actions" type="Node" parent="."]
 
 [node name="Strike" parent="Actions" instance=ExtResource( 9 )]
+effect_range = SubResource( 15 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )
