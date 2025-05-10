@@ -24,13 +24,6 @@ var selector_paused: bool = false
 func enter(_msg := {}) -> void:
 	travel_path = _msg["travel_path"]
 	
-	ErrorUtil.connect_signal(
-			SignalBusEncounter,
-			"selector_paused",
-			self, 
-			"_on_SignalBusEncounter_selector_paused"
-	)
-	
 	# Move to the 'Standby' state if the travel path only has one point.
 	# This indicates that the player character's current position was 
 	# selected as the destination.
@@ -50,8 +43,7 @@ func update(delta: float) -> void:
 		# Move the player character towards the next tile.
 		weight += delta * Constants.MOVE_SPEED
 		weight = 1.0 if weight > 1.0 else weight
-		var li: Vector3 = start_point.linear_interpolate(next_point, weight)
-		pc.translation = li
+		pc.translation = start_point.linear_interpolate(next_point, weight)
 		
 		# When finished moving to next tile, check to see if path has been fully
 		# traversed. Move to the 'Standby' state when path has been fully traversed.
@@ -75,13 +67,8 @@ func exit() -> void:
 	next_point_index = 1
 	completed_path = false
 	selector_paused = false
-	SignalBusEncounter.disconnect(
-		"selector_paused",
-		self,
-		"_on_SignalBusEncounter_selector_paused"
-	)
-	SignalBusEncounter.emit_signal("selector_required", next_point)
+	pc.emit_selector_required(next_point)
 
 
-func _on_SignalBusEncounter_selector_paused() -> void:
+func _on_Selector_selector_paused() -> void:
 	selector_paused = true

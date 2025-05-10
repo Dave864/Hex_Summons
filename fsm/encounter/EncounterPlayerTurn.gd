@@ -102,6 +102,13 @@ func _connect_other_node_signals() -> void:
 			enc.selector.fsm.state_nodes["Pause"],
 			"_on_PlayerCharacter_selector_required"
 	)
+	# Connect selector to current player 'Move' state
+	ErrorUtil.connect_signal(
+			enc.selector,
+			"selector_paused",
+			active_char.fsm.state_nodes["Move"],
+			"_on_Selector_selector_paused"
+	)
 	# Connect encounter UI to selector 'SelectMove' state
 	ErrorUtil.connect_signal(
 			enc.ui,
@@ -170,6 +177,12 @@ func _disconnect_other_node_signals() -> void:
 			"selector_required",
 			enc.selector.fsm.state_nodes["Pause"],
 			"_on_PlayerCharacter_selector_required"
+	)
+	# Disconnect selector from current player 'Move' state
+	enc.selector.disconnect(
+			"selector_paused",
+			active_char.fsm.state_nodes["Move"],
+			"_on_Selector_selector_paused"
 	)
 	# Disconnect encounter UI from selector 'SelectMove' state
 	enc.ui.disconnect(
