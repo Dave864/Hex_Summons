@@ -126,6 +126,8 @@ func _on_EncounterUI_player_action_selected(
 	player: PlayerCharacter,
 	new_action: Action
 ) -> void:
+	if not _state_is_active():
+		return
 	state_machine.transition_to(
 			SELECT_ACTION,
 			{
@@ -138,6 +140,8 @@ func _on_EncounterUI_player_action_selected(
 
 # Go to the "SelectMove" state when the player action selection is canceled.
 func _on_EncounterUI_player_action_type_canceled() -> void:
+	if not _state_is_active():
+		return
 	state_machine.transition_to(
 			SELECT_MOVE,
 			{"initial_position": player_pos}

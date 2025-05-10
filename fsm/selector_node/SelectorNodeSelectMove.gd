@@ -84,6 +84,8 @@ func _on_EncounterUI_player_action_selected(
 	player: PlayerCharacter,
 	action: Action
 ) -> void:
+	if not _state_is_active():
+		return
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(
 			SELECT_ACTION,
@@ -97,5 +99,7 @@ func _on_EncounterUI_player_action_selected(
 
 # Go to the "WAIT" state when the UI has signaled that a player turn has ended.
 func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
+	if not _state_is_active():
+		return
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(WAIT)

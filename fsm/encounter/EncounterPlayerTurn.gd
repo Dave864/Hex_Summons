@@ -22,6 +22,9 @@ var action_range: Dictionary = {"type": null, "tiles": null}
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
+	_connect_self_signals()
+	_connect_other_node_signals()
+	
 	active_char = enc.get_current_character()
 	start_index = active_char.get_map_index_at()
 	movement_area = enc.hex_map.get_traversible_tiles_for_character(
@@ -30,9 +33,6 @@ func enter(_msg := {}) -> void:
 	)
 	enc.hex_map.highlight_player_movement(movement_area, active_char)
 	enc.emit_player_turn_started()
-	
-	_connect_signals()
-	_connect_other_node_signals()
 
 
 # Corresponds to the `_process()` callback.
@@ -65,12 +65,18 @@ func _ready_connect_signals() -> void:
 			self,
 			"_on_EncounterUI_player_action_type_canceled"
 	)
+	ErrorUtil.connect_signal(
+			self,
+			"player_turn_started",
+			enc.ui,
+			"_on_Encounter_player_turn_started"
+	)
 
 
 # Connect the relevant signals to this node.
 # These signals are used by other states and will be disconnected to avoid
 # unintended behavior.
-func _connect_signals() -> void:
+func _connect_self_signals() -> void:
 	ErrorUtil.connect_signal(
 			enc.selector,
 			"move_tile_selected",
@@ -96,7 +102,7 @@ func _connect_other_node_signals() -> void:
 			enc.selector.fsm.state_nodes["Pause"],
 			"_on_PlayerCharacter_selector_required"
 	)
-	# Connect encounter UI to selector 'SelectMove'
+	# Connect encounter UI to selector 'SelectMove' state
 	ErrorUtil.connect_signal(
 			enc.ui,
 			"player_action_selected",
@@ -109,7 +115,7 @@ func _connect_other_node_signals() -> void:
 			enc.selector.fsm.state_nodes["SelectMove"],
 			"_on_EncounterUI_player_turn_ended"
 	)
-	# Connect encounter UI to selector 'SelectAction'
+	# Connect encounter UI to selector 'SelectAction' state
 	ErrorUtil.connect_signal(
 			enc.ui,
 			"player_action_selected",
@@ -126,6 +132,13 @@ func _connect_other_node_signals() -> void:
 			enc.ui,
 			"player_turn_ended",
 			enc.selector.fsm.state_nodes["SelectAction"],
+			"_on_EncounterUI_player_turn_ended"
+	)
+	# Connect encounterUI to selector 'Pause' state
+	ErrorUtil.connect_signal(
+			enc.ui,
+			"player_turn_ended",
+			enc.selector.fsm.state_nodes["Pause"],
 			"_on_EncounterUI_player_turn_ended"
 	)
 
@@ -142,18 +155,23 @@ func _disconnect_signals() -> void:
 			self,
 			"_on_Selector_effect_selector_required"
 	)
+	enc.disconnect(
+			"player_turn_started",
+			enc.ui,
+			"_on_Encounter_player_turn_started"
+	)
 
 
 # Disconnect the signals of the other nodes that are active during the
 # PlayerTurn state.
 func _disconnect_other_node_signals() -> void:
-	# Disconnect current player from selector 'Pause'
+	# Disconnect current player from selector 'Pause' state
 	active_char.disconnect(
 			"selector_required",
 			enc.selector.fsm.state_nodes["Pause"],
 			"_on_PlayerCharacter_selector_required"
 	)
-	# Disconnect encounter UI from selector 'SelectMove'
+	# Disconnect encounter UI from selector 'SelectMove' state
 	enc.ui.disconnect(
 			"player_action_selected",
 			enc.selector.fsm.state_nodes["SelectMove"],
@@ -164,7 +182,7 @@ func _disconnect_other_node_signals() -> void:
 			enc.selector.fsm.state_nodes["SelectMove"],
 			"_on_EncounterUI_player_turn_ended"
 	)
-	# Disconnect encounter UI from selector 'SelectAction'
+	# Disconnect encounter UI from selector 'SelectAction' state
 	enc.ui.disconnect(
 			"player_action_selected",
 			enc.selector.fsm.state_nodes["SelectAction"],
@@ -178,6 +196,12 @@ func _disconnect_other_node_signals() -> void:
 	enc.ui.disconnect(
 			"player_turn_ended",
 			enc.selector.fsm.state_nodes["SelectAction"],
+			"_on_EncounterUI_player_turn_ended"
+	)
+	# Disconnect from selector 'Pause' state
+	enc.ui.disconnect(
+			"player_turn_ended",
+			enc.selector.fsm.state_nodes["Pause"],
 			"_on_EncounterUI_player_turn_ended"
 	)
 

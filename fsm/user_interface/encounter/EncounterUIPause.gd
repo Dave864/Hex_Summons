@@ -39,4 +39,6 @@ func exit() -> void:
 
 # Wait for the EncounterUI object to recieve signal that the selector is required.
 func _on_EncounterUI_set_FSM_to_standby() -> void:
+	if not _state_is_active():
+		return
 	state_machine.transition_to(STANDBY)

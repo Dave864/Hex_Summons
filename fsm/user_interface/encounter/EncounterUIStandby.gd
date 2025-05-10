@@ -107,6 +107,8 @@ func _end_selected() -> void:
 
 
 func _on_EncounterUI_set_FSM_to_pause() -> void:
+	if not _state_is_active():
+		return
 	state_machine.transition_to(PAUSE)
 
 
