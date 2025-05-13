@@ -33,19 +33,19 @@ func enter(_msg: Dictionary = {}) -> void:
 			SignalBusEncounter,
 			"player_action_selected",
 			self,
-			"_on_SignalBusEncounter_player_action_selected"
+			"_on_EncounterUI_player_action_selected"
 	)
 	ErrorUtil.connect_signal(
 			SignalBusEncounter,
 			"player_action_type_canceled",
 			self,
-			"_on_SignalBusEncounter_player_action_type_canceled"
+			"_on_EncounterUI_player_action_type_canceled"
 	)
 	ErrorUtil.connect_signal(
 			SignalBusEncounter,
 			"player_turn_ended",
 			self,
-			"_on_SignalBusEncounter_player_turn_ended"
+			"_on_EncounterUI_player_turn_ended"
 	)
 	
 	action.set_emission_map_index(player_map_index)
@@ -68,17 +68,17 @@ func exit() -> void:
 	SignalBusEncounter.disconnect(
 			"player_action_selected",
 			self,
-			"_on_SignalBusEncounter_player_action_selected"
+			"_on_EncounterUI_player_action_selected"
 	)
 	SignalBusEncounter.disconnect(
 			"player_action_type_canceled",
 			self,
-			"_on_SignalBusEncounter_player_action_type_canceled"
+			"_on_EncounterUI_player_action_type_canceled"
 	)
 	SignalBusEncounter.disconnect(
 			"player_turn_ended",
 			self,
-			"_on_SignalBusEncounter_player_turn_ended"
+			"_on_EncounterUI_player_turn_ended"
 	)
 
 

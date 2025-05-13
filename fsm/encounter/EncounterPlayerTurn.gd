@@ -71,6 +71,12 @@ func _ready_connect_signals() -> void:
 			enc.ui,
 			"_on_Encounter_player_turn_started"
 	)
+	ErrorUtil.connect_signal(
+			enc,
+			"player_turn_started",
+			enc.selector.fsm.state_nodes["Wait"],
+			"_on_Encounter_player_turn_started"
+	)
 
 
 # Connect the relevant signals to this node.

@@ -35,7 +35,7 @@ func _ready() -> void:
 
 # Move the collision area to the mouse position.
 func move_to_mouse_position() -> void:
-	collision_area.translation = mouse_position.get_mouse_position()
+	move_to_position(mouse_position.get_mouse_position())
 
 
 # Move the collision area to the specified position.
