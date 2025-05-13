@@ -24,12 +24,30 @@ func enter(_msg := {}) -> void:
 		enc.players
 	)
 	ErrorUtil.connect_signal(
-			SignalBusEncounter,
+			active_char,
 			"enemy_actions_required",
 			self,
-			"_on_SignalBusEncounter_enemy_actions_required"
+			"_on_EnemyCharacter_enemy_actions_required"
 	)
-	SignalBusEncounter.emit_signal("enemy_turn_started", active_char)
+	ErrorUtil.connect_signal(
+			active_char,
+			"enemy_turn_ended",
+			self,
+			"_on_EnemyCharacter_enemy_turn_ended"
+	)
+	ErrorUtil.connect_signal(
+			enc,
+			"enemy_turn_started",
+			active_char.fsm.state_nodes["Wait"],
+			"_on_Encounter_enemy_turn_started"
+	)
+	ErrorUtil.connect_signal(
+			enc,
+			"enemy_actions_confirmed",
+			active_char.fsm.state_nodes["Think"],
+			"_on_Encounter_enemy_actions_confirmed"
+	)
+	enc.emit_enemy_turn_started()
 
 
 # Corresponds to the `_process()` callback.
@@ -42,33 +60,27 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	SignalBusEncounter.disconnect(
+	active_char.disconnect(
 			"enemy_actions_required",
 			self,
-			"_on_SignalBusEncounter_enemy_actions_required"
+			"_on_EnemyCharacter_enemy_actions_required"
 	)
-	enc.progress_initiative()
-
-
-func _ready_connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			SignalBusEncounter,
+	active_char.disconnect(
 			"enemy_turn_ended",
 			self,
-			"_on_SignalBusEncounter_enemy_turn_ended"
+			"_on_EnemyCharacter_enemy_turn_ended"
 	)
-
-
-func _on_SignalBusEncounter_enemy_actions_required() -> void:
-	_determine_action_chain()
-
-
-func _on_SignalBusEncounter_enemy_turn_ended(_enemy: EnemyCharacter) -> void:
-	var next_character: Character = enc.get_next_character()
-	if next_character is PlayerCharacter:
-		state_machine.transition_to(PLAYER_TURN)
-	elif next_character is EnemyCharacter:
-		state_machine.transition_to(ENEMY_TURN)
+	enc.disconnect(
+			"enemy_turn_started",
+			active_char.fsm.state_nodes["Wait"],
+			"_on_Encounter_enemy_turn_started"
+	)
+	enc.disconnect(
+			"enemy_actions_confirmed",
+			active_char.fsm.state_nodes["Think"],
+			"_on_Encounter_enemy_actions_confirmed"
+	)
+	enc.progress_initiative()
 
 
 # Determines the actions that the enemy character should take given the current
@@ -85,8 +97,8 @@ func _determine_action_chain() -> void:
 		var p_data: Array = [
 			p, 
 			enc.hex_map.calculate_distance(
-				active_char.get_map_index_at(),
-				p.get_map_index_at()
+					active_char.get_map_index_at(),
+					p.get_map_index_at()
 			)
 		]
 		player_distances.append(p_data)
@@ -104,4 +116,16 @@ func _determine_action_chain() -> void:
 	# Pause for a little bit to give the EncounterUI a chance to get ready.
 	# Workaround for bug where not moving the player causes the UI to not appear.
 	yield(get_tree().create_timer(0.1), "timeout")
-	SignalBusEncounter.emit_signal("enemy_actions_confirmed", action_chain)
+	enc.emit_enemy_actions_confirmed(action_chain)
+
+
+func _on_EnemyCharacter_enemy_actions_required() -> void:
+	_determine_action_chain()
+
+
+func _on_EnemyCharacter_enemy_turn_ended() -> void:
+	var next_character: Character = enc.get_next_character()
+	if next_character is PlayerCharacter:
+		state_machine.transition_to(PLAYER_TURN)
+	elif next_character is EnemyCharacter:
+		state_machine.transition_to(ENEMY_TURN)

@@ -9,8 +9,6 @@ Manages the events of an encounter.
 signal player_turn_started(player_info)
 # Inidicates when an enemy character starts their turn.
 signal enemy_turn_started(enemy_info)
-# Indicates that an enemy character has ended their turn.
-signal enemy_turn_ended(enemy_info)
 # Indicates that the action chain for an enemy character has been determined.
 signal enemy_actions_confirmed(action_chain)
 # Indicates that a map tile has been selected for movement.
@@ -87,6 +85,16 @@ func emit_player_turn_started() -> void:
 # Emits the 'move_tile_selected' signal.
 func emit_move_tile_selected(path_info: PoolVector3Array) -> void:
 	emit_signal("move_tile_selected", path_info)
+
+
+# Emits the 'enemy_turn_started' signal.
+func emit_enemy_turn_started() -> void:
+	emit_signal("enemy_turn_started", get_current_character())
+
+
+# Emits the 'enemy_actions_confirmed' signal.
+func emit_enemy_actions_confirmed(action_chain: Array) -> void:
+	emit_signal("enemy_actions_confirmed", action_chain)
 
 
 # Check that all required parameters are set.

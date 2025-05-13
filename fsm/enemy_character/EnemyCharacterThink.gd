@@ -9,13 +9,7 @@ take and then starts the logic chain.
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	ErrorUtil.connect_signal(
-			SignalBusEncounter,
-			"enemy_actions_confirmed",
-			self,
-			"_on_SignalBusEncounter_enemy_actions_confirmed"
-	)
-	SignalBusEncounter.emit_signal("enemy_actions_required")
+	ec.emit_enemy_actions_required()
 
 
 # Corresponds to the `_process()` callback.
@@ -23,17 +17,7 @@ func update(_delta: float) -> void:
 	pass
 
 
-# Called by the state machine before changing the active state.
-# Resets the interpolation weight an next_point_index.
-func exit() -> void:
-	SignalBusEncounter.disconnect(
-		"enemy_actions_confirmed",
-		self,
-		"_on_SignalBusEncounter_enemy_actions_confirmed"
-	)
-
-
-func _on_SignalBusEncounter_enemy_actions_confirmed(action_chain: Array) -> void:
+func _on_Encounter_enemy_actions_confirmed(action_chain: Array) -> void:
 	if action_chain.size() > 0:
 		if action_chain.back()[0] == MOVE:
 			print("Go to move")
@@ -42,5 +26,5 @@ func _on_SignalBusEncounter_enemy_actions_confirmed(action_chain: Array) -> void
 			print("Go to action")
 #			state_machine.transition_to(ACTION, {"command_chain": actions})
 	else:
-		SignalBusEncounter.emit_signal("enemy_turn_ended", ec)
+		ec.emit_enemy_turn_ended()
 		state_machine.transition_to(WAIT)
