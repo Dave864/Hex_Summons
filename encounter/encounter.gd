@@ -60,15 +60,13 @@ func _ready() -> void:
 
 # Move the initiative counter to the next index or reset it back to the start.
 func progress_initiative() -> void:
-	cur_init += 1
-	cur_init = 0 if cur_init >= initiative_tracker.size() else cur_init
+	cur_init = _determine_init_index(cur_init + 1)
 	ui.initiative_tracker.update_initiative(cur_init)
 
 
 # Gets the next character in the intiative track.
 func get_next_character() -> Character:
-	var next_init: int = cur_init + 1
-	next_init = 0 if next_init >= initiative_tracker.size() else next_init
+	var next_init: int = _determine_init_index(cur_init + 1)
 	return initiative_tracker[next_init]
 
 
@@ -95,6 +93,14 @@ func emit_enemy_turn_started() -> void:
 # Emits the 'enemy_actions_confirmed' signal.
 func emit_enemy_actions_confirmed(action_chain: Array) -> void:
 	emit_signal("enemy_actions_confirmed", action_chain)
+
+
+# Determines which index in the initiative array that a given value corresponds
+# to. Numbers that are larger than the size of the array wrap around to index zero
+# before resuming count. Numbers that are smaller than zero wrap around to the
+# end of the array before resuming count.
+func _determine_init_index(init_value: int) -> int:
+	return wrapi(init_value, 0, initiative_tracker.size() - 1)
 
 
 # Check that all required parameters are set.
