@@ -46,4 +46,4 @@ func _ready_connect_signals() -> void:
 
 # Determines if this state is the current active state in the FSM.
 func _state_is_active() -> bool:
-	return state_machine.state == name
+	return state_machine.state.name == name

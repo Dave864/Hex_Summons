@@ -22,9 +22,6 @@ var action_range: Dictionary = {"type": null, "tiles": null}
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	_connect_self_signals()
-	_connect_other_node_signals()
-	
 	active_char = enc.get_current_character()
 	start_index = active_char.get_map_index_at()
 	movement_area = enc.hex_map.get_traversible_tiles_for_character(
@@ -32,6 +29,9 @@ func enter(_msg := {}) -> void:
 		enc.enemies
 	)
 	enc.hex_map.highlight_player_movement(movement_area, active_char)
+	
+	_connect_self_signals()
+	_connect_other_node_signals()
 	enc.emit_player_turn_started()
 
 
@@ -66,7 +66,7 @@ func _ready_connect_signals() -> void:
 			"_on_EncounterUI_player_action_type_canceled"
 	)
 	ErrorUtil.connect_signal(
-			self,
+			enc,
 			"player_turn_started",
 			enc.ui,
 			"_on_Encounter_player_turn_started"
