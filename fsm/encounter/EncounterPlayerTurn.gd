@@ -30,8 +30,9 @@ func enter(_msg := {}) -> void:
 	)
 	enc.hex_map.highlight_player_movement(movement_area, active_char)
 	
-	_connect_self_signals()
-	_connect_other_node_signals()
+	_connect_signals_to_self()
+	_connect_signals_to_selector()
+	_connect_signals_to_character()
 	enc.emit_player_turn_started()
 
 
@@ -48,8 +49,9 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	_disconnect_signals()
-	_disconnect_other_node_signals()
+	_disconnect_signals_from_self()
+	_disconnect_signals_from_selector()
+	_disconnect_signals_from_character()
 
 
 func _ready_connect_signals() -> void:
@@ -77,12 +79,18 @@ func _ready_connect_signals() -> void:
 			enc.selector.fsm.state_nodes["Wait"],
 			"_on_Encounter_player_turn_started"
 	)
+	ErrorUtil.connect_signal(
+			enc,
+			"move_tile_selected",
+			enc.ui,
+			"_on_Encounter_move_tile_selected"
+	)
 
 
-# Connect the relevant signals to this node.
+# Connect the relevant signals to this state.
 # These signals are used by other states and will be disconnected to avoid
 # unintended behavior.
-func _connect_self_signals() -> void:
+func _connect_signals_to_self() -> void:
 	ErrorUtil.connect_signal(
 			enc.selector,
 			"move_tile_selected",
@@ -97,24 +105,10 @@ func _connect_self_signals() -> void:
 	)
 
 
-# Connect the signals of the other nodes that are active during the
-# PlayerTurn state. These signals are used by other states and will be 
-# disconnected to avoid unintended behavior.
-func _connect_other_node_signals() -> void:
-	# Connect current player to selector 'Pause'
-	ErrorUtil.connect_signal(
-			active_char,
-			"selector_required",
-			enc.selector.fsm.state_nodes["Pause"],
-			"_on_PlayerCharacter_selector_required"
-	)
-	# Connect selector to current player 'Move' state
-	ErrorUtil.connect_signal(
-			enc.selector,
-			"selector_paused",
-			active_char.fsm.state_nodes["Move"],
-			"_on_Selector_selector_paused"
-	)
+# Connect the relevant signals from other nodes to the FSM of the selector node.
+# These signals are used by other states and will be disconnected to avoid
+# unintended behavior.
+func _connect_signals_to_selector() -> void:
 	# Connect encounter UI to selector 'SelectMove' state
 	ErrorUtil.connect_signal(
 			enc.ui,
@@ -154,10 +148,51 @@ func _connect_other_node_signals() -> void:
 			enc.selector.fsm.state_nodes["Pause"],
 			"_on_EncounterUI_player_turn_ended"
 	)
+	# Connect current player to selector 'Pause' state
+	ErrorUtil.connect_signal(
+			active_char,
+			"selector_required",
+			enc.selector.fsm.state_nodes["Pause"],
+			"_on_PlayerCharacter_selector_required"
+	)
 
 
-# Disconnect the signals connected to this node.
-func _disconnect_signals() -> void:
+# Connect the relevant signals from other nodes to the FSM of the active 
+# character node. These signals are used by other states and will be 
+# disconnected to avoid unintended behavior.
+func _connect_signals_to_character() -> void:
+	# Connect encounter to current player 'Wait' state
+	ErrorUtil.connect_signal(
+			enc,
+			"player_turn_started",
+			active_char.fsm.state_nodes["Wait"],
+			"_on_Encounter_player_turn_started"
+	)
+	# Connect encounter to current player 'Standby' state
+	ErrorUtil.connect_signal(
+			enc,
+			"move_tile_selected",
+			active_char.fsm.state_nodes["Standby"],
+			"_on_Encounter_move_tile_selected"
+	)
+	# Connect encounter UI to current player 'Standby' state
+	ErrorUtil.connect_signal(
+			enc.ui,
+			"player_turn_ended",
+			active_char.fsm.state_nodes["Standby"],
+			"_on_EncounterUI_player_turn_ended"
+	)
+	# Connect selector to current player 'Move' state
+	ErrorUtil.connect_signal(
+			enc.selector,
+			"selector_paused",
+			active_char.fsm.state_nodes["Move"],
+			"_on_Selector_selector_paused"
+	)
+
+
+# Disconnect the signals connected to this state.
+func _disconnect_signals_from_self() -> void:
 	enc.selector.disconnect(
 			"move_tile_selected",
 			self,
@@ -168,27 +203,15 @@ func _disconnect_signals() -> void:
 			self,
 			"_on_Selector_effect_selector_required"
 	)
-	enc.disconnect(
-			"player_turn_started",
-			enc.ui,
-			"_on_Encounter_player_turn_started"
-	)
 
 
-# Disconnect the signals of the other nodes that are active during the
-# PlayerTurn state.
-func _disconnect_other_node_signals() -> void:
+# Disconnect the signals connected to the selector FSM.
+func _disconnect_signals_from_selector() -> void:
 	# Disconnect current player from selector 'Pause' state
 	active_char.disconnect(
 			"selector_required",
 			enc.selector.fsm.state_nodes["Pause"],
 			"_on_PlayerCharacter_selector_required"
-	)
-	# Disconnect selector from current player 'Move' state
-	enc.selector.disconnect(
-			"selector_paused",
-			active_char.fsm.state_nodes["Move"],
-			"_on_Selector_selector_paused"
 	)
 	# Disconnect encounter UI from selector 'SelectMove' state
 	enc.ui.disconnect(
@@ -222,6 +245,40 @@ func _disconnect_other_node_signals() -> void:
 			"player_turn_ended",
 			enc.selector.fsm.state_nodes["Pause"],
 			"_on_EncounterUI_player_turn_ended"
+	)
+	# Disconnect current player from selector 'Pause' state
+	active_char.disconnect(
+			"selector_required",
+			enc.selector.fsm.state_nodes["Pause"],
+			"_on_PlayerCharacter_selector_required"
+	)
+
+
+# Disconnect the signals connected to the active character FSM.
+func _disconnect_signals_from_character() -> void:
+		# Disconnect encounter from current player 'Wait' state
+	enc.disconnect(
+			"player_turn_started",
+			active_char.fsm.state_nodes["Wait"],
+			"_on_Encounter_player_turn_started"
+	)
+	# Disconnect encounter from current player 'Standby' state
+	enc.disconnect(
+			"move_tile_selected",
+			active_char.fsm.state_nodes["Standby"],
+			"_on_Encounter_move_tile_selected"
+	)
+	# Disconnect encounter UI from current player 'Standby' state
+	enc.ui.disconnect(
+			"player_turn_ended",
+			active_char.fsm.state_nodes["Standby"],
+			"_on_EncounterUI_player_turn_ended"
+	)
+	# Disconnect selector from current player 'Move' state
+	enc.selector.disconnect(
+			"selector_paused",
+			active_char.fsm.state_nodes["Move"],
+			"_on_Selector_selector_paused"
 	)
 
 

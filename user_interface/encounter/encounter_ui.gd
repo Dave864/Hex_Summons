@@ -209,7 +209,7 @@ func _on_Encounter_player_turn_started(player_info: PlayerCharacter) -> void:
 
 # Triggered when a move tile has been selected.
 # Causes the EncounterUI FSM to go to 'Pause'.
-func _on_Encounter_move_tile_selected() -> void:
+func _on_Encounter_move_tile_selected(_path_details: PoolVector3Array) -> void:
 	emit_signal("set_FSM_to_pause")
 
 

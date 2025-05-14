@@ -6,56 +6,12 @@ state.
 """
 
 
-# Called by the state machine upon changing the active state. The `msg` parameter
-# is a dictionary with arbitrary data the state can use to initialize itself.
-func enter(_msg := {}) -> void:
-	# These signals is used by other PlayerCharacters and will be disconnected 
-	# to avoid unintended behavior.
-	ErrorUtil.connect_signal(
-			SignalBusEncounter, 
-			"move_tile_selected", 
-			self, 
-			"_on_SignalBusEncounter_move_tile_selected"
-	)
-	ErrorUtil.connect_signal(
-			SignalBusEncounter,
-			"player_turn_ended",
-			self,
-			"_on_SignalBusEncounter_player_turn_ended"
-	)
-
-
-# Receives events from the `_unhandled_input()` callback.
-func handle_input(_event: InputEvent) -> void:
-	pass
-
-
-# Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	pass
-
-
-# Called by the state machine before changing the active state. 
-# Use this function to clean up the state.
-func exit() -> void:
-	SignalBusEncounter.disconnect(
-		"move_tile_selected",
-		self,
-		"_on_SignalBusEncounter_move_tile_selected"
-	)
-	SignalBusEncounter.disconnect(
-		"player_turn_ended",
-		self,
-		"_on_SignalBusEncounter_player_turn_ended"
-	)
-
-
 # Hit when the Selector selects a map tile destination.
-func _on_SignalBusEncounter_move_tile_selected(info: Array) -> void:
+func _on_Encounter_move_tile_selected(info: Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": info})
 
 
 # Hit when the EncounterUI indicates that a player has finished their turn.
-func _on_SignalBusEncounter_player_turn_ended(player: PlayerCharacter) -> void:
+func _on_EncounterUI_player_turn_ended(player: PlayerCharacter) -> void:
 	if pc.name == player.name:
 		state_machine.transition_to(WAIT)
