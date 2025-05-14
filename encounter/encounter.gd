@@ -100,7 +100,7 @@ func emit_enemy_actions_confirmed(action_chain: Array) -> void:
 # before resuming count. Numbers that are smaller than zero wrap around to the
 # end of the array before resuming count.
 func _determine_init_index(init_value: int) -> int:
-	return wrapi(init_value, 0, initiative_tracker.size() - 1)
+	return wrapi(init_value, 0, initiative_tracker.size())
 
 
 # Check that all required parameters are set.

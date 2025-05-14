@@ -238,12 +238,6 @@ func _disconnect_signals_from_UI() -> void:
 
 # Disconnect the signals connected to the selector FSM.
 func _disconnect_signals_from_selector() -> void:
-	# Disconnect current player from selector 'Pause' state
-	active_char.disconnect(
-			"selector_required",
-			enc.selector.fsm.state_nodes["Pause"],
-			"_on_PlayerCharacter_selector_required"
-	)
 	# Disconnect encounter UI from selector 'SelectMove' state
 	enc.ui.disconnect(
 			"player_action_selected",
@@ -271,7 +265,7 @@ func _disconnect_signals_from_selector() -> void:
 			enc.selector.fsm.state_nodes["SelectAction"],
 			"_on_EncounterUI_player_turn_ended"
 	)
-	# Disconnect from selector 'Pause' state
+	# Disconnect encounter UI from selector 'Pause' state
 	enc.ui.disconnect(
 			"player_turn_ended",
 			enc.selector.fsm.state_nodes["Pause"],
@@ -287,7 +281,7 @@ func _disconnect_signals_from_selector() -> void:
 
 # Disconnect the signals connected to the active character FSM.
 func _disconnect_signals_from_character() -> void:
-		# Disconnect encounter from current player 'Wait' state
+	# Disconnect encounter from current player 'Wait' state
 	enc.disconnect(
 			"player_turn_started",
 			active_char.fsm.state_nodes["Wait"],
