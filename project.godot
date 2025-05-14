@@ -275,10 +275,6 @@ _global_script_class_icons={
 config/name="Hex_Summons"
 config/icon="res://art/icon.png"
 
-[autoload]
-
-SignalBusEncounter="*res://autoloads/signal_bus_encounter.gd"
-
 [global]
 
 collision=false
