@@ -215,5 +215,5 @@ func _on_Encounter_move_tile_selected(_path_details: PoolVector3Array) -> void:
 
 # Triggered when a player character indicates that the selector is needed.
 # Causes the EncounterUI FSM to go to `Pause`.
-func _on_PlayerCharacter_selector_required() -> void:
+func _on_PlayerCharacter_selector_required(_initial_position: Vector3) -> void:
 	emit_signal("set_FSM_to_standby")

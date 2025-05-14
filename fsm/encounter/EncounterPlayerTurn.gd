@@ -31,6 +31,7 @@ func enter(_msg := {}) -> void:
 	enc.hex_map.highlight_player_movement(movement_area, active_char)
 	
 	_connect_signals_to_self()
+	_connect_signals_to_UI()
 	_connect_signals_to_selector()
 	_connect_signals_to_character()
 	enc.emit_player_turn_started()
@@ -50,6 +51,7 @@ func update(_delta: float) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	_disconnect_signals_from_self()
+	_disconnect_signals_from_UI()
 	_disconnect_signals_from_selector()
 	_disconnect_signals_from_character()
 
@@ -102,6 +104,19 @@ func _connect_signals_to_self() -> void:
 			"effect_selector_required",
 			self,
 			"_on_Selector_effect_selector_required"
+	)
+
+
+# Connect the relevant signals from other nodes to the FSM of the encounter UI node.
+# These signals are used by other states and will be disconnected to avoid
+# unintended behavior.
+func _connect_signals_to_UI() -> void:
+	# Connect current player to UI.
+	ErrorUtil.connect_signal(
+			active_char,
+			"selector_required",
+			enc.ui,
+			"_on_PlayerCharacter_selector_required"
 	)
 
 
@@ -202,6 +217,16 @@ func _disconnect_signals_from_self() -> void:
 			"effect_selector_required",
 			self,
 			"_on_Selector_effect_selector_required"
+	)
+
+
+# Disconnect the signals connected to the UI FSM.
+func _disconnect_signals_from_UI() -> void:
+	# Disconnect current player from UI.
+	active_char.disconnect(
+			"selector_required",
+			enc.ui,
+			"_on_PlayerCharacter_selector_required"
 	)
 
 
