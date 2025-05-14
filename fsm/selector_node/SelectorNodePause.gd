@@ -21,6 +21,8 @@ func exit() -> void:
 
 # Transition to the 'Wait' state when the current player's turn has ended.
 func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
+	if not _state_is_active():
+		return
 	state_machine.transition_to(WAIT)
 
 

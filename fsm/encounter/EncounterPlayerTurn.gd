@@ -70,6 +70,12 @@ func _ready_connect_signals() -> void:
 			"_on_EncounterUI_player_action_type_canceled"
 	)
 	ErrorUtil.connect_signal(
+			enc.ui,
+			"player_turn_ended",
+			self,
+			"_on_EncounterUI_player_turn_ended"
+	)
+	ErrorUtil.connect_signal(
 			enc,
 			"player_turn_started",
 			enc.ui,
