@@ -98,7 +98,7 @@ func _option_selected(option: int) -> void:
 # Signal that an action type is no longer being looked at before transitioning
 # to the 'Standby` state.
 func _action_type_canceled() -> void:
-	encounter_ui.emit_player_turn_ended()
+	encounter_ui.emit_player_action_type_canceled()
 	state_machine.transition_to(STANDBY)
 
 
