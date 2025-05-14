@@ -3,7 +3,7 @@ extends EncounterUIState
 The logic for what happens when an EncounterUI scene is in the `Action` state.
 Populates the SubOptions node with buttons descrbing available choices. Selecting
 the button for the currently active action will clear the SubOptions node and
-allow for movement. Selecting a different button will transition the the `Action`
+allow for movement. Selecting a different button will transition to the `Action`
 state using the features of the new option.
 """
 
@@ -121,3 +121,10 @@ func _on_SpellButton_button_pressed() -> void:
 # Logic for what happens when the End button is pressed.
 func _on_EndButton_button_pressed() -> void:
 	_end_selected()
+
+
+# Signal that an action option has been selected from the currently
+# displayed options.
+func _on_SubOptions_action_selected(action_info: Action) -> void:
+	encounter_ui.emit_player_action_selected(action_info)
+#	state_machine.transition_to(SUB_ACTION)

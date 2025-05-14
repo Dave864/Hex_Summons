@@ -5,6 +5,9 @@ Button that describes a possible sub-option for a given option.
 """
 
 
+# Indicates when the option described by the button has been selected.
+signal action_selected(action_info)
+
 var _action_details: Action = null setget set_action_details, get_action_details
 var _player: PlayerCharacter = null setget set_player
 
@@ -46,7 +49,7 @@ func get_button() -> Node:
 
 # Emit a signal indicating that the button was pressed.
 func _on_Button_pressed() -> void:
-	SignalBusEncounter.emit_signal("player_action_selected", _player, _action_details)
+	emit_signal("action_selected", _action_details)
 
 
 # Checks that all required parameters are set.
