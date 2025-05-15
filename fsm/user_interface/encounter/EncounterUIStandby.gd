@@ -40,11 +40,6 @@ func enter(_msg := {}) -> void:
 	)
 
 
-# Virtual function. Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	pass
-
-
 # Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("ui_encounter_player_end"):

@@ -18,12 +18,12 @@ signal top_vertex_changed(vertex)
 # 4 \ / 2
 #    3
 const HEX_VERTEX_RADIANS: Array = [
-	PI,
-	2.0 * PI / 3.0,
-	PI / 3.0,
 	0.0,
 	-PI / 3.0,
-	-2.0 * PI / 3.0
+	-2.0 * PI / 3.0,
+	PI,
+	2.0 * PI / 3.0,
+	PI / 3.0
 ]
 
 # The default distance the camera is to be set from the focus point.
@@ -179,7 +179,7 @@ func get_closest_vertex_radian() -> float:
 		var next_v: int = posmod(v + 1, 6)
 		var v_radian: float = HEX_VERTEX_RADIANS[v]
 		var next_v_radian: float = (
-			-HEX_VERTEX_RADIANS[next_v] if next_v == 0 and v == 5 
+			-HEX_VERTEX_RADIANS[next_v] if next_v == 3
 			else HEX_VERTEX_RADIANS[next_v]
 		)
 		var mid_radian: float = (v_radian + next_v_radian) / 2.0

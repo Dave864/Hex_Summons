@@ -25,10 +25,5 @@ func update(delta: float) -> void:
 	weight = 1.0 if weight > 1.0 else weight
 	enc_camera.interpolate_camera_rotation(original_orientation, weight)
 	if weight >= 1.0:
+		enc_camera.set_relative_top_vertex(0)
 		state_machine.transition_to(PAN)
-
-
-# Called by the state machine before changing the active state.
-# Use this function to clean up the state.
-func exit() -> void:
-	pass

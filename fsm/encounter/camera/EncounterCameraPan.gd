@@ -14,12 +14,6 @@ var joytick_pan: bool = false
 var mouse_motion: Vector2 = Vector2.ZERO
 
 
-# Called by the state machine upon changing the active state. The `msg` parameter
-# is a dictionary with arbitrary data the state can use to initialize itself.
-func enter(_msg := {}) -> void:
-	enc_camera.set_relative_top_vertex(0)
-
-
 # Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_camera_pan"):
@@ -50,9 +44,3 @@ func handle_input(event: InputEvent) -> void:
 func update(delta: float) -> void:
 	enc_camera.vertical_pan_joystick(delta)
 	enc_camera.lateral_pan_joystick(delta)
-
-
-# Called by the state machine before changing the active state.
-# Use this function to clean up the state.
-func exit() -> void:
-	pass
