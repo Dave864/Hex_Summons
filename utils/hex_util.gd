@@ -170,7 +170,10 @@ static func _relative_hex_direction(
 	desired_direction: int,
 	relative_top: int = 0
 ) -> int:
-	return posmod(desired_direction + relative_top, 6)
+	if desired_direction > 0:
+		return posmod(desired_direction + relative_top, 6)
+	else:
+		return desired_direction
 
 
 # Get the axial direction relative to the defined top vertex. Used to
@@ -182,4 +185,7 @@ static func _relative_to_topaxial_direction(
 	desired_direction: int,
 	relative_top: int = 0
 ) -> int:
-	return posmod(desired_direction + relative_top, 4)
+	if desired_direction > 0:
+		return posmod(desired_direction + relative_top, 4)
+	else:
+		return desired_direction

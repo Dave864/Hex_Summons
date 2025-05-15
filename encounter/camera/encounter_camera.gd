@@ -176,7 +176,7 @@ func interpolate_camera_rotation(
 func get_closest_vertex_radian() -> float:
 	var vertex_radian: float = 0.0
 	for v in range(HEX_VERTEX_RADIANS.size()):
-		var next_v: int = v + 1 if v < 5 else 0
+		var next_v: int = posmod(v + 1, 6)
 		var v_radian: float = HEX_VERTEX_RADIANS[v]
 		var next_v_radian: float = (
 			-HEX_VERTEX_RADIANS[next_v] if next_v == 0 and v == 5 

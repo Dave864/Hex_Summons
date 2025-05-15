@@ -154,7 +154,7 @@ func _determine_adjacencies() -> void:
 			else get_child(index - x_count - 1) if even_z_place
 			else get_child(index - x_count)
 		)
-		tile.set_adjacent_tile(HexUtil.Direction.UPPER_LEFT, index_0_tile)
+		tile.set_adjacent_tile(HexUtil.HexDirection.UPPER_LEFT, index_0_tile)
 		
 		# Determine which tile is adjacent to the top right edge.
 		var index_1_tile: Spatial = (
@@ -163,11 +163,11 @@ func _determine_adjacencies() -> void:
 			else get_child(index - x_count) if even_z_place
 			else get_child(index - x_count + 1)
 		)
-		tile.set_adjacent_tile(HexUtil.Direction.UPPER_RIGHT, index_1_tile)
+		tile.set_adjacent_tile(HexUtil.HexDirection.UPPER_RIGHT, index_1_tile)
 		
 		# Determine which tile is adjacent to the center right edge.
 		var index_2_tile: Spatial = null if is_right else get_child(index + 1)
-		tile.set_adjacent_tile(HexUtil.Direction.RIGHT, index_2_tile)
+		tile.set_adjacent_tile(HexUtil.HexDirection.RIGHT, index_2_tile)
 		
 		# Determine which tile is adjacent to the bottom right edge.
 		var index_3_tile: Spatial = (
@@ -176,7 +176,7 @@ func _determine_adjacencies() -> void:
 			else get_child(index + x_count) if even_z_place
 			else get_child(index + x_count + 1)
 		)
-		tile.set_adjacent_tile(HexUtil.Direction.BOTTOM_RIGHT, index_3_tile)
+		tile.set_adjacent_tile(HexUtil.HexDirection.BOTTOM_RIGHT, index_3_tile)
 		
 		# Determine which tile is adjacent to the bottom left edge.
 		var index_4_tile: Spatial = (
@@ -185,11 +185,11 @@ func _determine_adjacencies() -> void:
 			else get_child(index + x_count - 1) if even_z_place
 			else get_child(index + x_count)
 		)
-		tile.set_adjacent_tile(HexUtil.Direction.BOTTOM_LEFT, index_4_tile)
+		tile.set_adjacent_tile(HexUtil.HexDirection.BOTTOM_LEFT, index_4_tile)
 		
 		# Determine which tile is adjacent to the center left edge.
 		var index_5_tile: Spatial = null if is_left else get_child(index - 1)
-		tile.set_adjacent_tile(HexUtil.Direction.LEFT, index_5_tile)
+		tile.set_adjacent_tile(HexUtil.HexDirection.LEFT, index_5_tile)
 
 
 # Updates the set of map tiles when the x count of the map is updated

@@ -62,3 +62,5 @@ script = ExtResource( 12 )
 
 [node name="End" type="Node" parent="StateMachine"]
 script = ExtResource( 11 )
+
+[connection signal="top_vertex_changed" from="EncounterCamera" to="Selector" method="_on_EncounterCamera_top_vertex_changed"]

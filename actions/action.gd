@@ -34,7 +34,7 @@ func _ready() -> void:
 	_check_for_required_parameters()
 	# No DeadRange node indicates no dead range.
 	_is_cardinal = area_range is CardinalArea
-	set_emission_direction(HexUtil.Direction.UPPER_LEFT)
+	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
 func _process(_delta) -> void:

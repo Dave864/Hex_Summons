@@ -21,8 +21,8 @@ export(NodePath) var fsm_path = null
 var fsm: StateMachine = null
 # The MapTile that was last passed over.
 var tile_hovered: MapTile = null
-# Describes which hex vertex is the top with rexpect to the camera
-var relative_top_vertex: int = 0
+# Describes which hex vertex is the top with respect to the camera
+var top_vertex: int = 0
 
 # The current mouse position
 onready var mouse_position: MousePosition = $MousePosition
@@ -75,4 +75,4 @@ func _check_for_required_parameters() -> void:
 
 # Updates the relative top vertex when the camera changes orientation.
 func _on_EncounterCamera_top_vertex_changed(new_top_vertex: int) -> void:
-	relative_top_vertex = new_top_vertex
+	top_vertex = new_top_vertex
