@@ -6,7 +6,7 @@ Collection of functions useful for calculations on a hexagonal grid.
 
 
 # Represents the possible directions for a hex tile.
-enum Direction {
+enum HexDirection {
 	UPPER_LEFT,
 	UPPER_RIGHT,
 	RIGHT,
@@ -19,12 +19,12 @@ enum Direction {
 # in cube coordinates.
 # Reference: https://www.redblobgames.com/grids/hexagons/#neighbors-cube
 const CUBE_DIRECTION_VECTORS: Dictionary = {
-	Direction.UPPER_LEFT: Vector3(0.0, -1.0, 1.0),
-	Direction.UPPER_RIGHT: Vector3(1.0, -1.0, 0.0),
-	Direction.RIGHT: Vector3(1.0, 0.0, -1.0),
-	Direction.BOTTOM_RIGHT: Vector3(0.0, 1.0, -1.0),
-	Direction.BOTTOM_LEFT: Vector3(-1.0, 1.0, 0.0),
-	Direction.LEFT: Vector3(-1.0, 0.0, 1.0),
+	HexDirection.UPPER_LEFT: Vector3(0.0, -1.0, 1.0),
+	HexDirection.UPPER_RIGHT: Vector3(1.0, -1.0, 0.0),
+	HexDirection.RIGHT: Vector3(1.0, 0.0, -1.0),
+	HexDirection.BOTTOM_RIGHT: Vector3(0.0, 1.0, -1.0),
+	HexDirection.BOTTOM_LEFT: Vector3(-1.0, 1.0, 0.0),
+	HexDirection.LEFT: Vector3(-1.0, 0.0, 1.0),
 }
 
 # The ratio between 
@@ -39,12 +39,20 @@ const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 #  |   |
 # 4 \ / 2
 #    3
-const HV_0_COORD: Vector2 = Vector2(0.0, -1.0)
-const HV_1_COORD: Vector2 = Vector2(HEX_EDGE_RATIO, -0.5)
-const HV_2_COORD: Vector2 = Vector2(HEX_EDGE_RATIO, 0.5)
-const HV_3_COORD: Vector2 = Vector2(0.0, 1.0)
-const HV_4_COORD: Vector2 = Vector2(-HEX_EDGE_RATIO, 0.5)
-const HV_5_COORD: Vector2 = Vector2(-HEX_EDGE_RATIO, -0.5)
+const HV_COORD_0: Vector2 = Vector2(0.0, -1.0)
+const HV_COORD_1: Vector2 = Vector2(HEX_EDGE_RATIO, -0.5)
+const HV_COORD_2: Vector2 = Vector2(HEX_EDGE_RATIO, 0.5)
+const HV_COORD_3: Vector2 = Vector2(0.0, 1.0)
+const HV_COORD_4: Vector2 = Vector2(-HEX_EDGE_RATIO, 0.5)
+const HV_COORD_5: Vector2 = Vector2(-HEX_EDGE_RATIO, -0.5)
+const HV_COORDS: Array = [
+	HV_COORD_0,
+	HV_COORD_1,
+	HV_COORD_2,
+	HV_COORD_3,
+	HV_COORD_4,
+	HV_COORD_5
+]
 
 
 # Converts the index to the corresponding cube coordinate.
@@ -83,7 +91,11 @@ static func cube_to_index(coord: Vector3, x_count: int) -> int:
 # 5 |  | 2
 # 4  \/  3
 # Reference: # https://www.redblobgames.com/grids/hexagons/#neighbors
-static func cube_at_distance(origin: Vector3, distance: float, direction: int) -> Vector3:
+static func cube_at_distance(
+	origin: Vector3,
+	distance: float,
+	direction: int
+) -> Vector3:
 	var dest: Vector3 = origin
 	if CUBE_DIRECTION_VECTORS.has(direction):
 		dest += distance * CUBE_DIRECTION_VECTORS[direction]
@@ -94,53 +106,80 @@ static func cube_at_distance(origin: Vector3, distance: float, direction: int) -
 # 0  /\  1
 # 5 |  | 2
 # 4  \/  3
-static func get_hex_direction(dir_vec: Vector2) -> int:
+static func get_hex_direction(
+	dir_vec: Vector2,
+	top_vertex: int = 0
+) -> int:
 	var dir: int = -1
 	if (
-		dir_vec.x > HV_0_COORD.x
-		and dir_vec.x < HV_1_COORD.x
+		dir_vec.x > HV_COORD_0.x
+		and dir_vec.x < HV_COORD_1.x
 		and dir_vec.y < 0.0
 	):
-		dir = Direction.UPPER_RIGHT
+		dir = HexDirection.UPPER_RIGHT
 	elif (
 		dir_vec.x > 0.0
-		and dir_vec.y > HV_1_COORD.y
-		and dir_vec.y < HV_2_COORD.y
+		and dir_vec.y > HV_COORD_1.y
+		and dir_vec.y < HV_COORD_2.y
 	):
-		dir = Direction.RIGHT
+		dir = HexDirection.RIGHT
 	elif(
-		dir_vec.x > HV_3_COORD.x
-		and dir_vec.x < HV_2_COORD.x
+		dir_vec.x > HV_COORD_3.x
+		and dir_vec.x < HV_COORD_2.x
 		and dir_vec.y > 0.0
 	):
-		dir = Direction.BOTTOM_RIGHT
+		dir = HexDirection.BOTTOM_RIGHT
 	elif(
-		dir_vec.x > HV_4_COORD.x
-		and dir_vec.x < HV_3_COORD.x
+		dir_vec.x > HV_COORD_4.x
+		and dir_vec.x < HV_COORD_3.x
 		and dir_vec.y > 0.0
 	):
-		dir = Direction.BOTTOM_LEFT
+		dir = HexDirection.BOTTOM_LEFT
 	elif(
 		dir_vec.x < 0.0
-		and dir_vec.y < HV_4_COORD.y
-		and dir_vec.y > HV_5_COORD.y
+		and dir_vec.y < HV_COORD_4.y
+		and dir_vec.y > HV_COORD_5.y
 	):
-		dir = Direction.LEFT
+		dir = HexDirection.LEFT
 	elif(
-		dir_vec.x < HV_0_COORD.x
-		and dir_vec.x > HV_5_COORD.x
+		dir_vec.x < HV_COORD_0.x
+		and dir_vec.x > HV_COORD_5.x
 		and dir_vec.y < 0.0
 	):
-		dir = Direction.UPPER_LEFT
-	return dir
+		dir = HexDirection.UPPER_LEFT
+	return _relative_hex_direction(dir, top_vertex)
 
 
 # Converts joystick input to a hexagonal direction
-static func joystick_to_hex_direction() -> int:
+static func joystick_to_hex_direction(top_vertex: int = 0) -> int:
 	var dir_vec: Vector2 = Input.get_vector(
 			"ui_selector_l",
 			"ui_selector_r",
 			"ui_selector_u",
 			"ui_selector_d"
 	)
-	return get_hex_direction(dir_vec)
+	return get_hex_direction(dir_vec, top_vertex)
+
+
+# Get the hexagonal direction relative to the defined top vertex. Used to
+# match the joystick direction with respect to the camera orientation.
+# 0  /\  1
+# 5 |  | 2
+# 4  \/  3
+static func _relative_hex_direction(
+	desired_direction: int,
+	relative_top: int = 0
+) -> int:
+	return posmod(desired_direction + relative_top, 6)
+
+
+# Get the axial direction relative to the defined top vertex. Used to
+# match the joystick direction with respect to the camera orientation.
+# 0  /\            /\  0
+# 3 |  | 1  or  3 |  | 1
+#    \/  2      2  \/
+static func _relative_to_topaxial_direction(
+	desired_direction: int,
+	relative_top: int = 0
+) -> int:
+	return posmod(desired_direction + relative_top, 4)

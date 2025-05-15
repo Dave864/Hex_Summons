@@ -7,6 +7,8 @@ resizing camera dimensions.
 """
 
 
+# Indicates that the top vertex relative to camera view has been changed.
+# Used for moving the selector around the encounter map using joystick input.
 signal top_vertex_changed(vertex)
 
 # Defines the radians values that correspond to the vertices of a hexagon.
