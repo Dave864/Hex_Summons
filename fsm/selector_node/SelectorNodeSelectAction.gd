@@ -31,7 +31,7 @@ func enter(_msg: Dictionary = {}) -> void:
 	)
 	
 	action.set_emission_map_index(player_map_index)
-	selector.emit_effect_selector_required(action, false)
+	selector.emit_effect_selector_required(action)
 
 
 func update(_delta: float) -> void:
@@ -86,7 +86,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 			var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
 			var dir: Vector2 = (tile_pt - player_pt).normalized()
 			action.set_emission_direction(HexUtil.get_hex_direction(dir))
-		selector.emit_effect_selector_required(action, false)
+		selector.emit_effect_selector_required(action)
 
 
 # Go to the "SelectAction" state with the new action.

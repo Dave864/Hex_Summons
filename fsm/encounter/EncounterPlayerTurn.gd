@@ -355,14 +355,11 @@ func _on_EncounterUI_player_action_type_canceled() -> void:
 
 
 # Updates the tile selectors to show the effect range of an action
-func _on_Selector_effect_selector_required(
-	action: Action,
-	ignore_heights: bool
-) -> void:
+func _on_Selector_effect_selector_required(action: Action) -> void:
 	enc.hex_map.clear_selector_highlights()
 	var effect_area_indexes: Array = enc.hex_map.determine_area_indexes(
 		action.effect_range,
 		action.get_emission_map_index(),
 		action.get_emission_direction()
 	)
-	enc.hex_map.highlight_effect_area(effect_area_indexes, ignore_heights)
+	enc.hex_map.highlight_effect_area(effect_area_indexes, action.ignore_heights)

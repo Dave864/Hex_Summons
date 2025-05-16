@@ -19,4 +19,3 @@ radius = 0
 script = ExtResource( 2 )
 area_range = SubResource( 3 )
 effect_range = SubResource( 2 )
-ignore_casting_character = true

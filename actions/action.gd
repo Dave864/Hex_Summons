@@ -8,7 +8,15 @@ Describes the range and effects of an action.
 """
 TODO: Implement logic to use stats nodes to define action effect
 """
-export(int, 1, 1000) var power
+# The modifier that will be applied to the character's attack stat when this action is used.
+export(float, 0, 3) var potency = 1.0
+# The elemental affinity of the action.
+export(int, 0, 6) var earth_affinity = 0
+export(int, 0, 6) var fire_affinity = 0
+export(int, 0, 6) var water_affinity = 0
+export(int, 0, 6) var wind_affinity = 0
+# The number and elemental type of wisps used for the action.
+
 # The area specifying the possible tiles for effect emmision.
 export var area_range: Resource = null
 # The area that is ignored when determining the possible tiles for effect emmision.
@@ -17,10 +25,12 @@ export var dead_range: Resource = null
 export var effect_range: Resource = null
 # Flag that denotes if the emission is fixed to the center of the area.
 export(bool) var emit_from_center = true
-# Flag that denotes if the emission should include the casting character tile.
-export(bool) var ignore_casting_character = false
-# Flag that denotes if the emission ignores tile heights.
-export(bool) var ignore_heights = false
+# Flag that denotes if the effect should include the casting character tile.
+export(bool) var effect_ignores_caster = true
+# Flag that denotes if the possible source of the emmision is affected by tile heights.
+export(bool) var area_ignore_heights = false
+# Flag that denotes if the emission area is affected by tile heights.
+export(bool) var effect_ignore_heights = false
 
 # Whether the area range is cardinal or ring.
 var _is_cardinal: bool = false setget , get_is_cardinal

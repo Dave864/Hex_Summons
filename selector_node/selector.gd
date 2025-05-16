@@ -8,7 +8,7 @@ when a MapTile has been passed over.
 
 # Signal for the encounter node that specifies which tiles to highlight for effect
 # range selection.
-signal effect_selector_required(action_info, ignore_height)
+signal effect_selector_required(action_info)
 # Signal that indicates a move tile has been selected.
 signal move_tile_selected(map_tile)
 signal target_selected(selection_area)
@@ -46,8 +46,8 @@ func move_to_position(position: Vector3) -> void:
 
 
 # Emits the 'effect_selector_required' signal.
-func emit_effect_selector_required(action_info: Action, ignore_height: bool) -> void:
-	emit_signal("effect_selector_required", action_info, ignore_height)
+func emit_effect_selector_required(action_info: Action) -> void:
+	emit_signal("effect_selector_required", action_info)
 
 
 # Emits the 'move_tile_selected' signal.

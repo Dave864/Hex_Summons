@@ -13,5 +13,4 @@ distance = 1
 script = ExtResource( 1 )
 area_range = SubResource( 1 )
 effect_range = ExtResource( 3 )
-ignore_casting_character = true
-ignore_heights = true
+area_ignore_heights = true
