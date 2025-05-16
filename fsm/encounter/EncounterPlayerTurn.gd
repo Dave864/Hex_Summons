@@ -362,4 +362,4 @@ func _on_Selector_effect_selector_required(action: Action) -> void:
 		action.get_emission_map_index(),
 		action.get_emission_direction()
 	)
-	enc.hex_map.highlight_effect_area(effect_area_indexes, action.ignore_heights)
+	enc.hex_map.highlight_effect_area(effect_area_indexes, action.effect_ignore_heights)

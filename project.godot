@@ -117,7 +117,7 @@ _global_script_classes=[ {
 "base": "Character",
 "class": "EnemyCharacter",
 "language": "GDScript",
-"path": "res://character/mobs/enemy_character.gd"
+"path": "res://character/enemy_characters/enemy_character.gd"
 }, {
 "base": "State",
 "class": "EnemyCharacterState",
