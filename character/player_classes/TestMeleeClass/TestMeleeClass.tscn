@@ -1,34 +1,12 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://character/player_classes/player_class.gd" type="Script" id=1]
 [ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=2]
 [ext_resource path="res://character/player_classes/TestMeleeClass/stat_data/core_stats.tres" type="Resource" id=3]
-[ext_resource path="res://range_type/scripts/cone_area.gd" type="Script" id=4]
-[ext_resource path="res://range_type/scripts/cardinal_area.gd" type="Script" id=5]
 [ext_resource path="res://character/player_classes/TestMeleeClass/stat_data/elemental_stats.tres" type="Resource" id=6]
 [ext_resource path="res://character/player_classes/TestMeleeClass/stat_data/movement_area.tres" type="Resource" id=7]
-[ext_resource path="res://actions/Strike.tscn" type="PackedScene" id=8]
-[ext_resource path="res://actions/Sweep.tscn" type="PackedScene" id=9]
-[ext_resource path="res://range_type/cone_area.tres" type="Resource" id=10]
-
-[sub_resource type="Resource" id=14]
-resource_local_to_scene = true
-resource_name = "Cardinal_Area"
-script = ExtResource( 5 )
-distance = 1
-
-[sub_resource type="Resource" id=16]
-resource_local_to_scene = true
-resource_name = "Cardinal_Area"
-script = ExtResource( 5 )
-distance = 1
-
-[sub_resource type="Resource" id=17]
-resource_local_to_scene = true
-resource_name = "Cone_Area"
-script = ExtResource( 4 )
-spread = 2
-distance = 1
+[ext_resource path="res://actions/Strike/Strike.tscn" type="PackedScene" id=8]
+[ext_resource path="res://actions/Sweep/Sweep.tscn" type="PackedScene" id=9]
 
 [node name="TestMeleeClass" type="Node"]
 script = ExtResource( 1 )
@@ -42,11 +20,7 @@ movement_area = ExtResource( 7 )
 [node name="Techniques" type="Node" parent="."]
 
 [node name="Strike" parent="Techniques" instance=ExtResource( 8 )]
-area_range = SubResource( 14 )
-effect_range = ExtResource( 10 )
 
 [node name="Sweep" parent="Techniques" instance=ExtResource( 9 )]
-area_range = SubResource( 16 )
-effect_range = SubResource( 17 )
 
 [node name="Spells" type="Node" parent="."]

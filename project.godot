@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "AreaRange",
 "language": "GDScript",
-"path": "res://range_type/scripts/area_range.gd"
+"path": "res://area_range.gd"
 }, {
 "base": "Object",
 "class": "ArraySorters",
@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "AreaRange",
 "class": "CardinalArea",
 "language": "GDScript",
-"path": "res://range_type/scripts/cardinal_area.gd"
+"path": "res://range_type/cardinal_area.gd"
 }, {
 "base": "Spatial",
 "class": "Character",
@@ -52,12 +52,12 @@ _global_script_classes=[ {
 "base": "AreaRange",
 "class": "ColumnArea",
 "language": "GDScript",
-"path": "res://range_type/scripts/column_area.gd"
+"path": "res://column_area.gd"
 }, {
 "base": "AreaRange",
 "class": "ConeArea",
 "language": "GDScript",
-"path": "res://range_type/scripts/cone_area.gd"
+"path": "res://range_type/cone_area.gd"
 }, {
 "base": "Object",
 "class": "Constants",
@@ -79,10 +79,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://character/scripts/elemental_stats.gd"
 }, {
-"base": "Area",
+"base": "Reference",
 "class": "EmissionPoint",
 "language": "GDScript",
-"path": "res://range_type/scripts/emission_point.gd"
+"path": "res://range_type/emission_point.gd"
 }, {
 "base": "Node",
 "class": "Encounter",
@@ -187,7 +187,7 @@ _global_script_classes=[ {
 "base": "AreaRange",
 "class": "RingArea",
 "language": "GDScript",
-"path": "res://range_type/scripts/ring_area.gd"
+"path": "res://range_type/ring_area.gd"
 }, {
 "base": "Node",
 "class": "Selector",

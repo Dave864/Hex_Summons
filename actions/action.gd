@@ -87,14 +87,18 @@ func reset_emittor_position() -> void:
 # Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
-		area_range != null,
-		ErrorUtil.missing_required_parameter(name, "area_range")
+			area_range != null,
+			ErrorUtil.missing_required_parameter(name, "area_range")
 	)
 	assert(
-		area_range is CardinalArea or area_range is RingArea,
-		"Action %s area_range is not either a CardinalArea or RingArea." % [name]
+			area_range is CardinalArea or area_range is RingArea,
+			"Action %s area_range is neither a CardinalArea or RingArea." % [name]
 	)
 	assert(
-		effect_range != null,
-		ErrorUtil.missing_required_parameter(name, "effect_range")
+			effect_range != null,
+			ErrorUtil.missing_required_parameter(name, "effect_range")
+	)
+	assert(
+			effect_range is AreaRange,
+			"Error: Action %s effect_range is not an AreaRange." % [name]
 	)

@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://actions/Strike/stat_data/area_range.tres" type="Resource" id=1]
+[ext_resource path="res://actions/Strike/stat_data/effect_range.tres" type="Resource" id=2]
+[ext_resource path="res://actions/action.gd" type="Script" id=3]
+
+[node name="Strike" type="Node"]
+script = ExtResource( 3 )
+area_range = ExtResource( 1 )
+effect_range = ExtResource( 2 )
