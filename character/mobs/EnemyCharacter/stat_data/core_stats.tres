@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://character/scripts/core_stats.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+health_base = 1
+health_growth = 1
+attack_base = 1
+attack_growth = 1
+defense_base = 1
+defense_growth = 1
+agility_base = 1
+agility_growth = 1
+movement = 1

@@ -4,6 +4,7 @@
 [ext_resource path="res://actions/action.gd" type="Script" id=2]
 [ext_resource path="res://range_type/scripts/cardinal_area.gd" type="Script" id=4]
 
+
 [sub_resource type="Resource" id=3]
 resource_name = "Cardinal_Area"
 script = ExtResource( 4 )
