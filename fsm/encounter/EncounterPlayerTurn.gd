@@ -339,7 +339,7 @@ func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
 # Updates the tile highlights to show the area range of the action.
 func _on_EncounterUI_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
 	var area_indexes: Array = enc.hex_map.determine_area_indexes(
-		action.area_range,
+		action.ranges.area_range,
 		action.get_emission_map_index()
 	)
 	enc.hex_map.clear_highlights()
@@ -358,8 +358,8 @@ func _on_EncounterUI_player_action_type_canceled() -> void:
 func _on_Selector_effect_selector_required(action: Action) -> void:
 	enc.hex_map.clear_selector_highlights()
 	var effect_area_indexes: Array = enc.hex_map.determine_area_indexes(
-		action.effect_range,
+		action.ranges.effect_range,
 		action.get_emission_map_index(),
 		action.get_emission_direction()
 	)
-	enc.hex_map.highlight_effect_area(effect_area_indexes, action.effect_ignore_heights)
+	enc.hex_map.highlight_effect_area(effect_area_indexes, action.ranges.effect_ignore_heights)

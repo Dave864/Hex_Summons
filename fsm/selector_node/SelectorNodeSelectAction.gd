@@ -78,7 +78,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		selector.tile_hovered = map_tile
 		
 		action.set_emission_map_index(
-				player_map_index if action.emit_from_center 
+				player_map_index if action.ranges.emit_from_center 
 				else map_tile.get_map_index()
 		)
 		if action.get_is_cardinal():
