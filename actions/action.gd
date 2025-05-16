@@ -16,21 +16,10 @@ export(int, 0, 6) var fire_affinity = 0
 export(int, 0, 6) var water_affinity = 0
 export(int, 0, 6) var wind_affinity = 0
 # The number and elemental type of wisps used for the action.
-
-# The area specifying the possible tiles for effect emmision.
-export var area_range: Resource = null
-# The area that is ignored when determining the possible tiles for effect emmision.
-export var dead_range: Resource = null
-# The area specifying the tiles affected by the effect.
-export var effect_range: Resource = null
-# Flag that denotes if the emission is fixed to the center of the area.
-export(bool) var emit_from_center = true
-# Flag that denotes if the effect should include the casting character tile.
-export(bool) var effect_ignores_caster = true
-# Flag that denotes if the possible source of the emmision is affected by tile heights.
-export(bool) var area_ignore_heights = false
-# Flag that denotes if the emission area is affected by tile heights.
-export(bool) var effect_ignore_heights = false
+# The details of the area and effect range of the action.
+export(Resource) var ranges = null
+# The target of the action.
+export(Resource) var target = null
 
 # Whether the area range is cardinal or ring.
 var _is_cardinal: bool = false setget , get_is_cardinal
@@ -43,7 +32,7 @@ var _emission_direction: int setget set_emission_direction, get_emission_directi
 func _ready() -> void:
 	_check_for_required_parameters()
 	# No DeadRange node indicates no dead range.
-	_is_cardinal = area_range is CardinalArea
+	_is_cardinal = ranges.area_range is CardinalArea
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
@@ -87,18 +76,39 @@ func reset_emittor_position() -> void:
 # Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
-			area_range != null,
+			ranges != null,
+			ErrorUtil.missing_required_parameter(name, "ranges")
+	)
+	assert(
+			ranges is ActionRanges,
+			"Error: Action %s ranges is not of type ActionRanges."
+	)
+	assert(
+			ranges.area_range != null,
 			ErrorUtil.missing_required_parameter(name, "area_range")
 	)
 	assert(
-			area_range is CardinalArea or area_range is RingArea,
-			"Action %s area_range is neither a CardinalArea or RingArea." % [name]
+			ranges.area_range is CardinalArea or ranges.area_range is RingArea,
+			"Error: Action %s area_range is neither a CardinalArea or RingArea." % [name]
 	)
+	if ranges.dead_range != null:
+		assert(
+				ranges.dead_range is CardinalArea or ranges.dead_range is RingArea,
+				"Error: Action %s dead_range is neither a CardinalArea or RingArea."
+		)
 	assert(
-			effect_range != null,
+			ranges.effect_range != null,
 			ErrorUtil.missing_required_parameter(name, "effect_range")
 	)
 	assert(
-			effect_range is AreaRange,
+			ranges.effect_range is AreaRange,
 			"Error: Action %s effect_range is not an AreaRange." % [name]
+	)
+	assert(
+			target != null,
+			ErrorUtil.missing_required_parameter(name, "target")
+	)
+	assert(
+			target is ActionTarget,
+			"Error: Action %s target is not an ActionTarget." % [name]
 	)

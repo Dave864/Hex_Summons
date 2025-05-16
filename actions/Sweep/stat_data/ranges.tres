@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://actions/action_ranges.gd" type="Script" id=1]
+[ext_resource path="res://actions/Sweep/stat_data/area_range.tres" type="Resource" id=2]
+[ext_resource path="res://actions/Sweep/stat_data/effect_range.tres" type="Resource" id=3]
+
+[resource]
+script = ExtResource( 1 )
+area_range = ExtResource( 2 )
+effect_range = ExtResource( 3 )
+emit_from_center = true
+effect_ignores_caster = true
+area_ignore_heights = false
+effect_ignore_heights = false
