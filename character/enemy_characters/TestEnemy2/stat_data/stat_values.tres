@@ -1,9 +1,18 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://character/scripts/elemental_stats.gd" type="Script" id=1]
+[ext_resource path="res://character/scripts/stat_values.gd" type="Script" id=1]
 
 [resource]
 script = ExtResource( 1 )
+health_base = 7
+health_growth = 1
+attack_base = 2
+attack_growth = 1
+defense_base = 1
+defense_growth = 1
+agility_base = 4
+agility_growth = 1
+movement = 3
 magic_earth_base = 0
 magic_earth_growth = 0
 magic_fire_base = 0

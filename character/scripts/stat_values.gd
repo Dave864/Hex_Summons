@@ -1,16 +1,20 @@
-class_name ElementalStats
+class_name StatValues
 extends Resource
 """
-Defines the elemental stats used by all characters: Magic, Resistance. The elemental
-types are Earth, Fire, Water, Wind.
+Defines the stat values for a character. Includes base value and growth rate.
 """
 
 
-# The elemental stats.
-enum Type {MAGIC, RESISTANCE}
-# The elemental types.
-enum Element {EARTH, FIRE, WATER, WIND}
-
+# Base stat values
+export(int, 0, 1000) var health_base = 1
+export(int, 0, 1000) var health_growth = 1
+export(int, 0, 1000) var attack_base = 1
+export(int, 0, 1000) var attack_growth = 1
+export(int, 0, 1000) var defense_base = 1
+export(int, 0, 1000) var defense_growth = 1
+export(int, 0, 1000) var agility_base = 1
+export(int, 0, 1000) var agility_growth = 1
+export(int, 1, 20) var movement = 1
 # Magic stat values
 export(int, 0, 1000) var magic_earth_base = 0
 export(int, 0, 1000) var magic_earth_growth = 0

@@ -20,10 +20,8 @@ const RESISTANCE: String = "Resistance"
 var _level: int = 1 setget set_level, get_level
 var _current_health: int = 0
 
-# Core stat values
-export var core_stats: Resource = null
-# Elemental stat values
-export var elemental_stats: Resource = null
+# Stat values
+export var stat_values: Resource = null
 # Reference to the movement area
 export var movement_area: Resource = null
 
@@ -33,7 +31,7 @@ onready var _root_node: Node = get_tree().edited_scene_root
 
 func _ready() -> void:
 	_check_for_required_parameters()
-	movement_area.radius = core_stats.movement
+	movement_area.radius = stat_values.movement
 
 
 func set_level(val: int) -> void:
@@ -46,11 +44,11 @@ func get_level() -> int:
 
 func set_movement_range(val: int) -> void:
 	movement_area.radius = val
-	core_stats.movement = val
+	stat_values.movement = val
 
 
 func get_movement_range() -> int:
-	return _get_calculated_stat(CoreStats.Type.MOVEMENT)
+	return _get_calculated_stat(Stat.Type.MOVEMENT)
 
 
 # Get the indexes of the tiles within movement range.
@@ -59,7 +57,7 @@ func get_movement_area() -> Resource:
 
 
 func get_max_health() -> int:
-	return _get_calculated_stat(CoreStats.Type.HEALTH)
+	return _get_calculated_stat(Stat.Type.HEALTH)
 
 
 func set_cur_health(val: int) -> void:
@@ -78,23 +76,23 @@ func get_cur_health() -> int:
 
 
 func get_attack() -> int:
-	return _get_calculated_stat(CoreStats.Type.ATTACK)
+	return _get_calculated_stat(Stat.Type.ATTACK)
 
 
 func get_defense() -> int:
-	return _get_calculated_stat(CoreStats.Type.DEFENSE)
+	return _get_calculated_stat(Stat.Type.DEFENSE)
 
 
 func get_agility() -> int:
-	return _get_calculated_stat(CoreStats.Type.AGILITY)
+	return _get_calculated_stat(Stat.Type.AGILITY)
 
 
 func get_magic(type: int) -> int:
-	return _get_calculated_elemental_stat(ElementalStats.Type.MAGIC, type)
+	return _get_calculated_elemental_stat(ElementalStat.Type.MAGIC, type)
 
 
 func get_resistance(type: int) -> int:
-	return _get_calculated_elemental_stat(ElementalStats.Stat.RESISTANCE, type)
+	return _get_calculated_elemental_stat(ElementalStat.Stat.RESISTANCE, type)
 
 
 # Get all the stats save for movement.
@@ -105,16 +103,16 @@ func get_all() -> Dictionary:
 		DEFENSE: get_defense(),
 		AGILITY: get_agility(),
 		MAGIC: {
-			ElementalStats.Element.EARTH: get_magic(ElementalStats.Element.EARTH),
-			ElementalStats.Element.FIRE: get_magic(ElementalStats.Element.FIRE),
-			ElementalStats.Element.WATER: get_magic(ElementalStats.Element.WATER),
-			ElementalStats.Element.WIND: get_magic(ElementalStats.Element.WIND),
+			ElementalStat.Element.EARTH: get_magic(ElementalStat.Element.EARTH),
+			ElementalStat.Element.FIRE: get_magic(ElementalStat.Element.FIRE),
+			ElementalStat.Element.WATER: get_magic(ElementalStat.Element.WATER),
+			ElementalStat.Element.WIND: get_magic(ElementalStat.Element.WIND),
 		},
 		RESISTANCE: {
-			ElementalStats.Element.EARTH: get_resistance(ElementalStats.Element.EARTH),
-			ElementalStats.Element.FIRE: get_resistance(ElementalStats.Element.FIRE),
-			ElementalStats.Element.WATER: get_resistance(ElementalStats.Element.WATER),
-			ElementalStats.Element.WIND: get_resistance(ElementalStats.Element.WIND),
+			ElementalStat.Element.EARTH: get_resistance(ElementalStat.Element.EARTH),
+			ElementalStat.Element.FIRE: get_resistance(ElementalStat.Element.FIRE),
+			ElementalStat.Element.WATER: get_resistance(ElementalStat.Element.WATER),
+			ElementalStat.Element.WIND: get_resistance(ElementalStat.Element.WIND),
 		}
 	}
 
@@ -122,16 +120,16 @@ func get_all() -> Dictionary:
 # Obtains the calculated value for a given stat.
 func _get_calculated_stat(stat: int) -> int:
 	match stat:
-		CoreStats.Type.HEALTH:
-			return core_stats.health_base + core_stats.health_growth * _level
-		CoreStats.Type.ATTACK:
-			return core_stats.attack_base + core_stats.attack_growth * _level
-		CoreStats.Type.DEFENSE:
-			return core_stats.defense_base + core_stats.defense_growth * _level
-		CoreStats.Type.AGILITY:
-			return core_stats.agility_base + core_stats.agility_growth * _level
-		CoreStats.Type.MOVEMENT:
-			return core_stats.movement
+		Stat.Type.HEALTH:
+			return stat_values.health_base + stat_values.health_growth * _level
+		Stat.Type.ATTACK:
+			return stat_values.attack_base + stat_values.attack_growth * _level
+		Stat.Type.DEFENSE:
+			return stat_values.defense_base + stat_values.defense_growth * _level
+		Stat.Type.AGILITY:
+			return stat_values.agility_base + stat_values.agility_growth * _level
+		Stat.Type.MOVEMENT:
+			return stat_values.movement
 		_:
 			return 0
 
@@ -139,9 +137,9 @@ func _get_calculated_stat(stat: int) -> int:
 # Obtains the calculated value for a given elemental stat.
 func _get_calculated_elemental_stat(stat: int, element: int) -> int:
 	match stat:
-		ElementalStats.Type.MAGIC:
+		ElementalStat.Type.MAGIC:
 			return _magic_for_level(element)
-		ElementalStats.Type.RESISTANCE:
+		ElementalStat.Type.RESISTANCE:
 			return _resistance_for_level(element)
 		_:
 			return 0
@@ -150,28 +148,28 @@ func _get_calculated_elemental_stat(stat: int, element: int) -> int:
 # Determines the value of a specified magic element for a given level.
 func _magic_for_level(element: int) -> int:
 	match element:
-		ElementalStats.Element.EARTH:
+		ElementalStat.Element.EARTH:
 			return (
-					elemental_stats.magic_earth_base
-					+ elemental_stats.magic_earth_growth
+					stat_values.magic_earth_base
+					+ stat_values.magic_earth_growth
 					* _level
 			)
-		ElementalStats.Element.FIRE:
+		ElementalStat.Element.FIRE:
 			return (
-					elemental_stats.magic_fire_base
-					+ elemental_stats.magic_fire_growth
+					stat_values.magic_fire_base
+					+ stat_values.magic_fire_growth
 					* _level
 			)
-		ElementalStats.Element.WATER:
+		ElementalStat.Element.WATER:
 			return (
-					elemental_stats.magic_water_base
-					+ elemental_stats.magic_water_growth
+					stat_values.magic_water_base
+					+ stat_values.magic_water_growth
 					* _level
 			)
-		ElementalStats.Element.WIND:
+		ElementalStat.Element.WIND:
 			return (
-					elemental_stats.magic_wind_base
-					+ elemental_stats.magic_wind_growth
+					stat_values.magic_wind_base
+					+ stat_values.magic_wind_growth
 					* _level
 			)
 		_:
@@ -181,28 +179,28 @@ func _magic_for_level(element: int) -> int:
 # Determines the value of a specified resistance element for a given level.
 func _resistance_for_level(element: int) -> int:
 	match element:
-		ElementalStats.Element.EARTH:
+		ElementalStat.Element.EARTH:
 			return (
-					elemental_stats.res_earth_base
-					+ elemental_stats.res_earth_growth
+					stat_values.res_earth_base
+					+ stat_values.res_earth_growth
 					* _level
 			)
-		ElementalStats.Element.FIRE:
+		ElementalStat.Element.FIRE:
 			return (
-					elemental_stats.res_fire_base
-					+ elemental_stats.res_fire_growth
+					stat_values.res_fire_base
+					+ stat_values.res_fire_growth
 					* _level
 			)
-		ElementalStats.Element.WATER:
+		ElementalStat.Element.WATER:
 			return (
-					elemental_stats.res_water_base
-					+ elemental_stats.res_water_growth
+					stat_values.res_water_base
+					+ stat_values.res_water_growth
 					* _level
 			)
-		ElementalStats.Element.WIND:
+		ElementalStat.Element.WIND:
 			return (
-					elemental_stats.res_wind_base
-					+ elemental_stats.res_wind_growth
+					stat_values.res_wind_base
+					+ stat_values.res_wind_growth
 					* _level
 			)
 		_:
@@ -220,18 +218,10 @@ func _check_for_required_parameters() -> void:
 			"Error: CharacterStat movement_area is not of type RingArea."
 	)
 	assert(
-			core_stats != null,
-			ErrorUtil.missing_required_parameter(self.name, "core_stats")
+			stat_values != null,
+			ErrorUtil.missing_required_parameter(self.name, "stat_values")
 	)
 	assert(
-			core_stats is CoreStats,
-			"Error: CharacterStat core_stats is not of type CoreStats. "
-	)
-	assert(
-			elemental_stats != null,
-			ErrorUtil.missing_required_parameter(self.name, "elemental_stats")
-	)
-	assert(
-			elemental_stats is ElementalStats,
-			"Error: CharacterStat elemental_stats is not of type ElementalStats."
+			stat_values is StatValues,
+			"Error: CharacterStat stat_values is not of type CoreStats. "
 	)

@@ -1,21 +1,19 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://character/player_classes/player_class.gd" type="Script" id=1]
 [ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=2]
-[ext_resource path="res://character/player_classes/TestRangeClass/stat_data/elemental_stats.tres" type="Resource" id=5]
+[ext_resource path="res://character/player_classes/TestRangeClass/stat_data/stat_values.tres" type="Resource" id=3]
 [ext_resource path="res://character/player_classes/TestRangeClass/stat_data/movement_area.tres" type="Resource" id=6]
 [ext_resource path="res://actions/Strike/Strike.tscn" type="PackedScene" id=8]
 [ext_resource path="res://actions/Shot/Shot.tscn" type="PackedScene" id=9]
 [ext_resource path="res://actions/Beam/Beam.tscn" type="PackedScene" id=11]
-[ext_resource path="res://character/player_classes/TestRangeClass/stat_data/core_stats.tres" type="Resource" id=12]
 
 [node name="TestRangeClass" type="Node"]
 script = ExtResource( 1 )
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource( 2 )
-core_stats = ExtResource( 12 )
-elemental_stats = ExtResource( 5 )
+stat_values = ExtResource( 3 )
 movement_area = ExtResource( 6 )
 
 [node name="Techniques" type="Node" parent="."]
