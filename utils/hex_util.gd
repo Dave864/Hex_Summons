@@ -181,7 +181,7 @@ static func _relative_hex_direction(
 # 0  /\            /\  0
 # 3 |  | 1  or  3 |  | 1
 #    \/  2      2  \/
-static func _relative_to_topaxial_direction(
+static func _relative_axial_direction(
 	desired_direction: int,
 	relative_top: int = 0
 ) -> int:

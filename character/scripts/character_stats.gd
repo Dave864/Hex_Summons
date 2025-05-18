@@ -17,13 +17,27 @@ const AGILITY: String = "Agility"
 const MAGIC: String = "Magic"
 const RESISTANCE: String = "Resistance"
 
-var _level: int = 1 setget set_level, get_level
-var _current_health: int = 0
-
 # Stat values
 export var stat_values: Resource = null
 # Reference to the movement area
 export var movement_area: Resource = null
+
+# Modifier values for all stats
+var _health_mod: int = 0
+var _attack_mod: int = 0
+var _defense_mod: int = 0
+var _agility_mod: int = 0
+var _movement_mod: int = 0
+var _magic_earth_mod: int = 0
+var _magic_fire_mod: int = 0
+var _magic_water_mod: int = 0
+var _magic_wind_mod: int = 0
+var _res_earth_mod: int = 0
+var _res_fire_mod: int = 0
+var _res_water_mod: int = 0
+var _res_wind_mod: int = 0
+var _level: int = 1 setget set_level, get_level
+var _current_health: int = 0
 
 # Referene to the scene tree root.
 onready var _root_node: Node = get_tree().edited_scene_root
@@ -95,13 +109,15 @@ func get_resistance(type: int) -> int:
 	return _get_calculated_elemental_stat(ElementalStat.Stat.RESISTANCE, type)
 
 
-# Get all the stats save for movement.
+# Get all the stats.
 func get_all() -> Dictionary:
 	return {
 		LEVEL: _level,
+		HEALTH: get_max_health(),
 		ATTACK: get_attack(),
 		DEFENSE: get_defense(),
 		AGILITY: get_agility(),
+		MOVEMENT: get_movement_range(),
 		MAGIC: {
 			ElementalStat.Element.EARTH: get_magic(ElementalStat.Element.EARTH),
 			ElementalStat.Element.FIRE: get_magic(ElementalStat.Element.FIRE),
@@ -117,19 +133,87 @@ func get_all() -> Dictionary:
 	}
 
 
+# Updates the modifier for the specified stat.
+func update_modifier(type: int, value: int) -> void:
+	match type:
+		Stat.Type.HEALTH:
+			_health_mod += value
+		Stat.Type.ATTACK:
+			_attack_mod += value
+		Stat.Type.DEFENSE:
+			_defense_mod += value
+		Stat.Type.AGILITY:
+			_agility_mod += value
+		Stat.Type.MOVEMENT:
+			_movement_mod += value
+
+
+# Updates the modifier for the specified elemental stat.
+func update_elemental_modifier(type: int, element: int, value: int) -> void:
+	match element:
+		ElementalStat.Element.EARTH:
+			if type == ElementalStat.Type.MAGIC:
+				_magic_earth_mod += value
+			elif type == ElementalStat.Type.RESISTANCE:
+				_res_earth_mod += value
+		ElementalStat.Element.FIRE:
+			if type == ElementalStat.Type.MAGIC:
+				_magic_fire_mod += value
+			elif type == ElementalStat.Type.RESISTANCE:
+				_res_fire_mod += value
+		ElementalStat.Element.WATER:
+			if type == ElementalStat.Type.MAGIC:
+				_magic_water_mod += value
+			elif type == ElementalStat.Type.RESISTANCE:
+				_res_water_mod += value
+		ElementalStat.Element.WIND:
+			if type == ElementalStat.Type.MAGIC:
+				_magic_wind_mod += value
+			elif type == ElementalStat.Type.RESISTANCE:
+				_res_wind_mod += value
+
+
 # Obtains the calculated value for a given stat.
 func _get_calculated_stat(stat: int) -> int:
 	match stat:
 		Stat.Type.HEALTH:
-			return stat_values.health_base + stat_values.health_growth * _level
+			return (
+					(
+						stat_values.health_base
+						+ stat_values.health_growth
+						* _level
+					)
+					+ _health_mod
+			)
 		Stat.Type.ATTACK:
-			return stat_values.attack_base + stat_values.attack_growth * _level
+			return (
+					(
+						stat_values.attack_base
+						+ stat_values.attack_growth
+						* _level
+					)
+					+ _attack_mod
+			)
 		Stat.Type.DEFENSE:
-			return stat_values.defense_base + stat_values.defense_growth * _level
+			return (
+					(
+						stat_values.defense_base
+						+ stat_values.defense_growth
+						* _level
+					)
+					+ _defense_mod
+			)
 		Stat.Type.AGILITY:
-			return stat_values.agility_base + stat_values.agility_growth * _level
+			return (
+					(
+						stat_values.agility_base
+						+ stat_values.agility_growth
+						* _level
+					)
+					+ _agility_mod
+			)
 		Stat.Type.MOVEMENT:
-			return stat_values.movement
+			return stat_values.movement + _movement_mod
 		_:
 			return 0
 
@@ -150,27 +234,39 @@ func _magic_for_level(element: int) -> int:
 	match element:
 		ElementalStat.Element.EARTH:
 			return (
-					stat_values.magic_earth_base
-					+ stat_values.magic_earth_growth
-					* _level
+					(
+						stat_values.magic_earth_base
+						+ stat_values.magic_earth_growth
+						* _level
+					)
+					+ _magic_earth_mod
 			)
 		ElementalStat.Element.FIRE:
 			return (
-					stat_values.magic_fire_base
-					+ stat_values.magic_fire_growth
-					* _level
+					(
+						stat_values.magic_fire_base
+						+ stat_values.magic_fire_growth
+						* _level
+					)
+					+ _magic_fire_mod
 			)
 		ElementalStat.Element.WATER:
 			return (
-					stat_values.magic_water_base
-					+ stat_values.magic_water_growth
-					* _level
+					(
+						stat_values.magic_water_base
+						+ stat_values.magic_water_growth
+						* _level
+					)
+					+ _magic_water_mod
 			)
 		ElementalStat.Element.WIND:
 			return (
-					stat_values.magic_wind_base
-					+ stat_values.magic_wind_growth
-					* _level
+					(
+						stat_values.magic_wind_base
+						+ stat_values.magic_wind_growth
+						* _level
+					)
+					+ _magic_wind_mod
 			)
 		_:
 			return 0
@@ -181,27 +277,39 @@ func _resistance_for_level(element: int) -> int:
 	match element:
 		ElementalStat.Element.EARTH:
 			return (
-					stat_values.res_earth_base
-					+ stat_values.res_earth_growth
-					* _level
+					(
+						stat_values.res_earth_base
+						+ stat_values.res_earth_growth
+						* _level
+					)
+					+ _res_earth_mod
 			)
 		ElementalStat.Element.FIRE:
 			return (
-					stat_values.res_fire_base
-					+ stat_values.res_fire_growth
-					* _level
+					(
+						stat_values.res_fire_base
+						+ stat_values.res_fire_growth
+						* _level
+					)
+					+ _res_fire_mod
 			)
 		ElementalStat.Element.WATER:
 			return (
-					stat_values.res_water_base
-					+ stat_values.res_water_growth
-					* _level
+					(
+						stat_values.res_water_base
+						+ stat_values.res_water_growth
+						* _level
+					)
+					+ _res_water_mod
 			)
 		ElementalStat.Element.WIND:
 			return (
-					stat_values.res_wind_base
-					+ stat_values.res_wind_growth
-					* _level
+					(
+						stat_values.res_wind_base
+						+ stat_values.res_wind_growth
+						* _level
+					)
+					+ _res_wind_mod
 			)
 		_:
 			return 0

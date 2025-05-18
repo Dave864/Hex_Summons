@@ -15,7 +15,6 @@ export(int, 0, 6) var earth_affinity = 0
 export(int, 0, 6) var fire_affinity = 0
 export(int, 0, 6) var water_affinity = 0
 export(int, 0, 6) var wind_affinity = 0
-# The number and elemental type of wisps used for the action.
 # The details of the area and effect range of the action.
 export(Resource) var ranges = null
 # The target of the action.

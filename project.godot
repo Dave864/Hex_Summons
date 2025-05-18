@@ -79,6 +79,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://user_interface/encounter/DisplayPanel/display_panel.gd"
 }, {
+"base": "Node",
+"class": "Effect",
+"language": "GDScript",
+"path": "res://effects/effect.gd"
+}, {
+"base": "Node",
+"class": "ElementalPolarity",
+"language": "GDScript",
+"path": "res://autoloads/elemental_polarity.gd"
+}, {
 "base": "Resource",
 "class": "ElementalStat",
 "language": "GDScript",
@@ -254,6 +264,8 @@ _global_script_class_icons={
 "ConeArea": "",
 "Constants": "",
 "DisplayPanel": "",
+"Effect": "",
+"ElementalPolarity": "",
 "ElementalStat": "",
 "EmissionPoint": "",
 "Encounter": "",
@@ -292,6 +304,10 @@ _global_script_class_icons={
 
 config/name="Hex_Summons"
 config/icon="res://art/icon.png"
+
+[autoload]
+
+ElementalPolarity="*res://autoloads/elemental_polarity.gd"
 
 [global]
 
