@@ -1,4 +1,3 @@
-class_name ElementalPolarity
 extends Node
 """
 Defines the polarity of the four core elements. 
@@ -44,9 +43,43 @@ func swap_elements(element_1: int, element_2: int) -> void:
 
 
 # Swap the polarities of all elements.
-func invert_polarities() -> void:
+func invert_all_polarities() -> void:
+	invert_left_polarities()
+	invert_right_polarities()
+
+
+# Swap the polarities of the elements on the left side of the hex.
+# Corresponds to index 0 of each polarity array.
+func invert_left_polarities() -> void:
 	_swap_polarities_at_index(0)
+
+
+# Swap the polarities of the elements on the right side of the hex.
+# Corresponds to index 1 of each polarity array.
+func invert_right_polarities() -> void:
 	_swap_polarities_at_index(1)
+
+
+# Shift the polarities of all elements counter-clockwise.
+# L: [0, 1] => [1, 3]
+# D: [2, 3] => [0, 2]
+func shift_polarities_ccw() -> void:
+	var first_light_element: int = _polarities[LIGHT][0]
+	_polarities[LIGHT][0] = _polarities[LIGHT][1]
+	_polarities[LIGHT][1] = _polarities[DARK][1]
+	_polarities[DARK][1] = _polarities[DARK][0]
+	_polarities[DARK][0] = first_light_element
+
+
+# Shift the polarities of all elements clockwise.
+# L: [0, 1] => [2, 0]
+# D: [2, 3] => [3, 1]
+func shift_polarities_cw() -> void:
+	var first_dark_element: int = _polarities[DARK][0]
+	_polarities[LIGHT][0] = _polarities[DARK][0]
+	_polarities[DARK][0] = _polarities[DARK][1]
+	_polarities[DARK][1] = _polarities[LIGHT][1]
+	_polarities[LIGHT][1] = first_dark_element
 
 
 # Get the elements of the Light polarity.

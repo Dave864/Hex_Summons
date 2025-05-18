@@ -84,11 +84,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://effects/effect.gd"
 }, {
-"base": "Node",
-"class": "ElementalPolarity",
-"language": "GDScript",
-"path": "res://autoloads/elemental_polarity.gd"
-}, {
 "base": "Resource",
 "class": "ElementalStat",
 "language": "GDScript",
@@ -265,7 +260,6 @@ _global_script_class_icons={
 "Constants": "",
 "DisplayPanel": "",
 "Effect": "",
-"ElementalPolarity": "",
 "ElementalStat": "",
 "EmissionPoint": "",
 "Encounter": "",
