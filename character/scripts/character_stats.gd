@@ -171,6 +171,14 @@ func update_elemental_modifier(type: int, element: int, value: int) -> void:
 				_magic_wind_mod += value
 			elif type == ElementalStat.Type.RESISTANCE:
 				_res_wind_mod += value
+		ElementalStat.Element.LIGHT:
+			var light_elements: Array = ElementalPolarity.get_light_elements()
+			update_elemental_modifier(type, light_elements[0], value)
+			update_elemental_modifier(type, light_elements[1], value)
+		ElementalStat.Element.DARK:
+			var dark_elements: Array = ElementalPolarity.get_dark_elements()
+			update_elemental_modifier(type, dark_elements[0], value)
+			update_elemental_modifier(type, dark_elements[1], value)
 
 
 # Obtains the calculated value for a given stat.
@@ -268,6 +276,18 @@ func _magic_for_level(element: int) -> int:
 					)
 					+ _magic_wind_mod
 			)
+		ElementalStat.Element.LIGHT:
+			var light_elements: Array = ElementalPolarity.get_light_elements()
+			return (
+				_magic_for_level(light_elements[0])
+				+ _magic_for_level(light_elements[1])
+			)
+		ElementalStat.Element.DARK:
+			var dark_elements: Array = ElementalPolarity.get_dark_elements()
+			return (
+				_magic_for_level(dark_elements[0])
+				+ _magic_for_level(dark_elements[1])
+			)
 		_:
 			return 0
 
@@ -310,6 +330,18 @@ func _resistance_for_level(element: int) -> int:
 						* _level
 					)
 					+ _res_wind_mod
+			)
+		ElementalStat.Element.LIGHT:
+			var light_elements: Array = ElementalPolarity.get_light_elements()
+			return (
+				_resistance_for_level(light_elements[0])
+				+ _resistance_for_level(light_elements[1])
+			)
+		ElementalStat.Element.DARK:
+			var dark_elements: Array = ElementalPolarity.get_dark_elements()
+			return (
+				_resistance_for_level(dark_elements[0])
+				+ _resistance_for_level(dark_elements[1])
 			)
 		_:
 			return 0
