@@ -139,6 +139,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://utils/error_util.gd"
 }, {
+"base": "StrengthCalculation",
+"class": "FlatValue",
+"language": "GDScript",
+"path": "res://effects/flat_value.gd"
+}, {
 "base": "MeshInstance",
 "class": "HexHighlighter",
 "language": "GDScript",
@@ -178,6 +183,11 @@ _global_script_classes=[ {
 "class": "MousePosition",
 "language": "GDScript",
 "path": "res://selector_node/mouse_position.gd"
+}, {
+"base": "StrengthCalculation",
+"class": "Percentage",
+"language": "GDScript",
+"path": "res://effects/percentage.gd"
 }, {
 "base": "Character",
 "class": "PlayerCharacter",
@@ -229,6 +239,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://fsm/state_machine.gd"
 }, {
+"base": "Resource",
+"class": "StrengthCalculation",
+"language": "GDScript",
+"path": "res://effects/strength_calculation.gd"
+}, {
 "base": "ScrollContainer",
 "class": "SubOptions",
 "language": "GDScript",
@@ -271,6 +286,7 @@ _global_script_class_icons={
 "EnemyCharacter": "",
 "EnemyCharacterState": "",
 "ErrorUtil": "",
+"FlatValue": "",
 "HexHighlighter": "",
 "HexMap": "",
 "HexMapAStar": "",
@@ -279,6 +295,7 @@ _global_script_class_icons={
 "LabeledIconButton": "",
 "MapTile": "",
 "MousePosition": "",
+"Percentage": "",
 "PlayerCharacter": "",
 "PlayerCharacterState": "",
 "PlayerClass": "",
@@ -289,6 +306,7 @@ _global_script_class_icons={
 "StatValues": "",
 "State": "",
 "StateMachine": "",
+"StrengthCalculation": "",
 "SubOptions": "",
 "SubOptionsButton": "",
 "Tiles": ""

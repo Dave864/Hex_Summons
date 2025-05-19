@@ -10,3 +10,6 @@ types are Earth, Fire, Water, Wind, Dark, Light.
 enum Type {MAGIC, RESISTANCE}
 # The elemental types.
 enum Element {EARTH, FIRE, WATER, WIND, DARK, LIGHT}
+
+export(Type) var type = Type.MAGIC
+export(Element) var element = Element.EARTH

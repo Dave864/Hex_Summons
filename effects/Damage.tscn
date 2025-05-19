@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://effects/effect.gd" type="Script" id=1]
+[ext_resource path="res://stat_types/health.tres" type="Resource" id=2]
+[ext_resource path="res://effects/flat_value.tres" type="Resource" id=3]
+
+[node name="Damage" type="Node"]
+script = ExtResource( 1 )
+stat_affected = ExtResource( 2 )
+modifier = 1
+strength_calculation = ExtResource( 3 )

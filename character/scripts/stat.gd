@@ -7,3 +7,5 @@ Defines the stats used by all characters: Health, Attack, Defense, Agility, Move
 
 # The core stats used by characters and actions.
 enum Type {HEALTH, ATTACK, DEFENSE, AGILITY, MOVEMENT}
+
+export(Type) var type = Type.HEALTH

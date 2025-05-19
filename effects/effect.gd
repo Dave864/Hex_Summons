@@ -19,7 +19,7 @@ func _ready():
 
 
 # Applies the effect to the specified character.
-func apply_effect_to_character(character: Character) -> void:
+func apply_effect_to_target(source: Character, target: Character) -> void:
 	match modifier:
 		Modifier.INCREASE:
 			return
@@ -43,10 +43,10 @@ func _check_for_required_parameters() -> void:
 			strength_calculation != null,
 			ErrorUtil.missing_required_parameter(name, "strength_calculation")
 	)
-#	assert(
-#			strength_calculation is Potency or strength_calculation is Percentage or strength_calculation is FlatValue,
-#			(
-#				"Error: Effect %s stat_affected is neither a FlatValue, "
-#				+ "Percentage, or Potency." % [name]
-#			)
-#	)
+	assert(
+			strength_calculation is StrengthCalculation,
+			(
+				"Error: Effect %s strength_calculation is not a "
+				+ "StrengthCalculation resource." % [name]
+			)
+	)
