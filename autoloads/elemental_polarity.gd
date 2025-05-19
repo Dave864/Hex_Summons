@@ -82,6 +82,28 @@ func shift_polarities_cw() -> void:
 	_polarities[LIGHT][1] = first_dark_element
 
 
+# Changes the elements that are of the Light polarity.
+func set_elements_to_light(element_1: int, element_2: int) -> void:
+	if (
+		not _is_valid_core_element(element_1)
+		or not _is_valid_core_element(element_2)
+	):
+		printerr("Cannot assign polarity to a non-core element.")
+		return
+	_set_elements_to_polarity(LIGHT, DARK, element_1, element_2)
+
+
+# Changes the elements that are of the Dark polarity.
+func set_elements_to_dark(element_1: int, element_2: int) -> void:
+	if (
+		not _is_valid_core_element(element_1)
+		or not _is_valid_core_element(element_2)
+	):
+		printerr("Cannot assign polarity to a non-core element.")
+		return
+	_set_elements_to_polarity(DARK, LIGHT, element_1, element_2)
+
+
 # Get the elements of the Light polarity.
 func get_light_elements() -> Array:
 	return _polarities[LIGHT]
@@ -98,8 +120,52 @@ func get_element_polarity(element: int) -> int:
 		return element
 	elif element == _polarities[LIGHT][0] or element == _polarities[LIGHT][1]:
 		return LIGHT
-	else:
+	elif element == _polarities[DARK][0] or element == _polarities[DARK][1]:
 		return DARK
+	else:
+		return -1
+
+
+# 
+func _set_elements_to_polarity(
+	target_polarity: int,
+	inverse_polarity: int,
+	element_1: int,
+	element_2: int
+) -> void:
+	var element_1_details: Array = _get_polarity_and_index(element_1)
+	var element_2_details: Array = _get_polarity_and_index(element_2)
+	
+	if (
+		element_1_details[0] == inverse_polarity
+		and element_2_details[0] == inverse_polarity
+	):
+		_swap_polarities_at_index(element_1_details[1])
+		_swap_polarities_at_index(element_2_details[1])
+	elif (
+		element_1_details[0] == inverse_polarity
+		and element_2_details[0] == target_polarity
+	):
+		if element_1_details[1] != element_2_details[1]:
+			_swap_polarities_at_index(element_1_details[1])
+		else:
+			if element_1_details[1] == 0:
+				shift_polarities_ccw()
+			else:
+				shift_polarities_cw()
+	elif (
+		element_1_details[0] == target_polarity
+		and element_2_details[0] == inverse_polarity
+	):
+		if element_1_details[1] != element_2_details[1]:
+			_swap_polarities_at_index(element_2_details[1])
+		else:
+			if element_2_details[1] == 0:
+				shift_polarities_cw()
+			else:
+				shift_polarities_ccw()
+	_polarities[target_polarity][0] = element_1
+	_polarities[target_polarity][1] = element_2
 
 
 # Gets the polarity and index of a given element.
@@ -116,6 +182,16 @@ func _swap_polarities_at_index(index: int) -> void:
 	var light_element: int = _polarities[LIGHT][index]
 	_polarities[LIGHT][index] = _polarities[DARK][index]
 	_polarities[DARK][index] = light_element
+
+
+# Checks if a given value corresponds to an elemental type.
+func _is_valid_core_element(element: int) -> bool:
+	return (
+		element == ElementalStat.Element.EARTH
+		or element == ElementalStat.Element.FIRE
+		or element == ElementalStat.Element.WATER
+		or element == ElementalStat.Element.WIND
+	)
 
 
 # Sets Fire and Wind to Light. Sets Earth and Water to Dark.
