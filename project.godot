@@ -199,6 +199,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://character/player_classes/player_class.gd"
 }, {
+"base": "Resource",
+"class": "Potency",
+"language": "GDScript",
+"path": "res://actions/potency.gd"
+}, {
 "base": "AreaRange",
 "class": "RingArea",
 "language": "GDScript",
@@ -293,6 +298,7 @@ _global_script_class_icons={
 "PlayerCharacter": "",
 "PlayerCharacterState": "",
 "PlayerClass": "",
+"Potency": "",
 "RingArea": "",
 "Selector": "",
 "SelectorState": "",

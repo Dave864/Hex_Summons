@@ -1,19 +1,14 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://actions/action_stats.gd" type="Script" id=1]
 [ext_resource path="res://actions/Shot/stat_data/area_range.tres" type="Resource" id=2]
 [ext_resource path="res://actions/Shot/stat_data/effect_range.tres" type="Resource" id=3]
+[ext_resource path="res://actions/Shot/stat_data/potency.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
 target = 2
-attack_potency = 1.0
-earth_alignment = 0
-fire_alignment = 0
-water_alignment = 0
-wind_alignment = 0
-light_alignment = 0
-dark_alignment = 0
+potency = ExtResource( 4 )
 area_range = ExtResource( 2 )
 effect_range = ExtResource( 3 )
 emit_from_center = false

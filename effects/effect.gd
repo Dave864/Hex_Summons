@@ -8,9 +8,18 @@ modifier to a specified character stat.
 
 enum Modifier {INCREASE, DECREASE, SET}
 
+# The stat of the target that is affected by this effect.
 export(Resource) var stat_affected = null
-export(Modifier) var modifier = Modifier.INCREASE
+# How the targeted stat is modified.
+export(Modifier) var modifier = Modifier.SET
+# The method that determines the strength of this effect. Uses the action's
+# potency if left empty.
 export(Resource) var strength_calculation = null
+# Flag that indicates if this effect is resisted by the target
+export(bool) var resisted = true
+# How many turns does this effect last after application. A value of zero means
+# the effect is applied immediately.
+export(int, 0, 100) var turn_duration = 0
 
 
 # Called when the node enters the scene tree for the first time.
