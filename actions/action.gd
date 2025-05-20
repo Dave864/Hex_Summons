@@ -1,23 +1,15 @@
 class_name Action
 extends Node
 """
-Describes the range and effects of an action.
+Describes the details of an action.
 """
 
 
-"""
-TODO: Implement logic to use stats nodes to define action effect
-"""
-# The modifier that will be applied to the character's attack stat when this action is used.
-export(float, 0, 3) var potency = 1.0
-# The elemental affinity of the action.
-export(int, 0, 6) var earth_affinity = 0
-export(int, 0, 6) var fire_affinity = 0
-export(int, 0, 6) var water_affinity = 0
-export(int, 0, 6) var wind_affinity = 0
 # The details of the area and effect range of the action.
 export(Resource) var stat_details = null
 
+# The effects of this action
+var _effects: Array setget , get_effects
 # Whether the area range is cardinal or ring.
 var _is_cardinal: bool = false setget , get_is_cardinal
 # The index of the tile the effect is emitted from.
@@ -28,13 +20,17 @@ var _emission_direction: int setget set_emission_direction, get_emission_directi
 
 func _ready() -> void:
 	_check_for_required_parameters()
-	# No DeadRange node indicates no dead range.
+	_initialize_effects()
 	_is_cardinal = stat_details.area_range is CardinalArea
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
 func _process(_delta) -> void:
 	pass
+
+# Returns the effects of this action.
+func get_effects() -> Array:
+	return _effects
 
 
 # Returns if the area range is bound cardinally or not.
@@ -68,6 +64,17 @@ func get_emission_direction() -> int:
 # Resets the position of the emittor.
 func reset_emittor_position() -> void:
 	_emission_map_index = -1
+
+
+# Initialize the effects list of the action, checking that all effects are valid.
+func _initialize_effects() -> void:
+	_effects = get_children()
+	assert(
+			len(_effects) > 0,
+			"Error: Action %s does not have any effects" % [name]
+	)
+	for effect in _effects:
+		assert(effect is Effect, "Error: Action %s effect %s is not an Effect")
 
 
 # Checks that all required parameters are set.

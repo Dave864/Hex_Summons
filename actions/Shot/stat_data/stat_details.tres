@@ -7,6 +7,13 @@
 [resource]
 script = ExtResource( 1 )
 target = 2
+attack_potency = 1.0
+earth_alignment = 0
+fire_alignment = 0
+water_alignment = 0
+wind_alignment = 0
+light_alignment = 0
+dark_alignment = 0
 area_range = ExtResource( 2 )
 effect_range = ExtResource( 3 )
 emit_from_center = false
