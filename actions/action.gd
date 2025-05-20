@@ -16,9 +16,7 @@ export(int, 0, 6) var fire_affinity = 0
 export(int, 0, 6) var water_affinity = 0
 export(int, 0, 6) var wind_affinity = 0
 # The details of the area and effect range of the action.
-export(Resource) var ranges = null
-# The target of the action.
-export(Resource) var target = null
+export(Resource) var stat_details = null
 
 # Whether the area range is cardinal or ring.
 var _is_cardinal: bool = false setget , get_is_cardinal
@@ -31,7 +29,7 @@ var _emission_direction: int setget set_emission_direction, get_emission_directi
 func _ready() -> void:
 	_check_for_required_parameters()
 	# No DeadRange node indicates no dead range.
-	_is_cardinal = ranges.area_range is CardinalArea
+	_is_cardinal = stat_details.area_range is CardinalArea
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
@@ -75,39 +73,11 @@ func reset_emittor_position() -> void:
 # Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
-			ranges != null,
-			ErrorUtil.missing_required_parameter(name, "ranges")
+			stat_details != null,
+			ErrorUtil.missing_required_parameter(name, "stat_details")
 	)
 	assert(
-			ranges is ActionRanges,
-			"Error: Action %s ranges is not of type ActionRanges."
+			stat_details is ActionStats,
+			"Error: Action %s ranges is not of type ActionStats."
 	)
-	assert(
-			ranges.area_range != null,
-			ErrorUtil.missing_required_parameter(name, "area_range")
-	)
-	assert(
-			ranges.area_range is CardinalArea or ranges.area_range is RingArea,
-			"Error: Action %s area_range is neither a CardinalArea or RingArea." % [name]
-	)
-	if ranges.dead_range != null:
-		assert(
-				ranges.dead_range is CardinalArea or ranges.dead_range is RingArea,
-				"Error: Action %s dead_range is neither a CardinalArea or RingArea."
-		)
-	assert(
-			ranges.effect_range != null,
-			ErrorUtil.missing_required_parameter(name, "effect_range")
-	)
-	assert(
-			ranges.effect_range is AreaRange,
-			"Error: Action %s effect_range is not an AreaRange." % [name]
-	)
-	assert(
-			target != null,
-			ErrorUtil.missing_required_parameter(name, "target")
-	)
-	assert(
-			target is ActionTarget,
-			"Error: Action %s target is not an ActionTarget." % [name]
-	)
+	stat_details.check_for_required_resources()

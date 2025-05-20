@@ -1,10 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://actions/Shot/stat_data/ranges.tres" type="Resource" id=1]
+[ext_resource path="res://actions/Shot/stat_data/stat_details.tres" type="Resource" id=1]
 [ext_resource path="res://actions/action.gd" type="Script" id=2]
-[ext_resource path="res://actions/Shot/stat_data/target.tres" type="Resource" id=3]
 
 [node name="Shot" type="Node"]
 script = ExtResource( 2 )
-ranges = ExtResource( 1 )
-target = ExtResource( 3 )
+stat_details = ExtResource( 1 )
