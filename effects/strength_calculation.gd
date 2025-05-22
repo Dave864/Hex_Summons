@@ -10,11 +10,11 @@ export(Resource) var action_potency = null
 
 # Determines the strength of the effect for a given character.
 func calculate_effect_strength(
-	source: Character,
-	target: Character = null,
-	resisted: bool = false
+	source_stats: CharacterStats,
+	target: Character,
+	resisted: bool
 ) -> float:
-	var strength_values: Dictionary = _calculate_potency_values(source.stats)
+	var strength_values: Dictionary = _calculate_potency_values(source_stats)
 	if resisted:
 		var res_values: Dictionary = target.stats.get_defensive()
 		_apply_resistance(strength_values, res_values)
@@ -22,6 +22,38 @@ func calculate_effect_strength(
 	for v in strength_values.values():
 		total_strength += v
 	return total_strength
+
+
+# Sets the value specified stat of the target character to the value of the potency.
+func set_operation(
+	source_stats: CharacterStats,
+	target: Character,
+	stat_affected: Resource,
+	resisted: bool
+) -> void:
+	pass
+
+
+# Increases the value specified stat of the target character by the value of
+# the potency.
+func increase_operation(
+	source_stats: CharacterStats,
+	target: Character,
+	stat_affected: Resource,
+	resisted: bool
+) -> void:
+	pass
+
+
+# Descreases the value specified stat of the target character by the value of
+# the potency.
+func decrease_operation(
+	source_stats: CharacterStats,
+	target: Character,
+	stat_affected: Resource,
+	resisted: bool
+) -> void:
+	pass
 
 
 func check_for_required_resources() -> void:

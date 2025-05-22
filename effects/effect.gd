@@ -20,6 +20,8 @@ export(bool) var resisted = true
 # the effect is applied immediately.
 export(int, 0, 100) var turn_duration = 0
 
+# The stats of the character that will apply this effect.
+var _source_stats: CharacterStats = null setget set_source_stats
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,8 +29,18 @@ func _ready():
 	strength_calculation.check_for_required_resources()
 
 
+# Updates the source character of this effect.
+func set_source_stats(new_source: CharacterStats) -> void:
+	_source_stats = new_source
+
+
 # Applies the effect to the specified character.
-func apply_effect_to_target(source: Character, target: Character) -> void:
+func apply_effect_to_target(target: Character) -> void:
+	var strength: float = strength_calculation.calculate_effect_strength(
+			_source_stats,
+			target,
+			resisted
+	)
 	match modifier:
 		Modifier.INCREASE:
 			return

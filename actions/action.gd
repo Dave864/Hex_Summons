@@ -5,6 +5,8 @@ Describes the details of an action.
 """
 
 
+# The path to the stats of the character that owns this action.
+export(NodePath) var source_stats_path = null
 # The details of the area and effect range of the action.
 export(Resource) var stat_details = null
 
@@ -75,10 +77,17 @@ func _initialize_effects() -> void:
 	)
 	for effect in _effects:
 		assert(effect is Effect, "Error: Action %s effect %s is not an Effect")
+		# Type checking for the node referenced at the path.
+		var source_stats_node: CharacterStats = get_node(source_stats_path)
+		effect.set_source(source_stats_node)
 
 
 # Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
+	assert(
+			source_stats_path != null,
+			ErrorUtil.missing_required_parameter(name, "source_stats_path")
+	)
 	assert(
 			stat_details != null,
 			ErrorUtil.missing_required_parameter(name, "stat_details")
