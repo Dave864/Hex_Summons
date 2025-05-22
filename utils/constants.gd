@@ -20,6 +20,16 @@ enum RangeTypes {
 	SPELL
 }
 
+# Words referring to different character stats.
+const LEVEL: String = "Level"
+const MOVEMENT: String = "Movement"
+const HEALTH: String = "Health"
+const ATTACK: String = "Attack"
+const DEFENSE: String = "Defense"
+const AGILITY: String = "Agility"
+const MAGIC: String = "Magic"
+const RESISTANCE: String = "Resistance"
+
 # The path to a default icon.
 const DEFAULT_ICON_PATH: String = "res://art/icon.png"
 

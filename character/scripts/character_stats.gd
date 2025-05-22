@@ -8,15 +8,6 @@ Node that keeps track of all of a character's statistics.
 
 signal health_changed(new_value)
 
-const LEVEL: String = "Level"
-const MOVEMENT: String = "Movement"
-const HEALTH: String = "Health"
-const ATTACK: String = "Attack"
-const DEFENSE: String = "Defense"
-const AGILITY: String = "Agility"
-const MAGIC: String = "Magic"
-const RESISTANCE: String = "Resistance"
-
 # Stat values
 export var stat_values: Resource = null
 # Reference to the movement area
@@ -112,19 +103,45 @@ func get_resistance(type: int) -> int:
 # Get all the stats.
 func get_all() -> Dictionary:
 	return {
-		LEVEL: _level,
-		HEALTH: get_max_health(),
-		ATTACK: get_attack(),
-		DEFENSE: get_defense(),
-		AGILITY: get_agility(),
-		MOVEMENT: get_movement_range(),
-		MAGIC: {
+		Constants.LEVEL: _level,
+		Constants.HEALTH: get_max_health(),
+		Constants.ATTACK: get_attack(),
+		Constants.DEFENSE: get_defense(),
+		Constants.AGILITY: get_agility(),
+		Constants.MOVEMENT: get_movement_range(),
+		Constants.MAGIC: {
 			ElementalStat.Element.EARTH: get_magic(ElementalStat.Element.EARTH),
 			ElementalStat.Element.FIRE: get_magic(ElementalStat.Element.FIRE),
 			ElementalStat.Element.WATER: get_magic(ElementalStat.Element.WATER),
 			ElementalStat.Element.WIND: get_magic(ElementalStat.Element.WIND),
 		},
-		RESISTANCE: {
+		Constants.RESISTANCE: {
+			ElementalStat.Element.EARTH: get_resistance(ElementalStat.Element.EARTH),
+			ElementalStat.Element.FIRE: get_resistance(ElementalStat.Element.FIRE),
+			ElementalStat.Element.WATER: get_resistance(ElementalStat.Element.WATER),
+			ElementalStat.Element.WIND: get_resistance(ElementalStat.Element.WIND),
+		}
+	}
+
+
+# Get the offensive stats.
+func get_offensive() -> Dictionary:
+	return {
+		Constants.ATTACK: get_attack(),
+		Constants.MAGIC: {
+			ElementalStat.Element.EARTH: get_magic(ElementalStat.Element.EARTH),
+			ElementalStat.Element.FIRE: get_magic(ElementalStat.Element.FIRE),
+			ElementalStat.Element.WATER: get_magic(ElementalStat.Element.WATER),
+			ElementalStat.Element.WIND: get_magic(ElementalStat.Element.WIND),
+		}
+	}
+
+
+# Get the defensive stats.
+func get_defensive() -> Dictionary:
+	return {
+		Constants.DEFENSE: get_defense(),
+		Constants.RESISTANCE: {
 			ElementalStat.Element.EARTH: get_resistance(ElementalStat.Element.EARTH),
 			ElementalStat.Element.FIRE: get_resistance(ElementalStat.Element.FIRE),
 			ElementalStat.Element.WATER: get_resistance(ElementalStat.Element.WATER),
