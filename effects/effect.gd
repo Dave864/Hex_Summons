@@ -36,11 +36,6 @@ func set_source_stats(new_source: CharacterStats) -> void:
 
 # Applies the effect to the specified character.
 func apply_effect_to_target(target: Character) -> void:
-	var strength: float = strength_calculation.calculate_effect_strength(
-			_source_stats,
-			target,
-			resisted
-	)
 	match modifier:
 		Modifier.INCREASE:
 			return

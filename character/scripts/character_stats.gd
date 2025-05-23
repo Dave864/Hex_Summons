@@ -53,7 +53,7 @@ func set_movement_range(val: int) -> void:
 
 
 func get_movement_range() -> int:
-	return _get_calculated_stat(Stat.Type.MOVEMENT)
+	return get_calculated_stat(Stat.Type.MOVEMENT)
 
 
 # Get the indexes of the tiles within movement range.
@@ -62,7 +62,7 @@ func get_movement_area() -> Resource:
 
 
 func get_max_health() -> int:
-	return _get_calculated_stat(Stat.Type.HEALTH)
+	return get_calculated_stat(Stat.Type.HEALTH)
 
 
 func set_cur_health(val: int) -> void:
@@ -81,23 +81,23 @@ func get_cur_health() -> int:
 
 
 func get_attack() -> int:
-	return _get_calculated_stat(Stat.Type.ATTACK)
+	return get_calculated_stat(Stat.Type.ATTACK)
 
 
 func get_defense() -> int:
-	return _get_calculated_stat(Stat.Type.DEFENSE)
+	return get_calculated_stat(Stat.Type.DEFENSE)
 
 
 func get_agility() -> int:
-	return _get_calculated_stat(Stat.Type.AGILITY)
+	return get_calculated_stat(Stat.Type.AGILITY)
 
 
 func get_magic(type: int) -> int:
-	return _get_calculated_elemental_stat(ElementalStat.Type.MAGIC, type)
+	return get_calculated_elemental_stat(ElementalStat.Type.MAGIC, type)
 
 
 func get_resistance(type: int) -> int:
-	return _get_calculated_elemental_stat(ElementalStat.Stat.RESISTANCE, type)
+	return get_calculated_elemental_stat(ElementalStat.Stat.RESISTANCE, type)
 
 
 # Get all the stats.
@@ -150,8 +150,9 @@ func get_defensive() -> Dictionary:
 	}
 
 
-# Updates the modifier for the specified stat.
-func update_modifier(type: int, value: int) -> void:
+# Updates the modifier for the specified stat so that it results in the new value
+# when added to the base value of the stat.
+func update_stat(type: int, value: int) -> void:
 	match type:
 		Stat.Type.HEALTH:
 			_health_mod += value
@@ -165,8 +166,9 @@ func update_modifier(type: int, value: int) -> void:
 			_movement_mod += value
 
 
-# Updates the modifier for the specified elemental stat.
-func update_elemental_modifier(type: int, element: int, value: int) -> void:
+# Updates the modifier for the specified elemental statso that it results in
+# the new value when added to the base value of the stat.
+func update_elemental_stat(type: int, element: int, value: int) -> void:
 	match element:
 		ElementalStat.Element.EARTH:
 			if type == ElementalStat.Type.MAGIC:
@@ -190,16 +192,16 @@ func update_elemental_modifier(type: int, element: int, value: int) -> void:
 				_res_wind_mod += value
 		ElementalStat.Element.LIGHT:
 			var light_elements: Array = ElementalPolarity.get_light_elements()
-			update_elemental_modifier(type, light_elements[0], value)
-			update_elemental_modifier(type, light_elements[1], value)
+			update_elemental_stat(type, light_elements[0], value)
+			update_elemental_stat(type, light_elements[1], value)
 		ElementalStat.Element.DARK:
 			var dark_elements: Array = ElementalPolarity.get_dark_elements()
-			update_elemental_modifier(type, dark_elements[0], value)
-			update_elemental_modifier(type, dark_elements[1], value)
+			update_elemental_stat(type, dark_elements[0], value)
+			update_elemental_stat(type, dark_elements[1], value)
 
 
 # Obtains the calculated value for a given stat.
-func _get_calculated_stat(stat: int) -> int:
+func get_calculated_stat(stat: int) -> int:
 	match stat:
 		Stat.Type.HEALTH:
 			return (
@@ -244,7 +246,7 @@ func _get_calculated_stat(stat: int) -> int:
 
 
 # Obtains the calculated value for a given elemental stat.
-func _get_calculated_elemental_stat(stat: int, element: int) -> int:
+func get_calculated_elemental_stat(stat: int, element: int) -> int:
 	match stat:
 		ElementalStat.Type.MAGIC:
 			return _magic_for_level(element)
