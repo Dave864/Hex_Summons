@@ -6,12 +6,10 @@ modifier to a specified character stat.
 """
 
 
-enum Operation {INCREASE, DECREASE, SET}
-
 # The stat of the target that is affected by this effect.
 export(Resource) var stat_affected = null
 # How the targeted stat is modified.
-export(Operation) var operation = Operation.SET
+export(Constants.Operation) var operation = Constants.Operation.SET
 # The method that determines the strength of this effect.
 export(Resource) var strength_calculation = null
 # Flag that indicates if this effect is resisted by the target

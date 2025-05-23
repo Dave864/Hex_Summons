@@ -20,6 +20,9 @@ enum RangeTypes {
 	SPELL
 }
 
+# The different operations that can be performed on character stats.
+enum Operation {INCREASE, DECREASE, SET}
+
 # Words referring to different character stats.
 const LEVEL: String = "Level"
 const MOVEMENT: String = "Movement"

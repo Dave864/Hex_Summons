@@ -8,7 +8,8 @@ Base class that is used to define the strength of an effect.
 export(Resource) var action_potency = null
 
 
-# Gets the base strength, percentage, and original target stat value.
+# Gets the needed details for the operation and then runs said operation on those
+# values, returning the result.
 func process_operation(
 	source_stats: CharacterStats,
 	target_stats: CharacterStats,
@@ -27,11 +28,11 @@ func process_operation(
 	var stat_value: int = _get_target_stat_value(target_stats, stat_affected)
 	
 	match operation:
-		Effect.Operation.SET:
+		Constants.Operation.SET:
 			return _set_operation(base_strength, percentage, stat_value)
-		Effect.Operation.INCREASE:
+		Constants.Operation.INCREASE:
 			return _increase_operation(base_strength, percentage, stat_value)
-		Effect.Operation.DECREASE:
+		Constants.Operation.DECREASE:
 			return _decrease_operation(base_strength, percentage, stat_value)
 		_:
 			return 0

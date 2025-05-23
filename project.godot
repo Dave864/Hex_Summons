@@ -140,9 +140,9 @@ _global_script_classes=[ {
 "path": "res://utils/error_util.gd"
 }, {
 "base": "StrengthCalculation",
-"class": "FlatValue",
+"class": "FlatValueCalcultion",
 "language": "GDScript",
-"path": "res://effects/flat_value.gd"
+"path": "res://effects/flat_value_calculation.gd"
 }, {
 "base": "MeshInstance",
 "class": "HexHighlighter",
@@ -185,9 +185,9 @@ _global_script_classes=[ {
 "path": "res://selector_node/mouse_position.gd"
 }, {
 "base": "StrengthCalculation",
-"class": "Percentage",
+"class": "PercentageCalculation",
 "language": "GDScript",
-"path": "res://effects/percentage.gd"
+"path": "res://effects/percentage_calculation.gd"
 }, {
 "base": "Character",
 "class": "PlayerCharacter",
@@ -291,7 +291,7 @@ _global_script_class_icons={
 "EnemyCharacter": "",
 "EnemyCharacterState": "",
 "ErrorUtil": "",
-"FlatValue": "",
+"FlatValueCalcultion": "",
 "HexHighlighter": "",
 "HexMap": "",
 "HexMapAStar": "",
@@ -300,7 +300,7 @@ _global_script_class_icons={
 "LabeledIconButton": "",
 "MapTile": "",
 "MousePosition": "",
-"Percentage": "",
+"PercentageCalculation": "",
 "PlayerCharacter": "",
 "PlayerCharacterState": "",
 "PlayerClass": "",
