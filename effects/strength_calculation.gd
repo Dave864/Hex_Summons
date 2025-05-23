@@ -24,16 +24,16 @@ func process_operation(
 	)
 	# How far should the target value shift towards the strength value.
 	# 0.0 means it does not shift, 1.0 means it shifts fully.
-	var percentage: float = clamp(base_strength / resisted_strength, 0.0, 1.0)
+	var shift_percentage: float = clamp(base_strength / resisted_strength, 0.0, 1.0)
 	var stat_value: int = _get_target_stat_value(target_stats, stat_affected)
 	
 	match operation:
 		Constants.Operation.SET:
-			return _set_operation(base_strength, percentage, stat_value)
+			return _set_operation(base_strength, shift_percentage, stat_value)
 		Constants.Operation.INCREASE:
-			return _increase_operation(base_strength, percentage, stat_value)
+			return _increase_operation(base_strength, shift_percentage, stat_value)
 		Constants.Operation.DECREASE:
-			return _decrease_operation(base_strength, percentage, stat_value)
+			return _decrease_operation(base_strength, shift_percentage, stat_value)
 		_:
 			return 0
 
@@ -41,14 +41,15 @@ func process_operation(
 # Determines the value that the target stat will be set to. If this effect is
 # resisted, the value will be closer to that of the original stat.
 func _set_operation(
-	base_strength: float,
-	percentage: float,
+	target_strength: float,
+	shift_percentage: float,
 	stat_value: int
 ) -> int:
-	if base_strength - stat_value >= 0.0:
-		stat_value += convert(base_strength * percentage, TYPE_INT)
+	var diff: float = target_strength - stat_value
+	if diff >= 0.0:
+		stat_value += convert(diff * shift_percentage, TYPE_INT)
 	else:
-		stat_value -= convert(base_strength * percentage, TYPE_INT)
+		stat_value -= convert(diff * shift_percentage, TYPE_INT)
 	return stat_value
 
 
@@ -56,20 +57,20 @@ func _set_operation(
 # the potency.
 func _increase_operation(
 	base_strength: float,
-	percentage: float,
+	shift_percentage: float,
 	stat_value: int
 ) -> int:
-	return stat_value + convert(base_strength * percentage, TYPE_INT)
+	return stat_value + convert(base_strength * shift_percentage, TYPE_INT)
 
 
 # Descreases the value specified stat of the target character by the value of
 # the potency.
 func _decrease_operation(
 	base_strength: float,
-	percentage: float,
+	shift_percentage: float,
 	stat_value: int
 ) -> int:
-	return stat_value - convert(base_strength * percentage, TYPE_INT) 
+	return stat_value - convert(base_strength * shift_percentage, TYPE_INT) 
 
 
 func check_for_required_resources() -> void:

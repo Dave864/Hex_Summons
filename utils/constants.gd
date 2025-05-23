@@ -17,11 +17,15 @@ enum MapOccupants {
 enum RangeTypes {
 	MOVE,
 	TECHNIQUE,
-	SPELL
+	SPELL,
 }
 
 # The different operations that can be performed on character stats.
-enum Operation {INCREASE, DECREASE, SET}
+enum Operation {
+	INCREASE,
+	DECREASE,
+	SET
+}
 
 # Words referring to different character stats.
 const LEVEL: String = "Level"

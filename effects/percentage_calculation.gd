@@ -1,11 +1,11 @@
-class_name FlatValueCalcultion
+class_name PercentageCalculation
 extends StrengthCalculation
 """
-A strength calculation that simply sets the strength to a given value.
+A strength calculation that uses the percentage of a given number.
 """
 
 
-export(int, 0, 1000) var flat_value = 0
+export(float, 0.0, 5.0) var percentage = 1.0
 
 
 # Determines the value that the target stat will be set to. If this effect is
@@ -15,7 +15,7 @@ func _set_operation(
 	shift_percentage: float,
 	stat_value: int
 ) -> int:
-	var diff: float = flat_value - stat_value
+	var diff: float = (stat_value * percentage) - stat_value
 	if diff >= 0.0:
 		stat_value += convert(diff * shift_percentage, TYPE_INT)
 	else:
@@ -30,7 +30,7 @@ func _increase_operation(
 	shift_percentage: float,
 	stat_value: int
 ) -> int:
-	return stat_value + convert(flat_value * shift_percentage, TYPE_INT)
+	return stat_value + convert(stat_value * percentage * shift_percentage, TYPE_INT)
 
 
 # Descreases the value specified stat of the target character by the value of
@@ -40,4 +40,4 @@ func _decrease_operation(
 	shift_percentage: float,
 	stat_value: int
 ) -> int:
-	return stat_value - convert(flat_value * shift_percentage, TYPE_INT)
+	return stat_value - convert(stat_value * percentage * shift_percentage, TYPE_INT)
