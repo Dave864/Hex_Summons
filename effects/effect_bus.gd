@@ -51,22 +51,29 @@ func progress_duration(turn_count: int = 1) -> void:
 # Determines the final value of the affected stat after applying all of the effects.
 # Uses the provided character stats as reference. Does not update the character stats.
 func process_effects(base_stats: CharacterStats) -> int:
-	var final_stat_value: int = 0
+	var final_stat_value: int = -1
 	for id in _effect_bus.keys():
-		"""
-		TODO: Add logic that processes effect
-		"""
-		pass
+		final_stat_value += _effect_bus[_bus_end][0].effect_on_target(base_stats)
+	if _effect_bus.keys().size() > 0:
+		# Stats should never go below zero.
+		final_stat_value = convert(
+				clamp(final_stat_value, 0.0, final_stat_value),
+				TYPE_INT
+		)
 	return final_stat_value
 
 
 # Determines the final value of the affected stat using only the most recent effect.
 # Uses the provided character stats as reference. Does not update the character stats.
 func process_last_effect(base_stats: CharacterStats) -> int:
-	var final_stat_value: int = 0
-	"""
-	TODO: Add logic that processes effect
-	"""
+	var final_stat_value: int = -1
+	if _effect_bus.keys().size() > 0:
+		final_stat_value = _effect_bus[_bus_end][0].effect_on_target(base_stats)
+		# Stats should never go below zero.
+		final_stat_value = convert(
+				clamp(final_stat_value, 0.0, final_stat_value),
+				TYPE_INT
+		)
 	return final_stat_value
 
 

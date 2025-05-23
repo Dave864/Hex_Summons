@@ -35,15 +35,17 @@ func set_source_stats(new_source: CharacterStats) -> void:
 	_source_stats = new_source
 
 
-# Applies the effect to the specified character.
-func apply_effect_to_target(target_stats: CharacterStats) -> void:
+# Determines the numerical result of the effect on a target set of character stats.
+func effect_on_target(target_stats: CharacterStats) -> int:
 	match operation:
 		Operation.INCREASE:
-			return
+			return 0
 		Operation.DECREASE:
-			return
+			return 0
 		Operation.SET:
-			return
+			return 0
+		_:
+			return 0
 
 
 # Check that all required parameters are set.
