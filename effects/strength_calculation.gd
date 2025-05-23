@@ -8,23 +8,42 @@ Base class that is used to define the strength of an effect.
 export(Resource) var action_potency = null
 
 
-# Determines the value that the target stat will be set to. If this effect is
-# resisted, the value will be closer to that of the original stat.
-func set_operation(
+# Gets the base strength, percentage, and original target stat value.
+func process_operation(
 	source_stats: CharacterStats,
 	target_stats: CharacterStats,
 	stat_affected: Resource,
-	resisted: bool
+	resisted: bool,
+	operation: int
 ) -> int:
 	var base_strength: float = _calculate_strength(source_stats)
 	var resisted_strength: float = (
 			_calculate_resisted_strength(source_stats, target_stats) if resisted
 			else base_strength
 	)
-	# How far should the target value shift towards the original potency.
+	# How far should the target value shift towards the strength value.
 	# 0.0 means it does not shift, 1.0 means it shifts fully.
 	var percentage: float = clamp(base_strength / resisted_strength, 0.0, 1.0)
 	var stat_value: int = _get_target_stat_value(target_stats, stat_affected)
+	
+	match operation:
+		Effect.Operation.SET:
+			return _set_operation(base_strength, percentage, stat_value)
+		Effect.Operation.INCREASE:
+			return _increase_operation(base_strength, percentage, stat_value)
+		Effect.Operation.DECREASE:
+			return _decrease_operation(base_strength, percentage, stat_value)
+		_:
+			return 0
+
+
+# Determines the value that the target stat will be set to. If this effect is
+# resisted, the value will be closer to that of the original stat.
+func _set_operation(
+	base_strength: float,
+	percentage: float,
+	stat_value: int
+) -> int:
 	if base_strength - stat_value >= 0.0:
 		stat_value += convert(base_strength * percentage, TYPE_INT)
 	else:
@@ -34,24 +53,22 @@ func set_operation(
 
 # Increases the value specified stat of the target character by the value of
 # the potency.
-func increase_operation(
-	source_stats: CharacterStats,
-	target_char: Character,
-	stat_affected: Resource,
-	resisted: bool
+func _increase_operation(
+	base_strength: float,
+	percentage: float,
+	stat_value: int
 ) -> int:
-	return 0
+	return stat_value + convert(base_strength * percentage, TYPE_INT)
 
 
 # Descreases the value specified stat of the target character by the value of
 # the potency.
-func decrease_operation(
-	source_stats: CharacterStats,
-	target_char: Character,
-	stat_affected: Resource,
-	resisted: bool
+func _decrease_operation(
+	base_strength: float,
+	percentage: float,
+	stat_value: int
 ) -> int:
-	return 0
+	return stat_value - convert(base_strength * percentage, TYPE_INT) 
 
 
 func check_for_required_resources() -> void:
@@ -89,20 +106,6 @@ func _convert_to_scalar(strength_data: Dictionary) -> float:
 	return total_strength
 
 
-# Updates the value of the target character's stat.
-func _set_target_stat_value(
-	target_stats: CharacterStats,
-	stat: Resource,
-	value: int
-) -> void:
-	if stat is Stat:
-		target_stats.update_modifier(stat.Type, value)
-	elif stat is ElementalStat:
-		target_stats.update_elemental_modifier(stat.Type, stat.Element, value)
-	else:
-		printerr("A non Stat or ElementalStat resource was provided.")
-
-
 # Gets the value of the target character's stat.
 func _get_target_stat_value(target_stats: CharacterStats, stat: Resource) -> int:
 	if stat is Stat:
@@ -116,13 +119,13 @@ func _get_target_stat_value(target_stats: CharacterStats, stat: Resource) -> int
 
 # Determines the raw potency values for a given character.
 func _get_potency_values(character_stats: CharacterStats) -> Dictionary:
-	var pv: Dictionary = character_stats.get_offensive()
-	pv[Constants.ATTACK] *= action_potency.attack_potency
+	var p_vals: Dictionary = character_stats.get_offensive()
+	p_vals[Constants.ATTACK] *= action_potency.attack_potency
 	for element in ElementalStat.Element:
-		pv[Constants.MAGIC][element] *= (
+		p_vals[Constants.MAGIC][element] *= (
 				action_potency.get_elemental_potency(element)
 		)
-	return pv
+	return p_vals
 
 
 # Applies resistance values to the strength.

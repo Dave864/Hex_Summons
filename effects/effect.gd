@@ -37,15 +37,13 @@ func set_source_stats(new_source: CharacterStats) -> void:
 
 # Determines the numerical result of the effect on a target set of character stats.
 func effect_on_target(target_stats: CharacterStats) -> int:
-	match operation:
-		Operation.INCREASE:
-			return 0
-		Operation.DECREASE:
-			return 0
-		Operation.SET:
-			return 0
-		_:
-			return 0
+	return strength_calculation.process_operation(
+			_source_stats,
+			target_stats,
+			stat_affected,
+			resisted,
+			operation
+	)
 
 
 # Check that all required parameters are set.
