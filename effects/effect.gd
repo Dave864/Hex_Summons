@@ -6,12 +6,12 @@ modifier to a specified character stat.
 """
 
 
-enum Modifier {INCREASE, DECREASE, SET}
+enum Operation {INCREASE, DECREASE, SET}
 
 # The stat of the target that is affected by this effect.
 export(Resource) var stat_affected = null
 # How the targeted stat is modified.
-export(Modifier) var modifier = Modifier.SET
+export(Operation) var operation = Operation.SET
 # The method that determines the strength of this effect.
 export(Resource) var strength_calculation = null
 # Flag that indicates if this effect is resisted by the target
@@ -23,25 +23,26 @@ export(int, 0, 100) var turn_duration = 0
 # The stats of the character that will apply this effect.
 var _source_stats: CharacterStats = null setget set_source_stats
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
 	strength_calculation.check_for_required_resources()
 
 
-# Updates the source character of this effect.
+# Updates the source character stats of this effect.
 func set_source_stats(new_source: CharacterStats) -> void:
 	_source_stats = new_source
 
 
 # Applies the effect to the specified character.
-func apply_effect_to_target(target: Character) -> void:
-	match modifier:
-		Modifier.INCREASE:
+func apply_effect_to_target(target_stats: CharacterStats) -> void:
+	match operation:
+		Operation.INCREASE:
 			return
-		Modifier.DECREASE:
+		Operation.DECREASE:
 			return
-		Modifier.SET:
+		Operation.SET:
 			return
 
 

@@ -93,11 +93,11 @@ func get_agility() -> int:
 
 
 func get_magic(type: int) -> int:
-	return get_calculated_elemental_stat(ElementalStat.Type.MAGIC, type)
+	return _magic_for_level(type)
 
 
 func get_resistance(type: int) -> int:
-	return get_calculated_elemental_stat(ElementalStat.Stat.RESISTANCE, type)
+	return _resistance_for_level(type)
 
 
 # Get all the stats.
@@ -114,12 +114,16 @@ func get_all() -> Dictionary:
 			ElementalStat.Element.FIRE: get_magic(ElementalStat.Element.FIRE),
 			ElementalStat.Element.WATER: get_magic(ElementalStat.Element.WATER),
 			ElementalStat.Element.WIND: get_magic(ElementalStat.Element.WIND),
+			ElementalStat.Element.LIGHT: get_magic(ElementalStat.Element.LIGHT),
+			ElementalStat.Element.DARK: get_magic(ElementalStat.Element.DARK),
 		},
 		Constants.RESISTANCE: {
 			ElementalStat.Element.EARTH: get_resistance(ElementalStat.Element.EARTH),
 			ElementalStat.Element.FIRE: get_resistance(ElementalStat.Element.FIRE),
 			ElementalStat.Element.WATER: get_resistance(ElementalStat.Element.WATER),
 			ElementalStat.Element.WIND: get_resistance(ElementalStat.Element.WIND),
+			ElementalStat.Element.LIGHT: get_resistance(ElementalStat.Element.LIGHT),
+			ElementalStat.Element.DARK: get_resistance(ElementalStat.Element.DARK),
 		}
 	}
 
@@ -133,6 +137,8 @@ func get_offensive() -> Dictionary:
 			ElementalStat.Element.FIRE: get_magic(ElementalStat.Element.FIRE),
 			ElementalStat.Element.WATER: get_magic(ElementalStat.Element.WATER),
 			ElementalStat.Element.WIND: get_magic(ElementalStat.Element.WIND),
+			ElementalStat.Element.LIGHT: get_magic(ElementalStat.Element.LIGHT),
+			ElementalStat.Element.DARK: get_magic(ElementalStat.Element.DARK),
 		}
 	}
 
@@ -146,6 +152,8 @@ func get_defensive() -> Dictionary:
 			ElementalStat.Element.FIRE: get_resistance(ElementalStat.Element.FIRE),
 			ElementalStat.Element.WATER: get_resistance(ElementalStat.Element.WATER),
 			ElementalStat.Element.WIND: get_resistance(ElementalStat.Element.WIND),
+			ElementalStat.Element.LIGHT: get_resistance(ElementalStat.Element.LIGHT),
+			ElementalStat.Element.DARK: get_resistance(ElementalStat.Element.DARK),
 		}
 	}
 

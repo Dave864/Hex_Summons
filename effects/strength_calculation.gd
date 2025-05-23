@@ -8,27 +8,28 @@ Base class that is used to define the strength of an effect.
 export(Resource) var action_potency = null
 
 
-# Sets the value specified stat of the target character to the value of the potency.
+# Determines the value that the target stat will be set to. If this effect is
+# resisted, the value will be closer to that of the original stat.
 func set_operation(
 	source_stats: CharacterStats,
-	target_char: Character,
+	target_stats: CharacterStats,
 	stat_affected: Resource,
 	resisted: bool
-) -> void:
+) -> int:
 	var base_strength: float = _calculate_strength(source_stats)
 	var resisted_strength: float = (
-			_calculate_resisted_strength(source_stats, target_char) if resisted
+			_calculate_resisted_strength(source_stats, target_stats) if resisted
 			else base_strength
 	)
 	# How far should the target value shift towards the original potency.
 	# 0.0 means it does not shift, 1.0 means it shifts fully.
-	var percentage: float = resisted_strength / base_strength
-	var stat_value: int = _get_target_stat_value(target_char, stat_affected)
+	var percentage: float = clamp(base_strength / resisted_strength, 0.0, 1.0)
+	var stat_value: int = _get_target_stat_value(target_stats, stat_affected)
 	if base_strength - stat_value >= 0.0:
 		stat_value += convert(base_strength * percentage, TYPE_INT)
 	else:
 		stat_value -= convert(base_strength * percentage, TYPE_INT)
-	_set_target_stat_value(target_char, stat_affected, stat_value)
+	return stat_value
 
 
 # Increases the value specified stat of the target character by the value of
@@ -38,8 +39,8 @@ func increase_operation(
 	target_char: Character,
 	stat_affected: Resource,
 	resisted: bool
-) -> void:
-	pass
+) -> int:
+	return 0
 
 
 # Descreases the value specified stat of the target character by the value of
@@ -49,8 +50,8 @@ func decrease_operation(
 	target_char: Character,
 	stat_affected: Resource,
 	resisted: bool
-) -> void:
-	pass
+) -> int:
+	return 0
 
 
 func check_for_required_resources() -> void:
@@ -72,10 +73,10 @@ func _calculate_strength(source_stats: CharacterStats) -> float:
 # Determines the strength of the effect for a given character when resisted by the target.
 func _calculate_resisted_strength(
 	source_stats: CharacterStats,
-	target_char: Character
+	target_stats: CharacterStats
 ) -> float:
 	var strength_values: Dictionary = _get_potency_values(source_stats)
-	var res_values: Dictionary = target_char.stats.get_defensive()
+	var res_values: Dictionary = target_stats.get_defensive()
 	_apply_resistance(strength_values, res_values)
 	return _convert_to_scalar(strength_values)
 
@@ -89,21 +90,25 @@ func _convert_to_scalar(strength_data: Dictionary) -> float:
 
 
 # Updates the value of the target character's stat.
-func _set_target_stat_value(target_char: Character, stat: Resource, value: int) -> void:
+func _set_target_stat_value(
+	target_stats: CharacterStats,
+	stat: Resource,
+	value: int
+) -> void:
 	if stat is Stat:
-		target_char.stats.update_modifier(stat.Type, value)
+		target_stats.update_modifier(stat.Type, value)
 	elif stat is ElementalStat:
-		target_char.stats.update_elemental_modifier(stat.Type, stat.Element, value)
+		target_stats.update_elemental_modifier(stat.Type, stat.Element, value)
 	else:
 		printerr("A non Stat or ElementalStat resource was provided.")
 
 
 # Gets the value of the target character's stat.
-func _get_target_stat_value(target_char: Character, stat: Resource) -> int:
+func _get_target_stat_value(target_stats: CharacterStats, stat: Resource) -> int:
 	if stat is Stat:
-		return target_char.stats.get_calculated_stat(stat.Type)
+		return target_stats.get_calculated_stat(stat.Type)
 	elif stat is ElementalStat:
-		return target_char.stats.get_calculated_elemental_stat(stat.Type, stat.Element)
+		return target_stats.get_calculated_elemental_stat(stat.Type, stat.Element)
 	else:
 		printerr("A non Stat or ElementalStat resource was requested.")
 		return 0
@@ -113,18 +118,10 @@ func _get_target_stat_value(target_char: Character, stat: Resource) -> int:
 func _get_potency_values(character_stats: CharacterStats) -> Dictionary:
 	var pv: Dictionary = character_stats.get_offensive()
 	pv[Constants.ATTACK] *= action_potency.attack_potency
-	pv[Constants.MAGIC][ElementalStat.Element.EARTH] *= (
-			action_potency.get_elemental_potency(ElementalStat.Element.EARTH)
-	)
-	pv[Constants.MAGIC][ElementalStat.Element.FIRE]*= (
-			action_potency.get_elemental_potency(ElementalStat.Element.FIRE)
-	)
-	pv[Constants.MAGIC][ElementalStat.Element.WATER]*= (
-			action_potency.get_elemental_potency(ElementalStat.Element.WATER)
-	)
-	pv[Constants.MAGIC][ElementalStat.Element.WIND]*= (
-			action_potency.get_elemental_potency(ElementalStat.Element.WIND)
-	)
+	for element in ElementalStat.Element:
+		pv[Constants.MAGIC][element] *= (
+				action_potency.get_elemental_potency(element)
+		)
 	return pv
 
 
@@ -134,22 +131,11 @@ func _apply_resistance(strength: Dictionary, resistance: Dictionary) -> void:
 			strength[Constants.ATTACK],
 			resistance[Constants.DEFENSE]
 	)
-	strength[Constants.MAGIC][ElementalStat.Element.EARTH] = _bind_resistance(
-			strength[Constants.MAGIC][ElementalStat.Element.EARTH],
-			resistance[Constants.RESISTANCE][ElementalStat.Element.EARTH]
-	)
-	strength[Constants.MAGIC][ElementalStat.Element.FIRE] = _bind_resistance(
-			strength[Constants.MAGIC][ElementalStat.Element.FIRE],
-			resistance[Constants.RESISTANCE][ElementalStat.Element.FIRE]
-	)
-	strength[Constants.MAGIC][ElementalStat.Element.WATER] = _bind_resistance(
-			strength[Constants.MAGIC][ElementalStat.Element.WATER],
-			resistance[Constants.RESISTANCE][ElementalStat.Element.WATER]
-	)
-	strength[Constants.MAGIC][ElementalStat.Element.WIND] = _bind_resistance(
-			strength[Constants.MAGIC][ElementalStat.Element.WIND],
-			resistance[Constants.RESISTANCE][ElementalStat.Element.WIND]
-	)
+	for element in ElementalStat.Element:
+		strength[Constants.MAGIC][element] = _bind_resistance(
+				strength[Constants.MAGIC][element],
+				resistance[Constants.RESISTANCE][element]
+		)
 
 
 # Calculates the result of resistance, binding the result to be no lower than zero.
