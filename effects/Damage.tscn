@@ -7,5 +7,4 @@
 [node name="Damage" type="Node"]
 script = ExtResource( 1 )
 stat_affected = ExtResource( 2 )
-modifier = 1
 strength_calculation = ExtResource( 3 )

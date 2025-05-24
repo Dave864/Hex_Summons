@@ -60,8 +60,5 @@ func _check_for_required_parameters() -> void:
 	)
 	assert(
 			strength_calculation is StrengthCalculation,
-			(
-				"Error: Effect %s strength_calculation is not a "
-				+ "StrengthCalculation resource." % [name]
-			)
+			"Error: Effect %s strength_calculation is not a StrengthCalculation resource." % [name]
 	)

@@ -37,6 +37,7 @@ movement_area = ExtResource( 11 )
 [node name="Actions" type="Node" parent="."]
 
 [node name="Shot" parent="Actions" instance=ExtResource( 9 )]
+source_stats_path = NodePath("../../Stats")
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )

@@ -18,7 +18,9 @@ movement_area = ExtResource( 7 )
 [node name="Techniques" type="Node" parent="."]
 
 [node name="Strike" parent="Techniques" instance=ExtResource( 8 )]
+source_stats_path = NodePath("../../Stats")
 
 [node name="Sweep" parent="Techniques" instance=ExtResource( 9 )]
+source_stats_path = NodePath("../../Stats")
 
 [node name="Spells" type="Node" parent="."]
