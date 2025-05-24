@@ -52,8 +52,8 @@ func set_movement_range(val: int) -> void:
 	stat_values.movement = val
 
 
-func get_movement_range() -> int:
-	return get_calculated_stat(Stat.Type.MOVEMENT)
+func get_movement_range(with_modifier: bool = true) -> int:
+	return get_stat(Stat.Type.MOVEMENT, with_modifier)
 
 
 # Get the indexes of the tiles within movement range.
@@ -61,8 +61,8 @@ func get_movement_area() -> Resource:
 	return movement_area
 
 
-func get_max_health() -> int:
-	return get_calculated_stat(Stat.Type.HEALTH)
+func get_max_health(with_modifier: bool = true) -> int:
+	return get_stat(Stat.Type.HEALTH, with_modifier)
 
 
 func set_cur_health(val: int) -> void:
@@ -80,80 +80,101 @@ func get_cur_health() -> int:
 	return _current_health
 
 
-func get_attack() -> int:
-	return get_calculated_stat(Stat.Type.ATTACK)
+func get_attack(with_modifier: bool = true) -> int:
+	return get_stat(Stat.Type.ATTACK, with_modifier)
 
 
-func get_defense() -> int:
-	return get_calculated_stat(Stat.Type.DEFENSE)
+func get_defense(with_modifier: bool = true) -> int:
+	return get_stat(Stat.Type.DEFENSE, with_modifier)
 
 
-func get_agility() -> int:
-	return get_calculated_stat(Stat.Type.AGILITY)
+func get_agility(with_modifier: bool = true) -> int:
+	return get_stat(Stat.Type.AGILITY, with_modifier)
 
 
-func get_magic(type: int) -> int:
-	return _magic_for_level(type)
+func get_magic(type: int, with_modifier: bool = true) -> int:
+	return _magic_for_level(type, with_modifier)
 
 
-func get_resistance(type: int) -> int:
-	return _resistance_for_level(type)
+func get_resistance(type: int, with_modifier: bool = true) -> int:
+	return _resistance_for_level(type, with_modifier)
 
 
 # Get all the stats.
-func get_all() -> Dictionary:
-	return {
+func get_all(with_modifier: bool = true) -> Dictionary:
+	var all_stats: Dictionary = {
 		Constants.LEVEL: _level,
-		Constants.HEALTH: get_max_health(),
-		Constants.ATTACK: get_attack(),
-		Constants.DEFENSE: get_defense(),
-		Constants.AGILITY: get_agility(),
-		Constants.MOVEMENT: get_movement_range(),
-		Constants.MAGIC: {
-			ElementalStat.Element.EARTH: get_magic(ElementalStat.Element.EARTH),
-			ElementalStat.Element.FIRE: get_magic(ElementalStat.Element.FIRE),
-			ElementalStat.Element.WATER: get_magic(ElementalStat.Element.WATER),
-			ElementalStat.Element.WIND: get_magic(ElementalStat.Element.WIND),
-			ElementalStat.Element.LIGHT: get_magic(ElementalStat.Element.LIGHT),
-			ElementalStat.Element.DARK: get_magic(ElementalStat.Element.DARK),
-		},
-		Constants.RESISTANCE: {
-			ElementalStat.Element.EARTH: get_resistance(ElementalStat.Element.EARTH),
-			ElementalStat.Element.FIRE: get_resistance(ElementalStat.Element.FIRE),
-			ElementalStat.Element.WATER: get_resistance(ElementalStat.Element.WATER),
-			ElementalStat.Element.WIND: get_resistance(ElementalStat.Element.WIND),
-			ElementalStat.Element.LIGHT: get_resistance(ElementalStat.Element.LIGHT),
-			ElementalStat.Element.DARK: get_resistance(ElementalStat.Element.DARK),
-		}
+		Constants.HEALTH: get_max_health(with_modifier),
+		Constants.AGILITY: get_agility(with_modifier),
+		Constants.MOVEMENT: get_movement_range(with_modifier),
 	}
+	all_stats.merge(get_offensive(with_modifier))
+	all_stats.merge(get_defensive(with_modifier))
+	return all_stats
 
 
 # Get the offensive stats.
-func get_offensive() -> Dictionary:
+func get_offensive(with_modifier: bool = true) -> Dictionary:
 	return {
-		Constants.ATTACK: get_attack(),
+		Constants.ATTACK: get_attack(with_modifier),
 		Constants.MAGIC: {
-			ElementalStat.Element.EARTH: get_magic(ElementalStat.Element.EARTH),
-			ElementalStat.Element.FIRE: get_magic(ElementalStat.Element.FIRE),
-			ElementalStat.Element.WATER: get_magic(ElementalStat.Element.WATER),
-			ElementalStat.Element.WIND: get_magic(ElementalStat.Element.WIND),
-			ElementalStat.Element.LIGHT: get_magic(ElementalStat.Element.LIGHT),
-			ElementalStat.Element.DARK: get_magic(ElementalStat.Element.DARK),
+			ElementalStat.Element.EARTH: get_magic(
+					ElementalStat.Element.EARTH,
+					with_modifier
+			),
+			ElementalStat.Element.FIRE: get_magic(
+					ElementalStat.Element.FIRE,
+					with_modifier
+			),
+			ElementalStat.Element.WATER: get_magic(
+					ElementalStat.Element.WATER,
+					with_modifier
+			),
+			ElementalStat.Element.WIND: get_magic(
+					ElementalStat.Element.WIND,
+					with_modifier
+			),
+			ElementalStat.Element.LIGHT: get_magic(
+					ElementalStat.Element.LIGHT,
+					with_modifier
+			),
+			ElementalStat.Element.DARK: get_magic(
+					ElementalStat.Element.DARK,
+					with_modifier
+			),
 		}
 	}
 
 
 # Get the defensive stats.
-func get_defensive() -> Dictionary:
+func get_defensive(with_modifier: bool = true) -> Dictionary:
 	return {
 		Constants.DEFENSE: get_defense(),
 		Constants.RESISTANCE: {
-			ElementalStat.Element.EARTH: get_resistance(ElementalStat.Element.EARTH),
-			ElementalStat.Element.FIRE: get_resistance(ElementalStat.Element.FIRE),
-			ElementalStat.Element.WATER: get_resistance(ElementalStat.Element.WATER),
-			ElementalStat.Element.WIND: get_resistance(ElementalStat.Element.WIND),
-			ElementalStat.Element.LIGHT: get_resistance(ElementalStat.Element.LIGHT),
-			ElementalStat.Element.DARK: get_resistance(ElementalStat.Element.DARK),
+			ElementalStat.Element.EARTH: get_resistance(
+					ElementalStat.Element.EARTH,
+					with_modifier
+			),
+			ElementalStat.Element.FIRE: get_resistance(
+					ElementalStat.Element.FIRE,
+					with_modifier
+			),
+			ElementalStat.Element.WATER: get_resistance(
+					ElementalStat.Element.WATER,
+					with_modifier
+			),
+			ElementalStat.Element.WIND: get_resistance(
+					ElementalStat.Element.WIND,
+					with_modifier
+			),
+			ElementalStat.Element.LIGHT: get_resistance(
+					ElementalStat.Element.LIGHT,
+					with_modifier
+			),
+			ElementalStat.Element.DARK: get_resistance(
+					ElementalStat.Element.DARK,
+					with_modifier
+			),
 		}
 	}
 
@@ -163,15 +184,15 @@ func get_defensive() -> Dictionary:
 func update_stat(type: int, value: int) -> void:
 	match type:
 		Stat.Type.HEALTH:
-			_health_mod += value
+			_health_mod = value
 		Stat.Type.ATTACK:
-			_attack_mod += value
+			_attack_mod = value
 		Stat.Type.DEFENSE:
-			_defense_mod += value
+			_defense_mod = value
 		Stat.Type.AGILITY:
-			_agility_mod += value
+			_agility_mod = value
 		Stat.Type.MOVEMENT:
-			_movement_mod += value
+			_movement_mod = value
 
 
 # Updates the modifier for the specified elemental statso that it results in
@@ -180,24 +201,24 @@ func update_elemental_stat(type: int, element: int, value: int) -> void:
 	match element:
 		ElementalStat.Element.EARTH:
 			if type == ElementalStat.Type.MAGIC:
-				_magic_earth_mod += value
+				_magic_earth_mod = value
 			elif type == ElementalStat.Type.RESISTANCE:
-				_res_earth_mod += value
+				_res_earth_mod = value
 		ElementalStat.Element.FIRE:
 			if type == ElementalStat.Type.MAGIC:
-				_magic_fire_mod += value
+				_magic_fire_mod = value
 			elif type == ElementalStat.Type.RESISTANCE:
-				_res_fire_mod += value
+				_res_fire_mod = value
 		ElementalStat.Element.WATER:
 			if type == ElementalStat.Type.MAGIC:
-				_magic_water_mod += value
+				_magic_water_mod = value
 			elif type == ElementalStat.Type.RESISTANCE:
-				_res_water_mod += value
+				_res_water_mod = value
 		ElementalStat.Element.WIND:
 			if type == ElementalStat.Type.MAGIC:
-				_magic_wind_mod += value
+				_magic_wind_mod = value
 			elif type == ElementalStat.Type.RESISTANCE:
-				_res_wind_mod += value
+				_res_wind_mod = value
 		ElementalStat.Element.LIGHT:
 			var light_elements: Array = ElementalPolarity.get_light_elements()
 			update_elemental_stat(type, light_elements[0], value)
@@ -208,170 +229,139 @@ func update_elemental_stat(type: int, element: int, value: int) -> void:
 			update_elemental_stat(type, dark_elements[1], value)
 
 
-# Obtains the calculated value for a given stat.
-func get_calculated_stat(stat: int) -> int:
+# Obtains the value for a given stat.
+func get_stat(stat: int, with_modifier: bool = true) -> int:
+	var result: int
+	var modifier: int
 	match stat:
 		Stat.Type.HEALTH:
-			return (
-					(
-						stat_values.health_base
-						+ stat_values.health_growth
-						* _level
-					)
-					+ _health_mod
-			)
+			result = stat_values.health_base + (stat_values.health_growth * _level)
+			modifier = _health_mod
 		Stat.Type.ATTACK:
-			return (
-					(
-						stat_values.attack_base
-						+ stat_values.attack_growth
-						* _level
-					)
-					+ _attack_mod
-			)
+			result = stat_values.attack_base + (stat_values.attack_growth * _level)
+			modifier = _attack_mod
 		Stat.Type.DEFENSE:
-			return (
-					(
-						stat_values.defense_base
-						+ stat_values.defense_growth
-						* _level
-					)
-					+ _defense_mod
-			)
+			result = stat_values.defense_base + (stat_values.defense_growth * _level)
+			modifier = _defense_mod
 		Stat.Type.AGILITY:
-			return (
-					(
-						stat_values.agility_base
-						+ stat_values.agility_growth
-						* _level
-					)
-					+ _agility_mod
-			)
+			result = stat_values.agility_base + (stat_values.agility_growth * _level)
+			modifier = _agility_mod
 		Stat.Type.MOVEMENT:
-			return stat_values.movement + _movement_mod
+			result = stat_values.movement
+			modifier = _movement_mod
 		_:
-			return 0
+			result = 0
+			modifier = 0
+	return result + modifier if with_modifier else result
 
 
 # Obtains the calculated value for a given elemental stat.
-func get_calculated_elemental_stat(stat: int, element: int) -> int:
+func get_calculated_elemental_stat(
+	stat: int,
+	element: int,
+	with_modifier: bool = true
+) -> int:
 	match stat:
 		ElementalStat.Type.MAGIC:
-			return _magic_for_level(element)
+			return _magic_for_level(element, with_modifier)
 		ElementalStat.Type.RESISTANCE:
-			return _resistance_for_level(element)
+			return _resistance_for_level(element, with_modifier)
 		_:
 			return 0
 
 
 # Determines the value of a specified magic element for a given level.
-func _magic_for_level(element: int) -> int:
+func _magic_for_level(element: int, with_modifier: bool) -> int:
+	var result: int
+	var modifier: int
 	match element:
 		ElementalStat.Element.EARTH:
-			return (
-					(
-						stat_values.magic_earth_base
-						+ stat_values.magic_earth_growth
-						* _level
-					)
-					+ _magic_earth_mod
+			result = (
+					stat_values.magic_earth_base 
+					+ (stat_values.magic_earth_growth * _level)
 			)
+			modifier = _magic_earth_mod
 		ElementalStat.Element.FIRE:
-			return (
-					(
-						stat_values.magic_fire_base
-						+ stat_values.magic_fire_growth
-						* _level
-					)
-					+ _magic_fire_mod
+			result = (
+					stat_values.magic_fire_base
+					+ (stat_values.magic_fire_growth * _level)
 			)
+			modifier = _magic_fire_mod
 		ElementalStat.Element.WATER:
-			return (
-					(
-						stat_values.magic_water_base
-						+ stat_values.magic_water_growth
-						* _level
-					)
-					+ _magic_water_mod
+			result = (
+					stat_values.magic_water_base
+					+ (stat_values.magic_water_growth * _level)
 			)
+			modifier = _magic_water_mod
 		ElementalStat.Element.WIND:
-			return (
-					(
-						stat_values.magic_wind_base
-						+ stat_values.magic_wind_growth
-						* _level
-					)
-					+ _magic_wind_mod
+			result = (
+					stat_values.magic_wind_base
+					+ (stat_values.magic_wind_growth * _level)
 			)
+			modifier = _magic_wind_mod
 		ElementalStat.Element.LIGHT:
 			var light_elements: Array = ElementalPolarity.get_light_elements()
 			return (
-				_magic_for_level(light_elements[0])
-				+ _magic_for_level(light_elements[1])
+				_magic_for_level(light_elements[0], with_modifier)
+				+ _magic_for_level(light_elements[1], with_modifier)
 			)
 		ElementalStat.Element.DARK:
 			var dark_elements: Array = ElementalPolarity.get_dark_elements()
 			return (
-				_magic_for_level(dark_elements[0])
-				+ _magic_for_level(dark_elements[1])
+				_magic_for_level(dark_elements[0], with_modifier)
+				+ _magic_for_level(dark_elements[1], with_modifier)
 			)
 		_:
-			return 0
+			result = 0
+			modifier = 0
+	return result + modifier if with_modifier else result
 
 
 # Determines the value of a specified resistance element for a given level.
-func _resistance_for_level(element: int) -> int:
+func _resistance_for_level(element: int, with_modifier: bool) -> int:
+	var result: int
+	var modifier: int
 	match element:
 		ElementalStat.Element.EARTH:
-			return (
-					(
-						stat_values.res_earth_base
-						+ stat_values.res_earth_growth
-						* _level
-					)
-					+ _res_earth_mod
+			result = (
+					stat_values.res_earth_base 
+					+ (stat_values.res_earth_growth * _level)
 			)
+			modifier = _res_earth_mod
 		ElementalStat.Element.FIRE:
-			return (
-					(
-						stat_values.res_fire_base
-						+ stat_values.res_fire_growth
-						* _level
-					)
-					+ _res_fire_mod
+			result = (
+					stat_values.res_fire_base 
+					+ (stat_values.res_fire_growth * _level)
 			)
+			modifier = _res_fire_mod
 		ElementalStat.Element.WATER:
-			return (
-					(
-						stat_values.res_water_base
-						+ stat_values.res_water_growth
-						* _level
-					)
-					+ _res_water_mod
+			result = (
+					stat_values.res_water_base 
+					+ (stat_values.res_water_growth * _level)
 			)
+			modifier = _res_water_mod
 		ElementalStat.Element.WIND:
-			return (
-					(
-						stat_values.res_wind_base
-						+ stat_values.res_wind_growth
-						* _level
-					)
-					+ _res_wind_mod
+			result = (
+					stat_values.res_wind_base 
+					+ (stat_values.res_wind_growth * _level)
 			)
+			modifier = _res_wind_mod
 		ElementalStat.Element.LIGHT:
 			var light_elements: Array = ElementalPolarity.get_light_elements()
 			return (
-				_resistance_for_level(light_elements[0])
-				+ _resistance_for_level(light_elements[1])
+				_resistance_for_level(light_elements[0], with_modifier)
+				+ _resistance_for_level(light_elements[1], with_modifier)
 			)
 		ElementalStat.Element.DARK:
 			var dark_elements: Array = ElementalPolarity.get_dark_elements()
 			return (
-				_resistance_for_level(dark_elements[0])
-				+ _resistance_for_level(dark_elements[1])
+				_resistance_for_level(dark_elements[0], with_modifier)
+				+ _resistance_for_level(dark_elements[1], with_modifier)
 			)
 		_:
-			return 0
+			result = 0
+			modifier = 0
+	return result + modifier if with_modifier else result
 
 
 # Check that all required parameters are set.
