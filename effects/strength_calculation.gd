@@ -22,55 +22,51 @@ func process_operation(
 			_calculate_resisted_strength(source_stats, target_stats) if resisted
 			else base_strength
 	)
-	# How far should the target value shift towards the strength value.
-	# 0.0 means it does not shift, 1.0 means it shifts fully.
-	var shift_percentage: float = clamp(base_strength / resisted_strength, 0.0, 1.0)
+	# How effective will the change be.
+	#  0.0 means not effective, 1.0 means fully effective.
+	var efficacy: float = clamp(base_strength / resisted_strength, 0.0, 1.0)
 	var stat_value: int = _get_stat_value(target_stats, stat_affected)
 	
 	match operation:
 		Constants.Operation.SET:
-			return _set_operation(base_strength, shift_percentage, stat_value)
+			return _set_operation(base_strength, efficacy, stat_value)
 		Constants.Operation.INCREASE:
-			return _increase_operation(base_strength, shift_percentage, stat_value)
+			return _increase_operation(base_strength, efficacy, stat_value)
 		Constants.Operation.DECREASE:
-			return _decrease_operation(base_strength, shift_percentage, stat_value)
+			return _decrease_operation(base_strength, efficacy, stat_value)
 		_:
 			return 0
 
 
-# Determines the value that the target stat will be set to. If this effect is
-# resisted, the value will be closer to that of the original stat.
+# Determines the value that will be used to change the stat to be the desired value.
 func _set_operation(
 	target_strength: float,
-	shift_percentage: float,
+	efficacy: float,
 	stat_value: int
 ) -> int:
 	var diff: float = target_strength - stat_value
 	if diff >= 0.0:
-		stat_value += convert(diff * shift_percentage, TYPE_INT)
+		return convert(diff * efficacy, TYPE_INT)
 	else:
-		stat_value -= convert(diff * shift_percentage, TYPE_INT)
-	return stat_value
+		return -convert(diff * efficacy, TYPE_INT)
 
 
-# Increases the value specified stat of the target character by the value of
-# the potency.
+# Determines the value to increase the target stat by.
 func _increase_operation(
 	base_strength: float,
-	shift_percentage: float,
-	stat_value: int
+	efficacy: float,
+	_stat_value: int
 ) -> int:
-	return stat_value + convert(base_strength * shift_percentage, TYPE_INT)
+	return convert(base_strength * efficacy, TYPE_INT)
 
 
-# Descreases the value specified stat of the target character by the value of
-# the potency.
+# Determines the value to increase the target stat by.
 func _decrease_operation(
 	base_strength: float,
-	shift_percentage: float,
-	stat_value: int
+	efficacy: float,
+	_stat_value: int
 ) -> int:
-	return stat_value - convert(base_strength * shift_percentage, TYPE_INT) 
+	return -convert(base_strength * efficacy, TYPE_INT) 
 
 
 func check_for_required_resources() -> void:

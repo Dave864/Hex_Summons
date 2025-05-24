@@ -12,32 +12,31 @@ export(int, 0, 1000) var flat_value = 0
 # resisted, the value will be closer to that of the original stat.
 func _set_operation(
 	_target_strength: float,
-	shift_percentage: float,
+	efficacy: float,
 	stat_value: int
 ) -> int:
 	var diff: float = flat_value - stat_value
 	if diff >= 0.0:
-		stat_value += convert(diff * shift_percentage, TYPE_INT)
+		return convert(diff * efficacy, TYPE_INT)
 	else:
-		stat_value -= convert(diff * shift_percentage, TYPE_INT)
-	return stat_value
+		return -convert(diff * efficacy, TYPE_INT)
 
 
 # Increases the value specified stat of the target character by the value of
 # the potency.
 func _increase_operation(
 	_base_strength: float,
-	shift_percentage: float,
-	stat_value: int
+	efficacy: float,
+	_stat_value: int
 ) -> int:
-	return stat_value + convert(flat_value * shift_percentage, TYPE_INT)
+	return convert(flat_value * efficacy, TYPE_INT)
 
 
 # Descreases the value specified stat of the target character by the value of
 # the potency.
 func _decrease_operation(
 	_base_strength: float,
-	shift_percentage: float,
-	stat_value: int
+	efficacy: float,
+	_stat_value: int
 ) -> int:
-	return stat_value - convert(flat_value * shift_percentage, TYPE_INT)
+	return -convert(flat_value * efficacy, TYPE_INT)
