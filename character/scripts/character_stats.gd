@@ -179,56 +179,6 @@ func get_defensive(with_modifier: bool = true) -> Dictionary:
 	}
 
 
-# Updates the modifier for the specified stat so that it results in the new value
-# when added to the base value of the stat.
-func update_stat(type: int, value: int) -> void:
-	match type:
-		Stat.Type.HEALTH:
-			_health_mod = value
-		Stat.Type.ATTACK:
-			_attack_mod = value
-		Stat.Type.DEFENSE:
-			_defense_mod = value
-		Stat.Type.AGILITY:
-			_agility_mod = value
-		Stat.Type.MOVEMENT:
-			_movement_mod = value
-
-
-# Updates the modifier for the specified elemental statso that it results in
-# the new value when added to the base value of the stat.
-func update_elemental_stat(type: int, element: int, value: int) -> void:
-	match element:
-		ElementalStat.Element.EARTH:
-			if type == ElementalStat.Type.MAGIC:
-				_magic_earth_mod = value
-			elif type == ElementalStat.Type.RESISTANCE:
-				_res_earth_mod = value
-		ElementalStat.Element.FIRE:
-			if type == ElementalStat.Type.MAGIC:
-				_magic_fire_mod = value
-			elif type == ElementalStat.Type.RESISTANCE:
-				_res_fire_mod = value
-		ElementalStat.Element.WATER:
-			if type == ElementalStat.Type.MAGIC:
-				_magic_water_mod = value
-			elif type == ElementalStat.Type.RESISTANCE:
-				_res_water_mod = value
-		ElementalStat.Element.WIND:
-			if type == ElementalStat.Type.MAGIC:
-				_magic_wind_mod = value
-			elif type == ElementalStat.Type.RESISTANCE:
-				_res_wind_mod = value
-		ElementalStat.Element.LIGHT:
-			var light_elements: Array = ElementalPolarity.get_light_elements()
-			update_elemental_stat(type, light_elements[0], value)
-			update_elemental_stat(type, light_elements[1], value)
-		ElementalStat.Element.DARK:
-			var dark_elements: Array = ElementalPolarity.get_dark_elements()
-			update_elemental_stat(type, dark_elements[0], value)
-			update_elemental_stat(type, dark_elements[1], value)
-
-
 # Obtains the value for a given stat.
 func get_stat(stat: int, with_modifier: bool = true) -> int:
 	var result: int
@@ -268,6 +218,68 @@ func get_calculated_elemental_stat(
 			return _resistance_for_level(element, with_modifier)
 		_:
 			return 0
+
+
+# Updates the modifier for the specified stat so that it results in the new value
+# when added to the base value of the stat.
+func update_modifier(type: int, value: int) -> void:
+	match type:
+		Stat.Type.HEALTH:
+			_health_mod = value
+		Stat.Type.ATTACK:
+			_attack_mod = value
+		Stat.Type.DEFENSE:
+			_defense_mod = value
+		Stat.Type.AGILITY:
+			_agility_mod = value
+		Stat.Type.MOVEMENT:
+			_movement_mod = value
+
+
+# Updates the modifier for the specified elemental statso that it results in
+# the new value when added to the base value of the stat.
+func update_elemental_modifier(type: int, element: int, value: int) -> void:
+	match element:
+		ElementalStat.Element.EARTH:
+			if type == ElementalStat.Type.MAGIC:
+				_magic_earth_mod = value
+			elif type == ElementalStat.Type.RESISTANCE:
+				_res_earth_mod = value
+		ElementalStat.Element.FIRE:
+			if type == ElementalStat.Type.MAGIC:
+				_magic_fire_mod = value
+			elif type == ElementalStat.Type.RESISTANCE:
+				_res_fire_mod = value
+		ElementalStat.Element.WATER:
+			if type == ElementalStat.Type.MAGIC:
+				_magic_water_mod = value
+			elif type == ElementalStat.Type.RESISTANCE:
+				_res_water_mod = value
+		ElementalStat.Element.WIND:
+			if type == ElementalStat.Type.MAGIC:
+				_magic_wind_mod = value
+			elif type == ElementalStat.Type.RESISTANCE:
+				_res_wind_mod = value
+		ElementalStat.Element.LIGHT:
+			var light_elements: Array = ElementalPolarity.get_light_elements()
+			update_elemental_modifier(type, light_elements[0], value)
+			update_elemental_modifier(type, light_elements[1], value)
+		ElementalStat.Element.DARK:
+			var dark_elements: Array = ElementalPolarity.get_dark_elements()
+			update_elemental_modifier(type, dark_elements[0], value)
+			update_elemental_modifier(type, dark_elements[1], value)
+
+
+# sets the values of all the modifiers to zero. Used when effects are processed.
+func clear_modifiers() -> void:
+	update_modifier(Stat.Type.HEALTH, 0)
+	update_modifier(Stat.Type.ATTACK, 0)
+	update_modifier(Stat.Type.DEFENSE, 0)
+	update_modifier(Stat.Type.AGILITY, 0)
+	update_modifier(Stat.Type.MOVEMENT, 0)
+	for element in ElementalStat.Element:
+		update_elemental_modifier(ElementalStat.Type.MAGIC, element, 0)
+		update_elemental_modifier(ElementalStat.Type.RESISTANCE, element, 0)
 
 
 # Determines the value of a specified magic element for a given level.
