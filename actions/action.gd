@@ -27,9 +27,6 @@ func _ready() -> void:
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
-func _process(_delta) -> void:
-	pass
-
 # Returns the effects of this action.
 func get_effects() -> Array:
 	return _effects

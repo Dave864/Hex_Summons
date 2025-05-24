@@ -11,7 +11,7 @@ var _effect_bus: Dictionary = {}
 var _bus_end: int
 
 
-# Called when the node enters the scene tree for the first time.
+# Called when an instance of this object is created.
 func _init(affected_stat: Resource):
 	assert(
 			affected_stat is Stat or affected_stat is ElementalStat,
@@ -21,9 +21,11 @@ func _init(affected_stat: Resource):
 	_bus_end = -1
 
 
-# Adds a new effect to the end of the bus. Updates prior instances of the same
-# effect object.
+# Adds a new effect to the end of the bus if it targets the affected stat.
+# Updates prior instances of the same effect object.
 func add_effect(effect: Effect) -> void:
+	if effect.stat_affected != _affected_stat:
+		return
 	var effect_id: int = effect.get_instance_id()
 	# Stores effect and current turn duration.
 	_effect_bus[effect_id] = [effect, 0]
@@ -38,6 +40,13 @@ func remove_effect(effect: Effect) -> void:
 		_update_bus_end()
 
 
+# Removes all effects from the bus.
+func clear() -> void:
+	for id in _effect_bus.keys():
+		_effect_bus.erase(id)
+	_update_bus_end()
+
+
 # Updates the duration for all effects in the bus. Removes effects whose duration
 # have expired.
 func progress_duration(turn_count: int = 1) -> void:
@@ -50,10 +59,10 @@ func progress_duration(turn_count: int = 1) -> void:
 
 # Determines the final value of the affected stat after applying all of the effects.
 # Uses the provided character stats as reference. Does not update the character stats.
-func process_effects(base_stats: CharacterStats) -> int:
-	var final_stat_value: int = -1
+func process_effects(char_stats: CharacterStats) -> int:
+	var final_stat_value: int = 0
 	for id in _effect_bus.keys():
-		final_stat_value += _effect_bus[_bus_end][0].effect_on_target(base_stats)
+		final_stat_value += _effect_bus[_bus_end][0].effect_on_target(char_stats)
 	if _effect_bus.keys().size() > 0:
 		# Stats should never go below zero.
 		final_stat_value = convert(
@@ -65,10 +74,10 @@ func process_effects(base_stats: CharacterStats) -> int:
 
 # Determines the final value of the affected stat using only the most recent effect.
 # Uses the provided character stats as reference. Does not update the character stats.
-func process_last_effect(base_stats: CharacterStats) -> int:
-	var final_stat_value: int = -1
+func process_last_effect(char_stats: CharacterStats) -> int:
+	var final_stat_value: int = 0
 	if _effect_bus.keys().size() > 0:
-		final_stat_value = _effect_bus[_bus_end][0].effect_on_target(base_stats)
+		final_stat_value = _effect_bus[_bus_end][0].effect_on_target(char_stats)
 		# Stats should never go below zero.
 		final_stat_value = convert(
 				clamp(final_stat_value, 0.0, final_stat_value),

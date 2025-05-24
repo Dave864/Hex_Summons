@@ -25,7 +25,7 @@ func process_operation(
 	# How far should the target value shift towards the strength value.
 	# 0.0 means it does not shift, 1.0 means it shifts fully.
 	var shift_percentage: float = clamp(base_strength / resisted_strength, 0.0, 1.0)
-	var stat_value: int = _get_target_stat_value(target_stats, stat_affected)
+	var stat_value: int = _get_stat_value(target_stats, stat_affected)
 	
 	match operation:
 		Constants.Operation.SET:
@@ -109,7 +109,7 @@ func _convert_to_scalar(strength_data: Dictionary) -> float:
 
 
 # Gets the value of the target character's stat.
-func _get_target_stat_value(target_stats: CharacterStats, stat: Resource) -> int:
+func _get_stat_value(target_stats: CharacterStats, stat: Resource) -> int:
 	if stat is Stat:
 		return target_stats.get_calculated_stat(stat.Type)
 	elif stat is ElementalStat:
