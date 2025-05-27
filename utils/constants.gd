@@ -30,7 +30,8 @@ enum Operation {
 # Words referring to different character stats.
 const LEVEL: String = "Level"
 const MOVEMENT: String = "Movement"
-const HEALTH: String = "Health"
+const MAX_HEALTH: String = "Max Health"
+const CUR_HEALTH: String = "Current Health"
 const ATTACK: String = "Attack"
 const DEFENSE: String = "Defense"
 const AGILITY: String = "Agility"

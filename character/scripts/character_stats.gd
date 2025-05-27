@@ -14,7 +14,7 @@ export var stat_values: Resource = null
 export var movement_area: Resource = null
 
 # Modifier values for all stats
-var _health_mod: int = 0
+var _max_health_mod: int = 0
 var _attack_mod: int = 0
 var _defense_mod: int = 0
 var _agility_mod: int = 0
@@ -62,7 +62,7 @@ func get_movement_area() -> Resource:
 
 
 func get_max_health(with_modifier: bool = true) -> int:
-	return get_stat(Stat.Type.HEALTH, with_modifier)
+	return get_stat(Stat.Type.MAX_HEALTH, with_modifier)
 
 
 func set_cur_health(val: int) -> void:
@@ -77,7 +77,7 @@ func max_cur_health() -> void:
 
 
 func get_cur_health() -> int:
-	return _current_health
+	return get_stat(Stat.Type.CUR_HEALTH)
 
 
 func get_attack(with_modifier: bool = true) -> int:
@@ -104,7 +104,8 @@ func get_resistance(type: int, with_modifier: bool = true) -> int:
 func get_all(with_modifier: bool = true) -> Dictionary:
 	var all_stats: Dictionary = {
 		Constants.LEVEL: _level,
-		Constants.HEALTH: get_max_health(with_modifier),
+		Constants.MAX_HEALTH: get_max_health(with_modifier),
+		Constants.CUR_HEALTH: get_max_health(with_modifier),
 		Constants.AGILITY: get_agility(with_modifier),
 		Constants.MOVEMENT: get_movement_range(with_modifier),
 	}
@@ -184,9 +185,12 @@ func get_stat(stat: int, with_modifier: bool = true) -> int:
 	var result: int
 	var modifier: int
 	match stat:
-		Stat.Type.HEALTH:
+		Stat.Type.MAX_HEALTH:
 			result = stat_values.health_base + (stat_values.health_growth * _level)
-			modifier = _health_mod
+			modifier = _max_health_mod
+		Stat.Type.CUR_HEALTH:
+			result = _current_health
+			modifier = 0
 		Stat.Type.ATTACK:
 			result = stat_values.attack_base + (stat_values.attack_growth * _level)
 			modifier = _attack_mod
@@ -224,8 +228,8 @@ func get_calculated_elemental_stat(
 # when added to the base value of the stat.
 func update_modifier(type: int, value: int) -> void:
 	match type:
-		Stat.Type.HEALTH:
-			_health_mod = value
+		Stat.Type.MAX_HEALTH:
+			_max_health_mod = value
 		Stat.Type.ATTACK:
 			_attack_mod = value
 		Stat.Type.DEFENSE:
@@ -272,7 +276,7 @@ func update_elemental_modifier(type: int, element: int, value: int) -> void:
 
 # sets the values of all the modifiers to zero. Used when effects are processed.
 func clear_modifiers() -> void:
-	update_modifier(Stat.Type.HEALTH, 0)
+	update_modifier(Stat.Type.MAX_HEALTH, 0)
 	update_modifier(Stat.Type.ATTACK, 0)
 	update_modifier(Stat.Type.DEFENSE, 0)
 	update_modifier(Stat.Type.AGILITY, 0)
