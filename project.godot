@@ -77,17 +77,17 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Effect",
 "language": "GDScript",
-"path": "res://effects/effect.gd"
+"path": "res://effects/scripts/effect.gd"
 }, {
 "base": "Node",
 "class": "EffectAspect",
 "language": "GDScript",
-"path": "res://effects/effect_aspect.gd"
+"path": "res://effects/scripts/effect_aspect.gd"
 }, {
 "base": "Object",
 "class": "EffectBus",
 "language": "GDScript",
-"path": "res://effects/effect_bus.gd"
+"path": "res://effects/scripts/effect_bus.gd"
 }, {
 "base": "Resource",
 "class": "ElementalStat",
@@ -147,7 +147,7 @@ _global_script_classes=[ {
 "base": "StrengthCalculation",
 "class": "FlatValueCalcultion",
 "language": "GDScript",
-"path": "res://effects/flat_value_calculation.gd"
+"path": "res://effects/scripts/flat_value_calculation.gd"
 }, {
 "base": "MeshInstance",
 "class": "HexHighlighter",
@@ -192,7 +192,7 @@ _global_script_classes=[ {
 "base": "StrengthCalculation",
 "class": "PercentageCalculation",
 "language": "GDScript",
-"path": "res://effects/percentage_calculation.gd"
+"path": "res://effects/scripts/percentage_calculation.gd"
 }, {
 "base": "Character",
 "class": "PlayerCharacter",
@@ -237,7 +237,7 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "StatEffectsHandler",
 "language": "GDScript",
-"path": "res://effects/stat_effects_handler.gd"
+"path": "res://effects/scripts/stat_effects_handler.gd"
 }, {
 "base": "Resource",
 "class": "StatValues",
@@ -257,7 +257,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "StrengthCalculation",
 "language": "GDScript",
-"path": "res://effects/strength_calculation.gd"
+"path": "res://effects/scripts/strength_calculation.gd"
 }, {
 "base": "ScrollContainer",
 "class": "SubOptions",
