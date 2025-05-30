@@ -38,6 +38,17 @@ func process_operation(
 			return 0
 
 
+func check_for_required_resources() -> void:
+	assert(
+			action_potency != null,
+			"Error: StrengthCalculation missing defined action_potency."
+	)
+	assert(
+			action_potency is Potency,
+			"Error: StrengthCalculation action_potency is not Potency resource."
+	)
+
+
 # Determines the value that will be used to change the stat to be the desired value.
 func _set_operation(
 	target_strength: float,
@@ -67,17 +78,6 @@ func _decrease_operation(
 	_stat_value: int
 ) -> int:
 	return -convert(base_strength * efficacy, TYPE_INT) 
-
-
-func check_for_required_resources() -> void:
-	assert(
-			action_potency != null,
-			"Error: StrengthCalculation missing defined action_potency."
-	)
-	assert(
-			action_potency is Potency,
-			"Error: StrengthCalculation action_potency is not Potency resource."
-	)
 
 
 # Determines the strength of the effect for a given character.

@@ -5,4 +5,4 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource( 1 )
-value = 4
+flat_value = 0
