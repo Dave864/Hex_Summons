@@ -1,10 +1,12 @@
 tool
 class_name MapTile
-extends Area
+extends Spatial
 """
 Represents an individual map tile.
 """
 
+
+signal height_changed(new_height)
 
 const HIGHLIGHTER_Y_OFFSET = 0.01
 const SELECTOR_Y_OFFSET = 0.125
@@ -15,43 +17,23 @@ export(int, 0, 20) var height = 0 setget set_height
 #  0  / \  1
 #  5 |   | 2
 #  4  \ /  3
+
+onready var map_coordinate: MapCoordinate = $MapCoordinate
+onready var occupant: Occupant = $Occupant
+
 var _adjacent_tiles: Array = [null, null, null, null, null, null] \
-	setget , get_adjacent
-# The index position of the map tile when it is part of a collection of tiles.
-var _map_index: int = -1 setget set_map_index, get_map_index
-# The cube coordinates of the map tile.
-#     -z
-# +y   |  +x
-#   \ / \ /
-#    |   |
-#   / \ / \
-# -x   |  -y
-#     +z
-var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
-# The current occupant of the tile.
-var _occupant: Character = null setget , get_current_occupant
+	setget , get_all_adjacent
 # Flag that indicates the highlight of the tile.
 var _highlight_type: int = HexHighlighter.Option.NONE setget set_highlight_type, get_highlight_type
 # Flag that indicates the selector of the tile.
 var _selector_type: int = HexHighlighter.Option.NONE setget set_selector_type, get_selector_type
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	ErrorUtil.connect_signal(self, "area_entered", self, "_on_MapTile_area_entered")
-	ErrorUtil.connect_signal(self, "area_exited", self, "_on_MapTile_area_exited")
-
-
 # Updates the height of the map tile.
 func set_height(value: int) -> void:
 	height = value
-	_update_tile_shape_height()
-	_update_collision_shape_height()
-	_update_highlighter_position()
-	"""
-	TODO: Remove label.
-	"""
-	_update_label_display()
+	emit_signal("height_changed", value)
+	_update_highlighter_positions()
 
 
 # Gets the adjacent tile of the specified position.
@@ -62,46 +44,18 @@ func get_adjacent_tile(position: int) -> Spatial:
 # Sets the adjacent tile of the specified position.
 func set_adjacent_tile(position: int, map_tile: Area):
 	_adjacent_tiles[position] = map_tile
-	"""
-	TODO: Remove label.
-	"""
-	_update_label_display()
 
 
 # Gets the array pf all adjacent tiles.
-func get_adjacent() -> Array:
+func get_all_adjacent() -> Array:
 	return _adjacent_tiles
-
-
-# Get the index value of the MapTile.
-func get_map_index() -> int:
-	return _map_index
-
-
-# Set the index value of the MapTile.
-func set_map_index(value: int):
-	_map_index = value
-	"""
-	TODO: Remove label.
-	"""
-	_update_label_display()
-
-
-# Get the cube coordinates of the MapTile.
-func get_cube_coord() -> Vector3:
-	return _cube_coord
-
-
-# Set the cube coordinates of the MapTile.
-func set_cube_coord(value: Vector3) -> void:
-	_cube_coord = value
 
 
 # Set the value of the highlight flag.
 func set_highlight_type(value: int) -> void:
 	_highlight_type = value
-	$HexHighlighter.set_option(_highlight_type)
-	$HexHighlighter.set_transparency(Constants.OPACITY_FULL)
+	$TileHighlighter.set_option(_highlight_type)
+	$TileHighlighter.set_transparency(Constants.OPACITY_FULL)
 
 
 # Get the value of the highlight flag.
@@ -121,83 +75,26 @@ func get_selector_type() -> int:
 	return _selector_type
 
 
-# Gets the current character occupying this tile.
-func get_current_occupant() -> Character:
-	return _occupant
-
-
-# Check if the tile is able to be moved through by the specifed character type.
-func can_character_pass(character_type: int) -> bool:
-	match character_type:
-		Constants.MapOccupants.PLAYER:
-			return _occupant == null or _occupant.get_type() == Constants.MapOccupants.PLAYER
-		Constants.MapOccupants.ENEMY:
-			return _occupant == null or _occupant.get_type() == Constants.MapOccupants.ENEMY
-		_:
-			return true
-
-
 # Checks whether the Map Tile is an active element of the map.
 func is_active() -> bool:
 	return visible
 
 
-# Return the coordinate that a character will be placed at when moving onto the
+# Return the translation that a character will be placed at when moving onto the
 # tile.
 func character_position() -> Vector3:
-	var cp: Vector3 = translation
+	var cp: Vector3 = $Coordinate.translation
 	cp.y = Constants.HEX_TILE_UNIT_HEIGHT * height
 	return cp
 
 
-# Updates the shape mesh so that it reflects the current height.
-func _update_tile_shape_height() -> void:
-	$TileShape.mesh.set_height(Constants.HEX_TILE_UNIT_HEIGHT * (1 + height))
-	# Move the shape so that the bottom is always at -0.25
-	var y_translate: float = (Constants.HEX_TILE_UNIT_HEIGHT / 2) * (height - 1)
-	$TileShape.set_translation(Vector3(0.0, y_translate, 0.0))
-
-
-# Updates the collision shape mesh so that it reflects the current height.
-func _update_collision_shape_height() -> void:
-	var points: PoolVector3Array = $CollisionShape.shape.get_points()
-	for i in range(6):
-		var h: float = 0.25 + (Constants.HEX_TILE_UNIT_HEIGHT * height)
-		points[i] = Vector3(points[i].x, h, points[i].z)
-	$CollisionShape.shape.set_points(points)
-
-
 # Update the position of the tile highlighters so that they are on top of the tile.
-func _update_highlighter_position() -> void:
+func _update_highlighter_positions() -> void:
 	var y_translate: float = HIGHLIGHTER_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
-	$HexHighlighter.translation = Vector3(0.0, y_translate, 0.0)
+	$TileHighlighter.translation = Vector3(0.0, y_translate, 0.0)
 	y_translate = SELECTOR_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
 	$SelectorHighlighter.translation = Vector3(0.0, y_translate, 0.0)
 	"""
 	TODO: remove label
 	"""
-	$Label3D.translation = Vector3(0.0, y_translate, 0.2)
-
-
-func _on_MapTile_area_entered(area) -> void:
-	# Add entered character as this tile's occupant.
-	if (
-		_occupant == null 
-		and (area is PlayerCharacter or area is EnemyCharacter)
-	):
-		_occupant = area
-
-
-func _on_MapTile_area_exited(area) -> void:
-	if _occupant != null and area.name == _occupant.name:
-		_occupant = null
-
-
-"""
-TODO: Label is here for debugging purposes. Will need to be removed.
-"""
-func _update_label_display() -> void:
-	var format: String = "[%d:%d]\n%s  \n    %s\n%s  "
-	
-	$Label3D.text = str(format % [_map_index, height, _cube_coord.x, _cube_coord.y, _cube_coord.z])
-	
+	$DebugLabel.translation = Vector3(0.0, y_translate, 0.2)

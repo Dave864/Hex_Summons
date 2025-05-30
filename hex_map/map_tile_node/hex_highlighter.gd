@@ -1,5 +1,5 @@
-extends MeshInstance
 class_name HexHighlighter
+extends MeshInstance
 """
 Hexagonal shape used to represent available options in a HexMap scene.
 """
