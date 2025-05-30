@@ -2,7 +2,7 @@
 
 [ext_resource path="res://stat_types/cur_health.tres" type="Resource" id=1]
 [ext_resource path="res://effects/Damage/strength.tres" type="Resource" id=2]
-[ext_resource path="res://effects/Damage/Damage.gd" type="Script" id=3]
+[ext_resource path="res://effects/Damage/damage_effect.gd" type="Script" id=3]
 [ext_resource path="res://effects/scripts/effect_aspect.gd" type="Script" id=4]
 
 [node name="Damage" type="Node"]

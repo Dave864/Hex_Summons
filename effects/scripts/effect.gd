@@ -22,6 +22,7 @@ func _ready():
 # Updates the action_potency reference for this effect.
 func set_action_potency(ap: Potency) -> void:
 	_action_potency = ap
+	_set_aspects_action_potency()
 
 
 # Updates the source character stats of this effect.
@@ -36,7 +37,7 @@ func get_aspects() -> Array:
 # Initializes the action potency of each aspect to the referenced potency.
 func _set_aspects_action_potency() -> void:
 	for a in _aspects:
-		a.strength_calculation.action_potency = _action_potency
+		a.set_action_potency(_action_potency)
 
 
 # Check that all required parameters are set.

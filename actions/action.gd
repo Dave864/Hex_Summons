@@ -76,7 +76,8 @@ func _initialize_effects() -> void:
 		assert(effect is Effect, "Error: Action %s effect %s is not an Effect")
 		# Type checking for the node referenced at the path.
 		var source_stats_node: CharacterStats = get_node(source_stats_path)
-		effect.set_source(source_stats_node)
+		effect.set_source_stats(source_stats_node)
+		effect.set_action_potency(stat_details.potency)
 
 
 # Checks that all required parameters are set.

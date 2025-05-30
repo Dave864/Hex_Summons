@@ -5,21 +5,23 @@ Base class that is used to define the strength of an effect.
 """
 
 
-export(Resource) var action_potency = null
-
-
 # Gets the needed details for the operation and then runs said operation on those
 # values, returning the result.
 func process_operation(
 	source_stats: CharacterStats,
 	target_stats: CharacterStats,
+	action_potency: Potency,
 	stat_affected: Resource,
 	resisted: bool,
 	operation: int
 ) -> int:
-	var base_strength: float = _calculate_strength(source_stats)
+	var base_strength: float = _calculate_strength(source_stats, action_potency)
 	var resisted_strength: float = (
-			_calculate_resisted_strength(source_stats, target_stats) if resisted
+			_calculate_resisted_strength(
+					source_stats,
+					target_stats,
+					action_potency
+			) if resisted
 			else base_strength
 	)
 	# How effective will the change be.
@@ -36,17 +38,6 @@ func process_operation(
 			return _decrease_operation(base_strength, efficacy, stat_value)
 		_:
 			return 0
-
-
-func check_for_required_resources() -> void:
-	assert(
-			action_potency != null,
-			"Error: StrengthCalculation missing defined action_potency."
-	)
-	assert(
-			action_potency is Potency,
-			"Error: StrengthCalculation action_potency is not Potency resource."
-	)
 
 
 # Determines the value that will be used to change the stat to be the desired value.
@@ -81,16 +72,20 @@ func _decrease_operation(
 
 
 # Determines the strength of the effect for a given character.
-func _calculate_strength(source_stats: CharacterStats) -> float:
-	return _convert_to_scalar(_get_potency_values(source_stats))
+func _calculate_strength(
+		source_stats: CharacterStats,
+		action_potency: Potency
+) -> float:
+	return _convert_to_scalar(_get_potency_values(source_stats, action_potency))
 
 
 # Determines the strength of the effect for a given character when resisted by the target.
 func _calculate_resisted_strength(
 	source_stats: CharacterStats,
-	target_stats: CharacterStats
+	target_stats: CharacterStats,
+	action_potency: Potency
 ) -> float:
-	var strength_values: Dictionary = _get_potency_values(source_stats)
+	var strength_values: Dictionary = _get_potency_values(source_stats, action_potency)
 	var res_values: Dictionary = target_stats.get_defensive()
 	_apply_resistance(strength_values, res_values)
 	return _convert_to_scalar(strength_values)
@@ -116,7 +111,10 @@ func _get_stat_value(target_stats: CharacterStats, stat: Resource) -> int:
 
 
 # Determines the raw potency values for a given character.
-func _get_potency_values(character_stats: CharacterStats) -> Dictionary:
+func _get_potency_values(
+		character_stats: CharacterStats,
+		action_potency: Potency
+) -> Dictionary:
 	var p_vals: Dictionary = character_stats.get_offensive()
 	p_vals[Constants.ATTACK] *= action_potency.attack_potency
 	for element in ElementalStat.Element:

@@ -1,3 +1,4 @@
+class_name DamageEffect
 extends Effect
 """
 Defines the core details of a damage effect.

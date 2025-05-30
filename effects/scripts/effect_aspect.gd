@@ -20,6 +20,8 @@ export(int, 0, 100) var turn_duration = 0
 
 # The stats of the character that will apply this effect.
 var _source_stats: CharacterStats = null setget set_source_stats
+# The potency of the action the parent effect is assigned to.
+var _action_potency: Potency = null setget set_action_potency
 
 
 # Called when the node enters the scene tree for the first time.
@@ -28,9 +30,14 @@ func _ready():
 	strength_calculation.check_for_required_resources()
 
 
-# Updates the source character stats of this effect.
+# Updates the source character stats of this effect aspect.
 func set_source_stats(new_source: CharacterStats) -> void:
 	_source_stats = new_source
+
+
+# Updates the action potency data.
+func set_action_potency(new_potency: Potency) -> void:
+	_action_potency = new_potency
 
 
 # Determines the numerical result of the effect on a target set of character stats.
@@ -39,6 +46,7 @@ func effect_on_target(target_stats: CharacterStats) -> int:
 			_source_stats,
 			target_stats,
 			stat_affected,
+			_action_potency,
 			resisted,
 			operation
 	)
