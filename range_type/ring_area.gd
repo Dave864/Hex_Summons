@@ -12,7 +12,7 @@ export(int, 0, 1000) var radius = 0
 # Determines which map tiles are in the ring area positioned at the start index.
 # Does not account for tile heights.
 # Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
-func determine_ring_area_indexes(start: int, map_tiles: Tiles) -> Array:
+func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
 	var tile_ids: Array = []
 	var start_coord: Vector3 = map_tiles.get_tile_at_index(start).map_coordinate.get_cube_coord()
 	for x in range(-radius, radius + 1):

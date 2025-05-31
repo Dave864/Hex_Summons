@@ -15,7 +15,7 @@ export (int, 1, 100) var distance = 1
 # Determines which map tiles are in the column area positioned at the start index,
 # oriented to face the specified direction (0 - 5). Does not account for tile
 # heights.
-func determine_column_area_indexes(start: int, dir: int, map_tiles: Tiles) -> Array:
+func determine_directional_area_indexes(start: int, dir: int, map_tiles: Tiles) -> Array:
 	var left_dir: int = dir - 1 if dir > 0 else 5
 	var right_dir: int = dir + 1 if dir < 5 else 0
 	var tile_ids: Array = []

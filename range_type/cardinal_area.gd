@@ -11,7 +11,7 @@ export(int, 1, 1000) var distance = 1
 
 # Determines which map tiles are in the cardinal area positioned at the start index.
 # Does not account for tile heights.
-func determine_cardinal_area_indexes(start: int, map_tiles: Tiles) -> Array:
+func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
 	var tile_ids: Array = []
 	var start_coord: Vector3 = map_tiles.get_tile_at_index(start).map_coordinate.get_cube_coord()
 	tile_ids.append(start)

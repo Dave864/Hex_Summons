@@ -14,7 +14,11 @@ export (int, 1, 100) var distance = 1
 # Determines which map tiles are in the cone area position at the start index,
 # oriented to face the specified direction (0 - 5). Does not account for tile
 # heights.
-func determine_cone_area_indexes(start: int, dir: int, map_tiles: Tiles) -> Array:
+func determine_directional_area_indexes(
+	start: int,
+	dir: int,
+	map_tiles: Tiles
+) -> Array:
 	var tile_ids: Array = []
 	var start_coord: Vector3 = map_tiles.get_tile_at_index(start).map_coordinate.get_cube_coord()
 	tile_ids.append(start)
