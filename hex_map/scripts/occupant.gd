@@ -26,13 +26,8 @@ func can_character_pass(character_type: int) -> bool:
 			return true
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
 # Updates the occupant when a new area enters the collision space.
-func _on_MapCollider_area_entered(area) -> void:
+func _on_MapTile_area_entered(area) -> void:
 	# Add entered character as this tile's occupant.
 	if (
 		_occupant == null 
@@ -42,6 +37,6 @@ func _on_MapCollider_area_entered(area) -> void:
 
 
 # Removes the occupant if it leaves the collision space.
-func _on_MapCollider_area_exited(area) -> void:
+func _on_MapTile_area_exited(area) -> void:
 	if _occupant != null and area.name == _occupant.name:
 		_occupant = null

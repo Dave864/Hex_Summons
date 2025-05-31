@@ -39,7 +39,7 @@ func _init(hex_map_tiles: Array, x_count: int, z_count: int) -> void:
 # Get the area that can be reached in a specific map section starting from a
 # given point in said section. This takes into account the tile heights.
 # Will return an empty array if the start tile is not in the map section.
-func get_traversable_tiles(start_tile: int, reach: int, map_section: Array) -> Array:
+func get_traversable_ids(start_tile: int, reach: int, map_section: Array) -> Array:
 	var tiles_in_range: Array = []
 	disconnect_area(map_section)
 	for tiles in map_section:

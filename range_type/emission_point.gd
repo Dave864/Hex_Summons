@@ -5,7 +5,7 @@ Defines the tile the action will be emmited from.
 """
 
 
-var emission_tile: MapTile = null
+var emission_coord: MapCoordinate = null
 
 
 # Called when the node enters the scene tree for the first time.
@@ -14,4 +14,4 @@ func _ready():
 
 
 func _on_EmissionPoint_area_entered(map_tile: Area) -> void:
-	emission_tile = map_tile
+	emission_coord = map_tile.map_coordinate

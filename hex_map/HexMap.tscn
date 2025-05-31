@@ -1,14 +1,23 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://hex_map/scripts/hex_map.gd" type="Script" id=1]
 [ext_resource path="res://hex_map/scripts/tiles.gd" type="Script" id=2]
 [ext_resource path="res://hex_map/map_tile_node/MapTile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://hex_map/resources/hex_map_floor.tres" type="PlaneMesh" id=4]
-[ext_resource path="res://hex_map/map_tile_node/map_tile.gd" type="Script" id=5]
-
+[ext_resource path="res://hex_map/scripts/pathfinder.gd" type="Script" id=5]
+[ext_resource path="res://hex_map/scripts/selection_tracker.gd" type="Script" id=6]
 
 [node name="HexMap" type="Spatial"]
 script = ExtResource( 1 )
+
+[node name="SelectionTracker" type="Node" parent="."]
+script = ExtResource( 6 )
+map_tiles_reference = NodePath("../Tiles")
+pathfinder_reference = NodePath("../Pathfinder")
+
+[node name="Pathfinder" type="Node" parent="."]
+script = ExtResource( 5 )
+map_tiles_reference = NodePath("../Tiles")
 
 [node name="FloorMesh" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
@@ -19,130 +28,62 @@ script = ExtResource( 2 )
 x_count = 4
 z_count = 5
 
-[node name="MapTile0" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile0" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, -3 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile1" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile1" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, -3 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile2" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile2" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, -3 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile3" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile3" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, -3 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile4" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile4" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, -1.5 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile5" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile5" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, -1.5 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile6" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile6" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, -1.5 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile7" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile7" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, -1.5 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile8" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile8" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 0 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile9" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile9" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 0 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
-height = 3
 
-[node name="MapTile10" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile10" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 0 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
-height = 2
 
-[node name="MapTile11" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile11" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 0 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
-height = 1
 
-[node name="MapTile12" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile12" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, 1.5 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
-height = 1
 
-[node name="MapTile13" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile13" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, 1.5 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
-height = 3
 
-[node name="MapTile14" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile14" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, 1.5 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
-height = 2
 
-[node name="MapTile15" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile15" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, 1.5 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile19" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile16" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 3 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
 
-[node name="MapTile20" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile17" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 3 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
-height = 1
 
-[node name="MapTile21" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile18" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 3 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )
-height = 1
 
-[node name="MapTile22" type="Area" parent="Tiles" instance=ExtResource( 3 )]
+[node name="MapTile19" parent="Tiles" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 3 )
-collision_layer = 2
-collision_mask = 13
-script = ExtResource( 5 )

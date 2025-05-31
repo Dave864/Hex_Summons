@@ -189,7 +189,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://hex_map/scripts/map_coordinate.gd"
 }, {
-"base": "Spatial",
+"base": "Area",
 "class": "MapTile",
 "language": "GDScript",
 "path": "res://hex_map/map_tile_node/map_tile.gd"
@@ -203,6 +203,11 @@ _global_script_classes=[ {
 "class": "Occupant",
 "language": "GDScript",
 "path": "res://hex_map/scripts/occupant.gd"
+}, {
+"base": "Node",
+"class": "Pathfinder",
+"language": "GDScript",
+"path": "res://hex_map/scripts/pathfinder.gd"
 }, {
 "base": "StrengthCalculation",
 "class": "PercentageCalculation",
@@ -243,6 +248,11 @@ _global_script_classes=[ {
 "class": "ScalingHexMesh",
 "language": "GDScript",
 "path": "res://hex_map/map_tile_node/scaling_hex_mesh.gd"
+}, {
+"base": "Node",
+"class": "SelectionTracker",
+"language": "GDScript",
+"path": "res://hex_map/scripts/selection_tracker.gd"
 }, {
 "base": "Node",
 "class": "Selector",
@@ -339,6 +349,7 @@ _global_script_class_icons={
 "MapTile": "",
 "MousePosition": "",
 "Occupant": "",
+"Pathfinder": "",
 "PercentageCalculation": "",
 "PlayerCharacter": "",
 "PlayerCharacterState": "",
@@ -347,6 +358,7 @@ _global_script_class_icons={
 "RingArea": "",
 "ScalingHexCollider": "",
 "ScalingHexMesh": "",
+"SelectionTracker": "",
 "Selector": "",
 "SelectorState": "",
 "Stat": "",

@@ -23,11 +23,6 @@ var _map_tile: PackedScene = preload("res://hex_map/map_tile_node/MapTile.tscn")
 onready var _root_node: Node = get_tree().edited_scene_root
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_initial_grid_generation()
-
-
 # Update the z_count parameter and regenerate the grid.
 func set_z_count(new_count: int) -> void:
 	var old_z: int = z_count
@@ -67,6 +62,30 @@ func get_tile_at_index(index: int) -> Node:
 	return get_child(index)
 
 
+# Gets the MapTiles of the specified ids.
+func get_tiles_from_ids(ids: Array) -> Array:
+	var tiles: Array = []
+	for i in ids:
+		tiles.append(get_child(i))
+	return tiles
+
+
+# Gets all the MapTiles.
+func get_all_tiles() -> Array:
+	return get_children()
+
+
+# Checks if the given cube coordinates are within the bounds of the map.
+func is_valid_cube(cube: Vector3) -> bool:
+	var offset: Vector2 = HexUtil.cube_to_offset(cube)
+	return (
+		offset.x >= 0 
+		and offset.x < get_x_count()
+		and offset.y >= 0 
+		and offset.y < get_z_count()
+	)
+
+
 # Removes all tiles from the tiles node and regenerates the map.
 func regenerate_grid(r: bool) -> void:
 	if Engine.is_editor_hint() and r:
@@ -77,6 +96,11 @@ func regenerate_grid(r: bool) -> void:
 		_generate_grid()
 		_set_coordinates()
 		_determine_adjacencies()
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_initial_grid_generation()
 
 
 # Creates the intial instance of the grid map.
@@ -126,8 +150,8 @@ func _set_coordinates() -> void:
 	var index: int = 0
 	for tile in get_children():
 		tile.name = MAP_TILE + String(index)
-		tile.set_map_index(index)
-		tile.set_cube_coord(HexUtil.index_to_cube(index, get_x_count()))
+		tile.map_coordinate.set_map_index(index)
+		tile.map_coordinate.set_cube_coord(HexUtil.index_to_cube(index, get_x_count()))
 		index += 1
 
 
@@ -137,7 +161,7 @@ func _set_coordinates() -> void:
 #  4  \ /  3
 func _determine_adjacencies() -> void:
 	for tile in get_children():
-		var index: int = tile.get_map_index()
+		var index: int = tile.map_coordinate.get_map_index()
 		var z_place: int = int(floor(float(index) / float(x_count)))
 		var x_place: int = index % x_count
 		var even_z_place: bool = _is_even(z_place)
