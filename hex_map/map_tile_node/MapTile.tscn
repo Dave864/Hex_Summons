@@ -8,6 +8,10 @@
 [ext_resource path="res://hex_map/map_tile_node/MapTileDebugLabel.gd" type="Script" id=6]
 [ext_resource path="res://hex_map/map_tile_node/map_tile.gd" type="Script" id=7]
 
+[sub_resource type="ConvexPolygonShape" id=8]
+resource_local_to_scene = true
+points = PoolVector3Array( 0.87, 0.25, 0.5, 0, 0.25, 1, -0.87, 0.25, 0.5, -0.87, 0.25, -0.5, 0, 0.25, -1, 0.87, 0.25, -0.5, -0.87, -0.5, -0.5, 0, -0.5, -1, 0.87, -0.5, -0.5, 0.87, -0.5, 0.5, 0, -0.5, 1, -0.87, -0.5, 0.5 )
+
 [sub_resource type="CylinderMesh" id=9]
 resource_local_to_scene = true
 height = 0.5
@@ -40,12 +44,12 @@ rings = 0
 resource_local_to_scene = true
 flags_transparent = true
 
-[sub_resource type="ConvexPolygonShape" id=8]
-resource_local_to_scene = true
-points = PoolVector3Array( 0.87, 0.25, 0.5, 0, 0.25, 1, -0.87, 0.25, 0.5, -0.87, 0.25, -0.5, 0, 0.25, -1, 0.87, 0.25, -0.5, -0.87, -0.5, -0.5, 0, -0.5, -1, 0.87, -0.5, -0.5, 0.87, -0.5, 0.5, 0, -0.5, 1, -0.87, -0.5, 0.5 )
-
-[node name="MapTile" type="Spatial"]
+[node name="MapTile" type="Area"]
 script = ExtResource( 7 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 8 )
+script = ExtResource( 4 )
 
 [node name="MapCoordinate" type="Position3D" parent="."]
 script = ExtResource( 3 )
@@ -85,16 +89,8 @@ text = "[-1:0]
 script = ExtResource( 6 )
 coordinate_ref = NodePath("../MapCoordinate")
 
-[node name="MapCollider" type="Area" parent="."]
-collision_layer = 2
-collision_mask = 12
-
-[node name="CollisionShape" type="CollisionShape" parent="MapCollider"]
-shape = SubResource( 8 )
-script = ExtResource( 4 )
-
+[connection signal="area_entered" from="." to="Occupant" method="_on_MapTile_area_entered"]
+[connection signal="area_exited" from="." to="Occupant" method="_on_MapTile_area_exited"]
 [connection signal="height_changed" from="." to="TileShape" method="_on_HeightSource_height_changed"]
 [connection signal="height_changed" from="." to="DebugLabel" method="_on_MapTile_height_changed"]
-[connection signal="height_changed" from="." to="MapCollider/CollisionShape" method="_on_HeightSource_height_changed"]
-[connection signal="area_entered" from="MapCollider" to="Occupant" method="_on_MapCollider_area_entered"]
-[connection signal="area_exited" from="MapCollider" to="Occupant" method="_on_MapCollider_area_exited"]
+[connection signal="height_changed" from="." to="CollisionShape" method="_on_HeightSource_height_changed"]

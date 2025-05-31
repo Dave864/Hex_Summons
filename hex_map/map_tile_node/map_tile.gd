@@ -1,6 +1,6 @@
 tool
 class_name MapTile
-extends Spatial
+extends Area
 """
 Represents an individual map tile.
 """
