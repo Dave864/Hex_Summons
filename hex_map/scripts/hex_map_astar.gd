@@ -31,7 +31,11 @@ func _init(hex_map_tiles: Array, x_count: int, z_count: int) -> void:
 			TODO: weight will need to be updated when different tile types
 			are eventually created
 			"""
-			add_point(tile.get_map_index(), tile.character_position(), 1.0)
+			add_point(
+					tile.map_coordinate.get_map_index(),
+					tile.character_position(),
+					1.0
+			)
 	
 	reconnect_area(hex_map_tiles)
 
@@ -65,7 +69,7 @@ func update_astar_disabled_for_characters(characters: Array, disabled: bool) -> 
 func disconnect_area(tiles_to_disconnect: Array) -> void:
 	for tile in tiles_to_disconnect:
 		if tile.is_active():
-			for neighbor in tile.get_adjacent():
+			for neighbor in tile.get_all_adjacent():
 				if (
 						neighbor != null 
 						and not neighbor in tiles_to_disconnect
@@ -83,10 +87,13 @@ func full_reset(map_tiles: Array):
 func reconnect_area(map_tiles: Array) -> void:
 	for tile in map_tiles:
 		if tile.is_active():
-			for neighbor in tile.get_adjacent():
+			for neighbor in tile.get_all_adjacent():
 				# Connect non empty and active neighbors.
 				if neighbor != null and neighbor.is_active():
-					connect_points(tile.get_map_index(), neighbor.get_map_index())
+					connect_points(
+							tile.map_coordinate.get_map_index(),
+							neighbor.map_coordinate.get_map_index()
+					)
 
 
 # Reset the disabled flag for the specified connections in the astar map.

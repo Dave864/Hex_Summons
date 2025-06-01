@@ -7,12 +7,16 @@ from the child nodes that are needed for other nodes to interact with the map.
 """
 
 
-const TILES = "Tiles"
-const FLOOR_MESH = "FloorMesh"
+const TILES: String = "Tiles"
+const FLOOR_MESH: String = "FloorMesh"
+const SELECTION_TRACKER: String = "SelectionTracker"
+const RANGE_FINDER: String = "RangeFinder"
 
 #var _hm_astar: HexMapAStar = null
 var _floor_mesh: PlaneMesh = preload("res://hex_map/resources/hex_map_floor.tres")
 var _floor_mesh_node: MeshInstance = null
+var _selection_tracker_node: SelectionTracker = null
+var _range_finder_node: RangeFinder = null
 var _tiles_node: Tiles = null
 
 onready var _map_tiles: Array = [] setget , get_map_tiles
@@ -21,6 +25,8 @@ onready var _root_node: Node = get_tree().edited_scene_root
 
 
 func _ready() -> void:
+	_create_selection_tracker()
+	_create_pathfinder()
 	_create_floor_mesh()
 	_create_tiles_node()
 	_map_tiles = _tiles_node.get_children()
@@ -64,3 +70,25 @@ func _create_floor_mesh() -> void:
 		_floor_mesh_node.translation.y = -Constants.HEX_TILE_UNIT_HEIGHT
 	else:
 		_floor_mesh_node = get_node(FLOOR_MESH)
+
+
+# Create a selection tracker node if not already present.
+func _create_selection_tracker() -> void:
+	if get_node_or_null(SELECTION_TRACKER) == null:
+		_selection_tracker_node = SelectionTracker.new()
+		_selection_tracker_node.name = SELECTION_TRACKER
+		add_child(_selection_tracker_node)
+		_selection_tracker_node.set_owner(_root_node)
+	else:
+		_selection_tracker_node = get_node(SELECTION_TRACKER)
+
+
+# Create a pathfinder node if not already present.
+func _create_pathfinder() -> void:
+	if get_node_or_null(RANGE_FINDER) == null:
+		_range_finder_node = RangeFinder.new()
+		_range_finder_node.name = RANGE_FINDER
+		add_child(_range_finder_node)
+		_range_finder_node.set_owner(_root_node)
+	else:
+		_range_finder_node = get_node(RANGE_FINDER)

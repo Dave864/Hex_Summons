@@ -91,6 +91,6 @@ coordinate_ref = NodePath("../MapCoordinate")
 
 [connection signal="area_entered" from="." to="Occupant" method="_on_MapTile_area_entered"]
 [connection signal="area_exited" from="." to="Occupant" method="_on_MapTile_area_exited"]
+[connection signal="height_changed" from="." to="CollisionShape" method="_on_HeightSource_height_changed"]
 [connection signal="height_changed" from="." to="TileShape" method="_on_HeightSource_height_changed"]
 [connection signal="height_changed" from="." to="DebugLabel" method="_on_MapTile_height_changed"]
-[connection signal="height_changed" from="." to="CollisionShape" method="_on_HeightSource_height_changed"]

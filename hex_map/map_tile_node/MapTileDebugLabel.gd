@@ -23,10 +23,5 @@ func update_label_display(height: int) -> void:
 	)
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
 func _on_MapTile_height_changed(new_height: int) -> void:
 	update_label_display(new_height)

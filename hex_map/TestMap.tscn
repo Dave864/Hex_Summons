@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://hex_map/scripts/tiles.gd" type="Script" id=1]
+[ext_resource path="res://hex_map/scripts/range_finder.gd" type="Script" id=2]
 [ext_resource path="res://hex_map/scripts/hex_map.gd" type="Script" id=3]
 [ext_resource path="res://hex_map/map_tile_node/MapTile.tscn" type="PackedScene" id=4]
 [ext_resource path="res://hex_map/resources/hex_map_floor.tres" type="PlaneMesh" id=5]
+[ext_resource path="res://hex_map/scripts/selection_tracker.gd" type="Script" id=6]
 
 [node name="TestMap" type="Spatial"]
 script = ExtResource( 3 )
@@ -322,3 +324,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, 6 )
 
 [node name="MapTile89" parent="Tiles" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, 6 )
+
+[node name="SelectionTracker" type="Node" parent="."]
+script = ExtResource( 6 )
+map_tiles_reference = NodePath("../Tiles")
+range_finder_reference = NodePath("../RangeFinder")
+
+[node name="RangeFinder" type="Node" parent="."]
+script = ExtResource( 2 )
+map_tiles_reference = NodePath("../Tiles")

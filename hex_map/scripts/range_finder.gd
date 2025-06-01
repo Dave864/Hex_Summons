@@ -1,4 +1,4 @@
-class_name Pathfinder
+class_name RangeFinder
 extends Node
 """
 Contains the logic for determining area ranges and paths for a HexMap. Requires

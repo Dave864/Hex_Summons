@@ -13,14 +13,14 @@ const SELECTOR_Y_OFFSET = 0.125
 
 # The height of the tile.
 export(int, 0, 20) var height = 0 setget set_height
-# References the MapTile nodes that are adjacent to this one.
-#  0  / \  1
-#  5 |   | 2
-#  4  \ /  3
 
 onready var map_coordinate: MapCoordinate = $MapCoordinate
 onready var occupant: Occupant = $Occupant
 
+# References the MapTile nodes that are adjacent to this one.
+#  0  / \  1
+#  5 |   | 2
+#  4  \ /  3
 var _adjacent_tiles: Array = [null, null, null, null, null, null] \
 	setget , get_all_adjacent
 # Flag that indicates the highlight of the tile.
@@ -44,9 +44,10 @@ func get_adjacent_tile(position: int) -> Spatial:
 # Sets the adjacent tile of the specified position.
 func set_adjacent_tile(position: int, map_tile: Area):
 	_adjacent_tiles[position] = map_tile
+	$DebugLabel.update_label_display(height)
 
 
-# Gets the array pf all adjacent tiles.
+# Gets the array of all adjacent tiles.
 func get_all_adjacent() -> Array:
 	return _adjacent_tiles
 
@@ -83,9 +84,13 @@ func is_active() -> bool:
 # Return the translation that a character will be placed at when moving onto the
 # tile.
 func character_position() -> Vector3:
-	var cp: Vector3 = $Coordinate.translation
+	var cp: Vector3 = map_coordinate.translation
 	cp.y = Constants.HEX_TILE_UNIT_HEIGHT * height
 	return cp
+
+
+func _ready() -> void:
+	$DebugLabel.update_label_display(height)
 
 
 # Update the position of the tile highlighters so that they are on top of the tile.

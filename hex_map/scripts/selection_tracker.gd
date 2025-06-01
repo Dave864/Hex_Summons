@@ -7,10 +7,10 @@ to the map tiles and Pathfinder.
 
 
 export(NodePath) var map_tiles_reference = null
-export(NodePath) var pathfinder_reference = null
+export(NodePath) var range_finder_reference = null
 
 var _map_tiles: Tiles = null
-var _pathfinder: Pathfinder = null
+var _range_finder: RangeFinder = null
 var _highlighted_map_indexes: Array = []
 var _selectable_map_indexes: Array = []
 
@@ -49,7 +49,7 @@ func highlight_player_movement(
 func highlight_player_action_area(tile_indexes: Array, pc: PlayerCharacter) -> void:
 	var map_section: Array = _map_tiles.get_tiles_from_ids(tile_indexes)
 	
-	var area_range_indices: Array = _pathfinder.get_traversable_tiles(
+	var area_range_indices: Array = _range_finder.get_traversable_tiles(
 		pc.get_map_index_at(),
 		pc.stats.get_movement_range(),
 		map_section
@@ -108,4 +108,4 @@ func clear_selector_highlights() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_map_tiles = get_node(map_tiles_reference)
-	_pathfinder = get_node(pathfinder_reference)
+	_range_finder = get_node(range_finder_reference)
