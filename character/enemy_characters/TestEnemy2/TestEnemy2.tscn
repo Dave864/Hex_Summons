@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://art/icon.png" type="Texture" id=1]
 [ext_resource path="res://character/enemy_characters/enemy_character.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://character/enemy_characters/TestEnemy2/stat_data/stat_values.tres" type="Resource" id=6]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterThink.gd" type="Script" id=7]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterAction.gd" type="Script" id=8]
+[ext_resource path="res://hex_map/scripts/map_coordinate.gd" type="Script" id=9]
 [ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=10]
 [ext_resource path="res://character/enemy_characters/TestEnemy2/stat_data/movement_area.tres" type="Resource" id=11]
 
@@ -19,6 +20,9 @@ collision_layer = 8
 collision_mask = 2
 script = ExtResource( 2 )
 fsm_path = NodePath("StateMachine")
+
+[node name="MapCoordinate" type="Position3D" parent="."]
+script = ExtResource( 9 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
@@ -52,3 +56,4 @@ script = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
+[connection signal="area_entered" from="." to="MapCoordinate" method="_on_Character_area_entered"]
