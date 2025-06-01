@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://hex_map_movement_path.gd" type="Script" id=1]
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 0.2, 0.2, 0.2 )
+
+[node name="HexMapMovementPath" type="Path"]
+script = ExtResource( 1 )
+
+[node name="PathFollow" type="PathFollow" parent="."]
+rotation_mode = 0
+loop = false
+
+[node name="Position3D" type="Position3D" parent="PathFollow"]
+
+[node name="MeshInstance" type="MeshInstance" parent="PathFollow"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.253378, 0 )
+mesh = SubResource( 2 )

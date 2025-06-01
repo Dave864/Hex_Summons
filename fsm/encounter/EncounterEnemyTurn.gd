@@ -118,7 +118,7 @@ func _determine_action_chain() -> void:
 	action_chain.push_front([EnemyCharacterState.MOVE, path])
 	# Pause for a little bit to give the EncounterUI a chance to get ready.
 	# Workaround for bug where not moving the player causes the UI to not appear.
-	yield(get_tree().create_timer(0.1), "timeout")
+#	yield(get_tree().create_timer(0.1), "timeout")
 	enc.emit_enemy_actions_confirmed(action_chain)
 
 

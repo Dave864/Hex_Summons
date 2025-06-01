@@ -169,6 +169,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://hex_map/scripts/hex_map_astar.gd"
 }, {
+"base": "Path",
+"class": "HexMapMovementPath",
+"language": "GDScript",
+"path": "res://hex_map_movement_path.gd"
+}, {
 "base": "Object",
 "class": "HexUtil",
 "language": "GDScript",
@@ -342,6 +347,7 @@ _global_script_class_icons={
 "HexHighlighter": "",
 "HexMap": "",
 "HexMapAStar": "",
+"HexMapMovementPath": "",
 "HexUtil": "",
 "InitiativeTracker": "",
 "LabeledIconButton": "",
