@@ -1,12 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://character/player_classes/player_class.gd" type="Script" id=1]
 [ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=2]
 [ext_resource path="res://character/player_classes/TestClass/stat_data/stat_values.tres" type="Resource" id=3]
 [ext_resource path="res://character/player_classes/TestClass/stat_data/movement_area.tres" type="Resource" id=6]
-[ext_resource path="res://actions/Strike/Strike.tscn" type="PackedScene" id=8]
-[ext_resource path="res://actions/Shot/Shot.tscn" type="PackedScene" id=9]
-[ext_resource path="res://actions/Sweep/Sweep.tscn" type="PackedScene" id=10]
 
 [node name="TestClass" type="Node"]
 script = ExtResource( 1 )
@@ -17,14 +14,5 @@ stat_values = ExtResource( 3 )
 movement_area = ExtResource( 6 )
 
 [node name="Techniques" type="Node" parent="."]
-
-[node name="Strike" parent="Techniques" instance=ExtResource( 8 )]
-source_stats_path = NodePath("../../Stats")
-
-[node name="Shot" parent="Techniques" instance=ExtResource( 9 )]
-source_stats_path = NodePath("../../Stats")
-
-[node name="Sweep" parent="Techniques" instance=ExtResource( 10 )]
-source_stats_path = NodePath("../../Stats")
 
 [node name="Spells" type="Node" parent="."]
