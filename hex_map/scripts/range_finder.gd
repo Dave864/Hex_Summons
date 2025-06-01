@@ -69,7 +69,10 @@ func get_point_path_toward_for_character(
 ) -> PoolVector3Array:
 	# Get the currently traversible tiles for the character if movement is not
 	# provided.
-	assert(movement_area_ids.size() == 0, "")
+	assert(
+			movement_area_ids.size() > 0,
+			"Error: No movement area provided for character %s." % c.name
+	)
 	var start_id: int = c.get_map_index_at()
 	var true_dest_id: int = dest_id
 	
@@ -93,7 +96,10 @@ func get_point_path_toward_for_character(
 		# range. A tile occupied by an opponent is not considered within
 		# movement range.
 		for i in range(path_to_dest.size() - 1, 0, -1):
-			var occupant: Character = _map_tiles.get_tile_at_index(path_to_dest[i]).get_current_occupant()
+			var occupant: Character = (
+					_map_tiles.get_tile_at_index(path_to_dest[i]) \
+					.occupant.get_current_occupant()
+			)
 			if (
 				not path_to_dest[i] in movement_area_ids
 				or (occupant != null and occupant.get_type() != c.get_type())
@@ -102,7 +108,10 @@ func get_point_path_toward_for_character(
 		# Check if the true destination, the last tile in the available move, is
 		# occupied by an ally other than itself. If so, disable that tile and 
 		# recalculate the shortest path.
-		var dest_occupant: Character = _map_tiles.get_tile_at_index(true_dest_id).get_current_occupant()
+		var dest_occupant: Character = (
+				_map_tiles.get_tile_at_index(true_dest_id) \
+				.occupant.get_current_occupant()
+		)
 		if (
 			dest_occupant != null
 			and dest_occupant.name != c.name
@@ -124,21 +133,21 @@ func update_astar_disabled_for_characters(characters: Array, disabled: bool) -> 
 		_hm_astar.set_point_disabled(c.get_map_index_at(), disabled)
 
 
-## Get the area that can be reached by a character. Takes in an array of the
-## opposing characters for determining the tiles to disable.
-#func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Array:
-#	update_astar_disabled_for_characters(opponents, true)
-#	var c_move_indexes: Array = determine_area_indexes(
-#		c.stats.get_movement_area(),
-#		c.get_map_index_at()
-#	)
-#	var t_tiles: Array = _hm_astar.get_traversable_tiles(
-#		c.get_map_index_at(),
-#		c.stats.get_movement_range(),
-#		_get_tiles_from_ids(c_move_indexes)
-#	)
-#	update_astar_disabled_for_characters(opponents, false)
-#	return t_tiles
+# Get the area that can be reached by a character. Takes in an array of the
+# opposing characters for determining the tiles to disable.
+func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Array:
+	update_astar_disabled_for_characters(opponents, true)
+	var c_move_indexes: Array = _determine_ring_area_indexes(
+		c.stats.get_movement_range(),
+		c.get_map_index_at()
+	)
+	var t_tiles: Array = _hm_astar.get_traversable_ids(
+		c.get_map_index_at(),
+		c.stats.get_movement_range(),
+		_map_tiles.get_tiles_from_ids(c_move_indexes)
+	)
+	update_astar_disabled_for_characters(opponents, false)
+	return t_tiles
 
 
 # Called when the node enters the scene tree for the first time.
@@ -149,3 +158,23 @@ func _ready():
 		_map_tiles.get_x_count(),
 		_map_tiles.get_z_count()
 	)
+
+
+# Determines which map tiles are in the ring area positioned at the start index.
+# Does not account for tile heights.
+# Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
+func _determine_ring_area_indexes(radius: int, start: int) -> Array:
+	var tile_ids: Array = []
+	var start_coord: Vector3 = (
+			_map_tiles.get_tile_at_index(start) \
+			.map_coordinate.get_cube_coord()
+	)
+	for x in range(-radius, radius + 1):
+		var x_lower: int = max(-radius, -x - radius) as int
+		var x_upper: int = min(radius, radius - x) as int
+		for y in range(x_lower, x_upper + 1):
+			var coord: Vector3 = Vector3(x, y, -x - y) + start_coord
+			if _map_tiles.is_valid_cube(coord):
+				var tile_id = HexUtil.cube_to_index(coord, _map_tiles.get_x_count())
+				tile_ids.append(tile_id)
+	return tile_ids

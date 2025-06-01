@@ -45,6 +45,8 @@ resource_local_to_scene = true
 flags_transparent = true
 
 [node name="MapTile" type="Area"]
+collision_layer = 2
+collision_mask = 13
 script = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

@@ -24,25 +24,28 @@ func highlight_player_movement(
 	start_id: int = -1
 ) -> void:
 	for i in tile_indexes:
-		var tile: MapTile = _map_tiles[i]
-		if tile.get_current_occupant() == null:
+		var tile: MapTile = _map_tiles.get_tile_at_index(i)
+		if tile.occupant.get_current_occupant() == null:
 			if i == start_id:
 				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 			else:
 				tile.set_highlight_type(HexHighlighter.Option.RANGE)
-			_highlighted_map_indexes.append(tile.get_map_index())
-		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
+			_highlighted_map_indexes.append(tile.map_coordinate.get_map_index())
+		elif (
+			tile.occupant.get_current_occupant().get_type() 
+			== Constants.MapOccupants.ENEMY
+		):
 			tile.set_highlight_type(HexHighlighter.Option.NONE)
-			_highlighted_map_indexes.append(tile.get_map_index())
-		elif tile.get_current_occupant().name == pc.name:
+			_highlighted_map_indexes.append(tile.map_coordinate.get_map_index())
+		elif tile.occupant.get_current_occupant().name == pc.name:
 			if start_id < 0 or start_id == pc.get_map_index_at():
 				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 			else:
 				tile.set_highlight_type(HexHighlighter.Option.RANGE)
-			_highlighted_map_indexes.append(tile.get_map_index())
+			_highlighted_map_indexes.append(tile.map_coordinate.get_map_index())
 		else:
 			tile.set_highlight_type(HexHighlighter.Option.ALLY)
-			_highlighted_map_indexes.append(tile.get_map_index())
+			_highlighted_map_indexes.append(tile.map_coordinate.get_map_index())
 
 
 # Highlight the specified tiles as being within the area range of an action.
@@ -94,14 +97,14 @@ func highlight_effect_area(tile_indexes: Array, ignore_heights: bool) -> void:
 # Clear the higlights from all tiles.
 func clear_highlights() -> void:
 	for i in _highlighted_map_indexes:
-		_map_tiles[i].set_highlight_type(HexHighlighter.Option.NONE)
+		_map_tiles.get_tile_at_index(i).set_highlight_type(HexHighlighter.Option.NONE)
 	_highlighted_map_indexes.clear()
 
 
 # Clear selector highlights from all tiles.
 func clear_selector_highlights() -> void:
 	for i in _selectable_map_indexes:
-		_map_tiles[i].set_selector_type(HexHighlighter.Option.NONE)
+		_map_tiles.get_tile_at_index(i).set_selector_type(HexHighlighter.Option.NONE)
 	_selectable_map_indexes.clear()
 
 

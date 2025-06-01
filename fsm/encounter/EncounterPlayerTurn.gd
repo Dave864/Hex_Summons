@@ -24,11 +24,11 @@ var action_range: Dictionary = {"type": null, "tiles": null}
 func enter(_msg := {}) -> void:
 	active_char = enc.get_current_character()
 	start_index = active_char.get_map_index_at()
-	movement_area = enc.hex_map.get_traversible_tiles_for_character(
+	movement_area = enc.hex_map.range_finder.get_traversible_tiles_for_character(
 		active_char,
 		enc.enemies
 	)
-	enc.hex_map.highlight_player_movement(movement_area, active_char)
+	enc.hex_map.selection_tracker.highlight_player_movement(movement_area, active_char)
 	
 	_connect_signals_to_self()
 	_connect_signals_to_UI()
@@ -310,11 +310,11 @@ func _disconnect_signals_from_character() -> void:
 # Determine the path to the selected tile for character movement and signal that
 # the movement tile has been selected.
 func _on_Selector_move_tile_selected(tile: MapTile) -> void:
-	var path_data: PoolVector3Array = enc.hex_map.get_point_path_for_player(
-		active_char,
-		tile.get_map_index(),
-		enc.enemies,
-		movement_area
+	var path_data: PoolVector3Array = enc.hex_map.range_finder.get_point_path_for_player(
+			active_char,
+			tile.map_coordinate.get_map_index(),
+			enc.enemies,
+			movement_area
 	)
 	enc.emit_move_tile_selected(path_data)
 
@@ -323,8 +323,8 @@ func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 # transition to either the PlayerTurn state or the EnemyTurn state depending 
 # on the next character.
 func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
-	enc.hex_map.clear_highlights()
-	enc.hex_map.clear_selector_highlights()
+	enc.hex_map.selection_tracker.clear_highlights()
+	enc.hex_map.selection_tracker.clear_selector_highlights()
 	var next_character: Character = enc.get_next_character()
 	enc.progress_initiative()
 	if next_character is PlayerCharacter:
@@ -338,7 +338,10 @@ func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
 
 # Updates the tile highlights to show the area range of the action.
 func _on_EncounterUI_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
-	var area_indexes: Array = enc.hex_map.determine_area_indexes(
+	"""
+	TODO: Change the function call to something that is present.
+	"""
+	var area_indexes: Array = enc.hex_map.range_finder.determine_area_indexes(
 		action.stat_details.area_range,
 		action.get_emission_map_index()
 	)

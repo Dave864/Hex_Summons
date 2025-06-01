@@ -13,10 +13,10 @@ const SELECTION_TRACKER: String = "SelectionTracker"
 const RANGE_FINDER: String = "RangeFinder"
 
 #var _hm_astar: HexMapAStar = null
+var selection_tracker: SelectionTracker = null
+var range_finder: RangeFinder = null
 var _floor_mesh: PlaneMesh = preload("res://hex_map/resources/hex_map_floor.tres")
 var _floor_mesh_node: MeshInstance = null
-var _selection_tracker_node: SelectionTracker = null
-var _range_finder_node: RangeFinder = null
 var _tiles_node: Tiles = null
 
 onready var _map_tiles: Array = [] setget , get_map_tiles
@@ -75,20 +75,20 @@ func _create_floor_mesh() -> void:
 # Create a selection tracker node if not already present.
 func _create_selection_tracker() -> void:
 	if get_node_or_null(SELECTION_TRACKER) == null:
-		_selection_tracker_node = SelectionTracker.new()
-		_selection_tracker_node.name = SELECTION_TRACKER
-		add_child(_selection_tracker_node)
-		_selection_tracker_node.set_owner(_root_node)
+		selection_tracker = SelectionTracker.new()
+		selection_tracker.name = SELECTION_TRACKER
+		add_child(selection_tracker)
+		selection_tracker.set_owner(_root_node)
 	else:
-		_selection_tracker_node = get_node(SELECTION_TRACKER)
+		selection_tracker = get_node(SELECTION_TRACKER)
 
 
 # Create a pathfinder node if not already present.
 func _create_pathfinder() -> void:
 	if get_node_or_null(RANGE_FINDER) == null:
-		_range_finder_node = RangeFinder.new()
-		_range_finder_node.name = RANGE_FINDER
-		add_child(_range_finder_node)
-		_range_finder_node.set_owner(_root_node)
+		range_finder = RangeFinder.new()
+		range_finder.name = RANGE_FINDER
+		add_child(range_finder)
+		range_finder.set_owner(_root_node)
 	else:
-		_range_finder_node = get_node(RANGE_FINDER)
+		range_finder = get_node(RANGE_FINDER)
