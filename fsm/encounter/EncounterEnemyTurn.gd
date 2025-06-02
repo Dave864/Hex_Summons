@@ -92,6 +92,26 @@ func _determine_action_chain() -> void:
 	character.
 	"""
 	var action_chain: Array = []
+	var path: PoolVector3Array = (
+			enc.hex_map \
+			.range_finder.get_point_path_toward_for_character(
+				active_char,
+				_determine_closest_player_index(),
+				enc.enemies,
+				enc.players,
+				movement_range
+			)
+	)
+	enc.move_path.create_segmented_bezier_path(path)
+	action_chain.push_front([EnemyCharacterState.MOVE, enc.move_path])
+#	# Pause for a little bit to give the EncounterUI a chance to get ready.
+#	# Workaround for bug where not moving the player causes the UI to not appear.
+#	yield(get_tree().create_timer(0.1), "timeout")
+	enc.emit_enemy_actions_confirmed(action_chain)
+
+
+# Gets the map index of the player character closest to the active enemy.
+func _determine_closest_player_index() -> int:
 	var player_distances: Array = []
 	for p in enc.players:
 		var p_data: Array = [
@@ -104,22 +124,8 @@ func _determine_action_chain() -> void:
 		player_distances.append(p_data)
 	
 	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
-	var path: PoolVector3Array = (
-			enc.hex_map \
-			.range_finder.get_point_path_toward_for_character(
-				active_char,
-				player_distances[0][0].get_map_index_at(),
-				enc.enemies,
-				enc.players,
-				movement_range
-			)
-	)
-	
-	action_chain.push_front([EnemyCharacterState.MOVE, path])
-	# Pause for a little bit to give the EncounterUI a chance to get ready.
-	# Workaround for bug where not moving the player causes the UI to not appear.
-#	yield(get_tree().create_timer(0.1), "timeout")
-	enc.emit_enemy_actions_confirmed(action_chain)
+	return player_distances[0][0].get_map_index_at()
+
 
 
 func _on_EnemyCharacter_enemy_actions_required() -> void:

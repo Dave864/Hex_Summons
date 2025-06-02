@@ -7,91 +7,77 @@ state if movement is the last command.
 """
 
 
-# Reference to the movement path of the enemy character.
-export(NodePath) var movement_path_ref = null
-
-# Array of the positions to be traveled to in order.
-var travel_path: PoolVector3Array
-# The start position for the current movement step.
-var start_point: Vector3
-# The end point for the current movement step.
-var next_point: Vector3
-# The index of the end point in the travel path.
-var next_point_index: int = 1
-# The current interpolation weight.
-var weight: float = 0.0
-# The list of commands the enemy will execute.
-var command_chain: Array = []
-
-# The movement path of the character
+## Array of the positions to be traveled to in order.
+#var travel_path: PoolVector3Array = []
+## The start position for the current movement step.
+#var start_point: Vector3 = Vector3.ZERO
+## The end point for the current movement step.
+#var next_point: Vector3 = Vector3.ZERO
+# The reference to the movement path.
 var _movement_path: HexMapMovementPath = null
+# Flag indicating if the movement is active.
+var _movement_active: bool = false
+## The index of the end point in the travel path.
+#var next_point_index: int = 1
+# The current interpolation weight.
+var _weight: float = 0.0
+# The list of commands the enemy will execute.
+var _command_chain: Array = []
 
 
 # Set the starting point for the path.
 func enter(_msg := {}) -> void:
-	command_chain = _msg["command_chain"]
-	travel_path = command_chain.pop_back()[1]
-	
-	# Move to the `Wait` state if the travel path only has one point.
-	# This indicates that the enemy character's current position is the target destination.
-	if travel_path.size() > 1:
-		start_point = ec.translation
-		next_point = travel_path[next_point_index]
-		if _movement_path != null:
-			_movement_path.create_bezier_path(travel_path)
-	else:
-		_move_to_next_state()
+	_command_chain = _msg["command_chain"]
+#	travel_path = command_chain.pop_back()[1]
+	_movement_path = _command_chain.pop_back()[1]
+	_movement_active = true
+	ErrorUtil.connect_signal(
+			_movement_path,
+			"movement_finished",
+			self,
+			"_on_MovementPath_movement_ended"
+	)
 
 
 # Corresponds to the `_process()` callback.
 func update(delta: float) -> void:
-	if _movement_path != null:
-		weight += delta
-		_movement_path.move_unit_offset(weight)
-		if weight >= 1.0:
-			_move_to_next_state()
-	else:
-		# Move the enemy character towards the next tile.
-		weight += delta * Constants.MOVE_SPEED
-		weight = 1.0 if weight > 1.0 else weight
-		var li: Vector3 = start_point.linear_interpolate(next_point, weight)
-		ec.translation = li
-	
-		# When finished moving to next tile, check to see if path has been fully
-		# traversed. Move to the `Wait` state when path has been fully traversed.
-		if weight >= 1.0:
-			next_point_index += 1
-			if next_point_index < travel_path.size():
-				weight = 0.0
-				start_point = ec.translation
-				next_point = travel_path[next_point_index]
-			else:
-				_move_to_next_state()
+	_weight += delta * Constants.MOVE_SPEED
+	_movement_path.move_offset(_weight)
+	# Only update the movement position if the movement has not ended.
+	# This is to prevent the character from being moved to an undesired location
+	# after the movement_ended signal has been caught.
+	if _movement_active:
+		ec.translation = _movement_path.get_current_pos()
 
 
 # Called by the state machine before changing the active state.
 # Resets the interpolation weight an next_point_index.
 func exit() -> void:
-	weight = 0.0
-	next_point_index = 1
-	if _movement_path != null:
-		_movement_path.reset_path()
-
-
-func _ready() -> void:
-	if movement_path_ref != null:
-		_movement_path = get_node_or_null(movement_path_ref)
+	_weight = 0.0
 
 
 # Checks the command chain to determine what state to go to next.
 func _move_to_next_state() -> void:
-	if command_chain.size() > 0:
-		if command_chain.back()[0] == MOVE:
+	if _command_chain.size() > 0:
+		if _command_chain.back()[0] == MOVE:
 			print("Go to move")
 #			state_machine.transition_to(MOVE, {"command_chain": command_chain})
-		elif command_chain.back()[0] == ACTION:
+		elif _command_chain.back()[0] == ACTION:
 			print("Go to action")
 #			state_machine.transition_to(ACTION, {"command_chain": command_chain})
 	else:
 		ec.emit_enemy_turn_ended()
 		state_machine.transition_to(WAIT)
+
+
+func _on_MovementPath_movement_ended(final_position: Vector3) -> void:
+	_movement_active = false
+	_movement_path.disconnect(
+			"movement_finished",
+			self,
+			"_on_MovementPath_movement_ended"
+	)
+	_movement_path.reset_path()
+	_movement_path = null
+	ec.translation = final_position
+	_move_to_next_state()
