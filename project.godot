@@ -386,6 +386,7 @@ config/icon="res://art/icon.png"
 [autoload]
 
 ElementalPolarity="*res://autoloads/elemental_polarity.gd"
+SignalBus="*res://autoloads/signal_bus.gd"
 
 [global]
 
