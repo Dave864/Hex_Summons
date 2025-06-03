@@ -5,7 +5,18 @@ The Enemy Character does nothing until it is called upon to act.
 """
 
 
+# To be called in the _ready function to connect signals to 
+# the state. The signals connected here should not be required by other states.
+func _ready_connect_signals() -> void:
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"enemy_turn_started",
+			self,
+			"_on_SignalBus_enemy_turn_started"
+	)
+
+
 # Hit when the enemy character is selected to take its turn.
-func _on_Encounter_enemy_turn_started(enemy: EnemyCharacter) -> void:
+func _on_SignalBus_enemy_turn_started(enemy: EnemyCharacter) -> void:
 	if enemy.name == ec.name:
 		state_machine.transition_to(THINK)

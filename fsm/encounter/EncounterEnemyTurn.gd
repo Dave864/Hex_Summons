@@ -35,19 +35,7 @@ func enter(_msg := {}) -> void:
 			self,
 			"_on_EnemyCharacter_enemy_turn_ended"
 	)
-	ErrorUtil.connect_signal(
-			enc,
-			"enemy_turn_started",
-			active_char.fsm.state_nodes["Wait"],
-			"_on_Encounter_enemy_turn_started"
-	)
-	ErrorUtil.connect_signal(
-			enc,
-			"enemy_actions_confirmed",
-			active_char.fsm.state_nodes["Think"],
-			"_on_Encounter_enemy_actions_confirmed"
-	)
-	enc.emit_enemy_turn_started()
+	SignalBus.emit_enemy_turn_started(active_char)
 
 
 # Corresponds to the `_process()` callback.
@@ -69,16 +57,6 @@ func exit() -> void:
 			"enemy_turn_ended",
 			self,
 			"_on_EnemyCharacter_enemy_turn_ended"
-	)
-	enc.disconnect(
-			"enemy_turn_started",
-			active_char.fsm.state_nodes["Wait"],
-			"_on_Encounter_enemy_turn_started"
-	)
-	enc.disconnect(
-			"enemy_actions_confirmed",
-			active_char.fsm.state_nodes["Think"],
-			"_on_Encounter_enemy_actions_confirmed"
 	)
 	enc.progress_initiative()
 
@@ -107,7 +85,7 @@ func _determine_action_chain() -> void:
 #	# Pause for a little bit to give the EncounterUI a chance to get ready.
 #	# Workaround for bug where not moving the player causes the UI to not appear.
 #	yield(get_tree().create_timer(0.1), "timeout")
-	enc.emit_enemy_actions_confirmed(action_chain)
+	SignalBus.emit_enemy_actions_confirmed(action_chain)
 
 
 # Gets the map index of the player character closest to the active enemy.

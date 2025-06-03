@@ -14,15 +14,6 @@ signal enemy_turn_ended()
 var _actions: Array
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_check_for_required_parameters()
-	fsm = get_node(fsm_path)
-	stats = $Stats
-	stats.max_cur_health()
-	_actions = $Actions.get_children()
-
-
 # Returns the type of the character, ENEMY.
 func get_type() -> int:
 	return Constants.MapOccupants.ENEMY
@@ -38,6 +29,15 @@ func emit_enemy_turn_ended() -> void:
 	emit_signal("enemy_turn_ended")
 
 
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_check_for_required_parameters()
+	fsm = get_node(fsm_path)
+	stats = $Stats
+	stats.max_cur_health()
+	_actions = $Actions.get_children()
+
+
 # Virtual function. Updates emission points for all actions of the chracter.
 func _update_emission_index(_index: int) -> void:
 	for action in _actions:
@@ -48,10 +48,6 @@ func _update_emission_index(_index: int) -> void:
 func _check_for_required_parameters() -> void:
 	var stats_path: String = "Stats"
 	var actions_path: String = "Actions"
-	assert(
-		fsm_path != null,
-		"Encounter has not set the path for the FSM."
-	)
 	assert(
 			get_node_or_null(stats_path) != null,
 			"EnemyCharacter does not have a Stats node."

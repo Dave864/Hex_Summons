@@ -7,12 +7,6 @@ state if movement is the last command.
 """
 
 
-## Array of the positions to be traveled to in order.
-#var travel_path: PoolVector3Array = []
-## The start position for the current movement step.
-#var start_point: Vector3 = Vector3.ZERO
-## The end point for the current movement step.
-#var next_point: Vector3 = Vector3.ZERO
 # The reference to the movement path.
 var _movement_path: HexMapMovementPath = null
 # Flag indicating if the movement is active.
@@ -53,6 +47,7 @@ func update(delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Resets the interpolation weight an next_point_index.
 func exit() -> void:
+	_movement_path = null
 	_weight = 0.0
 
 
@@ -78,6 +73,5 @@ func _on_MovementPath_movement_ended(final_position: Vector3) -> void:
 			"_on_MovementPath_movement_ended"
 	)
 	_movement_path.reset_path()
-	_movement_path = null
 	ec.translation = final_position
 	_move_to_next_state()

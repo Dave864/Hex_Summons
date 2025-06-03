@@ -7,10 +7,6 @@ Manages the events of an encounter.
 
 # Indicates when a player character starts their turn.
 signal player_turn_started(player_info)
-# Inidicates when an enemy character starts their turn.
-signal enemy_turn_started(enemy_info)
-# Indicates that the action chain for an enemy character has been determined.
-signal enemy_actions_confirmed(action_chain)
 # Indicates that a map tile has been selected for movement.
 signal move_tile_selected(path_info)
 
@@ -84,16 +80,6 @@ func emit_player_turn_started() -> void:
 # Emits the 'move_tile_selected' signal.
 func emit_move_tile_selected(path_info: PoolVector3Array) -> void:
 	emit_signal("move_tile_selected", path_info)
-
-
-# Emits the 'enemy_turn_started' signal.
-func emit_enemy_turn_started() -> void:
-	emit_signal("enemy_turn_started", get_current_character())
-
-
-# Emits the 'enemy_actions_confirmed' signal.
-func emit_enemy_actions_confirmed(action_chain: Array) -> void:
-	emit_signal("enemy_actions_confirmed", action_chain)
 
 
 # Determines which index in the initiative array that a given value corresponds
