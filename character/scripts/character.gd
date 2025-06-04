@@ -6,10 +6,6 @@ position details.
 """
 
 
-# Reference to this node's FSM
-export(NodePath) var fsm_path = null
-
-var fsm: StateMachine = null
 var stats: CharacterStats
 # Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false setget , get_is_start_set
@@ -35,8 +31,6 @@ func get_type() -> int:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_check_for_required_parameters()
-	fsm = get_node(fsm_path)
 	"""
 	TODO: Temporarily sets current hp to max for testing purposes
 	"""
@@ -55,10 +49,3 @@ func _on_Character_area_entered(map_tile: Area) -> void:
 	# of the tile it in the area of.
 	if !_start_set:
 		_start_set = true
-
-
-func _check_for_required_parameters() -> void:
-	assert(
-		fsm_path != null,
-		"Encounter has not set the path for the FSM."
-	)

@@ -32,7 +32,6 @@ func emit_enemy_turn_ended() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_parameters()
-	fsm = get_node(fsm_path)
 	stats = $Stats
 	stats.max_cur_health()
 	_actions = $Actions.get_children()
