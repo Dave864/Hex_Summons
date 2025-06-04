@@ -7,10 +7,6 @@ resizing camera dimensions.
 """
 
 
-# Indicates that the top vertex relative to camera view has been changed.
-# Used for moving the selector around the encounter map using joystick input.
-signal top_vertex_changed(vertex)
-
 # Defines the radians values that correspond to the vertices of a hexagon.
 #    0
 # 5 / \ 1
@@ -103,7 +99,7 @@ func set_relative_top_vertex(new_top: int) -> void:
 			"New relative vertex for EncounterCamera is out of bounds for a hex."
 	)
 	_relative_top_vertex = new_top
-	emit_signal("top_vertex_changed", new_top)
+	SignalBus.emit_top_vertex_changed(new_top)
 
 
 # Gets the orientation of the focus point.

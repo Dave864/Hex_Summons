@@ -14,31 +14,26 @@ func enter(_msg := {}) -> void:
 	# This signal is used by other states and will be disconnected to avoid
 	# unintended behavior.
 	ErrorUtil.connect_signal(
-			encounter_ui,
-			"set_FSM_to_standby",
+			SignalBus,
+			"selector_required",
 			self,
-			"_on_EncounterUI_set_FSM_to_standby"
+			"_on_SignalBus_selector_required"
 	)
-
-
-# Virtual function. Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	pass
 
 
 # Virtual function. Called by the state machine before changing the active 
 # state. Use this function to clean up the state.
 func exit() -> void:
 	encounter_ui.toggle_options()
-	encounter_ui.disconnect(
-			"set_FSM_to_standby",
+	SignalBus.disconnect(
+			"selector_required",
 			self,
-			"_on_EncounterUI_set_FSM_to_standby"
+			"_on_SignalBus_selector_required"
 	)
 
 
-# Wait for the EncounterUI object to recieve signal that the selector is required.
-func _on_EncounterUI_set_FSM_to_standby() -> void:
+# Wait for the signal that the selector is required.
+func _on_SignalBus_selector_required(_start_pos: Vector3) -> void:
 	if not _state_is_active():
 		return
 	state_machine.transition_to(STANDBY)

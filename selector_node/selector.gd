@@ -6,19 +6,11 @@ when a MapTile has been passed over.
 """
 
 
-# Signal for the encounter node that specifies which tiles to highlight for effect
-# range selection.
-signal effect_selector_required(action_info)
-# Signal that indicates a move tile has been selected.
-signal move_tile_selected(map_tile)
-signal target_selected(selection_area)
-# Indicates that the selector is being paused.
-signal selector_paused()
+# Indicates a tile has been selected for movement.
+signal move_tile_selected(tile_selected)
+# Indicates that a given action needs the effect area displayed.
+signal effect_area_required(action)
 
-# Reference to this node's FSM
-export(NodePath) var fsm_path = null
-
-var fsm: StateMachine = null
 # The MapTile that was last passed over.
 var tile_hovered: MapTile = null
 # Describes which hex vertex is the top with respect to the camera
@@ -28,11 +20,6 @@ var top_vertex: int = 0
 onready var mouse_position: MousePosition = $MousePosition
 # The collision are for the selector
 onready var collision_area: Area = $CollisionArea
-
-
-func _ready() -> void:
-	_check_for_required_parameters()
-	fsm = get_node(fsm_path)
 
 
 # Move the collision area to the mouse position.
@@ -45,34 +32,25 @@ func move_to_position(position: Vector3) -> void:
 	collision_area.translation = position
 
 
-# Emits the 'effect_selector_required' signal.
-func emit_effect_selector_required(action_info: Action) -> void:
-	emit_signal("effect_selector_required", action_info)
+# Emits the move_tile_selected signal.
+func emit_move_tile_selected(tile_selected: MapTile) -> void:
+	emit_signal("move_tile_selected", tile_selected)
 
 
-# Emits the 'move_tile_selected' signal.
-func emit_move_tile_selected(move_tile: MapTile) -> void:
-	emit_signal("move_tile_selected", move_tile)
+# Emits the effect_area_required.
+func emit_effect_area_required(action: Action) -> void:
+	emit_signal("effect_area_required", action)
 
 
-# Emits the 'target_selected' signal.
-func emit_target_selected(selected_area: Array) -> void:
-	emit_signal("target_selected", selected_area)
-
-
-# Emits the 'selector_paused' signal.
-func emit_selector_paused() -> void:
-	emit_signal("selector_paused")
-
-
-# Check that all required parameters are set.
-func _check_for_required_parameters() -> void:
-	assert(
-		fsm_path != null,
-		"EncounterUI has not set the path for the FSM."
+func _ready() -> void:
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"top_vertex_changed",
+			self,
+			"_on_SignalBus_top_vertex_changed"
 	)
 
 
 # Updates the relative top vertex when the camera changes orientation.
-func _on_EncounterCamera_top_vertex_changed(new_top_vertex: int) -> void:
+func _on_SignalBus_top_vertex_changed(new_top_vertex: int) -> void:
 	top_vertex = new_top_vertex

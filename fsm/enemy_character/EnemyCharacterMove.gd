@@ -11,8 +11,6 @@ state if movement is the last command.
 var _movement_path: HexMapMovementPath = null
 # Flag indicating if the movement is active.
 var _movement_active: bool = false
-## The index of the end point in the travel path.
-#var next_point_index: int = 1
 # The current interpolation weight.
 var _weight: float = 0.0
 # The list of commands the enemy will execute.
@@ -29,7 +27,7 @@ func enter(_msg := {}) -> void:
 			_movement_path,
 			"movement_finished",
 			self,
-			"_on_MovementPath_movement_ended"
+			"_on_MovementPath_movement_finished"
 	)
 
 
@@ -65,12 +63,12 @@ func _move_to_next_state() -> void:
 		state_machine.transition_to(WAIT)
 
 
-func _on_MovementPath_movement_ended(final_position: Vector3) -> void:
+func _on_MovementPath_movement_finished(final_position: Vector3) -> void:
 	_movement_active = false
 	_movement_path.disconnect(
 			"movement_finished",
 			self,
-			"_on_MovementPath_movement_ended"
+			"_on_MovementPath_movement_finished"
 	)
 	_movement_path.reset_path()
 	ec.translation = final_position

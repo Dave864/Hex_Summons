@@ -5,19 +5,11 @@ Manages the events of an encounter.
 """
 
 
-# Indicates when a player character starts their turn.
-signal player_turn_started(player_info)
-# Indicates that a map tile has been selected for movement.
-signal move_tile_selected(path_info)
-
 # Reference to the encounter hex_map. This is to allow for differently named
 # hex map scene to be used.
 export(NodePath) var hex_map_path = null
-# Reference to this node's FSM
-export(NodePath) var fsm_path = null
 
 var hex_map: HexMap = null
-var fsm: StateMachine = null
 
 var initiative_tracker: Array
 var cur_init: int = 0
@@ -33,7 +25,6 @@ onready var ui: EncounterUI = $EncounterUI
 func _ready() -> void:
 	_check_for_required_parameters()
 	hex_map = get_node(hex_map_path)
-	fsm = get_node(fsm_path)
 	
 	"""
 	TODO: implement logic to load the HexMap, based on some details determined
@@ -72,16 +63,6 @@ func get_current_character() -> Character:
 	return initiative_tracker[cur_init]
 
 
-# Emits the 'player_turn_started' signal.
-func emit_player_turn_started() -> void:
-	emit_signal("player_turn_started", get_current_character())
-
-
-# Emits the 'move_tile_selected' signal.
-func emit_move_tile_selected(path_info: PoolVector3Array) -> void:
-	emit_signal("move_tile_selected", path_info)
-
-
 # Determines which index in the initiative array that a given value corresponds
 # to. Numbers that are larger than the size of the array wrap around to index zero
 # before resuming count. Numbers that are smaller than zero wrap around to the
@@ -92,10 +73,6 @@ func _determine_init_index(init_value: int) -> int:
 
 # Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
-	assert(
-		fsm_path != null,
-		"Encounter has not set the path for the FSM."
-	)
 	assert(
 		hex_map_path != null,
 		"Encounter has not set the path for the hex_map."

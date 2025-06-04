@@ -29,9 +29,27 @@ func enter(_msg: Dictionary = {}) -> void:
 			self,
 			"_on_Selector_area_entered"
 	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_action_type_canceled",
+			self,
+			"_on_SignalBus_player_action_type_canceled"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
+	)
 	
 	action.set_emission_map_index(player_map_index)
-	selector.emit_effect_selector_required(action)
+	selector.emit_effect_area_required(action)
 
 
 func update(_delta: float) -> void:
@@ -46,6 +64,21 @@ func exit() -> void:
 			"area_entered",
 			self,
 			"_on_Selector_area_entered"
+	)
+	SignalBus.disconnect(
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
+	)
+	SignalBus.disconnect(
+			"player_action_type_canceled",
+			self,
+			"_on_SignalBus_player_action_type_canceled"
+	)
+	SignalBus.disconnect(
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -86,11 +119,11 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 			var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
 			var dir: Vector2 = (tile_pt - player_pt).normalized()
 			action.set_emission_direction(HexUtil.get_hex_direction(dir))
-		selector.emit_effect_selector_required(action)
+		selector.emit_effect_area_required(action)
 
 
 # Go to the "SelectAction" state with the new action.
-func _on_EncounterUI_player_action_selected(
+func _on_SignalBus_player_action_selected(
 	player: PlayerCharacter,
 	new_action: Action
 ) -> void:
@@ -107,7 +140,7 @@ func _on_EncounterUI_player_action_selected(
 
 
 # Go to the "SelectMove" state when the player action selection is canceled.
-func _on_EncounterUI_player_action_type_canceled() -> void:
+func _on_SignalBus_player_action_type_canceled() -> void:
 	if not _state_is_active():
 		return
 	state_machine.transition_to(
@@ -117,6 +150,6 @@ func _on_EncounterUI_player_action_type_canceled() -> void:
 
 
 # Go to the "WAIT" state when a player has signaled that their turn is ended.
-func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
+func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(WAIT)

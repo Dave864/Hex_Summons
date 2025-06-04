@@ -16,31 +16,27 @@ func enter(_msg := {}) -> void:
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
 	ErrorUtil.connect_signal(
-		encounter_ui,
-		"set_FSM_to_standby",
+		SignalBus,
+		"player_turn_started",
 		self,
-		"_on_EncounterUI_set_FSM_to_standby"
+		"_on_SignalBus_player_turn_started"
 	)
-
-
-# Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	pass
 
 
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	encounter_ui.disconnect(
-		"set_FSM_to_standby",
+	SignalBus.disconnect(
+		"player_turn_started",
 		self,
-		"_on_EncounterUI_set_FSM_to_standby"
+		"_on_SignalBus_player_turn_started"
 	)
 
 
 # Wait for the EncounterUI object to recieve signal that user input needs to
 # be obtained.
-func _on_EncounterUI_set_FSM_to_standby() -> void:
+func _on_SignalBus_player_turn_started(character: PlayerCharacter) -> void:
 	if not _state_is_active():
 		return
+	encounter_ui.set_focused_player(character)
 	state_machine.transition_to(STANDBY)

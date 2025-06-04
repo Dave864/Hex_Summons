@@ -18,10 +18,10 @@ func enter(_msg := {}) -> void:
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
 	ErrorUtil.connect_signal(
-		encounter_ui,
-		"set_FSM_to_pause",
+		SignalBus,
+		"move_path_created",
 		self,
-		"_on_EncounterUI_set_FSM_to_pause"
+		"_on_SignalBus_move_path_created"
 	)
 	encounter_ui.technique_button.connect_button_signal(
 			self,
@@ -63,10 +63,10 @@ func handle_input(_event: InputEvent) -> void:
 # Virtual function. Called by the state machine before changing the active 
 # state. Use this function to clean up the state.
 func exit() -> void:
-	encounter_ui.disconnect(
-		"set_FSM_to_pause",
+	SignalBus.disconnect(
+		"move_path_created",
 		self,
-		"_on_EncounterUI_set_FSM_to_pause"
+		"_on_SignalBus_move_path_created"
 	)
 	encounter_ui.technique_button.disconnect_button_signal(
 			self,
@@ -97,11 +97,12 @@ func _spell_selected() -> void:
 
 
 func _end_selected() -> void:
-	encounter_ui.emit_player_turn_ended()
+	SignalBus.emit_player_turn_ended(encounter_ui.get_focused_player())
 	state_machine.transition_to(WAIT)
 
 
-func _on_EncounterUI_set_FSM_to_pause() -> void:
+# Triggered when a move tile has been selected and a path created to said tile.
+func _on_SignalBus_move_path_created(_path: HexMapMovementPath) -> void:
 	if not _state_is_active():
 		return
 	state_machine.transition_to(PAUSE)

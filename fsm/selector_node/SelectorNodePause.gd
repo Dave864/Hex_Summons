@@ -10,22 +10,43 @@ something, it goes back to the 'Select' state.
 
 # Connect to the player_turn_ended signal to see if the player turn ends.
 func enter(_msg: Dictionary = {}) -> void:
-	selector.emit_selector_paused()
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"selector_required",
+			self,
+			"_on_SignalBus_selector_required"
+	)
+	SignalBus.emit_selector_paused()
 
 
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	pass
+	SignalBus.disconnect(
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
+	)
+	SignalBus.disconnect(
+			"selector_required",
+			self,
+			"_on_SignalBus_selector_required"
+	)
 
 
 # Transition to the 'Wait' state when the current player's turn has ended.
-func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
+func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	if not _state_is_active():
 		return
 	state_machine.transition_to(WAIT)
 
 
 # Transition to the 'Select' state when the selector is needed again.
-func _on_PlayerCharacter_selector_required(initial_position: Vector3) -> void:
+func _on_SignalBus_selector_required(initial_position: Vector3) -> void:
 	state_machine.transition_to(SELECT_MOVE, {"initial_position": initial_position})

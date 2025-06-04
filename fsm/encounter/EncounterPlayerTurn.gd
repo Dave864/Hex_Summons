@@ -10,31 +10,31 @@ player characters or all enemy characters are defeated.
 
 
 # The player character currently active
-var active_char: PlayerCharacter = null
+var _active_char: PlayerCharacter = null
 # The index of tiles that the player can move to.
-var movement_area: Array = []
+var _movement_area: Array = []
 # The index of the tile the player starts from.
-var start_index: int = 0
+var _start_index: int = 0
 # The index of tiles in reach of an action. 
-var action_range: Dictionary = {"type": null, "tiles": null}
+var _action_range: Dictionary = {"type": null, "tiles": null}
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	active_char = enc.get_current_character()
-	start_index = active_char.get_map_index_at()
-	movement_area = enc.hex_map.range_finder.get_traversible_tiles_for_character(
-		active_char,
-		enc.enemies
+	_active_char = enc.get_current_character()
+	_start_index = _active_char.get_map_index_at()
+	_movement_area = enc.hex_map.range_finder.get_traversible_tiles_for_character(
+			_active_char,
+			enc.enemies
 	)
-	enc.hex_map.selection_tracker.highlight_player_movement(movement_area, active_char)
+	enc.hex_map.selection_tracker.highlight_player_movement(
+			_movement_area,
+			_active_char
+	)
 	
-	_connect_signals_to_self()
-	_connect_signals_to_UI()
-	_connect_signals_to_selector()
-	_connect_signals_to_character()
-	enc.emit_player_turn_started()
+	_connect_signals()
+	SignalBus.emit_player_turn_started(_active_char)
 
 
 # Corresponds to the `_process()` callback.
@@ -50,55 +50,34 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	_disconnect_signals_from_self()
-	_disconnect_signals_from_UI()
-	_disconnect_signals_from_selector()
-	_disconnect_signals_from_character()
+	_disconnect_signals()
 
 
 func _ready_connect_signals() -> void:
 	ErrorUtil.connect_signal(
-			enc.ui,
+			SignalBus,
 			"player_action_selected",
 			self,
-			"_on_EncounterUI_player_action_selected"
+			"_on_SignalBus_player_action_selected"
 	)
 	ErrorUtil.connect_signal(
-			enc.ui,
+			SignalBus,
 			"player_action_type_canceled",
 			self,
-			"_on_EncounterUI_player_action_type_canceled"
+			"_on_SignalBus_player_action_type_canceled"
 	)
 	ErrorUtil.connect_signal(
-			enc.ui,
+			SignalBus,
 			"player_turn_ended",
 			self,
-			"_on_EncounterUI_player_turn_ended"
-	)
-	ErrorUtil.connect_signal(
-			enc,
-			"player_turn_started",
-			enc.ui,
-			"_on_Encounter_player_turn_started"
-	)
-	ErrorUtil.connect_signal(
-			enc,
-			"player_turn_started",
-			enc.selector.fsm.state_nodes["Wait"],
-			"_on_Encounter_player_turn_started"
-	)
-	ErrorUtil.connect_signal(
-			enc,
-			"move_tile_selected",
-			enc.ui,
-			"_on_Encounter_move_tile_selected"
+			"_on_SignalBus_player_turn_ended"
 	)
 
 
 # Connect the relevant signals to this state.
 # These signals are used by other states and will be disconnected to avoid
 # unintended behavior.
-func _connect_signals_to_self() -> void:
+func _connect_signals() -> void:
 	ErrorUtil.connect_signal(
 			enc.selector,
 			"move_tile_selected",
@@ -107,203 +86,23 @@ func _connect_signals_to_self() -> void:
 	)
 	ErrorUtil.connect_signal(
 			enc.selector,
-			"effect_selector_required",
+			"effect_area_required",
 			self,
-			"_on_Selector_effect_selector_required"
-	)
-
-
-# Connect the relevant signals from other nodes to the FSM of the encounter UI node.
-# These signals are used by other states and will be disconnected to avoid
-# unintended behavior.
-func _connect_signals_to_UI() -> void:
-	# Connect current player to UI.
-	ErrorUtil.connect_signal(
-			active_char,
-			"selector_required",
-			enc.ui,
-			"_on_PlayerCharacter_selector_required"
-	)
-
-
-# Connect the relevant signals from other nodes to the FSM of the selector node.
-# These signals are used by other states and will be disconnected to avoid
-# unintended behavior.
-func _connect_signals_to_selector() -> void:
-	# Connect encounter UI to selector 'SelectMove' state
-	ErrorUtil.connect_signal(
-			enc.ui,
-			"player_action_selected",
-			enc.selector.fsm.state_nodes["SelectMove"],
-			"_on_EncounterUI_player_action_selected"
-	)
-	ErrorUtil.connect_signal(
-			enc.ui,
-			"player_turn_ended",
-			enc.selector.fsm.state_nodes["SelectMove"],
-			"_on_EncounterUI_player_turn_ended"
-	)
-	# Connect encounter UI to selector 'SelectAction' state
-	ErrorUtil.connect_signal(
-			enc.ui,
-			"player_action_selected",
-			enc.selector.fsm.state_nodes["SelectAction"],
-			"_on_EncounterUI_player_action_selected"
-	)
-	ErrorUtil.connect_signal(
-			enc.ui,
-			"player_action_type_canceled",
-			enc.selector.fsm.state_nodes["SelectAction"],
-			"_on_EncounterUI_player_action_type_canceled"
-	)
-	ErrorUtil.connect_signal(
-			enc.ui,
-			"player_turn_ended",
-			enc.selector.fsm.state_nodes["SelectAction"],
-			"_on_EncounterUI_player_turn_ended"
-	)
-	# Connect encounterUI to selector 'Pause' state
-	ErrorUtil.connect_signal(
-			enc.ui,
-			"player_turn_ended",
-			enc.selector.fsm.state_nodes["Pause"],
-			"_on_EncounterUI_player_turn_ended"
-	)
-	# Connect current player to selector 'Pause' state
-	ErrorUtil.connect_signal(
-			active_char,
-			"selector_required",
-			enc.selector.fsm.state_nodes["Pause"],
-			"_on_PlayerCharacter_selector_required"
-	)
-
-
-# Connect the relevant signals from other nodes to the FSM of the active 
-# character node. These signals are used by other states and will be 
-# disconnected to avoid unintended behavior.
-func _connect_signals_to_character() -> void:
-	# Connect encounter to current player 'Wait' state
-	ErrorUtil.connect_signal(
-			enc,
-			"player_turn_started",
-			active_char.fsm.state_nodes["Wait"],
-			"_on_Encounter_player_turn_started"
-	)
-	# Connect encounter to current player 'Standby' state
-	ErrorUtil.connect_signal(
-			enc,
-			"move_tile_selected",
-			active_char.fsm.state_nodes["Standby"],
-			"_on_Encounter_move_tile_selected"
-	)
-	# Connect encounter UI to current player 'Standby' state
-	ErrorUtil.connect_signal(
-			enc.ui,
-			"player_turn_ended",
-			active_char.fsm.state_nodes["Standby"],
-			"_on_EncounterUI_player_turn_ended"
-	)
-	# Connect selector to current player 'Move' state
-	ErrorUtil.connect_signal(
-			enc.selector,
-			"selector_paused",
-			active_char.fsm.state_nodes["Move"],
-			"_on_Selector_selector_paused"
+			"_on_Selector_effect_area_required"
 	)
 
 
 # Disconnect the signals connected to this state.
-func _disconnect_signals_from_self() -> void:
+func _disconnect_signals() -> void:
 	enc.selector.disconnect(
 			"move_tile_selected",
 			self,
 			"_on_Selector_move_tile_selected"
 	)
 	enc.selector.disconnect(
-			"effect_selector_required",
+			"effect_area_required",
 			self,
-			"_on_Selector_effect_selector_required"
-	)
-
-
-# Disconnect the signals connected to the UI FSM.
-func _disconnect_signals_from_UI() -> void:
-	# Disconnect current player from UI.
-	active_char.disconnect(
-			"selector_required",
-			enc.ui,
-			"_on_PlayerCharacter_selector_required"
-	)
-
-
-# Disconnect the signals connected to the selector FSM.
-func _disconnect_signals_from_selector() -> void:
-	# Disconnect encounter UI from selector 'SelectMove' state
-	enc.ui.disconnect(
-			"player_action_selected",
-			enc.selector.fsm.state_nodes["SelectMove"],
-			"_on_EncounterUI_player_action_selected"
-	)
-	enc.ui.disconnect(
-			"player_turn_ended",
-			enc.selector.fsm.state_nodes["SelectMove"],
-			"_on_EncounterUI_player_turn_ended"
-	)
-	# Disconnect encounter UI from selector 'SelectAction' state
-	enc.ui.disconnect(
-			"player_action_selected",
-			enc.selector.fsm.state_nodes["SelectAction"],
-			"_on_EncounterUI_player_action_selected"
-	)
-	enc.ui.disconnect(
-			"player_action_type_canceled",
-			enc.selector.fsm.state_nodes["SelectAction"],
-			"_on_EncounterUI_player_action_type_canceled"
-	)
-	enc.ui.disconnect(
-			"player_turn_ended",
-			enc.selector.fsm.state_nodes["SelectAction"],
-			"_on_EncounterUI_player_turn_ended"
-	)
-	# Disconnect encounter UI from selector 'Pause' state
-	enc.ui.disconnect(
-			"player_turn_ended",
-			enc.selector.fsm.state_nodes["Pause"],
-			"_on_EncounterUI_player_turn_ended"
-	)
-	# Disconnect current player from selector 'Pause' state
-	active_char.disconnect(
-			"selector_required",
-			enc.selector.fsm.state_nodes["Pause"],
-			"_on_PlayerCharacter_selector_required"
-	)
-
-
-# Disconnect the signals connected to the active character FSM.
-func _disconnect_signals_from_character() -> void:
-	# Disconnect encounter from current player 'Wait' state
-	enc.disconnect(
-			"player_turn_started",
-			active_char.fsm.state_nodes["Wait"],
-			"_on_Encounter_player_turn_started"
-	)
-	# Disconnect encounter from current player 'Standby' state
-	enc.disconnect(
-			"move_tile_selected",
-			active_char.fsm.state_nodes["Standby"],
-			"_on_Encounter_move_tile_selected"
-	)
-	# Disconnect encounter UI from current player 'Standby' state
-	enc.ui.disconnect(
-			"player_turn_ended",
-			active_char.fsm.state_nodes["Standby"],
-			"_on_EncounterUI_player_turn_ended"
-	)
-	# Disconnect selector from current player 'Move' state
-	enc.selector.disconnect(
-			"selector_paused",
-			active_char.fsm.state_nodes["Move"],
-			"_on_Selector_selector_paused"
+			"_on_Selector_effect_area_required"
 	)
 
 
@@ -311,18 +110,33 @@ func _disconnect_signals_from_character() -> void:
 # the movement tile has been selected.
 func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 	var path_data: PoolVector3Array = enc.hex_map.range_finder.get_point_path_for_player(
-			active_char,
+			_active_char,
 			tile.map_coordinate.get_map_index(),
 			enc.enemies,
-			movement_area
+			_movement_area
 	)
-	enc.emit_move_tile_selected(path_data)
+	enc.move_path.create_segmented_bezier_path(path_data)
+	SignalBus.emit_move_path_created(enc.move_path)
+
+
+# Updates the tile selectors to show the effect range of an action
+func _on_Selector_effect_area_required(action: Action) -> void:
+	enc.hex_map.clear_selector_highlights()
+	var effect_area_indexes: Array = enc.hex_map.determine_area_indexes(
+		action.stat_details.effect_range,
+		action.get_emission_map_index(),
+		action.get_emission_direction()
+	)
+	enc.hex_map.highlight_effect_area(
+			effect_area_indexes,
+			action.stat_details.effect_ignore_heights
+	)
 
 
 # Clear the tile movement highlights, update the initiative tracker and
 # transition to either the PlayerTurn state or the EnemyTurn state depending 
 # on the next character.
-func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
+func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	enc.hex_map.selection_tracker.clear_highlights()
 	enc.hex_map.selection_tracker.clear_selector_highlights()
 	var next_character: Character = enc.get_next_character()
@@ -337,7 +151,7 @@ func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
 
 
 # Updates the tile highlights to show the area range of the action.
-func _on_EncounterUI_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
+func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
 	"""
 	TODO: Change the function call to something that is present.
 	"""
@@ -346,26 +160,16 @@ func _on_EncounterUI_player_action_selected(_p: PlayerCharacter, action: Action)
 		action.get_emission_map_index()
 	)
 	enc.hex_map.clear_highlights()
-	enc.hex_map.highlight_player_action_area(area_indexes, active_char)
+	enc.hex_map.highlight_player_action_area(area_indexes, _active_char)
 
 
 # Called when the user backs out from an action type menu. Resets the tile highlights
 # to indicate player movement.
-func _on_EncounterUI_player_action_type_canceled() -> void:
+func _on_SignalBus_player_action_type_canceled() -> void:
 	enc.hex_map.clear_highlights()
 	enc.hex_map.clear_selector_highlights()
-	enc.hex_map.highlight_player_movement(movement_area, active_char, start_index)
-
-
-# Updates the tile selectors to show the effect range of an action
-func _on_Selector_effect_selector_required(action: Action) -> void:
-	enc.hex_map.clear_selector_highlights()
-	var effect_area_indexes: Array = enc.hex_map.determine_area_indexes(
-		action.stat_details.effect_range,
-		action.get_emission_map_index(),
-		action.get_emission_direction()
-	)
-	enc.hex_map.highlight_effect_area(
-			effect_area_indexes,
-			action.stat_details.effect_ignore_heights
+	enc.hex_map.highlight_player_movement(
+			_movement_area,
+			_active_char,
+			_start_index
 	)

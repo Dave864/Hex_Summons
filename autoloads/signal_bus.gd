@@ -14,9 +14,13 @@ signal player_action_type_canceled()
 signal enemy_turn_started(character)
 signal enemy_actions_confirmed(action_chain)
 # Encounter selection signals
-signal selector_required()
+signal selector_required(start_pos)
+signal selector_paused()
 signal action_selector_required(action)
-signal move_tile_selected(map_tile)
+signal move_path_created(move_path)
+# Indicates that the top vertex relative to camera view has been changed.
+# Used for moving the selector around the encounter map using joystick input.
+signal top_vertex_changed(vertex)
 
 
 func emit_player_turn_started(character: PlayerCharacter) -> void:
@@ -43,13 +47,21 @@ func emit_enemy_actions_confirmed(action_chain: Array) -> void:
 	emit_signal("enemy_actions_confirmed", action_chain)
 
 
-func emit_selector_required() -> void:
-	emit_signal("selector_required")
+func emit_selector_required(start_pos: Vector3) -> void:
+	emit_signal("selector_required", start_pos)
+
+
+func emit_selector_paused() -> void:
+	emit_signal("selector_paused")
 
 
 func emit_action_selector_required(action: Action) -> void:
 	emit_signal("action_selector_required", action)
 
 
-func emit_move_tile_selected(map_tile: MapTile) -> void:
-	emit_signal("move_tile_selected", map_tile)
+func emit_move_path_created(move_path: HexMapMovementPath) -> void:
+	emit_signal("move_path_created", move_path)
+
+
+func emit_top_vertex_changed(vertex: int) -> void:
+	emit_signal("top_vertex_changed", vertex)

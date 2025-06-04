@@ -9,7 +9,7 @@ state. If a player turn ends, go to the 'Wait' state.
 """
 
 
-var mouse_active: bool = false
+var _mouse_active: bool = false
 
 
 # Reveal the selector shape and enable to ability to snap to tile positions.
@@ -21,10 +21,22 @@ func enter(_msg: Dictionary = {}) -> void:
 			self,
 			"_on_Selector_area_entered"
 	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
+	)
 
 
 func update(_delta: float) -> void:
-	if mouse_active:
+	if _mouse_active:
 		selector.move_to_mouse_position()
 
 
@@ -36,17 +48,27 @@ func exit() -> void:
 			self,
 			"_on_Selector_area_entered"
 	)
+	SignalBus.disconnect(
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
+	)
+	SignalBus.disconnect(
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
+	)
 
 
 # Handles input events
-func handle_input(_event: InputEvent) -> void:
-	mouse_active = _event is InputEventMouse
-	if _event.is_action_pressed("ui_selector_select"):
+func handle_input(event: InputEvent) -> void:
+	_mouse_active = event is InputEventMouse
+	if event.is_action_pressed("ui_selector_select"):
 		if selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY:
 			selector.emit_move_tile_selected(selector.tile_hovered)
 			state_machine.transition_to(PAUSE)
 	
-	if not mouse_active:
+	if not _mouse_active:
 		_resolve_joystick_direction(HexUtil.joystick_to_hex_direction(selector.top_vertex))
 
 
@@ -81,7 +103,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 
 
 # Go to the "SelectAction" state when the UI signals that an action was selected.
-func _on_EncounterUI_player_action_selected(
+func _on_SignalBus_player_action_selected(
 	player: PlayerCharacter,
 	action: Action
 ) -> void:
@@ -99,7 +121,7 @@ func _on_EncounterUI_player_action_selected(
 
 
 # Go to the "WAIT" state when the UI has signaled that a player turn has ended.
-func _on_EncounterUI_player_turn_ended(_player: PlayerCharacter) -> void:
+func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	if not _state_is_active():
 		return
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)

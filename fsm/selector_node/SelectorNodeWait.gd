@@ -6,7 +6,27 @@ until the encounter is ready to recieve new player selections.
 """
 
 
+# Connect to the player_turn_started signal from the SignalBus.
+func enter(_msg: Dictionary = {}) -> void:
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_turn_started",
+			self,
+			"_on_SignalBus_player_turn_started"
+	)
+
+
+# Called by the state machine before changing the active state. Use this 
+# function to clean up the state.
+func exit() -> void:
+	SignalBus.disconnect(
+			"player_turn_started",
+			self,
+			"_on_SignalBus_player_turn_started"
+	)
+
+
 # Set the position of the selector to the player whose turn has started and move
 # to the `SelectMove` state.
-func _on_Encounter_player_turn_started(player: PlayerCharacter) -> void:
+func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
 	state_machine.transition_to(SELECT_MOVE, {"initial_position": player.translation})

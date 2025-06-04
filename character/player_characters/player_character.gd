@@ -5,10 +5,6 @@ Handles actions specific to player characters.
 """
 
 
-# Indicates that the selector needs to be activated again.
-# warning-ignore:unused_signal
-signal selector_required(initial_position)
-
 # The current player class; determines stat adjusters and abilities.
 var _player_class: PlayerClass
 # References to the various attacks and spells the character has access to.
@@ -41,11 +37,6 @@ func get_spells() -> Array:
 # Returns the type of the character, PLAYER.
 func get_type() -> int:
 	return Constants.MapOccupants.PLAYER
-
-
-# Emits the 'selector_required' signal.
-func emit_selector_required(initial_position: Vector3) -> void:
-	emit_signal("selector_required", initial_position)
 
 
 # Virtual function. Updates emission points for all actions of the chracter.

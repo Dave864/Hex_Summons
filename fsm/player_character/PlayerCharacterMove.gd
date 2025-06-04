@@ -5,70 +5,70 @@ The Player Character moves from tile to tile along a preset path.
 """
 
 
-# Array of the positions to be traveled to in order.
-var travel_path: PoolVector3Array
-# The start position for the current movement step.
-var start_point: Vector3
-# The end point for the current movement step.
-var next_point: Vector3
-# The index of the end point in the travel path.
-var next_point_index: int = 1
+# The reference to the movement path.
+var _movement_path: HexMapMovementPath = null
+# Flag indicating if the movement is active.
+var _movement_active: bool = false
 # The current interpolation weight.
-var weight: float = 0.0
+var _weight: float = 0.0
 
-var completed_path: bool = false
-var selector_paused: bool = false
+var _completed_path: bool = false
+var _selector_paused: bool = false
 
 
 # Set the starting point for the path.
-func enter(_msg := {}) -> void:
-	travel_path = _msg["travel_path"]
+func enter(_msg: Dictionary = {}) -> void:
+	_movement_path = _msg["travel_path"]
+	_movement_active = true
 	
-	# Move to the 'Standby' state if the travel path only has one point.
-	# This indicates that the player character's current position was 
-	# selected as the destination.
-	if travel_path.size() > 1:
-		start_point = pc.translation
-		next_point = travel_path[next_point_index]
-	elif selector_paused:
-		next_point = travel_path[0]
-		state_machine.transition_to(STANDBY)
-	else:
-		completed_path = true
+	ErrorUtil.connect_signal(
+			_movement_path,
+			"movement_finished",
+			self,
+			"_on_MovementPath_movement_finished"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"selector_paused",
+			self,
+			"_on_SignalBus_selector_paused"
+	)
 
 
 # Corresponds to the `_process()` callback.
 func update(delta: float) -> void:
-	if not completed_path:
-		# Move the player character towards the next tile.
-		weight += delta * Constants.MOVE_SPEED
-		weight = 1.0 if weight > 1.0 else weight
-		pc.translation = start_point.linear_interpolate(next_point, weight)
-		
-		# When finished moving to next tile, check to see if path has been fully
-		# traversed. Move to the 'Standby' state when path has been fully traversed.
-		if weight >= 1.0:
-			next_point_index += 1
-			if next_point_index < travel_path.size():
-				weight = 0.0
-				start_point = pc.translation
-				next_point = travel_path[next_point_index]
-			else:
-				next_point = travel_path[-1]
-				completed_path = true
-	elif selector_paused:
+	_weight += delta * Constants.MOVE_SPEED
+	_movement_path.move_offset(_weight)
+	# Only update the movement position if the movement has not ended.
+	# This is to prevent the character from being moved to an undesired location
+	# after the movement_ended signal has been caught.
+	if _movement_active:
+		pc.translation = _movement_path.get_current_pos()
+	elif _selector_paused:
 		state_machine.transition_to(STANDBY)
 
 
 # Called by the state machine before changing the active state.
 # Resets the interpolation weight and next_point_index.
 func exit() -> void:
-	weight = 0.0
-	next_point_index = 1
-	completed_path = false
-	selector_paused = false
-	pc.emit_selector_required(next_point)
+	_weight = 0.0
+	_selector_paused = false
+	_movement_path = null
+	SignalBus.disconnect("selector_paused", self, "_on_SignalBus_selector_paused")
+	SignalBus.emit_selector_required(pc.translation)
 
 
-func _on_Selector_selector_paused() -> void:
-	selector_paused = true
+func _on_SignalBus_selector_paused() -> void:
+	_selector_paused = true
+
+
+func _on_MovementPath_movement_finished(final_position: Vector3) -> void:
+	_movement_active = false
+	_movement_path.disconnect(
+			"movement_finished",
+			self,
+			"_on_MovementPath_movement_finished"
+	)
+	_movement_path.reset_path()
+	pc.translation = final_position
+	state_machine.transition_to(STANDBY)
