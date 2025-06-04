@@ -174,6 +174,7 @@ func get_closest_vertex_radian() -> float:
 	for v in range(HEX_VERTEX_RADIANS.size()):
 		var next_v: int = posmod(v + 1, 6)
 		var v_radian: float = HEX_VERTEX_RADIANS[v]
+		# Make sure that the segment defined by vertices 2 and 3 is not skipped.
 		var next_v_radian: float = (
 			-HEX_VERTEX_RADIANS[next_v] if next_v == 3
 			else HEX_VERTEX_RADIANS[next_v]

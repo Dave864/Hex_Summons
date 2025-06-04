@@ -45,14 +45,6 @@ const HV_COORD_2: Vector2 = Vector2(HEX_EDGE_RATIO, 0.5)
 const HV_COORD_3: Vector2 = Vector2(0.0, 1.0)
 const HV_COORD_4: Vector2 = Vector2(-HEX_EDGE_RATIO, 0.5)
 const HV_COORD_5: Vector2 = Vector2(-HEX_EDGE_RATIO, -0.5)
-const HV_COORDS: Array = [
-	HV_COORD_0,
-	HV_COORD_1,
-	HV_COORD_2,
-	HV_COORD_3,
-	HV_COORD_4,
-	HV_COORD_5
-]
 
 
 # Converts the index to the corresponding cube coordinate.
@@ -162,7 +154,7 @@ static func joystick_to_hex_direction(top_vertex: int = 0) -> int:
 
 
 # Get the hexagonal direction relative to the defined top vertex. Used to
-# match the joystick direction with respect to the camera orientation.
+# match the camera orientation.
 # 0  /\  1
 # 5 |  | 2
 # 4  \/  3
@@ -170,14 +162,14 @@ static func _relative_hex_direction(
 	desired_direction: int,
 	relative_top: int = 0
 ) -> int:
-	if desired_direction > 0:
+	if desired_direction >= 0:
 		return posmod(desired_direction + relative_top, 6)
 	else:
 		return desired_direction
 
 
 # Get the axial direction relative to the defined top vertex. Used to
-# match the joystick direction with respect to the camera orientation.
+# match the camera orientation.
 # 0  /\            /\  0
 # 3 |  | 1  or  3 |  | 1
 #    \/  2      2  \/
@@ -185,7 +177,7 @@ static func _relative_axial_direction(
 	desired_direction: int,
 	relative_top: int = 0
 ) -> int:
-	if desired_direction > 0:
+	if desired_direction >= 0:
 		return posmod(desired_direction + relative_top, 4)
 	else:
 		return desired_direction
