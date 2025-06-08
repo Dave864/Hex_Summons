@@ -20,9 +20,9 @@ func _init(affected_stat: Resource):
 			"Error: Attempting to create a StatEffectHandler for a non stat resource."
 	)
 	_affected_stat = affected_stat
-	_setter_bus = EffectBus.new(affected_stat)
-	_flat_change_bus = EffectBus.new(affected_stat)
-	_percentage_change_bus = EffectBus.new(affected_stat)
+	_setter_bus = EffectBus.new(affected_stat.type)
+	_flat_change_bus = EffectBus.new(affected_stat.type)
+	_percentage_change_bus = EffectBus.new(affected_stat.type)
 
 
 # Updates the duration for all effects.

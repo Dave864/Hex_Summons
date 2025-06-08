@@ -19,7 +19,6 @@ radius = 0.001
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 2 )
-fsm_path = NodePath("StateMachine")
 
 [node name="MapCoordinate" type="Position3D" parent="."]
 script = ExtResource( 10 )

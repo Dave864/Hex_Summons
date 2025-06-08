@@ -395,6 +395,6 @@ func _check_for_required_parameters() -> void:
 			ErrorUtil.missing_required_parameter(self.name, "stat_values")
 	)
 	assert(
-			stat_values is StatValues,
-			"Error: CharacterStat stat_values is not of type CoreStats. "
+			stat_values is BaseStats,
+			"Error: CharacterStat stat_values is not of type BaseStats."
 	)

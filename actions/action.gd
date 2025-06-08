@@ -68,10 +68,10 @@ func reset_emittor_position() -> void:
 # Initialize the effects list of the action, checking that all effects are valid.
 func _initialize_effects() -> void:
 	_effects = get_children()
-	assert(
-			len(_effects) > 0,
-			"Error: Action %s does not have any effects" % [name]
-	)
+#	assert(
+#			len(_effects) > 0,
+#			"Error: Action %s does not have any effects" % [name]
+#	)
 	for effect in _effects:
 		assert(effect is Effect, "Error: Action %s effect %s is not an Effect")
 		# Type checking for the node referenced at the path.

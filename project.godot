@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://utils/array_sorters.gd"
 }, {
+"base": "Resource",
+"class": "BaseStats",
+"language": "GDScript",
+"path": "res://character/scripts/base_stats.gd"
+}, {
 "base": "AreaRange",
 "class": "CardinalArea",
 "language": "GDScript",
@@ -279,10 +284,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://effects/scripts/stat_effects_handler.gd"
 }, {
-"base": "Resource",
-"class": "StatValues",
+"base": "Node",
+"class": "StatManager",
 "language": "GDScript",
-"path": "res://character/scripts/stat_values.gd"
+"path": "res://character/scripts/stat_manager.gd"
 }, {
 "base": "Node",
 "class": "State",
@@ -320,6 +325,7 @@ _global_script_class_icons={
 "ActivePlayerStats": "",
 "AreaRange": "",
 "ArraySorters": "",
+"BaseStats": "",
 "CardinalArea": "",
 "Character": "",
 "CharacterStats": "",
@@ -369,7 +375,7 @@ _global_script_class_icons={
 "SelectorState": "",
 "Stat": "",
 "StatEffectsHandler": "",
-"StatValues": "",
+"StatManager": "",
 "State": "",
 "StateMachine": "",
 "StrengthCalculation": "",
@@ -497,10 +503,8 @@ ui_camera_reset={
 3d_physics/layer_1="selector"
 3d_physics/layer_2="map"
 3d_physics/layer_3="player"
-3d_physics/layer_4="mob"
-3d_physics/layer_5="move_range"
-3d_physics/layer_6="action_range"
-3d_physics/layer_7="effect_range"
+3d_physics/layer_4="enemy"
+3d_physics/layer_5="action"
 
 [mono]
 

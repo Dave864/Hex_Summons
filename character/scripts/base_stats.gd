@@ -1,4 +1,4 @@
-class_name StatValues
+class_name BaseStats
 extends Resource
 """
 Defines the stat values for a character. Includes base value and growth rate.
