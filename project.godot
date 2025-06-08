@@ -274,15 +274,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://character/scripts/stat.gd"
 }, {
-"base": "Object",
+"base": "Node",
 "class": "StatEffectsHandler",
 "language": "GDScript",
 "path": "res://effects/scripts/stat_effects_handler.gd"
-}, {
-"base": "Node",
-"class": "StatManager",
-"language": "GDScript",
-"path": "res://character/scripts/stat_manager.gd"
 }, {
 "base": "Node",
 "class": "State",
@@ -369,7 +364,6 @@ _global_script_class_icons={
 "SelectorState": "",
 "Stat": "",
 "StatEffectsHandler": "",
-"StatManager": "",
 "State": "",
 "StateMachine": "",
 "StrengthCalculation": "",

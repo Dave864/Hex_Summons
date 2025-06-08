@@ -59,8 +59,8 @@ func _check_for_required_parameters() -> void:
 			ErrorUtil.missing_required_parameter(name, "stat_affected")
 	)
 	assert(
-			stat_affected is Stat or stat_affected is ElementalStat,
-			"Error: Effect %s stat_affected is neither a Stat or ElementalStat." % [name]
+			stat_affected is Stat,
+			"Error: Effect %s stat_affected is not a Stat." % [name]
 	)
 	assert(
 			strength_calculation != null,
