@@ -24,17 +24,17 @@ export(int, 0, 6) var dark_alignment = 0
 # Gets the potency value of an element.
 func get_elemental_potency(element: int) -> float:
 	match element:
-		ElementalStat.Element.EARTH:
+		Constants.Element.EARTH:
 			return ELEMENTAL_POTENCY[earth_alignment]
-		ElementalStat.Element.FIRE:
+		Constants.Element.FIRE:
 			return ELEMENTAL_POTENCY[fire_alignment]
-		ElementalStat.Element.WATER:
+		Constants.Element.WATER:
 			return ELEMENTAL_POTENCY[water_alignment]
-		ElementalStat.Element.WIND:
+		Constants.Element.WIND:
 			return ELEMENTAL_POTENCY[wind_alignment]
-		ElementalStat.Element.LIGHT:
+		Constants.Element.LIGHT:
 			return ELEMENTAL_POTENCY[light_alignment]
-		ElementalStat.Element.DARK:
+		Constants.Element.DARK:
 			return ELEMENTAL_POTENCY[dark_alignment]
 		_:
 			return 0.0

@@ -6,8 +6,8 @@ Each polarity always has two core elements.
 """
 
 
-const LIGHT: int = ElementalStat.Element.LIGHT
-const DARK: int = ElementalStat.Element.DARK
+const LIGHT: int = Constants.Element.LIGHT
+const DARK: int = Constants.Element.DARK
 
 var _polarities: Dictionary = {
 	LIGHT: [-1, -1],
@@ -23,8 +23,8 @@ func _ready() -> void:
 # Swap the polarities of the given elements.
 func swap_elements(element_1: int, element_2: int) -> void:
 	if (
-		not element_1 in ElementalStat.Element.keys()
-		or not element_2 in ElementalStat.Element.keys()
+		not element_1 in Constants.Element.keys()
+		or not element_2 in Constants.Element.keys()
 	):
 		printerr("Cannot swap the polarity of a nonexistant element.")
 		return
@@ -187,16 +187,16 @@ func _swap_polarities_at_index(index: int) -> void:
 # Checks if a given value corresponds to an elemental type.
 func _is_valid_core_element(element: int) -> bool:
 	return (
-		element == ElementalStat.Element.EARTH
-		or element == ElementalStat.Element.FIRE
-		or element == ElementalStat.Element.WATER
-		or element == ElementalStat.Element.WIND
+		element == Constants.Element.EARTH
+		or element == Constants.Element.FIRE
+		or element == Constants.Element.WATER
+		or element == Constants.Element.WIND
 	)
 
 
 # Sets Fire and Wind to Light. Sets Earth and Water to Dark.
 func _set_to_default() -> void:
-	_polarities[LIGHT][0] = ElementalStat.Element.FIRE
-	_polarities[LIGHT][1] = ElementalStat.Element.WIND
-	_polarities[DARK][0] = ElementalStat.Element.EARTH
-	_polarities[DARK][1] = ElementalStat.Element.WATER
+	_polarities[LIGHT][0] = Constants.Element.FIRE
+	_polarities[LIGHT][1] = Constants.Element.WIND
+	_polarities[DARK][0] = Constants.Element.EARTH
+	_polarities[DARK][1] = Constants.Element.WATER

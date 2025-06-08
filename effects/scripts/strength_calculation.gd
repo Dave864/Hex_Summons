@@ -103,10 +103,8 @@ func _convert_to_scalar(strength_data: Dictionary) -> float:
 func _get_stat_value(target_stats: CharacterStats, stat: Resource) -> int:
 	if stat is Stat:
 		return target_stats.get_calculated_stat(stat.Type)
-	elif stat is ElementalStat:
-		return target_stats.get_calculated_elemental_stat(stat.Type, stat.Element)
 	else:
-		printerr("A non Stat or ElementalStat resource was requested.")
+		printerr("A non Stat resource was requested.")
 		return 0
 
 
@@ -117,7 +115,7 @@ func _get_potency_values(
 ) -> Dictionary:
 	var p_vals: Dictionary = character_stats.get_offensive()
 	p_vals[Constants.ATTACK] *= action_potency.attack_potency
-	for element in ElementalStat.Element:
+	for element in Constants.Element:
 		p_vals[Constants.MAGIC][element] *= (
 				action_potency.get_elemental_potency(element)
 		)
@@ -130,7 +128,7 @@ func _apply_resistance(strength: Dictionary, resistance: Dictionary) -> void:
 			strength[Constants.ATTACK],
 			resistance[Constants.DEFENSE]
 	)
-	for element in ElementalStat.Element:
+	for element in Constants.Element:
 		strength[Constants.MAGIC][element] = _bind_resistance(
 				strength[Constants.MAGIC][element],
 				resistance[Constants.RESISTANCE][element]

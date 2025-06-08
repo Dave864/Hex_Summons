@@ -99,11 +99,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://effects/scripts/effect_bus.gd"
 }, {
-"base": "Resource",
-"class": "ElementalStat",
-"language": "GDScript",
-"path": "res://character/scripts/elemental_stat.gd"
-}, {
 "base": "Area",
 "class": "EmissionPoint",
 "language": "GDScript",
@@ -338,7 +333,6 @@ _global_script_class_icons={
 "Effect": "",
 "EffectAspect": "",
 "EffectBus": "",
-"ElementalStat": "",
 "EmissionPoint": "",
 "Encounter": "",
 "EncounterCamera": "",

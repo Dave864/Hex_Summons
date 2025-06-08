@@ -6,6 +6,18 @@ throughout the game.
 """
 
 
+# The elements that define magic and resistance. LIGHT and DARK are considered
+# polar elements. FIRE, EARTH, WATER, and WIND are core elements and can each
+# be aligned to either of the polar elements.
+enum Element {
+	EARTH,
+	FIRE,
+	WATER,
+	WIND,
+	LIGHT,
+	DARK,
+}
+
 # Possible occupants of a MapTile.
 enum MapOccupants {
 	PLAYER,

@@ -9,9 +9,7 @@ Node that keeps track of all of a character's statistics.
 signal health_changed(new_value)
 
 # Stat values
-export var stat_values: Resource = null
-# Reference to the movement area
-export var movement_area: Resource = null
+export var base_stat_values: Resource = null
 
 # Modifier values for all stats
 var _max_health_mod: int = 0
@@ -36,7 +34,6 @@ onready var _root_node: Node = get_tree().edited_scene_root
 
 func _ready() -> void:
 	_check_for_required_parameters()
-	movement_area.radius = stat_values.movement
 
 
 func set_level(val: int) -> void:
@@ -48,17 +45,11 @@ func get_level() -> int:
 
 
 func set_movement_range(val: int) -> void:
-	movement_area.radius = val
-	stat_values.movement = val
+	base_stat_values.movement = val
 
 
 func get_movement_range(with_modifier: bool = true) -> int:
 	return get_stat(Stat.Type.MOVEMENT, with_modifier)
-
-
-# Get the indexes of the tiles within movement range.
-func get_movement_area() -> Resource:
-	return movement_area
 
 
 func get_max_health(with_modifier: bool = true) -> int:
@@ -92,12 +83,12 @@ func get_agility(with_modifier: bool = true) -> int:
 	return get_stat(Stat.Type.AGILITY, with_modifier)
 
 
-func get_magic(type: int, with_modifier: bool = true) -> int:
-	return _magic_for_level(type, with_modifier)
+func get_magic(element: int, with_modifier: bool = true) -> int:
+	return _magic_for_level(element, with_modifier)
 
 
-func get_resistance(type: int, with_modifier: bool = true) -> int:
-	return _resistance_for_level(type, with_modifier)
+func get_resistance(element: int, with_modifier: bool = true) -> int:
+	return _resistance_for_level(element, with_modifier)
 
 
 # Get all the stats.
@@ -119,28 +110,28 @@ func get_offensive(with_modifier: bool = true) -> Dictionary:
 	return {
 		Constants.ATTACK: get_attack(with_modifier),
 		Constants.MAGIC: {
-			ElementalStat.Element.EARTH: get_magic(
-					ElementalStat.Element.EARTH,
+			Constants.Element.EARTH: get_magic(
+					Constants.Element.EARTH,
 					with_modifier
 			),
-			ElementalStat.Element.FIRE: get_magic(
-					ElementalStat.Element.FIRE,
+			Constants.Element.FIRE: get_magic(
+					Constants.Element.FIRE,
 					with_modifier
 			),
-			ElementalStat.Element.WATER: get_magic(
-					ElementalStat.Element.WATER,
+			Constants.Element.WATER: get_magic(
+					Constants.Element.WATER,
 					with_modifier
 			),
-			ElementalStat.Element.WIND: get_magic(
-					ElementalStat.Element.WIND,
+			Constants.Element.WIND: get_magic(
+					Constants.Element.WIND,
 					with_modifier
 			),
-			ElementalStat.Element.LIGHT: get_magic(
-					ElementalStat.Element.LIGHT,
+			Constants.Element.LIGHT: get_magic(
+					Constants.Element.LIGHT,
 					with_modifier
 			),
-			ElementalStat.Element.DARK: get_magic(
-					ElementalStat.Element.DARK,
+			Constants.Element.DARK: get_magic(
+					Constants.Element.DARK,
 					with_modifier
 			),
 		}
@@ -152,28 +143,28 @@ func get_defensive(with_modifier: bool = true) -> Dictionary:
 	return {
 		Constants.DEFENSE: get_defense(),
 		Constants.RESISTANCE: {
-			ElementalStat.Element.EARTH: get_resistance(
-					ElementalStat.Element.EARTH,
+			Constants.Element.EARTH: get_resistance(
+					Constants.Element.EARTH,
 					with_modifier
 			),
-			ElementalStat.Element.FIRE: get_resistance(
-					ElementalStat.Element.FIRE,
+			Constants.Element.FIRE: get_resistance(
+					Constants.Element.FIRE,
 					with_modifier
 			),
-			ElementalStat.Element.WATER: get_resistance(
-					ElementalStat.Element.WATER,
+			Constants.Element.WATER: get_resistance(
+					Constants.Element.WATER,
 					with_modifier
 			),
-			ElementalStat.Element.WIND: get_resistance(
-					ElementalStat.Element.WIND,
+			Constants.Element.WIND: get_resistance(
+					Constants.Element.WIND,
 					with_modifier
 			),
-			ElementalStat.Element.LIGHT: get_resistance(
-					ElementalStat.Element.LIGHT,
+			Constants.Element.LIGHT: get_resistance(
+					Constants.Element.LIGHT,
 					with_modifier
 			),
-			ElementalStat.Element.DARK: get_resistance(
-					ElementalStat.Element.DARK,
+			Constants.Element.DARK: get_resistance(
+					Constants.Element.DARK,
 					with_modifier
 			),
 		}
@@ -186,42 +177,27 @@ func get_stat(stat: int, with_modifier: bool = true) -> int:
 	var modifier: int
 	match stat:
 		Stat.Type.MAX_HEALTH:
-			result = stat_values.health_base + (stat_values.health_growth * _level)
+			result = base_stat_values.health_base + (base_stat_values.health_growth * _level)
 			modifier = _max_health_mod
 		Stat.Type.CUR_HEALTH:
 			result = _current_health
 			modifier = 0
 		Stat.Type.ATTACK:
-			result = stat_values.attack_base + (stat_values.attack_growth * _level)
+			result = base_stat_values.attack_base + (base_stat_values.attack_growth * _level)
 			modifier = _attack_mod
 		Stat.Type.DEFENSE:
-			result = stat_values.defense_base + (stat_values.defense_growth * _level)
+			result = base_stat_values.defense_base + (base_stat_values.defense_growth * _level)
 			modifier = _defense_mod
 		Stat.Type.AGILITY:
-			result = stat_values.agility_base + (stat_values.agility_growth * _level)
+			result = base_stat_values.agility_base + (base_stat_values.agility_growth * _level)
 			modifier = _agility_mod
 		Stat.Type.MOVEMENT:
-			result = stat_values.movement
+			result = base_stat_values.movement
 			modifier = _movement_mod
 		_:
 			result = 0
 			modifier = 0
 	return result + modifier if with_modifier else result
-
-
-# Obtains the calculated value for a given elemental stat.
-func get_calculated_elemental_stat(
-	stat: int,
-	element: int,
-	with_modifier: bool = true
-) -> int:
-	match stat:
-		ElementalStat.Type.MAGIC:
-			return _magic_for_level(element, with_modifier)
-		ElementalStat.Type.RESISTANCE:
-			return _resistance_for_level(element, with_modifier)
-		_:
-			return 0
 
 
 # Updates the modifier for the specified stat so that it results in the new value
@@ -240,38 +216,48 @@ func update_modifier(type: int, value: int) -> void:
 			_movement_mod = value
 
 
-# Updates the modifier for the specified elemental statso that it results in
-# the new value when added to the base value of the stat.
-func update_elemental_modifier(type: int, element: int, value: int) -> void:
+# Updates the modifier for the specified elemental magic stat so that it
+# results in the new value when added to the base value of the stat.
+func update_magic_modifier(element: int, value: int) -> void:
 	match element:
-		ElementalStat.Element.EARTH:
-			if type == ElementalStat.Type.MAGIC:
-				_magic_earth_mod = value
-			elif type == ElementalStat.Type.RESISTANCE:
-				_res_earth_mod = value
-		ElementalStat.Element.FIRE:
-			if type == ElementalStat.Type.MAGIC:
-				_magic_fire_mod = value
-			elif type == ElementalStat.Type.RESISTANCE:
-				_res_fire_mod = value
-		ElementalStat.Element.WATER:
-			if type == ElementalStat.Type.MAGIC:
-				_magic_water_mod = value
-			elif type == ElementalStat.Type.RESISTANCE:
-				_res_water_mod = value
-		ElementalStat.Element.WIND:
-			if type == ElementalStat.Type.MAGIC:
-				_magic_wind_mod = value
-			elif type == ElementalStat.Type.RESISTANCE:
-				_res_wind_mod = value
-		ElementalStat.Element.LIGHT:
+		Constants.Element.EARTH:
+			_magic_earth_mod = value
+		Constants.Element.FIRE:
+			_magic_fire_mod = value
+		Constants.Element.WATER:
+			_magic_water_mod = value
+		Constants.Element.WIND:
+			_magic_wind_mod = value
+		Constants.Element.LIGHT:
 			var light_elements: Array = ElementalPolarity.get_light_elements()
-			update_elemental_modifier(type, light_elements[0], value)
-			update_elemental_modifier(type, light_elements[1], value)
-		ElementalStat.Element.DARK:
+			update_magic_modifier(light_elements[0], value)
+			update_magic_modifier(light_elements[1], value)
+		Constants.Element.DARK:
 			var dark_elements: Array = ElementalPolarity.get_dark_elements()
-			update_elemental_modifier(type, dark_elements[0], value)
-			update_elemental_modifier(type, dark_elements[1], value)
+			update_magic_modifier(dark_elements[0], value)
+			update_magic_modifier(dark_elements[1], value)
+
+
+# Updates the modifier for the specified elemental resistance stat so that it
+# results in the new value when added to the base value of the stat.
+func update_res_modifier(element: int, value: int) -> void:
+	match element:
+		Constants.Element.EARTH:
+			_res_earth_mod = value
+		Constants.Element.FIRE:
+			_res_fire_mod = value
+		Constants.Element.WATER:
+			_res_water_mod = value
+		Constants.Element.WIND:
+			_res_wind_mod = value
+		Constants.Element.LIGHT:
+			var light_elements: Array = ElementalPolarity.get_light_elements()
+			update_res_modifier(light_elements[0], value)
+			update_res_modifier(light_elements[1], value)
+		Constants.Element.DARK:
+			var dark_elements: Array = ElementalPolarity.get_dark_elements()
+			update_res_modifier(dark_elements[0], value)
+			update_res_modifier(dark_elements[1], value)
 
 
 # sets the values of all the modifiers to zero. Used when effects are processed.
@@ -281,9 +267,9 @@ func clear_modifiers() -> void:
 	update_modifier(Stat.Type.DEFENSE, 0)
 	update_modifier(Stat.Type.AGILITY, 0)
 	update_modifier(Stat.Type.MOVEMENT, 0)
-	for element in ElementalStat.Element:
-		update_elemental_modifier(ElementalStat.Type.MAGIC, element, 0)
-		update_elemental_modifier(ElementalStat.Type.RESISTANCE, element, 0)
+	for element in Constants.Element:
+		update_magic_modifier(element, 0)
+		update_res_modifier(element, 0)
 
 
 # Determines the value of a specified magic element for a given level.
@@ -291,37 +277,37 @@ func _magic_for_level(element: int, with_modifier: bool) -> int:
 	var result: int
 	var modifier: int
 	match element:
-		ElementalStat.Element.EARTH:
+		Constants.Element.EARTH:
 			result = (
-					stat_values.magic_earth_base 
-					+ (stat_values.magic_earth_growth * _level)
+					base_stat_values.magic_earth_base 
+					+ (base_stat_values.magic_earth_growth * _level)
 			)
 			modifier = _magic_earth_mod
-		ElementalStat.Element.FIRE:
+		Constants.Element.FIRE:
 			result = (
-					stat_values.magic_fire_base
-					+ (stat_values.magic_fire_growth * _level)
+					base_stat_values.magic_fire_base
+					+ (base_stat_values.magic_fire_growth * _level)
 			)
 			modifier = _magic_fire_mod
-		ElementalStat.Element.WATER:
+		Constants.Element.WATER:
 			result = (
-					stat_values.magic_water_base
-					+ (stat_values.magic_water_growth * _level)
+					base_stat_values.magic_water_base
+					+ (base_stat_values.magic_water_growth * _level)
 			)
 			modifier = _magic_water_mod
-		ElementalStat.Element.WIND:
+		Constants.Element.WIND:
 			result = (
-					stat_values.magic_wind_base
-					+ (stat_values.magic_wind_growth * _level)
+					base_stat_values.magic_wind_base
+					+ (base_stat_values.magic_wind_growth * _level)
 			)
 			modifier = _magic_wind_mod
-		ElementalStat.Element.LIGHT:
+		Constants.Element.LIGHT:
 			var light_elements: Array = ElementalPolarity.get_light_elements()
 			return (
 				_magic_for_level(light_elements[0], with_modifier)
 				+ _magic_for_level(light_elements[1], with_modifier)
 			)
-		ElementalStat.Element.DARK:
+		Constants.Element.DARK:
 			var dark_elements: Array = ElementalPolarity.get_dark_elements()
 			return (
 				_magic_for_level(dark_elements[0], with_modifier)
@@ -338,37 +324,37 @@ func _resistance_for_level(element: int, with_modifier: bool) -> int:
 	var result: int
 	var modifier: int
 	match element:
-		ElementalStat.Element.EARTH:
+		Constants.Element.EARTH:
 			result = (
-					stat_values.res_earth_base 
-					+ (stat_values.res_earth_growth * _level)
+					base_stat_values.res_earth_base 
+					+ (base_stat_values.res_earth_growth * _level)
 			)
 			modifier = _res_earth_mod
-		ElementalStat.Element.FIRE:
+		Constants.Element.FIRE:
 			result = (
-					stat_values.res_fire_base 
-					+ (stat_values.res_fire_growth * _level)
+					base_stat_values.res_fire_base 
+					+ (base_stat_values.res_fire_growth * _level)
 			)
 			modifier = _res_fire_mod
-		ElementalStat.Element.WATER:
+		Constants.Element.WATER:
 			result = (
-					stat_values.res_water_base 
-					+ (stat_values.res_water_growth * _level)
+					base_stat_values.res_water_base 
+					+ (base_stat_values.res_water_growth * _level)
 			)
 			modifier = _res_water_mod
-		ElementalStat.Element.WIND:
+		Constants.Element.WIND:
 			result = (
-					stat_values.res_wind_base 
-					+ (stat_values.res_wind_growth * _level)
+					base_stat_values.res_wind_base 
+					+ (base_stat_values.res_wind_growth * _level)
 			)
 			modifier = _res_wind_mod
-		ElementalStat.Element.LIGHT:
+		Constants.Element.LIGHT:
 			var light_elements: Array = ElementalPolarity.get_light_elements()
 			return (
 				_resistance_for_level(light_elements[0], with_modifier)
 				+ _resistance_for_level(light_elements[1], with_modifier)
 			)
-		ElementalStat.Element.DARK:
+		Constants.Element.DARK:
 			var dark_elements: Array = ElementalPolarity.get_dark_elements()
 			return (
 				_resistance_for_level(dark_elements[0], with_modifier)
@@ -383,18 +369,10 @@ func _resistance_for_level(element: int, with_modifier: bool) -> int:
 # Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
-			movement_area != null,
-			ErrorUtil.missing_required_parameter(self.name, "movement_area")
+			base_stat_values != null,
+			ErrorUtil.missing_required_parameter(self.name, "base_stat_values")
 	)
 	assert(
-			movement_area is RingArea,
-			"Error: CharacterStat movement_area is not of type RingArea."
-	)
-	assert(
-			stat_values != null,
-			ErrorUtil.missing_required_parameter(self.name, "stat_values")
-	)
-	assert(
-			stat_values is BaseStats,
-			"Error: CharacterStat stat_values is not of type BaseStats."
+			base_stat_values is BaseStats,
+			"Error: CharacterStat base_stat_values is not of type BaseStats."
 	)
