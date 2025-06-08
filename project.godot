@@ -154,6 +154,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://effects/scripts/flat_value_calculation.gd"
 }, {
+"base": "Node",
+"class": "GeneralEffectsHandler",
+"language": "GDScript",
+"path": "res://effects/scripts/general_effects_handler.gd"
+}, {
+"base": "Node",
+"class": "HealthEffectsHandler",
+"language": "GDScript",
+"path": "res://effects/scripts/health_effects_handler.gd"
+}, {
 "base": "MeshInstance",
 "class": "HexHighlighter",
 "language": "GDScript",
@@ -275,11 +285,6 @@ _global_script_classes=[ {
 "path": "res://character/scripts/stat.gd"
 }, {
 "base": "Node",
-"class": "StatEffectsHandler",
-"language": "GDScript",
-"path": "res://effects/scripts/stat_effects_handler.gd"
-}, {
-"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://fsm/state.gd"
@@ -339,6 +344,8 @@ _global_script_class_icons={
 "EnemyCharacterState": "",
 "ErrorUtil": "",
 "FlatValueCalcultion": "",
+"GeneralEffectsHandler": "",
+"HealthEffectsHandler": "",
 "HexHighlighter": "",
 "HexMap": "",
 "HexMapAStar": "",
@@ -363,7 +370,6 @@ _global_script_class_icons={
 "Selector": "",
 "SelectorState": "",
 "Stat": "",
-"StatEffectsHandler": "",
 "State": "",
 "StateMachine": "",
 "StrengthCalculation": "",

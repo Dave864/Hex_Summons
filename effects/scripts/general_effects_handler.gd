@@ -1,4 +1,4 @@
-class_name StatEffectsHandler
+class_name GeneralEffectsHandler
 extends Node
 """
 Tracks the effects that modify the specified stat. This is used for attack,
@@ -86,6 +86,7 @@ func _ready():
 # Connects the effects of an action to this manager.
 func _on_HitBox_area_entered(_action: Area) -> void:
 	# Go through all of the effects associated with this action
+	# Get the ones that apply to the specified stat.
 	# Apply resistance to all effects that require it
 	# Update the modifier value
 	pass
