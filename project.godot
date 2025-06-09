@@ -14,17 +14,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://actions/action.gd"
 }, {
-"base": "Resource",
-"class": "ActionStats",
-"language": "GDScript",
-"path": "res://actions/action_stats.gd"
-}, {
 "base": "PanelContainer",
 "class": "ActivePlayerStats",
 "language": "GDScript",
 "path": "res://user_interface/encounter/active_player_stats.gd"
 }, {
-"base": "Resource",
+"base": "Node",
 "class": "AreaRange",
 "language": "GDScript",
 "path": "res://range_type/area_range.gd"
@@ -316,7 +311,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Action": "",
-"ActionStats": "",
 "ActivePlayerStats": "",
 "AreaRange": "",
 "ArraySorters": "",

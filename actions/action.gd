@@ -5,10 +5,30 @@ Describes the details of an action.
 """
 
 
+const AREA_RANGE: String = "AreaRange"
+const DEAD_RANGE: String = "DeadRange"
+const EFFECT_RANGE: String = "EffectRange"
+const EFFECTS: String = "Effects"
+
+# The percentage of a character's attack to use for potency calculations.
+export(Resource) var potency = null
+# Flag that denotes if the emission is fixed to the center of the area.
+export(bool) var emit_from_center = true
+# Flag that denotes if the effect should include the casting character tile.
+export(bool) var effect_ignores_caster = true
+# Flag that denotes if the possible source of the emmision is affected by tile heights.
+export(bool) var area_ignore_heights = false
+# Flag that denotes if the emission area is affected by tile heights.
+export(bool) var effect_ignore_heights = false
+
 # The path to the stats of the character that owns this action.
-export(NodePath) var source_stats_path = null
-# The details of the area and effect range of the action.
-export(Resource) var stat_details = null
+var source_stats: CharacterStats = null
+# The area specifying the possible tiles for effect emmision.
+var area_range: AreaRange = null
+# The area that is ignored when determining the possible tiles for effect emmision.
+var dead_range: AreaRange = null
+# The area specifying the tiles affected by the effect.
+var effect_range: AreaRange = null
 
 # The effects of this action
 var _effects: Array setget , get_effects
@@ -18,13 +38,6 @@ var _is_cardinal: bool = false setget , get_is_cardinal
 var _emission_map_index: int = -1 setget set_emission_map_index, get_emission_map_index
 # The direction the effect is emitted. Only updated if the action is cardinal.
 var _emission_direction: int setget set_emission_direction, get_emission_direction
-
-
-func _ready() -> void:
-	_check_for_required_parameters()
-	_initialize_effects()
-	_is_cardinal = stat_details.area_range is CardinalArea
-	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
 # Returns the effects of this action.
@@ -65,9 +78,33 @@ func reset_emittor_position() -> void:
 	_emission_map_index = -1
 
 
+func _ready() -> void:
+	_check_for_required_parameters()
+	_initialize_effects()
+	_is_cardinal = area_range is CardinalArea
+	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
+
+
+# Checks that all required parameters are set.
+func _check_for_required_parameters() -> void:
+	assert(
+			potency != null,
+			"Error: ActionStats missing defined potency."
+	)
+	assert(
+			potency is Potency,
+			"Error: ActionStats potency is not a Potency resource."
+	)
+	assert(
+			has_node(EFFECTS),
+			"Error: Action %s is missing the Effects node." % [name]
+	)
+	_set_and_check_ranges()
+
+
 # Initialize the effects list of the action, checking that all effects are valid.
 func _initialize_effects() -> void:
-	_effects = get_children()
+	_effects = get_node("Effects").get_children()
 #	assert(
 #			len(_effects) > 0,
 #			"Error: Action %s does not have any effects" % [name]
@@ -75,23 +112,33 @@ func _initialize_effects() -> void:
 	for effect in _effects:
 		assert(effect is Effect, "Error: Action %s effect %s is not an Effect")
 		# Type checking for the node referenced at the path.
-		var source_stats_node: CharacterStats = get_node(source_stats_path)
-		effect.set_source_stats(source_stats_node)
-		effect.set_action_potency(stat_details.potency)
+		effect.set_source_stats(source_stats)
+		effect.set_action_potency(potency)
 
 
-# Checks that all required parameters are set.
-func _check_for_required_parameters() -> void:
+# Gets the references to the range nodes, confirming if such nodes exist. 
+func _set_and_check_ranges() -> void:
+	area_range = get_node_or_null(AREA_RANGE)
+	dead_range = get_node_or_null(DEAD_RANGE)
+	effect_range = get_node_or_null(EFFECT_RANGE)
 	assert(
-			source_stats_path != null,
-			ErrorUtil.missing_required_parameter(name, "source_stats_path")
+			area_range != null,
+			"Error: ActionStats missing defined area range."
 	)
 	assert(
-			stat_details != null,
-			ErrorUtil.missing_required_parameter(name, "stat_details")
+			area_range is CardinalArea or area_range is RingArea,
+			"Error: Area range is neither a CardinalArea or RingArea."
+	)
+	if dead_range != null:
+		assert(
+				dead_range is CardinalArea or dead_range is RingArea,
+				"Error: Dead range is neither a CardinalArea or RingArea."
+		)
+	assert(
+			effect_range != null,
+			"Error: ActionStats missing defined effect_range."
 	)
 	assert(
-			stat_details is ActionStats,
-			"Error: Action %s ranges is not of type ActionStats."
+			effect_range is AreaRange,
+			"Error: Action %s effect_range is not an AreaRange." % [name]
 	)
-	stat_details.check_for_required_resources()

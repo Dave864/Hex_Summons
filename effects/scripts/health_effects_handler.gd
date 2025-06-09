@@ -27,5 +27,6 @@ func _on_HitBox_area_entered(_action: Area) -> void:
 	# Go through all of the effects associated with this action
 	# Get the ones that apply to health.
 	# Apply resistance to all effects that require it
+	# Apply immediate effects
 	# Update the modifier value
 	pass
