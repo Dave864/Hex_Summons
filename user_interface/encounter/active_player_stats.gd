@@ -14,7 +14,13 @@ onready var _name_label = $VBoxContainer/Name
 # Populate the display elements with the player stats.
 func set_stats(player: PlayerCharacter) -> void:
 	_check_for_required_parameters()
-	_health_label.text = "%d/%d" % [player.stats.get_cur_health(), player.stats.get_max_health()]
+	_health_label.text = (
+			"%d/%d" % \
+			[
+				player.stats.get_stat(Stat.Type.CUR_HEALTH),
+				player.stats.get_stat(Stat.Type.MAX_HEALTH)
+			]
+	)
 	_name_label.text = player.name
 
 

@@ -127,7 +127,10 @@ func toggle_options() -> void:
 func track_party_member(p: PlayerCharacter) -> void:
 	var p_label: CharacterSummary = _character_summary.instance()
 	p_label.set_name(p.name)
-	p_label.set_hp(p.stats.get_cur_health(), p.stats.get_max_health())
+	p_label.set_hp(
+			p.stats.get_stat(Stat.Type.CUR_HEALTH),
+			p.stats.get_stat(Stat.Type.CUR_HEALTH)
+	)
 	p_label.set_text_alignment(Label.ALIGN_LEFT)
 #	p.stats.connect("hp_changed", p_label, "_on_Character_hp_changed")
 	party_stats.add_child(p_label)
@@ -137,7 +140,10 @@ func track_party_member(p: PlayerCharacter) -> void:
 func track_enemy(e: EnemyCharacter) -> void:
 	var e_label: CharacterSummary = _character_summary.instance()
 	e_label.set_name(e.name)
-	e_label.set_hp(e.stats.get_cur_health(), e.stats.get_max_health())
+	e_label.set_hp(
+			e.stats.get_stat(Stat.Type.CUR_HEALTH),
+			e.stats.get_stat(Stat.Type.CUR_HEALTH)
+	)
 	e_label.set_text_alignment(Label.ALIGN_RIGHT)
 #	e.stats.connect("hp_changed", e_label, "_on_Character_hp_changed")
 	enemy_stats.add_child(e_label)

@@ -59,7 +59,7 @@ const HEX_TILE_UNIT_HEIGHT: float = 0.5
 # The "radius" of a hexagon drawn for the purposes of illustrating an action's
 # area range and effect range. The radius is the distance from the center to
 # a vertex of a hexagon.
-const DISPLAY_HEX_RADIUS: float = 5.0
+const DISPLAY_HEX_RADIUS: float = 3.0
 
 # The vertical displacement required by the selector shape in order to keep it
 # on top of map tiles.
