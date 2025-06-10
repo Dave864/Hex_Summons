@@ -1,11 +1,10 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://art/icon.png" type="Texture" id=1]
 [ext_resource path="res://character/enemy_characters/enemy_character.gd" type="Script" id=2]
 [ext_resource path="res://fsm/state_machine.gd" type="Script" id=3]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterMove.gd" type="Script" id=4]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterWait.gd" type="Script" id=5]
-[ext_resource path="res://character/enemy_characters/EnemyCharacter/stat_data/movement_area.tres" type="Resource" id=6]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterThink.gd" type="Script" id=7]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterAction.gd" type="Script" id=8]
 [ext_resource path="res://character/enemy_characters/EnemyCharacter/stat_data/stat_values.tres" type="Resource" id=9]
@@ -33,8 +32,7 @@ texture = ExtResource( 1 )
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource( 15 )
-stat_values = ExtResource( 9 )
-movement_area = ExtResource( 6 )
+base_stat_values = ExtResource( 9 )
 
 [node name="Actions" type="Node" parent="."]
 
