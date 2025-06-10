@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://actions/action.gd" type="Script" id=1]
 [ext_resource path="res://range_type/cardinal_area.gd" type="Script" id=2]
 [ext_resource path="res://range_type/column_area.gd" type="Script" id=3]
+[ext_resource path="res://actions/Beam/stat_data/potency.tres" type="Resource" id=4]
 
 [node name="Beam" type="Node"]
 script = ExtResource( 1 )
+potency = ExtResource( 4 )
 
 [node name="SourceRange" type="Node" parent="."]
 script = ExtResource( 2 )
