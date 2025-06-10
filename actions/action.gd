@@ -5,7 +5,7 @@ Describes the details of an action.
 """
 
 
-const AREA_RANGE: String = "AreaRange"
+const SOURCE_RANGE: String = "SourceRange"
 const DEAD_RANGE: String = "DeadRange"
 const EFFECT_RANGE: String = "EffectRange"
 const EFFECTS: String = "Effects"
@@ -17,14 +17,14 @@ export(bool) var emit_from_center = true
 # Flag that denotes if the effect should include the casting character tile.
 export(bool) var effect_ignores_caster = true
 # Flag that denotes if the possible source of the emmision is affected by tile heights.
-export(bool) var area_ignore_heights = false
+export(bool) var source_ignore_heights = false
 # Flag that denotes if the emission area is affected by tile heights.
 export(bool) var effect_ignore_heights = false
 
 # The path to the stats of the character that owns this action.
 var source_stats: CharacterStats = null
 # The area specifying the possible tiles for effect emmision.
-var area_range: AreaRange = null
+var source_range: AreaRange = null
 # The area that is ignored when determining the possible tiles for effect emmision.
 var dead_range: AreaRange = null
 # The area specifying the tiles affected by the effect.
@@ -81,7 +81,7 @@ func reset_emittor_position() -> void:
 func _ready() -> void:
 	_check_for_required_parameters()
 	_initialize_effects()
-	_is_cardinal = area_range is CardinalArea
+	_is_cardinal = source_range is CardinalArea
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
@@ -118,27 +118,29 @@ func _initialize_effects() -> void:
 
 # Gets the references to the range nodes, confirming if such nodes exist. 
 func _set_and_check_ranges() -> void:
-	area_range = get_node_or_null(AREA_RANGE)
+	source_range = get_node_or_null(SOURCE_RANGE)
 	dead_range = get_node_or_null(DEAD_RANGE)
 	effect_range = get_node_or_null(EFFECT_RANGE)
 	assert(
-			area_range != null,
-			"Error: ActionStats missing defined area range."
+			source_range != null,
+			"Error: Action %s missing SourceArea node." % [name]
 	)
 	assert(
-			area_range is CardinalArea or area_range is RingArea,
-			"Error: Area range is neither a CardinalArea or RingArea."
+			source_range is CardinalArea or source_range is RingArea,
+			"Error: Action %s SourceRange is neither a CardinalArea " \
+			+ "or RingArea." % [name]
 	)
 	if dead_range != null:
 		assert(
 				dead_range is CardinalArea or dead_range is RingArea,
-				"Error: Dead range is neither a CardinalArea or RingArea."
+				"Error: Action %s DeadRange is neither a CardinalArea " \
+				+ "or RingArea." % [name]
 		)
 	assert(
 			effect_range != null,
-			"Error: ActionStats missing defined effect_range."
+			"Error: Action %s missing EffectRange node." % [name]
 	)
 	assert(
 			effect_range is AreaRange,
-			"Error: Action %s effect_range is not an AreaRange." % [name]
+			"Error: Action %s EffectRange is not an AreaRange." % [name]
 	)

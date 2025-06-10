@@ -1,8 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://actions/action.gd" type="Script" id=1]
-[ext_resource path="res://actions/Beam/stat_data/stat_details.tres" type="Resource" id=2]
+[ext_resource path="res://range_type/cardinal_area.gd" type="Script" id=2]
+[ext_resource path="res://range_type/column_area.gd" type="Script" id=3]
 
 [node name="Beam" type="Node"]
 script = ExtResource( 1 )
-stat_details = ExtResource( 2 )
+
+[node name="SourceRange" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="EffectRange" type="Node" parent="."]
+script = ExtResource( 3 )
+spread = 1
+distance = 3
+
+[node name="Effects" type="Node" parent="."]
