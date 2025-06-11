@@ -48,30 +48,30 @@ func highlight_player_movement(
 			_highlighted_map_indexes.append(tile.map_coordinate.get_map_index())
 
 
-# Highlight the specified tiles as being within the area range of an action.
-func highlight_player_action_area(tile_indexes: Array, pc: PlayerCharacter) -> void:
-	var map_section: Array = _map_tiles.get_tiles_from_ids(tile_indexes)
+# Highlight the specified tiles as being within the source range of an action.
+func highlight_action_source_area(tile_indexes: Array, pc: PlayerCharacter) -> void:
+#	var map_section: Array = _map_tiles.get_tiles_from_ids(tile_indexes)
 	
-	var area_range_indices: Array = _range_finder.get_traversable_tiles(
-		pc.get_map_index_at(),
-		pc.stats.get_movement_range(),
-		map_section
-	)
+#	var source_range_indices: Array = _range_finder.get_traversable_tiles(
+#		pc.get_map_index_at(),
+#		pc.stats.get_movement_range(),
+#		map_section
+#	)
 	
-	for i in area_range_indices:
-		var tile: MapTile = _map_tiles[i]
-		if i == pc.get_map_index_at():
+	for index in tile_indexes:
+		var tile: MapTile = _map_tiles.get_tile_at_index(index)
+		if index == pc.get_map_index_at():
 			tile.set_highlight_type(HexHighlighter.Option.PLAYER)
-			_highlighted_map_indexes.append(tile.get_map_index())
-		elif tile.get_current_occupant() == null:
+			_highlighted_map_indexes.append(index)
+		elif tile.occupant.get_current_occupant() == null:
 			tile.set_highlight_type(HexHighlighter.Option.RANGE)
-			_highlighted_map_indexes.append(tile.get_map_index())
-		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
+			_highlighted_map_indexes.append(index)
+		elif tile.occupant.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
 			tile.set_highlight_type(HexHighlighter.Option.TARGET)
-			_highlighted_map_indexes.append(tile.get_map_index())
+			_highlighted_map_indexes.append(index)
 		else:
 			tile.set_highlight_type(HexHighlighter.Option.ALLY)
-			_highlighted_map_indexes.append(tile.get_map_index())
+			_highlighted_map_indexes.append(index)
 
 
 # Highlight the selector for the specified tiles to represent the effect area
@@ -83,15 +83,16 @@ func highlight_effect_area(tile_indexes: Array, ignore_heights: bool) -> void:
 		pass
 	
 	for tile in map_section:
-		if tile.get_current_occupant() == null:
+		var occupant: Character = tile.occupant.get_current_occupant()
+		if occupant == null:
 			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)
-			_selectable_map_indexes.append(tile.get_map_index())
-		elif tile.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
+			_selectable_map_indexes.append(tile.map_coordinate.get_map_index())
+		elif occupant.get_type() == Constants.MapOccupants.ENEMY:
 			tile.set_selector_type(HexHighlighter.Option.TARGET)
-			_selectable_map_indexes.append(tile.get_map_index())
+			_selectable_map_indexes.append(tile.map_coordinate.get_map_index())
 		else:
 			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)
-			_selectable_map_indexes.append(tile.get_map_index())
+			_selectable_map_indexes.append(tile.map_coordinate.get_map_index())
 
 
 # Clear the higlights from all tiles.

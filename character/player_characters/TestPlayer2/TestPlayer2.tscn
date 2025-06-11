@@ -7,7 +7,7 @@
 [ext_resource path="res://fsm/player_character/PlayerCharacterMove.gd" type="Script" id=5]
 [ext_resource path="res://character/player_classes/TestRangeClass/TestRangeClass.tscn" type="PackedScene" id=6]
 [ext_resource path="res://fsm/player_character/PlayerCharacterWait.gd" type="Script" id=7]
-[ext_resource path="res://fsm/player_character/PlayerCharacterAttack.gd" type="Script" id=8]
+[ext_resource path="res://fsm/player_character/PlayerCharacterAction.gd" type="Script" id=8]
 [ext_resource path="res://hex_map/scripts/map_coordinate.gd" type="Script" id=9]
 
 [sub_resource type="SphereShape" id=1]
@@ -17,7 +17,6 @@ radius = 0.001
 collision_layer = 4
 collision_mask = 2
 script = ExtResource( 2 )
-fsm_path = NodePath("StateMachine")
 
 [node name="MapCoordinate" type="Position3D" parent="."]
 script = ExtResource( 9 )
@@ -38,7 +37,7 @@ initial_state = NodePath("Wait")
 [node name="Move" type="Node" parent="StateMachine"]
 script = ExtResource( 5 )
 
-[node name="Attack" type="Node" parent="StateMachine"]
+[node name="Action" type="Node" parent="StateMachine"]
 script = ExtResource( 8 )
 
 [node name="Standby" type="Node" parent="StateMachine"]

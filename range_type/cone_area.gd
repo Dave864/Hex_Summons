@@ -20,7 +20,10 @@ func determine_directional_area_indexes(
 	map_tiles: Tiles
 ) -> Array:
 	var tile_ids: Array = []
-	var start_coord: Vector3 = map_tiles.get_tile_at_index(start).map_coordinate.get_cube_coord()
+	var start_coord: Vector3 = (
+			map_tiles.get_tile_at_index(start) \
+			.map_coordinate.get_cube_coord()
+	)
 	tile_ids.append(start)
 	for s in range(spread + 1):
 		var cur_dir: int = dir + s
@@ -33,17 +36,36 @@ func determine_directional_area_indexes(
 					cur_dir
 			)
 			if map_tiles.is_valid_cube(cur_coord):
-				tile_ids.append(cur_coord)
+				var tile_id = HexUtil.cube_to_index(
+						cur_coord,
+						map_tiles.get_x_count()
+				)
+				tile_ids.append(tile_id)
 			# Don't cast ray if this is the last origin line to add.
 			if s < spread:
-				for i in range(d):
-					# The ray is cast two positions clockwise from the origin direction
-					var ray_dir: int = cur_dir + 2 if cur_dir < 4 else cur_dir - 4
-					var ray_coord: Vector3 = HexUtil.cube_at_distance(
-							cur_coord,
-							i + 1,
-							ray_dir
-					)
-					if map_tiles.is_valid_cube(ray_coord):
-						tile_ids.append(ray_coord)
+				_determine_ray_indexes(d, cur_dir, cur_coord, map_tiles, tile_ids)
 	return tile_ids
+
+
+# Helper function that gets the tile indexes of the "ray" from a specific tile.
+func _determine_ray_indexes(
+		distance_step: int,
+		cur_dir: int,
+		cur_coord: Vector3,
+		map_tiles: Tiles, 
+		tile_ids: Array
+) -> void:
+	for i in distance_step:
+		# The ray is cast two positions clockwise from the origin direction
+		var ray_dir: int = cur_dir + 2 if cur_dir < 4 else cur_dir - 4
+		var ray_coord: Vector3 = HexUtil.cube_at_distance(
+				cur_coord,
+				i + 1,
+				ray_dir
+		)
+		if map_tiles.is_valid_cube(ray_coord):
+			var tile_id = HexUtil.cube_to_index(
+					ray_coord,
+					map_tiles.get_x_count()
+			)
+			tile_ids.append(tile_id)

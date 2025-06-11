@@ -26,9 +26,17 @@ func determine_directional_area_indexes(start: int, dir: int, map_tiles: Tiles) 
 		var right_coord: Vector3 = HexUtil.cube_at_distance(start_coord, s, right_dir)
 		if s > 0:
 			if map_tiles.is_valid_cube(left_coord):
-				tile_ids.append(left_coord)
+				var tile_id = HexUtil.cube_to_index(
+						left_coord,
+						map_tiles.get_x_count()
+				)
+				tile_ids.append(tile_id)
 			if map_tiles.is_valid_cube(right_coord):
-				tile_ids.append(right_coord)
+				var tile_id = HexUtil.cube_to_index(
+						right_coord,
+						map_tiles.get_x_count()
+				)
+				tile_ids.append(tile_id)
 		# Add additional tiles to fully fill in the "column" shape. Without the
 		# extra tiles, the shape is a chevron.
 		for d in range(distance + spread - s):
@@ -36,13 +44,25 @@ func determine_directional_area_indexes(start: int, dir: int, map_tiles: Tiles) 
 			if s == 0:
 				var ray_coord: Vector3 = HexUtil.cube_at_distance(start_coord, d, dir)
 				if map_tiles.is_valid_cube(ray_coord):
-					tile_ids.append(ray_coord)
+					var tile_id = HexUtil.cube_to_index(
+						ray_coord,
+						map_tiles.get_x_count()
+					)
+					tile_ids.append(tile_id)
 			# Cast rays from both left and right points.
 			else:
 				var ray_coord_l: Vector3 = HexUtil.cube_at_distance(left_coord, d, dir)
 				var ray_coord_r: Vector3 = HexUtil.cube_at_distance(right_coord, d, dir)
 				if map_tiles.is_valid_cube(ray_coord_l):
-					tile_ids.append(ray_coord_l)
+					var tile_id = HexUtil.cube_to_index(
+						ray_coord_l,
+						map_tiles.get_x_count()
+					)
+					tile_ids.append(tile_id)
 				if map_tiles.is_valid_cube(ray_coord_r):
-					tile_ids.append(ray_coord_r)
+					var tile_id = HexUtil.cube_to_index(
+						ray_coord_r,
+						map_tiles.get_x_count()
+					)
+					tile_ids.append(tile_id)
 	return tile_ids

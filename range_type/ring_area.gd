@@ -24,5 +24,16 @@ func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
 		for y in range(x_lower, x_upper + 1):
 			var coord: Vector3 = Vector3(x, y, -x - y) + start_coord
 			if map_tiles.is_valid_cube(coord):
-				tile_ids.append(coord)
+				var tile_id = HexUtil.cube_to_index(coord, map_tiles.get_x_count())
+				tile_ids.append(tile_id)
 	return tile_ids
+
+
+# Base function for area ranges that define an area emitted in a direction from
+# starting point.
+func determine_directional_area_indexes(
+	start: int,
+	_dir: int,
+	map_tiles: Tiles
+) -> Array:
+	return determine_area_indexes(start, map_tiles)

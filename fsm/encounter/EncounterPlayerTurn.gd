@@ -121,15 +121,15 @@ func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 
 # Updates the tile selectors to show the effect range of an action
 func _on_Selector_effect_area_required(action: Action) -> void:
-	enc.hex_map.clear_selector_highlights()
-	var effect_area_indexes: Array = enc.hex_map.determine_area_indexes(
-		action.stat_details.effect_range,
-		action.get_emission_map_index(),
-		action.get_emission_direction()
+	enc.hex_map.selection_tracker.clear_selector_highlights()
+	var effect_area_indexes: Array = enc.hex_map.range_finder.determine_effect_range_indexes(
+			action.effect_range,
+			action.get_emission_map_index(),
+			action.get_emission_direction()
 	)
-	enc.hex_map.highlight_effect_area(
+	enc.hex_map.selection_tracker.highlight_effect_area(
 			effect_area_indexes,
-			action.stat_details.effect_ignore_heights
+			action.effect_ignore_heights
 	)
 
 
@@ -150,25 +150,26 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 		state_machine.transition_to(ENEMY_TURN)
 
 
-# Updates the tile highlights to show the area range of the action.
+# Updates the tile highlights to show the source range of the action.
 func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
-	"""
-	TODO: Change the function call to something that is present.
-	"""
-	var area_indexes: Array = enc.hex_map.range_finder.determine_area_indexes(
-		action.stat_details.area_range,
-		action.get_emission_map_index()
+	var source_indexes: Array = enc.hex_map.range_finder.determine_source_range_indexes(
+			action.source_range,
+			action.dead_range,
+			action.get_emission_map_index()
 	)
-	enc.hex_map.clear_highlights()
-	enc.hex_map.highlight_player_action_area(area_indexes, _active_char)
+	enc.hex_map.selection_tracker.clear_highlights()
+	enc.hex_map.selection_tracker.highlight_action_source_area(
+			source_indexes,
+			_active_char
+	)
 
 
 # Called when the user backs out from an action type menu. Resets the tile highlights
 # to indicate player movement.
 func _on_SignalBus_player_action_type_canceled() -> void:
-	enc.hex_map.clear_highlights()
-	enc.hex_map.clear_selector_highlights()
-	enc.hex_map.highlight_player_movement(
+	enc.hex_map.selection_tracker.clear_highlights()
+	enc.hex_map.selection_tracker.clear_selector_highlights()
+	enc.hex_map.selection_tracker.highlight_player_movement(
 			_movement_area,
 			_active_char,
 			_start_index

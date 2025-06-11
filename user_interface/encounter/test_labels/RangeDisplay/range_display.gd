@@ -23,6 +23,7 @@ func update_range_display(action: Action) -> void:
 
 
 func _draw() -> void:
+	# Determine the configuration of tiles for the source range minus dead range.
 	_draw_range()
 
 
@@ -36,7 +37,7 @@ func _draw_range() -> void:
 				else Constants.DISPLAY_HEX_RADIUS * 3
 		)
 		_draw_filled_hex(Color.gray, center)
-		for col in 10:
+		for col in 9:
 			center.x += Constants.DISPLAY_HEX_RADIUS * 2 + 0.5
 			_draw_filled_hex(Color.gray, center)
 
@@ -60,3 +61,9 @@ func _get_points_for_hex(center: Vector2) -> PoolVector2Array:
 	for i in 7:
 		hex_vertices.append(top_vertex.rotated(i * PI / 3) + center)
 	return hex_vertices
+
+
+# Sets the minimum size for the display panel so that the drawn elements are
+# always within its bounds. 
+func _set_min_size() -> void:
+	pass

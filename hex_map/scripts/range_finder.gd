@@ -150,6 +150,44 @@ func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Arra
 	return t_tiles
 
 
+# Determines the tile indexes that describe a source range, excluding any defined
+# dead range.
+func determine_source_range_indexes(
+	source_range: AreaRange,
+	dead_range: AreaRange,
+	emission_map_index: int
+) -> Array:
+	var source_indexes: Array = source_range.determine_area_indexes(
+			emission_map_index,
+			_map_tiles
+	)
+	var dead_indexes: Array = (
+			dead_range.determine_area_indexes(emission_map_index, _map_tiles) 
+			if dead_range != null
+			else []
+	)
+	if dead_indexes.size() == 0:
+		return source_indexes
+	var final_indexes: Array = []
+	for index in source_indexes:
+		if not dead_indexes.has(index):
+			final_indexes.append(index)
+	return final_indexes
+
+
+# Determines the tile indexes that describe the given effect range.
+func determine_effect_range_indexes(
+	effect_range: AreaRange,
+	emission_map_index: int,
+	emission_direction: int
+) -> Array:
+	return effect_range.determine_directional_area_indexes(
+			emission_map_index,
+			emission_direction,
+			_map_tiles
+	)
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_map_tiles = get_node(map_tiles_reference)

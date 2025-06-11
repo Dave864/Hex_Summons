@@ -111,8 +111,8 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		selector.tile_hovered = map_tile
 		
 		action.set_emission_map_index(
-				player_map_index if action.stat_details.emit_from_center 
-				else map_tile.get_map_index()
+				player_map_index if action.emit_from_center 
+				else map_tile.map_coordinate.get_map_index()
 		)
 		if action.get_is_cardinal():
 			var player_pt: Vector2 = Vector2(player_pos.x, player_pos.z)

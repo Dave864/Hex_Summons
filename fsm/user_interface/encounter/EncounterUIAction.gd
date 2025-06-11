@@ -17,7 +17,10 @@ func enter(_msg := {}) -> void:
 	option_flag = _msg["option_flag"]
 	encounter_ui.set_current_selection(option_flag)
 	encounter_ui.grab_focus_for_sub_option_at_index(0)
-	SignalBus.emit_player_action_selected(encounter_ui.get_sub_option_at_index(0))
+	SignalBus.emit_player_action_selected(
+			encounter_ui.get_focused_player(),
+			encounter_ui.get_sub_option_at_index(0)
+	)
 	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
@@ -126,5 +129,8 @@ func _on_EndButton_button_pressed() -> void:
 # Signal that an action option has been selected from the currently
 # displayed options.
 func _on_SubOptions_action_selected(action_info: Action) -> void:
-	SignalBus.emit_player_action_selected(action_info)
+	SignalBus.emit_player_action_selected(
+			encounter_ui.get_focused_player(),
+			action_info
+	)
 #	state_machine.transition_to(SUB_ACTION)

@@ -123,24 +123,24 @@ func _set_and_check_ranges() -> void:
 	effect_range = get_node_or_null(EFFECT_RANGE)
 	assert(
 			source_range != null,
-			"Error: Action %s missing SourceArea node." % [name]
+			"Error: Action {s} missing SourceArea node.".format([name])
 	)
 	assert(
 			source_range is CardinalArea or source_range is RingArea,
-			"Error: Action %s SourceRange is neither a CardinalArea " \
-			+ "or RingArea." % [name]
+			"Error: Action {s} SourceRange is neither a CardinalArea " \
+			+ "or RingArea.".format([name])
 	)
 	if dead_range != null:
 		assert(
 				dead_range is CardinalArea or dead_range is RingArea,
-				"Error: Action %s DeadRange is neither a CardinalArea " \
-				+ "or RingArea." % [name]
+				"Error: Action {s} DeadRange is neither a CardinalArea " \
+				+ "or RingArea.".format([name])
 		)
 	assert(
 			effect_range != null,
-			"Error: Action %s missing EffectRange node." % [name]
+			"Error: Action {s} missing EffectRange node.".format([name])
 	)
 	assert(
 			effect_range is AreaRange,
-			"Error: Action %s EffectRange is not an AreaRange." % [name]
+			"Error: Action {s} EffectRange is not an AreaRange.".format([name])
 	)
