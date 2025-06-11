@@ -9,19 +9,19 @@ turn has been terminated.
 """
 
 
-var mouse_active: bool = false
+var _mouse_active: bool = false
 # The action to display the effect area for.
-var action: Action = null
+var _action: Action = null
 # The location of the player that is using the action.
-var player_pos: Vector3 = Vector3.ZERO
+var _player_pos: Vector3 = Vector3.ZERO
 # The tile index of the player that is using the action.
-var player_map_index: int = -1
+var _player_map_index: int = -1
 
 
 func enter(_msg: Dictionary = {}) -> void:
-	action = _msg["action"]
-	player_pos = _msg["player_pos"]
-	player_map_index = _msg["player_map_index"]
+	_action = _msg["action"]
+	_player_pos = _msg["player_pos"]
+	_player_map_index = _msg["player_map_index"]
 	
 	ErrorUtil.connect_signal(
 			selector.collision_area,
@@ -48,12 +48,12 @@ func enter(_msg: Dictionary = {}) -> void:
 			"_on_SignalBus_player_turn_ended"
 	)
 	
-	action.set_emission_map_index(player_map_index)
-	selector.emit_effect_area_required(action)
+	_action.set_emission_map_index(_player_map_index)
+	selector.emit_effect_area_required(_action)
 
 
 func update(_delta: float) -> void:
-	if mouse_active:
+	if _mouse_active:
 		selector.move_to_mouse_position()
 
 
@@ -84,8 +84,8 @@ func exit() -> void:
 
 # Handles input events
 func handle_input(_event: InputEvent) -> void:
-	mouse_active = _event is InputEventMouse
-	if not mouse_active:
+	_mouse_active = _event is InputEventMouse
+	if not _mouse_active:
 		_resolve_joystick_direction(HexUtil.joystick_to_hex_direction(selector.top_vertex))
 
 
@@ -110,16 +110,16 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 	):
 		selector.tile_hovered = map_tile
 		
-		action.set_emission_map_index(
-				player_map_index if action.emit_from_center 
+		_action.set_emission_map_index(
+				_player_map_index if _action.emit_from_center 
 				else map_tile.map_coordinate.get_map_index()
 		)
-		if action.get_is_cardinal():
-			var player_pt: Vector2 = Vector2(player_pos.x, player_pos.z)
+		if _action.get_is_cardinal():
+			var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
 			var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
 			var dir: Vector2 = (tile_pt - player_pt).normalized()
-			action.set_emission_direction(HexUtil.get_hex_direction(dir))
-		selector.emit_effect_area_required(action)
+			_action.set_emission_direction(HexUtil.get_hex_direction(dir))
+		selector.emit_effect_area_required(_action)
 
 
 # Go to the "SelectAction" state with the new action.
@@ -145,7 +145,7 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 		return
 	state_machine.transition_to(
 			SELECT_MOVE,
-			{"initial_position": player_pos}
+			{"initial_position": _player_pos}
 	)
 
 

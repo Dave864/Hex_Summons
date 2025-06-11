@@ -11,7 +11,7 @@ CollisionShapes described by a ConvexPolygonShape.
 func _update_collision_shape_height(height: int) -> void:
 	var points: PoolVector3Array = shape.get_points()
 	for i in range(6):
-		var h: float = 0.25 + (Constants.HEX_TILE_UNIT_HEIGHT * height)
+		var h: float = Constants.HEX_TILE_UNIT_HEIGHT * height
 		points[i] = Vector3(points[i].x, h, points[i].z)
 	shape.set_points(points)
 
