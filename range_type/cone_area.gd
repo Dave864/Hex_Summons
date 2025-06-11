@@ -11,6 +11,12 @@ export (int, 0, 5) var spread = 0
 export (int, 1, 100) var distance = 1
 
 
+# Returns the reach of the ConeArea. Used when determining which tiles are
+# affected by tile heights.
+func get_reach() -> int:
+	return distance
+
+
 # Determines which map tiles are in the cone area position at the start index,
 # oriented to face the specified direction (0 - 5). Does not account for tile
 # heights.

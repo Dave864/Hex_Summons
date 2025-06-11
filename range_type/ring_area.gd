@@ -9,6 +9,12 @@ Describes a range whose area encompasses all hexes within a defined distance.
 export(int, 0, 1000) var radius = 0
 
 
+# Returns the reach of the RingArea. Used when determining which tiles are
+# affected by tile heights.
+func get_reach() -> int:
+	return radius
+
+
 # Determines which map tiles are in the ring area positioned at the start index.
 # Does not account for tile heights.
 # Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate

@@ -14,19 +14,25 @@ var _z_count: int
 # Get the area that can be reached in a specific map section starting from a
 # given point in said section. This takes into account the tile heights.
 # Will return an empty array if the start tile is not in the map section.
-func get_traversable_ids(start_tile: int, reach: int, map_section: Array) -> Array:
+func get_traversable_ids(start_index: int, reach: int, map_section: Array) -> Array:
 	var ids_in_range: Array = []
 	disconnect_area(map_section)
 	for tiles in map_section:
 		var tile_index: int = tiles.get_index()
-		var path: PoolIntArray = get_id_path(start_tile, tile_index)
-		var total_distance: float = 0.0
-		for i in range(1, path.size()):
-			total_distance += _compute_cost(path[i - 1], path[i])
+		var total_distance: float = distance(start_index, tile_index)
 		if total_distance <= reach:
 			ids_in_range.append(tile_index)
 	reconnect_area(map_section)
 	return ids_in_range
+
+
+# Determines the travel distance from the start to the end.
+func distance(start_index: int, end_index: int) -> float:
+	var path: PoolIntArray = get_id_path(start_index, end_index)
+	var dist: float = 0.0
+	for i in range(1, path.size()):
+		dist += _compute_cost(path[i - 1], path[i])
+	return dist
 
 
 # Updates the astar disabled flag for the tiles occupied by the specified characters.

@@ -9,6 +9,12 @@ Describes an area whose area is constrained by the six directions of a hexagon.
 export(int, 1, 1000) var distance = 1
 
 
+# Returns the reach of the CardinalArea. Used when determining which tiles are
+# affected by tile heights.
+func get_reach() -> int:
+	return distance
+
+
 # Determines which map tiles are in the cardinal area positioned at the start index.
 # Does not account for tile heights.
 func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:

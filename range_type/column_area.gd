@@ -12,6 +12,12 @@ export (int, 0, 100) var spread = 0
 export (int, 1, 100) var distance = 1
 
 
+# Returns the reach of the ColumnArea. Used when determining which tiles are
+# affected by tile heights.
+func get_reach() -> int:
+	return distance + spread
+
+
 # Determines which map tiles are in the column area positioned at the start index,
 # oriented to face the specified direction (0 - 5). Does not account for tile
 # heights.
@@ -19,7 +25,10 @@ func determine_directional_area_indexes(start: int, dir: int, map_tiles: Tiles) 
 	var left_dir: int = dir - 1 if dir > 0 else 5
 	var right_dir: int = dir + 1 if dir < 5 else 0
 	var tile_ids: Array = []
-	var start_coord: Vector3 = map_tiles.get_tile_at_index(start).map_coordinate.get_cube_coord()
+	var start_coord: Vector3 = (
+			map_tiles.get_tile_at_index(start) \
+			.map_coordinate.get_cube_coord()
+	)
 	tile_ids.append(start)
 	for s in range(spread + 1):
 		var left_coord: Vector3 = HexUtil.cube_at_distance(start_coord, s, left_dir)
@@ -39,7 +48,7 @@ func determine_directional_area_indexes(start: int, dir: int, map_tiles: Tiles) 
 				tile_ids.append(tile_id)
 		# Add additional tiles to fully fill in the "column" shape. Without the
 		# extra tiles, the shape is a chevron.
-		for d in range(distance + spread - s):
+		for d in range(distance + spread - s + 1):
 			# Only cast ray from starting point when spread is at 0.
 			if s == 0:
 				var ray_coord: Vector3 = HexUtil.cube_at_distance(start_coord, d, dir)

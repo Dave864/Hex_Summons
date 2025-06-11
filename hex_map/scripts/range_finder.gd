@@ -13,8 +13,8 @@ var _hm_astar: HexMapAStar = null
 
 
 # Calculates the distance from a given start to a specified destination.
-func calculate_distance(start_id: int, dest_id: int) -> int:
-	return _hm_astar.get_id_path(start_id, dest_id).size()
+func calculate_distance(start_id: int, dest_id: int) -> float:
+	return _hm_astar.distance(start_id, dest_id)
 
 
 # Determines the path to the point within a defined area for a player character.
@@ -54,7 +54,7 @@ func get_point_path_toward(
 	var movement_area_tiles: Array = _map_tiles.get_tiles_from_ids(movement_area_ids)
 	_hm_astar.disconnect_area(movement_area_tiles)
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(start_id, true_dest_id)
-	_hm_astar.full_reset(movement_area_tiles)
+	_hm_astar.reconnect_area(movement_area_tiles)
 	
 	return point_path
 
@@ -146,7 +146,6 @@ func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Arra
 		c.stats.get_movement_range(),
 		_map_tiles.get_tiles_from_ids(c_move_indexes)
 	)
-	update_astar_disabled_for_characters(opponents, false)
 	return t_tiles
 
 
@@ -169,7 +168,11 @@ func determine_source_range_indexes(
 	)
 
 	if not ignore_heights:
-		pass
+		source_indexes = _get_traversible_indexes(
+				source_indexes,
+				emission_map_index,
+				source_range.get_reach()
+		)
 
 	if dead_indexes.size() == 0:
 		return source_indexes
@@ -194,9 +197,13 @@ func determine_effect_range_indexes(
 	)
 	
 	if not ignore_heights:
-		pass
-
-	return effect_indexes
+		return _get_traversible_indexes(
+				effect_indexes,
+				emission_map_index,
+				effect_range.get_reach()
+		)
+	else:
+		return effect_indexes
 
 
 # Called when the node enters the scene tree for the first time.
@@ -227,3 +234,13 @@ func _determine_ring_area_indexes(radius: int, start: int) -> Array:
 				var tile_id = HexUtil.cube_to_index(coord, _map_tiles.get_x_count())
 				tile_ids.append(tile_id)
 	return tile_ids
+
+
+# Determines which tiles are reachable in a specified map section.
+func _get_traversible_indexes(
+	section_indexes: Array,
+	start_index: int,
+	travel_range: int
+) -> Array:
+	var section_tiles: Array = _map_tiles.get_tiles_from_ids(section_indexes)
+	return _hm_astar.get_traversable_ids(start_index, travel_range, section_tiles)
