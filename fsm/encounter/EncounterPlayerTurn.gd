@@ -125,11 +125,13 @@ func _on_Selector_effect_area_required(action: Action) -> void:
 	var effect_area_indexes: Array = enc.hex_map.range_finder.determine_effect_range_indexes(
 			action.effect_range,
 			action.get_emission_map_index(),
-			action.get_emission_direction()
-	)
-	enc.hex_map.selection_tracker.highlight_effect_area(
-			effect_area_indexes,
+			action.get_emission_direction(),
 			action.effect_ignore_heights
+	)
+	enc.hex_map.selection_tracker.select_effect_range(
+			effect_area_indexes,
+			_active_char.get_map_index_at(),
+			action.effect_ignores_caster
 	)
 
 
@@ -155,7 +157,8 @@ func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -
 	var source_indexes: Array = enc.hex_map.range_finder.determine_source_range_indexes(
 			action.source_range,
 			action.dead_range,
-			action.get_emission_map_index()
+			action.get_emission_map_index(),
+			action.source_ignore_heights
 	)
 	enc.hex_map.selection_tracker.clear_highlights()
 	enc.hex_map.selection_tracker.highlight_action_source_area(

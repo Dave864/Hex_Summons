@@ -7,10 +7,8 @@ to the map tiles and Pathfinder.
 
 
 export(NodePath) var map_tiles_reference = null
-export(NodePath) var range_finder_reference = null
 
 var _map_tiles: Tiles = null
-var _range_finder: RangeFinder = null
 var _highlighted_map_indexes: Array = []
 var _selectable_map_indexes: Array = []
 
@@ -50,14 +48,6 @@ func highlight_player_movement(
 
 # Highlight the specified tiles as being within the source range of an action.
 func highlight_action_source_area(tile_indexes: Array, pc: PlayerCharacter) -> void:
-#	var map_section: Array = _map_tiles.get_tiles_from_ids(tile_indexes)
-	
-#	var source_range_indices: Array = _range_finder.get_traversable_tiles(
-#		pc.get_map_index_at(),
-#		pc.stats.get_movement_range(),
-#		map_section
-#	)
-	
 	for index in tile_indexes:
 		var tile: MapTile = _map_tiles.get_tile_at_index(index)
 		if index == pc.get_map_index_at():
@@ -76,12 +66,12 @@ func highlight_action_source_area(tile_indexes: Array, pc: PlayerCharacter) -> v
 
 # Highlight the selector for the specified tiles to represent the effect area
 # of an action.
-func highlight_effect_area(tile_indexes: Array, ignore_heights: bool) -> void:
+func select_effect_range(
+		tile_indexes: Array,
+		caster_index: int,
+		ignore_caster: bool
+) -> void:
 	var map_section: Array = _map_tiles.get_tiles_from_ids(tile_indexes)
-	
-	if !ignore_heights:
-		pass
-	
 	for tile in map_section:
 		var occupant: Character = tile.occupant.get_current_occupant()
 		if occupant == null:
@@ -89,6 +79,9 @@ func highlight_effect_area(tile_indexes: Array, ignore_heights: bool) -> void:
 			_selectable_map_indexes.append(tile.map_coordinate.get_map_index())
 		elif occupant.get_type() == Constants.MapOccupants.ENEMY:
 			tile.set_selector_type(HexHighlighter.Option.TARGET)
+			_selectable_map_indexes.append(tile.map_coordinate.get_map_index())
+		elif tile.map_coordinate.get_map_index() == caster_index and ignore_caster:
+			tile.set_selector_type(HexHighlighter.Option.NONE)
 			_selectable_map_indexes.append(tile.map_coordinate.get_map_index())
 		else:
 			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)
@@ -112,4 +105,3 @@ func clear_selector_highlights() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_map_tiles = get_node(map_tiles_reference)
-	_range_finder = get_node(range_finder_reference)

@@ -155,7 +155,8 @@ func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Arra
 func determine_source_range_indexes(
 	source_range: AreaRange,
 	dead_range: AreaRange,
-	emission_map_index: int
+	emission_map_index: int,
+	ignore_heights: bool
 ) -> Array:
 	var source_indexes: Array = source_range.determine_area_indexes(
 			emission_map_index,
@@ -166,6 +167,10 @@ func determine_source_range_indexes(
 			if dead_range != null
 			else []
 	)
+
+	if not ignore_heights:
+		pass
+
 	if dead_indexes.size() == 0:
 		return source_indexes
 	var final_indexes: Array = []
@@ -179,13 +184,19 @@ func determine_source_range_indexes(
 func determine_effect_range_indexes(
 	effect_range: AreaRange,
 	emission_map_index: int,
-	emission_direction: int
+	emission_direction: int,
+	ignore_heights: bool
 ) -> Array:
-	return effect_range.determine_directional_area_indexes(
+	var effect_indexes: Array = effect_range.determine_directional_area_indexes(
 			emission_map_index,
 			emission_direction,
 			_map_tiles
 	)
+	
+	if not ignore_heights:
+		pass
+
+	return effect_indexes
 
 
 # Called when the node enters the scene tree for the first time.
