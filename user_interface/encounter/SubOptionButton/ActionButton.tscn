@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://user_interface/encounter/SubOptionButton/action_button.gd" type="Script" id=1]
-[ext_resource path="res://user_interface/encounter/test_labels/RangeDisplay/range_display.gd" type="Script" id=2]
 
 [node name="ActionButton" type="MarginContainer"]
 anchor_right = 1.0
@@ -19,17 +18,11 @@ margin_bottom = 57.0
 alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer"]
-margin_left = 496.0
+margin_left = 498.0
 margin_top = 21.0
-margin_right = 523.0
+margin_right = 525.0
 margin_bottom = 35.0
 size_flags_horizontal = 6
 text = "Test"
-
-[node name="RangeDisplay" type="Panel" parent="HBoxContainer"]
-margin_left = 1024.0
-margin_right = 1024.0
-margin_bottom = 57.0
-script = ExtResource( 2 )
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
