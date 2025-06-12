@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://actions/action.gd"
 }, {
+"base": "SubOptionButton",
+"class": "ActionButton",
+"language": "GDScript",
+"path": "res://user_interface/encounter/SubOptionButton/action_button.gd"
+}, {
 "base": "PanelContainer",
 "class": "ActivePlayerStats",
 "language": "GDScript",
@@ -294,15 +299,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://effects/scripts/strength_calculation.gd"
 }, {
+"base": "MarginContainer",
+"class": "SubOptionButton",
+"language": "GDScript",
+"path": "res://user_interface/encounter/SubOptionButton/sub_option_button.gd"
+}, {
 "base": "ScrollContainer",
 "class": "SubOptions",
 "language": "GDScript",
 "path": "res://user_interface/encounter/sub_options.gd"
-}, {
-"base": "MarginContainer",
-"class": "SubOptionsButton",
-"language": "GDScript",
-"path": "res://user_interface/encounter/SubOptionsButton/sub_options_button.gd"
 }, {
 "base": "Spatial",
 "class": "Tiles",
@@ -311,6 +316,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Action": "",
+"ActionButton": "",
 "ActivePlayerStats": "",
 "AreaRange": "",
 "ArraySorters": "",
@@ -367,8 +373,8 @@ _global_script_class_icons={
 "State": "",
 "StateMachine": "",
 "StrengthCalculation": "",
+"SubOptionButton": "",
 "SubOptions": "",
-"SubOptionsButton": "",
 "Tiles": ""
 }
 

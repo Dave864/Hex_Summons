@@ -1,5 +1,5 @@
 extends MarginContainer
-class_name SubOptionsButton
+class_name SubOptionButton
 """
 Button that describes a possible sub-option for a given option.
 """
@@ -10,11 +10,6 @@ signal action_selected(action_info)
 
 var _action_details: Action = null setget set_action_details, get_action_details
 var _player: PlayerCharacter = null setget set_player
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
 
 
 # Set the action details for the button.
@@ -35,7 +30,7 @@ func set_player(p: PlayerCharacter) -> void:
 
 
 # Sets the right focus neighbor for controller support.
-func set_focus_neighbor_right(neighbor: SubOptionsButton) -> void:
+func set_focus_neighbor_right(neighbor: SubOptionButton) -> void:
 	$Button.set_focus_neighbour(MARGIN_RIGHT, neighbor.get_button().get_path())
 	# Prevents the action buttons from being reached whil sub options are open.
 	$Button.set_focus_neighbour(MARGIN_BOTTOM, "")
@@ -45,6 +40,11 @@ func set_focus_neighbor_right(neighbor: SubOptionsButton) -> void:
 # Returns the "Button" node.
 func get_button() -> Node:
 	return $Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_check_for_required_parameters()
 
 
 # Emit a signal indicating that the button was pressed.
@@ -57,5 +57,5 @@ func _check_for_required_parameters() -> void:
 	var button_node: Button = get_node_or_null("Button")
 	assert(
 			button_node != null,
-			"SubOptions node does not have a Button node."
+			"SubOptionButton node does not have a Button node."
 	)

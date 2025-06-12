@@ -29,9 +29,13 @@ func _draw() -> void:
 
 # Draws the array of hexagons that display the range of the action.
 func _draw_range() -> void:
+	_set_min_size(10, 10)
 	var center: Vector2 = Vector2.ZERO
 	for row in range(1, 11):
-		center.y = (Constants.DISPLAY_HEX_RADIUS * 2 + 0.5) * row
+		center.y = (
+				(Constants.DISPLAY_HEX_RADIUS * 2 + 0.5) * row \
+				+ (rect_size.y / 2 - 12 * Constants.DISPLAY_HEX_RADIUS)
+		)
 		center.x = (
 				Constants.DISPLAY_HEX_RADIUS * 2 if row % 2 != 0
 				else Constants.DISPLAY_HEX_RADIUS * 3
@@ -65,5 +69,7 @@ func _get_points_for_hex(center: Vector2) -> PoolVector2Array:
 
 # Sets the minimum size for the display panel so that the drawn elements are
 # always within its bounds. 
-func _set_min_size() -> void:
-	pass
+func _set_min_size(row_count: int, col_count: int) -> void:
+	var x_size: float = (Constants.DISPLAY_HEX_RADIUS + 0.5) * 2 * (col_count + 0.5)
+	var y_size: float = (Constants.DISPLAY_HEX_RADIUS + 0.5) * 2 * row_count
+	set_custom_minimum_size(Vector2(x_size, y_size))

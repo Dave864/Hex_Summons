@@ -14,7 +14,7 @@ const ACTION: String = "Action"
 const SUB_ACTION: String = "SubAction"
 
 # Typed reference to the EncounterUI node.
-var encounter_ui: EncounterUI
+var encounter_ui: 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
