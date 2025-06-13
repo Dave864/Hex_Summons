@@ -52,12 +52,12 @@ func update_range_display(action: Action) -> void:
 	_dead_range = action.dead_range
 	_effect_range = action.effect_range
 	_emit_from_center = action.emit_from_center
-	update()
+#	update()
 
 
 func _ready() -> void:
-#	_action = get_node(action_ref)
-#	update_range_display(_action)
+	_action = get_node(action_ref)
+	update_range_display(_action)
 	for row in row_count:
 		var row_array: Array = []
 		for col in col_count:
@@ -68,8 +68,9 @@ func _ready() -> void:
 			}
 			row_array.append(hex_details)
 		_hex_matrix.append(row_array)
-	_hex_matrix[_mid_row][1][OUTLINE] = DetailMarker.EMPTY
+	_hex_matrix[_mid_row][1][OUTLINE] = DetailMarker.CASTER
 	_hex_matrix[_mid_row][1][FILL] = DetailMarker.CASTER
+	_determine_source_hexes()
 
 
 func _draw() -> void:

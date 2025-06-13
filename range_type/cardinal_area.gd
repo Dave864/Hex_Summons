@@ -43,7 +43,7 @@ func populate_range_display_matrix(range_type: int, hex_matrix: Array) -> void:
 			var hm_index: Vector2 = neighbor_indexes[i]
 			# Only updates if index is not empty.
 			if hm_index.x >= 0 and hm_index.y >= 0:
-				var matrix_cell: Dictionary = hex_matrix[hm_index.x][hm_index.y]
-#				matrix_cell["Outline"] = range_type
+				var matrix_cell: Dictionary = hex_matrix[hm_index.y][hm_index.x]
+				matrix_cell["Outline"] = range_type
 				matrix_cell["Fill"] = range_type
 				neighbor_indexes[i] = matrix_cell["Index"].get_neighbor(i)
