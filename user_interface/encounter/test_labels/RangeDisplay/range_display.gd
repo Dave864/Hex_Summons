@@ -11,7 +11,7 @@ const INDEX: String = "Index"
 const OUTLINE: String = "Outline"
 const FILL: String = "Fill"
 
-enum Detail {
+enum DetailMarker {
 	EMPTY,
 	CASTER,
 	SOURCE_RANGE,
@@ -62,33 +62,22 @@ func _ready() -> void:
 		for col in col_count:
 			var hex_details: Dictionary = {
 				INDEX: HexNodeRef.new(Vector2(col, row), row_count, col_count),
-				OUTLINE: Detail.EMPTY,
-				FILL: Detail.EMPTY
+				OUTLINE: DetailMarker.EMPTY,
+				FILL: DetailMarker.EMPTY
 			}
 			row_array.append(hex_details)
 		_hex_matrix.append(row_array)
-	_hex_matrix[_mid_row][1][OUTLINE] = Detail.CASTER
-	_hex_matrix[_mid_row][1][FILL] = Detail.CASTER
+	_hex_matrix[_mid_row][1][OUTLINE] = DetailMarker.CASTER
+	_hex_matrix[_mid_row][1][FILL] = DetailMarker.CASTER
 
 
 func _draw() -> void:
 	# Determine the configuration of tiles for the source range minus dead range.
-#	_draw_range()
-	pass
+	_draw_range()
 
 
 func _determine_source_hexes() -> void:
-	if _source_range is CardinalArea:
-		pass
-	else:
-		pass
-	
-	if _dead_range == null:
-		pass
-	elif _dead_range is CardinalArea:
-		pass
-	else:
-		pass
+	_source_range.populate_range_display_matrix(DetailMarker.SOURCE_RANGE, _hex_matrix)
 
 
 func _determine_effect_hexes() -> void:
@@ -106,19 +95,43 @@ func _determine_effect_hexes() -> void:
 func _draw_range() -> void:
 	_set_min_size()
 	var center: Vector2 = Vector2.ZERO
-	for row in range(1, row_count + 1):
-		center.y = _hex_radius * 2 * row
-		center.x = _hex_radius * 2 if row % 2 != 0 else _hex_radius * 3
-		_draw_filled_hex(Color.gray, center)
-		for col in col_count - 1:
+	for row in row_count:
+		center.y = _hex_radius * 2 * (row + 1)
+		center.x = _hex_radius * 2 if row % 2 == 0 else _hex_radius * 3
+		_draw_hex(row, 0, center)
+		for col in col_count:
 			center.x += _hex_radius * 2 + 0.5
-			_draw_filled_hex(Color.gray, center)
+			_draw_hex(row, col, center)
+
+
+# Draw the hex centered at the coordinate using the details of the hex_matrix.
+func _draw_hex(row: int, col: int, coord: Vector2) -> void:
+	var matrix_cell: Dictionary = _hex_matrix[row][col]
+#	_draw_filled_hex(_determine_color(matrix_cell[FILL]), coord)
+	_draw_hex_outline(_determine_color(matrix_cell[OUTLINE]), coord)
+
+
+# Determines the color to use based on the detail marker.
+func _determine_color(detail_marker: int) -> Color:
+	var c: Color
+	match detail_marker:
+		DetailMarker.CASTER:
+			c = Color.aqua
+		DetailMarker.SOURCE_RANGE:
+			c = Color.blue
+		DetailMarker.EFFECT_RANGE:
+			c = Color.orange
+		DetailMarker.EFFECT_SOURCE:
+			c = Color.yellow
+		_:
+			c = Color.gray
+	return c
 
 
 # Draw a colored outline of a hexagon.
 func _draw_hex_outline(color: Color, center: Vector2) -> void:
 	var hex_vertices: PoolVector2Array = _get_points_for_hex(center)
-	draw_polyline(hex_vertices, color, _hex_radius / 2)
+	draw_polyline(hex_vertices, color, _hex_radius / 5)
 
 
 # Draws a filled colored hexagon.
