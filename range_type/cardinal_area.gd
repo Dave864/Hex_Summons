@@ -33,11 +33,17 @@ func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
 	return tile_ids
 
 
-# Base function for area ranges that define an area emitted in a direction from
-# starting point.
-func determine_directional_area_indexes(
-	start: int,
-	_dir: int,
-	map_tiles: Tiles
-) -> Array:
-	return determine_area_indexes(start, map_tiles)
+# Modifies a RangeDisplay hex matrix so that it reflects the details of this CardinalArea.
+func populate_range_display_matrix(range_type: int, hex_matrix: Array) -> void:
+	var mid_row: int = int(round(hex_matrix.size() / 2.0)) - 1
+	var caster_point: HexNodeRef = hex_matrix[mid_row][1]["Index"]
+	var neighbor_indexes: Array = caster_point.get_neighbors()
+	for d in distance:
+		for i in 6:
+			var hm_index: Vector2 = neighbor_indexes[i]
+			# Only updates if index is not empty.
+			if hm_index.x >= 0 and hm_index.y >= 0:
+				var matrix_cell: Dictionary = hex_matrix[hm_index.x][hm_index.y]
+#				matrix_cell["Outline"] = range_type
+				matrix_cell["Fill"] = range_type
+				neighbor_indexes[i] = matrix_cell["Index"].get_neighbor(i)

@@ -75,3 +75,8 @@ func determine_directional_area_indexes(start: int, dir: int, map_tiles: Tiles) 
 					)
 					tile_ids.append(tile_id)
 	return tile_ids
+
+
+# Modifies a RangeDisplay hex matrix so that it reflects the details of this ColumnArea.
+func populate_range_display_matrix(_range_type: int, _hex_matrix: Array) -> void:
+	pass

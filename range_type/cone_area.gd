@@ -75,3 +75,8 @@ func _determine_ray_indexes(
 					map_tiles.get_x_count()
 			)
 			tile_ids.append(tile_id)
+
+
+# Modifies a RangeDisplay hex matrix so that it reflects the details of this ConeArea.
+func populate_range_display_matrix(_range_type: int, _hex_matrix: Array) -> void:
+	pass

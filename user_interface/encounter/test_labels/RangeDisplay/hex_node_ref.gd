@@ -29,6 +29,14 @@ func get_neighbors() -> Array:
 	return _neighbors
 
 
+func get_neighbor(n: int) -> Vector2:
+	assert(
+			n >= 0 and n < 6,
+			"Attempted to get invalid neighbor from HexNodeRef."
+	)
+	return _neighbors[n]
+
+
 func _init(new_index: Vector2, row_count: int, col_count: int) -> void:
 	index_pos = new_index
 	_set_neighbors(row_count, col_count)
