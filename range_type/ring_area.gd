@@ -35,6 +35,15 @@ func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
 	return tile_ids
 
 
+# Calls determine_area_indexes as RingAreas do not require a direction.
+func determine_directional_area_indexes(
+	start: int,
+	_dir: int,
+	map_tiles: Tiles
+) -> Array:
+	return determine_area_indexes(start, map_tiles)
+
+
 # Modifies a RangeDisplay hex matrix so that it reflects the details of this RingArea.
 # Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
 func populate_range_display_matrix(
