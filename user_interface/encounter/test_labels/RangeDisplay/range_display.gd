@@ -21,9 +21,10 @@ enum DetailMarker {
 
 export(NodePath) var action_ref
 export(int, 5, 15) var row_count = 9 setget set_row_count
-export(int, 5, 15) var col_count = 8
-export(float, 1.0, 5.0) var _hex_radius = 4.0
-export(float, 0.5, 3.0) var _outline_width: float = 1.0
+export(int, 5, 15) var col_count = 8 setget set_col_count
+export(float, 1.0, 10.0) var hex_radius = 4.0 setget set_hex_radius
+export(float, 0.5, 5.0) var outline_width = 1.0 setget set_outline_width
+export(float, 0.0, 3.0) var hex_spacing = 0.0 setget set_hex_spacing
 
 var _action: Action = null
 
@@ -44,6 +45,27 @@ func set_row_count(rc: int) -> void:
 			else rc
 	)
 	_mid_row = int(round(row_count / 2.0)) - 1
+	update()
+
+
+func set_col_count(cc: int) -> void:
+	col_count = cc
+	update()
+
+
+func set_hex_radius(r: float) -> void:
+	hex_radius = r
+	update()
+
+
+func set_outline_width(ow: float) -> void:
+	outline_width = ow
+	update()
+
+
+func set_hex_spacing(hs: float) -> void:
+	hex_spacing = hs
+	update()
 
 
 # Redraws the range display for the given action.
@@ -57,12 +79,11 @@ func update_range_display(action: Action) -> void:
 
 
 func _ready() -> void:
-	_action = get_node(action_ref)
+#	_action = get_node(action_ref)
 	_create_hex_matrix()
-	update_range_display(_action)
-	_determine_source_hexes()
-	_hex_matrix[_mid_row][1][OUTLINE] = DetailMarker.CASTER
-	_hex_matrix[_mid_row][1][FILL] = DetailMarker.CASTER
+#	update_range_display(_action)
+#	_determine_source_hexes()
+	_set_caster_hex()
 
 
 func _draw() -> void:
@@ -124,22 +145,22 @@ func _draw_range() -> void:
 	_set_min_size()
 	var center: Vector2 = Vector2.ZERO
 	for row in row_count:
-		center.y = _hex_radius * 1.5 * (row + 1)
+		center.y = hex_radius * 1.5 * (row + 1) + (row * hex_spacing)
 		center.x = (
-				_hex_radius * HexUtil.HEX_EDGE_RATIO * 2 if row % 2 == 0
-				else _hex_radius * HexUtil.HEX_EDGE_RATIO * 3
+				hex_radius * HexUtil.HEX_EDGE_RATIO * 2 if row % 2 == 0
+				else hex_radius * HexUtil.HEX_EDGE_RATIO * 3 + (hex_spacing / 2)
 		)
 		_draw_hex(row, 0, center)
 		for col in range(1, col_count):
-			center.x += _hex_radius * HexUtil.HEX_EDGE_RATIO * 2
+			center.x += hex_radius * HexUtil.HEX_EDGE_RATIO * 2 + hex_spacing
 			_draw_hex(row, col, center)
 
 
 # Draw the hex centered at the coordinate using the details of the hex_matrix.
 func _draw_hex(row: int, col: int, coord: Vector2) -> void:
 	var matrix_cell: Dictionary = _hex_matrix[row][col]
-	_draw_filled_hex(_determine_color(matrix_cell[FILL]), coord)
 	_draw_hex_outline(_determine_color(matrix_cell[OUTLINE]), coord)
+	_draw_hex_fill(_determine_color(matrix_cell[FILL]), coord)
 
 
 # Determines the color to use based on the detail marker.
@@ -161,21 +182,20 @@ func _determine_color(detail_marker: int) -> Color:
 
 # Draw a colored outline of a hexagon.
 func _draw_hex_outline(color: Color, center: Vector2) -> void:
-	var hex_vertices: PoolVector2Array = _get_points_for_hex(center, _outline_width / 2)
-	hex_vertices.append(hex_vertices[0])
-	draw_polyline(hex_vertices, color, _outline_width)
+	var hex_vertices: PoolVector2Array = _get_points_for_hex(center)
+	draw_colored_polygon(hex_vertices, color)
 
 
 # Draws a filled colored hexagon.
-func _draw_filled_hex(color: Color, center: Vector2) -> void:
-	var hex_vertices: PoolVector2Array = _get_points_for_hex(center, _outline_width)
+func _draw_hex_fill(color: Color, center: Vector2) -> void:
+	var hex_vertices: PoolVector2Array = _get_points_for_hex(center, outline_width)
 	draw_colored_polygon(hex_vertices, color)
 
 
 # Gets the points for a hexagon centered at a given point.
 func _get_points_for_hex(center: Vector2, outline_offset: float = 0.0) -> PoolVector2Array:
 	var hex_vertices: PoolVector2Array = []
-	var top_vertex: Vector2 = Vector2(0.0, _hex_radius - outline_offset)
+	var top_vertex: Vector2 = Vector2(0.0, hex_radius - outline_offset)
 	for i in 6:
 		hex_vertices.append(top_vertex.rotated(i * PI / 3) + center)
 	return hex_vertices
@@ -184,6 +204,6 @@ func _get_points_for_hex(center: Vector2, outline_offset: float = 0.0) -> PoolVe
 # Sets the minimum size for the display panel so that the drawn elements are
 # always within its bounds. 
 func _set_min_size() -> void:
-	var x_size: float = _hex_radius * 2 * col_count
-	var y_size: float = _hex_radius * 2 * row_count
+	var x_size: float = hex_radius * 2 * col_count
+	var y_size: float = hex_radius * 2 * row_count
 	set_custom_minimum_size(Vector2(x_size, y_size))
