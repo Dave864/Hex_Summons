@@ -83,7 +83,6 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	# Determine the configuration of tiles for the source range minus dead range.
 	_draw_range()
 
 
@@ -94,6 +93,13 @@ func _determine_source_hexes() -> void:
 			DisplayMatrix.Detail.SOURCE_RANGE,
 			_hex_matrix
 	)
+	if _dead_range != null:
+		_dead_range.populate_range_display_matrix(
+				Vector2(1, _mid_row),
+				DisplayMatrix.Detail.EMPTY,
+				DisplayMatrix.Detail.EMPTY,
+				_hex_matrix
+		)
 	_set_caster_hex()
 
 
