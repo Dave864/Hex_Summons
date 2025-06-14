@@ -36,3 +36,14 @@ func populate_range_display_matrix(
 	_hex_matrix: Array
 ) -> void:
 	pass
+
+
+# Checks if a matrix index is within the bounds of the specified RangeDisplay
+# hex matrix.
+func _is_index_in_matrix(matrix_index: Vector2, hex_matrix: Array) -> bool:
+	return (
+		matrix_index.y >=0 
+		and matrix_index.y < hex_matrix.size()
+		and matrix_index.x >= 0
+		and matrix_index.x < hex_matrix[0].size()
+	)

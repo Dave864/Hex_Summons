@@ -53,11 +53,6 @@ func populate_range_display_matrix(
 		for y in range(x_lower, x_upper + 1):
 			var cube_coord: Vector3 = Vector3(x, y, -x - y) + start_coord
 			var matrix_index: Vector2 = HexUtil.cube_to_offset(cube_coord)
-			if (
-				matrix_index.y >=0 
-				and matrix_index.y < hex_matrix.size()
-				and matrix_index.x >= 0
-				and matrix_index.x < hex_matrix[0].size()
-			):
+			if _is_index_in_matrix(matrix_index, hex_matrix):
 				hex_matrix[matrix_index.y][matrix_index.x]["Outline"] = outline_type
 				hex_matrix[matrix_index.y][matrix_index.x]["Fill"] = fill_type
