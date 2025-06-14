@@ -38,9 +38,9 @@ func populate_range_display_matrix(
 	center_point: Vector2,
 	outline_type: int,
 	fill_type: int,
-	hex_matrix: Array
+	hex_matrix: DisplayMatrix
 ) -> void:
-	var center_hex: HexNodeRef = hex_matrix[center_point.y][center_point.x]["Index"]
+	var center_hex: HexNeighborRef = hex_matrix.at(center_point)["Index"]
 	var neighbor_indexes: Array = center_hex.get_neighbors()
 	_update_hex_matrix(hex_matrix, center_point, outline_type, fill_type)
 	for d in distance:
@@ -48,6 +48,6 @@ func populate_range_display_matrix(
 			var hm_index: Vector2 = neighbor_indexes[i]
 			# Only updates if index is not empty.
 			if hm_index.x >= 0 and hm_index.y >= 0:
-				var matrix_cell: Dictionary = hex_matrix[hm_index.y][hm_index.x]
+				var matrix_cell: Dictionary = hex_matrix.at(hm_index)
 				_update_hex_matrix(hex_matrix, hm_index, outline_type, fill_type)
 				neighbor_indexes[i] = matrix_cell["Index"].get_neighbor(i)

@@ -79,6 +79,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://effects/Damage/damage_effect.gd"
 }, {
+"base": "Object",
+"class": "DisplayMatrix",
+"language": "GDScript",
+"path": "res://user_interface/encounter/SubOptionButton/RangeDisplay/display_matrix.gd"
+}, {
 "base": "PanelContainer",
 "class": "DisplayPanel",
 "language": "GDScript",
@@ -180,9 +185,9 @@ _global_script_classes=[ {
 "path": "res://hex_map_movement_path.gd"
 }, {
 "base": "Object",
-"class": "HexNodeRef",
+"class": "HexNeighborRef",
 "language": "GDScript",
-"path": "res://user_interface/encounter/SubOptionButton/RangeDisplay/hex_node_ref.gd"
+"path": "res://user_interface/encounter/SubOptionButton/RangeDisplay/hex_neighbor_ref.gd"
 }, {
 "base": "Object",
 "class": "HexUtil",
@@ -334,6 +339,7 @@ _global_script_class_icons={
 "ConeArea": "",
 "Constants": "",
 "DamageEffect": "",
+"DisplayMatrix": "",
 "DisplayPanel": "",
 "Effect": "",
 "EffectAspect": "",
@@ -354,7 +360,7 @@ _global_script_class_icons={
 "HexMap": "",
 "HexMapAStar": "",
 "HexMapMovementPath": "",
-"HexNodeRef": "",
+"HexNeighborRef": "",
 "HexUtil": "",
 "InitiativeTracker": "",
 "LabeledIconButton": "",

@@ -1,4 +1,4 @@
-class_name HexNodeRef
+class_name HexNeighborRef
 extends Object
 """
 Keeps track of the adjacenct indexes for a given index. Meant to be used in a
@@ -32,7 +32,7 @@ func get_neighbors() -> Array:
 func get_neighbor(n: int) -> Vector2:
 	assert(
 			n >= 0 and n < 6,
-			"Attempted to get invalid neighbor from HexNodeRef."
+			"Attempted to get invalid neighbor from HexNeighborRef."
 	)
 	return _neighbors[n]
 

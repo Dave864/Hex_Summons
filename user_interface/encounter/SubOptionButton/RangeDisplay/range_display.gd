@@ -6,19 +6,6 @@ Test UI node that is meant to check the feasability of drawing the range data
 of actions on a specific UI element.
 """
 
-
-const INDEX: String = "Index"
-const OUTLINE: String = "Outline"
-const FILL: String = "Fill"
-
-enum DetailMarker {
-	EMPTY,
-	CASTER,
-	SOURCE_RANGE,
-	EFFECT_RANGE,
-	EFFECT_SOURCE
-}
-
 export(NodePath) var action_ref
 export(int, 5, 15) var row_count = 9 setget set_row_count
 export(int, 5, 15) var col_count = 8 setget set_col_count
@@ -35,7 +22,7 @@ var _dead_range: AreaRange = null
 var _effect_range: AreaRange = null
 var _emit_from_center: bool = false
 # Matrix that represents the hexes in the display.
-var _hex_matrix: Array = []
+var _hex_matrix: DisplayMatrix = null
 
 
 func set_row_count(rc: int) -> void:
@@ -45,12 +32,14 @@ func set_row_count(rc: int) -> void:
 			else rc
 	)
 	_mid_row = int(round(row_count / 2.0)) - 1
+	_hex_matrix = DisplayMatrix.new(row_count, col_count)
 	if Engine.is_editor_hint():
 		update()
 
 
 func set_col_count(cc: int) -> void:
 	col_count = cc
+	_hex_matrix = DisplayMatrix.new(row_count, col_count)
 	if Engine.is_editor_hint():
 		update()
 
@@ -79,12 +68,12 @@ func update_range_display(action: Action) -> void:
 	_dead_range = action.dead_range
 	_effect_range = action.effect_range
 	_emit_from_center = action.emit_from_center
-	_reset_hex_matrix()
+	_hex_matrix.reset_display()
 	update()
 
 
 func _ready() -> void:
-	_create_hex_matrix()
+	_hex_matrix = DisplayMatrix.new(row_count, col_count)
 	_set_caster_hex()
 	if not Engine.is_editor_hint():
 		_action = get_node(action_ref)
@@ -98,33 +87,11 @@ func _draw() -> void:
 	_draw_range()
 
 
-# Creates an empty hex matrix with row_count rows and col_count columns.
-func _create_hex_matrix() -> void:
-	for row in row_count:
-		var row_array: Array = []
-		for col in col_count:
-			var hex_details: Dictionary = {
-				INDEX: HexNodeRef.new(Vector2(col, row), row_count, col_count),
-				OUTLINE: DetailMarker.EMPTY,
-				FILL: DetailMarker.EMPTY
-			}
-			row_array.append(hex_details)
-		_hex_matrix.append(row_array)
-
-
-# Rests the current hex matrix so that the display is empty.
-func _reset_hex_matrix() -> void:
-	for row in row_count:
-		for col in col_count:
-			_hex_matrix[row][col][OUTLINE] = DetailMarker.EMPTY
-			_hex_matrix[row][col][FILL] = DetailMarker.EMPTY
-
-
 func _determine_source_hexes() -> void:
 	_source_range.populate_range_display_matrix(
 			Vector2(1, _mid_row),
-			DetailMarker.EMPTY,
-			DetailMarker.SOURCE_RANGE,
+			DisplayMatrix.Detail.EMPTY,
+			DisplayMatrix.Detail.SOURCE_RANGE,
 			_hex_matrix
 	)
 	_set_caster_hex()
@@ -134,14 +101,15 @@ func _determine_effect_hexes() -> void:
 	var emission_index: Vector2 = Vector2(1, _mid_row)
 	
 	if not _emit_from_center:
-		for x in range(2, _hex_matrix[_mid_row].size()):
-			if _hex_matrix[_mid_row][x][FILL] == DetailMarker.SOURCE_RANGE:
+		for x in range(2, col_count):
+			var index: Vector2 = Vector2(x, _mid_row)
+			if _hex_matrix.fill_at(index) == DisplayMatrix.Detail.SOURCE_RANGE:
 				emission_index.x = x
 	
 	_effect_range.populate_range_display_matrix(
 			emission_index,
-			DetailMarker.EMPTY,
-			DetailMarker.EFFECT_RANGE,
+			DisplayMatrix.Detail.EMPTY,
+			DisplayMatrix.Detail.EFFECT_RANGE,
 			_hex_matrix
 	)
 	_set_caster_hex()
@@ -150,13 +118,12 @@ func _determine_effect_hexes() -> void:
 
 # Sets the details for the hex that represents the caster.
 func _set_caster_hex() -> void:
-	_hex_matrix[_mid_row][1][OUTLINE] = DetailMarker.CASTER
-	_hex_matrix[_mid_row][1][FILL] = DetailMarker.CASTER
+	_hex_matrix.set_caster_details()
 
 
 # Sets the details for the hex that represents the emission point.
 func _set_emission_hex(emission_point: Vector2) -> void:
-	_hex_matrix[emission_point.y][emission_point.x][OUTLINE] = DetailMarker.EFFECT_SOURCE
+	_hex_matrix.set_emission_details(emission_point)
 
 
 # Draws the array of hexagons that display the range of the action.
@@ -177,22 +144,23 @@ func _draw_range() -> void:
 
 # Draw the hex centered at the coordinate using the details of the hex_matrix.
 func _draw_hex(row: int, col: int, coord: Vector2) -> void:
-	var matrix_cell: Dictionary = _hex_matrix[row][col]
-	_draw_hex_outline(_determine_color(matrix_cell[OUTLINE]), coord)
-	_draw_hex_fill(_determine_color(matrix_cell[FILL]), coord)
+	var outline_color: Color = _determine_color(_hex_matrix.outline_at(Vector2(col, row)))
+	var fill_color: Color = _determine_color(_hex_matrix.fill_at(Vector2(col, row)))
+	_draw_hex_outline(outline_color, coord)
+	_draw_hex_fill(fill_color, coord)
 
 
 # Determines the color to use based on the detail marker.
 func _determine_color(detail_marker: int) -> Color:
 	var c: Color
 	match detail_marker:
-		DetailMarker.CASTER:
+		DisplayMatrix.Detail.CASTER:
 			c = Color.aqua
-		DetailMarker.SOURCE_RANGE:
+		DisplayMatrix.Detail.SOURCE_RANGE:
 			c = Color.blue
-		DetailMarker.EFFECT_RANGE:
+		DisplayMatrix.Detail.EFFECT_RANGE:
 			c = Color.orange
-		DetailMarker.EFFECT_SOURCE:
+		DisplayMatrix.Detail.EFFECT_SOURCE:
 			c = Color.yellow
 		_:
 			c = Color.slategray

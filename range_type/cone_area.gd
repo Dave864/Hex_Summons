@@ -58,11 +58,11 @@ func populate_range_display_matrix(
 	center_point: Vector2,
 	outline_type: int,
 	fill_type: int,
-	hex_matrix: Array
+	hex_matrix: DisplayMatrix
 ) -> void:
 	var start_coord: Vector3 = HexUtil.index_to_cube(
-			center_point.y * hex_matrix[0].size() + center_point.x,
-			hex_matrix[0].size()
+			int(center_point.y * hex_matrix.get_col_count() + center_point.x),
+			hex_matrix.get_col_count()
 	)
 	var dir: int = _get_initial_direction()
 	for s in range(spread + 1):
@@ -120,7 +120,7 @@ func _determine_ray_displays(
 		distance_step: int,
 		cur_dir: int,
 		cur_coord: Vector3,
-		hex_matrix: Array,
+		hex_matrix: DisplayMatrix,
 		outline_type: int,
 		fill_type: int
 ) -> void:

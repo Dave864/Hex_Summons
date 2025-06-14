@@ -41,11 +41,11 @@ func populate_range_display_matrix(
 	center_point: Vector2,
 	outline_type: int,
 	fill_type: int,
-	hex_matrix: Array
+	hex_matrix: DisplayMatrix
 ) -> void:
 	var start_coord: Vector3 = HexUtil.index_to_cube(
-			center_point.y * hex_matrix[0].size() + center_point.x,
-			hex_matrix[0].size()
+			int(center_point.y * hex_matrix.get_col_count() + center_point.x),
+			hex_matrix.get_col_count()
 	)
 	for x in range(-radius, radius + 1):
 		var x_lower: int = max(-radius, -x - radius) as int
@@ -54,5 +54,4 @@ func populate_range_display_matrix(
 			var cube_coord: Vector3 = Vector3(x, y, -x - y) + start_coord
 			var matrix_index: Vector2 = HexUtil.cube_to_offset(cube_coord)
 			if _is_index_in_matrix(matrix_index, hex_matrix):
-				hex_matrix[matrix_index.y][matrix_index.x]["Outline"] = outline_type
-				hex_matrix[matrix_index.y][matrix_index.x]["Fill"] = fill_type
+				hex_matrix.set_details(matrix_index, outline_type, fill_type)

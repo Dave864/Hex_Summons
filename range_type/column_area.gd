@@ -82,11 +82,11 @@ func populate_range_display_matrix(
 	center_point: Vector2,
 	outline_type: int,
 	fill_type: int,
-	hex_matrix: Array
+	hex_matrix: DisplayMatrix
 ) -> void:
 	var start_coord: Vector3 = HexUtil.index_to_cube(
-			center_point.y * hex_matrix[0].size() + center_point.x,
-			hex_matrix[0].size()
+			int(center_point.y * hex_matrix.get_col_count() + center_point.x),
+			hex_matrix.get_col_count()
 	)
 	for s in range(spread + 1):
 		var left_coord: Vector3 = HexUtil.cube_at_distance(
