@@ -90,6 +90,7 @@ func _ready() -> void:
 		_action = get_node(action_ref)
 		update_range_display(_action)
 		_determine_source_hexes()
+		_determine_effect_hexes()
 
 
 func _draw() -> void:
@@ -119,12 +120,6 @@ func _reset_hex_matrix() -> void:
 			_hex_matrix[row][col][FILL] = DetailMarker.EMPTY
 
 
-# Sets the details for the hex that represents the caster.
-func _set_caster_hex() -> void:
-	_hex_matrix[_mid_row][1][OUTLINE] = DetailMarker.CASTER
-	_hex_matrix[_mid_row][1][FILL] = DetailMarker.CASTER
-
-
 func _determine_source_hexes() -> void:
 	_source_range.populate_range_display_matrix(
 			Vector2(1, _mid_row),
@@ -136,14 +131,32 @@ func _determine_source_hexes() -> void:
 
 
 func _determine_effect_hexes() -> void:
-	if _effect_range is CardinalArea:
-		pass
-	elif _effect_range is RingArea:
-		pass
-	elif _effect_range is ConeArea:
-		pass
-	elif _effect_range is ColumnArea:
-		pass
+	var emission_index: Vector2 = Vector2(1, _mid_row)
+	
+	if not _emit_from_center:
+		for x in range(2, _hex_matrix[_mid_row].size()):
+			if _hex_matrix[_mid_row][x][FILL] == DetailMarker.SOURCE_RANGE:
+				emission_index.x = x
+	
+	_effect_range.populate_range_display_matrix(
+			emission_index,
+			DetailMarker.EMPTY,
+			DetailMarker.EFFECT_RANGE,
+			_hex_matrix
+	)
+	_set_caster_hex()
+	_set_emission_hex(emission_index)
+
+
+# Sets the details for the hex that represents the caster.
+func _set_caster_hex() -> void:
+	_hex_matrix[_mid_row][1][OUTLINE] = DetailMarker.CASTER
+	_hex_matrix[_mid_row][1][FILL] = DetailMarker.CASTER
+
+
+# Sets the details for the hex that represents the emission point.
+func _set_emission_hex(emission_point: Vector2) -> void:
+	_hex_matrix[emission_point.y][emission_point.x][OUTLINE] = DetailMarker.EFFECT_SOURCE
 
 
 # Draws the array of hexagons that display the range of the action.
@@ -182,7 +195,7 @@ func _determine_color(detail_marker: int) -> Color:
 		DetailMarker.EFFECT_SOURCE:
 			c = Color.yellow
 		_:
-			c = Color.gray
+			c = Color.slategray
 	return c
 
 
