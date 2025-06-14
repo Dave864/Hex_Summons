@@ -77,8 +77,7 @@ func populate_range_display_matrix(
 			)
 			var cur_index: Vector2 = HexUtil.cube_to_offset(cur_coord)
 			if _is_index_in_matrix(cur_index, hex_matrix):
-				hex_matrix[cur_index.y][cur_index.x]["Outline"] = outline_type
-				hex_matrix[cur_index.y][cur_index.x]["Fill"] = fill_type
+				_update_hex_matrix(hex_matrix, cur_index, outline_type, fill_type)
 			# Don't cast ray if this is the last origin line to add.
 			if s < spread:
 				_determine_ray_displays(
@@ -135,8 +134,7 @@ func _determine_ray_displays(
 		)
 		var ray_index: Vector2 = HexUtil.cube_to_offset(ray_coord)
 		if _is_index_in_matrix(ray_index, hex_matrix):
-			hex_matrix[ray_index.y][ray_index.x]["Outline"] = outline_type
-			hex_matrix[ray_index.y][ray_index.x]["Fill"] = fill_type
+			_update_hex_matrix(hex_matrix, ray_index, outline_type, fill_type)
 
 
 # Helper for populate_range_display. Determines which direction to start from

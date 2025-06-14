@@ -84,4 +84,56 @@ func populate_range_display_matrix(
 	fill_type: int,
 	hex_matrix: Array
 ) -> void:
-	pass
+	var start_coord: Vector3 = HexUtil.index_to_cube(
+			center_point.y * hex_matrix[0].size() + center_point.x,
+			hex_matrix[0].size()
+	)
+	for s in range(spread + 1):
+		var left_coord: Vector3 = HexUtil.cube_at_distance(
+				start_coord,
+				s,
+				HexUtil.HexDirection.UPPER_RIGHT
+		)
+		var right_coord: Vector3 = HexUtil.cube_at_distance(
+				start_coord,
+				s,
+				HexUtil.HexDirection.BOTTOM_RIGHT
+		)
+		if s > 0:
+			var left_index: Vector2 = HexUtil.cube_to_offset(left_coord)
+			var right_index: Vector2 = HexUtil.cube_to_offset(right_coord)
+			if _is_index_in_matrix(left_index, hex_matrix):
+				_update_hex_matrix(hex_matrix, left_index, outline_type, fill_type)
+			if _is_index_in_matrix(right_index, hex_matrix):
+				_update_hex_matrix(hex_matrix, right_index, outline_type, fill_type)
+		# Add additional tiles to fully fill in the "column" shape. Without the
+		# extra tiles, the shape is a chevron.
+		for d in range(distance + spread - s + 1):
+			# Only cast ray from starting point when spread is at 0.
+			if s == 0:
+				var ray_coord: Vector3 = HexUtil.cube_at_distance(
+						start_coord,
+						d,
+						HexUtil.HexDirection.RIGHT
+				)
+				var hex_index: Vector2 = HexUtil.cube_to_offset(ray_coord)
+				if _is_index_in_matrix(hex_index, hex_matrix):
+					_update_hex_matrix(hex_matrix, hex_index, outline_type, fill_type)
+			# Cast rays from both left and right points.
+			else:
+				var ray_coord_l: Vector3 = HexUtil.cube_at_distance(
+						left_coord,
+						d,
+						HexUtil.HexDirection.RIGHT
+				)
+				var ray_hex_l: Vector2 = HexUtil.cube_to_offset(ray_coord_l)
+				var ray_coord_r: Vector3 = HexUtil.cube_at_distance(
+						right_coord,
+						d,
+						HexUtil.HexDirection.RIGHT
+				)
+				var ray_hex_r: Vector2 = HexUtil.cube_to_offset(ray_coord_r)
+				if _is_index_in_matrix(ray_hex_l, hex_matrix):
+					_update_hex_matrix(hex_matrix, ray_hex_l, outline_type, fill_type)
+				if _is_index_in_matrix(ray_hex_r, hex_matrix):
+					_update_hex_matrix(hex_matrix, ray_hex_r, outline_type, fill_type)

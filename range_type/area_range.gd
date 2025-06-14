@@ -47,3 +47,14 @@ func _is_index_in_matrix(matrix_index: Vector2, hex_matrix: Array) -> bool:
 		and matrix_index.x >= 0
 		and matrix_index.x < hex_matrix[0].size()
 	)
+
+
+# Updates the details of the RangeDisplay matrix array at the given index.
+func _update_hex_matrix(
+	hex_matrix: Array,
+	matrix_index: Vector2,
+	outline_details: int,
+	fill_details: int
+) -> void:
+	hex_matrix[matrix_index.y][matrix_index.x]["Outline"] = outline_details
+	hex_matrix[matrix_index.y][matrix_index.x]["Fill"] = fill_details
