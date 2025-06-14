@@ -182,7 +182,7 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "HexNodeRef",
 "language": "GDScript",
-"path": "res://user_interface/encounter/test_labels/RangeDisplay/hex_node_ref.gd"
+"path": "res://user_interface/encounter/SubOptionButton/RangeDisplay/hex_node_ref.gd"
 }, {
 "base": "Object",
 "class": "HexUtil",
@@ -247,7 +247,7 @@ _global_script_classes=[ {
 "base": "Panel",
 "class": "RangeDisplay",
 "language": "GDScript",
-"path": "res://user_interface/encounter/test_labels/RangeDisplay/range_display.gd"
+"path": "res://user_interface/encounter/SubOptionButton/RangeDisplay/range_display.gd"
 }, {
 "base": "Node",
 "class": "RangeFinder",
