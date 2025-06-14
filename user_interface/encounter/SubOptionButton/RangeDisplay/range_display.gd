@@ -197,6 +197,12 @@ func _get_points_for_hex(center: Vector2, outline_offset: float = 0.0) -> PoolVe
 # Sets the minimum size for the display panel so that the drawn elements are
 # always within its bounds. 
 func _set_min_size() -> void:
-	var x_size: float = hex_radius * 2 * col_count
-	var y_size: float = hex_radius * 2 * row_count
+	var x_size: float = (
+			hex_radius * 2 * col_count \
+			+ (col_count * hex_spacing)
+	)
+	var y_size: float = (
+			hex_radius * 1.5 * (row_count + 1) \
+			+ (row_count * hex_spacing)
+	)
 	set_custom_minimum_size(Vector2(x_size, y_size))
