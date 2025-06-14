@@ -45,27 +45,32 @@ func set_row_count(rc: int) -> void:
 			else rc
 	)
 	_mid_row = int(round(row_count / 2.0)) - 1
-	update()
+	if Engine.is_editor_hint():
+		update()
 
 
 func set_col_count(cc: int) -> void:
 	col_count = cc
-	update()
+	if Engine.is_editor_hint():
+		update()
 
 
 func set_hex_radius(r: float) -> void:
 	hex_radius = r
-	update()
+	if Engine.is_editor_hint():
+		update()
 
 
 func set_outline_width(ow: float) -> void:
 	outline_width = ow
-	update()
+	if Engine.is_editor_hint():
+		update()
 
 
 func set_hex_spacing(hs: float) -> void:
 	hex_spacing = hs
-	update()
+	if Engine.is_editor_hint():
+		update()
 
 
 # Redraws the range display for the given action.
@@ -75,15 +80,16 @@ func update_range_display(action: Action) -> void:
 	_effect_range = action.effect_range
 	_emit_from_center = action.emit_from_center
 	_reset_hex_matrix()
-#	update()
+	update()
 
 
 func _ready() -> void:
-#	_action = get_node(action_ref)
 	_create_hex_matrix()
-#	update_range_display(_action)
-#	_determine_source_hexes()
 	_set_caster_hex()
+	if not Engine.is_editor_hint():
+		_action = get_node(action_ref)
+		update_range_display(_action)
+		_determine_source_hexes()
 
 
 func _draw() -> void:
