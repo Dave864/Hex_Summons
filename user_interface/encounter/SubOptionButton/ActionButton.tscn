@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://user_interface/encounter/SubOptionButton/action_button.gd" type="Script" id=1]
+[ext_resource path="res://user_interface/encounter/SubOptionButton/RangeDisplay/RangeDisplay.tscn" type="PackedScene" id=2]
 
 [node name="ActionButton" type="MarginContainer"]
 anchor_right = 1.0
@@ -10,19 +11,27 @@ script = ExtResource( 1 )
 
 [node name="Button" type="Button" parent="."]
 margin_right = 1024.0
-margin_bottom = 57.0
+margin_bottom = 60.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 1024.0
-margin_bottom = 57.0
+margin_bottom = 60.0
+mouse_filter = 2
 alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer"]
-margin_left = 498.0
-margin_top = 21.0
-margin_right = 525.0
-margin_bottom = 35.0
+margin_left = 464.0
+margin_top = 23.0
+margin_right = 491.0
+margin_bottom = 37.0
 size_flags_horizontal = 6
 text = "Test"
+
+[node name="RangeDisplay" parent="HBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 960.0
+margin_right = 1024.0
+margin_bottom = 60.0
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

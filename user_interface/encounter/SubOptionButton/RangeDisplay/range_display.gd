@@ -6,14 +6,12 @@ Test UI node that is meant to check the feasability of drawing the range data
 of actions on a specific UI element.
 """
 
-export(NodePath) var action_ref
+
 export(int, 5, 15) var row_count = 9 setget set_row_count
 export(int, 5, 15) var col_count = 8 setget set_col_count
 export(float, 1.0, 10.0) var hex_radius = 4.0 setget set_hex_radius
 export(float, 0.5, 5.0) var outline_width = 1.0 setget set_outline_width
 export(float, 0.0, 3.0) var hex_spacing = 0.0 setget set_hex_spacing
-
-var _action: Action = null
 
 var _mid_row: int = int(round(row_count / 2.0)) - 1
 # References to the range details of an action.
@@ -68,21 +66,22 @@ func update_range_display(action: Action) -> void:
 	_dead_range = action.dead_range
 	_effect_range = action.effect_range
 	_emit_from_center = action.emit_from_center
-	_hex_matrix.reset_display()
 	update()
 
 
 func _ready() -> void:
 	_hex_matrix = DisplayMatrix.new(row_count, col_count)
-	_set_caster_hex()
-	if not Engine.is_editor_hint():
-		_action = get_node(action_ref)
-		update_range_display(_action)
-		_determine_source_hexes()
-		_determine_effect_hexes()
+
+
+func _init() -> void:
+	_hex_matrix = DisplayMatrix.new(row_count, col_count)
 
 
 func _draw() -> void:
+	if not Engine.is_editor_hint():
+		_hex_matrix.reset_display()
+		_determine_source_hexes()
+		_determine_effect_hexes()
 	_draw_range()
 
 
@@ -100,7 +99,6 @@ func _determine_source_hexes() -> void:
 				DisplayMatrix.Detail.EMPTY,
 				_hex_matrix
 		)
-	_set_caster_hex()
 
 
 func _determine_effect_hexes() -> void:
@@ -118,6 +116,7 @@ func _determine_effect_hexes() -> void:
 			DisplayMatrix.Detail.EFFECT_RANGE,
 			_hex_matrix
 	)
+	
 	_set_caster_hex()
 	_set_emission_hex(emission_index)
 

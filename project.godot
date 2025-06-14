@@ -185,11 +185,6 @@ _global_script_classes=[ {
 "path": "res://hex_map_movement_path.gd"
 }, {
 "base": "Object",
-"class": "HexNeighborRef",
-"language": "GDScript",
-"path": "res://user_interface/encounter/SubOptionButton/RangeDisplay/hex_neighbor_ref.gd"
-}, {
-"base": "Object",
 "class": "HexUtil",
 "language": "GDScript",
 "path": "res://utils/hex_util.gd"
@@ -360,7 +355,6 @@ _global_script_class_icons={
 "HexMap": "",
 "HexMapAStar": "",
 "HexMapMovementPath": "",
-"HexNeighborRef": "",
 "HexUtil": "",
 "InitiativeTracker": "",
 "LabeledIconButton": "",

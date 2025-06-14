@@ -8,7 +8,8 @@ Button that describes a possible action for a given option.
 # Set the action details for the button.
 func set_action_details(a: Action) -> void:
 	_action_details = a
-	$Button.set_text(_action_details.name)
+	$HBoxContainer/Label.set_text(_action_details.name)
+	$HBoxContainer/RangeDisplay.update_range_display(_action_details)
 
 
 # Checks that all required parameters are set.

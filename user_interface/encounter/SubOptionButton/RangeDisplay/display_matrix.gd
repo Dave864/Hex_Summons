@@ -14,7 +14,6 @@ enum Detail {
 	EFFECT_SOURCE
 }
 
-const INDEX: String = "Index"
 const OUTLINE: String = "Outline"
 const FILL: String = "Fill"
 
@@ -37,10 +36,6 @@ func get_col_count() -> int:
 # Gets the details at the given index.
 func at(index: Vector2) -> Dictionary:
 	return _matrix[index.y][index.x]
-
-
-func neighbors_at(index: Vector2) -> HexNeighborRef:
-	return _matrix[index.y][index.x][INDEX]
 
 
 # Gets the outline details at the given index.
@@ -105,7 +100,6 @@ func _init(row_count: int, col_count: int):
 		var row_array: Array = []
 		for col in _col_count:
 			var hex_details: Dictionary = {
-				INDEX: HexNeighborRef.new(Vector2(col, row), row_count, col_count),
 				OUTLINE: Detail.EMPTY,
 				FILL: Detail.EMPTY
 			}

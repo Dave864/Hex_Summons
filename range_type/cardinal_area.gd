@@ -40,14 +40,14 @@ func populate_range_display_matrix(
 	fill_type: int,
 	hex_matrix: DisplayMatrix
 ) -> void:
-	var center_hex: HexNeighborRef = hex_matrix.at(center_point)["Index"]
-	var neighbor_indexes: Array = center_hex.get_neighbors()
+	var center_coord: Vector3 = HexUtil.index_to_cube(
+			int(center_point.y * hex_matrix.get_col_count() + center_point.x),
+			hex_matrix.get_col_count()
+	)
 	_update_hex_matrix(hex_matrix, center_point, outline_type, fill_type)
-	for d in distance:
-		for i in 6:
-			var hm_index: Vector2 = neighbor_indexes[i]
-			# Only updates if index is not empty.
-			if hm_index.x >= 0 and hm_index.y >= 0:
-				var matrix_cell: Dictionary = hex_matrix.at(hm_index)
-				_update_hex_matrix(hex_matrix, hm_index, outline_type, fill_type)
-				neighbor_indexes[i] = matrix_cell["Index"].get_neighbor(i)
+	for d in range(1, distance + 1):
+		for n in 6:
+			var coord: Vector3 = HexUtil.cube_at_distance(center_coord, d, n)
+			var index: Vector2 = HexUtil.cube_to_offset(coord)
+			if _is_index_in_matrix(index, hex_matrix):
+				_update_hex_matrix(hex_matrix, index, outline_type, fill_type)

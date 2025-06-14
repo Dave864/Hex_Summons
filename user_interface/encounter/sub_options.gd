@@ -24,7 +24,7 @@ onready var _sub_options_container: HBoxContainer = $HBoxContainer
 # Populate the sub-options container.
 func populate(player: PlayerCharacter, player_actions: Array) -> void:
 	for pa in player_actions:
-		var new_button: SubOptionButton = _sub_option_button.instance()
+		var new_button: SubOptionButton = _action_button.instance()
 		new_button.set_action_details(pa)
 		new_button.set_player(player)
 		new_button.connect(
