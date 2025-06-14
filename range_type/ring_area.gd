@@ -36,5 +36,28 @@ func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
 
 
 # Modifies a RangeDisplay hex matrix so that it reflects the details of this RingArea.
-func populate_range_display_matrix(_range_type: int, _hex_matrix: Array) -> void:
-	pass
+# Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
+func populate_range_display_matrix(
+	center_point: Vector2,
+	outline_type: int,
+	fill_type: int,
+	hex_matrix: Array
+) -> void:
+	var start_coord: Vector3 = HexUtil.index_to_cube(
+			center_point.y * hex_matrix[0].size() + center_point.x,
+			hex_matrix[0].size()
+	)
+	for x in range(-radius, radius + 1):
+		var x_lower: int = max(-radius, -x - radius) as int
+		var x_upper: int = min(radius, radius - x) as int
+		for y in range(x_lower, x_upper + 1):
+			var cube_coord: Vector3 = Vector3(x, y, -x - y) + start_coord
+			var matrix_index: Vector2 = HexUtil.cube_to_offset(cube_coord)
+			if (
+				matrix_index.y >=0 
+				and matrix_index.y < hex_matrix.size()
+				and matrix_index.x >= 0
+				and matrix_index.x < hex_matrix[0].size()
+			):
+				hex_matrix[matrix_index.y][matrix_index.x]["Outline"] = outline_type
+				hex_matrix[matrix_index.y][matrix_index.x]["Fill"] = fill_type

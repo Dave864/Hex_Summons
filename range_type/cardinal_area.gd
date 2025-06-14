@@ -34,16 +34,22 @@ func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
 
 
 # Modifies a RangeDisplay hex matrix so that it reflects the details of this CardinalArea.
-func populate_range_display_matrix(range_type: int, hex_matrix: Array) -> void:
-	var mid_row: int = int(round(hex_matrix.size() / 2.0)) - 1
-	var caster_point: HexNodeRef = hex_matrix[mid_row][1]["Index"]
-	var neighbor_indexes: Array = caster_point.get_neighbors()
+func populate_range_display_matrix(
+	center_point: Vector2,
+	outline_type: int,
+	fill_type: int,
+	hex_matrix: Array
+) -> void:
+	var center_hex: HexNodeRef = hex_matrix[center_point.y][center_point.x]["Index"]
+	var neighbor_indexes: Array = center_hex.get_neighbors()
+	hex_matrix[center_point.y][center_point.x]["Outline"] = outline_type
+	hex_matrix[center_point.y][center_point.x]["Fill"] = fill_type
 	for d in distance:
 		for i in 6:
 			var hm_index: Vector2 = neighbor_indexes[i]
 			# Only updates if index is not empty.
 			if hm_index.x >= 0 and hm_index.y >= 0:
 				var matrix_cell: Dictionary = hex_matrix[hm_index.y][hm_index.x]
-				matrix_cell["Outline"] = range_type
-				matrix_cell["Fill"] = range_type
+				matrix_cell["Outline"] = outline_type
+				matrix_cell["Fill"] = fill_type
 				neighbor_indexes[i] = matrix_cell["Index"].get_neighbor(i)

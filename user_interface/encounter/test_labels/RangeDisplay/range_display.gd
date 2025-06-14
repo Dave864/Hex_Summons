@@ -52,12 +52,26 @@ func update_range_display(action: Action) -> void:
 	_dead_range = action.dead_range
 	_effect_range = action.effect_range
 	_emit_from_center = action.emit_from_center
+	_reset_hex_matrix()
 #	update()
 
 
 func _ready() -> void:
 	_action = get_node(action_ref)
+	_create_hex_matrix()
 	update_range_display(_action)
+	_determine_source_hexes()
+	_hex_matrix[_mid_row][1][OUTLINE] = DetailMarker.CASTER
+	_hex_matrix[_mid_row][1][FILL] = DetailMarker.CASTER
+
+
+func _draw() -> void:
+	# Determine the configuration of tiles for the source range minus dead range.
+	_draw_range()
+
+
+# Creates an empty hex matrix with row_count rows and col_count columns.
+func _create_hex_matrix() -> void:
 	for row in row_count:
 		var row_array: Array = []
 		for col in col_count:
@@ -68,18 +82,30 @@ func _ready() -> void:
 			}
 			row_array.append(hex_details)
 		_hex_matrix.append(row_array)
+
+
+# Rests the current hex matrix so that the display is empty.
+func _reset_hex_matrix() -> void:
+	for row in row_count:
+		for col in col_count:
+			_hex_matrix[row][col][OUTLINE] = DetailMarker.EMPTY
+			_hex_matrix[row][col][FILL] = DetailMarker.EMPTY
+
+
+# Sets the details for the hex that represents the caster.
+func _set_caster_hex() -> void:
 	_hex_matrix[_mid_row][1][OUTLINE] = DetailMarker.CASTER
 	_hex_matrix[_mid_row][1][FILL] = DetailMarker.CASTER
-	_determine_source_hexes()
-
-
-func _draw() -> void:
-	# Determine the configuration of tiles for the source range minus dead range.
-	_draw_range()
 
 
 func _determine_source_hexes() -> void:
-	_source_range.populate_range_display_matrix(DetailMarker.SOURCE_RANGE, _hex_matrix)
+	_source_range.populate_range_display_matrix(
+			Vector2(1, _mid_row),
+			DetailMarker.EMPTY,
+			DetailMarker.SOURCE_RANGE,
+			_hex_matrix
+	)
+	_set_caster_hex()
 
 
 func _determine_effect_hexes() -> void:
