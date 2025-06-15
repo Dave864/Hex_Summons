@@ -12,11 +12,12 @@ var _start_set: bool = false setget , get_is_start_set
 
 # Reference to the Character sprite.
 onready var character_sprite: Sprite3D = $Sprite3D
+onready var map_coordinate: MapCoordinate = $MapCoordinate
 
 
 # Get the index of the tile the character is currently at.
 func get_map_index_at() -> int:
-	return $MapCoordinate.get_map_index()
+	return map_coordinate.get_map_index()
 
 
 # Get whether or not the starting location of the character has been set.
@@ -45,6 +46,8 @@ func _update_emission_index(_index: int) -> void:
 # Update the character's position index when passing over a MapTile.
 func _on_Character_area_entered(map_tile: Area) -> void:
 	_update_emission_index(map_tile.map_coordinate.get_map_index())
+	map_coordinate.set_map_index(map_tile.map_coordinate.get_map_index())
+	map_coordinate.set_cube_coord(map_tile.map_coordinate.get_cube_coord())
 	# If the creature's start position has not been set, move it to the position
 	# of the tile it in the area of.
 	if !_start_set:

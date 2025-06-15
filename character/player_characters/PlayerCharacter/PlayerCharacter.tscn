@@ -47,4 +47,3 @@ script = ExtResource( 4 )
 script = ExtResource( 7 )
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
-[connection signal="area_entered" from="." to="MapCoordinate" method="_on_Character_area_entered"]
