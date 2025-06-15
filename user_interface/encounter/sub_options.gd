@@ -21,19 +21,21 @@ var _action_button: PackedScene = preload(
 onready var _sub_options_container: HBoxContainer = $HBoxContainer
 
 
+# Reveal this UI element and enable it to be found by the mouse.
+func activate() -> void:
+	_sub_options_container.mouse_filter = Control.MOUSE_FILTER_PASS
+	show()
+
+
+# Hide this UI element and do not allow mouse input to be caught by it.
+func deactivate() -> void:
+	_sub_options_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hide()
+
+
 # Populate the sub-options container.
 func populate(player: PlayerCharacter, player_actions: Array) -> void:
-	for pa in player_actions:
-		var new_button: SubOptionButton = _action_button.instance()
-		new_button.set_action_details(pa)
-		new_button.set_player(player)
-		new_button.connect(
-				"action_selected",
-				self,
-				"_on_SubOptionButton_action_selected"
-		)
-		_actions.append(pa)
-		_sub_options_container.add_child(new_button)
+	_populate_sub_options(player, player_actions)
 	for i in range(_sub_options_container.get_child_count() - 1):
 		var current_option: SubOptionButton = _sub_options_container.get_child(i)
 		var right_neighor: SubOptionButton = _sub_options_container.get_child(i + 1)
@@ -63,12 +65,20 @@ func grab_focus_at_index(index: int) -> void:
 	_sub_options_container.get_child(index).get_button().grab_focus()
 
 
-func _populate_with_actions() -> void:
-	pass
-
-
-func _populate_with_sub_options() -> void:
-	pass
+# Create new buttons for the given player actions.
+func _populate_sub_options(player: PlayerCharacter, player_actions: Array) -> void:
+	for pa in player_actions:
+		var new_button: SubOptionButton = _action_button.instance()
+		_action_button.instance()
+		new_button.set_action_details(pa)
+		new_button.set_player(player)
+		new_button.connect(
+				"action_selected",
+				self,
+				"_on_SubOptionButton_action_selected"
+		)
+		_actions.append(pa)
+		_sub_options_container.add_child(new_button)
 
 
 # Emits the "action_selected" signal when one of the button options has been pressed.

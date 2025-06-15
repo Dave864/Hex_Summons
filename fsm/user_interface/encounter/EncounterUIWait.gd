@@ -9,7 +9,7 @@ turn starts.
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	encounter_ui.sub_options.hide()
+	encounter_ui.sub_options.deactivate()
 	encounter_ui.options.hide()
 	encounter_ui.active_player_stats.hide()
 	
