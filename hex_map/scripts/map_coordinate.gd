@@ -38,8 +38,3 @@ func get_cube_coord() -> Vector3:
 # Set the cube coordinates of the MapTile.
 func set_cube_coord(value: Vector3) -> void:
 	_cube_coord = value
-
-
-func _on_Character_area_entered(map_tile: Area) -> void:
-	set_map_index(map_tile.map_coordinate.get_map_index())
-	set_cube_coord(map_tile.map_coordinate.get_cube_coord())
