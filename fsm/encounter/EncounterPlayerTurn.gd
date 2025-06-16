@@ -34,10 +34,7 @@ func enter(_msg := {}) -> void:
 	)
 	
 	_connect_signals()
-	SignalBus.emit_player_turn_started(
-			_active_char,
-			enc.hex_map.get_map_tiles()[_active_char.map_coordinate.get_map_index()]
-	)
+	SignalBus.emit_player_turn_started(_active_char)
 
 
 # Corresponds to the `_process()` callback.

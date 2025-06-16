@@ -74,6 +74,7 @@ func _determine_init_index(init_value: int) -> int:
 
 # Connects all map tile "mouse_hovered" signals to the selector.
 func _connect_map_to_selector() -> void:
+	selector.set_map_tiles_ref(hex_map.get_map_tiles())
 	for mt in hex_map.get_map_tiles():
 		ErrorUtil.connect_signal(
 				mt,

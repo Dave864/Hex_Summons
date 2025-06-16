@@ -21,18 +21,12 @@ var _player_map_index: int = -1
 onready var _update_highlights_ref: FuncRef = funcref(self, "_update_highlights")
 
 
-func enter(_msg: Dictionary = {}) -> void:
-	_action = _msg["action"]
-	_player_pos = _msg["player_pos"]
-	_player_map_index = _msg["player_map_index"]
+func enter(msg: Dictionary = {}) -> void:
+	_action = msg["action"]
+	_player_pos = msg["player_pos"]
+	_player_map_index = msg["player_map_index"]
 	selector.set_update_highlights_func(_update_highlights_ref)
 	
-	ErrorUtil.connect_signal(
-			selector.collision_area,
-			"area_entered",
-			self,
-			"_on_Selector_area_entered"
-	)
 	ErrorUtil.connect_signal(
 			SignalBus,
 			"player_action_selected",
@@ -56,19 +50,9 @@ func enter(_msg: Dictionary = {}) -> void:
 	selector.emit_effect_area_required(_action)
 
 
-func update(_delta: float) -> void:
-	if _mouse_active:
-		selector.move_to_mouse_position()
-
-
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	selector.collision_area.disconnect(
-			"area_entered",
-			self,
-			"_on_Selector_area_entered"
-	)
 	SignalBus.disconnect(
 			"player_action_selected",
 			self,
@@ -95,40 +79,6 @@ func handle_input(_event: InputEvent) -> void:
 
 # Update the highlights for a given tile. Also updates what the hovered tile is.
 func _update_highlights(map_tile: MapTile) -> void:
-	print("Update action highlight for tile %d" % [map_tile.map_coordinate.get_map_index()])
-#	if (
-#		map_tile.is_active() 
-#		and (
-#			map_tile.get_highlight_type() == HexHighlighter.Option.RANGE
-#			or map_tile.get_highlight_type() == HexHighlighter.Option.TARGET
-#			or map_tile.get_highlight_type() == HexHighlighter.Option.PLAYER
-#		)
-#	):
-#		selector.tile_hovered = map_tile
-#
-#		_action.set_emission_map_index(
-#				_player_map_index if _action.emit_from_center 
-#				else map_tile.map_coordinate.get_map_index()
-#		)
-#		if _action.get_is_cardinal():
-#			var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
-#			var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
-#			var dir: Vector2 = (tile_pt - player_pt).normalized()
-#			_action.set_emission_direction(HexUtil.get_hex_direction(dir))
-#		selector.emit_effect_area_required(_action)
-
-
-# Determines if the selector is able to move to the adjacent tile in the
-# given direction (0 - 5) and does so if able.
-func _resolve_joystick_direction(direction: int) -> void:
-	if direction >= 0 and direction <= 5:
-		"""
-		TODO: Implement logic to handle joystick input.
-		"""
-
-
-# Activate the selector for the hovered tile.
-func _on_Selector_area_entered(map_tile: Area) -> void:
 	if (
 		map_tile.is_active() 
 		and (
@@ -138,7 +88,7 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 		)
 	):
 		selector.tile_hovered = map_tile
-		
+
 		_action.set_emission_map_index(
 				_player_map_index if _action.emit_from_center 
 				else map_tile.map_coordinate.get_map_index()
@@ -149,6 +99,15 @@ func _on_Selector_area_entered(map_tile: Area) -> void:
 			var dir: Vector2 = (tile_pt - player_pt).normalized()
 			_action.set_emission_direction(HexUtil.get_hex_direction(dir))
 		selector.emit_effect_area_required(_action)
+
+
+# Determines if the selector is able to move to the adjacent tile in the
+# given direction (0 - 5) and does so if able.
+func _resolve_joystick_direction(direction: int) -> void:
+	if direction >= 0 and direction <= 5:
+		"""
+		TODO: Implement logic to handle joystick input.
+		"""
 
 
 # Go to the "SelectAction" state with the new action.
@@ -172,10 +131,8 @@ func _on_SignalBus_player_action_selected(
 func _on_SignalBus_player_action_type_canceled() -> void:
 	if not _state_is_active():
 		return
-	state_machine.transition_to(
-			SELECT_MOVE,
-			{"initial_position": _player_pos}
-	)
+	var start_tile: MapTile = selector.get_map_tiles_ref()[_player_map_index]
+	state_machine.transition_to(SELECT_MOVE, {"start_tile": start_tile})
 
 
 # Go to the "WAIT" state when a player has signaled that their turn is ended.

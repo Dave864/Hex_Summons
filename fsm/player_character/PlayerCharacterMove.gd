@@ -55,7 +55,7 @@ func exit() -> void:
 	_selector_paused = false
 	_movement_path = null
 	SignalBus.disconnect("selector_paused", self, "_on_SignalBus_selector_paused")
-	SignalBus.emit_selector_required(pc.translation)
+	SignalBus.emit_selector_required(pc.map_coordinate.get_map_index())
 
 
 func _on_SignalBus_selector_paused() -> void:

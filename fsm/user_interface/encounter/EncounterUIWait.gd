@@ -35,7 +35,7 @@ func exit() -> void:
 
 # Wait for the EncounterUI object to recieve signal that user input needs to
 # be obtained.
-func _on_SignalBus_player_turn_started(character: PlayerCharacter, _tile: MapTile) -> void:
+func _on_SignalBus_player_turn_started(character: PlayerCharacter) -> void:
 	if not _state_is_active():
 		return
 	encounter_ui.set_focused_player(character)

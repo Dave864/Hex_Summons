@@ -33,7 +33,7 @@ func exit() -> void:
 
 
 # Wait for the signal that the selector is required.
-func _on_SignalBus_selector_required(_start_pos: Vector3) -> void:
+func _on_SignalBus_selector_required(_start_index: int) -> void:
 	if not _state_is_active():
 		return
 	state_machine.transition_to(STANDBY)

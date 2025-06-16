@@ -17,15 +17,8 @@ onready var _update_highlights_ref: FuncRef = funcref(self, "_update_highlights"
 
 # Reveal the selector shape and enable to ability to snap to tile positions.
 func enter(msg: Dictionary = {}) -> void:
-	selector.move_to_position(msg["initial_position"])
-#	selector.tile_hovered = msg["start_tile"]
+	selector.tile_hovered = msg["start_tile"]
 	selector.set_update_highlights_func(_update_highlights_ref)
-	ErrorUtil.connect_signal(
-			selector.collision_area,
-			"area_entered",
-			self,
-			"_on_Selector_area_entered"
-	)
 	ErrorUtil.connect_signal(
 			SignalBus,
 			"player_action_selected",
@@ -40,19 +33,10 @@ func enter(msg: Dictionary = {}) -> void:
 	)
 
 
-func update(_delta: float) -> void:
-	if _mouse_active:
-		selector.move_to_mouse_position()
-
-
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	selector.collision_area.disconnect(
-			"area_entered",
-			self,
-			"_on_Selector_area_entered"
-	)
+	selector.set_update_highlights_func(null)
 	SignalBus.disconnect(
 			"player_action_selected",
 			self,
@@ -79,24 +63,23 @@ func handle_input(event: InputEvent) -> void:
 
 # Update the highlights for a given tile. Also updates what the hovered tile is.
 func _update_highlights(map_tile: MapTile) -> void:
-	print("Update move highlight for tile %d" % [map_tile.map_coordinate.get_map_index()])
-#	if !map_tile.is_active():
-#		return
-#
-#	# Turn off previous selector indicator to indicate a new tile is being
-#	# hovered over.
-#	if selector.tile_hovered != null:
-#		selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
-#	selector.tile_hovered = map_tile
-#
-#	var highlight: int = map_tile.get_highlight_type()
-#	if (
-#		highlight == HexHighlighter.Option.RANGE
-#		or highlight == HexHighlighter.Option.PLAYER
-#	):
-#		map_tile.set_selector_type(HexHighlighter.Option.MOVE)
-#	else:
-#		map_tile.set_selector_type(HexHighlighter.Option.GRAY)
+	if !map_tile.is_active():
+		return
+
+	# Turn off previous selector indicator to indicate a new tile is being
+	# hovered over.
+	if selector.tile_hovered != null:
+		selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	selector.tile_hovered = map_tile
+
+	var highlight: int = map_tile.get_highlight_type()
+	if (
+		highlight == HexHighlighter.Option.RANGE
+		or highlight == HexHighlighter.Option.PLAYER
+	):
+		map_tile.set_selector_type(HexHighlighter.Option.MOVE)
+	else:
+		map_tile.set_selector_type(HexHighlighter.Option.GRAY)
 
 
 # Determines if the selector is able to move to the adjacent tile in the
@@ -106,27 +89,6 @@ func _resolve_joystick_direction(direction: int) -> void:
 		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(direction)
 		if adjacent_tile != null:
 			selector.move_to_position(adjacent_tile.character_position())
-
-
-# Activate the selector for the hovered tile.
-func _on_Selector_area_entered(map_tile: Area) -> void:
-	if !map_tile.is_active():
-		return
-	
-	# Turn off previous selector indicator to indicate a new tile is being
-	# hovered over.
-	if selector.tile_hovered != null:
-		selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
-	selector.tile_hovered = map_tile
-	
-	var highlight: int = map_tile.get_highlight_type()
-	if (
-		highlight == HexHighlighter.Option.RANGE
-		or highlight == HexHighlighter.Option.PLAYER
-	):
-		map_tile.set_selector_type(HexHighlighter.Option.MOVE)
-	else:
-		map_tile.set_selector_type(HexHighlighter.Option.GRAY)
 
 
 # Go to the "SelectAction" state when the UI signals that an action was selected.
