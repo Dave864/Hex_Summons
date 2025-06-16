@@ -9,15 +9,16 @@ state. If a player turn ends, go to the 'Wait' state.
 """
 
 
+# Flag that indicates that the mouse is active.
 var _mouse_active: bool = false
 
 # Reference to the function that will update the tile highlights.
 onready var _update_highlights_ref: FuncRef = funcref(self, "_update_highlights")
 
 
-# Reveal the selector shape and enable to ability to snap to tile positions.
+# Reveal the selector shape and enable the ability to update tile highlights.
 func enter(msg: Dictionary = {}) -> void:
-	selector.tile_hovered = msg["start_tile"]
+	_update_highlights(msg["start_tile"])
 	selector.set_update_highlights_func(_update_highlights_ref)
 	ErrorUtil.connect_signal(
 			SignalBus,
@@ -88,7 +89,7 @@ func _resolve_joystick_direction(direction: int) -> void:
 	if direction >= 0 and direction <= 5:
 		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(direction)
 		if adjacent_tile != null:
-			selector.move_to_position(adjacent_tile.character_position())
+			_update_highlights(adjacent_tile)
 
 
 # Go to the "SelectAction" state when the UI signals that an action was selected.

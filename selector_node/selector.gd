@@ -22,11 +22,6 @@ var _map_tiles_ref: Array = [] setget set_map_tiles_ref, get_map_tiles_ref
 # states will use different logic for updating the highlights.
 var _update_highlights_func: FuncRef = null setget set_update_highlights_func
 
-# The current mouse position
-onready var mouse_position: MousePosition = $MousePosition
-# The collision are for the selector
-onready var collision_area: Area = $CollisionArea
-
 
 # Sets the reference to the map tiles.
 func set_map_tiles_ref(map_tiles_ref: Array) -> void:
@@ -41,16 +36,6 @@ func get_map_tiles_ref() -> Array:
 # Sets the _update_highlights_func.
 func set_update_highlights_func(new_func: FuncRef) -> void:
 	_update_highlights_func = new_func
-
-
-# Move the collision area to the mouse position.
-func move_to_mouse_position() -> void:
-	move_to_position(mouse_position.get_mouse_position())
-
-
-# Move the collision area to the specified position.
-func move_to_position(position: Vector3) -> void:
-	collision_area.translation = position
 
 
 # Emits the move_tile_selected signal.

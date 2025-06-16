@@ -1,27 +1,14 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://selector_node/selector.gd" type="Script" id=1]
-[ext_resource path="res://selector_node/mouse_position.gd" type="Script" id=2]
 [ext_resource path="res://fsm/state_machine.gd" type="Script" id=3]
 [ext_resource path="res://fsm/selector_node/SelectorNodeSelectMove.gd" type="Script" id=4]
 [ext_resource path="res://fsm/selector_node/SelectorNodeWait.gd" type="Script" id=5]
 [ext_resource path="res://fsm/selector_node/SelectorNodePause.gd" type="Script" id=7]
 [ext_resource path="res://fsm/selector_node/SelectorNodeSelectAction.gd" type="Script" id=8]
 
-[sub_resource type="SphereShape" id=8]
-radius = 0.025
-
 [node name="Selector" type="Node"]
 script = ExtResource( 1 )
-
-[node name="MousePosition" type="Position3D" parent="."]
-script = ExtResource( 2 )
-
-[node name="CollisionArea" type="Area" parent="."]
-collision_mask = 2
-
-[node name="CollisionShape" type="CollisionShape" parent="CollisionArea"]
-shape = SubResource( 8 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )

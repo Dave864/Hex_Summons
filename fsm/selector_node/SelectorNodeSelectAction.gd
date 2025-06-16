@@ -53,6 +53,7 @@ func enter(msg: Dictionary = {}) -> void:
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
+	selector.set_update_highlights_func(null)
 	SignalBus.disconnect(
 			"player_action_selected",
 			self,
