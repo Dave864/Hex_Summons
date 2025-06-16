@@ -87,7 +87,7 @@ func is_active() -> bool:
 
 # Return the translation that a character will be placed at when moving onto the
 # tile.
-func character_position() -> Vector3:
+func get_character_position() -> Vector3:
 	var cp: Vector3 = translation
 	cp.y = Constants.HEX_TILE_UNIT_HEIGHT * height
 	return cp

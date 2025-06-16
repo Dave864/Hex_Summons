@@ -105,7 +105,7 @@ func _init(hex_map_tiles: Array, x_count: int, z_count: int) -> void:
 			"""
 			add_point(
 					tile.map_coordinate.get_map_index(),
-					tile.character_position(),
+					tile.get_character_position(),
 					1.0
 			)
 	

@@ -64,6 +64,7 @@ func handle_input(event: InputEvent) -> void:
 
 # Update the highlights for a given tile. Also updates what the hovered tile is.
 func _update_highlights(map_tile: MapTile) -> void:
+	JoystickHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	if !map_tile.is_active():
 		return
 
