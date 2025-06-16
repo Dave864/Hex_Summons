@@ -259,7 +259,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://range_type/ring_area.gd"
 }, {
-"base": "Reference",
+"base": "CollisionShape",
 "class": "ScalingHexCollider",
 "language": "GDScript",
 "path": "res://hex_map/map_tile_node/scripts/scaling_hex_collider.gd"
