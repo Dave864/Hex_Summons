@@ -167,7 +167,7 @@ _global_script_classes=[ {
 "base": "MeshInstance",
 "class": "HexHighlighter",
 "language": "GDScript",
-"path": "res://hex_map/map_tile_node/hex_highlighter.gd"
+"path": "res://hex_map/map_tile_node/scripts/hex_highlighter.gd"
 }, {
 "base": "Spatial",
 "class": "HexMap",
@@ -207,7 +207,7 @@ _global_script_classes=[ {
 "base": "Area",
 "class": "MapTile",
 "language": "GDScript",
-"path": "res://hex_map/map_tile_node/map_tile.gd"
+"path": "res://hex_map/map_tile_node/scripts/map_tile.gd"
 }, {
 "base": "Position3D",
 "class": "MousePosition",
@@ -259,15 +259,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://range_type/ring_area.gd"
 }, {
-"base": "CollisionShape",
+"base": "Reference",
 "class": "ScalingHexCollider",
 "language": "GDScript",
-"path": "res://hex_map/map_tile_node/scaling_hex_collider.gd"
+"path": "res://hex_map/map_tile_node/scripts/scaling_hex_collider.gd"
 }, {
 "base": "MeshInstance",
 "class": "ScalingHexMesh",
 "language": "GDScript",
-"path": "res://hex_map/map_tile_node/scaling_hex_mesh.gd"
+"path": "res://hex_map/map_tile_node/scripts/scaling_hex_mesh.gd"
 }, {
 "base": "Node",
 "class": "SelectionTracker",
@@ -505,6 +505,7 @@ ui_camera_reset={
 3d_physics/layer_3="player"
 3d_physics/layer_4="enemy"
 3d_physics/layer_5="action"
+3d_physics/layer_6="mouse_blocker"
 
 [mono]
 
