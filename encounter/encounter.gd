@@ -24,12 +24,13 @@ onready var ui: EncounterUI = $EncounterUI
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_parameters()
-	hex_map = get_node(hex_map_path)
-	
 	"""
 	TODO: implement logic to load the HexMap, based on some details determined
 	out of scene.
 	"""
+	hex_map = get_node(hex_map_path)
+	_connect_map_to_selector()
+	
 	"""
 	TODO: implement logic to load the players and enemies, placing them at
 	appropriate spots on the HexMap.
@@ -69,6 +70,17 @@ func get_current_character() -> Character:
 # end of the array before resuming count.
 func _determine_init_index(init_value: int) -> int:
 	return wrapi(init_value, 0, initiative_tracker.size())
+
+
+# Connects all map tile "mouse_hovered" signals to the selector.
+func _connect_map_to_selector() -> void:
+	for mt in hex_map.get_map_tiles():
+		ErrorUtil.connect_signal(
+				mt,
+				"mouse_hovered",
+				selector,
+				"_on_MapTile_mouse_hovered"
+		)
 
 
 # Check that all required parameters are set.

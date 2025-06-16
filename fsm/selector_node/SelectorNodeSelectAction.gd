@@ -17,11 +17,15 @@ var _player_pos: Vector3 = Vector3.ZERO
 # The tile index of the player that is using the action.
 var _player_map_index: int = -1
 
+# Reference to the function that will update the tile highlights.
+onready var _update_highlights_ref: FuncRef = funcref(self, "_update_highlights")
+
 
 func enter(_msg: Dictionary = {}) -> void:
 	_action = _msg["action"]
 	_player_pos = _msg["player_pos"]
 	_player_map_index = _msg["player_map_index"]
+	selector.set_update_highlights_func(_update_highlights_ref)
 	
 	ErrorUtil.connect_signal(
 			selector.collision_area,
@@ -87,6 +91,31 @@ func handle_input(_event: InputEvent) -> void:
 	_mouse_active = _event is InputEventMouse
 	if not _mouse_active:
 		_resolve_joystick_direction(HexUtil.joystick_to_hex_direction(selector.top_vertex))
+
+
+# Update the highlights for a given tile. Also updates what the hovered tile is.
+func _update_highlights(map_tile: MapTile) -> void:
+	print("Update action highlight for tile %d" % [map_tile.map_coordinate.get_map_index()])
+#	if (
+#		map_tile.is_active() 
+#		and (
+#			map_tile.get_highlight_type() == HexHighlighter.Option.RANGE
+#			or map_tile.get_highlight_type() == HexHighlighter.Option.TARGET
+#			or map_tile.get_highlight_type() == HexHighlighter.Option.PLAYER
+#		)
+#	):
+#		selector.tile_hovered = map_tile
+#
+#		_action.set_emission_map_index(
+#				_player_map_index if _action.emit_from_center 
+#				else map_tile.map_coordinate.get_map_index()
+#		)
+#		if _action.get_is_cardinal():
+#			var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
+#			var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
+#			var dir: Vector2 = (tile_pt - player_pt).normalized()
+#			_action.set_emission_direction(HexUtil.get_hex_direction(dir))
+#		selector.emit_effect_area_required(_action)
 
 
 # Determines if the selector is able to move to the adjacent tile in the

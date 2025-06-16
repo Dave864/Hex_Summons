@@ -6,6 +6,7 @@ Represents an individual map tile.
 """
 
 
+signal mouse_hovered(map_tile)
 signal height_changed(new_height)
 
 const HIGHLIGHTER_Y_OFFSET = 0.01
@@ -24,9 +25,11 @@ onready var occupant: Occupant = $Occupant
 var _adjacent_tiles: Array = [null, null, null, null, null, null] \
 	setget , get_all_adjacent
 # Flag that indicates the highlight of the tile.
-var _highlight_type: int = HexHighlighter.Option.NONE setget set_highlight_type, get_highlight_type
+var _highlight_type: int = HexHighlighter.Option.NONE \
+	setget set_highlight_type, get_highlight_type
 # Flag that indicates the selector of the tile.
-var _selector_type: int = HexHighlighter.Option.NONE setget set_selector_type, get_selector_type
+var _selector_type: int = HexHighlighter.Option.NONE \
+	setget set_selector_type, get_selector_type
 
 
 # Updates the height of the map tile.
@@ -103,3 +106,7 @@ func _update_highlighter_positions() -> void:
 	TODO: remove label
 	"""
 	$DebugLabel.translation = Vector3(0.0, y_translate, 0.2)
+
+
+func _on_MapTile_mouse_entered():
+	emit_signal("mouse_hovered", self)

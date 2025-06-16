@@ -25,6 +25,6 @@ func exit() -> void:
 
 
 # Hit when the player character is selected to take its turn.
-func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
+func _on_SignalBus_player_turn_started(player: PlayerCharacter, _tile: MapTile) -> void:
 	if player.name == pc.name:
 		state_machine.transition_to(STANDBY)

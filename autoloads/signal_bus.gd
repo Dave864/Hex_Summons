@@ -23,8 +23,8 @@ signal move_path_created(move_path)
 signal top_vertex_changed(vertex)
 
 
-func emit_player_turn_started(character: PlayerCharacter) -> void:
-	emit_signal("player_turn_started", character)
+func emit_player_turn_started(character: PlayerCharacter, tile: MapTile) -> void:
+	emit_signal("player_turn_started", character, tile)
 
 
 func emit_player_turn_ended(character: PlayerCharacter) -> void:

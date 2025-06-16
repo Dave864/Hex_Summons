@@ -16,10 +16,17 @@ var tile_hovered: MapTile = null
 # Describes which hex vertex is the top with respect to the camera
 var top_vertex: int = 0
 
+var _update_highlights_func: FuncRef = null setget set_update_highlights_func
+
 # The current mouse position
 onready var mouse_position: MousePosition = $MousePosition
 # The collision are for the selector
 onready var collision_area: Area = $CollisionArea
+
+
+# Sets the _update_highlights_func.
+func set_update_highlights_func(new_func: FuncRef) -> void:
+	_update_highlights_func = new_func
 
 
 # Move the collision area to the mouse position.
@@ -49,6 +56,12 @@ func _ready() -> void:
 			self,
 			"_on_SignalBus_top_vertex_changed"
 	)
+
+
+# Gets the tile that the mouse last hovered over.
+func _on_MapTile_mouse_hovered(new_tile: MapTile) -> void:
+	if _update_highlights_func != null:
+		_update_highlights_func.call_func(new_tile)
 
 
 # Updates the relative top vertex when the camera changes orientation.

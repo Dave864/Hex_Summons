@@ -11,10 +11,15 @@ state. If a player turn ends, go to the 'Wait' state.
 
 var _mouse_active: bool = false
 
+# Reference to the function that will update the tile highlights.
+onready var _update_highlights_ref: FuncRef = funcref(self, "_update_highlights")
+
 
 # Reveal the selector shape and enable to ability to snap to tile positions.
-func enter(_msg: Dictionary = {}) -> void:
-	selector.move_to_position(_msg["initial_position"])
+func enter(msg: Dictionary = {}) -> void:
+	selector.move_to_position(msg["initial_position"])
+#	selector.tile_hovered = msg["start_tile"]
+	selector.set_update_highlights_func(_update_highlights_ref)
 	ErrorUtil.connect_signal(
 			selector.collision_area,
 			"area_entered",
@@ -70,6 +75,28 @@ func handle_input(event: InputEvent) -> void:
 	
 	if not _mouse_active:
 		_resolve_joystick_direction(HexUtil.joystick_to_hex_direction(selector.top_vertex))
+
+
+# Update the highlights for a given tile. Also updates what the hovered tile is.
+func _update_highlights(map_tile: MapTile) -> void:
+	print("Update move highlight for tile %d" % [map_tile.map_coordinate.get_map_index()])
+#	if !map_tile.is_active():
+#		return
+#
+#	# Turn off previous selector indicator to indicate a new tile is being
+#	# hovered over.
+#	if selector.tile_hovered != null:
+#		selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+#	selector.tile_hovered = map_tile
+#
+#	var highlight: int = map_tile.get_highlight_type()
+#	if (
+#		highlight == HexHighlighter.Option.RANGE
+#		or highlight == HexHighlighter.Option.PLAYER
+#	):
+#		map_tile.set_selector_type(HexHighlighter.Option.MOVE)
+#	else:
+#		map_tile.set_selector_type(HexHighlighter.Option.GRAY)
 
 
 # Determines if the selector is able to move to the adjacent tile in the
