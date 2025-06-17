@@ -26,26 +26,7 @@ func enter(msg: Dictionary = {}) -> void:
 	_player_pos = msg["player_pos"]
 	_player_map_index = msg["player_map_index"]
 	selector.set_update_highlights_func(_update_highlights_ref)
-	
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_action_selected",
-			self,
-			"_on_SignalBus_player_action_selected"
-	)
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_action_type_canceled",
-			self,
-			"_on_SignalBus_player_action_type_canceled"
-	)
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
-	)
-	
+	_connect_signals()
 	_action.set_emission_map_index(_player_map_index)
 	selector.emit_effect_area_required(_action)
 
@@ -68,6 +49,11 @@ func exit() -> void:
 			"player_turn_ended",
 			self,
 			"_on_SignalBus_player_turn_ended"
+	)
+	SignalBus.disconnect(
+			"top_vertex_changed",
+			self,
+			"_on_SignalBus_top_vertex_changed"
 	)
 
 
@@ -101,6 +87,34 @@ func _update_highlights(map_tile: MapTile) -> void:
 			var dir: Vector2 = (tile_pt - player_pt).normalized()
 			_action.set_emission_direction(HexUtil.get_hex_direction(dir))
 		selector.emit_effect_area_required(_action)
+
+
+# Connect signals to this state.
+func _connect_signals() -> void:
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_action_type_canceled",
+			self,
+			"_on_SignalBus_player_action_type_canceled"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"top_vertex_changed",
+			self,
+			"_on_SignalBus_top_vertex_changed"
+	)
 
 
 # Determines if the selector is able to move to the adjacent tile in the
@@ -141,3 +155,8 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(WAIT)
+
+
+# Update the mouse tracker when the camera changes orientation.
+func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
+	JoystickHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())

@@ -11,10 +11,11 @@ enum InputSource {
 	NONE
 }
 
+
+var input_source: int = InputSource.NONE
 # Keeps track of the mouse position. Used for switching between joypad and mouse
 # input.
 var _mouse_position: Vector2 = Vector2.ZERO
-var _input_source: int = InputSource.NONE
 
 
 # Updates the recorded mouse position.
@@ -38,15 +39,13 @@ func _ready():
 func _input(event: InputEvent):
 	var left_dir_vec: Vector2 = _left_joystick_dir()
 	var right_dir_vec: Vector2 = _right_joystick_dir()
-	if event is InputEventMouse and not _input_source == InputSource.MOUSE:
-		_input_source = InputSource.MOUSE
+	if event is InputEventMouse and not input_source == InputSource.MOUSE:
 		_swap_to_mouse()
 	elif (
 		event is InputEventJoypadMotion
 		and (left_dir_vec != Vector2.ZERO or right_dir_vec != Vector2.ZERO)
-		and not _input_source == InputSource.JOYSTICK
+		and not input_source == InputSource.JOYSTICK
 	):
-		_input_source = InputSource.JOYSTICK
 		_swap_to_joystick()
 
 
@@ -72,12 +71,16 @@ func _right_joystick_dir() -> Vector2:
 
 # Reveals the mouse cursor at the last recorded position.
 func _swap_to_mouse() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	warp_mouse(_mouse_position)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	input_source = InputSource.MOUSE
 
 
 # Hides the mouse cursor.
 func _swap_to_joystick() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	input_source = InputSource.JOYSTICK
 
 
 # Scales the viewport size to match the window.

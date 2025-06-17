@@ -20,18 +20,7 @@ onready var _update_highlights_ref: FuncRef = funcref(self, "_update_highlights"
 func enter(msg: Dictionary = {}) -> void:
 	_update_highlights(msg["start_tile"])
 	selector.set_update_highlights_func(_update_highlights_ref)
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_action_selected",
-			self,
-			"_on_SignalBus_player_action_selected"
-	)
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
-	)
+	_connect_signals()
 
 
 # Called by the state machine before changing the active state. Use this 
@@ -48,6 +37,11 @@ func exit() -> void:
 			self,
 			"_on_SignalBus_player_turn_ended"
 	)
+	SignalBus.disconnect(
+			"top_vertex_changed",
+			self,
+			"_on_SignalBus_top_vertex_changed"
+	)
 
 
 # Handles input events
@@ -60,6 +54,28 @@ func handle_input(event: InputEvent) -> void:
 	
 	if not _mouse_active:
 		_resolve_joystick_direction(HexUtil.joystick_to_hex_direction(selector.top_vertex))
+
+
+# Connect signals to this state.
+func _connect_signals() -> void:
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"top_vertex_changed",
+			self,
+			"_on_SignalBus_top_vertex_changed"
+	)
 
 
 # Update the highlights for a given tile. Also updates what the hovered tile is.
@@ -117,3 +133,8 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 		return
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(WAIT)
+
+
+# Update the mouse tracker when the camera changes orientation.
+func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
+	JoystickHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
