@@ -131,7 +131,7 @@ func lateral_pan_mouse(lateral_motion: float) -> void:
 
 # Handles vertical camera panning from joystick input.
 func vertical_pan_joystick(delta: float) -> void:
-	var vertical_move: float = Input.get_axis("ui_camera_d", "ui_camera_u")
+	var vertical_move: float = Input.get_axis("right_joystick_d", "right_joystick_u")
 	if abs(vertical_move) == 0.0:
 		return
 	var rotation: float = rad2deg(_focus_pt.rotation.x)
@@ -143,7 +143,7 @@ func vertical_pan_joystick(delta: float) -> void:
 
 # Handles lateral camera panning from joystick input.
 func lateral_pan_joystick(delta: float) -> void:
-	var horizontal_move: float = Input.get_axis("ui_camera_l", "ui_camera_r")
+	var horizontal_move: float = Input.get_axis("right_joystick_l", "right_joystick_r")
 	if abs(horizontal_move) == 0.0:
 		return
 	_focus_pt.rotation.y -= deg2rad(horizontal_move * joystick_lateral_pan_speed * delta)

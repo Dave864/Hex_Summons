@@ -30,8 +30,8 @@ func handle_input(event: InputEvent) -> void:
 		enc_camera.lateral_pan_mouse(mouse_motion.x)
 	if event is InputEventJoypadMotion:
 		var camera_move: Vector2 = Vector2(
-				Input.get_axis("ui_camera_d", "ui_camera_u"),
-				Input.get_axis("ui_camera_l", "ui_camera_r")
+				Input.get_axis("right_joystick_d", "right_joystick_u"),
+				Input.get_axis("right_joystick_l", "right_joystick_r")
 		)
 		if joytick_pan and camera_move == Vector2.ZERO:
 			joytick_pan = false

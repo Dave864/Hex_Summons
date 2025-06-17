@@ -5,11 +5,16 @@ and holding to be considered a sequence of taps instead of a continuous ipnut.
 """
 
 
-# Flag that tracks if the mouse is being used for input or not.
-var _mouse_active: bool = false
+enum InputSource {
+	MOUSE,
+	JOYSTICK,
+	NONE
+}
+
 # Keeps track of the mouse position. Used for switching between joypad and mouse
 # input.
 var _mouse_position: Vector2 = Vector2.ZERO
+var _input_source: int = InputSource.NONE
 
 
 # Updates the recorded mouse position.
@@ -24,31 +29,55 @@ func update_mouse_tracker_3d(pos: Vector3) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CONFINED_HIDDEN
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	update_mouse_tracker_2d(get_viewport().get_mouse_position())
 	_scale_to_window()
 
 
 func _input(event: InputEvent):
-	if event is InputEventMouse and not _mouse_active:
-		_mouse_active = true
+	var left_dir_vec: Vector2 = _left_joystick_dir()
+	var right_dir_vec: Vector2 = _right_joystick_dir()
+	if event is InputEventMouse and not _input_source == InputSource.MOUSE:
+		_input_source = InputSource.MOUSE
 		_swap_to_mouse()
-	elif not event is InputEventMouse and _mouse_active:
-		_mouse_active = false
+	elif (
+		event is InputEventJoypadMotion
+		and (left_dir_vec != Vector2.ZERO or right_dir_vec != Vector2.ZERO)
+		and not _input_source == InputSource.JOYSTICK
+	):
+		_input_source = InputSource.JOYSTICK
 		_swap_to_joystick()
+
+
+# Get the direction of the left joystick input.
+func _left_joystick_dir() -> Vector2:
+	return Input.get_vector(
+			"left_joystick_l",
+			"left_joystick_r",
+			"left_joystick_u",
+			"left_joystick_d"
+	)
+
+
+# Get the direction of the right joystick input.
+func _right_joystick_dir() -> Vector2:
+	return Input.get_vector(
+			"right_joystick_l",
+			"right_joystick_r",
+			"right_joystick_u",
+			"right_joystick_d"
+	)
 
 
 # Reveals the mouse cursor at the last recorded position.
 func _swap_to_mouse() -> void:
-	print("mouse swap")
-	warp_mouse(_mouse_position)
-	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 # Hides the mouse cursor.
 func _swap_to_joystick() -> void:
-	print("joystick swap")
-	Input.mouse_mode = Input.MOUSE_MODE_CONFINED_HIDDEN
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 # Scales the viewport size to match the window.
