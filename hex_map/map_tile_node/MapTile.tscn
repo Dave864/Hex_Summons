@@ -96,6 +96,8 @@ text = "[-1:0]
 script = ExtResource( 6 )
 coordinate_ref = NodePath("../MapCoordinate")
 
+[connection signal="area_entered" from="." to="Occupant" method="_on_MapTile_area_entered"]
+[connection signal="area_exited" from="." to="Occupant" method="_on_MapTile_area_exited"]
 [connection signal="height_changed" from="." to="MouseBlocker/ScalingHexCollider" method="_on_HeightSource_height_changed"]
 [connection signal="height_changed" from="." to="TileShape" method="_on_HeightSource_height_changed"]
 [connection signal="mouse_entered" from="." to="." method="_on_MapTile_mouse_entered"]
