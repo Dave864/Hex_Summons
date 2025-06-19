@@ -94,9 +94,11 @@ func set_relative_top_vertex(new_top: int) -> void:
 	SignalBus.emit_top_vertex_changed(new_top)
 
 
-# Gets the orientation of the focus point.
+# Gets the orientation of the focus point. Normalizes the y rotation beforehand.
 func get_focus_point_orientation() -> Vector3:
-	return _focus_pt.rotation
+	var original_rotation: Vector3 = _focus_pt.rotation
+	original_rotation.y = _normalize_lateral_rotation(original_rotation.y)
+	return original_rotation
 
 
 # Get the relative top vertex.
@@ -162,7 +164,8 @@ func interpolate_camera_rotation(
 
 # Determines which radian rotation is closest to the camera's current rotation.
 func get_closest_vertex_radian() -> float:
-	var vertex_radian: float = 0.0
+	var focus_radian: float = _normalize_lateral_rotation(_focus_pt.rotation.y)
+	var closest_radian: float = focus_radian
 	for v in range(HEX_VERTEX_RADIANS.size()):
 		var next_v: int = posmod(v + 1, 6)
 		var v_radian: float = HEX_VERTEX_RADIANS[v]
@@ -172,13 +175,13 @@ func get_closest_vertex_radian() -> float:
 			else HEX_VERTEX_RADIANS[next_v]
 		)
 		var mid_radian: float = (v_radian + next_v_radian) / 2.0
-		if v_radian > _focus_pt.rotation.y and mid_radian < _focus_pt.rotation.y:
-			vertex_radian = v_radian
+		if v_radian > focus_radian and mid_radian < focus_radian:
+			closest_radian = v_radian
 			set_relative_top_vertex(v)
-		elif next_v_radian < _focus_pt.rotation.y and mid_radian > _focus_pt.rotation.y:
-			vertex_radian = next_v_radian
+		elif next_v_radian < focus_radian and mid_radian > focus_radian:
+			closest_radian = next_v_radian
 			set_relative_top_vertex(next_v)
-	return vertex_radian
+	return closest_radian
 
 
 # Called when the node enters the scene tree for the first time.
@@ -208,7 +211,8 @@ func _bind_vertical_rotation(rotation: float) -> float:
 # for a circle. Rotation is in radians.
 func _normalize_lateral_rotation(rotation: float) -> float:
 	return (
-		rotation - 2.0 * PI if rotation > PI
+		abs(rotation) if is_equal_approx(abs(rotation), PI)
+		else rotation - 2.0 * PI if rotation > PI
 		else rotation + 2.0 * PI if rotation < -PI
 		else rotation
 	)

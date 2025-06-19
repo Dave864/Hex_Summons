@@ -29,14 +29,11 @@ func handle_input(event: InputEvent) -> void:
 		enc_camera.vertical_pan_mouse(mouse_motion.y)
 		enc_camera.lateral_pan_mouse(mouse_motion.x)
 	if event is InputEventJoypadMotion:
-		var camera_move: Vector2 = Vector2(
-				Input.get_axis("right_joystick_d", "right_joystick_u"),
-				Input.get_axis("right_joystick_l", "right_joystick_r")
-		)
-		if joystick_pan and camera_move == Vector2.ZERO:
+		var camera_move: Vector2 = GamepadHandler.right_joystick_dir()
+		if joystick_pan and is_zero_approx(camera_move.x):
 			joystick_pan = false
 			state_machine.transition_to(NORMALIZE)
-		elif !joystick_pan and camera_move != Vector2.ZERO:
+		elif !joystick_pan and !is_zero_approx(camera_move.x):
 			joystick_pan = true
 
 
