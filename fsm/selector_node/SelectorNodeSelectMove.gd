@@ -9,9 +9,6 @@ state. If a player turn ends, go to the 'Wait' state.
 """
 
 
-# Flag that indicates that the mouse is active.
-var _mouse_active: bool = false
-
 # Reference to the function that will update the tile highlights.
 onready var _update_highlights_ref: FuncRef = funcref(self, "_update_highlights")
 
@@ -46,13 +43,12 @@ func exit() -> void:
 
 # Handles input events
 func handle_input(event: InputEvent) -> void:
-	_mouse_active = event is InputEventMouse
 	if event.is_action_pressed("ui_selector_select"):
 		if selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY:
 			selector.emit_move_tile_selected(selector.tile_hovered)
 			state_machine.transition_to(PAUSE)
 	
-	if not _mouse_active:
+	if InputController.get_source() == InputController.Source.GAMEPAD:
 		_resolve_joystick_direction(HexUtil.joystick_to_hex_direction(selector.top_vertex))
 
 
@@ -80,7 +76,7 @@ func _connect_signals() -> void:
 
 # Update the highlights for a given tile. Also updates what the hovered tile is.
 func _update_highlights(map_tile: MapTile) -> void:
-	JoystickHandler.update_mouse_tracker_3d(map_tile.get_character_position())
+	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	if !map_tile.is_active():
 		return
 
@@ -137,4 +133,4 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 # Update the mouse tracker when the camera changes orientation.
 func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
-	JoystickHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
+	MouseHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())

@@ -56,14 +56,6 @@ onready var _focus_pt: Position3D = $FocusPoint
 onready var _camera: Camera = $FocusPoint/Camera
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	_check_for_required_parameters()
-	_focus_pt.rotation = Vector3(deg2rad(_vert_pan_midpoint), 0.0, 0.0)
-	_default_orientation = _focus_pt.rotation
-	set_camera_distance(default_distance)
-
-
 # Sets the value of the default distance.
 func set_default_distance(distance: float) -> void:
 	default_distance = distance
@@ -187,6 +179,14 @@ func get_closest_vertex_radian() -> float:
 			vertex_radian = next_v_radian
 			set_relative_top_vertex(next_v)
 	return vertex_radian
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_check_for_required_parameters()
+	_focus_pt.rotation = Vector3(deg2rad(_vert_pan_midpoint), 0.0, 0.0)
+	_default_orientation = _focus_pt.rotation
+	set_camera_distance(default_distance)
 
 
 # Calculates the midpoint between the vertical bounds.

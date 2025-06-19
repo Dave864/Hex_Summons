@@ -393,7 +393,9 @@ config/icon="res://art/icon.png"
 
 ElementalPolarity="*res://autoloads/elemental_polarity.gd"
 SignalBus="*res://autoloads/signal_bus.gd"
-JoystickHandler="*res://autoloads/joystick_handler.gd"
+GamepadHandler="*res://autoloads/gamepad_handler.gd"
+MouseHandler="*res://autoloads/mouse_handler.gd"
+InputController="*res://autoloads/input_controller.gd"
 
 [global]
 

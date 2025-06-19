@@ -110,5 +110,5 @@ func _update_highlighter_positions() -> void:
 
 
 func _on_MapTile_mouse_entered():
-	if JoystickHandler.input_source == JoystickHandler.InputSource.MOUSE:
+	if InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
 		emit_signal("mouse_hovered", self)

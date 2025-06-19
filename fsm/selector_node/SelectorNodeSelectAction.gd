@@ -9,7 +9,6 @@ turn has been terminated.
 """
 
 
-var _mouse_active: bool = false
 # The action to display the effect area for.
 var _action: Action = null
 # The location of the player that is using the action.
@@ -59,14 +58,13 @@ func exit() -> void:
 
 # Handles input events
 func handle_input(_event: InputEvent) -> void:
-	_mouse_active = _event is InputEventMouse
-	if not _mouse_active:
+	if InputController.get_source() == InputController.Source.GAMEPAD:
 		_resolve_joystick_direction(HexUtil.joystick_to_hex_direction(selector.top_vertex))
 
 
 # Update the highlights for a given tile. Also updates what the hovered tile is.
 func _update_highlights(map_tile: MapTile) -> void:
-	JoystickHandler.update_mouse_tracker_3d(map_tile.get_character_position())
+	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	if (
 		map_tile.is_active() 
 		and (
@@ -159,4 +157,4 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 # Update the mouse tracker when the camera changes orientation.
 func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
-	JoystickHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
+	GamepadHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())

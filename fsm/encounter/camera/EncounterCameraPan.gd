@@ -9,7 +9,7 @@ joystick input. Goes to the 'Reset' state when the assigned input is recieved.
 # Flag indicating that the camera should pan based on mouse movement.
 var pan_camera: bool = false
 # Flag indicating that the joystick is being used for movement.
-var joytick_pan: bool = false
+var joystick_pan: bool = false
 # The value of the mouse motion.
 var mouse_motion: Vector2 = Vector2.ZERO
 
@@ -33,11 +33,11 @@ func handle_input(event: InputEvent) -> void:
 				Input.get_axis("right_joystick_d", "right_joystick_u"),
 				Input.get_axis("right_joystick_l", "right_joystick_r")
 		)
-		if joytick_pan and camera_move == Vector2.ZERO:
-			joytick_pan = false
+		if joystick_pan and camera_move == Vector2.ZERO:
+			joystick_pan = false
 			state_machine.transition_to(NORMALIZE)
-		elif !joytick_pan and camera_move != Vector2.ZERO:
-			joytick_pan = true
+		elif !joystick_pan and camera_move != Vector2.ZERO:
+			joystick_pan = true
 
 
 # Virtual function. Corresponds to the `_process()` callback.
