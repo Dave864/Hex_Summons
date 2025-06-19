@@ -54,12 +54,16 @@ func exit() -> void:
 			self,
 			"_on_SignalBus_top_vertex_changed"
 	)
+	GamepadHandler.disconnect(
+			"left_joystick_pulsed",
+			self,
+			"_on_GamepadHandler_left_joystick_pulsed"
+	)
 
 
 # Handles input events
 func handle_input(_event: InputEvent) -> void:
-	if InputController.get_source() == InputController.Source.GAMEPAD:
-		_resolve_joystick_direction(HexUtil.joystick_to_hex_direction(selector.top_vertex))
+	pass
 
 
 # Update the highlights for a given tile. Also updates what the hovered tile is.
@@ -113,6 +117,12 @@ func _connect_signals() -> void:
 			self,
 			"_on_SignalBus_top_vertex_changed"
 	)
+	ErrorUtil.connect_signal(
+			GamepadHandler,
+			"left_joystick_pulsed",
+			self,
+			"_on_GamepadHandler_left_joystick_pulsed"
+	)
 
 
 # Determines if the selector is able to move to the adjacent tile in the
@@ -122,6 +132,7 @@ func _resolve_joystick_direction(direction: int) -> void:
 		"""
 		TODO: Implement logic to handle joystick input.
 		"""
+		print("left pulse")
 
 
 # Go to the "SelectAction" state with the new action.
@@ -157,4 +168,10 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 # Update the mouse tracker when the camera changes orientation.
 func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
-	GamepadHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
+	MouseHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
+
+
+# Resolves the left joystick pulse input.
+func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
+	var hex_dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
+	_resolve_joystick_direction(hex_dir)
