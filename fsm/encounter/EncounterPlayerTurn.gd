@@ -131,7 +131,8 @@ func _on_Selector_effect_area_required(action: Action) -> void:
 	enc.hex_map.selection_tracker.select_effect_range(
 			effect_area_indexes,
 			_active_char.get_map_index_at(),
-			action.effect_ignores_caster
+			action.effect_ignores_caster,
+			action.get_is_cardinal()
 	)
 
 

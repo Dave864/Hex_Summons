@@ -14,17 +14,22 @@ var _selectable_map_indexes: Array = []
 
 
 # Highlight the specified tiles as movement for the given player character.
-# Setting start_id to -1 indicates that we want to use the current player position
+# Setting player_index to -1 indicates that we want to use the current player position
 # to determine where to set the Player highlight.
 func highlight_player_movement(
 	tile_indexes: Array,
 	pc: PlayerCharacter,
-	start_id: int = -1
+	player_index: int = -1
 ) -> void:
+	# Activate the selector at the player's current position.
+	var player_tile: MapTile = _map_tiles.get_tile_at_index(pc.get_map_index_at())
+	player_tile.set_selector_type(HexHighlighter.Option.MOVE)
+	
+	# Set the tile highlights.
 	for i in tile_indexes:
 		var tile: MapTile = _map_tiles.get_tile_at_index(i)
 		if tile.occupant.get_current_occupant() == null:
-			if i == start_id:
+			if i == player_index:
 				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 			else:
 				tile.set_highlight_type(HexHighlighter.Option.RANGE)
@@ -36,7 +41,7 @@ func highlight_player_movement(
 			tile.set_highlight_type(HexHighlighter.Option.NONE)
 			_highlighted_map_indexes.append(tile.map_coordinate.get_map_index())
 		elif tile.occupant.get_current_occupant().name == pc.name:
-			if start_id < 0 or start_id == pc.get_map_index_at():
+			if player_index < 0 or player_index == pc.get_map_index_at():
 				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 			else:
 				tile.set_highlight_type(HexHighlighter.Option.RANGE)
@@ -69,7 +74,8 @@ func highlight_action_source_area(tile_indexes: Array, pc: PlayerCharacter) -> v
 func select_effect_range(
 		tile_indexes: Array,
 		caster_index: int,
-		ignore_caster: bool
+		ignore_caster: bool,
+		is_cardinal: bool
 ) -> void:
 	var map_section: Array = _map_tiles.get_tiles_from_ids(tile_indexes)
 	for tile in map_section:
@@ -81,7 +87,10 @@ func select_effect_range(
 			tile.set_selector_type(HexHighlighter.Option.TARGET)
 			_selectable_map_indexes.append(tile.map_coordinate.get_map_index())
 		elif tile.map_coordinate.get_map_index() == caster_index and ignore_caster:
-			tile.set_selector_type(HexHighlighter.Option.NONE)
+			if is_cardinal:
+				tile.set_selector_type(HexHighlighter.Option.NONE)
+			else:
+				tile.set_selector_type(HexHighlighter.Option.GRAY)
 			_selectable_map_indexes.append(tile.map_coordinate.get_map_index())
 		else:
 			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)

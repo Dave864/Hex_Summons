@@ -20,7 +20,7 @@ var top_vertex: int = 0
 var _map_tiles_ref: Array = [] setget set_map_tiles_ref, get_map_tiles_ref
 # Reference to a function that will update the map tile highlights. Different
 # states will use different logic for updating the highlights.
-var _update_highlights_func: FuncRef = null setget set_update_highlights_func
+var _update_selection_func: FuncRef = null setget set_update_selection_func
 
 
 # Sets the reference to the map tiles.
@@ -33,9 +33,9 @@ func get_map_tiles_ref() -> Array:
 	return _map_tiles_ref
 
 
-# Sets the _update_highlights_func.
-func set_update_highlights_func(new_func: FuncRef) -> void:
-	_update_highlights_func = new_func
+# Sets the _update_selection_func.
+func set_update_selection_func(new_func: FuncRef) -> void:
+	_update_selection_func = new_func
 
 
 # Emits the move_tile_selected signal.
@@ -59,8 +59,8 @@ func _ready() -> void:
 
 # Gets the tile that the mouse last hovered over.
 func _on_MapTile_mouse_hovered(new_tile: MapTile) -> void:
-	if _update_highlights_func != null:
-		_update_highlights_func.call_func(new_tile)
+	if _update_selection_func != null:
+		_update_selection_func.call_func(new_tile)
 
 
 # Updates the relative top vertex when the camera changes orientation.

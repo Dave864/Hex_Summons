@@ -10,20 +10,20 @@ state. If a player turn ends, go to the 'Wait' state.
 
 
 # Reference to the function that will update the tile highlights.
-onready var _update_highlights_ref: FuncRef = funcref(self, "_update_highlights")
+onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 
 
 # Reveal the selector shape and enable the ability to update tile highlights.
 func enter(msg: Dictionary = {}) -> void:
-	_update_highlights(msg["start_tile"])
-	selector.set_update_highlights_func(_update_highlights_ref)
+	_update_selection(msg["start_tile"])
+	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
 
 
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	selector.set_update_highlights_func(null)
+	selector.set_update_selection_func(null)
 	SignalBus.disconnect(
 			"player_action_selected",
 			self,
@@ -82,8 +82,8 @@ func _connect_signals() -> void:
 	)
 
 
-# Update the highlights for a given tile. Also updates what the hovered tile is.
-func _update_highlights(map_tile: MapTile) -> void:
+# Update the selector for a given tile. Also updates what the hovered tile is.
+func _update_selection(map_tile: MapTile) -> void:
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	if !map_tile.is_active():
 		return
@@ -110,7 +110,7 @@ func _resolve_joystick_direction(direction: int) -> void:
 	if direction >= 0 and direction <= 5:
 		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(direction)
 		if adjacent_tile != null:
-			_update_highlights(adjacent_tile)
+			_update_selection(adjacent_tile)
 
 
 # Go to the "SelectAction" state when the UI signals that an action was selected.

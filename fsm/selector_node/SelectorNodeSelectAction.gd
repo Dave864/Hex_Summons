@@ -17,14 +17,15 @@ var _player_pos: Vector3 = Vector3.ZERO
 var _player_map_index: int = -1
 
 # Reference to the function that will update the tile highlights.
-onready var _update_highlights_ref: FuncRef = funcref(self, "_update_highlights")
+onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 
 
 func enter(msg: Dictionary = {}) -> void:
 	_action = msg["action"]
 	_player_pos = msg["player_pos"]
 	_player_map_index = msg["player_map_index"]
-	selector.set_update_highlights_func(_update_highlights_ref)
+	selector.tile_hovered = selector.get_map_tiles_ref()[_player_map_index]
+	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
 	_action.set_emission_map_index(_player_map_index)
 	selector.emit_effect_area_required(_action)
@@ -33,7 +34,7 @@ func enter(msg: Dictionary = {}) -> void:
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	selector.set_update_highlights_func(null)
+	selector.set_update_selection_func(null)
 	SignalBus.disconnect(
 			"player_action_selected",
 			self,
@@ -66,10 +67,15 @@ func handle_input(_event: InputEvent) -> void:
 	if InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
 		if _action.get_is_cardinal():
 			_orient_emission_to_mouse()
+	elif InputController.get_source() == InputController.Source.GAMEPAD:
+		var joy_dir: Vector2 = GamepadHandler.left_joystick_dir()
+		if _action.get_is_cardinal() and not joy_dir.is_zero_approx():
+			var dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
+			_resolve_joystick_for_cardinal(dir)
 
 
-# Update the highlights for a given tile. Also updates what the hovered tile is.
-func _update_highlights(map_tile: MapTile) -> void:
+# Update the selection for a given tile. Also updates what the hovered tile is.
+func _update_selection(map_tile: MapTile) -> void:
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	if !map_tile.is_active():
 		return
@@ -143,12 +149,21 @@ func _connect_signals() -> void:
 
 # Determines if the selector is able to move to the adjacent tile in the
 # given direction (0 - 5) and does so if able.
-func _resolve_joystick_direction(direction: int) -> void:
-	if direction >= 0 and direction <= 5:
-		"""
-		TODO: Implement logic to handle joystick input.
-		"""
-		print("left pulse")
+func _resolve_joystick_for_area(dir: int) -> void:
+	if dir >= 0 and dir <= 5:
+		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(dir)
+		if adjacent_tile != null:
+			_update_selection(adjacent_tile)
+
+
+# Determines if the selector is able to move to the given direction (0 - 5)
+# and does so if able.
+func _resolve_joystick_for_cardinal(dir: int) -> void:
+	if dir >= 0 and dir <= 5:
+		var player_tile: MapTile = selector.get_map_tiles_ref()[_player_map_index]
+		var direction_tile: MapTile = player_tile.get_adjacent_tile(dir)
+		if direction_tile != null:
+			_update_selection(direction_tile)
 
 
 # Go to the "SelectAction" state with the new action.
@@ -173,6 +188,7 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 	if not _state_is_active():
 		return
 	var start_tile: MapTile = selector.get_map_tiles_ref()[_player_map_index]
+	selector.tile_hovered = start_tile
 	state_machine.transition_to(SELECT_MOVE, {"start_tile": start_tile})
 
 
@@ -189,5 +205,7 @@ func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
 
 # Resolves the left joystick pulse input.
 func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
+	if _action.get_is_cardinal():
+		return
 	var hex_dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
-	_resolve_joystick_direction(hex_dir)
+	_resolve_joystick_for_area(hex_dir)
