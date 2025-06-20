@@ -63,7 +63,9 @@ func exit() -> void:
 
 # Handles input events
 func handle_input(_event: InputEvent) -> void:
-	pass
+	if InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
+		if _action.get_is_cardinal():
+			_orient_emission_to_mouse()
 
 
 # Update the highlights for a given tile. Also updates what the hovered tile is.
@@ -73,16 +75,24 @@ func _update_highlights(map_tile: MapTile) -> void:
 		return
 	if _action.get_is_cardinal():
 		selector.tile_hovered = map_tile
-		_action.set_emission_map_index(_player_map_index)
-		var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
-		var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
-		var dir: Vector2 = (tile_pt - player_pt).normalized()
-		_action.set_emission_direction(HexUtil.get_hex_direction(dir))
-		selector.emit_effect_area_required(_action)
+		_orient_emission_to_mouse()
 	elif _is_target_tile(map_tile):
 		selector.tile_hovered = map_tile
 		_action.set_emission_map_index(map_tile.map_coordinate.get_map_index())
 		selector.emit_effect_area_required(_action)
+
+
+# Orients the direction of an action cast from the player based on mouse position.
+func _orient_emission_to_mouse() -> void:
+	_action.set_emission_map_index(_player_map_index)
+	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
+	var mouse_pt: Vector2 = Vector2(
+		MouseHandler.get_world_position().x,
+		MouseHandler.get_world_position().z
+	)
+	var dir: Vector2 = (mouse_pt - player_pt).normalized()
+	_action.set_emission_direction(HexUtil.get_hex_direction(dir))
+	selector.emit_effect_area_required(_action)
 
 
 # Checks if a given map tile is a valid target for an action.
