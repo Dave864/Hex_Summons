@@ -69,7 +69,6 @@ func grab_focus_at_index(index: int) -> void:
 func _populate_sub_options(player: PlayerCharacter, player_actions: Array) -> void:
 	for pa in player_actions:
 		var new_button: SubOptionButton = _action_button.instance()
-		_action_button.instance()
 		new_button.set_action_details(pa)
 		new_button.set_player(player)
 		new_button.connect(
