@@ -69,26 +69,32 @@ func handle_input(_event: InputEvent) -> void:
 # Update the highlights for a given tile. Also updates what the hovered tile is.
 func _update_highlights(map_tile: MapTile) -> void:
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
-	if (
-		map_tile.is_active() 
-		and (
-			map_tile.get_highlight_type() == HexHighlighter.Option.RANGE
-			or map_tile.get_highlight_type() == HexHighlighter.Option.TARGET
-			or map_tile.get_highlight_type() == HexHighlighter.Option.PLAYER
-		)
-	):
+	if !map_tile.is_active():
+		return
+	if _action.get_is_cardinal():
 		selector.tile_hovered = map_tile
-
-		_action.set_emission_map_index(
-				_player_map_index if _action.emit_from_center 
-				else map_tile.map_coordinate.get_map_index()
-		)
-		if _action.get_is_cardinal():
-			var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
-			var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
-			var dir: Vector2 = (tile_pt - player_pt).normalized()
-			_action.set_emission_direction(HexUtil.get_hex_direction(dir))
+		_action.set_emission_map_index(_player_map_index)
+		var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
+		var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
+		var dir: Vector2 = (tile_pt - player_pt).normalized()
+		_action.set_emission_direction(HexUtil.get_hex_direction(dir))
 		selector.emit_effect_area_required(_action)
+	elif _is_target_tile(map_tile):
+		selector.tile_hovered = map_tile
+		_action.set_emission_map_index(map_tile.map_coordinate.get_map_index())
+		selector.emit_effect_area_required(_action)
+
+
+# Checks if a given map tile is a valid target for an action.
+func _is_target_tile(map_tile: MapTile) -> bool:
+	"""
+	TODO: Update action to get the effect target details
+	"""
+	return (
+		map_tile.get_highlight_type() == HexHighlighter.Option.RANGE
+		or map_tile.get_highlight_type() == HexHighlighter.Option.TARGET
+		or map_tile.get_highlight_type() == HexHighlighter.Option.PLAYER
+	)
 
 
 # Connect signals to this state.
