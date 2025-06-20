@@ -81,7 +81,10 @@ func _update_selection(map_tile: MapTile) -> void:
 		return
 	if _action.get_is_cardinal():
 		selector.tile_hovered = map_tile
-		_orient_emission_to_mouse()
+		if InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
+			_orient_emission_to_mouse()
+		elif InputController.get_source() == InputController.Source.GAMEPAD:
+			_orient_emission_to_tile(map_tile)
 	elif _is_target_tile(map_tile):
 		selector.tile_hovered = map_tile
 		_action.set_emission_map_index(map_tile.map_coordinate.get_map_index())
@@ -96,8 +99,18 @@ func _orient_emission_to_mouse() -> void:
 		MouseHandler.get_world_position().x,
 		MouseHandler.get_world_position().z
 	)
-	var dir: Vector2 = (mouse_pt - player_pt).normalized()
-	_action.set_emission_direction(HexUtil.get_hex_direction(dir))
+	var vector_dir: Vector2 = (mouse_pt - player_pt).normalized()
+	_action.set_emission_direction(HexUtil.get_hex_direction(vector_dir))
+	selector.emit_effect_area_required(_action)
+
+
+# Orients the direction of an action cast from the player based on tile position.
+func _orient_emission_to_tile(map_tile: MapTile) -> void:
+	_action.set_emission_map_index(_player_map_index)
+	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
+	var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
+	var vector_dir: Vector2 = (tile_pt - player_pt).normalized()
+	_action.set_emission_direction(HexUtil.get_hex_direction(vector_dir))
 	selector.emit_effect_area_required(_action)
 
 
