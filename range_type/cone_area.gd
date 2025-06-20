@@ -25,6 +25,9 @@ func determine_directional_area_indexes(
 	dir: int,
 	map_tiles: Tiles
 ) -> Array:
+	# Adjust the direction based on the spread so that the resulting indexes
+	# are aligned to the original direction.
+	dir = posmod(dir - int(spread / 2), 6)
 	var tile_ids: Array = []
 	var start_coord: Vector3 = (
 			map_tiles.get_tile_at_index(start) \
