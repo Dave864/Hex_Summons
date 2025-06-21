@@ -24,11 +24,9 @@ func enter(msg: Dictionary = {}) -> void:
 	_action = msg["action"]
 	_player_pos = msg["player_pos"]
 	_player_map_index = msg["player_map_index"]
-	selector.tile_hovered = selector.get_map_tiles_ref()[_player_map_index]
 	selector.set_update_selection_func(_update_selection_ref)
+	_orient_to_closest_target()
 	_connect_signals()
-	_action.set_emission_map_index(_player_map_index)
-	selector.emit_effect_area_required(_action)
 
 
 # Called by the state machine before changing the active state. Use this 
@@ -65,11 +63,11 @@ func exit() -> void:
 # Handles input events
 func handle_input(_event: InputEvent) -> void:
 	if InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
-		if _action.get_is_cardinal():
+		if _action.emit_from_center:
 			_orient_emission_to_mouse()
 	elif InputController.get_source() == InputController.Source.GAMEPAD:
 		var joy_dir: Vector2 = GamepadHandler.left_joystick_dir()
-		if _action.get_is_cardinal() and not joy_dir.is_zero_approx():
+		if _action.emit_from_center and not joy_dir.is_zero_approx():
 			var dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
 			_resolve_joystick_for_cardinal(dir)
 
@@ -99,9 +97,11 @@ func _orient_emission_to_mouse() -> void:
 		MouseHandler.get_world_position().x,
 		MouseHandler.get_world_position().z
 	)
-	var vector_dir: Vector2 = (mouse_pt - player_pt).normalized()
-	_action.set_emission_direction(HexUtil.get_hex_direction(vector_dir))
-	selector.emit_effect_area_required(_action)
+	var dir: int = HexUtil.get_hex_direction((mouse_pt - player_pt).normalized())
+	var source_tile: MapTile = selector.map_tiles[_player_map_index]
+	if source_tile.get_adjacent_tile(dir) != null:
+		_action.set_emission_direction(dir)
+		selector.emit_effect_area_required(_action)
 
 
 # Orients the direction of an action cast from the player based on tile position.
@@ -111,6 +111,49 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
 	var vector_dir: Vector2 = (tile_pt - player_pt).normalized()
 	_action.set_emission_direction(HexUtil.get_hex_direction(vector_dir))
+	selector.emit_effect_area_required(_action)
+
+
+# Positions the action emission to the closest valid target, or orients it to said target.
+func _orient_to_closest_target() -> void:
+	"""
+	TODO: Update to determine if players, enemies, or both are valid targets.
+	Currently only looks for enemies.
+	"""
+	var potential_targets: Array = selector.enemies_ref
+	
+	var target_distances: Array = []
+	for option in potential_targets:
+		var dist: float = selector.range_finder.calculate_distance(
+				_player_map_index,
+				option.map_coordinate.get_map_index()
+		)
+		target_distances.append([option, dist])
+	target_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
+	
+	# Get the range of the action, account for source reach if necessary.
+	var action_range: float = _action.effect_range.get_reach()
+	action_range += (
+			_action.source_range.get_reach() if _action.emit_from_center
+			else 0
+	)
+	
+	for td in target_distances:
+		var target_index: int = td[0].map_coordinate.get_map_index()
+		# Set the orientation to the closest target that can be reached.
+		if _action.emit_from_center:
+			var target_tile: MapTile = selector.map_tiles[target_index]
+			_orient_emission_to_tile(target_tile)
+			return
+		# Set the emission point to the tile of the target.
+		elif td[1] < action_range:
+			selector.tile_hovered = selector.map_tiles[target_index]
+			_action.set_emission_map_index(target_index)
+			selector.emit_effect_area_required(_action)
+			return
+	
+	# Set to player position if all targets are out of range.
+	selector.tile_hovered = selector.map_tiles[_player_map_index]
 	selector.emit_effect_area_required(_action)
 
 
@@ -173,7 +216,7 @@ func _resolve_joystick_for_area(dir: int) -> void:
 # and does so if able.
 func _resolve_joystick_for_cardinal(dir: int) -> void:
 	if dir >= 0 and dir <= 5:
-		var player_tile: MapTile = selector.get_map_tiles_ref()[_player_map_index]
+		var player_tile: MapTile = selector.map_tiles[_player_map_index]
 		var direction_tile: MapTile = player_tile.get_adjacent_tile(dir)
 		if direction_tile != null:
 			_update_selection(direction_tile)
@@ -200,7 +243,7 @@ func _on_SignalBus_player_action_selected(
 func _on_SignalBus_player_action_type_canceled() -> void:
 	if not _state_is_active():
 		return
-	var start_tile: MapTile = selector.get_map_tiles_ref()[_player_map_index]
+	var start_tile: MapTile = selector.map_tiles[_player_map_index]
 	selector.tile_hovered = start_tile
 	state_machine.transition_to(SELECT_MOVE, {"start_tile": start_tile})
 
@@ -213,6 +256,10 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 # Update the mouse tracker when the camera changes orientation.
 func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
+	"""
+	TODO: Update to determine if enemies, players, or both are valid targets for
+	the action. Currently just looks at enemies.
+	"""
 	MouseHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
 
 

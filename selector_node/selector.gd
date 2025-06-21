@@ -15,22 +15,18 @@ signal effect_area_required(action)
 var tile_hovered: MapTile = null
 # Describes which hex vertex is the top with respect to the camera
 var top_vertex: int = 0
+# Reference to the player characters in the current encounter.
+var players_ref: Array = []
+# Reference to the enemy characer in the current encounter.
+var enemies_ref: Array = []
+# Reference to the HexMap of the current encounter map.
+var map_tiles: Array = []
+# Reference to the map's range finder.
+var range_finder: RangeFinder = null
 
-# Reference to the map tiles of the current encounter map.
-var _map_tiles_ref: Array = [] setget set_map_tiles_ref, get_map_tiles_ref
 # Reference to a function that will update the map tile highlights. Different
 # states will use different logic for updating the highlights.
 var _update_selection_func: FuncRef = null setget set_update_selection_func
-
-
-# Sets the reference to the map tiles.
-func set_map_tiles_ref(map_tiles_ref: Array) -> void:
-	_map_tiles_ref = map_tiles_ref
-
-
-# Gets the map tiles reference.
-func get_map_tiles_ref() -> Array:
-	return _map_tiles_ref
 
 
 # Sets the _update_selection_func.

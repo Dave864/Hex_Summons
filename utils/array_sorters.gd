@@ -13,7 +13,7 @@ static func sort_character_initiative(a: Character, b: Character) -> bool:
 # Sorts characters by their distances in ascending order.
 # Takes in two arrays, each of which contains two items.
 # The first element is the character.
-# The seconf element is the distance.
+# The second element is the distance.
 static func sort_distance_to_character_asc(c1: Array, c2: Array) -> bool:
 	return c1[1] < c2[1]
 

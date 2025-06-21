@@ -49,5 +49,5 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 # Transition to the 'Select' state when the selector is needed again.
 func _on_SignalBus_selector_required(start_index: int) -> void:
-	var start_tile: MapTile = selector.get_map_tiles_ref()[start_index]
+	var start_tile: MapTile = selector.map_tiles[start_index]
 	state_machine.transition_to(SELECT_MOVE, {"start_tile": start_tile})

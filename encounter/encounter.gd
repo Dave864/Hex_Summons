@@ -21,6 +21,23 @@ onready var move_path: HexMapMovementPath = $MovementPath
 onready var ui: EncounterUI = $EncounterUI
 
 
+# Move the initiative counter to the next index or reset it back to the start.
+func progress_initiative() -> void:
+	cur_init = _determine_init_index(cur_init + 1)
+	ui.initiative_tracker.update_initiative(cur_init)
+
+
+# Gets the next character in the intiative track.
+func get_next_character() -> Character:
+	var next_init: int = _determine_init_index(cur_init + 1)
+	return initiative_tracker[next_init]
+
+
+# Gets the character currently in initiative.
+func get_current_character() -> Character:
+	return initiative_tracker[cur_init]
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_parameters()
@@ -45,23 +62,10 @@ func _ready() -> void:
 	
 	for e in enemies:
 		ui.track_enemy(e)
-
-
-# Move the initiative counter to the next index or reset it back to the start.
-func progress_initiative() -> void:
-	cur_init = _determine_init_index(cur_init + 1)
-	ui.initiative_tracker.update_initiative(cur_init)
-
-
-# Gets the next character in the intiative track.
-func get_next_character() -> Character:
-	var next_init: int = _determine_init_index(cur_init + 1)
-	return initiative_tracker[next_init]
-
-
-# Gets the character currently in initiative.
-func get_current_character() -> Character:
-	return initiative_tracker[cur_init]
+	
+	selector.players_ref = players
+	selector.enemies_ref = enemies
+	selector.range_finder = hex_map.range_finder
 
 
 # Determines which index in the initiative array that a given value corresponds
@@ -74,7 +78,7 @@ func _determine_init_index(init_value: int) -> int:
 
 # Connects all map tile "mouse_hovered" signals to the selector.
 func _connect_map_to_selector() -> void:
-	selector.set_map_tiles_ref(hex_map.get_map_tiles())
+	selector.map_tiles = hex_map.get_map_tiles()
 	for mt in hex_map.get_map_tiles():
 		ErrorUtil.connect_signal(
 				mt,
