@@ -53,6 +53,7 @@ func exit() -> void:
 	_disconnect_signals()
 
 
+# Connect signals that will persist throughout the life of this state.
 func _ready_connect_signals() -> void:
 	ErrorUtil.connect_signal(
 			SignalBus,
@@ -158,7 +159,7 @@ func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -
 	var source_indexes: Array = enc.hex_map.range_finder.determine_source_range_indexes(
 			action.source_range,
 			action.dead_range,
-			action.get_emission_map_index(),
+			_p.map_coordinate.get_map_index(),
 			action.source_ignore_heights
 	)
 	enc.hex_map.selection_tracker.clear_highlights()
