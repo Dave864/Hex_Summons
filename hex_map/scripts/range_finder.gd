@@ -154,15 +154,15 @@ func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Arra
 func determine_source_range_indexes(
 	source_range: AreaRange,
 	dead_range: AreaRange,
-	emission_map_index: int,
+	source_start_index: int,
 	ignore_heights: bool
 ) -> Array:
 	var source_indexes: Array = source_range.determine_area_indexes(
-			emission_map_index,
+			source_start_index,
 			_map_tiles
 	)
 	var dead_indexes: Array = (
-			dead_range.determine_area_indexes(emission_map_index, _map_tiles) 
+			dead_range.determine_area_indexes(source_start_index, _map_tiles) 
 			if dead_range != null
 			else []
 	)
@@ -170,7 +170,7 @@ func determine_source_range_indexes(
 	if not ignore_heights:
 		source_indexes = _get_traversible_indexes(
 				source_indexes,
-				emission_map_index,
+				source_start_index,
 				source_range.get_reach()
 		)
 
