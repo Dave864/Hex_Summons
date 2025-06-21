@@ -104,40 +104,36 @@ static func get_hex_direction(
 ) -> int:
 	var dir: int = -1
 	if (
-		dir_vec.x > HV_COORD_0.x
+		dir_vec.x >= HV_COORD_0.x
 		and dir_vec.x < HV_COORD_1.x
-		and dir_vec.y < 0.0
+		and dir_vec.y <= 0.0
 	):
 		dir = HexDirection.UPPER_RIGHT
 	elif (
-		dir_vec.x > 0.0
-		and dir_vec.y > HV_COORD_1.y
+		dir_vec.x >= 0.0
+		and dir_vec.y >= HV_COORD_1.y
 		and dir_vec.y < HV_COORD_2.y
 	):
 		dir = HexDirection.RIGHT
 	elif(
-		dir_vec.x > HV_COORD_3.x
+		dir_vec.x >= HV_COORD_3.x
 		and dir_vec.x < HV_COORD_2.x
-		and dir_vec.y > 0.0
+		and dir_vec.y >= 0.0
 	):
 		dir = HexDirection.BOTTOM_RIGHT
 	elif(
-		dir_vec.x > HV_COORD_4.x
+		dir_vec.x >= HV_COORD_4.x
 		and dir_vec.x < HV_COORD_3.x
-		and dir_vec.y > 0.0
+		and dir_vec.y >= 0.0
 	):
 		dir = HexDirection.BOTTOM_LEFT
 	elif(
-		dir_vec.x < 0.0
-		and dir_vec.y < HV_COORD_4.y
+		dir_vec.x <= 0.0
+		and dir_vec.y <= HV_COORD_4.y
 		and dir_vec.y > HV_COORD_5.y
 	):
 		dir = HexDirection.LEFT
-	elif(
-		dir_vec.x < HV_COORD_0.x
-		and dir_vec.x > HV_COORD_5.x
-		and dir_vec.y < 0.0
-	):
+	else:
 		dir = HexDirection.UPPER_LEFT
 	return _relative_hex_direction(dir, top_vertex)
 

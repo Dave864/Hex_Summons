@@ -11,7 +11,7 @@ turn has been terminated.
 
 # The action to display the effect area for.
 var _action: Action = null
-# The location of the player that is using the action.
+# The translation of the player that is using the action.
 var _player_pos: Vector3 = Vector3.ZERO
 # The tile index of the player that is using the action.
 var _player_map_index: int = -1
@@ -25,8 +25,11 @@ func enter(msg: Dictionary = {}) -> void:
 	_player_pos = msg["player_pos"]
 	_player_map_index = msg["player_map_index"]
 	selector.set_update_selection_func(_update_selection_ref)
-	_orient_to_closest_target()
 	_connect_signals()
+	if _action.emit_from_center:
+		_orient_to_closest_target()
+	else:
+		_place_on_closest_target()
 
 
 # Called by the state machine before changing the active state. Use this 
@@ -97,7 +100,10 @@ func _orient_emission_to_mouse() -> void:
 		MouseHandler.get_world_position().x,
 		MouseHandler.get_world_position().z
 	)
-	var dir: int = HexUtil.get_hex_direction((mouse_pt - player_pt).normalized())
+	var dir: int = HexUtil.get_hex_direction(
+			(mouse_pt - player_pt).normalized(),
+			selector.top_vertex
+	)
 	var source_tile: MapTile = selector.map_tiles[_player_map_index]
 	if source_tile.get_adjacent_tile(dir) != null:
 		_action.set_emission_direction(dir)
@@ -110,26 +116,25 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
 	var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
 	var vector_dir: Vector2 = (tile_pt - player_pt).normalized()
-	_action.set_emission_direction(HexUtil.get_hex_direction(vector_dir))
+	var emission_dir: int = HexUtil.get_hex_direction(vector_dir, selector.top_vertex)
+	_action.set_emission_direction(emission_dir)
 	selector.emit_effect_area_required(_action)
 
 
-# Positions the action emission to the closest valid target, or orients it to said target.
+# Orients the action emission to the closest valid target.
 func _orient_to_closest_target() -> void:
-	"""
-	TODO: Update to determine if players, enemies, or both are valid targets.
-	Currently only looks for enemies.
-	"""
-	var potential_targets: Array = selector.enemies_ref
-	
-	var target_distances: Array = []
-	for option in potential_targets:
-		var dist: float = selector.range_finder.calculate_distance(
-				_player_map_index,
-				option.map_coordinate.get_map_index()
-		)
-		target_distances.append([option, dist])
-	target_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
+	var target_distances: Array = _get_target_distances()
+	# Get the map tile the target is at.
+	var target_index: int = target_distances[0][0].map_coordinate.get_map_index()
+	var target_tile: MapTile = selector.map_tiles[target_index]
+	_orient_emission_to_tile(target_tile)
+	selector.emit_effect_area_required(_action)
+
+
+# Places the effect emission so that the effect area highlights the closest
+# target. Effect is positioned on player otherwise.
+func _place_on_closest_target() -> void:
+	var target_distances: Array = _get_target_distances()
 	
 	# Get the range of the action, account for source reach if necessary.
 	var action_range: float = _action.effect_range.get_reach()
@@ -155,6 +160,25 @@ func _orient_to_closest_target() -> void:
 	# Set to player position if all targets are out of range.
 	selector.tile_hovered = selector.map_tiles[_player_map_index]
 	selector.emit_effect_area_required(_action)
+
+
+# Gets an array of the targets sorted by distance from player. The closest
+# target is at the first index. Each index contains the target character and distance.
+func _get_target_distances() -> Array:
+	"""
+	TODO: Update to determine if players, enemies, or both are valid targets.
+	Currently only looks for enemies.
+	"""
+	var potential_targets: Array = selector.enemies_ref
+	var target_distances: Array = []
+	for option in potential_targets:
+		var dist: float = selector.range_finder.calculate_distance(
+				_player_map_index,
+				option.map_coordinate.get_map_index()
+		)
+		target_distances.append([option, dist])
+	target_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
+	return target_distances
 
 
 # Checks if a given map tile is a valid target for an action.
@@ -256,10 +280,6 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 # Update the mouse tracker when the camera changes orientation.
 func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
-	"""
-	TODO: Update to determine if enemies, players, or both are valid targets for
-	the action. Currently just looks at enemies.
-	"""
 	MouseHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
 
 

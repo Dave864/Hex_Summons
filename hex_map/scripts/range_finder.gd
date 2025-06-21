@@ -26,7 +26,7 @@ func get_point_path_for_player(
 ) -> PoolVector3Array:
 	# Disable connection points of the opposite character type to prevent character
 	# from being able to move into those spaces
-	update_astar_disabled_for_characters(enemies, true)
+	_update_astar_disabled_for_characters(enemies, true)
 	
 	_hm_astar.disconnect_area(_map_tiles.get_tiles_from_ids(movement_area))
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(
@@ -78,11 +78,11 @@ func get_point_path_toward_for_character(
 	
 	# Disable connection points of the opposite character type to prevent character
 	# from being able to move into those spaces
-	update_astar_disabled_for_characters(
+	_update_astar_disabled_for_characters(
 		enemies,
 		c.get_type() == Constants.MapOccupants.PLAYER
 	)
-	update_astar_disabled_for_characters(
+	_update_astar_disabled_for_characters(
 		players,
 		c.get_type() == Constants.MapOccupants.ENEMY
 	)
@@ -127,16 +127,10 @@ func get_point_path_toward_for_character(
 	return point_path
 
 
-# Updates the astar disabled flag for the tiles occupied by the specified characters.
-func update_astar_disabled_for_characters(characters: Array, disabled: bool) -> void:
-	for c in characters:
-		_hm_astar.set_point_disabled(c.get_map_index_at(), disabled)
-
-
 # Get the area that can be reached by a character. Takes in an array of the
 # opposing characters for determining the tiles to disable.
 func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Array:
-	update_astar_disabled_for_characters(opponents, true)
+	_update_astar_disabled_for_characters(opponents, true)
 	var c_move_indexes: Array = _determine_ring_area_indexes(
 		c.stats.get_movement_range(),
 		c.get_map_index_at()
@@ -146,6 +140,7 @@ func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Arra
 		c.stats.get_movement_range(),
 		_map_tiles.get_tiles_from_ids(c_move_indexes)
 	)
+	_update_astar_disabled_for_characters(opponents, false)
 	return t_tiles
 
 
@@ -214,6 +209,15 @@ func _ready():
 		_map_tiles.get_x_count(),
 		_map_tiles.get_z_count()
 	)
+
+
+# Updates the astar disabled flag for the tiles occupied by the specified characters.
+func _update_astar_disabled_for_characters(
+	characters: Array,
+	disabled: bool
+) -> void:
+	for c in characters:
+		_hm_astar.set_point_disabled(c.get_map_index_at(), disabled)
 
 
 # Determines which map tiles are in the ring area positioned at the start index.
