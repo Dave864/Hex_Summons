@@ -101,8 +101,7 @@ func _orient_emission_to_mouse() -> void:
 		MouseHandler.get_world_position().z
 	)
 	var dir: int = HexUtil.get_hex_direction(
-			(mouse_pt - player_pt).normalized(),
-			selector.top_vertex
+			(mouse_pt - player_pt).normalized()
 	)
 	var source_tile: MapTile = selector.map_tiles[_player_map_index]
 	if source_tile.get_adjacent_tile(dir) != null:
@@ -116,7 +115,7 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
 	var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
 	var vector_dir: Vector2 = (tile_pt - player_pt).normalized()
-	var emission_dir: int = HexUtil.get_hex_direction(vector_dir, selector.top_vertex)
+	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
 	_action.set_emission_direction(emission_dir)
 	selector.emit_effect_area_required(_action)
 
@@ -128,7 +127,6 @@ func _orient_to_closest_target() -> void:
 	var target_index: int = target_distances[0][0].map_coordinate.get_map_index()
 	var target_tile: MapTile = selector.map_tiles[target_index]
 	_orient_emission_to_tile(target_tile)
-	selector.emit_effect_area_required(_action)
 
 
 # Places the effect emission so that the effect area highlights the closest
@@ -242,7 +240,7 @@ func _resolve_joystick_for_cardinal(dir: int) -> void:
 	if dir >= 0 and dir <= 5:
 		var player_tile: MapTile = selector.map_tiles[_player_map_index]
 		var direction_tile: MapTile = player_tile.get_adjacent_tile(dir)
-		if direction_tile != null:
+		if direction_tile != null and _is_target_tile(direction_tile):
 			_update_selection(direction_tile)
 
 
