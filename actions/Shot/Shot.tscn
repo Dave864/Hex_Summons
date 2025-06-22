@@ -12,7 +12,7 @@ source_ignore_heights = true
 
 [node name="SourceRange" type="Node" parent="."]
 script = ExtResource( 1 )
-radius = 3
+radius = 4
 
 [node name="EffectRange" type="Node" parent="."]
 script = ExtResource( 1 )

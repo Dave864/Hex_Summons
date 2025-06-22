@@ -5,7 +5,7 @@
 [ext_resource path="res://character/player_classes/TestRangeClass/stat_data/stat_values.tres" type="Resource" id=3]
 [ext_resource path="res://actions/Shot/Shot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://actions/Beam/Beam.tscn" type="PackedScene" id=5]
-[ext_resource path="res://actions/Strike/Strike.tscn" type="PackedScene" id=6]
+[ext_resource path="res://actions/Blast/Blast.tscn" type="PackedScene" id=7]
 
 [node name="TestRangeClass" type="Node"]
 script = ExtResource( 1 )
@@ -16,10 +16,10 @@ base_stat_values = ExtResource( 3 )
 
 [node name="Techniques" type="Node" parent="."]
 
+[node name="Blast" parent="Techniques" instance=ExtResource( 7 )]
+
 [node name="Shot" parent="Techniques" instance=ExtResource( 4 )]
 
 [node name="Beam" parent="Techniques" instance=ExtResource( 5 )]
-
-[node name="Strike" parent="Techniques" instance=ExtResource( 6 )]
 
 [node name="Spells" type="Node" parent="."]
