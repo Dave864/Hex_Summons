@@ -58,7 +58,7 @@ func disconnect_area(tiles_to_disconnect: Array) -> void:
 
 
 # Fully reset the connection map for the given section of map.
-func full_reset(map_tiles: Array):
+func section_reset(map_tiles: Array):
 	reconnect_area(map_tiles)
 	reset_disabled(map_tiles)
 

@@ -14,6 +14,8 @@ var _hm_astar: HexMapAStar = null
 
 # Calculates the distance from a given start to a specified destination.
 func calculate_distance(start_id: int, dest_id: int) -> float:
+	# Reset all connections to make sure distance can be found.
+	_hm_astar.section_reset(_map_tiles.get_all_tiles())
 	return _hm_astar.distance(start_id, dest_id)
 
 
@@ -33,7 +35,7 @@ func get_point_path_for_player(
 		pc.get_map_index_at(),
 		dest_id
 	)
-	_hm_astar.full_reset(_map_tiles.get_tiles_from_ids(movement_area))
+	_hm_astar.section_reset(_map_tiles.get_tiles_from_ids(movement_area))
 	return point_path
 
 
@@ -123,7 +125,7 @@ func get_point_path_toward_for_character(
 	
 	_hm_astar.disconnect_area(_map_tiles.get_tiles_from_ids(movement_area_ids))
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(start_id, true_dest_id)
-	_hm_astar.full_reset(_map_tiles.get_all_tiles())
+	_hm_astar.section_reset(_map_tiles.get_all_tiles())
 	return point_path
 
 

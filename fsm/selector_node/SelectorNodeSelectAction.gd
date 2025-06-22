@@ -100,9 +100,8 @@ func _orient_emission_to_mouse() -> void:
 		MouseHandler.get_world_position().x,
 		MouseHandler.get_world_position().z
 	)
-	var dir: int = HexUtil.get_hex_direction(
-			(mouse_pt - player_pt).normalized()
-	)
+	# Relative top not needed as mouse position translates to direct map coordinates.
+	var dir: int = HexUtil.get_hex_direction((mouse_pt - player_pt).normalized())
 	var source_tile: MapTile = selector.map_tiles[_player_map_index]
 	if source_tile.get_adjacent_tile(dir) != null:
 		_action.set_emission_direction(dir)
@@ -115,6 +114,7 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
 	var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
 	var vector_dir: Vector2 = (tile_pt - player_pt).normalized()
+	# Relative top not needed as we are using direct map coordinates.
 	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
 	_action.set_emission_direction(emission_dir)
 	selector.emit_effect_area_required(_action)
@@ -135,21 +135,15 @@ func _place_on_closest_target() -> void:
 	var target_distances: Array = _get_target_distances()
 	
 	# Get the range of the action, account for source reach if necessary.
-	var action_range: float = _action.effect_range.get_reach()
-	action_range += (
-			_action.source_range.get_reach() if _action.emit_from_center
-			else 0
+	var action_range: float = (
+			_action.effect_range.get_reach() \
+			+ _action.source_range.get_reach()
 	)
 	
 	for td in target_distances:
 		var target_index: int = td[0].map_coordinate.get_map_index()
-		# Set the orientation to the closest target that can be reached.
-		if _action.emit_from_center:
-			var target_tile: MapTile = selector.map_tiles[target_index]
-			_orient_emission_to_tile(target_tile)
-			return
 		# Set the emission point to the tile of the target.
-		elif td[1] < action_range:
+		if td[1] <= action_range:
 			selector.tile_hovered = selector.map_tiles[target_index]
 			_action.set_emission_map_index(target_index)
 			selector.emit_effect_area_required(_action)
@@ -285,5 +279,6 @@ func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
 func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
 	if _action.get_is_cardinal():
 		return
+	# Relative top needed as joystick direction does not account for camera orientation.
 	var hex_dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
 	_resolve_joystick_for_area(hex_dir)
