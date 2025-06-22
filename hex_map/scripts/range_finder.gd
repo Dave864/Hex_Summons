@@ -24,18 +24,18 @@ func get_point_path_for_player(
 	pc: PlayerCharacter,
 	dest_id: int,
 	enemies: Array,
-	movement_area: Array
+	movement_area_ids: Array
 ) -> PoolVector3Array:
 	# Disable connection points of the opposite character type to prevent character
 	# from being able to move into those spaces
 	_update_astar_disabled_for_characters(enemies, true)
 	
-	_hm_astar.disconnect_area(_map_tiles.get_tiles_from_ids(movement_area))
+	_hm_astar.disconnect_area(_map_tiles.get_tiles_from_ids(movement_area_ids))
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(
 		pc.get_map_index_at(),
 		dest_id
 	)
-	_hm_astar.section_reset(_map_tiles.get_tiles_from_ids(movement_area))
+	_hm_astar.section_reset(_map_tiles.get_tiles_from_ids(movement_area_ids))
 	return point_path
 
 
@@ -56,7 +56,7 @@ func get_point_path_toward(
 	var movement_area_tiles: Array = _map_tiles.get_tiles_from_ids(movement_area_ids)
 	_hm_astar.disconnect_area(movement_area_tiles)
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(start_id, true_dest_id)
-	_hm_astar.reconnect_area(movement_area_tiles)
+	_hm_astar.connect_area(movement_area_tiles)
 	
 	return point_path
 
@@ -208,9 +208,8 @@ func determine_effect_range_indexes(
 func _ready():
 	_map_tiles = get_node(map_tiles_reference)
 	_hm_astar = HexMapAStar.new(
-		_map_tiles.get_all_tiles(),
-		_map_tiles.get_x_count(),
-		_map_tiles.get_z_count()
+			_map_tiles.get_all_tiles(),
+			_map_tiles.get_x_count()
 	)
 
 

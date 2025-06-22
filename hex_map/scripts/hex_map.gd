@@ -12,7 +12,6 @@ const FLOOR_MESH: String = "FloorMesh"
 const SELECTION_TRACKER: String = "SelectionTracker"
 const RANGE_FINDER: String = "RangeFinder"
 
-#var _hm_astar: HexMapAStar = null
 var selection_tracker: SelectionTracker = null
 var range_finder: RangeFinder = null
 var _floor_mesh: PlaneMesh = preload("res://hex_map/resources/hex_map_floor.tres")

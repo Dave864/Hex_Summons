@@ -41,11 +41,6 @@ onready var summon_button: LabeledIconButton = $Options/SummonButton
 onready var end_button: LabeledIconButton = $Options/EndButton
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
 # Sets the selection flag.
 func set_current_selection(new_flag: int) -> void:
 	_current_selection = new_flag
