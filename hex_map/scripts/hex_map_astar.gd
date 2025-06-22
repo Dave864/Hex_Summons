@@ -45,16 +45,17 @@ func update_astar_disabled_for_characters(characters: Array, disabled: bool) -> 
 # of MapTiles.
 func disconnect_area(tiles_to_disconnect: Array) -> void:
 	for tile in tiles_to_disconnect:
-		if tile.is_active():
-			for neighbor in tile.get_all_adjacent():
-				if (
-						neighbor != null 
-						and not neighbor in tiles_to_disconnect
-				):
-					disconnect_points(
-							tile.map_coordinate.get_map_index(),
-							neighbor.map_coordinate.get_map_index()
-					)
+		if !tile.is_active():
+			continue
+		for neighbor in tile.get_all_adjacent():
+			if (
+				neighbor != null 
+				and not neighbor in tiles_to_disconnect
+			):
+				disconnect_points(
+						tile.map_coordinate.get_map_index(),
+						neighbor.map_coordinate.get_map_index()
+				)
 
 
 # Fully reset the connection map for the given section of map.

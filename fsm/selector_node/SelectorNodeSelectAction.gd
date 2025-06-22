@@ -132,22 +132,21 @@ func _orient_to_closest_target() -> void:
 # Places the effect emission so that the effect area highlights the closest
 # target. Effect is positioned on player otherwise.
 func _place_on_closest_target() -> void:
-	var target_distances: Array = _get_target_distances()
+	var target_details: Array = _get_target_distances()[0]
 	
-	# Get the range of the action, account for source reach if necessary.
+	# Get the full range of the action.
 	var action_range: float = (
 			_action.effect_range.get_reach() \
 			+ _action.source_range.get_reach()
 	)
 	
-	for td in target_distances:
-		var target_index: int = td[0].map_coordinate.get_map_index()
-		# Set the emission point to the tile of the target.
-		if td[1] <= action_range:
-			selector.tile_hovered = selector.map_tiles[target_index]
-			_action.set_emission_map_index(target_index)
-			selector.emit_effect_area_required(_action)
-			return
+	var target_index: int = target_details[0].map_coordinate.get_map_index()
+	# Set the emission point to the tile of the target.
+	if target_details[1] <= action_range:
+		selector.tile_hovered = selector.map_tiles[target_index]
+		_action.set_emission_map_index(target_index)
+		selector.emit_effect_area_required(_action)
+		return
 	
 	# Set to player position if all targets are out of range.
 	selector.tile_hovered = selector.map_tiles[_player_map_index]

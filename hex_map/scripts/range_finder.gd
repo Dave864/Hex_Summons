@@ -67,7 +67,7 @@ func get_point_path_toward_for_character(
 	dest_id: int,
 	enemies: Array,
 	players: Array,
-	movement_area_ids: Array = []
+	movement_area_ids: Array
 ) -> PoolVector3Array:
 	# Get the currently traversible tiles for the character if movement is not
 	# provided.
@@ -123,9 +123,10 @@ func get_point_path_toward_for_character(
 		else:
 			break
 	
-	_hm_astar.disconnect_area(_map_tiles.get_tiles_from_ids(movement_area_ids))
+	var section_tiles: Array = _map_tiles.get_tiles_from_ids(movement_area_ids)
+	_hm_astar.disconnect_area(section_tiles)
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(start_id, true_dest_id)
-	_hm_astar.section_reset(_map_tiles.get_all_tiles())
+	_hm_astar.section_reset(section_tiles)
 	return point_path
 
 
