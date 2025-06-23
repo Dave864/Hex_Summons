@@ -43,32 +43,6 @@ func get_point_path_for_player(
 	return point_path
 
 
-# Determines the path within an area from start that gets closest to a destination.
-func get_point_path_toward(
-	start_id: int,
-	dest_id: int,
-	movement_area_ids: Array
-) -> PoolVector3Array:
-	# Enable all connections to make sure the path can be found.
-	_hm_astar.set_all_disabled(false)
-	var true_dest_id: int = dest_id
-	var path_to_dest: PoolIntArray = _hm_astar.get_id_path(start_id, dest_id)
-	
-	# Determine the last point in the path that is within the movement range.
-	for i in range(path_to_dest.size() - 1, 0, -1):
-		if (not path_to_dest[i] in movement_area_ids):
-			true_dest_id = path_to_dest[i - 1]
-	
-	# Only enable the movement area
-	_hm_astar.set_all_disabled()
-	_hm_astar.set_area_disabled(movement_area_ids, false)
-	
-	var point_path: PoolVector3Array = _hm_astar.get_point_path(start_id, true_dest_id)
-	# Reset for future range finder operations.
-	_hm_astar.set_area_disabled(movement_area_ids)
-	return point_path
-
-
 # Determines the path within a character's movement area that gets closest
 # to a destination.
 func get_point_path_toward_for_character(
