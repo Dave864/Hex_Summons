@@ -127,17 +127,19 @@ func get_point_path_toward_for_character(
 # Get the area that can be reached by a character. Takes in an array of the
 # opposing characters for determining the tiles to disable.
 func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Array:
-	_disable_character_tiles(opponents, true)
 	var c_move_indexes: Array = _determine_ring_area_indexes(
 		c.stats.get_movement_range(),
 		c.get_map_index_at()
 	)
+	_hm_astar.set_area_disabled(c_move_indexes, false)
+	_disable_character_tiles(opponents, true)
 	var t_tiles: Array = _hm_astar.get_traversable_ids(
 		c.get_map_index_at(),
 		c.stats.get_movement_range(),
 		c_move_indexes
 	)
-	_disable_character_tiles(opponents, false)
+	# Reset for future range finder operations.
+	_hm_astar.set_area_disabled(c_move_indexes)
 	return t_tiles
 
 
@@ -160,7 +162,7 @@ func determine_source_range_indexes(
 	)
 
 	if not ignore_heights:
-		source_indexes = _get_traversible_indexes(
+		source_indexes = _get_traversible_ids(
 				source_indexes,
 				source_start_index,
 				source_range.get_reach()
@@ -189,7 +191,7 @@ func determine_effect_range_indexes(
 	)
 	
 	if not ignore_heights:
-		return _get_traversible_indexes(
+		return _get_traversible_ids(
 				effect_indexes,
 				emission_map_index,
 				effect_range.get_reach()
@@ -240,6 +242,7 @@ func _determine_closest_point_toward(
 				or (occupant != null and occupant.get_type() != c.get_type())
 			):
 				true_dest_id = path_to_dest[i - 1]
+			else:
 				break
 		# Check if the found destination tile is occupied by an ally other 
 		# than itself. If so, disable that tile and recalculate the shortest path.
@@ -279,10 +282,16 @@ func _determine_ring_area_indexes(radius: int, start: int) -> Array:
 
 
 # Determines which tiles are reachable in a specified map section.
-func _get_traversible_indexes(
-	section_indexes: Array,
+func _get_traversible_ids(
+	section_ids: Array,
 	start_index: int,
 	travel_range: int
 ) -> Array:
-	var section_tiles: Array = _map_tiles.get_tiles_from_ids(section_indexes)
-	return _hm_astar.get_traversable_ids(start_index, travel_range, section_tiles)
+	_hm_astar.set_area_disabled(section_ids, false)
+	var indexes: Array = _hm_astar.get_traversable_ids(
+			start_index,
+			travel_range,
+			section_ids
+	)
+	_hm_astar.set_area_disabled(section_ids)
+	return indexes
