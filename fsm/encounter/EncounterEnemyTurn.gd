@@ -71,8 +71,7 @@ func _determine_action_chain() -> void:
 	"""
 	var action_chain: Array = []
 	var path: PoolVector3Array = (
-			enc.hex_map \
-			.range_finder.get_point_path_toward_for_character(
+			enc.hex_map.range_finder.get_point_path_toward_for_character(
 				active_char,
 				_determine_closest_player_index(),
 				enc.enemies,

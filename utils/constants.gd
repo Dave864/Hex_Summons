@@ -18,13 +18,6 @@ enum Element {
 	DARK,
 }
 
-# Possible occupants of a MapTile.
-enum MapOccupants {
-	PLAYER,
-	ENEMY,
-	EMPTY,
-}
-
 # What the range finder is being used for.
 enum RangeTypes {
 	MOVE,
@@ -60,10 +53,6 @@ const HEX_TILE_UNIT_HEIGHT: float = 0.5
 # area range and effect range. The radius is the distance from the center to
 # a vertex of a hexagon.
 const DISPLAY_HEX_RADIUS: float = 3.0
-
-# The vertical displacement required by the selector shape in order to keep it
-# on top of map tiles.
-const SELECTOR_DISPLACEMENT: float = 0.125
 
 # The maximimum values for various character and attack stats.
 const MAX_STAT: int = 1000

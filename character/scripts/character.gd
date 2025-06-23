@@ -6,6 +6,12 @@ position details.
 """
 
 
+enum Type {
+	ENEMY,
+	PLAYER,
+	NONE
+}
+
 var stats: CharacterStats
 # Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false setget , get_is_start_set
@@ -27,7 +33,7 @@ func get_is_start_set() -> bool:
 
 # Virtual function. Returns the type of the character.
 func get_type() -> int:
-	return Constants.MapOccupants.EMPTY
+	return Type.NONE
 
 
 # Called when the node enters the scene tree for the first time.

@@ -16,7 +16,7 @@ var _actions: Array
 
 # Returns the type of the character, ENEMY.
 func get_type() -> int:
-	return Constants.MapOccupants.ENEMY
+	return Type.ENEMY
 
 
 # Emit the signal 'enemy_actions_required'

@@ -18,10 +18,10 @@ func get_current_occupant() -> Character:
 # Check if the tile is able to be moved through by the specifed character type.
 func can_character_pass(character_type: int) -> bool:
 	match character_type:
-		Constants.MapOccupants.PLAYER:
-			return _occupant == null or _occupant.get_type() == Constants.MapOccupants.PLAYER
-		Constants.MapOccupants.ENEMY:
-			return _occupant == null or _occupant.get_type() == Constants.MapOccupants.ENEMY
+		Character.Type.PLAYER:
+			return _occupant == null or _occupant.get_type() == Character.Type.PLAYER
+		Character.Type.ENEMY:
+			return _occupant == null or _occupant.get_type() == Character.Type.ENEMY
 		_:
 			return true
 

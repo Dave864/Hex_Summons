@@ -36,7 +36,7 @@ func get_spells() -> Array:
 
 # Returns the type of the character, PLAYER.
 func get_type() -> int:
-	return Constants.MapOccupants.PLAYER
+	return Type.PLAYER
 
 
 # Virtual function. Updates emission points for all actions of the chracter.

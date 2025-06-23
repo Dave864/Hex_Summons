@@ -12,7 +12,7 @@ export(Texture) var icon_pressed = null setget set_icon_pressed, get_icon_presse
 export(Texture) var icon_hover = null setget set_icon_hover, get_icon_hover
 export(Texture) var icon_disabled = null setget set_icon_disabled, get_icon_disabled
 export(Texture) var icon_focused = null setget set_icon_focused, get_icon_focused
-export(bool) var disabled = false setget set_disabled, get_disabled
+export(bool) var disabled = false setget set_area_disabled, get_disabled
 
 var _is_highlighted: bool
 
@@ -102,7 +102,7 @@ func get_icon_focused() -> Texture:
 
 
 # Set the disabled flag.
-func set_disabled(flag_value: bool) -> void:
+func set_area_disabled(flag_value: bool) -> void:
 	disabled = flag_value
 	_disabled_update()
 

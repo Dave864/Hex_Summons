@@ -12,15 +12,14 @@ var _x_count: int
 # Get the area that can be reached in a specific map section starting from a
 # given point in said section. This takes into account the tile heights.
 # Will return an empty array if the start tile is not in the map section.
-func get_traversable_ids(start_index: int, reach: int, map_section: Array) -> Array:
+func get_traversable_ids(start_id: int, reach: int, map_section_ids: Array) -> Array:
 	var ids_in_range: Array = []
-	disconnect_area(map_section)
-	for tiles in map_section:
-		var tile_index: int = tiles.get_index()
-		var total_distance: float = distance(start_index, tile_index)
+	set_area_disabled(map_section_ids, false)
+	for id in map_section_ids:
+		var total_distance: float = distance(start_id, id)
 		if total_distance <= reach:
-			ids_in_range.append(tile_index)
-	connect_area(map_section)
+			ids_in_range.append(id)
+	set_area_disabled(map_section_ids)
 	return ids_in_range
 
 
@@ -59,7 +58,7 @@ func disconnect_area(tiles_to_disconnect: Array) -> void:
 # Fully reset the connection map for the given section of map.
 func section_reset(map_tiles: Array):
 	connect_area(map_tiles)
-	reset_disabled(map_tiles)
+	set_area_disabled(map_tiles)
 
 
 # Establish the connections in the astar map for the specified area.
@@ -75,11 +74,16 @@ func connect_area(map_tiles: Array) -> void:
 					)
 
 
-# Reset the disabled flag for the specified connections in the astar map.
-func reset_disabled(map_tiles: Array) -> void:
-	for tile in map_tiles:
-		if tile.is_active():
-			set_point_disabled(tile.map_coordinate.get_map_index(), false)
+# Set the disabled flag for the specified area in the astar map.
+func set_area_disabled(tile_ids: Array, disabled: bool = true) -> void:
+	for id in tile_ids:
+		set_point_disabled(id, disabled)
+
+
+# Sets the disabled flag for all connections in the astar map.
+func set_all_disabled(disabled: bool = true) -> void:
+	for id in get_point_count():
+		set_point_disabled(id, disabled)
 
 
 func _init(hex_map_tiles: Array, x_count: int) -> void:
@@ -103,6 +107,7 @@ func _init(hex_map_tiles: Array, x_count: int) -> void:
 					tile.get_character_position(),
 					1.0
 			)
+			set_point_disabled(tile.map_coordinate.get_map_index())
 	
 	connect_area(hex_map_tiles)
 

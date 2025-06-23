@@ -36,7 +36,7 @@ func highlight_player_movement(
 			_highlighted_map_indexes.append(tile.map_coordinate.get_map_index())
 		elif (
 			tile.occupant.get_current_occupant().get_type() 
-			== Constants.MapOccupants.ENEMY
+			== Character.Type.ENEMY
 		):
 			tile.set_highlight_type(HexHighlighter.Option.NONE)
 			_highlighted_map_indexes.append(tile.map_coordinate.get_map_index())
@@ -61,7 +61,7 @@ func highlight_action_source_area(tile_indexes: Array, pc: PlayerCharacter) -> v
 		elif tile.occupant.get_current_occupant() == null:
 			tile.set_highlight_type(HexHighlighter.Option.RANGE)
 			_highlighted_map_indexes.append(index)
-		elif tile.occupant.get_current_occupant().get_type() == Constants.MapOccupants.ENEMY:
+		elif tile.occupant.get_current_occupant().get_type() == Character.Type.ENEMY:
 			tile.set_highlight_type(HexHighlighter.Option.TARGET)
 			_highlighted_map_indexes.append(index)
 		else:
@@ -83,7 +83,7 @@ func select_effect_range(
 		if occupant == null:
 			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)
 			_selectable_map_indexes.append(tile.map_coordinate.get_map_index())
-		elif occupant.get_type() == Constants.MapOccupants.ENEMY:
+		elif occupant.get_type() == Character.Type.ENEMY:
 			tile.set_selector_type(HexHighlighter.Option.TARGET)
 			_selectable_map_indexes.append(tile.map_coordinate.get_map_index())
 		elif tile.map_coordinate.get_map_index() == caster_index and ignore_caster:
