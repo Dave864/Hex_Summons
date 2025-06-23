@@ -123,7 +123,7 @@ func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 # Updates the tile selectors to show the effect range of an action
 func _on_Selector_effect_area_required(action: Action) -> void:
 	enc.hex_map.selection_tracker.clear_selector_highlights()
-	var effect_area_indexes: Array = enc.hex_map.range_finder.determine_effect_range_indexes(
+	var effect_area_indexes: Array = enc.hex_map.range_finder.get_effect_range_indexes(
 			action.effect_range,
 			action.get_emission_map_index(),
 			action.get_emission_direction(),
@@ -156,7 +156,7 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 # Updates the tile highlights to show the source range of the action.
 func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
-	var source_indexes: Array = enc.hex_map.range_finder.determine_source_range_indexes(
+	var source_indexes: Array = enc.hex_map.range_finder.get_source_range_indexes(
 			action.source_range,
 			action.dead_range,
 			_p.map_coordinate.get_map_index(),

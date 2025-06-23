@@ -43,6 +43,26 @@ func get_player_point_path(
 	return point_path
 
 
+# Determines the tile id  within a given area that is closest to a destination.
+func get_closest_index_toward(
+	start_id: int,
+	dest_id: int,
+	movement_area_ids: Array
+) -> int:
+	_hm_astar.set_all_disabled(false)
+	var path_to_dest: PoolIntArray = _hm_astar.get_id_path(start_id, dest_id)
+	# Reset for future range finder operations.
+	_hm_astar.set_all_disabled()
+	
+	var closest_id: int = dest_id
+	for i in range(path_to_dest.size() - 1, 0, -1):
+		if not path_to_dest[i] in movement_area_ids:
+			closest_id = path_to_dest[i - 1]
+		else:
+			break
+	return closest_id
+
+
 # Determines the path within a character's movement area that gets closest
 # to a destination.
 func get_character_point_path_toward(
@@ -119,7 +139,7 @@ func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
 
 # Determines the tile indexes that describe a source range, excluding any defined
 # dead range.
-func determine_source_range_indexes(
+func get_source_range_indexes(
 	source_range: AreaRange,
 	dead_range: AreaRange,
 	source_start_index: int,
@@ -134,7 +154,7 @@ func determine_source_range_indexes(
 			if dead_range != null
 			else []
 	)
-
+	
 	if not ignore_heights:
 		source_indexes = _get_traversible_ids(
 				source_indexes,
@@ -152,7 +172,7 @@ func determine_source_range_indexes(
 
 
 # Determines the tile indexes that describe the given effect range.
-func determine_effect_range_indexes(
+func get_effect_range_indexes(
 	effect_range: AreaRange,
 	emission_map_index: int,
 	emission_direction: int,

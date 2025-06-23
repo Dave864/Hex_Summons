@@ -136,14 +136,41 @@ func _place_on_closest_target() -> void:
 	var target_details: Array = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_map_index()
 	# Get the full range of the action.
-	var action_range: float = (
+	var outer_action_range: float = (
 			_action.effect_range.get_reach() \
 			+ _action.source_range.get_reach()
 	)
-	# Set the emission point to the tile closest to the target.
-	if target_details[1] <= action_range:
+	var inner_action_range: float = clamp(
+			_action.dead_range.get_reach() \
+			- _action.effect_range.get_reach(),
+			0.0,
+			_action.dead_range.get_reach()
+	)
+	# Set emission point if target is within source range.
+	if (
+		target_details[1] <= _action.source_range.get_reach()
+		and target_details[1] > _action.dead_range.get_reach()
+	):
 		selector.tile_hovered = selector.map_tiles[target_index]
 		_action.set_emission_map_index(target_index)
+	# Set the emission point to the tile closest to the target.
+	elif (
+		target_details[1] <= outer_action_range
+		and target_details[1] > inner_action_range
+	):
+		var area_ids: Array = selector.range_finder.get_source_range_indexes(
+				_action.source_range,
+				_action.dead_range,
+				_player_map_index,
+				_action.source_ignore_heights
+		)
+		var closest_index: int = selector.range_finder.get_closest_index_toward(
+				_player_map_index,
+				target_index,
+				area_ids
+		)
+		selector.tile_hovered = selector.map_tiles[closest_index]
+		_action.set_emission_map_index(closest_index)
 	# Set to player position if target is out of range.
 	else:
 		selector.tile_hovered = selector.map_tiles[_player_map_index]
