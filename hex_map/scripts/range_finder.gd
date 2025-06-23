@@ -23,7 +23,7 @@ func calculate_distance(start_id: int, dest_id: int) -> float:
 
 
 # Determines the path to the point within a defined area for a player character.
-func get_point_path_for_player(
+func get_player_point_path(
 	pc: PlayerCharacter,
 	dest_id: int,
 	enemies: Array,
@@ -45,7 +45,7 @@ func get_point_path_for_player(
 
 # Determines the path within a character's movement area that gets closest
 # to a destination.
-func get_point_path_toward_for_character(
+func get_character_point_path_toward(
 	c: Character,
 	dest_id: int,
 	enemies: Array,
@@ -100,7 +100,7 @@ func get_point_path_toward_for_character(
 
 # Get the area that can be reached by a character. Takes in an array of the
 # opposing characters for determining the tiles to disable.
-func get_traversible_tiles_for_character(c: Character, opponents: Array) -> Array:
+func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
 	var c_move_indexes: Array = _determine_ring_area_indexes(
 		c.stats.get_movement_range(),
 		c.get_map_index_at()
@@ -192,7 +192,7 @@ func _disable_character_tiles(
 		_hm_astar.set_point_disabled(c.get_map_index_at(), disabled)
 
 
-# Helper function for get_point_path_toward_for_character. Finds the closest point
+# Helper function for get_character_point_path_toward. Finds the closest point
 # to a destination within a character's movement area that the character can move to.
 func _determine_closest_point_toward(
 	c: Character,

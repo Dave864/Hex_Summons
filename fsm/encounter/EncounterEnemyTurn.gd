@@ -19,7 +19,7 @@ var movement_range: Array = []
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	active_char = enc.get_current_character()
-	movement_range = enc.hex_map.range_finder.get_traversible_tiles_for_character(
+	movement_range = enc.hex_map.range_finder.get_character_travesible_tiles(
 		active_char,
 		enc.players
 	)
@@ -71,7 +71,7 @@ func _determine_action_chain() -> void:
 	"""
 	var action_chain: Array = []
 	var path: PoolVector3Array = (
-			enc.hex_map.range_finder.get_point_path_toward_for_character(
+			enc.hex_map.range_finder.get_character_point_path_toward(
 				active_char,
 				_determine_closest_player_index(),
 				enc.enemies,

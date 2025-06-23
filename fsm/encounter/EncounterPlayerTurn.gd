@@ -24,7 +24,7 @@ var _action_range: Dictionary = {"type": null, "tiles": null}
 func enter(_msg := {}) -> void:
 	_active_char = enc.get_current_character()
 	_start_index = _active_char.get_map_index_at()
-	_movement_area = enc.hex_map.range_finder.get_traversible_tiles_for_character(
+	_movement_area = enc.hex_map.range_finder.get_character_travesible_tiles(
 			_active_char,
 			enc.enemies
 	)
@@ -110,7 +110,7 @@ func _disconnect_signals() -> void:
 # Determine the path to the selected tile for character movement and signal that
 # the movement tile has been selected.
 func _on_Selector_move_tile_selected(tile: MapTile) -> void:
-	var path_data: PoolVector3Array = enc.hex_map.range_finder.get_point_path_for_player(
+	var path_data: PoolVector3Array = enc.hex_map.range_finder.get_player_point_path(
 			_active_char,
 			tile.map_coordinate.get_map_index(),
 			enc.enemies,
