@@ -156,7 +156,7 @@ func _place_on_closest_target() -> void:
 	# Set the emission point to the tile closest to the target.
 	elif (
 		target_details[1] <= outer_action_range
-		and target_details[1] > inner_action_range
+		and target_details[1] >= inner_action_range
 	):
 		var area_ids: Array = selector.range_finder.get_source_range_indexes(
 				_action.source_range,
