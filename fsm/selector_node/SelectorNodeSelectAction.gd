@@ -103,7 +103,8 @@ func _orient_emission_to_mouse() -> void:
 	# Relative top not needed as mouse position translates to direct map coordinates.
 	var dir: int = HexUtil.get_hex_direction((mouse_pt - player_pt).normalized())
 	var source_tile: MapTile = selector.map_tiles[_player_map_index]
-	if source_tile.get_adjacent_tile(dir) != null:
+	var target_tile: MapTile = source_tile.get_adjacent_tile(dir)
+	if _is_target_tile(target_tile):
 		_action.set_emission_direction(dir)
 		selector.emit_effect_area_required(_action)
 
@@ -178,10 +179,32 @@ func _is_target_tile(map_tile: MapTile) -> bool:
 	TODO: Update action to get the effect target details
 	"""
 	return (
-		map_tile.get_highlight_type() == HexHighlighter.Option.RANGE
-		or map_tile.get_highlight_type() == HexHighlighter.Option.TARGET
-		or map_tile.get_highlight_type() == HexHighlighter.Option.PLAYER
+		map_tile != null
+		and (
+			map_tile.get_highlight_type() == HexHighlighter.Option.RANGE
+			or map_tile.get_highlight_type() == HexHighlighter.Option.TARGET
+			or map_tile.get_highlight_type() == HexHighlighter.Option.PLAYER
+		)
 	)
+
+
+# Determines if the selector is able to move to the adjacent tile in the
+# given direction (0 - 5) and does so if able.
+func _resolve_joystick_for_area(dir: int) -> void:
+	if dir >= 0 and dir <= 5:
+		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(dir)
+		if adjacent_tile != null:
+			_update_selection(adjacent_tile)
+
+
+# Determines if the selector is able to move to the given direction (0 - 5)
+# and does so if able.
+func _resolve_joystick_for_cardinal(dir: int) -> void:
+	if dir >= 0 and dir <= 5:
+		var player_tile: MapTile = selector.map_tiles[_player_map_index]
+		var direction_tile: MapTile = player_tile.get_adjacent_tile(dir)
+		if _is_target_tile(direction_tile):
+			_update_selection(direction_tile)
 
 
 # Connect signals to this state.
@@ -216,25 +239,6 @@ func _connect_signals() -> void:
 			self,
 			"_on_GamepadHandler_left_joystick_pulsed"
 	)
-
-
-# Determines if the selector is able to move to the adjacent tile in the
-# given direction (0 - 5) and does so if able.
-func _resolve_joystick_for_area(dir: int) -> void:
-	if dir >= 0 and dir <= 5:
-		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(dir)
-		if adjacent_tile != null:
-			_update_selection(adjacent_tile)
-
-
-# Determines if the selector is able to move to the given direction (0 - 5)
-# and does so if able.
-func _resolve_joystick_for_cardinal(dir: int) -> void:
-	if dir >= 0 and dir <= 5:
-		var player_tile: MapTile = selector.map_tiles[_player_map_index]
-		var direction_tile: MapTile = player_tile.get_adjacent_tile(dir)
-		if direction_tile != null and _is_target_tile(direction_tile):
-			_update_selection(direction_tile)
 
 
 # Go to the "SelectAction" state with the new action.
