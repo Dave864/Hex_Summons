@@ -54,8 +54,7 @@ static func index_to_cube(index: int, x_count: int) -> Vector3:
 	var z_pos: int = int(floor(float(index) / float(x_count)))
 	var x_pos: int = index % x_count
 	var x_cube: int = int(x_pos - (z_pos - (z_pos & 1)) / 2.0)
-	var y_cube: int = z_pos
-	return Vector3(x_cube, y_cube, -x_cube - y_cube)
+	return Vector3(x_cube, z_pos, -x_cube - z_pos)
 
 
 # Converts the cube coordinates to offset coordinates. The offset coordinates
@@ -136,17 +135,6 @@ static func get_hex_direction(
 	else:
 		dir = HexDirection.UPPER_LEFT
 	return _relative_hex_direction(dir, top_vertex)
-
-
-# Converts joystick input to a hexagonal direction
-static func joystick_to_hex_direction(top_vertex: int = 0) -> int:
-	var dir_vec: Vector2 = Input.get_vector(
-			"left_joystick_l",
-			"left_joystick_r",
-			"left_joystick_u",
-			"left_joystick_d"
-	)
-	return get_hex_direction(dir_vec, top_vertex)
 
 
 # Get the hexagonal direction relative to the defined top vertex. Used to
