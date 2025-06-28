@@ -13,7 +13,7 @@ var _x_count: int = 0
 # Get the area that can be reached in a specific map section starting from a
 # given point in said section. This takes into account the tile heights.
 # Will return an empty array if the start tile is not in the map section.
-# Reference: https://www.redblobgames.com/grids/hexagons/#range-obstacles
+# Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
 func get_traversable_ids(start_id: int, reach: int, map_section_ids: Array) -> Array:
 	var id_distance: Dictionary = {}
 	for id in map_section_ids:
@@ -34,7 +34,7 @@ func get_traversable_ids(start_id: int, reach: int, map_section_ids: Array) -> A
 						and id_distance[connection_id] < 0.0
 				)
 				if not_checked and not is_point_disabled(connection_id):
-					var dist: float = _cube_dist(id, connection_id)
+					var dist: float = _travel_dist(id, connection_id)
 					id_distance[connection_id] = dist + id_distance[id]
 					fringes[k].append(connection_id)
 	
@@ -44,6 +44,40 @@ func get_traversable_ids(start_id: int, reach: int, map_section_ids: Array) -> A
 		if id_distance[id] <= reach:
 			ids_in_range.append(id)
 	return ids_in_range
+
+
+# Gets the distances from the starting point to all tiles within a given reach.
+# A negative reach indicates that distances to all map tiles should be found.
+# Each entry has the travel distance and tile distance stored in an array.
+# Travel distance is at index 0, tile distance is at index 1.
+# Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
+func get_distances(start_id: int, reach: int = -1) -> Dictionary:
+	var frontier: PQueue = PQueue.new()
+	var id_distances: Dictionary = {}
+	
+	frontier.push(0.0, start_id)
+	id_distances[start_id] = [0.0, 0]
+	while not frontier.empty():
+		var current: Array = frontier.min()
+		frontier.pop_min()
+		
+		for next_id in get_point_connections(current[1]):
+			if is_point_disabled(next_id):
+				continue
+			var cur_dist: Array = id_distances[current[1]]
+			var travel_dist: float = _travel_dist(current[1], next_id) + cur_dist[0]
+			var tile_dist: int = int(_cube_dist(start_id, next_id))
+			if (
+				(
+					not id_distances.has(next_id)
+					or travel_dist < id_distances[next_id][0]
+				) and (reach < 0 or tile_dist <= reach)
+			):
+				id_distances[next_id] = [travel_dist, tile_dist]
+				frontier.push(travel_dist, next_id)
+	
+	frontier.free()
+	return id_distances
 
 
 # Determines the travel distance from the start to the end.
@@ -114,26 +148,33 @@ func _connect_tiles(map_tiles: Array) -> void:
 # Virtual Astar function. Called when computing the cost between two
 # connected points.
 func _compute_cost(u: int, v: int) -> float:
-	return _cube_dist(u, v)
+	return _travel_dist(u, v)
 
 
 # Virtual Astar function. Called when estimating the cost between a point 
 # and the path's ending point.
 func _estimate_cost(u: int, v: int) -> float:
-	return min(0, _cube_dist(u, v) - 1)
+	return min(0, _travel_dist(u, v) - 1)
 
 
-# Calculates the distance between two tiles. Uses the cube coordinates.
+# Calculates the travel distance between two tiles. Uses the cube distance and 
+# height difference.
+func _travel_dist(start_index: int, end_index: int) -> float:
+	var start_pos: Vector3 = get_point_position(start_index)
+	var end_pos: Vector3 = get_point_position(end_index)
+	# Record height difference as units of tile unit height.
+	var height_diff: float = abs(start_pos.y - end_pos.y) / Constants.HEX_TILE_UNIT_HEIGHT
+	# Height differences of 1 tile height are seen as the same height.
+	# Halve height difference to keep consistent with cube distance.
+	height_diff = height_diff / 2.0 if height_diff > 1.0 else 0.0
+	var cube_dist: float = _cube_dist(start_index, end_index)
+	return cube_dist + height_diff
+
+
+# Calculates the cube distance between two tiles.
 # Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
 func _cube_dist(start_index: int, end_index: int) -> float:
 	var start_cube: Vector3 = HexUtil.index_to_cube(start_index, _x_count)
 	var end_cube: Vector3 = HexUtil.index_to_cube(end_index, _x_count)
 	var diff: Vector3 = start_cube - end_cube
-	
-	var start_pos: Vector3 = get_point_position(start_index)
-	var end_pos: Vector3 = get_point_position(end_index)
-	# Record height difference as units of tile unit height.
-	var height_diff: float = abs(start_pos.y - end_pos.y) / Constants.HEX_TILE_UNIT_HEIGHT
-	# Height differences of 1 tile height are seen as the same height
-	height_diff = height_diff if height_diff > 1.0 else 0.0
-	return (abs(diff.x) + abs(diff.y) + abs(diff.z) + abs(height_diff)) / 2.0
+	return (abs(diff.x) + abs(diff.y) + abs(diff.z)) / 2.0
