@@ -23,6 +23,8 @@ var enemies_ref: Array = []
 var map_tiles: Array = []
 # Reference to the map's range finder.
 var range_finder: RangeFinder = null
+# Reference to the HexMap of the current encounter map.
+var hex_map: HexMap = null
 
 # Reference to a function that will update the map tile highlights. Different
 # states will use different logic for updating the highlights.

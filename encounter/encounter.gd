@@ -66,6 +66,7 @@ func _ready() -> void:
 	selector.players_ref = players
 	selector.enemies_ref = enemies
 	selector.range_finder = hex_map.range_finder
+	selector.hex_map = hex_map
 
 
 # Determines which index in the initiative array that a given value corresponds
