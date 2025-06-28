@@ -97,8 +97,8 @@ func _orient_emission_to_mouse() -> void:
 	_action.set_emission_map_index(_player_map_index)
 	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
 	var mouse_pt: Vector2 = Vector2(
-		MouseHandler.get_world_position().x,
-		MouseHandler.get_world_position().z
+		MouseHandler.get_3d_position().x,
+		MouseHandler.get_3d_position().z
 	)
 	# Relative top not needed as mouse position translates to direct map coordinates.
 	var dir: int = HexUtil.get_hex_direction((mouse_pt - player_pt).normalized())
