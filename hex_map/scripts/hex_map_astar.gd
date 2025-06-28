@@ -47,11 +47,12 @@ func get_traversable_ids(start_id: int, reach: int, map_section_ids: Array) -> A
 
 
 # Gets the distances from the starting point to all tiles within a given reach.
-# A negative reach indicates that distances to all map tiles should be found.
+# A negative reach indicates that all map tiles should be looked at. Specifying
+# get_all determines whether to include tiles that are outside of reach of not.
 # Each entry has the travel distance and tile distance stored in an array.
 # Travel distance is at index 0, tile distance is at index 1.
 # Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
-func get_distances(start_id: int, reach: int = -1) -> Dictionary:
+func get_distances(start_id: int, get_all: bool, reach: int = -1) -> Dictionary:
 	var frontier: PQueue = PQueue.new()
 	var id_distances: Dictionary = {}
 	
@@ -71,7 +72,9 @@ func get_distances(start_id: int, reach: int = -1) -> Dictionary:
 				(
 					not id_distances.has(next_id)
 					or travel_dist < id_distances[next_id][0]
-				) and (reach < 0 or tile_dist <= reach)
+				)
+				and (reach < 0 or tile_dist <= reach)
+				and (get_all or travel_dist <= reach)
 			):
 				id_distances[next_id] = [travel_dist, tile_dist]
 				frontier.push(travel_dist, next_id)

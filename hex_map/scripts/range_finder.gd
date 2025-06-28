@@ -121,20 +121,30 @@ func get_character_point_path_toward(
 # Get the area that can be reached by a character. Takes in an array of the
 # opposing characters for determining the tiles to disable.
 func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
-	var c_move_indexes: Array = _determine_ring_area_indexes(
-		c.stats.get_movement_range(),
-		c.get_map_index_at()
-	)
-	_hm_astar.set_area_disabled(c_move_indexes, false)
+	_hm_astar.set_all_disabled(false)
 	_disable_character_tiles(opponents, true)
-	var t_tiles: Array = _hm_astar.get_traversable_ids(
-		c.get_map_index_at(),
-		c.stats.get_movement_range(),
-		c_move_indexes
+	var move_distances: Dictionary = _hm_astar.get_distances(
+			c.get_map_index_at(),
+			false,
+			c.stats.get_movement_range()
 	)
 	# Reset for future range finder operations.
-	_hm_astar.set_area_disabled(c_move_indexes)
-	return t_tiles
+	_hm_astar.set_all_disabled(false)
+	return move_distances.keys()
+#	var c_move_indexes: Array = _determine_ring_area_indexes(
+#		c.stats.get_movement_range(),
+#		c.get_map_index_at()
+#	)
+#	_hm_astar.set_area_disabled(c_move_indexes, false)
+#	_disable_character_tiles(opponents, true)
+#	var t_tiles: Array = _hm_astar.get_traversable_ids(
+#		c.get_map_index_at(),
+#		c.stats.get_movement_range(),
+#		c_move_indexes
+#	)
+#	# Reset for future range finder operations.
+#	_hm_astar.set_area_disabled(c_move_indexes)
+#	return t_tiles
 
 
 # Determines the tile indexes that describe a source range, excluding any defined
