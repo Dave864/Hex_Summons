@@ -4,10 +4,14 @@ The logic for what happens when the Selector is in the 'SelectMove' state.
 The Selector is able to pass over map tiles and highlight said tiles.
 When the input for selecting a tile is given, the Selector moves to the
 'Pause' state and a signal is emitted indicating which tile was selected.
-If an action is hovered over in the UI, the Selector moves to the 'SelectAction'
+If an action option is selected in the UI, the Selector moves to the 'SelectAction'
 state. If a player turn ends, go to the 'Wait' state.
 """
 
+
+# Tracks the travel and tile distances from the original character position
+# to the tiles within movement range.
+var _movement_ids: Array = []
 
 # Reference to the function that will update the tile highlights.
 onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
@@ -15,7 +19,12 @@ onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 
 # Reveal the selector shape and enable the ability to update tile highlights.
 func enter(msg: Dictionary = {}) -> void:
-	_update_selection(msg["start_tile"])
+	# Check that the passed in data is what is expected.
+	var start_tile: MapTile = msg["start_tile"]
+	var movement_range: int = msg["movement_range"]
+	var start_index: int = start_tile.map_coordinate.get_map_index()
+	_determine_movement_ids(start_index, movement_range)
+	_update_selection(start_tile)
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
 
@@ -82,7 +91,15 @@ func _connect_signals() -> void:
 	)
 
 
+# Gets the tile ids that are within a player's movement range. 
+func _determine_movement_ids(start_id: int, movement_range: int) -> void:
+	# Reuse previously found ids if current player has not started a new
+	# turn. Ids get cleared when the player ends their turn.
+	if _movement_ids.size() > 0:
+		return
+
 # Update the selector for a given tile. Also updates what the hovered tile is.
+# Passed to the Selector node to be called when the mouse hovers over the tile.
 func _update_selection(map_tile: MapTile) -> void:
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	if !map_tile.is_active():
@@ -136,6 +153,7 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	if not _state_is_active():
 		return
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	_movement_ids.clear()
 	state_machine.transition_to(WAIT)
 
 

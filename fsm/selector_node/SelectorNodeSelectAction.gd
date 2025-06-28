@@ -288,7 +288,13 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 		return
 	var start_tile: MapTile = selector.map_tiles[_player_map_index]
 	selector.tile_hovered = start_tile
-	state_machine.transition_to(SELECT_MOVE, {"start_tile": start_tile})
+	state_machine.transition_to(
+			SELECT_MOVE,
+			{
+				"start_tile": start_tile,
+				"movement_range": 0
+			}
+	)
 
 
 # Go to the "WAIT" state when a player has signaled that their turn is ended.

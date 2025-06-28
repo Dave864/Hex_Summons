@@ -2,9 +2,9 @@ extends SelectorState
 """
 The logic for what happens when the Selector is in the 'Pause' state.
 The Selector is inactive and hidden until either the end of a player turn or
-the need for another tile selection arises. When a player's turn ends, the
+the need for another movement tile selection arises. When a player's turn ends, the
 Selector goes into the 'Wait' state. If the Selector is needed again to select
-something, it goes back to the 'Select' state.
+a movement destination, it goes back to the 'SelectMove' state.
 """
 
 
@@ -47,7 +47,13 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	state_machine.transition_to(WAIT)
 
 
-# Transition to the 'Select' state when the selector is needed again.
+# Transition to the 'SelectMove' state when the selector is needed again.
 func _on_SignalBus_selector_required(start_index: int) -> void:
 	var start_tile: MapTile = selector.map_tiles[start_index]
-	state_machine.transition_to(SELECT_MOVE, {"start_tile": start_tile})
+	state_machine.transition_to(
+			SELECT_MOVE,
+			{
+				"start_tile": start_tile,
+				"movement_range": 0
+			}
+	)
