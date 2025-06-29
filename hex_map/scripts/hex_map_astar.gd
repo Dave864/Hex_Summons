@@ -10,42 +10,6 @@ pathfinding and area-finding.
 var _x_count: int = 0
 
 
-# Get the area that can be reached in a specific map section starting from a
-# given point in said section. This takes into account the tile heights.
-# Will return an empty array if the start tile is not in the map section.
-# Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
-func get_traversable_ids(start_id: int, reach: int, map_section_ids: Array) -> Array:
-	var id_distance: Dictionary = {}
-	for id in map_section_ids:
-		id_distance[id] = -1.0
-	# Check if start is in the map section.
-	if !id_distance.has(start_id):
-		return []
-	
-	# Determine the distances of all map section ids.
-	var fringes: Array = [[start_id]]
-	id_distance[start_id] = 0.0
-	for k in range(1, reach + 1):
-		fringes.append([])
-		for id in fringes[k - 1]:
-			for connection_id in get_point_connections(id):
-				var not_checked: bool = (
-						id_distance.has(connection_id) 
-						and id_distance[connection_id] < 0.0
-				)
-				if not_checked and not is_point_disabled(connection_id):
-					var dist: float = _travel_dist(id, connection_id)
-					id_distance[connection_id] = dist + id_distance[id]
-					fringes[k].append(connection_id)
-	
-	# Get the ids in range.
-	var ids_in_range: Array = []
-	for id in id_distance.keys():
-		if id_distance[id] <= reach:
-			ids_in_range.append(id)
-	return ids_in_range
-
-
 # Gets the distances from the starting point to all tiles within a given reach.
 # A negative reach indicates that all map tiles should be looked at. Specifying
 # get_all determines whether to include tiles that are outside of reach of not.
