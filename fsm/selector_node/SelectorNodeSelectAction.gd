@@ -279,6 +279,8 @@ func _on_SignalBus_player_action_selected(
 func _on_SignalBus_player_action_type_canceled() -> void:
 	if not _state_is_active():
 		return
+	selector.hex_map.selection_tracker.clear_highlights()
+	selector.hex_map.selection_tracker.clear_selector_highlights()
 	state_machine.transition_to(SELECT_MOVE)
 
 

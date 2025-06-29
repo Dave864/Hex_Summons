@@ -63,12 +63,6 @@ func _ready_connect_signals() -> void:
 	)
 	ErrorUtil.connect_signal(
 			SignalBus,
-			"player_action_type_canceled",
-			self,
-			"_on_SignalBus_player_action_type_canceled"
-	)
-	ErrorUtil.connect_signal(
-			SignalBus,
 			"player_turn_ended",
 			self,
 			"_on_SignalBus_player_turn_ended"
@@ -166,16 +160,4 @@ func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -
 	enc.hex_map.selection_tracker.highlight_action_source_area(
 			source_indexes,
 			_active_char
-	)
-
-
-# Called when the user backs out from an action type menu. Resets the tile highlights
-# to indicate player movement.
-func _on_SignalBus_player_action_type_canceled() -> void:
-	enc.hex_map.selection_tracker.clear_highlights()
-	enc.hex_map.selection_tracker.clear_selector_highlights()
-	enc.hex_map.selection_tracker.highlight_player_movement(
-			_movement_area,
-			_active_char,
-			_start_index
 	)

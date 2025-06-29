@@ -9,6 +9,8 @@ state. If a player turn ends, go to the 'Wait' state.
 """
 
 
+# The starting index for the movement area.
+var _move_origin_index: int = -1
 # Tracks the travel and tile distances from the original character position
 # to the tiles within movement range.
 var _movement_ids: Array = []
@@ -19,9 +21,16 @@ onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 
 # Reveal the selector shape and enable the ability to update tile highlights.
 func enter(_msg: Dictionary = {}) -> void:
-	var start_index : int = selector.active_player.map_coordinate.get_index()
-	var start_tile: MapTile = selector.hex_map.get_tile_at(start_index)
+	var _player_index: int = selector.active_player.map_coordinate.get_index()
+	if _move_origin_index < 0:
+		_move_origin_index = _player_index
+	var start_tile: MapTile = selector.hex_map.get_tile_at(_player_index)
 	_determine_movement_ids()
+	selector.hex_map.selection_tracker.highlight_player_movement(
+			_movement_ids,
+			selector.active_player,
+			_move_origin_index
+	)
 	_update_selection(start_tile)
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
@@ -148,6 +157,7 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	if not _state_is_active():
 		return
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	_move_origin_index = -1
 	_movement_ids.clear()
 	state_machine.transition_to(WAIT)
 
