@@ -5,6 +5,9 @@ Manages the various UI elements of an encounter.
 """
 
 
+# Inidicates that the UI is waiting to be activated.
+signal is_waiting()
+
 enum Options {
 	MOVE,
 	TECHNIQUE,
@@ -39,6 +42,11 @@ onready var spell_button: LabeledIconButton = $Options/SpellButton
 onready var summon_button: LabeledIconButton = $Options/SummonButton
 #onready var item_button: LabeledIconButton = $Options/ItemButton
 onready var end_button: LabeledIconButton = $Options/EndButton
+
+
+# Emits the is_waiting signal.
+func emit_is_waiting() -> void:
+	emit_signal("is_waiting")
 
 
 # Sets the selection flag.

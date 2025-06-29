@@ -140,9 +140,8 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	var next_character: Character = enc.get_next_character()
 	enc.progress_initiative()
 	if next_character is PlayerCharacter:
-		# Pause for a little bit to give the EncounterUI a chance to get ready.
-		# Workaround for bug where the UI does not show up when the player did nothing prior.
-		yield(get_tree().create_timer(0.1), "timeout")
+		# Yield until the UI is in the "Wait" state.
+		yield(enc.ui, "is_waiting")
 		state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:
 		state_machine.transition_to(ENEMY_TURN)
