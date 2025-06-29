@@ -48,12 +48,5 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 
 
 # Transition to the 'SelectMove' state when the selector is needed again.
-func _on_SignalBus_selector_required(start_index: int) -> void:
-	var start_tile: MapTile = selector.map_tiles[start_index]
-	state_machine.transition_to(
-			SELECT_MOVE,
-			{
-				"start_tile": start_tile,
-				"movement_range": 0
-			}
-	)
+func _on_SignalBus_selector_required(_start_index: int) -> void:
+	state_machine.transition_to(SELECT_MOVE)

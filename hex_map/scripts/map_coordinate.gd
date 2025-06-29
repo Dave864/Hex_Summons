@@ -8,7 +8,7 @@ cube coordinate.
 
 
 # The index position of the map tile when it is part of a collection of tiles.
-var _map_index: int = -1 setget set_map_index, get_map_index
+var _index: int = -1 setget set_index, get_index
 # The cube coordinates of the map tile.
 #     -z
 # +y   |  +x
@@ -21,13 +21,13 @@ var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
 
 
 # Get the index value of the MapTile.
-func get_map_index() -> int:
-	return _map_index
+func get_index() -> int:
+	return _index
 
 
 # Set the index value of the MapTile.
-func set_map_index(value: int):
-	_map_index = value
+func set_index(value: int):
+	_index = value
 
 
 # Get the cube coordinates of the MapTile.

@@ -23,7 +23,7 @@ var _action_range: Dictionary = {"type": null, "tiles": null}
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_active_char = enc.get_current_character()
-	_start_index = _active_char.get_map_index_at()
+	_start_index = _active_char.map_coordinate.get_index()
 	_movement_area = enc.hex_map.range_finder.get_character_travesible_tiles(
 			_active_char,
 			enc.enemies
@@ -112,7 +112,7 @@ func _disconnect_signals() -> void:
 func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 	var path_data: PoolVector3Array = enc.hex_map.range_finder.get_player_point_path(
 			_active_char,
-			tile.map_coordinate.get_map_index(),
+			tile.map_coordinate.get_index(),
 			enc.enemies,
 			_movement_area
 	)
@@ -131,7 +131,7 @@ func _on_Selector_effect_area_required(action: Action) -> void:
 	)
 	enc.hex_map.selection_tracker.select_effect_range(
 			effect_area_indexes,
-			_active_char.get_map_index_at(),
+			_active_char.map_coordinate.get_index(),
 			action.effect_ignores_caster,
 			action.get_is_cardinal()
 	)
@@ -159,7 +159,7 @@ func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -
 	var source_indexes: Array = enc.hex_map.range_finder.get_source_range_indexes(
 			action.source_range,
 			action.dead_range,
-			_p.map_coordinate.get_map_index(),
+			_p.map_coordinate.get_index(),
 			action.source_ignore_heights
 	)
 	enc.hex_map.selection_tracker.clear_highlights()

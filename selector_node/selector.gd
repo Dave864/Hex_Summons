@@ -15,6 +15,8 @@ signal effect_area_required(action)
 var tile_hovered: MapTile = null
 # Describes which hex vertex is the top with respect to the camera
 var top_vertex: int = 0
+# Reference to the active player character.
+var active_player: PlayerCharacter = null
 # Reference to the player characters in the current encounter.
 var players_ref: Array = []
 # Reference to the enemy characer in the current encounter.

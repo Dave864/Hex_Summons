@@ -14,7 +14,7 @@ func update_label_display(height: int) -> void:
 	var cube_coord: Vector3 = coord.get_cube_coord()
 	text = str(
 			format % [
-				coord.get_map_index(), 
+				coord.get_index(), 
 				height, 
 				cube_coord.x,
 				cube_coord.y,

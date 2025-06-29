@@ -22,8 +22,8 @@ onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 
 func enter(msg: Dictionary = {}) -> void:
 	_action = msg["action"]
-	_player_pos = msg["player_pos"]
-	_player_map_index = msg["player_map_index"]
+	_player_pos = selector.active_player.translation
+	_player_map_index = selector.active_player.map_coordinate.get_index()
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
 	if _action.emit_from_center:
@@ -88,7 +88,7 @@ func _update_selection(map_tile: MapTile) -> void:
 			_orient_emission_to_tile(map_tile)
 	elif _is_target_tile(map_tile):
 		selector.tile_hovered = map_tile
-		_action.set_emission_map_index(map_tile.map_coordinate.get_map_index())
+		_action.set_emission_map_index(map_tile.map_coordinate.get_index())
 		selector.emit_effect_area_required(_action)
 
 
@@ -125,7 +125,7 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 func _orient_to_closest_target() -> void:
 	var target_distances: Array = _get_target_distances()
 	# Get the map tile the target is at.
-	var target_index: int = target_distances[0][0].map_coordinate.get_map_index()
+	var target_index: int = target_distances[0][0].map_coordinate.get_index()
 	var target_tile: MapTile = selector.map_tiles[target_index]
 	_orient_emission_to_tile(target_tile)
 
@@ -134,7 +134,7 @@ func _orient_to_closest_target() -> void:
 # target. Effect is positioned on player otherwise.
 func _place_on_closest_target() -> void:
 	var target_details: Array = _get_target_distances()[0]
-	var target_index: int = target_details[0].map_coordinate.get_map_index()
+	var target_index: int = target_details[0].map_coordinate.get_index()
 	# Get the full range of the action.
 	var outer_action_range: float = (
 			_action.effect_range.get_reach() \
@@ -190,7 +190,7 @@ func _get_target_distances() -> Array:
 	for option in potential_targets:
 		var dist: float = selector.range_finder.calculate_distance(
 				_player_map_index,
-				option.map_coordinate.get_map_index()
+				option.map_coordinate.get_index()
 		)
 		target_distances.append([option, dist])
 	target_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
@@ -267,34 +267,19 @@ func _connect_signals() -> void:
 
 # Go to the "SelectAction" state with the new action.
 func _on_SignalBus_player_action_selected(
-	player: PlayerCharacter,
+	_player: PlayerCharacter,
 	new_action: Action
 ) -> void:
 	if not _state_is_active():
 		return
-	state_machine.transition_to(
-			SELECT_ACTION,
-			{
-				"action": new_action,
-				"player_pos": player.translation,
-				"player_map_index": player.get_map_index_at()
-			}
-	)
+	state_machine.transition_to(SELECT_ACTION, {"action": new_action})
 
 
 # Go to the "SelectMove" state when the player action selection is canceled.
 func _on_SignalBus_player_action_type_canceled() -> void:
 	if not _state_is_active():
 		return
-	var start_tile: MapTile = selector.map_tiles[_player_map_index]
-	selector.tile_hovered = start_tile
-	state_machine.transition_to(
-			SELECT_MOVE,
-			{
-				"start_tile": start_tile,
-				"movement_range": 0
-			}
-	)
+	state_machine.transition_to(SELECT_MOVE)
 
 
 # Go to the "WAIT" state when a player has signaled that their turn is ended.

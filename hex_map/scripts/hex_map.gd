@@ -23,14 +23,6 @@ onready var _map_tiles: Array = [] setget , get_map_tiles
 onready var _root_node: Node = get_tree().edited_scene_root
 
 
-func _ready() -> void:
-	_create_selection_tracker()
-	_create_pathfinder()
-	_create_floor_mesh()
-	_create_tiles_node()
-	_map_tiles = _tiles_node.get_children()
-
-
 # Get the number of tiles along the X axis.
 func get_x_count() -> int:
 	return _tiles_node.get_x_count()
@@ -44,6 +36,19 @@ func get_z_count() -> int:
 # Retrieve the map tiles of this hex map.
 func get_map_tiles() -> Array:
 	return _map_tiles
+
+
+# Get the map tile at the specific index.
+func get_tile_at(index: int) -> MapTile:
+	return _map_tiles[index]
+
+
+func _ready() -> void:
+	_create_selection_tracker()
+	_create_pathfinder()
+	_create_floor_mesh()
+	_create_tiles_node()
+	_map_tiles = _tiles_node.get_children()
 
 
 # Creates a Tiles node if not already present.

@@ -29,11 +29,5 @@ func exit() -> void:
 # Set the position of the selector to the player whose turn has started and move
 # to the `SelectMove` state.
 func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
-	var start_tile: MapTile = selector.map_tiles[player.map_coordinate.get_map_index()]
-	state_machine.transition_to(
-			SELECT_MOVE,
-			{
-				"start_tile": start_tile,
-				"movement_range": player.stats.get_movement_range()
-			}
-	)
+	selector.active_player = player
+	state_machine.transition_to(SELECT_MOVE)

@@ -94,14 +94,14 @@ func _determine_closest_player_index() -> int:
 		var p_data: Array = [
 			p, 
 			enc.hex_map.range_finder.calculate_distance(
-					active_char.get_map_index_at(),
-					p.get_map_index_at()
+					active_char.map_coordinate.get_index(),
+					p.map_coordinate.get_index()
 			)
 		]
 		player_distances.append(p_data)
 	
 	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
-	return player_distances[0][0].get_map_index_at()
+	return player_distances[0][0].map_coordinate.get_index()
 
 
 

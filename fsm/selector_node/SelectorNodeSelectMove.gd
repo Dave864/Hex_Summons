@@ -18,12 +18,10 @@ onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 
 
 # Reveal the selector shape and enable the ability to update tile highlights.
-func enter(msg: Dictionary = {}) -> void:
-	# Check that the passed in data is what is expected.
-	var start_tile: MapTile = msg["start_tile"]
-	var movement_range: int = msg["movement_range"]
-	var start_index: int = start_tile.map_coordinate.get_map_index()
-	_determine_movement_ids(start_index, movement_range)
+func enter(_msg: Dictionary = {}) -> void:
+	var start_index : int = selector.active_player.map_coordinate.get_index()
+	var start_tile: MapTile = selector.hex_map.get_tile_at(start_index)
+	_determine_movement_ids()
 	_update_selection(start_tile)
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
@@ -92,11 +90,15 @@ func _connect_signals() -> void:
 
 
 # Gets the tile ids that are within a player's movement range. 
-func _determine_movement_ids(start_id: int, movement_range: int) -> void:
+func _determine_movement_ids() -> void:
 	# Reuse previously found ids if current player has not started a new
 	# turn. Ids get cleared when the player ends their turn.
 	if _movement_ids.size() > 0:
 		return
+	_movement_ids = selector.range_finder.get_character_travesible_tiles(
+			selector.active_player,
+			selector.enemies_ref
+	)
 
 # Update the selector for a given tile. Also updates what the hovered tile is.
 # Passed to the Selector node to be called when the mouse hovers over the tile.
@@ -132,20 +134,13 @@ func _resolve_joystick_direction(direction: int) -> void:
 
 # Go to the "SelectAction" state when the UI signals that an action was selected.
 func _on_SignalBus_player_action_selected(
-	player: PlayerCharacter,
+	_player: PlayerCharacter,
 	action: Action
 ) -> void:
 	if not _state_is_active():
 		return
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
-	state_machine.transition_to(
-			SELECT_ACTION,
-			{
-				"action": action,
-				"player_pos": player.translation,
-				"player_map_index": player.get_map_index_at()
-			}
-	)
+	state_machine.transition_to(SELECT_ACTION, {"action": action})
 
 
 # Go to the "WAIT" state when the UI has signaled that a player turn has ended.

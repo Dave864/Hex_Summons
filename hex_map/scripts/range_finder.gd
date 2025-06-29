@@ -35,7 +35,7 @@ func get_player_point_path(
 	_disable_character_tiles(enemies, true)
 	
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(
-		pc.get_map_index_at(),
+		pc.map_coordinate.get_index(),
 		dest_id
 	)
 	 # Reset for future range finder operations.
@@ -76,7 +76,7 @@ func get_character_point_path_toward(
 			movement_area_ids.size() > 0,
 			"Error: No movement area provided for character %s." % c.name
 	)
-	var start_id: int = c.get_map_index_at()
+	var start_id: int = c.map_coordinate.get_index()
 	# Enable all connections to make sure the path can be found.
 	_hm_astar.set_all_disabled(false)
 	# Disable connection points of the opposite character type to prevent character
@@ -124,27 +124,13 @@ func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
 	_hm_astar.set_all_disabled(false)
 	_disable_character_tiles(opponents, true)
 	var move_distances: Dictionary = _hm_astar.get_distances(
-			c.get_map_index_at(),
+			c.map_coordinate.get_index(),
 			false,
 			c.stats.get_movement_range()
 	)
 	# Reset for future range finder operations.
-	_hm_astar.set_all_disabled(false)
+	_hm_astar.set_all_disabled()
 	return move_distances.keys()
-#	var c_move_indexes: Array = _determine_ring_area_indexes(
-#		c.stats.get_movement_range(),
-#		c.get_map_index_at()
-#	)
-#	_hm_astar.set_area_disabled(c_move_indexes, false)
-#	_disable_character_tiles(opponents, true)
-#	var t_tiles: Array = _hm_astar.get_traversable_ids(
-#		c.get_map_index_at(),
-#		c.stats.get_movement_range(),
-#		c_move_indexes
-#	)
-#	# Reset for future range finder operations.
-#	_hm_astar.set_area_disabled(c_move_indexes)
-#	return t_tiles
 
 
 # Determines the tile indexes that describe a source range, excluding any defined
@@ -219,7 +205,7 @@ func _disable_character_tiles(
 	disabled: bool
 ) -> void:
 	for c in characters:
-		_hm_astar.set_point_disabled(c.get_map_index_at(), disabled)
+		_hm_astar.set_point_disabled(c.map_coordinate.get_index(), disabled)
 
 
 # Helper function for get_character_point_path_toward. Finds the closest point
@@ -289,13 +275,10 @@ func _determine_ring_area_indexes(radius: int, start: int) -> Array:
 func _get_traversible_ids(
 	section_ids: Array,
 	start_index: int,
-	travel_range: int
+	reach: int
 ) -> Array:
 	_hm_astar.set_area_disabled(section_ids, false)
-	var indexes: Array = _hm_astar.get_traversable_ids(
-			start_index,
-			travel_range,
-			section_ids
-	)
+	var distances: Dictionary = _hm_astar.get_distances(start_index, false, reach)
+	# Reset for future range finder operations.
 	_hm_astar.set_area_disabled(section_ids)
-	return indexes
+	return distances.keys()

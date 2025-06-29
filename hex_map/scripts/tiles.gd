@@ -150,7 +150,7 @@ func _set_coordinates() -> void:
 	var index: int = 0
 	for tile in get_children():
 		tile.name = MAP_TILE + String(index)
-		tile.map_coordinate.set_map_index(index)
+		tile.map_coordinate.set_index(index)
 		tile.map_coordinate.set_cube_coord(HexUtil.index_to_cube(index, get_x_count()))
 		index += 1
 
@@ -161,7 +161,7 @@ func _set_coordinates() -> void:
 #  4  \ /  3
 func _determine_adjacencies() -> void:
 	for tile in get_children():
-		var index: int = tile.map_coordinate.get_map_index()
+		var index: int = tile.map_coordinate.get_index()
 		var z_place: int = int(floor(float(index) / float(x_count)))
 		var x_place: int = index % x_count
 		var even_z_place: bool = _is_even(z_place)
