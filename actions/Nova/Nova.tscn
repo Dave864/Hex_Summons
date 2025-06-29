@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://actions/action.gd" type="Script" id=1]
+[ext_resource path="res://range_type/ring_area.gd" type="Script" id=3]
+[ext_resource path="res://actions/Nova/potency.tres" type="Resource" id=4]
+
+[node name="Nova" type="Node"]
+script = ExtResource( 1 )
+potency = ExtResource( 4 )
+effect_ignore_heights = true
+
+[node name="SourceRange" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="DeadRange" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="EffectRange" type="Node" parent="."]
+script = ExtResource( 3 )
+radius = 2
+
+[node name="Effects" type="Node" parent="."]
