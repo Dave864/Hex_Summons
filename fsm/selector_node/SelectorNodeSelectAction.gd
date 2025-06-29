@@ -15,6 +15,8 @@ var _action: Action = null
 var _player_pos: Vector3 = Vector3.ZERO
 # The tile index of the player that is using the action.
 var _player_map_index: int = -1
+# Stores the distances of all tiles within the map.
+var _distance_map: Dictionary = {}
 
 # Reference to the function that will update the tile highlights.
 onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
@@ -23,7 +25,7 @@ onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 func enter(msg: Dictionary = {}) -> void:
 	_action = msg["action"]
 	_player_pos = selector.active_player.translation
-	_player_map_index = selector.active_player.map_coordinate.get_index()
+	_determine_distance_map()
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
 	if _action.emit_from_center:
@@ -75,12 +77,22 @@ func handle_input(_event: InputEvent) -> void:
 			_resolve_joystick_for_cardinal(dir)
 
 
+# Gets the distance map. Updates the recorded _player_map_index.
+func _determine_distance_map() -> void:
+	if _player_map_index != selector.active_player.map_coordinate.get_index():
+		_player_map_index = selector.active_player.map_coordinate.get_index()
+		_distance_map = selector.hex_map.range_finder.get_distance_map(
+				_player_map_index,
+				true
+		)
+
+
 # Update the selection for a given tile. Also updates what the hovered tile is.
 func _update_selection(map_tile: MapTile) -> void:
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	if !map_tile.is_active():
 		return
-	if _action.get_is_cardinal():
+	if _action.emit_from_center:
 		selector.tile_hovered = map_tile
 		if InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
 			_orient_emission_to_mouse()
@@ -212,6 +224,23 @@ func _is_target_tile(map_tile: MapTile) -> bool:
 	)
 
 
+# Updates the selection display to show the effect area.
+func _highlight_effect_range() -> void:
+	selector.hex_map.selection_tracker.clear_selector_highlights()
+	var effect_area_indexes: Array = selector.hex_map.range_finder.get_effect_range_indexes(
+			_action.effect_range,
+			_action.get_emission_map_index(),
+			_action.get_emission_direction(),
+			_action.effect_ignore_heights
+	)
+	selector.hex_map.selection_tracker.select_effect_range(
+			effect_area_indexes,
+			_player_map_index,
+			_action.effect_ignores_caster,
+			_action.get_is_cardinal()
+	)
+
+
 # Determines if the selector is able to move to the adjacent tile in the
 # given direction (0 - 5) and does so if able.
 func _resolve_joystick_for_area(dir: int) -> void:
@@ -287,6 +316,8 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 # Go to the "WAIT" state when a player has signaled that their turn is ended.
 func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	_player_map_index = -1
+	_player_pos = Vector3.ZERO
 	state_machine.transition_to(WAIT)
 
 

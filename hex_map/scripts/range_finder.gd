@@ -22,6 +22,20 @@ func calculate_distance(start_id: int, dest_id: int) -> float:
 	return dist
 
 
+# Gets the distances from the starting point to all tiles within a given reach.
+# A negative reach indicates that all map tiles should be looked at. Specifying
+# get_all determines whether to include tiles that are outside of reach of not.
+# Each entry has the travel distance and tile distance stored in an array.
+# Travel distance is at index 0, tile distance is at index 1.
+func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictionary:
+	# Enable all connections to make sure distance can be found.
+	_hm_astar.set_all_disabled(false)
+	var d_map: Dictionary = _hm_astar.get_distance_map(start_id, get_all, reach)
+	# Reset for future range finder operations.
+	_hm_astar.set_all_disabled()
+	return d_map
+
+
 # Determines the path to the point within a defined area for a player character.
 func get_player_point_path(
 	pc: PlayerCharacter,
@@ -123,7 +137,7 @@ func get_character_point_path_toward(
 func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
 	_hm_astar.set_all_disabled(false)
 	_disable_character_tiles(opponents, true)
-	var move_distances: Dictionary = _hm_astar.get_distances(
+	var move_distances: Dictionary = _hm_astar.get_distance_map(
 			c.map_coordinate.get_index(),
 			false,
 			c.stats.get_movement_range()
@@ -258,7 +272,7 @@ func _get_traversible_ids(
 	reach: int
 ) -> Array:
 	_hm_astar.set_area_disabled(section_ids, false)
-	var distances: Dictionary = _hm_astar.get_distances(start_index, false, reach)
+	var distances: Dictionary = _hm_astar.get_distance_map(start_index, false, reach)
 	# Reset for future range finder operations.
 	_hm_astar.set_area_disabled(section_ids)
 	return distances.keys()
