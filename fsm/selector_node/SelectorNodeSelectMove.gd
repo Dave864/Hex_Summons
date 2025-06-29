@@ -21,17 +21,11 @@ onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 
 # Reveal the selector shape and enable the ability to update tile highlights.
 func enter(_msg: Dictionary = {}) -> void:
-	var _player_index: int = selector.active_player.map_coordinate.get_index()
+	var player_index: int = selector.active_player.map_coordinate.get_index()
 	if _move_origin_index < 0:
-		_move_origin_index = _player_index
-	var start_tile: MapTile = selector.hex_map.get_tile_at(_player_index)
+		_move_origin_index = player_index
 	_determine_movement_ids()
-	selector.hex_map.selection_tracker.highlight_player_movement(
-			_movement_ids,
-			selector.active_player,
-			_move_origin_index
-	)
-	_update_selection(start_tile)
+	_highlight_movement_range(player_index)
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
 
@@ -108,6 +102,18 @@ func _determine_movement_ids() -> void:
 			selector.active_player,
 			selector.enemies_ref
 	)
+
+
+# Highlights the movement range for the active character.
+func _highlight_movement_range(player_index: int) -> void:
+	selector.hex_map.selection_tracker.highlight_player_movement(
+			_movement_ids,
+			selector.active_player,
+			_move_origin_index
+	)
+	var start_tile: MapTile = selector.hex_map.get_tile_at(player_index)
+	_update_selection(start_tile)
+
 
 # Update the selector for a given tile. Also updates what the hovered tile is.
 # Passed to the Selector node to be called when the mouse hovers over the tile.
