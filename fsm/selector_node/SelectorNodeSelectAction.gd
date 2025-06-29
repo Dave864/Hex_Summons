@@ -102,7 +102,7 @@ func _orient_emission_to_mouse() -> void:
 	)
 	# Relative top not needed as mouse position translates to direct map coordinates.
 	var dir: int = HexUtil.get_hex_direction((mouse_pt - player_pt).normalized())
-	var source_tile: MapTile = selector.map_tiles[_player_map_index]
+	var source_tile: MapTile = selector.hex_map.get_tile_at(_player_map_index)
 	var target_tile: MapTile = source_tile.get_adjacent_tile(dir)
 	if _is_target_tile(target_tile):
 		_action.set_emission_direction(dir)
@@ -126,7 +126,7 @@ func _orient_to_closest_target() -> void:
 	var target_distances: Array = _get_target_distances()
 	# Get the map tile the target is at.
 	var target_index: int = target_distances[0][0].map_coordinate.get_index()
-	var target_tile: MapTile = selector.map_tiles[target_index]
+	var target_tile: MapTile = selector.hex_map.get_tile_at(target_index)
 	_orient_emission_to_tile(target_tile)
 
 
@@ -151,29 +151,29 @@ func _place_on_closest_target() -> void:
 		target_details[1] <= _action.source_range.get_reach()
 		and target_details[1] > _action.dead_range.get_reach()
 	):
-		selector.tile_hovered = selector.map_tiles[target_index]
+		selector.tile_hovered = selector.hex_map.get_tile_at(target_index)
 		_action.set_emission_map_index(target_index)
 	# Set the emission point to the tile closest to the target.
 	elif (
 		target_details[1] <= outer_action_range
 		and target_details[1] >= inner_action_range
 	):
-		var area_ids: Array = selector.range_finder.get_source_range_indexes(
+		var area_ids: Array = selector.hex_map.range_finder.get_source_range_indexes(
 				_action.source_range,
 				_action.dead_range,
 				_player_map_index,
 				_action.source_ignore_heights
 		)
-		var closest_index: int = selector.range_finder.get_closest_index_toward(
+		var closest_index: int = selector.hex_map.range_finder.get_closest_index_toward(
 				_player_map_index,
 				target_index,
 				area_ids
 		)
-		selector.tile_hovered = selector.map_tiles[closest_index]
+		selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
 		_action.set_emission_map_index(closest_index)
 	# Set to player position if target is out of range.
 	else:
-		selector.tile_hovered = selector.map_tiles[_player_map_index]
+		selector.tile_hovered = selector.hex_map.get_tile_at(_player_map_index)
 		_action.set_emission_map_index(_player_map_index)
 	selector.emit_effect_area_required(_action)
 
@@ -188,7 +188,7 @@ func _get_target_distances() -> Array:
 	var potential_targets: Array = selector.enemies_ref
 	var target_distances: Array = []
 	for option in potential_targets:
-		var dist: float = selector.range_finder.calculate_distance(
+		var dist: float = selector.hex_map.range_finder.calculate_distance(
 				_player_map_index,
 				option.map_coordinate.get_index()
 		)
@@ -225,7 +225,7 @@ func _resolve_joystick_for_area(dir: int) -> void:
 # and does so if able.
 func _resolve_joystick_for_cardinal(dir: int) -> void:
 	if dir >= 0 and dir <= 5:
-		var player_tile: MapTile = selector.map_tiles[_player_map_index]
+		var player_tile: MapTile = selector.hex_map.get_tile_at(_player_map_index)
 		var direction_tile: MapTile = player_tile.get_adjacent_tile(dir)
 		if _is_target_tile(direction_tile):
 			_update_selection(direction_tile)

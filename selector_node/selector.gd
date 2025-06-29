@@ -21,8 +21,6 @@ var active_player: PlayerCharacter = null
 var players_ref: Array = []
 # Reference to the enemy characer in the current encounter.
 var enemies_ref: Array = []
-# Reference to the HexMap of the current encounter map.
-var map_tiles: Array = []
 # Reference to the map's range finder.
 var range_finder: RangeFinder = null
 # Reference to the HexMap of the current encounter map.

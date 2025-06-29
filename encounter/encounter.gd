@@ -62,11 +62,6 @@ func _ready() -> void:
 	
 	for e in enemies:
 		ui.track_enemy(e)
-	
-	selector.players_ref = players
-	selector.enemies_ref = enemies
-	selector.range_finder = hex_map.range_finder
-	selector.hex_map = hex_map
 
 
 # Determines which index in the initiative array that a given value corresponds
@@ -79,7 +74,9 @@ func _determine_init_index(init_value: int) -> int:
 
 # Connects all map tile "mouse_hovered" signals to the selector.
 func _connect_map_to_selector() -> void:
-	selector.map_tiles = hex_map.get_map_tiles()
+	selector.players_ref = players
+	selector.enemies_ref = enemies
+	selector.hex_map = hex_map
 	for mt in hex_map.get_map_tiles():
 		ErrorUtil.connect_signal(
 				mt,

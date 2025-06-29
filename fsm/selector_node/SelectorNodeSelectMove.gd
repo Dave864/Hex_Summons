@@ -95,7 +95,7 @@ func _determine_movement_ids() -> void:
 	# turn. Ids get cleared when the player ends their turn.
 	if _movement_ids.size() > 0:
 		return
-	_movement_ids = selector.range_finder.get_character_travesible_tiles(
+	_movement_ids = selector.hex_map.range_finder.get_character_travesible_tiles(
 			selector.active_player,
 			selector.enemies_ref
 	)
