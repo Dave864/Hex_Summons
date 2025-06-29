@@ -251,26 +251,6 @@ func _determine_closest_point_toward(
 	return true_dest_id
 
 
-# Determines which map tiles are in the ring area positioned at the start index.
-# Does not account for tile heights.
-# Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
-func _determine_ring_area_indexes(radius: int, start: int) -> Array:
-	var tile_ids: Array = []
-	var start_coord: Vector3 = (
-			_map_tiles.get_tile_at_index(start) \
-			.map_coordinate.get_cube_coord()
-	)
-	for x in range(-radius, radius + 1):
-		var x_lower: int = max(-radius, -x - radius) as int
-		var x_upper: int = min(radius, radius - x) as int
-		for y in range(x_lower, x_upper + 1):
-			var coord: Vector3 = Vector3(x, y, -x - y) + start_coord
-			if _map_tiles.is_valid_cube(coord):
-				var tile_id = HexUtil.cube_to_index(coord, _map_tiles.get_x_count())
-				tile_ids.append(tile_id)
-	return tile_ids
-
-
 # Determines which tiles are reachable in a specified map section.
 func _get_traversible_ids(
 	section_ids: Array,
