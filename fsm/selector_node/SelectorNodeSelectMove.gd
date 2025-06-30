@@ -152,8 +152,6 @@ func _on_SignalBus_player_action_selected(
 	_player: PlayerCharacter,
 	action: Action
 ) -> void:
-	if not _state_is_active():
-		return
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(SELECT_ACTION, {"action": action})
 
@@ -164,7 +162,7 @@ func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
 		selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 		_move_origin_index = -1
 		_movement_ids.clear()
-	if not _state_is_active():
+	if _state_is_active():
 		state_machine.transition_to(WAIT)
 
 

@@ -8,6 +8,7 @@ until the encounter is ready to recieve new player selections.
 
 # Connect to the player_turn_started signal from the SignalBus.
 func enter(_msg: Dictionary = {}) -> void:
+	selector.active_player = null
 	ErrorUtil.connect_signal(
 			SignalBus,
 			"player_turn_started",
