@@ -55,12 +55,6 @@ func exit() -> void:
 
 # Connect signals that will persist throughout the life of this state.
 func _ready_connect_signals() -> void:
-#	ErrorUtil.connect_signal(
-#			SignalBus,
-#			"player_action_selected",
-#			self,
-#			"_on_SignalBus_player_action_selected"
-#	)
 	ErrorUtil.connect_signal(
 			SignalBus,
 			"player_turn_ended",
@@ -79,12 +73,6 @@ func _connect_signals() -> void:
 			self,
 			"_on_Selector_move_tile_selected"
 	)
-#	ErrorUtil.connect_signal(
-#			enc.selector,
-#			"effect_area_required",
-#			self,
-#			"_on_Selector_effect_area_required"
-#	)
 
 
 # Disconnect the signals connected to this state.
@@ -114,23 +102,6 @@ func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 	SignalBus.emit_move_path_created(enc.move_path)
 
 
-## Updates the tile selectors to show the effect range of an action
-#func _on_Selector_effect_area_required(action: Action) -> void:
-#	enc.hex_map.selection_tracker.clear_selector_highlights()
-#	var effect_area_indexes: Array = enc.hex_map.range_finder.get_effect_range_indexes(
-#			action.effect_range,
-#			action.get_emission_map_index(),
-#			action.get_emission_direction(),
-#			action.effect_ignore_heights
-#	)
-#	enc.hex_map.selection_tracker.select_effect_range(
-#			effect_area_indexes,
-#			_active_char.map_coordinate.get_index(),
-#			action.effect_ignores_caster,
-#			action.get_is_cardinal()
-#	)
-
-
 # Clear the tile movement highlights, update the initiative tracker and
 # transition to either the PlayerTurn state or the EnemyTurn state depending 
 # on the next character.
@@ -145,18 +116,3 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 		state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:
 		state_machine.transition_to(ENEMY_TURN)
-
-
-## Updates the tile highlights to show the source range of the action.
-#func _on_SignalBus_player_action_selected(_p: PlayerCharacter, action: Action) -> void:
-#	var source_indexes: Array = enc.hex_map.range_finder.get_source_range_indexes(
-#			action.source_range,
-#			action.dead_range,
-#			_p.map_coordinate.get_index(),
-#			action.source_ignore_heights
-#	)
-#	enc.hex_map.selection_tracker.clear_highlights()
-#	enc.hex_map.selection_tracker.highlight_action_source_area(
-#			source_indexes,
-#			_active_char
-#	)

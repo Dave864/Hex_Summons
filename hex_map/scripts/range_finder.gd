@@ -147,63 +147,6 @@ func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
 	return move_distances.keys()
 
 
-## Determines the tile indexes that describe a source range, excluding any defined
-## dead range.
-#func get_source_range_indexes(
-#	source_range: AreaRange,
-#	dead_range: AreaRange,
-#	source_start_index: int,
-#	ignore_heights: bool
-#) -> Array:
-#	var source_indexes: Array = source_range.determine_area_indexes(
-#			source_start_index,
-#			_map_tiles
-#	)
-#	var dead_indexes: Array = (
-#			dead_range.determine_area_indexes(source_start_index, _map_tiles) 
-#			if dead_range != null
-#			else []
-#	)
-#
-#	if not ignore_heights:
-#		source_indexes = _get_traversible_ids(
-#				source_indexes,
-#				source_start_index,
-#				source_range.get_reach()
-#		)
-#
-#	if dead_indexes.size() == 0:
-#		return source_indexes
-#	var final_indexes: Array = []
-#	for index in source_indexes:
-#		if not dead_indexes.has(index):
-#			final_indexes.append(index)
-#	return final_indexes
-
-
-## Determines the tile indexes that describe the given effect range.
-#func get_effect_range_indexes(
-#	effect_range: AreaRange,
-#	emission_map_index: int,
-#	emission_direction: int,
-#	ignore_heights: bool
-#) -> Array:
-#	var effect_indexes: Array = effect_range.determine_directional_area_indexes(
-#			emission_map_index,
-#			emission_direction,
-#			_map_tiles
-#	)
-#
-#	if not ignore_heights:
-#		return _get_traversible_ids(
-#				effect_indexes,
-#				emission_map_index,
-#				effect_range.get_reach()
-#		)
-#	else:
-#		return effect_indexes
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_map_tiles = get_node(map_tiles_reference)
