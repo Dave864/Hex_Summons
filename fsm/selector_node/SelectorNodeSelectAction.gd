@@ -26,6 +26,7 @@ func enter(msg: Dictionary = {}) -> void:
 	_action = msg["action"]
 	_player_pos = selector.active_player.translation
 	_determine_distance_map()
+	_highlight_source_range()
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
 	if _action.emit_from_center:
@@ -65,12 +66,10 @@ func exit() -> void:
 	)
 
 
-# Handles input events
+# Handles input events.
 func handle_input(_event: InputEvent) -> void:
-	if InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
-		if _action.emit_from_center:
-			_orient_emission_to_mouse()
-	elif InputController.get_source() == InputController.Source.GAMEPAD:
+	# Mouse input handled by Selector.
+	if InputController.get_source() == InputController.Source.GAMEPAD:
 		var joy_dir: Vector2 = GamepadHandler.left_joystick_dir()
 		if _action.emit_from_center and not joy_dir.is_zero_approx():
 			var dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
@@ -79,15 +78,17 @@ func handle_input(_event: InputEvent) -> void:
 
 # Gets the distance map. Updates the recorded _player_map_index.
 func _determine_distance_map() -> void:
-	if _player_map_index != selector.active_player.map_coordinate.get_index():
-		_player_map_index = selector.active_player.map_coordinate.get_index()
+	var player_map_index: int = selector.active_player.map_coordinate.get_index()
+	if _player_map_index != player_map_index:
+		_player_map_index = player_map_index
 		_distance_map = selector.hex_map.range_finder.get_distance_map(
 				_player_map_index,
 				true
 		)
 
 
-# Update the selection for a given tile. Also updates what the hovered tile is.
+# Update the selection for a given tile.
+# Passed to the Selector node to be called when the mouse hovers over the tile.
 func _update_selection(map_tile: MapTile) -> void:
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	if !map_tile.is_active():
@@ -101,7 +102,8 @@ func _update_selection(map_tile: MapTile) -> void:
 	elif _is_target_tile(map_tile):
 		selector.tile_hovered = map_tile
 		_action.set_emission_map_index(map_tile.map_coordinate.get_index())
-		selector.emit_effect_area_required(_action)
+		_highlight_effect_range()
+#		selector.emit_effect_area_required(_action)
 
 
 # Orients the direction of an action cast from the player based on mouse position.
@@ -118,7 +120,8 @@ func _orient_emission_to_mouse() -> void:
 	var target_tile: MapTile = source_tile.get_adjacent_tile(dir)
 	if _is_target_tile(target_tile):
 		_action.set_emission_direction(dir)
-		selector.emit_effect_area_required(_action)
+		_highlight_effect_range()
+#		selector.emit_effect_area_required(_action)
 
 
 # Orients the direction of an action cast from the player based on tile position.
@@ -130,7 +133,8 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	# Relative top not needed as we are using direct map coordinates.
 	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
 	_action.set_emission_direction(emission_dir)
-	selector.emit_effect_area_required(_action)
+	_highlight_effect_range()
+#	selector.emit_effect_area_required(_action)
 
 
 # Orients the action emission to the closest valid target.
@@ -170,16 +174,10 @@ func _place_on_closest_target() -> void:
 		target_details[1] <= outer_action_range
 		and target_details[1] >= inner_action_range
 	):
-		var area_ids: Array = selector.hex_map.range_finder.get_source_range_indexes(
-				_action.source_range,
-				_action.dead_range,
-				_player_map_index,
-				_action.source_ignore_heights
-		)
 		var closest_index: int = selector.hex_map.range_finder.get_closest_index_toward(
 				_player_map_index,
 				target_index,
-				area_ids
+				_get_source_range()
 		)
 		selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
 		_action.set_emission_map_index(closest_index)
@@ -187,7 +185,8 @@ func _place_on_closest_target() -> void:
 	else:
 		selector.tile_hovered = selector.hex_map.get_tile_at(_player_map_index)
 		_action.set_emission_map_index(_player_map_index)
-	selector.emit_effect_area_required(_action)
+	_highlight_effect_range()
+#	selector.emit_effect_area_required(_action)
 
 
 # Gets an array of the targets sorted by distance from player. The closest
@@ -224,21 +223,68 @@ func _is_target_tile(map_tile: MapTile) -> bool:
 	)
 
 
+# Updates the selection display to show the source area.
+func _highlight_source_range() -> void:
+	selector.hex_map.selection_tracker.clear_highlights()
+	selector.hex_map.selection_tracker.highlight_action_source_area(
+			_get_source_range(),
+			selector.active_player
+	)
+
+
 # Updates the selection display to show the effect area.
 func _highlight_effect_range() -> void:
 	selector.hex_map.selection_tracker.clear_selector_highlights()
-	var effect_area_indexes: Array = selector.hex_map.range_finder.get_effect_range_indexes(
-			_action.effect_range,
-			_action.get_emission_map_index(),
-			_action.get_emission_direction(),
-			_action.effect_ignore_heights
-	)
 	selector.hex_map.selection_tracker.select_effect_range(
-			effect_area_indexes,
+			_get_effect_range(),
 			_player_map_index,
 			_action.effect_ignores_caster,
 			_action.get_is_cardinal()
 	)
+
+
+# Gets the tile ids of all tiles within the source range. Accounts for dead range.
+func _get_source_range() -> Array:
+	var source_range: Dictionary = {}
+	var source_indexes: Array = _action.source_range.determine_area_indexes(
+			_player_map_index,
+			selector.hex_map
+	)
+	var dead_indexes: Array = _action.dead_range.determine_area_indexes(
+			_player_map_index,
+			selector.hex_map
+	)
+	for index in source_indexes:
+		var travel_dist: float = _distance_map[index]["travel"]
+		if (
+			_action.source_ignore_heights
+			or travel_dist <= _action.source_range.get_reach()
+		):
+			source_range[index] = travel_dist
+	for index in dead_indexes:
+		if source_range.has(index):
+			source_range.erase(index)
+	return source_range.keys()
+
+
+# Gets the tile ids of all tiles within the effect range.
+func _get_effect_range() -> Array:
+	var emission_index: int = _action.get_emission_map_index()
+	var effect_indexes: Array = _action.effect_range.determine_directional_area_indexes(
+			emission_index,
+			_action.get_emission_direction(),
+			selector.hex_map
+	)
+	if _action.effect_ignore_heights:
+		return effect_indexes
+	var effect_range: Array = []
+	var emission_dist: float = _distance_map[emission_index]["travel"]
+	for index in effect_indexes:
+		var index_dist: float = _distance_map[index]["travel"]
+		var dist: float = abs(emission_dist - index_dist)
+		if dist <= _action.effect_range.get_reach():
+			effect_range.append(index)
+	return effect_range
 
 
 # Determines if the selector is able to move to the adjacent tile in the
@@ -246,7 +292,7 @@ func _highlight_effect_range() -> void:
 func _resolve_joystick_for_area(dir: int) -> void:
 	if dir >= 0 and dir <= 5:
 		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(dir)
-		if adjacent_tile != null:
+		if adjacent_tile != null and _is_target_tile(adjacent_tile):
 			_update_selection(adjacent_tile)
 
 
@@ -326,9 +372,10 @@ func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
 	MouseHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
 
 
-# Resolves the left joystick pulse input.
+# Resolves the left joystick pulse input. Pulses should only be used when the
+# effect is not bound to the caster's position.
 func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
-	if _action.get_is_cardinal():
+	if _action.emit_from_center:
 		return
 	# Relative top needed as joystick direction does not account for camera orientation.
 	var hex_dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)

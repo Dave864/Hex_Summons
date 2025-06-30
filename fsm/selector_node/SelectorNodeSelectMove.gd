@@ -40,11 +40,6 @@ func exit() -> void:
 			"_on_SignalBus_player_action_selected"
 	)
 	SignalBus.disconnect(
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
-	)
-	SignalBus.disconnect(
 			"top_vertex_changed",
 			self,
 			"_on_SignalBus_top_vertex_changed"
@@ -64,6 +59,17 @@ func handle_input(event: InputEvent) -> void:
 			state_machine.transition_to(PAUSE)
 
 
+# Need to keep connection to player_turn_ended signal in order to clear out
+# movement details when the turn is ended while in the SelectAction state.
+func _ready_connect_signals():
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"player_turn_ended",
+		self,
+		"_on_SignalBus_player_turn_ended"
+	)
+
+
 # Connect signals to this state.
 func _connect_signals() -> void:
 	ErrorUtil.connect_signal(
@@ -71,12 +77,6 @@ func _connect_signals() -> void:
 			"player_action_selected",
 			self,
 			"_on_SignalBus_player_action_selected"
-	)
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
 	)
 	ErrorUtil.connect_signal(
 			SignalBus,
@@ -159,13 +159,13 @@ func _on_SignalBus_player_action_selected(
 
 
 # Go to the "WAIT" state when the UI has signaled that a player turn has ended.
-func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
+func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
+	if player == selector.active_player:
+		selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+		_move_origin_index = -1
+		_movement_ids.clear()
 	if not _state_is_active():
-		return
-	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
-	_move_origin_index = -1
-	_movement_ids.clear()
-	state_machine.transition_to(WAIT)
+		state_machine.transition_to(WAIT)
 
 
 # Update the mouse tracker when the camera changes orientation.

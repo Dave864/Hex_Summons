@@ -18,10 +18,10 @@ func get_reach() -> int:
 # Determines which map tiles are in the ring area positioned at the start index.
 # Does not account for tile heights.
 # Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
-func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
+func determine_area_indexes(start: int, hm: HexMap) -> Array:
 	var tile_ids: Array = []
 	var start_coord: Vector3 = (
-			map_tiles.get_at(start) \
+			hm.get_tile_at(start) \
 			.map_coordinate.get_cube_coord()
 	)
 	for x in range(-radius, radius + 1):
@@ -29,8 +29,8 @@ func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
 		var x_upper: int = min(radius, radius - x) as int
 		for y in range(x_lower, x_upper + 1):
 			var coord: Vector3 = Vector3(x, y, -x - y) + start_coord
-			if map_tiles.is_valid_cube(coord):
-				var tile_id = HexUtil.cube_to_index(coord, map_tiles.get_x_count())
+			if hm.is_valid_cube(coord):
+				var tile_id = HexUtil.cube_to_index(coord, hm.get_x_count())
 				tile_ids.append(tile_id)
 	return tile_ids
 
@@ -39,9 +39,9 @@ func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
 func determine_directional_area_indexes(
 	start: int,
 	_dir: int,
-	map_tiles: Tiles
+	hm: HexMap
 ) -> Array:
-	return determine_area_indexes(start, map_tiles)
+	return determine_area_indexes(start, hm)
 
 
 # Modifies a RangeDisplay hex matrix so that it reflects the details of this RingArea.

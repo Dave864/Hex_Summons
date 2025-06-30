@@ -17,18 +17,18 @@ func get_reach() -> int:
 
 # Determines which map tiles are in the cardinal area positioned at the start index.
 # Does not account for tile heights.
-func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
+func determine_area_indexes(start: int, hm: HexMap) -> Array:
 	var tile_ids: Array = []
 	var start_coord: Vector3 = (
-			map_tiles.get_at(start) \
+			hm.get_tile_at(start) \
 			.map_coordinate.get_cube_coord()
 	)
 	tile_ids.append(start)
 	for d in range(1, distance + 1):
 		for n in range(6):
 			var coord: Vector3 = HexUtil.cube_at_distance(start_coord, d, n)
-			if map_tiles.is_valid_cube(coord):
-				var tile_id = HexUtil.cube_to_index(coord, map_tiles.get_x_count())
+			if hm.is_valid_cube(coord):
+				var tile_id = HexUtil.cube_to_index(coord, hm.get_x_count())
 				tile_ids.append(tile_id)
 	return tile_ids
 
@@ -37,9 +37,9 @@ func determine_area_indexes(start: int, map_tiles: Tiles) -> Array:
 func determine_directional_area_indexes(
 	start: int,
 	_dir: int,
-	map_tiles: Tiles
+	hm: HexMap
 ) -> Array:
-	return determine_area_indexes(start, map_tiles)
+	return determine_area_indexes(start, hm)
 
 
 # Modifies a RangeDisplay hex matrix so that it reflects the details of this CardinalArea.

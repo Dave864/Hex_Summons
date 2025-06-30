@@ -43,6 +43,11 @@ func get_tile_at(index: int) -> MapTile:
 	return _map_tiles[index]
 
 
+# Checks if the given cube coordinates are within the bounds of the map.
+func is_valid_cube(cube: Vector3) -> bool:
+	return _tiles_node.is_valid_cube(cube)
+
+
 func _ready() -> void:
 	_create_selection_tracker()
 	_create_pathfinder()

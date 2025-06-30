@@ -13,7 +13,7 @@ func get_reach() -> int:
 
 # Base function for area ranges that define a general area around a starting
 # point.
-func determine_area_indexes(_start: int, _map_tiles: Tiles) -> Array:
+func determine_area_indexes(_start: int, _hm: HexMap) -> Array:
 	return []
 
 
@@ -22,7 +22,7 @@ func determine_area_indexes(_start: int, _map_tiles: Tiles) -> Array:
 func determine_directional_area_indexes(
 	_start: int,
 	_dir: int,
-	_map_tiles: Tiles
+	_hm: HexMap
 ) -> Array:
 	return []
 

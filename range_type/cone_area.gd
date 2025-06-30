@@ -23,14 +23,14 @@ func get_reach() -> int:
 func determine_directional_area_indexes(
 	start: int,
 	dir: int,
-	map_tiles: Tiles
+	hm: HexMap
 ) -> Array:
 	# Adjust the direction based on the spread so that the resulting indexes
 	# are aligned to the original direction.
 	dir = posmod(dir - int(spread / 2), 6)
 	var tile_ids: Array = []
 	var start_coord: Vector3 = (
-			map_tiles.get_at(start) \
+			hm.get_tile_at(start) \
 			.map_coordinate.get_cube_coord()
 	)
 	tile_ids.append(start)
@@ -44,15 +44,15 @@ func determine_directional_area_indexes(
 					d + 1,
 					cur_dir
 			)
-			if map_tiles.is_valid_cube(cur_coord):
+			if hm.is_valid_cube(cur_coord):
 				var tile_id = HexUtil.cube_to_index(
 						cur_coord,
-						map_tiles.get_x_count()
+						hm.get_x_count()
 				)
 				tile_ids.append(tile_id)
 			# Don't cast ray if this is the last origin line to add.
 			if s < spread:
-				_determine_ray_indexes(d, cur_dir, cur_coord, map_tiles, tile_ids)
+				_determine_ray_indexes(d, cur_dir, cur_coord, hm, tile_ids)
 	return tile_ids
 
 
@@ -98,7 +98,7 @@ func _determine_ray_indexes(
 		distance_step: int,
 		cur_dir: int,
 		cur_coord: Vector3,
-		map_tiles: Tiles, 
+		hm: HexMap, 
 		tile_ids: Array
 ) -> void:
 	for i in distance_step:
@@ -109,10 +109,10 @@ func _determine_ray_indexes(
 				i + 1,
 				ray_dir
 		)
-		if map_tiles.is_valid_cube(ray_coord):
+		if hm.is_valid_cube(ray_coord):
 			var tile_id = HexUtil.cube_to_index(
 					ray_coord,
-					map_tiles.get_x_count()
+					hm.get_x_count()
 			)
 			tile_ids.append(tile_id)
 

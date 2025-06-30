@@ -13,15 +13,14 @@ var _x_count: int = 0
 # Gets the distances from the starting point to all tiles within a given reach.
 # A negative reach indicates that all map tiles should be looked at. Specifying
 # get_all determines whether to include tiles that are outside of reach of not.
-# Each entry has the travel distance and tile distance stored in an array.
-# Travel distance is at index 0, tile distance is at index 1.
+# Each entry has the travel distance and tile distance stored in a dictionary.
 # Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
 func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictionary:
 	var frontier: PQueue = PQueue.new()
 	var id_distances: Dictionary = {}
 	
 	frontier.push(0.0, start_id)
-	id_distances[start_id] = [0.0, 0]
+	id_distances[start_id] = {"travel": 0.0, "tile": 0}
 	while not frontier.empty():
 		var current: Array = frontier.min()
 		frontier.pop_min()
@@ -29,18 +28,18 @@ func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictiona
 		for next_id in get_point_connections(current[1]):
 			if is_point_disabled(next_id):
 				continue
-			var cur_dist: Array = id_distances[current[1]]
-			var travel_dist: float = _travel_dist(current[1], next_id) + cur_dist[0]
+			var cur_dist: Dictionary = id_distances[current[1]]
+			var travel_dist: float = _travel_dist(current[1], next_id) + cur_dist["travel"]
 			var tile_dist: int = int(_cube_dist(start_id, next_id))
 			if (
 				(
 					not id_distances.has(next_id)
-					or travel_dist < id_distances[next_id][0]
+					or travel_dist < id_distances[next_id]["travel"]
 				)
 				and (reach < 0 or tile_dist <= reach)
 				and (get_all or travel_dist <= reach)
 			):
-				id_distances[next_id] = [travel_dist, tile_dist]
+				id_distances[next_id] = {"travel": travel_dist, "tile": tile_dist}
 				frontier.push(travel_dist, next_id)
 	
 	frontier.free()
