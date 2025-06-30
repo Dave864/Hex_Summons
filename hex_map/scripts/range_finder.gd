@@ -208,7 +208,7 @@ func get_effect_range_indexes(
 func _ready():
 	_map_tiles = get_node(map_tiles_reference)
 	_hm_astar = HexMapAStar.new(
-			_map_tiles.get_all_tiles(),
+			_map_tiles.get_all(),
 			_map_tiles.get_x_count()
 	)
 
@@ -238,7 +238,7 @@ func _determine_closest_point_toward(
 		# movement range.
 		for i in range(path_to_dest.size() - 1, 0, -1):
 			var occupant: Character = (
-					_map_tiles.get_tile_at_index(path_to_dest[i]) \
+					_map_tiles.get_at(path_to_dest[i]) \
 					.occupant.get_current_occupant()
 			)
 			if (
@@ -251,7 +251,7 @@ func _determine_closest_point_toward(
 		# Check if the found destination tile is occupied by an ally other 
 		# than itself. If so, disable that tile and recalculate the shortest path.
 		var dest_occupant: Character = (
-				_map_tiles.get_tile_at_index(true_dest_id) \
+				_map_tiles.get_at(true_dest_id) \
 				.occupant.get_current_occupant()
 		)
 		if (

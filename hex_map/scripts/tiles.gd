@@ -13,8 +13,8 @@ export(int, 1, 50) var x_count = 2 setget set_x_count, get_x_count
 # The number of tiles along the Z axis.
 export(int, 1, 50) var z_count = 3 setget set_z_count, get_z_count
 # Indicates that the map tiles are to be regenerated. Workaround for creating
-# an Inspector plugin.
-export(bool) var regenerate = false setget regenerate_grid
+# an Inspector plugin. Should NEVER be set outside of Inspector.
+export(bool) var regenerate = false setget _regenerate_grid
 
 var _grid_start: Vector3 = _calculate_grid_start()
 var _map_tile: PackedScene = preload("res://hex_map/map_tile_node/MapTile.tscn")
@@ -58,12 +58,12 @@ func get_x_count() -> int:
 
 
 # Get the tile at the specified index.
-func get_tile_at_index(index: int) -> Node:
+func get_at(index: int) -> Node:
 	return get_child(index)
 
 
 # Gets the MapTiles of the specified ids.
-func get_tiles_from_ids(ids: Array) -> Array:
+func get_from_ids(ids: Array) -> Array:
 	var tiles: Array = []
 	for i in ids:
 		tiles.append(get_child(i))
@@ -71,7 +71,7 @@ func get_tiles_from_ids(ids: Array) -> Array:
 
 
 # Gets all the MapTiles.
-func get_all_tiles() -> Array:
+func get_all() -> Array:
 	return get_children()
 
 
@@ -86,8 +86,14 @@ func is_valid_cube(cube: Vector3) -> bool:
 	)
 
 
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_initial_grid_generation()
+
+
 # Removes all tiles from the tiles node and regenerates the map.
-func regenerate_grid(r: bool) -> void:
+# NEVER call this in other scripts. 
+func _regenerate_grid(r: bool) -> void:
 	if Engine.is_editor_hint() and r:
 		# Delete the tiles of the current map
 		var map_tiles = get_children()
@@ -96,11 +102,6 @@ func regenerate_grid(r: bool) -> void:
 		_generate_grid()
 		_set_coordinates()
 		_determine_adjacencies()
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_initial_grid_generation()
 
 
 # Creates the intial instance of the grid map.

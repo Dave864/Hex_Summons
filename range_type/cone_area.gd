@@ -30,7 +30,7 @@ func determine_directional_area_indexes(
 	dir = posmod(dir - int(spread / 2), 6)
 	var tile_ids: Array = []
 	var start_coord: Vector3 = (
-			map_tiles.get_tile_at_index(start) \
+			map_tiles.get_at(start) \
 			.map_coordinate.get_cube_coord()
 	)
 	tile_ids.append(start)

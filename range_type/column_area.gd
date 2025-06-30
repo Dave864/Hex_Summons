@@ -26,7 +26,7 @@ func determine_directional_area_indexes(start: int, dir: int, map_tiles: Tiles) 
 	var right_dir: int = dir + 1 if dir < 5 else 0
 	var tile_ids: Array = []
 	var start_coord: Vector3 = (
-			map_tiles.get_tile_at_index(start) \
+			map_tiles.get_at(start) \
 			.map_coordinate.get_cube_coord()
 	)
 	tile_ids.append(start)

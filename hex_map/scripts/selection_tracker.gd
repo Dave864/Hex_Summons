@@ -22,12 +22,12 @@ func highlight_player_movement(
 	player_index: int = -1
 ) -> void:
 	# Activate the selector at the player's current position.
-	var player_tile: MapTile = _map_tiles.get_tile_at_index(pc.map_coordinate.get_index())
+	var player_tile: MapTile = _map_tiles.get_at(pc.map_coordinate.get_index())
 	player_tile.set_selector_type(HexHighlighter.Option.MOVE)
 	
 	# Set the tile highlights.
 	for i in tile_indexes:
-		var tile: MapTile = _map_tiles.get_tile_at_index(i)
+		var tile: MapTile = _map_tiles.get_at(i)
 		if tile.occupant.get_current_occupant() == null:
 			if i == player_index:
 				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
@@ -54,7 +54,7 @@ func highlight_player_movement(
 # Highlight the specified tiles as being within the source range of an action.
 func highlight_action_source_area(tile_indexes: Array, pc: PlayerCharacter) -> void:
 	for index in tile_indexes:
-		var tile: MapTile = _map_tiles.get_tile_at_index(index)
+		var tile: MapTile = _map_tiles.get_at(index)
 		if index == pc.map_coordinate.get_index():
 			tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 			_highlighted_map_indexes.append(index)
@@ -77,7 +77,7 @@ func select_effect_range(
 		ignore_caster: bool,
 		is_cardinal: bool
 ) -> void:
-	var map_section: Array = _map_tiles.get_tiles_from_ids(tile_indexes)
+	var map_section: Array = _map_tiles.get_from_ids(tile_indexes)
 	for tile in map_section:
 		var occupant: Character = tile.occupant.get_current_occupant()
 		if occupant == null:
@@ -100,14 +100,14 @@ func select_effect_range(
 # Clear the higlights from all tiles.
 func clear_highlights() -> void:
 	for i in _highlighted_map_indexes:
-		_map_tiles.get_tile_at_index(i).set_highlight_type(HexHighlighter.Option.NONE)
+		_map_tiles.get_at(i).set_highlight_type(HexHighlighter.Option.NONE)
 	_highlighted_map_indexes.clear()
 
 
 # Clear selector highlights from all tiles.
 func clear_selector_highlights() -> void:
 	for i in _selectable_map_indexes:
-		_map_tiles.get_tile_at_index(i).set_selector_type(HexHighlighter.Option.NONE)
+		_map_tiles.get_at(i).set_selector_type(HexHighlighter.Option.NONE)
 	_selectable_map_indexes.clear()
 
 
