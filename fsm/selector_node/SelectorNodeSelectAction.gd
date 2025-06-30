@@ -261,19 +261,22 @@ func _get_source_range() -> Array:
 
 # Gets the tile ids of all tiles within the effect range.
 func _get_effect_range() -> Array:
-	var emission_index: int = _action.get_emission_map_index()
-	if _effect_ranges.has(emission_index):
-		return _effect_ranges[emission_index]
+	var e_index: int = _action.get_emission_map_index()
+	var e_dir: int = _action.get_emission_direction()
+	if _action.emit_from_center and _effect_ranges.has(e_dir):
+		return _effect_ranges[e_dir]
+	elif _effect_ranges.has(e_index):
+		return _effect_ranges[e_index]
 	var effect_indexes: Array = _action.effect_range.determine_directional_area_indexes(
-			emission_index,
-			_action.get_emission_direction(),
+			e_index,
+			e_dir,
 			selector.hex_map
 	)
 	if _action.effect_ignore_heights:
-		_effect_ranges[emission_index] = effect_indexes
+		_update_effect_ranges(e_index, e_dir, effect_indexes)
 		return effect_indexes
 	var effect_d_map: Dictionary = selector.hex_map.range_finder.get_distance_map(
-			emission_index,
+			e_index,
 			false,
 			_action.effect_range.get_reach()
 	)
@@ -281,8 +284,17 @@ func _get_effect_range() -> Array:
 	for index in effect_indexes:
 		if effect_d_map.has(index):
 			valid_effect_indexes.append(index)
-	_effect_ranges[emission_index] = valid_effect_indexes
+	_update_effect_ranges(e_index, e_dir, valid_effect_indexes)
 	return valid_effect_indexes
+
+
+# Updates the _effect_ranges dictionary to store the listed effect indexes
+# under either the emission point or direction.
+func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array) -> void:
+	if _action.emit_from_center:
+		_effect_ranges[e_dir] = indexes
+	else:
+		_effect_ranges[e_pt] = indexes
 
 
 # Determines if the selector is able to move to the adjacent tile in the
