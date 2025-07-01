@@ -16,14 +16,11 @@ option_ref = NodePath("..")
 
 [node name="SourceRange" type="Node" parent="."]
 script = ExtResource( 2 )
-distance = 3
 
 [node name="DeadRange" type="Node" parent="."]
 script = ExtResource( 1 )
-radius = 1
 
 [node name="EffectRange" type="Node" parent="."]
 script = ExtResource( 1 )
-radius = 1
 
 [node name="Effects" type="Node" parent="."]

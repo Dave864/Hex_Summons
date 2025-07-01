@@ -90,7 +90,10 @@ func set_caster_details() -> void:
 
 # Sets the details for the emission point.
 func set_emission_details(emission_index: Vector2) -> void:
-	_matrix[emission_index.y][emission_index.x][OUTLINE] = Detail.EFFECT_SOURCE
+	set_outline(emission_index, Detail.EFFECT_SOURCE)
+	# Don't update fill if caster point.
+	if fill_at(emission_index) != Detail.CASTER:
+		set_fill(emission_index, Detail.EFFECT_SOURCE)
 
 
 # Resets the matrix so that the display is empty.

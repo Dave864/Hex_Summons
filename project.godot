@@ -516,4 +516,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+batching/options/use_batching_in_editor=false
 environment/default_environment="res://default_env.tres"

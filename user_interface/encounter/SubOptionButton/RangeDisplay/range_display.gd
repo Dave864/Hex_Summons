@@ -18,6 +18,14 @@ var _emission_index: Vector2 = Vector2(1, _mid_row)
 var _action: Action = null
 # Matrix that represents the hexes in the display.
 var _d_matrix: DisplayMatrix = null
+# Tracks the order in which tiles should be drawn.
+var _draw_order: Dictionary = {
+	"empty": [],
+	"source_tile": [],
+	"effect_overlap": [],
+	"effect_tile": [],
+	"etc": [],
+}
 # The vertex positions for a hex at origin.
 var _origin_pts: PoolVector2Array = []
 var _origin_fill_pts: PoolVector2Array = []
@@ -61,8 +69,9 @@ func set_hex_spacing(hs: float) -> void:
 
 
 # Redraws the range display for the given action.
-func update_range_display(action: Action) -> void:
+func update_action(action: Action) -> void:
 	_action = action
+	_update_display_details()
 	update()
 
 
@@ -73,13 +82,28 @@ func _ready() -> void:
 
 
 func _draw() -> void:
+	for details in _draw_order["empty"]:
+		_draw_hex_fill(_get_color(details[1][DisplayMatrix.FILL]), details[0])
+	for details in _draw_order["source_tile"]:
+		_draw_hex_fill(_get_color(details[1][DisplayMatrix.FILL]), details[0])
+	for details in _draw_order["effect_overlap"]:
+		_draw_hex(details[1], details[0])
+	for details in _draw_order["effect_tile"]:
+		_draw_hex_fill(_get_color(details[1][DisplayMatrix.FILL]), details[0])
+	for details in _draw_order["etc"]:
+		_draw_hex(details[1], details[0])
+
+
+# Resets the drawing details for the display.
+func _update_display_details() -> void:
 	if not Engine.is_editor_hint():
 		_d_matrix.reset_display()
+		_clear_draw_order()
 		_determine_source_hexes()
 		_determine_effect_hexes()
 		_set_caster_hex()
 		_set_emission_hex()
-	_draw_range()
+		_update_draw_order()
 
 
 # Determine the hex vertices that will be used as reference for creating hexes
@@ -135,9 +159,8 @@ func _set_emission_hex() -> void:
 	_d_matrix.set_emission_details(_emission_index)
 
 
-# Draws the array of hexagons that display the range of the action.
-func _draw_range() -> void:
-	_set_min_size()
+# Determines the order to draw the hexex in order to trigger batching.
+func _update_draw_order() -> void:
 	var center: Vector2 = Vector2.ZERO
 	for row in row_count:
 		center.y = hex_radius * 1.5 * (row + 1) + (row * hex_spacing)
@@ -145,19 +168,50 @@ func _draw_range() -> void:
 				hex_radius * HexUtil.HEX_EDGE_RATIO * 2 if row % 2 == 0
 				else hex_radius * HexUtil.HEX_EDGE_RATIO * 3 + (hex_spacing / 2)
 		)
-		_draw_hex(row, 0, center)
+		var draw_data: Dictionary = _d_matrix.at(Vector2(0, row))
+		_determine_draw_step(draw_data, center)
 		for col in range(1, col_count):
+			draw_data = _d_matrix.at(Vector2(col, row))
 			center.x += hex_radius * HexUtil.HEX_EDGE_RATIO * 2 + hex_spacing
-			_draw_hex(row, col, center)
+			_determine_draw_step(draw_data, center)
+
+
+# Clears out the current draw order.
+func _clear_draw_order() -> void:
+	_draw_order["empty"].clear()
+	_draw_order["source_tile"].clear()
+	_draw_order["effect_overlap"].clear()
+	_draw_order["effect_tile"].clear()
+	_draw_order["etc"].clear()
+
+
+# Determines which part of the draw step the data should be part of.
+func _determine_draw_step(draw_data: Dictionary, center: Vector2) -> void:
+	if draw_data[DisplayMatrix.FILL] == DisplayMatrix.Detail.EMPTY:
+		_draw_order["empty"].append([center, draw_data])
+	elif (
+		draw_data[DisplayMatrix.OUTLINE] == DisplayMatrix.Detail.EFFECT_RANGE
+		and draw_data[DisplayMatrix.FILL] == DisplayMatrix.Detail.SOURCE_RANGE
+	):
+		_draw_order["effect_overlap"].append([center, draw_data])
+	elif (
+		draw_data[DisplayMatrix.FILL] == DisplayMatrix.Detail.SOURCE_RANGE
+		and draw_data[DisplayMatrix.OUTLINE] == DisplayMatrix.Detail.SOURCE_RANGE
+	):
+		_draw_order["source_tile"].append([center, draw_data])
+	elif draw_data[DisplayMatrix.FILL] == DisplayMatrix.Detail.EFFECT_RANGE:
+		_draw_order["effect_tile"].append([center, draw_data])
+	else:
+		_draw_order["etc"].append([center, draw_data])
 
 
 # Draw the hex centered at the coordinate using the details of the hex_matrix.
-func _draw_hex(row: int, col: int, coord: Vector2) -> void:
-	var outline_color: Color = _get_color(_d_matrix.outline_at(Vector2(col, row)))
-	var fill_color: Color = _get_color(_d_matrix.fill_at(Vector2(col, row)))
-	_draw_hex_outline(outline_color, coord)
+func _draw_hex(data: Dictionary, center: Vector2) -> void:
+	var outline_color: Color = _get_color(data[DisplayMatrix.OUTLINE])
+	var fill_color: Color = _get_color(data[DisplayMatrix.FILL])
+	_draw_hex_outline(outline_color, center)
 	if outline_color != fill_color:
-		_draw_hex_fill(fill_color, coord)
+		_draw_hex_fill(fill_color, center)
 
 
 # Determines the color to use based on the detail marker.
