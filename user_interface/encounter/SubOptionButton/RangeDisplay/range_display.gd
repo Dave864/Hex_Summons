@@ -14,9 +14,10 @@ export(float, 0.5, 5.0) var outline_width = 1.0 setget set_outline_width
 export(float, 0.0, 3.0) var hex_spacing = 0.0 setget set_hex_spacing
 
 var _mid_row: int = int(round(row_count / 2.0)) - 1
+var _emission_index: Vector2 = Vector2(1, _mid_row)
 var _action: Action = null
 # Matrix that represents the hexes in the display.
-var _hex_matrix: DisplayMatrix = null
+var _d_matrix: DisplayMatrix = null
 # The vertex positions for a hex at origin.
 var _origin_pts: PoolVector2Array = []
 var _origin_fill_pts: PoolVector2Array = []
@@ -29,14 +30,14 @@ func set_row_count(rc: int) -> void:
 			else rc
 	)
 	_mid_row = int(round(row_count / 2.0)) - 1
-	_hex_matrix = DisplayMatrix.new(row_count, col_count)
+	_d_matrix = DisplayMatrix.new(row_count, col_count)
 	if Engine.is_editor_hint():
 		update()
 
 
 func set_col_count(cc: int) -> void:
 	col_count = cc
-	_hex_matrix = DisplayMatrix.new(row_count, col_count)
+	_d_matrix = DisplayMatrix.new(row_count, col_count)
 	if Engine.is_editor_hint():
 		update()
 
@@ -66,16 +67,18 @@ func update_range_display(action: Action) -> void:
 
 
 func _ready() -> void:
-	_hex_matrix = DisplayMatrix.new(row_count, col_count)
+	_d_matrix = DisplayMatrix.new(row_count, col_count)
 	_origin_pts = _init_origin_vertices()
 	_origin_fill_pts = _init_origin_vertices(outline_width)
 
 
 func _draw() -> void:
 	if not Engine.is_editor_hint():
-		_hex_matrix.reset_display()
+		_d_matrix.reset_display()
 		_determine_source_hexes()
 		_determine_effect_hexes()
+		_set_caster_hex()
+		_set_emission_hex()
 	_draw_range()
 
 
@@ -91,50 +94,45 @@ func _init_origin_vertices(outline_offset: float = 0.0) -> PoolVector2Array:
 
 # Determine the hex colors that will represent the source range.
 func _determine_source_hexes() -> void:
-	_action.source_range.populate_range_display_matrix(
+	_action.source_range.update_range_display(
 			Vector2(1, _mid_row),
-			DisplayMatrix.Detail.EMPTY,
 			DisplayMatrix.Detail.SOURCE_RANGE,
-			_hex_matrix
+			DisplayMatrix.Detail.SOURCE_RANGE,
+			_d_matrix
 	)
 	if _action.dead_range != null:
-		_action.dead_range.populate_range_display_matrix(
+		_action.dead_range.update_range_display(
 				Vector2(1, _mid_row),
 				DisplayMatrix.Detail.EMPTY,
 				DisplayMatrix.Detail.EMPTY,
-				_hex_matrix
+				_d_matrix
 		)
 
 
 # Determine the hex colors that will represent the effect range.
 func _determine_effect_hexes() -> void:
-	var emission_index: Vector2 = Vector2(1, _mid_row)
-	
 	if not _action.emit_from_center:
+		# Determine the emission point.
 		for x in range(2, col_count):
 			var index: Vector2 = Vector2(x, _mid_row)
-			if _hex_matrix.fill_at(index) == DisplayMatrix.Detail.SOURCE_RANGE:
-				emission_index.x = x
-	
-	_action.effect_range.populate_range_display_matrix(
-			emission_index,
-			DisplayMatrix.Detail.EMPTY,
+			if _d_matrix.fill_at(index) == DisplayMatrix.Detail.SOURCE_RANGE:
+				_emission_index.x = x
+	_action.effect_range.update_range_display(
+			_emission_index,
 			DisplayMatrix.Detail.EFFECT_RANGE,
-			_hex_matrix
+			DisplayMatrix.Detail.EFFECT_RANGE,
+			_d_matrix
 	)
-	
-	_set_caster_hex()
-	_set_emission_hex(emission_index)
 
 
 # Sets the details for the hex that represents the caster.
 func _set_caster_hex() -> void:
-	_hex_matrix.set_caster_details()
+	_d_matrix.set_caster_details()
 
 
 # Sets the details for the hex that represents the emission point.
-func _set_emission_hex(emission_point: Vector2) -> void:
-	_hex_matrix.set_emission_details(emission_point)
+func _set_emission_hex() -> void:
+	_d_matrix.set_emission_details(_emission_index)
 
 
 # Draws the array of hexagons that display the range of the action.
@@ -155,14 +153,15 @@ func _draw_range() -> void:
 
 # Draw the hex centered at the coordinate using the details of the hex_matrix.
 func _draw_hex(row: int, col: int, coord: Vector2) -> void:
-	var outline_color: Color = _determine_color(_hex_matrix.outline_at(Vector2(col, row)))
-	var fill_color: Color = _determine_color(_hex_matrix.fill_at(Vector2(col, row)))
+	var outline_color: Color = _get_color(_d_matrix.outline_at(Vector2(col, row)))
+	var fill_color: Color = _get_color(_d_matrix.fill_at(Vector2(col, row)))
 	_draw_hex_outline(outline_color, coord)
-	_draw_hex_fill(fill_color, coord)
+	if outline_color != fill_color:
+		_draw_hex_fill(fill_color, coord)
 
 
 # Determines the color to use based on the detail marker.
-func _determine_color(detail_marker: int) -> Color:
+func _get_color(detail_marker: int) -> Color:
 	var c: Color
 	match detail_marker:
 		DisplayMatrix.Detail.CASTER:

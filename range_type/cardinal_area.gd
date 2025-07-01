@@ -43,20 +43,20 @@ func determine_directional_area_indexes(
 
 
 # Modifies a RangeDisplay hex matrix so that it reflects the details of this CardinalArea.
-func populate_range_display_matrix(
+func update_range_display(
 	center_point: Vector2,
 	outline_type: int,
 	fill_type: int,
-	hex_matrix: DisplayMatrix
+	d_matrix: DisplayMatrix
 ) -> void:
 	var center_coord: Vector3 = HexUtil.index_to_cube(
-			int(center_point.y * hex_matrix.get_col_count() + center_point.x),
-			hex_matrix.get_col_count()
+			int(center_point.y * d_matrix.get_col_count() + center_point.x),
+			d_matrix.get_col_count()
 	)
-	_update_hex_matrix(hex_matrix, center_point, outline_type, fill_type)
+	_update_hex_matrix(d_matrix, center_point, outline_type, fill_type)
 	for d in range(1, distance + 1):
 		for n in 6:
 			var coord: Vector3 = HexUtil.cube_at_distance(center_coord, d, n)
 			var index: Vector2 = HexUtil.cube_to_offset(coord)
-			if _is_index_in_matrix(index, hex_matrix):
-				_update_hex_matrix(hex_matrix, index, outline_type, fill_type)
+			if _is_index_in_matrix(index, d_matrix):
+				_update_hex_matrix(d_matrix, index, outline_type, fill_type)

@@ -78,15 +78,15 @@ func determine_directional_area_indexes(start: int, dir: int, hm: HexMap) -> Arr
 
 
 # Modifies a RangeDisplay hex matrix so that it reflects the details of this ColumnArea.
-func populate_range_display_matrix(
+func update_range_display(
 	center_point: Vector2,
 	outline_type: int,
 	fill_type: int,
-	hex_matrix: DisplayMatrix
+	d_matrix: DisplayMatrix
 ) -> void:
 	var start_coord: Vector3 = HexUtil.index_to_cube(
-			int(center_point.y * hex_matrix.get_col_count() + center_point.x),
-			hex_matrix.get_col_count()
+			int(center_point.y * d_matrix.get_col_count() + center_point.x),
+			d_matrix.get_col_count()
 	)
 	for s in range(spread + 1):
 		var left_coord: Vector3 = HexUtil.cube_at_distance(
@@ -102,10 +102,10 @@ func populate_range_display_matrix(
 		if s > 0:
 			var left_index: Vector2 = HexUtil.cube_to_offset(left_coord)
 			var right_index: Vector2 = HexUtil.cube_to_offset(right_coord)
-			if _is_index_in_matrix(left_index, hex_matrix):
-				_update_hex_matrix(hex_matrix, left_index, outline_type, fill_type)
-			if _is_index_in_matrix(right_index, hex_matrix):
-				_update_hex_matrix(hex_matrix, right_index, outline_type, fill_type)
+			if _is_index_in_matrix(left_index, d_matrix):
+				_update_hex_matrix(d_matrix, left_index, outline_type, fill_type)
+			if _is_index_in_matrix(right_index, d_matrix):
+				_update_hex_matrix(d_matrix, right_index, outline_type, fill_type)
 		# Add additional tiles to fully fill in the "column" shape. Without the
 		# extra tiles, the shape is a chevron.
 		for d in range(distance + spread - s + 1):
@@ -117,8 +117,8 @@ func populate_range_display_matrix(
 						HexUtil.HexDirection.RIGHT
 				)
 				var hex_index: Vector2 = HexUtil.cube_to_offset(ray_coord)
-				if _is_index_in_matrix(hex_index, hex_matrix):
-					_update_hex_matrix(hex_matrix, hex_index, outline_type, fill_type)
+				if _is_index_in_matrix(hex_index, d_matrix):
+					_update_hex_matrix(d_matrix, hex_index, outline_type, fill_type)
 			# Cast rays from both left and right points.
 			else:
 				var ray_coord_l: Vector3 = HexUtil.cube_at_distance(
@@ -133,7 +133,7 @@ func populate_range_display_matrix(
 						HexUtil.HexDirection.RIGHT
 				)
 				var ray_hex_r: Vector2 = HexUtil.cube_to_offset(ray_coord_r)
-				if _is_index_in_matrix(ray_hex_l, hex_matrix):
-					_update_hex_matrix(hex_matrix, ray_hex_l, outline_type, fill_type)
-				if _is_index_in_matrix(ray_hex_r, hex_matrix):
-					_update_hex_matrix(hex_matrix, ray_hex_r, outline_type, fill_type)
+				if _is_index_in_matrix(ray_hex_l, d_matrix):
+					_update_hex_matrix(d_matrix, ray_hex_l, outline_type, fill_type)
+				if _is_index_in_matrix(ray_hex_r, d_matrix):
+					_update_hex_matrix(d_matrix, ray_hex_r, outline_type, fill_type)

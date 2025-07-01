@@ -9,17 +9,21 @@
 [node name="Action" type="Node"]
 script = ExtResource( 3 )
 potency = ExtResource( 5 )
+emit_from_center = false
 
 [node name="ActionButton" parent="." instance=ExtResource( 4 )]
 option_ref = NodePath("..")
 
 [node name="SourceRange" type="Node" parent="."]
 script = ExtResource( 2 )
+distance = 3
 
 [node name="DeadRange" type="Node" parent="."]
 script = ExtResource( 1 )
+radius = 1
 
 [node name="EffectRange" type="Node" parent="."]
 script = ExtResource( 1 )
+radius = 1
 
 [node name="Effects" type="Node" parent="."]

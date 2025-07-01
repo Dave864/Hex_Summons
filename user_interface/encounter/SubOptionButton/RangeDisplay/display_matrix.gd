@@ -68,8 +68,18 @@ func set_fill(index: Vector2, fill_detail: int) -> void:
 
 # Sets the details for the given index.
 func set_details(index: Vector2, outline_detail: int, fill_detail: int) -> void:
-	set_outline(index, outline_detail)
-	set_fill(index, fill_detail)
+	# Don't update effect outline if new outline is a source.
+	if (
+		outline_detail != Detail.SOURCE_RANGE
+		or outline_at(index) != Detail.EFFECT_RANGE
+	):
+		set_outline(index, outline_detail)
+	# Don't update source fill if new fill is an effect.
+	if (
+		fill_detail != Detail.EFFECT_RANGE
+		or fill_at(index) != Detail.SOURCE_RANGE
+	):
+		set_fill(index, fill_detail)
 
 
 # Sets the details for the caster point.

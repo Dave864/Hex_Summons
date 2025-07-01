@@ -57,15 +57,15 @@ func determine_directional_area_indexes(
 
 
 # Modifies a RangeDisplay hex matrix so that it reflects the details of this ConeArea.
-func populate_range_display_matrix(
+func update_range_display(
 	center_point: Vector2,
 	outline_type: int,
 	fill_type: int,
-	hex_matrix: DisplayMatrix
+	d_matrix: DisplayMatrix
 ) -> void:
 	var start_coord: Vector3 = HexUtil.index_to_cube(
-			int(center_point.y * hex_matrix.get_col_count() + center_point.x),
-			hex_matrix.get_col_count()
+			int(center_point.y * d_matrix.get_col_count() + center_point.x),
+			d_matrix.get_col_count()
 	)
 	var dir: int = _get_initial_direction()
 	for s in range(spread + 1):
@@ -79,15 +79,15 @@ func populate_range_display_matrix(
 					cur_dir
 			)
 			var cur_index: Vector2 = HexUtil.cube_to_offset(cur_coord)
-			if _is_index_in_matrix(cur_index, hex_matrix):
-				_update_hex_matrix(hex_matrix, cur_index, outline_type, fill_type)
+			if _is_index_in_matrix(cur_index, d_matrix):
+				_update_hex_matrix(d_matrix, cur_index, outline_type, fill_type)
 			# Don't cast ray if this is the last origin line to add.
 			if s < spread:
 				_determine_ray_displays(
 						d,
 						cur_dir,
 						cur_coord,
-						hex_matrix,
+						d_matrix,
 						outline_type,
 						fill_type
 				)
@@ -123,7 +123,7 @@ func _determine_ray_displays(
 		distance_step: int,
 		cur_dir: int,
 		cur_coord: Vector3,
-		hex_matrix: DisplayMatrix,
+		d_matrix: DisplayMatrix,
 		outline_type: int,
 		fill_type: int
 ) -> void:
@@ -136,8 +136,8 @@ func _determine_ray_displays(
 				ray_dir
 		)
 		var ray_index: Vector2 = HexUtil.cube_to_offset(ray_coord)
-		if _is_index_in_matrix(ray_index, hex_matrix):
-			_update_hex_matrix(hex_matrix, ray_index, outline_type, fill_type)
+		if _is_index_in_matrix(ray_index, d_matrix):
+			_update_hex_matrix(d_matrix, ray_index, outline_type, fill_type)
 
 
 # Helper for populate_range_display. Determines which direction to start from

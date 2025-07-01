@@ -29,31 +29,31 @@ func determine_directional_area_indexes(
 
 # Base function for area ranges that take modifies a RangeDisplay hex matrix
 # so that it reflects the details of this AreaRange.
-func populate_range_display_matrix(
+func update_range_display(
 	_center_point: Vector2,
 	_outline_type: int,
 	_fill_type: int,
-	_hex_matrix: DisplayMatrix
+	_d_matrix: DisplayMatrix
 ) -> void:
 	pass
 
 
 # Checks if a matrix index is within the bounds of the specified RangeDisplay
 # hex matrix.
-func _is_index_in_matrix(matrix_index: Vector2, hex_matrix: DisplayMatrix) -> bool:
+func _is_index_in_matrix(matrix_index: Vector2, d_matrix: DisplayMatrix) -> bool:
 	return (
 		matrix_index.y >=0 
-		and matrix_index.y < hex_matrix.get_row_count()
+		and matrix_index.y < d_matrix.get_row_count()
 		and matrix_index.x >= 0
-		and matrix_index.x < hex_matrix.get_col_count()
+		and matrix_index.x < d_matrix.get_col_count()
 	)
 
 
 # Updates the details of the RangeDisplay matrix array at the given index.
 func _update_hex_matrix(
-	hex_matrix: DisplayMatrix,
+	d_matrix: DisplayMatrix,
 	matrix_index: Vector2,
 	outline_details: int,
 	fill_details: int
 ) -> void:
-	hex_matrix.set_details(matrix_index, outline_details, fill_details)
+	d_matrix.set_details(matrix_index, outline_details, fill_details)

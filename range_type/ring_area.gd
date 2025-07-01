@@ -46,15 +46,15 @@ func determine_directional_area_indexes(
 
 # Modifies a RangeDisplay hex matrix so that it reflects the details of this RingArea.
 # Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
-func populate_range_display_matrix(
+func update_range_display(
 	center_point: Vector2,
 	outline_type: int,
 	fill_type: int,
-	hex_matrix: DisplayMatrix
+	d_matrix: DisplayMatrix
 ) -> void:
 	var start_coord: Vector3 = HexUtil.index_to_cube(
-			int(center_point.y * hex_matrix.get_col_count() + center_point.x),
-			hex_matrix.get_col_count()
+			int(center_point.y * d_matrix.get_col_count() + center_point.x),
+			d_matrix.get_col_count()
 	)
 	for x in range(-radius, radius + 1):
 		var x_lower: int = max(-radius, -x - radius) as int
@@ -62,5 +62,5 @@ func populate_range_display_matrix(
 		for y in range(x_lower, x_upper + 1):
 			var cube_coord: Vector3 = Vector3(x, y, -x - y) + start_coord
 			var matrix_index: Vector2 = HexUtil.cube_to_offset(cube_coord)
-			if _is_index_in_matrix(matrix_index, hex_matrix):
-				hex_matrix.set_details(matrix_index, outline_type, fill_type)
+			if _is_index_in_matrix(matrix_index, d_matrix):
+				d_matrix.set_details(matrix_index, outline_type, fill_type)
