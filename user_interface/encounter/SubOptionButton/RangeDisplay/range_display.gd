@@ -81,6 +81,12 @@ func _ready() -> void:
 	_origin_fill_pts = _init_origin_vertices(outline_width)
 
 
+func _init() -> void:
+	_d_matrix = DisplayMatrix.new(row_count, col_count)
+	_origin_pts = _init_origin_vertices()
+	_origin_fill_pts = _init_origin_vertices(outline_width)
+
+
 func _draw() -> void:
 	for details in _draw_order["empty"]:
 		_draw_hex_fill(_get_color(details[1][DisplayMatrix.FILL]), details[0])

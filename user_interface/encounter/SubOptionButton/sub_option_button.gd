@@ -8,8 +8,6 @@ Button that describes a possible sub-option for a given option.
 # Indicates when the option described by the button has been selected.
 signal option_selected(option_info)
 
-export(NodePath) var option_ref = null
-
 var _option_details: Node = null setget set_option_details, get_option_details
 var _player: PlayerCharacter = null setget set_player
 
@@ -47,7 +45,6 @@ func get_button() -> Node:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_parameters()
-	_option_details = get_node(option_ref)
 
 
 # Emit a signal indicating that the button was pressed.
@@ -58,10 +55,6 @@ func _on_Button_pressed() -> void:
 # Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	var button_node: Button = get_node_or_null("Button")
-	assert(
-			option_ref != null,
-			"No reference to option provided."
-	)
 	assert(
 			button_node != null,
 			"SubOptionButton %s does not have a Button node." % [name]

@@ -128,7 +128,7 @@ func _on_EndButton_button_pressed() -> void:
 
 # Signal that an action option has been selected from the currently
 # displayed options.
-func _on_SubOptions_action_selected(action_info: Action) -> void:
+func _on_SubOptions_option_selected(action_info: Action) -> void:
 	SignalBus.emit_player_action_selected(
 			encounter_ui.get_focused_player(),
 			action_info
