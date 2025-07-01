@@ -6,7 +6,7 @@ Manages the SubOptions UI element in the EncounterUI.
 
 
 # Indicates that an action has been selected.
-signal action_selected(action_info)
+signal option_selected(option_info)
 
 var _actions: Array = []
 var _sub_option_button: PackedScene = preload(
@@ -15,7 +15,7 @@ var _sub_option_button: PackedScene = preload(
 )
 var _action_button: PackedScene = preload(
 		"res://user_interface/encounter/" \
-		+ "SubOptionButton/ActionButton.tscn"
+		+ "SubOptionButton/ActionButton/ActionButton.tscn"
 )
 
 onready var _sub_options_container: HBoxContainer = $HBoxContainer
@@ -34,8 +34,8 @@ func deactivate() -> void:
 
 
 # Populate the sub-options container.
-func populate(player: PlayerCharacter, player_actions: Array) -> void:
-	_populate_sub_options(player, player_actions)
+func populate(player: PlayerCharacter, options: Array) -> void:
+#	_populate_sub_options(player, player_actions)
 	for i in range(_sub_options_container.get_child_count() - 1):
 		var current_option: SubOptionButton = _sub_options_container.get_child(i)
 		var right_neighor: SubOptionButton = _sub_options_container.get_child(i + 1)
@@ -46,9 +46,9 @@ func populate(player: PlayerCharacter, player_actions: Array) -> void:
 func clear_sub_options() -> void:
 	for option_button in _sub_options_container.get_children():
 		option_button.disconnect(
-				"action_selected",
+				"option_selected",
 				self,
-				"_on_SubOptionButton_action_selected"
+				"_on_SubOptionButton_option_selected"
 		)
 		_sub_options_container.remove_child(option_button)
 		option_button.queue_free()
@@ -65,21 +65,21 @@ func grab_focus_at_index(index: int) -> void:
 	_sub_options_container.get_child(index).get_button().grab_focus()
 
 
-# Create new buttons for the given player actions.
-func _populate_sub_options(player: PlayerCharacter, player_actions: Array) -> void:
-	for pa in player_actions:
-		var new_button: SubOptionButton = _action_button.instance()
-		new_button.set_action_details(pa)
-		new_button.set_player(player)
-		new_button.connect(
-				"action_selected",
-				self,
-				"_on_SubOptionButton_action_selected"
-		)
-		_actions.append(pa)
-		_sub_options_container.add_child(new_button)
+## Create new buttons for the given player actions.
+#func _populate_sub_options(player: PlayerCharacter, player_actions: Array) -> void:
+#	for pa in player_actions:
+#		var new_button: SubOptionButton = _action_button.instance()
+#		new_button.set_action_details(pa)
+#		new_button.set_player(player)
+#		new_button.connect(
+#				"action_selected",
+#				self,
+#				"_on_SubOptionButton_action_selected"
+#		)
+#		_actions.append(pa)
+#		_sub_options_container.add_child(new_button)
 
 
 # Emits the "action_selected" signal when one of the button options has been pressed.
-func _on_SubOptionButton_action_selected(action_info: Action) -> void:
-	emit_signal("action_selected", action_info)
+func _on_SubOptionButton_option_selected(option_info: Node) -> void:
+	emit_signal("option_selected", option_info)

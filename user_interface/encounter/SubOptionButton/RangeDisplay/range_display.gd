@@ -14,13 +14,12 @@ export(float, 0.5, 5.0) var outline_width = 1.0 setget set_outline_width
 export(float, 0.0, 3.0) var hex_spacing = 0.0 setget set_hex_spacing
 
 var _mid_row: int = int(round(row_count / 2.0)) - 1
-# References to the range details of an action.
-var _source_range: AreaRange = null
-var _dead_range: AreaRange = null
-var _effect_range: AreaRange = null
-var _emit_from_center: bool = false
+var _action: Action = null
 # Matrix that represents the hexes in the display.
 var _hex_matrix: DisplayMatrix = null
+# The vertex positions for a hex at origin.
+var _origin_pts: PoolVector2Array = []
+var _origin_fill_pts: PoolVector2Array = []
 
 
 func set_row_count(rc: int) -> void:
@@ -62,19 +61,14 @@ func set_hex_spacing(hs: float) -> void:
 
 # Redraws the range display for the given action.
 func update_range_display(action: Action) -> void:
-	_source_range = action.source_range
-	_dead_range = action.dead_range
-	_effect_range = action.effect_range
-	_emit_from_center = action.emit_from_center
+	_action = action
 	update()
 
 
 func _ready() -> void:
 	_hex_matrix = DisplayMatrix.new(row_count, col_count)
-
-
-func _init() -> void:
-	_hex_matrix = DisplayMatrix.new(row_count, col_count)
+	_origin_pts = _init_origin_vertices()
+	_origin_fill_pts = _init_origin_vertices(outline_width)
 
 
 func _draw() -> void:
@@ -85,15 +79,26 @@ func _draw() -> void:
 	_draw_range()
 
 
+# Determine the hex vertices that will be used as reference for creating hexes
+# to draw.
+func _init_origin_vertices(outline_offset: float = 0.0) -> PoolVector2Array:
+	var hex_vertices: PoolVector2Array = []
+	var top_vertex: Vector2 = Vector2(0.0, hex_radius - outline_offset)
+	for i in 6:
+		hex_vertices.append(top_vertex.rotated(i * PI / 3))
+	return hex_vertices
+
+
+# Determine the hex colors that will represent the source range.
 func _determine_source_hexes() -> void:
-	_source_range.populate_range_display_matrix(
+	_action.source_range.populate_range_display_matrix(
 			Vector2(1, _mid_row),
 			DisplayMatrix.Detail.EMPTY,
 			DisplayMatrix.Detail.SOURCE_RANGE,
 			_hex_matrix
 	)
-	if _dead_range != null:
-		_dead_range.populate_range_display_matrix(
+	if _action.dead_range != null:
+		_action.dead_range.populate_range_display_matrix(
 				Vector2(1, _mid_row),
 				DisplayMatrix.Detail.EMPTY,
 				DisplayMatrix.Detail.EMPTY,
@@ -101,16 +106,17 @@ func _determine_source_hexes() -> void:
 		)
 
 
+# Determine the hex colors that will represent the effect range.
 func _determine_effect_hexes() -> void:
 	var emission_index: Vector2 = Vector2(1, _mid_row)
 	
-	if not _emit_from_center:
+	if not _action.emit_from_center:
 		for x in range(2, col_count):
 			var index: Vector2 = Vector2(x, _mid_row)
 			if _hex_matrix.fill_at(index) == DisplayMatrix.Detail.SOURCE_RANGE:
 				emission_index.x = x
 	
-	_effect_range.populate_range_display_matrix(
+	_action.effect_range.populate_range_display_matrix(
 			emission_index,
 			DisplayMatrix.Detail.EMPTY,
 			DisplayMatrix.Detail.EFFECT_RANGE,
@@ -174,22 +180,28 @@ func _determine_color(detail_marker: int) -> Color:
 
 # Draw a colored outline of a hexagon.
 func _draw_hex_outline(color: Color, center: Vector2) -> void:
-	var hex_vertices: PoolVector2Array = _get_points_for_hex(center)
+	if _origin_pts.size() == 0:
+		return
+	var hex_vertices: PoolVector2Array = _get_points_for_hex(center, _origin_pts)
 	draw_colored_polygon(hex_vertices, color)
 
 
 # Draws a filled colored hexagon.
 func _draw_hex_fill(color: Color, center: Vector2) -> void:
-	var hex_vertices: PoolVector2Array = _get_points_for_hex(center, outline_width)
+	if _origin_fill_pts.size() == 0:
+		return
+	var hex_vertices: PoolVector2Array = _get_points_for_hex(center, _origin_fill_pts)
 	draw_colored_polygon(hex_vertices, color)
 
 
 # Gets the points for a hexagon centered at a given point.
-func _get_points_for_hex(center: Vector2, outline_offset: float = 0.0) -> PoolVector2Array:
+func _get_points_for_hex(
+	center: Vector2,
+	origin_pts: PoolVector2Array
+) -> PoolVector2Array:
 	var hex_vertices: PoolVector2Array = []
-	var top_vertex: Vector2 = Vector2(0.0, hex_radius - outline_offset)
-	for i in 6:
-		hex_vertices.append(top_vertex.rotated(i * PI / 3) + center)
+	for v in origin_pts:
+		hex_vertices.append(v + center)
 	return hex_vertices
 
 

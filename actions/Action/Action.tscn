@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://range_type/ring_area.gd" type="Script" id=1]
+[ext_resource path="res://range_type/cardinal_area.gd" type="Script" id=2]
+[ext_resource path="res://actions/action.gd" type="Script" id=3]
+[ext_resource path="res://user_interface/encounter/SubOptionButton/ActionButton/ActionButton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://actions/Action/potency.tres" type="Resource" id=5]
+
+[node name="Action" type="Node"]
+script = ExtResource( 3 )
+potency = ExtResource( 5 )
+
+[node name="ActionButton" parent="." instance=ExtResource( 4 )]
+option_ref = NodePath("..")
+
+[node name="SourceRange" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="DeadRange" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="EffectRange" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="Effects" type="Node" parent="."]

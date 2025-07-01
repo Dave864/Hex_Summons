@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "SubOptionButton",
 "class": "ActionButton",
 "language": "GDScript",
-"path": "res://user_interface/encounter/SubOptionButton/action_button.gd"
+"path": "res://user_interface/encounter/SubOptionButton/ActionButton/action_button.gd"
 }, {
 "base": "PanelContainer",
 "class": "ActivePlayerStats",

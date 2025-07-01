@@ -6,21 +6,23 @@ Button that describes a possible sub-option for a given option.
 
 
 # Indicates when the option described by the button has been selected.
-signal action_selected(action_info)
+signal option_selected(option_info)
 
-var _action_details: Action = null setget set_action_details, get_action_details
+export(NodePath) var option_ref = null
+
+var _option_details: Node = null setget set_option_details, get_option_details
 var _player: PlayerCharacter = null setget set_player
 
 
 # Set the action details for the button.
-func set_action_details(a: Action) -> void:
-	_action_details = a
-	$Button.set_text(_action_details.name)
+func set_option_details(a: Node) -> void:
+	_option_details = a
+	$Button.set_text(_option_details.name)
 
 
 # Get the action details for the button.
-func get_action_details() -> Action:
-	return _action_details
+func get_option_details() -> Node:
+	return _option_details
 
 
 # Set the player character reference for the owner of the action this UI element
@@ -45,17 +47,22 @@ func get_button() -> Node:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_parameters()
+	_option_details = get_node(option_ref)
 
 
 # Emit a signal indicating that the button was pressed.
 func _on_Button_pressed() -> void:
-	emit_signal("action_selected", _action_details)
+	emit_signal("option_selected", _option_details)
 
 
 # Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	var button_node: Button = get_node_or_null("Button")
 	assert(
+			option_ref != null,
+			"No reference to option provided."
+	)
+	assert(
 			button_node != null,
-			"SubOptionButton node does not have a Button node."
+			"SubOptionButton %s does not have a Button node." % [name]
 	)
