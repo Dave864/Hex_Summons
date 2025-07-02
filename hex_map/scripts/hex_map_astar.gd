@@ -60,14 +60,17 @@ func get_closest_in_area(start_id: int, area_d_map: Dictionary) -> int:
 	var frontier: PQueue = PQueue.new()
 	var id_distances: Dictionary = {}
 	var closest: Array = [INF, -1]
+	# Used to stop when all area_d_map ids have been checked.
+	var checked_count: int = 0
 
 	frontier.push(0.0, start_id)
 	id_distances[start_id] = {"travel": 0.0, "tile": 0}
-	while not frontier.empty():
+	while not frontier.empty() and checked_count < area_d_map.size():
 		var current: Array = frontier.min()
 		frontier.pop_min()
 		
 		if area_d_map.has(current[1]):
+			checked_count += 1
 			if current[0] < closest[0]:
 				closest = current
 			continue
