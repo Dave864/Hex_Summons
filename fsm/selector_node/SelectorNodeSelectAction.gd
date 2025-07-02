@@ -15,6 +15,8 @@ var _action: Action = null
 var _player_pos: Vector3 = Vector3.ZERO
 # The tile index of the player that is using the action.
 var _player_map_index: int = -1
+# Stores the distance map of the source range.
+var _source_d_map: Dictionary = {}
 # Caches the tile ids of the effect area at different emission points.
 var _effect_ranges: Dictionary = {}
 
@@ -90,6 +92,7 @@ func _determine_changes(action: Action) -> void:
 		_player_pos = selector.active_player.translation
 		need_new_ranges = true
 	if need_new_ranges:
+		_source_d_map.clear()
 		_effect_ranges.clear()
 
 
@@ -153,40 +156,12 @@ func _orient_to_closest_target() -> void:
 func _place_on_closest_target() -> void:
 	var target_details: Array = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_index()
-	# Get the full range of the action.
-	var outer_action_range: float = (
-			_action.effect_range.get_reach() \
-			+ _action.source_range.get_reach()
+	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
+			target_index,
+			_source_d_map
 	)
-	var inner_action_range: float = clamp(
-			_action.dead_range.get_reach() \
-			- _action.effect_range.get_reach(),
-			0.0,
-			_action.dead_range.get_reach()
-	)
-	# Set emission point if target is within source range.
-	if (
-		target_details[1] <= _action.source_range.get_reach()
-		and target_details[1] > _action.dead_range.get_reach()
-	):
-		selector.tile_hovered = selector.hex_map.get_tile_at(target_index)
-		_action.set_emission_map_index(target_index)
-	# Set the emission point to the tile closest to the target.
-	elif (
-		target_details[1] <= outer_action_range
-		and target_details[1] >= inner_action_range
-	):
-		var closest_index: int = selector.hex_map.range_finder.get_closest_index_toward(
-				_player_map_index,
-				target_index,
-				_get_source_range()
-		)
-		selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
-		_action.set_emission_map_index(closest_index)
-	# Set to player position if target is out of range.
-	else:
-		selector.tile_hovered = selector.hex_map.get_tile_at(_player_map_index)
-		_action.set_emission_map_index(_player_map_index)
+	selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
+	_action.set_emission_map_index(closest_index)
 	_highlight_effect_range()
 
 
@@ -246,7 +221,7 @@ func _highlight_effect_range() -> void:
 
 # Gets the tile ids of all tiles within the source range. Accounts for dead range.
 func _get_source_range() -> Array:
-	var source_range: Dictionary = selector.hex_map.range_finder.get_distance_map(
+	_source_d_map = selector.hex_map.range_finder.get_distance_map(
 			_player_map_index,
 			_action.source_ignore_heights,
 			_action.source_range.get_reach()
@@ -256,9 +231,9 @@ func _get_source_range() -> Array:
 			selector.hex_map
 	)
 	for index in dead_indexes:
-		if source_range.has(index):
-			source_range.erase(index)
-	return source_range.keys()
+		if _source_d_map.has(index):
+			_source_d_map.erase(index)
+	return _source_d_map.keys()
 
 
 # Gets the tile ids of all tiles within the effect range.

@@ -18,18 +18,18 @@ var _x_count: int = 0
 func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictionary:
 	var frontier: PQueue = PQueue.new()
 	var id_distances: Dictionary = {}
-	
+
 	frontier.push(0.0, start_id)
 	id_distances[start_id] = {"travel": 0.0, "tile": 0}
 	while not frontier.empty():
 		var current: Array = frontier.min()
 		frontier.pop_min()
-		
+
 		for next_id in get_point_connections(current[1]):
 			if is_point_disabled(next_id):
 				continue
-			var cur_dist: Dictionary = id_distances[current[1]]
-			var travel_dist: float = _travel_dist(current[1], next_id) + cur_dist["travel"]
+			var dist: Dictionary = id_distances[current[1]]
+			var travel_dist: float = _travel_dist(current[1], next_id) + dist["travel"]
 			var tile_dist: int = int(_cube_dist(start_id, next_id))
 			if (
 				(
@@ -41,9 +41,53 @@ func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictiona
 			):
 				id_distances[next_id] = {"travel": travel_dist, "tile": tile_dist}
 				frontier.push(travel_dist, next_id)
-	
+
 	frontier.free()
 	return id_distances
+
+
+# Finds the point in the area that is closest to start. The area is a dicitonary
+# whose keys are the map tile ids and values are the various distances to the
+# tiles from some point, which may not be the same as start. Returns -1 if no
+# closest index could be found.
+# Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
+func get_closest_in_area(start_id: int, area_d_map: Dictionary) -> int:
+	if area_d_map.size() == 0:
+		return -1
+	if area_d_map.size() == 1:
+		return area_d_map.keys()[0]
+	
+	var frontier: PQueue = PQueue.new()
+	var id_distances: Dictionary = {}
+	var closest: Array = [INF, -1]
+
+	frontier.push(0.0, start_id)
+	id_distances[start_id] = {"travel": 0.0, "tile": 0}
+	while not frontier.empty():
+		var current: Array = frontier.min()
+		frontier.pop_min()
+		
+		if area_d_map.has(current[1]):
+			if current[0] < closest[0]:
+				closest = current
+			continue
+
+		for next_id in get_point_connections(current[1]):
+			if is_point_disabled(next_id):
+				continue
+			var dist: Dictionary = id_distances[current[1]]
+			var travel_dist: float = _travel_dist(current[1], next_id) + dist["travel"]
+			var tile_dist: int = int(_cube_dist(start_id, next_id))
+			if (
+				not id_distances.has(next_id)
+				or travel_dist < id_distances[next_id]["travel"]
+			):
+				id_distances[next_id] = {"travel": travel_dist, "tile": tile_dist}
+				frontier.push(travel_dist, next_id)
+
+	frontier.free()
+	id_distances.clear()
+	return closest[1]
 
 
 # Determines the travel distance from the start to the end.

@@ -57,6 +57,18 @@ func get_player_point_path(
 	return point_path
 
 
+# Finds the point in the area that is closest to start. The area is a dicitonary
+# whose keys are the map tile ids and values are the various distances to the
+# tiles from some point, which may not be the same as start.
+func get_closest_in_area(start_id: int, area_d_map: Dictionary) -> int:
+	# Enable all connections to make sure the closest point can be found.
+	_hm_astar.set_all_disabled(false)
+	var target_id: int = _hm_astar.get_closest_in_area(start_id, area_d_map)
+	# Reset for future range finder operations.
+	_hm_astar.set_all_disabled()
+	return target_id
+
+
 # Determines the tile id within a given area that is closest to a destination.
 func get_closest_index_toward(
 	start_id: int,
