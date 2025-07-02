@@ -214,6 +214,7 @@ func _highlight_effect_range() -> void:
 	selector.hex_map.selection_tracker.select_effect_range(
 			_get_effect_range(),
 			_player_map_index,
+			_action.get_emission_map_index(),
 			_action.effect_ignores_caster,
 			_action.get_is_cardinal()
 	)
@@ -231,7 +232,7 @@ func _get_source_range() -> Array:
 			selector.hex_map
 	)
 	for index in dead_indexes:
-		if _source_d_map.has(index):
+		if index != _player_map_index and _source_d_map.has(index):
 			_source_d_map.erase(index)
 	return _source_d_map.keys()
 

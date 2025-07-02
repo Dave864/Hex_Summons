@@ -21,9 +21,9 @@ const COLOR_AREA_RANGE: Color = Color.blue
 const COLOR_CHARACTER_ORIGIN: Color = Color.aqua
 const COLOR_ALLY_ORIGIN: Color = Color.dodgerblue
 const COLOR_EFFECT_RANGE: Color = Color.orange
-const COLOR_EFFECT_ORIGIN: Color = Color.orangered
+const COLOR_EFFECT_ORIGIN: Color = Color.gold
 const COLOR_TARGET_SELECT: Color = Color.red
-const COLOR_MOVE_SELECT: Color = Color.yellow
+const COLOR_MOVE_SELECT: Color = Color.gold
 const COLOR_GRAY_SELECT: Color = Color.gray
 
 var _hl_option: int setget set_option, get_option
