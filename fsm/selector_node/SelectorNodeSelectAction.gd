@@ -150,7 +150,8 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	# Relative top not needed as we are using direct map coordinates.
 	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
 	_action.set_emission_direction(emission_dir)
-	if _fix_orientation():
+	# No need to fix orientation for non-cardinal effect ranges.
+	if not _action.get_is_cardinal() or _fix_orientation():
 		_highlight_effect_range()
 	else:
 		selector.hex_map.selection_tracker.clear_selector_highlights()
