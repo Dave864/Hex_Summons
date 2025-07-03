@@ -25,6 +25,11 @@ onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 
 
 func enter(msg: Dictionary = {}) -> void:
+	assert(msg.has("action"), "Missing action key data in SelectAction")
+	assert(
+			msg["action"] is Action,
+			"Data at action key is not an Action in SelectAction."
+	)
 	_determine_changes(msg["action"])
 	_highlight_source_range()
 	selector.set_update_selection_func(_update_selection_ref)
@@ -99,8 +104,14 @@ func _determine_changes(action: Action) -> void:
 # Update the selection for a given tile.
 # Passed to the Selector node to be called when the mouse hovers over the tile.
 func _update_selection(map_tile: MapTile) -> void:
+	assert(map_tile != null, "SelectAction given a null MapTile.")
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	if !map_tile.is_active():
+		return
+	if (
+		_action.dead_range.get_reach() > 0
+		and map_tile.map_coordinate.get_index() == _player_map_index
+	):
 		return
 	if _action.emit_from_center:
 		selector.tile_hovered = map_tile
@@ -156,9 +167,6 @@ func _orient_to_closest_target() -> void:
 # Adjusts the orientation of an effect emitted from caster to make sure it is
 # in a direction the player can reach. Returns if the direction was set.
 func _fix_orientation() -> bool:
-	# Don't need to fix orientation for non-cardinal effect areas.
-	if not _action.get_is_cardinal():
-		return true
 	var p_cube: Vector3 = HexUtil.index_to_cube(
 			_player_map_index,
 			selector.hex_map.get_x_count()
