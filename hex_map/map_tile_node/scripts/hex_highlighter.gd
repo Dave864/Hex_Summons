@@ -58,6 +58,7 @@ func set_option(hl_option: int) -> void:
 			show()
 		Option.TARGET:
 			_set_highlighter_color(COLOR_TARGET_SELECT)
+			get_surface_material(0).render_priority = base_render_priority + 1
 			show()
 		Option.MOVE:
 			_set_highlighter_color(COLOR_MOVE_SELECT)
