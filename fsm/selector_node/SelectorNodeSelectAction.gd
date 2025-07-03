@@ -139,8 +139,8 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	# Relative top not needed as we are using direct map coordinates.
 	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
 	_action.set_emission_direction(emission_dir)
-	# 
-	_highlight_effect_range()
+	if _fix_orientation():
+		_highlight_effect_range()
 
 
 # Orients the action emission to the closest valid target.
@@ -152,12 +152,23 @@ func _orient_to_closest_target() -> void:
 
 
 # Adjusts the orientation of an effect emitted from caster to make sure it is
-# in a direction the player can reach.
-func _fix_orientation() -> void:
-	var dir_tile: MapTile = null
-	if dir_tile != null:
-		return
-	pass
+# in a direction the player can reach. Returns if the direction was set.
+func _fix_orientation() -> bool:
+	var p_cube: Vector3 = HexUtil.index_to_cube(
+			_player_map_index,
+			selector.hex_map.get_x_count()
+	)
+	for i in 6:
+		var dir: int = posmod(_action.get_emission_direction() + i, 6)
+		var dir_cube: Vector3 = HexUtil.CUBE_DIRECTION_VECTORS[dir] + p_cube
+		var dir_index: int = HexUtil.cube_to_index(
+				dir_cube,
+				selector.hex_map.get_x_count()
+		)
+		if selector.hex_map.is_valid_cube(dir_cube) and _source_d_map.has(dir_index):
+			_action.set_emission_direction(dir)
+			return true
+	return false
 
 
 # Places the effect emission so that the effect area highlights the closest
