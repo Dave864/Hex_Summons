@@ -24,9 +24,11 @@ rings = 0
 
 [sub_resource type="SpatialMaterial" id=13]
 resource_local_to_scene = true
-render_priority = -1
+render_priority = -128
 flags_transparent = true
+flags_unshaded = true
 flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
 
 [sub_resource type="SpatialMaterial" id=1]
 
@@ -41,9 +43,11 @@ rings = 0
 
 [sub_resource type="SpatialMaterial" id=11]
 resource_local_to_scene = true
+render_priority = -126
 flags_transparent = true
 flags_unshaded = true
 flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
 
 [node name="MapTile" type="Area"]
 collision_layer = 2

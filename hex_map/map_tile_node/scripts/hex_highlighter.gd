@@ -21,12 +21,14 @@ const COLOR_AREA_RANGE: Color = Color.blue
 const COLOR_CHARACTER_ORIGIN: Color = Color.aqua
 const COLOR_ALLY_ORIGIN: Color = Color.dodgerblue
 const COLOR_EFFECT_RANGE: Color = Color.orange
-const COLOR_EFFECT_ORIGIN: Color = Color.gold
+const COLOR_EFFECT_ORIGIN: Color = Color.yellow
 const COLOR_TARGET_SELECT: Color = Color.red
-const COLOR_MOVE_SELECT: Color = Color.gold
+const COLOR_MOVE_SELECT: Color = Color.yellow
 const COLOR_GRAY_SELECT: Color = Color.gray
 
 var _hl_option: int setget set_option, get_option
+
+onready var base_render_priority: int = get_surface_material(0).render_priority
 
 
 # Called when the node enters the scene tree for the first time.
@@ -36,6 +38,7 @@ func _ready():
 
 # Sets the color based on the option. Hides the highlighter if the option is NONE.
 func set_option(hl_option: int) -> void:
+	get_surface_material(0).render_priority = base_render_priority
 	match hl_option:
 		Option.PLAYER:
 			_set_highlighter_color(COLOR_CHARACTER_ORIGIN)
@@ -48,6 +51,7 @@ func set_option(hl_option: int) -> void:
 			show()
 		Option.EFFECT_ORIGIN:
 			_set_highlighter_color(COLOR_EFFECT_ORIGIN)
+			get_surface_material(0).render_priority = base_render_priority + 1
 			show()
 		Option.EFFECT_RANGE:
 			_set_highlighter_color(COLOR_EFFECT_RANGE)
