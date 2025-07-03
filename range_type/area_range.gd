@@ -13,13 +13,13 @@ func get_reach() -> int:
 
 # Base function for area ranges that define a general area around a starting
 # point.
-func determine_area_indexes(_start: int, _hm: HexMap) -> Array:
+func get_area_indexes(_start: int, _hm: HexMap) -> Array:
 	return []
 
 
 # Base function for area ranges that define an area emitted in a direction from
 # starting point.
-func determine_directional_area_indexes(
+func get_dir_area_indexes(
 	_start: int,
 	_dir: int,
 	_hm: HexMap

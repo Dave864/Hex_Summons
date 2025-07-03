@@ -139,16 +139,25 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	# Relative top not needed as we are using direct map coordinates.
 	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
 	_action.set_emission_direction(emission_dir)
+	# 
 	_highlight_effect_range()
 
 
 # Orients the action emission to the closest valid target.
 func _orient_to_closest_target() -> void:
 	var target_distances: Array = _get_target_distances()
-	# Get the map tile the target is at.
 	var target_index: int = target_distances[0][0].map_coordinate.get_index()
 	var target_tile: MapTile = selector.hex_map.get_tile_at(target_index)
 	_orient_emission_to_tile(target_tile)
+
+
+# Adjusts the orientation of an effect emitted from caster to make sure it is
+# in a direction the player can reach.
+func _fix_orientation() -> void:
+	var dir_tile: MapTile = null
+	if dir_tile != null:
+		return
+	pass
 
 
 # Places the effect emission so that the effect area highlights the closest
@@ -227,7 +236,7 @@ func _get_source_range() -> Array:
 			_action.source_ignore_heights,
 			_action.source_range.get_reach()
 	)
-	var dead_indexes: Array = _action.dead_range.determine_area_indexes(
+	var dead_indexes: Array = _action.dead_range.get_area_indexes(
 			_player_map_index,
 			selector.hex_map
 	)
@@ -245,7 +254,7 @@ func _get_effect_range() -> Array:
 		return _effect_ranges[e_dir]
 	elif _effect_ranges.has(e_index):
 		return _effect_ranges[e_index]
-	var effect_indexes: Array = _action.effect_range.determine_directional_area_indexes(
+	var effect_indexes: Array = _action.effect_range.get_dir_area_indexes(
 			e_index,
 			e_dir,
 			selector.hex_map

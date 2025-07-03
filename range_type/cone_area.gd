@@ -20,7 +20,7 @@ func get_reach() -> int:
 # Determines which map tiles are in the cone area position at the start index,
 # oriented to face the specified direction (0 - 5). Does not account for tile
 # heights.
-func determine_directional_area_indexes(
+func get_dir_area_indexes(
 	start: int,
 	dir: int,
 	hm: HexMap
