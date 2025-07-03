@@ -141,6 +141,8 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	_action.set_emission_direction(emission_dir)
 	if _fix_orientation():
 		_highlight_effect_range()
+	else:
+		selector.hex_map.selection_tracker.clear_selector_highlights()
 
 
 # Orients the action emission to the closest valid target.
@@ -154,6 +156,9 @@ func _orient_to_closest_target() -> void:
 # Adjusts the orientation of an effect emitted from caster to make sure it is
 # in a direction the player can reach. Returns if the direction was set.
 func _fix_orientation() -> bool:
+	# Don't need to fix orientation for non-cardinal effect areas.
+	if not _action.get_is_cardinal():
+		return true
 	var p_cube: Vector3 = HexUtil.index_to_cube(
 			_player_map_index,
 			selector.hex_map.get_x_count()
