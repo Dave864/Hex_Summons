@@ -81,7 +81,7 @@ static func cube_to_index(coord: Vector3, x_count: int) -> int:
 # 0  /\  1
 # 5 |  | 2
 # 4  \/  3
-# Reference: # https://www.redblobgames.com/grids/hexagons/#neighbors
+# Reference: https://www.redblobgames.com/grids/hexagons/#neighbors
 static func cube_at_distance(
 	origin: Vector3,
 	distance: float,
@@ -91,6 +91,29 @@ static func cube_at_distance(
 	if CUBE_DIRECTION_VECTORS.has(direction):
 		dest += distance * CUBE_DIRECTION_VECTORS[direction]
 	return dest
+
+
+# Calculates the cube distance.
+# Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
+static func cube_dist(start: Vector3, end: Vector3) -> float:
+	var diff: Vector3 = start - end
+	return (abs(diff.x) + abs(diff.y) + abs(diff.z)) / 2.0
+
+
+# Gets the cube coordinates of the hexes that are in a line from start to end.
+# Reference: https://www.redblobgames.com/grids/hexagons/#line-drawing
+static func cube_line(start: Vector3, end: Vector3) -> Array:
+	var line_cubes: Array = []
+	var dist: float = cube_dist(start, end)
+	for step in range(dist + 1):
+		var step_lerp: float = 1.0 / dist * step
+		var cube_lerp: Vector3 = Vector3(
+				_cube_axis_lerp(start.x, end.x, step_lerp),
+				_cube_axis_lerp(start.y, end.y, step_lerp),
+				_cube_axis_lerp(start.z, end.z, step_lerp)
+		)
+		line_cubes.append(_cube_round(cube_lerp))
+	return line_cubes
 
 
 # Determines the hexagonal direction of a given unit vector.
@@ -165,3 +188,31 @@ static func _relative_axial_direction(
 		return posmod(desired_direction + relative_top, 4)
 	else:
 		return desired_direction
+
+
+# Linearly interpolates between two points of a cube coordinate axis.
+# Helper for cube_line.
+# Reference: https://www.redblobgames.com/grids/hexagons/#line-drawing
+static func _cube_axis_lerp(start: float, end: float, weight: float) -> float:
+	return start + (end - start) * weight
+
+
+# Rounds the given cube fraction to the nearest cube coordinate. Helper for
+# cube_line.
+# Reference: https://www.redblobgames.com/grids/hexagons/#rounding
+static func _cube_round(cube_frac: Vector3) -> Vector3:
+	var x: float = round(cube_frac.x)
+	var y: float = round(cube_frac.y)
+	var z: float = round(cube_frac.z)
+
+	var x_diff: float = abs(x - cube_frac.x)
+	var y_diff: float = abs(y - cube_frac.y)
+	var z_diff: float = abs(z - cube_frac.z)
+
+	if x_diff > y_diff and x_diff > z_diff:
+		x = -y - z
+	elif y_diff > z_diff:
+		y = -x - z
+	else:
+		z = -x - y
+	return Vector3(x, y, z)

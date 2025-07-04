@@ -200,7 +200,10 @@ func _travel_dist(start_index: int, end_index: int) -> float:
 	var start_pos: Vector3 = get_point_position(start_index)
 	var end_pos: Vector3 = get_point_position(end_index)
 	# Record height difference as units of tile unit height.
-	var height_diff: float = abs(start_pos.y - end_pos.y) / Constants.HEX_TILE_UNIT_HEIGHT
+	var height_diff: float = (
+			abs(start_pos.y - end_pos.y) \
+			/ Constants.HEX_TILE_UNIT_HEIGHT
+	)
 	# Height differences of 1 tile height are seen as the same height.
 	# Halve height difference to keep consistent with cube distance.
 	height_diff = height_diff / 2.0 if height_diff > 1.0 else 0.0
@@ -209,9 +212,7 @@ func _travel_dist(start_index: int, end_index: int) -> float:
 
 
 # Calculates the cube distance between two tiles.
-# Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
 func _cube_dist(start_index: int, end_index: int) -> float:
 	var start_cube: Vector3 = HexUtil.index_to_cube(start_index, _x_count)
 	var end_cube: Vector3 = HexUtil.index_to_cube(end_index, _x_count)
-	var diff: Vector3 = start_cube - end_cube
-	return (abs(diff.x) + abs(diff.y) + abs(diff.z)) / 2.0
+	return HexUtil.cube_dist(start_cube, end_cube)
