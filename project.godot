@@ -397,6 +397,12 @@ GamepadHandler="*res://autoloads/gamepad_handler.gd"
 MouseHandler="*res://autoloads/mouse_handler.gd"
 InputController="*res://autoloads/input_controller.gd"
 
+[display]
+
+window/size/width=640
+window/size/height=320
+window/size/resizable=false
+
 [global]
 
 collision=false
