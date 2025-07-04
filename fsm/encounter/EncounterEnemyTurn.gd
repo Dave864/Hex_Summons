@@ -93,7 +93,7 @@ func _determine_closest_player_index() -> int:
 	for p in enc.players:
 		var p_data: Array = [
 			p, 
-			enc.hex_map.range_finder.calculate_distance(
+			enc.hex_map.range_finder.travel_distance(
 					active_char.map_coordinate.get_index(),
 					p.map_coordinate.get_index()
 			)

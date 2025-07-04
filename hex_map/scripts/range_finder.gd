@@ -12,11 +12,21 @@ var _map_tiles: Tiles = null
 var _hm_astar: HexMapAStar = null
 
 
-# Calculates the distance from a given start to a specified destination.
-func calculate_distance(start_id: int, dest_id: int) -> float:
+# Calculates the travel distance from a given start to a specified destination.
+func travel_distance(start_id: int, dest_id: int) -> float:
 	# Enable all connections to make sure distance can be found.
 	_hm_astar.set_all_disabled(false)
-	var dist: float = _hm_astar.distance(start_id, dest_id)
+	var dist: float = _hm_astar.travel_distance(start_id, dest_id)
+	# Reset for future range finder operations.
+	_hm_astar.set_all_disabled()
+	return dist
+
+
+# Calculates the travel distance from a given start to a specified destination.
+func tile_distance(start_id: int, dest_id: int) -> float:
+	# Enable all connections to make sure distance can be found.
+	_hm_astar.set_all_disabled(false)
+	var dist: float = _hm_astar.tile_distance(start_id, dest_id)
 	# Reset for future range finder operations.
 	_hm_astar.set_all_disabled()
 	return dist

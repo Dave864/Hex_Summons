@@ -1,8 +1,7 @@
 class_name Selector
 extends Node
 """
-Moves around the map based on mouse movement or joystick input and detects
-when a MapTile has been passed over.
+Handles the selection of map tiles for player movement and actions.
 """
 
 

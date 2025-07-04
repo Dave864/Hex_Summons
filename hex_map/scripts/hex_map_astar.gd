@@ -6,6 +6,8 @@ pathfinding and area-finding.
 """
 
 
+# The cost function that should be used when calculating distance.
+var _cost_func: FuncRef = null
 # Tracks how many tiles are along the x-axis of the hex map this object represents.
 var _x_count: int = 0
 
@@ -94,11 +96,19 @@ func get_closest_in_area(start_id: int, area_d_map: Dictionary) -> int:
 
 
 # Determines the travel distance from the start to the end.
-func distance(start_index: int, end_index: int) -> float:
+func travel_distance(start_index: int, end_index: int) -> float:
 	var path: PoolIntArray = get_id_path(start_index, end_index)
 	var dist: float = 0.0
 	for i in range(1, path.size()):
 		dist += _compute_cost(path[i - 1], path[i])
+	return dist
+
+
+# Determines the tile distance from the start to the end.
+func tile_distance(start_index: int, end_index: int) -> float:
+	_set_cost_to_tile()
+	var dist: float = travel_distance(start_index, end_index)
+	_set_cost_to_travel()
 	return dist
 
 
@@ -122,6 +132,7 @@ func set_all_disabled(disabled: bool = true) -> void:
 
 func _init(hex_map_tiles: Array, x_count: int) -> void:
 	_x_count = x_count
+	_set_cost_to_travel()
 	# Empty out the current astar map and resize if necessary.
 	clear()
 	if get_point_capacity() < hex_map_tiles.size():
@@ -144,6 +155,18 @@ func _init(hex_map_tiles: Array, x_count: int) -> void:
 	_connect_tiles(hex_map_tiles)
 
 
+# Sets the cost function for AStar to use the travel distance between tiles.
+# This accounts for tile heights. This is the default.
+func _set_cost_to_travel() -> void:
+	_cost_func = funcref(self, "_travel_dist")
+
+
+# Sets the cost function for AStar to use the tile distances. This ignores tile
+# heights.
+func _set_cost_to_tile() -> void:
+	_cost_func = funcref(self, "_cube_dist")
+
+
 # Establish the connections in the astar map for the specified area.
 func _connect_tiles(map_tiles: Array) -> void:
 	for tile in map_tiles:
@@ -161,13 +184,13 @@ func _connect_tiles(map_tiles: Array) -> void:
 # Virtual Astar function. Called when computing the cost between two
 # connected points.
 func _compute_cost(u: int, v: int) -> float:
-	return _travel_dist(u, v)
+	return _cost_func.call_func(u, v)
 
 
 # Virtual Astar function. Called when estimating the cost between a point 
 # and the path's ending point.
 func _estimate_cost(u: int, v: int) -> float:
-	return min(0, _travel_dist(u, v) - 1)
+	return min(0, _cost_func.call_func(u, v) - 1)
 
 
 # Calculates the travel distance between two tiles. Uses the cube distance and 

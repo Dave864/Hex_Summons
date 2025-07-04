@@ -82,11 +82,6 @@ func _disconnect_signals() -> void:
 			self,
 			"_on_Selector_move_tile_selected"
 	)
-#	enc.selector.disconnect(
-#			"effect_area_required",
-#			self,
-#			"_on_Selector_effect_area_required"
-#	)
 
 
 # Determine the path to the selected tile for character movement and signal that

@@ -1,8 +1,7 @@
 extends SelectorState
 """
 The logic for what happens when the Selector is in the 'SelectAction' state.
-Retrieves the tile ids of the effect area whenever the selector moves.
-Goes to the 'SelectAction' state when a new action is hovered over.
+Goes to the 'SelectAction' state when a new action is chosen.
 Goes to the 'SelectMove' state when the UI signals that the action type has
 been canceled. Goes to the 'Wait' state when the UI signals that the player
 turn has been terminated.
@@ -37,7 +36,7 @@ func enter(msg: Dictionary = {}) -> void:
 	if _action.emit_from_center:
 		_orient_to_closest_target()
 	else:
-		_place_on_closest_target()
+		_place_closest_to_target()
 
 
 # Called by the state machine before changing the active state. Use this 
@@ -106,11 +105,14 @@ func _determine_changes(action: Action) -> void:
 func _update_selection(map_tile: MapTile) -> void:
 	assert(map_tile != null, "SelectAction given a null MapTile.")
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
-	if !map_tile.is_active():
-		return
+	# Actions with dead range need to display the player tile highlight, but
+	# not allow emission from player position.
 	if (
-		_action.dead_range.get_reach() > 0
-		and map_tile.map_coordinate.get_index() == _player_map_index
+		!map_tile.is_active()
+		or (
+			_action.dead_range.get_reach() > 0
+			and map_tile.map_coordinate.get_index() == _player_map_index
+		)
 	):
 		return
 	if _action.emit_from_center:
@@ -122,6 +124,8 @@ func _update_selection(map_tile: MapTile) -> void:
 		selector.tile_hovered = map_tile
 		_action.set_emission_map_index(map_tile.map_coordinate.get_index())
 		_highlight_effect_range()
+	else:
+		_place_closest_to_tile(map_tile.map_coordinate.get_index())
 
 
 # Orients the direction of an action cast from the player based on mouse position.
@@ -186,14 +190,32 @@ func _fix_orientation() -> bool:
 
 
 # Places the effect emission so that the effect area highlights the closest
-# target. Effect is positioned on player otherwise.
-func _place_on_closest_target() -> void:
+# target. Emission is not placed if no valid tile could be found.
+func _place_closest_to_target() -> void:
 	var target_details: Array = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_index()
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
 			target_index,
 			_source_d_map
 	)
+	if closest_index < 0:
+		selector.hex_map.selection_tracker.clear_selector_highlights()
+		return
+	selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
+	_action.set_emission_map_index(closest_index)
+	_highlight_effect_range()
+
+
+# Places the effect emission so that it is on the source tile closest to the
+# specified tile. Emission is not placed if no valid source tile could be found.
+func _place_closest_to_tile(tile_index: int) -> void:
+	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
+			tile_index,
+			_source_d_map
+	)
+	if closest_index < 0:
+		selector.hex_map.selection_tracker.clear_selector_highlights()
+		return
 	selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
 	_action.set_emission_map_index(closest_index)
 	_highlight_effect_range()
@@ -209,7 +231,7 @@ func _get_target_distances() -> Array:
 	var potential_targets: Array = selector.enemies_ref
 	var target_distances: Array = []
 	for option in potential_targets:
-		var dist: float = selector.hex_map.range_finder.calculate_distance(
+		var dist: float = selector.hex_map.range_finder.travel_distance(
 				_player_map_index,
 				option.map_coordinate.get_index()
 		)

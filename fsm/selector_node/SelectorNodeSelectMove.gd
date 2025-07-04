@@ -1,7 +1,6 @@
 extends SelectorState
 """
 The logic for what happens when the Selector is in the 'SelectMove' state.
-The Selector is able to pass over map tiles and highlight said tiles.
 When the input for selecting a tile is given, the Selector moves to the
 'Pause' state and a signal is emitted indicating which tile was selected.
 If an action option is selected in the UI, the Selector moves to the 'SelectAction'
