@@ -38,6 +38,7 @@ func set_row_count(rc: int) -> void:
 			else rc
 	)
 	_mid_row = int(round(row_count / 2.0)) - 1
+	_emission_index = Vector2(1, _mid_row)
 	_d_matrix = DisplayMatrix.new(row_count, col_count)
 	if Engine.is_editor_hint():
 		update()
@@ -72,6 +73,7 @@ func set_hex_spacing(hs: float) -> void:
 func update_action(action: Action) -> void:
 	_action = action
 	_update_display_details()
+	_set_min_size()
 	update()
 
 

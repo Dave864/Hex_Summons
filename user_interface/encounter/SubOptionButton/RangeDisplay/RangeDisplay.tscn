@@ -3,12 +3,11 @@
 [ext_resource path="res://user_interface/encounter/SubOptionButton/RangeDisplay/range_display.gd" type="Script" id=5]
 
 [node name="RangeDisplay" type="Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = -960.0
-margin_bottom = -540.0
-rect_min_size = Vector2( 64, 60 )
+margin_right = 10.0
+margin_bottom = 10.0
 mouse_filter = 2
 size_flags_horizontal = 9
 size_flags_vertical = 5
 script = ExtResource( 5 )
+row_count = 7
+col_count = 7
