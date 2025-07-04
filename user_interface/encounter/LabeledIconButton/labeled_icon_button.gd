@@ -17,8 +17,8 @@ export(bool) var disabled = false setget set_area_disabled, get_disabled
 var _is_highlighted: bool
 
 onready var _button: Button = $Button
-onready var _label_node: Label = $VBoxContainer/Label
-onready var _icon_node: TextureRect = $VBoxContainer/Icon
+onready var _label_node: Label = $MarginContainer/VBoxContainer/Label
+onready var _icon_node: TextureRect = $MarginContainer/VBoxContainer/Icon
 
 
 # Called when the node enters the scene tree for the first time.
