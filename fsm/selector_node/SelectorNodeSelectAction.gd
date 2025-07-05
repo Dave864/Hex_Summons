@@ -194,10 +194,17 @@ func _fix_orientation() -> bool:
 func _place_closest_to_target() -> void:
 	var target_details: Array = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_index()
+	var player_index_details: Dictionary = _source_d_map[_player_map_index]
+	var ignore_player_index: bool = _action.dead_range.get_reach() > 0
+	if ignore_player_index:
+		_source_d_map.erase(_player_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
 			target_index,
 			_source_d_map
 	)
+	# Add back in player details if they were removed to preserve details.
+	if ignore_player_index:
+		_source_d_map[_player_map_index] = player_index_details
 	if closest_index < 0:
 		selector.hex_map.selection_tracker.clear_selector_highlights()
 		return
