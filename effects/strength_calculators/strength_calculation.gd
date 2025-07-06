@@ -24,8 +24,7 @@ func process_operation(
 			) if resisted
 			else base_strength
 	)
-	# How effective will the change be.
-	#  0.0 means not effective, 1.0 means fully effective.
+	# 0.0 means not effective, 1.0 means fully effective.
 	var efficacy: float = clamp(base_strength / resisted_strength, 0.0, 1.0)
 	var stat_value: int = _get_stat_value(target_stats, stat_affected)
 	
@@ -62,7 +61,7 @@ func _increase_operation(
 	return convert(base_strength * efficacy, TYPE_INT)
 
 
-# Determines the value to increase the target stat by.
+# Determines the value to decrease the target stat by.
 func _decrease_operation(
 	base_strength: float,
 	efficacy: float,
@@ -101,11 +100,8 @@ func _convert_to_scalar(strength_data: Dictionary) -> float:
 
 # Gets the value of the target character's stat.
 func _get_stat_value(target_stats: CharacterStats, stat: Resource) -> int:
-	if stat is Stat:
-		return target_stats.get_calculated_stat(stat.Type)
-	else:
-		printerr("A non Stat resource was requested.")
-		return 0
+	assert(stat is Stat , "A non Stat resource was requested.")
+	return target_stats.get_calculated_stat(stat.type)
 
 
 # Determines the raw potency values for a given character.

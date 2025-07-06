@@ -13,10 +13,11 @@ var _aspects: Array setget , get_aspects
 
 
 # Called when the node enters the scene tree for the first time.
+# The _action_potency and _source_stats variables are set by the Action 
+# this node is a child of.
 func _ready():
 	_aspects = get_children()
 	_check_for_required_parameters()
-	_set_aspects_action_potency()
 
 
 # Updates the action_potency reference for this effect.
@@ -28,8 +29,10 @@ func set_action_potency(ap: Potency) -> void:
 # Updates the source character stats of this effect.
 func set_source_stats(new_source: CharacterStats) -> void:
 	_source_stats = new_source
+	_set_aspects_source_stats()
 
 
+# Get all aspects associated with this effect.
 func get_aspects() -> Array:
 	return _aspects
 
@@ -38,6 +41,12 @@ func get_aspects() -> Array:
 func _set_aspects_action_potency() -> void:
 	for a in _aspects:
 		a.set_action_potency(_action_potency)
+
+
+# Initializes the source stats of each aspect to the referenced stats.
+func _set_aspects_source_stats() -> void:
+	for a in _aspects:
+		a.set_source_stats(_source_stats)
 
 
 # Check that all required parameters are set.

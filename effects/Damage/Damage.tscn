@@ -13,3 +13,4 @@ script = ExtResource( 4 )
 stat_affected = ExtResource( 1 )
 operation = 1
 calculation_method = ExtResource( 2 )
+resisted = false

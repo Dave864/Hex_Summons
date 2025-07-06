@@ -39,6 +39,8 @@ var _emission_map_index: int = -1 setget set_emission_map_index, get_emission_ma
 # The direction the effect is emitted. Only updated if the action is cardinal.
 var _emission_direction: int setget set_emission_direction, get_emission_direction
 
+onready var _hit_box: ActionHitBox = $ActionHitBox
+
 
 # Returns the effects of this action.
 func get_effects() -> Array:
@@ -71,6 +73,11 @@ func set_emission_direction(dir: int) -> void:
 # Get the direction of the emission. Returns -1 if the action is not cardinal.
 func get_emission_direction() -> int:
 	return _emission_direction
+
+
+# Get the hit box area of this action.
+func get_hit_box() -> ActionHitBox:
+	return _hit_box
 
 
 # Resets the position of the emittor.
