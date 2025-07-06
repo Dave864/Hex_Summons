@@ -6,7 +6,7 @@ Base class that is used to define the strength of an effect.
 
 
 # Determines the strength of the effect for a given character.
-func calculate_strength(
+func base_strength(
 		source_stats: CharacterStats,
 		action_potency: Potency
 ) -> float:
@@ -14,19 +14,19 @@ func calculate_strength(
 
 
 # Determines the effectiveness of an action on a given target.
-func calculate_efficacy(
+func efficacy(
 	source_stats: CharacterStats,
 	target_stats: CharacterStats,
 	action_potency: Potency
 ) -> float:
-	var base_strength: float = calculate_strength(source_stats, action_potency)
+	var b_str: float = base_strength(source_stats, action_potency)
 	var resisted_strength: float = _calculate_resisted_strength(
 			source_stats,
 			target_stats,
 			action_potency
 	)
 	# 0.0 means not effective, 1.0 means fully effective.
-	return clamp(base_strength / resisted_strength, 0.0, 1.0)
+	return clamp(b_str / resisted_strength, 0.0, 1.0)
 
 
 # Runs the specified operation on a given stat using the provided strength

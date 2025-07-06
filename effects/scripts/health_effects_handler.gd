@@ -18,21 +18,17 @@ var _percentage_change_bus: EffectBus
 func _ready():
 	_check_for_required_parameters()
 	_character_stats = get_node(character_stat_ref)
-	_flat_change_bus = EffectBus.new(Stat.Type.CUR_HEALTH)
-	_percentage_change_bus = EffectBus.new(Stat.Type.CUR_HEALTH)
+	_flat_change_bus = EffectBus.new(Stat.Type.CUR_HEALTH, false)
+	_percentage_change_bus = EffectBus.new(Stat.Type.CUR_HEALTH, true)
 
 
 # Connects the effects of an action to this manager.
 func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
 	var effects: Array = hit_box.get_effects()
-	var potency: Potency = hit_box.get_potency()
 	# Go through all of the effects associated with this action and get the ones
 	# that apply to health.
 	for effect in effects:
 		pass
-	# Apply resistance to all effects that require it
-	# Apply immediate effects
-	# Update the modifier value
 
 
 # Check that all required parameters are set.

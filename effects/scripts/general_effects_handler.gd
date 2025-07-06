@@ -79,8 +79,8 @@ func process_effects(character_stats: CharacterStats) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_flat_change_bus = EffectBus.new(_global_reference[stat])
-	_percentage_change_bus = EffectBus.new(_global_reference[stat])
+	_flat_change_bus = EffectBus.new(_global_reference[stat], false)
+	_percentage_change_bus = EffectBus.new(_global_reference[stat], true)
 
 
 # Connects the effects of an action to this manager.

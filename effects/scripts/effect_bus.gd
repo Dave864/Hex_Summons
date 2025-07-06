@@ -7,12 +7,14 @@ to evaluate the result of the effects.
 
 
 var _affected_stat: int
+var _is_percentage_calc: bool
 var _effect_bus: Dictionary = {}
 
 
 # Called when an instance of this object is created.
-func _init(affected_stat: int):
+func _init(affected_stat: int, is_percentage_calc: bool):
 	_affected_stat = affected_stat
+	_is_percentage_calc = is_percentage_calc
 
 
 # Looks at all aspects of an effect and adds aspects to the end of the bus if 
@@ -20,7 +22,17 @@ func _init(affected_stat: int):
 func add_effect(effect: Effect) -> void:
 	var effect_id: int = effect.get_instance_id()
 	for aspect in effect.get_aspects():
-		if aspect.stat_affected != _affected_stat:
+		if (
+			aspect.stat_affected != _affected_stat
+			or (
+				_is_percentage_calc
+				and not aspect.calclulation_method is PercentageCalculation
+			)
+			or (
+				!_is_percentage_calc
+				and aspect.calclulation_method is PercentageCalculation
+			)
+		):
 			continue
 		# Stores effect and current turn duration.
 		_effect_bus[effect_id] = [aspect, 0]

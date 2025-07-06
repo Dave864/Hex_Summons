@@ -35,12 +35,6 @@ var _source_stats: CharacterStats = null setget set_source_stats
 var _action_potency: Potency = null setget set_action_potency
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	_check_for_required_parameters()
-	calculation_method.check_for_required_resources()
-
-
 # Updates the source character stats of this effect aspect.
 func set_source_stats(new_source: CharacterStats) -> void:
 	_source_stats = new_source
@@ -53,14 +47,38 @@ func set_action_potency(new_potency: Potency) -> void:
 
 # Determines the numerical result of the effect on a target set of character stats.
 func effect_on_target(target_stats: CharacterStats) -> int:
-	return calculation_method.process_operation(
+	var b_str: float = calculation_method.base_strength(
 			_source_stats,
-			target_stats,
-			stat_affected,
-			_action_potency,
-			resisted,
-			operation
+			_action_potency
 	)
+	var eff: float = 1.0
+	if resisted:
+		eff = calculation_method.efficacy(
+				_source_stats,
+				target_stats,
+				_action_potency
+		)
+	match resistance_effect:
+		ResEffect.DURATION:
+			turn_duration = int(round(max_turn_duration * eff))
+			return int(b_str)
+		ResEffect.STRENGTH:
+			turn_duration = max_turn_duration
+			return calculation_method.process_operation(
+					b_str,
+					eff,
+					stat_affected,
+					operation
+			)
+		_:
+			turn_duration = max_turn_duration
+			return 0
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_check_for_required_parameters()
+	calculation_method.check_for_required_resources()
 
 
 # Check that all required parameters are set.
