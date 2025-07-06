@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://effects/scripts/strength_calculation.gd" type="Script" id=1]
+[ext_resource path="res://effects/strength_calculators/strength_calculation.gd" type="Script" id=1]
 
 [resource]
 resource_local_to_scene = true

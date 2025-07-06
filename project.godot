@@ -152,7 +152,7 @@ _global_script_classes=[ {
 "base": "StrengthCalculation",
 "class": "FlatValueCalcultion",
 "language": "GDScript",
-"path": "res://effects/scripts/flat_value_calculation.gd"
+"path": "res://effects/strength_calculators/flat_value_calculation.gd"
 }, {
 "base": "Node",
 "class": "GeneralEffectsHandler",
@@ -222,7 +222,7 @@ _global_script_classes=[ {
 "base": "StrengthCalculation",
 "class": "PercentageCalculation",
 "language": "GDScript",
-"path": "res://effects/scripts/percentage_calculation.gd"
+"path": "res://effects/strength_calculators/percentage_calculation.gd"
 }, {
 "base": "Character",
 "class": "PlayerCharacter",
@@ -287,7 +287,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "Stat",
 "language": "GDScript",
-"path": "res://character/scripts/stat.gd"
+"path": "res://stat_types/stat.gd"
 }, {
 "base": "Node",
 "class": "State",
@@ -302,7 +302,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "StrengthCalculation",
 "language": "GDScript",
-"path": "res://effects/scripts/strength_calculation.gd"
+"path": "res://effects/strength_calculators/strength_calculation.gd"
 }, {
 "base": "MarginContainer",
 "class": "SubOptionButton",
