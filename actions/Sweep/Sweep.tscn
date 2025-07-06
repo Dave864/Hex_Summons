@@ -3,8 +3,9 @@
 [ext_resource path="res://range_type/cone_area.gd" type="Script" id=1]
 [ext_resource path="res://actions/action.gd" type="Script" id=2]
 [ext_resource path="res://range_type/cardinal_area.gd" type="Script" id=3]
-[ext_resource path="res://actions/Sweep/stat_data/potency.tres" type="Resource" id=4]
+[ext_resource path="res://actions/Sweep/potency.tres" type="Resource" id=4]
 [ext_resource path="res://range_type/ring_area.gd" type="Script" id=5]
+
 
 [node name="Sweep" type="Node"]
 script = ExtResource( 2 )

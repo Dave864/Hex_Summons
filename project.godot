@@ -242,7 +242,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "Potency",
 "language": "GDScript",
-"path": "res://actions/potency.gd"
+"path": "res://actions/Strike/potency.gd"
 }, {
 "base": "Panel",
 "class": "RangeDisplay",
