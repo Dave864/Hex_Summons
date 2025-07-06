@@ -5,36 +5,45 @@ Base class that is used to define the strength of an effect.
 """
 
 
-# Gets the needed details for the operation and then runs said operation on those
-# values, returning the result.
-func process_operation(
+# Determines the strength of the effect for a given character.
+func calculate_strength(
+		source_stats: CharacterStats,
+		action_potency: Potency
+) -> float:
+	return _strength_scalar(_get_potency_values(source_stats, action_potency))
+
+
+# Determines the effectiveness of an action on a given target.
+func calculate_efficacy(
 	source_stats: CharacterStats,
 	target_stats: CharacterStats,
-	action_potency: Potency,
-	stat_affected: Resource,
-	resisted: bool,
-	operation: int
-) -> int:
-	var base_strength: float = _calculate_strength(source_stats, action_potency)
-	var resisted_strength: float = (
-			_calculate_resisted_strength(
-					source_stats,
-					target_stats,
-					action_potency
-			) if resisted
-			else base_strength
+	action_potency: Potency
+) -> float:
+	var base_strength: float = calculate_strength(source_stats, action_potency)
+	var resisted_strength: float = _calculate_resisted_strength(
+			source_stats,
+			target_stats,
+			action_potency
 	)
 	# 0.0 means not effective, 1.0 means fully effective.
-	var efficacy: float = clamp(base_strength / resisted_strength, 0.0, 1.0)
-	var stat_value: int = _get_stat_value(target_stats, stat_affected)
-	
+	return clamp(base_strength / resisted_strength, 0.0, 1.0)
+
+
+# Runs the specified operation on a given stat using the provided strength
+# and efficacy.
+func process_operation(
+	strength: float,
+	efficacy: float,
+	stat_value: int,
+	operation: int
+) -> int:
 	match operation:
 		Constants.Operation.SET:
-			return _set_operation(base_strength, efficacy, stat_value)
+			return _set_operation(strength, efficacy, stat_value)
 		Constants.Operation.INCREASE:
-			return _increase_operation(base_strength, efficacy, stat_value)
+			return _increase_operation(strength, efficacy, stat_value)
 		Constants.Operation.DECREASE:
-			return _decrease_operation(base_strength, efficacy, stat_value)
+			return _decrease_operation(strength, efficacy, stat_value)
 		_:
 			return 0
 
@@ -70,38 +79,28 @@ func _decrease_operation(
 	return -convert(base_strength * efficacy, TYPE_INT) 
 
 
-# Determines the strength of the effect for a given character.
-func _calculate_strength(
-		source_stats: CharacterStats,
-		action_potency: Potency
-) -> float:
-	return _convert_to_scalar(_get_potency_values(source_stats, action_potency))
-
-
-# Determines the strength of the effect for a given character when resisted by the target.
+# Determines the strength of the effect for a given character when resisted
+# by the target.
 func _calculate_resisted_strength(
 	source_stats: CharacterStats,
 	target_stats: CharacterStats,
 	action_potency: Potency
 ) -> float:
-	var strength_values: Dictionary = _get_potency_values(source_stats, action_potency)
+	var strength_values: Dictionary = _get_potency_values(
+			source_stats,
+			action_potency
+	)
 	var res_values: Dictionary = target_stats.get_defensive()
 	_apply_resistance(strength_values, res_values)
-	return _convert_to_scalar(strength_values)
+	return _strength_scalar(strength_values)
 
 
 # Combines the potency strength data into a single value.
-func _convert_to_scalar(strength_data: Dictionary) -> float:
+func _strength_scalar(strength_data: Dictionary) -> float:
 	var total_strength: float = strength_data[Constants.ATTACK]
 	for v in strength_data[Constants.MAGIC].values():
 		total_strength += v
 	return total_strength
-
-
-# Gets the value of the target character's stat.
-func _get_stat_value(target_stats: CharacterStats, stat: Resource) -> int:
-	assert(stat is Stat , "A non Stat resource was requested.")
-	return target_stats.get_calculated_stat(stat.type)
 
 
 # Determines the raw potency values for a given character.

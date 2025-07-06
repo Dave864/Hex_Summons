@@ -6,6 +6,11 @@ specified character stat.
 """
 
 
+enum ResEffect {
+	STRENGTH,
+	DURATION,
+}
+
 # The stat of the target that is affected by this effect.
 export(Resource) var stat_affected = null
 # How the targeted stat is modified.
@@ -14,9 +19,15 @@ export(Constants.Operation) var operation = Constants.Operation.SET
 export(Resource) var calculation_method = null
 # Flag that indicates if this effect is resisted by the target
 export(bool) var resisted = true
-# How many turns does this effect last after application. A value of zero means
-# the effect is applied immediately.
-export(int, 0, 100) var turn_duration = 0
+# Indicates if resistance affects aspect strength or duration.
+export(ResEffect) var resistance_effect = ResEffect.STRENGTH
+# The maximum number of turns this effect can last afier application. A value
+# of zero means the effect is applied immediately.
+export(int, 0, 100) var max_turn_duration = 0
+
+# How many turns does this effect last after application when adjusted for
+# resistances.
+var turn_duration: int = max_turn_duration
 
 # The stats of the character that will apply this effect.
 var _source_stats: CharacterStats = null setget set_source_stats
