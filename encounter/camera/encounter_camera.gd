@@ -107,40 +107,40 @@ func get_relative_top_vertex() -> int:
 
 
 # Handles vertical camera panning from mouse drag.
-func vertical_pan_mouse(vert_motion: float) -> void:
-	if abs(vert_motion) < mouse_drag_threshold:
+func vertical_pan_mouse(v_motion: float) -> void:
+	if abs(v_motion) < mouse_drag_threshold:
 		return
 	var rotation: float = rad2deg(_focus_pt.rotation.x)
 	# Vertical rotation is negative to position the camera above
 	# the encounter map.
-	rotation += -vert_motion
+	rotation += -v_motion
 	_focus_pt.rotation.x = deg2rad(_bind_vertical_rotation(rotation))
 
 
 # Handles lateral camera panning from mouse drag.
-func lateral_pan_mouse(lateral_motion: float) -> void:
-	_focus_pt.rotation.y -= deg2rad(lateral_motion * mouse_lateral_multiplier)
+func lateral_pan_mouse(l_motion: float) -> void:
+	_focus_pt.rotation.y -= deg2rad(l_motion * mouse_lateral_multiplier)
 	_focus_pt.rotation.y = _normalize_lateral_rotation(_focus_pt.rotation.y)
 
 
 # Handles vertical camera panning from joystick input.
 func vertical_pan_joystick(delta: float) -> void:
-	var vertical_move: float = Input.get_axis("right_joystick_d", "right_joystick_u")
-	if abs(vertical_move) == 0.0:
+	var v_move: float = Input.get_axis("right_joystick_d", "right_joystick_u")
+	if abs(v_move) == 0.0:
 		return
 	var rotation: float = rad2deg(_focus_pt.rotation.x)
 	# Vertical rotation is negative to position the camera above
 	# the encounter map.
-	rotation += -vertical_move * joystick_vert_pan_speed * delta
+	rotation += -v_move * joystick_vert_pan_speed * delta
 	_focus_pt.rotation.x = deg2rad(_bind_vertical_rotation(rotation))
 
 
 # Handles lateral camera panning from joystick input.
 func lateral_pan_joystick(delta: float) -> void:
-	var horizontal_move: float = Input.get_axis("right_joystick_l", "right_joystick_r")
-	if abs(horizontal_move) == 0.0:
+	var h_move: float = Input.get_axis("right_joystick_l", "right_joystick_r")
+	if abs(h_move) == 0.0:
 		return
-	_focus_pt.rotation.y -= deg2rad(horizontal_move * joystick_lateral_pan_speed * delta)
+	_focus_pt.rotation.y -= deg2rad(h_move * joystick_lateral_pan_speed * delta)
 	_focus_pt.rotation.y = _normalize_lateral_rotation(_focus_pt.rotation.y)
 
 
@@ -229,7 +229,7 @@ func _check_for_required_parameters() -> void:
 	# Check vertical panning bounds.
 	assert(
 			vert_panning_l_bound < vert_panning_u_bound,
-			"Lower vertical panning bounds are equal or higher than upper bounds."
+			"Lower vertical panning bounds are not below upper bounds."
 	)
 	# Check the camera status.
 	assert(
@@ -238,7 +238,7 @@ func _check_for_required_parameters() -> void:
 	)
 	assert(
 			_camera.translation.x == 0.0 and _camera.translation.y == 0.0,
-			"EncounterCamera camera distance translation is not bound along the z-axis."
+			"EncounterCamera camera distance translation not bound along z-axis."
 	)
 	assert(
 			_camera.rotation == Vector3.ZERO,
