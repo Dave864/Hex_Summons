@@ -6,6 +6,7 @@ specified character stat.
 """
 
 
+# Describes what changes when resistance is applied.
 enum ResEffect {
 	STRENGTH,
 	DURATION,
@@ -31,6 +32,8 @@ var turn_duration: int = max_turn_duration
 
 # The stats of the character that will apply this effect.
 var _source_stats: CharacterStats = null setget set_source_stats
+# The current values of the character stats.
+var _current_stats: Dictionary = {}
 # The potency of the action the parent effect is assigned to.
 var _action_potency: Potency = null setget set_action_potency
 
@@ -38,11 +41,17 @@ var _action_potency: Potency = null setget set_action_potency
 # Updates the source character stats of this effect aspect.
 func set_source_stats(new_source: CharacterStats) -> void:
 	_source_stats = new_source
+	update_current_stats()
 
 
 # Updates the action potency data.
 func set_action_potency(new_potency: Potency) -> void:
 	_action_potency = new_potency
+
+
+# Gets the current values of the source stats.
+func update_current_stats() -> void:
+	_current_stats = _source_stats.get_all()
 
 
 # Determines the numerical result of the effect on a target set of character stats.
