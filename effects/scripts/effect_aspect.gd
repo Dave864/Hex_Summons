@@ -57,13 +57,13 @@ func update_current_stats() -> void:
 # Determines the numerical result of the effect on a target set of character stats.
 func effect_on_target(target_stats: CharacterStats) -> int:
 	var b_str: float = calculation_method.base_strength(
-			_source_stats,
+			_current_stats,
 			_action_potency
 	)
 	var eff: float = 1.0
 	if resisted:
 		eff = calculation_method.efficacy(
-				_source_stats,
+				_current_stats,
 				target_stats,
 				_action_potency
 		)

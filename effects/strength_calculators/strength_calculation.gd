@@ -7,7 +7,7 @@ Base class that is used to define the strength of an effect.
 
 # Determines the strength of the effect for a given character.
 func base_strength(
-		source_stats: CharacterStats,
+		source_stats: Dictionary,
 		action_potency: Potency
 ) -> float:
 	return _strength_scalar(_get_potency_values(source_stats, action_potency))
@@ -15,7 +15,7 @@ func base_strength(
 
 # Determines the effectiveness of an action on a given target.
 func efficacy(
-	source_stats: CharacterStats,
+	source_stats: Dictionary,
 	target_stats: CharacterStats,
 	action_potency: Potency
 ) -> float:
@@ -82,7 +82,7 @@ func _decrease_operation(
 # Determines the strength of the effect for a given character when resisted
 # by the target.
 func _calculate_resisted_strength(
-	source_stats: CharacterStats,
+	source_stats: Dictionary,
 	target_stats: CharacterStats,
 	action_potency: Potency
 ) -> float:
@@ -105,14 +105,18 @@ func _strength_scalar(strength_data: Dictionary) -> float:
 
 # Determines the raw potency values for a given character.
 func _get_potency_values(
-		character_stats: CharacterStats,
+		character_stats: Dictionary,
 		action_potency: Potency
 ) -> Dictionary:
-	var p_vals: Dictionary = character_stats.get_offensive()
-	p_vals[Constants.ATTACK] *= action_potency.attack_potency
+	var p_vals: Dictionary = {}
+	p_vals[Constants.ATTACK] = (
+			action_potency.attack_potency \
+			* character_stats[Constants.ATTACK]
+	)
 	for element in Constants.Element:
-		p_vals[Constants.MAGIC][element] *= (
-				action_potency.get_elemental_potency(element)
+		p_vals[Constants.MAGIC][element] = (
+				action_potency.get_elemental_potency(element) \
+				* character_stats[Constants.MAGIC][element]
 		)
 	return p_vals
 
