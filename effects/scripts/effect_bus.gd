@@ -35,6 +35,7 @@ func add_effect(effect: Effect) -> void:
 			)
 		):
 			continue
+		aspect.update_current_stats()
 		# Stores effect and current turn duration.
 		_effect_bus[effect_id] = [aspect, 0]
 
@@ -60,7 +61,7 @@ func progress_duration(turn_count: int = 1) -> void:
 			_effect_bus.erase(id)
 
 
-# Determines the final value of the affected stat after applying effects with a
+# Determines the amount the affected stat changes after applying effects with a
 # turn count of 0. Uses the provided character stats as reference. Does not
 # update the character stats.
 func process_immediate_effects(char_stats: CharacterStats) -> int:
@@ -80,7 +81,7 @@ func process_immediate_effects(char_stats: CharacterStats) -> int:
 	return final_stat_value
 
 
-# Determines the final value of the affected stat after applying all of
+# Determines the amount the affected stat changes after applying all of
 # the effects. Uses the provided character stats as reference. Does not
 # update the character stats.
 func process_all_effects(char_stats: CharacterStats) -> int:

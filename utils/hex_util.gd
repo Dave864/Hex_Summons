@@ -160,6 +160,16 @@ static func get_hex_direction(
 	return _relative_hex_direction(dir, top_vertex)
 
 
+# Returns the rotation in radians of the given hex direction. Binds the direction
+# to valid hex directions.
+# 0: 1 * PI / 3.0  /\  1: 6 * PI / 3.0
+# 5: 2 * PI / 3.0 |  | 2: 5 * PI / 3.0
+# 4: 3 * PI / 3.0  \/  3: 4 * PI / 3.0
+func dir_rotation(dir: int) -> float:
+	var true_dir: int = 0 if dir < 0 else 5 if dir > 5 else dir
+	return 0.0
+
+
 # Get the hexagonal direction relative to the defined top vertex. Used to
 # match the camera orientation.
 # 0  /\  1

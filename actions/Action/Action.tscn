@@ -20,6 +20,7 @@ script = ExtResource( 4 )
 effects_ref = NodePath("../Effects")
 
 [node name="CollisionShape" type="CollisionShape" parent="ActionHitBox"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
 shape = SubResource( 1 )
 
 [node name="SourceRange" type="Node" parent="."]
