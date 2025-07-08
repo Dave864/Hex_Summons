@@ -16,10 +16,12 @@ var _player_pos: Vector3 = Vector3.ZERO
 var _player_map_index: int = -1
 # Stores the distance map of the source range.
 var _source_d_map: Dictionary = {}
+# The type of targets the action will hit.
+var _action_targets: Dictionary = {}
 # Caches the tile ids of the effect area at different emission points.
-var _effect_ranges: Dictionary = {}
-# Records the characters that the action will hit at the current emission point.
-var _targets: Array = []
+var _ranges_cache: Dictionary = {}
+# Caches the characters that the action will hit at different emission points.
+var _targets_cache: Dictionary = {}
 
 # Reference to the function that will update the tile highlights.
 onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
@@ -91,6 +93,7 @@ func _determine_changes(action: Action) -> void:
 	var need_new_ranges: bool = false
 	if action != _action:
 		_action = action
+		_action_targets = _action.get_targets()
 		need_new_ranges = true
 	var player_map_index: int = selector.active_player.map_coordinate.get_index()
 	if _player_map_index != player_map_index:
@@ -99,7 +102,8 @@ func _determine_changes(action: Action) -> void:
 		need_new_ranges = true
 	if need_new_ranges:
 		_source_d_map.clear()
-		_effect_ranges.clear()
+		_ranges_cache.clear()
+		_targets_cache.clear()
 
 
 # Update the selection for a given tile.
@@ -156,7 +160,8 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	# Relative top not needed as we are using direct map coordinates.
 	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
 	_action.set_emission_direction(emission_dir)
-	if _fix_orientation():
+	# No need to fix orientation for non-cardinal effect ranges.
+	if not _action.get_is_cardinal() or _fix_orientation():
 		_highlight_effect_range()
 	else:
 		selector.hex_map.selection_tracker.clear_selector_highlights()
@@ -225,7 +230,7 @@ func _place_closest_to_tile(tile_index: int) -> void:
 			tile_index,
 			_source_d_map
 	)
-	# Add back in player details if they were removed to preserve details.
+	# Add back in player details if they were removed to preserve distance map.
 	if ignore_player_index:
 		_source_d_map[_player_map_index] = player_index_details
 	if closest_index < 0:
@@ -260,19 +265,18 @@ func _is_target_tile(map_tile: MapTile) -> bool:
 	if map_tile == null:
 		return false
 	var is_caster: bool = map_tile.map_coordinate.get_index() == _player_map_index
-	var targets: Dictionary = _action.get_targets()
 	match map_tile.get_highlight_type():
 		HexHighlighter.Option.RANGE:
 			return true
 		HexHighlighter.Option.TARGET:
-			return targets.has(EffectAspect.Target.OPPONENTS)
+			return _action_targets.has(EffectAspect.Target.OPPONENTS)
 		HexHighlighter.Option.PLAYER:
 			return (
 				(
-					targets.has(EffectAspect.Target.SELF) 
+					_action_targets.has(EffectAspect.Target.SELF) 
 					and is_caster
 				)
-				or targets.has(EffectAspect.Target.ALLIES)
+				or _action_targets.has(EffectAspect.Target.ALLIES)
 			)
 		_:
 			return false
@@ -290,8 +294,10 @@ func _highlight_source_range() -> void:
 # Updates the selection display to show the effect area.
 func _highlight_effect_range() -> void:
 	selector.hex_map.selection_tracker.clear_selector_highlights()
+	var effect_range: Array = _get_effect_range()
+	_update_targets(effect_range)
 	selector.hex_map.selection_tracker.select_effect_range(
-			_get_effect_range(),
+			effect_range,
 			_player_map_index,
 			_action.get_emission_map_index(),
 			_action.effect_ignores_caster,
@@ -320,10 +326,10 @@ func _get_source_range() -> Array:
 func _get_effect_range() -> Array:
 	var e_index: int = _action.get_emission_map_index()
 	var e_dir: int = _action.get_emission_direction()
-	if _action.emit_from_center and _effect_ranges.has(e_dir):
-		return _effect_ranges[e_dir]
-	elif _effect_ranges.has(e_index):
-		return _effect_ranges[e_index]
+	if _action.emit_from_center and _ranges_cache.has(e_dir):
+		return _ranges_cache[e_dir]
+	elif _ranges_cache.has(e_index):
+		return _ranges_cache[e_index]
 	var effect_indexes: Array = _action.effect_range.get_dir_area_indexes(
 			e_index,
 			e_dir,
@@ -345,13 +351,42 @@ func _get_effect_range() -> Array:
 	return valid_effect_indexes
 
 
+# Gets the characters that will be hit by the action.
+func _update_targets(effect_range: Array) -> void:
+	var e_index: int = _action.get_emission_map_index()
+	var e_dir: int = _action.get_emission_direction()
+	if (
+		(_action.emit_from_center and _ranges_cache.has(e_dir))
+		or _ranges_cache.has(e_index)
+	):
+		return
+	var targets: Array = []
+	for index in effect_range:
+		var tile: MapTile = selector.hex_map.get_tile_at(index)
+		var c: Character = tile.occupant.get_current_occupant()
+		if (
+			(
+				c is EnemyCharacter 
+				and _action_targets.has(EffectAspect.Target.OPPONENTS)
+			) or (
+				c.map_coordinate.get_index() == _player_map_index
+				and _action_targets.has(EffectAspect.Target.SELF)
+			) or _action_targets.has(EffectAspect.Target.ALLIES)
+		):
+			targets.append(c)
+	if _action.emit_from_center:
+		_ranges_cache[e_dir] = targets
+	else:
+		_ranges_cache[e_index] = targets
+
+
 # Updates the _effect_ranges dictionary to store the listed effect indexes
 # under either the emission point or direction.
 func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array) -> void:
 	if _action.emit_from_center:
-		_effect_ranges[e_dir] = indexes
+		_ranges_cache[e_dir] = indexes
 	else:
-		_effect_ranges[e_pt] = indexes
+		_ranges_cache[e_pt] = indexes
 
 
 # Determines if the selector is able to move to the adjacent tile in the
@@ -431,7 +466,8 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	_player_map_index = -1
 	_player_pos = Vector3.ZERO
-	_effect_ranges.clear()
+	_ranges_cache.clear()
+	_targets_cache.clear()
 	_action = null
 	state_machine.transition_to(WAIT)
 
