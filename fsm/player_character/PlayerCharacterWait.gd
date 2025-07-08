@@ -26,5 +26,5 @@ func exit() -> void:
 
 # Hit when the player character is selected to take its turn.
 func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
-	if player.name == pc.name:
+	if player.get_instance_id() == pc.get_instance_id():
 		state_machine.transition_to(STANDBY)

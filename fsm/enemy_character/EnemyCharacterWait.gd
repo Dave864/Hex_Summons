@@ -18,5 +18,5 @@ func _ready_connect_signals() -> void:
 
 # Hit when the enemy character is selected to take its turn.
 func _on_SignalBus_enemy_turn_started(enemy: EnemyCharacter) -> void:
-	if enemy.name == ec.name:
+	if enemy.get_instance_id() == ec.get_instance_id():
 		state_machine.transition_to(THINK)

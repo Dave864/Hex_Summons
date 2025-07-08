@@ -118,6 +118,7 @@ func _ready() -> void:
 	_check_for_required_parameters()
 	_initialize_effects()
 	_hit_box = get_node(hit_box_ref)
+	_hit_box.caster_id = get_instance_id()
 	_is_cardinal = source_range is CardinalArea
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
