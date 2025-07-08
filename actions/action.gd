@@ -55,6 +55,15 @@ func get_is_cardinal() -> bool:
 	return _is_cardinal
 
 
+# Returns a set of targets this action effects.
+func get_targets() -> Dictionary:
+	var targets: Dictionary = {}
+	for effect in _effects:
+		for aspect in effect.get_aspects():
+			targets[aspect.target] = true
+	return targets
+
+
 # Set the tile index the effect is emitted from.
 func set_emission_map_index(index: int) -> void:
 	_emission_map_index = index

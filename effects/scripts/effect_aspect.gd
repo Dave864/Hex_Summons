@@ -6,12 +6,21 @@ specified character stat.
 """
 
 
+# Describes what the aspect targets.
+enum Target {
+	SELF,
+	ALLIES,
+	OPPONENTS,
+	NONE
+}
 # Describes what changes when resistance is applied.
 enum ResEffect {
 	STRENGTH,
 	DURATION,
 }
 
+# The target of this effect.
+export(Target) var target = Target.NONE
 # The stat of the target that is affected by this effect.
 export(Resource) var stat_affected = null
 # How the targeted stat is modified.

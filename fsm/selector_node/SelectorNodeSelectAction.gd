@@ -18,6 +18,8 @@ var _player_map_index: int = -1
 var _source_d_map: Dictionary = {}
 # Caches the tile ids of the effect area at different emission points.
 var _effect_ranges: Dictionary = {}
+# Records the characters that the action will hit at the current emission point.
+var _targets: Array = []
 
 # Reference to the function that will update the tile highlights.
 onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
@@ -256,17 +258,31 @@ func _get_target_distances() -> Array:
 
 # Checks if a given map tile is a valid target for an action.
 func _is_target_tile(map_tile: MapTile) -> bool:
-	"""
-	TODO: Update action to get the effect target details
-	"""
-	return (
-		map_tile != null
-		and (
-			map_tile.get_highlight_type() == HexHighlighter.Option.RANGE
-			or map_tile.get_highlight_type() == HexHighlighter.Option.TARGET
-			or map_tile.get_highlight_type() == HexHighlighter.Option.PLAYER
-		)
-	)
+	if map_tile == null:
+		return false
+	var is_target: bool = false
+	var is_caster: bool = map_tile.map_coordinate.get_index() == _player_map_index
+	var targets: Dictionary = _action.get_targets()
+	match map_tile.get_highlight_type():
+		HexHighlighter.Option.RANGE:
+			is_target = true
+		HexHighlighter.Option.TARGET:
+			if targets.has(EffectAspect.Target.OPPONENTS):
+				_targets.append(map_tile.occupant.get_current_occupant())
+				is_target = true
+		HexHighlighter.Option.PLAYER:
+			if (
+				(
+					targets.has(EffectAspect.Target.SELF) 
+					and is_caster
+				)
+				or targets.has(EffectAspect.Target.ALLIES)
+			):
+				_targets.append(map_tile.occupant.get_current_occupant())
+				is_target = true
+		_:
+			is_target = false
+	return is_target
 
 
 # Updates the selection display to show the source area.
