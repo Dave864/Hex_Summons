@@ -244,11 +244,12 @@ func _place_closest_to_tile(tile_index: int) -> void:
 # Gets an array of the targets sorted by distance from player. The closest
 # target is at the first index. Each index contains the target character and distance.
 func _get_target_distances() -> Array:
-	"""
-	TODO: Update to determine if players, enemies, or both are valid targets.
-	Currently only looks for enemies.
-	"""
-	var potential_targets: Array = selector.enemies_ref
+	var potential_targets: Array = []
+	if _action_targets.has(EffectAspect.Target.OPPONENTS):
+		potential_targets.append_array(selector.enemies_ref)
+	if _action_targets.has(EffectAspect.Target.ALLIES):
+		potential_targets.append_array(selector.players_ref)
+	
 	var target_distances: Array = []
 	for option in potential_targets:
 		var dist: float = selector.hex_map.range_finder.travel_distance(
