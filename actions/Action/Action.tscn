@@ -6,7 +6,7 @@
 [ext_resource path="res://actions/action_hit_box.gd" type="Script" id=4]
 [ext_resource path="res://actions/Action/potency.tres" type="Resource" id=5]
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="SphereShape" id=1]
 
 [node name="Action" type="Node"]
 script = ExtResource( 3 )
@@ -24,6 +24,7 @@ effects_ref = NodePath("../Effects")
 [node name="CollisionShape" type="CollisionShape" parent="ActionHitBox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
 shape = SubResource( 1 )
+disabled = true
 
 [node name="SourceRange" type="Node" parent="."]
 script = ExtResource( 2 )
