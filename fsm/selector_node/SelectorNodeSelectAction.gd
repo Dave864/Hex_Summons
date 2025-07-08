@@ -351,6 +351,23 @@ func _get_effect_range() -> Array:
 	return valid_effect_indexes
 
 
+# Gets the targets for the current emission area.
+func _get_targets() -> Array:
+	if _action.emit_from_center:
+		return _targets_cache[_action.get_emission_direction()]
+	else:
+		return _targets_cache[_action.get_emission_map_index()]
+
+
+# Updates the _effect_ranges dictionary to store the listed effect indexes
+# under either the emission point or direction.
+func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array) -> void:
+	if _action.emit_from_center:
+		_ranges_cache[e_dir] = indexes
+	else:
+		_ranges_cache[e_pt] = indexes
+
+
 # Gets the characters that will be hit by the action.
 func _update_targets(effect_range: Array) -> void:
 	var e_index: int = _action.get_emission_map_index()
@@ -375,18 +392,19 @@ func _update_targets(effect_range: Array) -> void:
 		):
 			targets.append(c)
 	if _action.emit_from_center:
-		_ranges_cache[e_dir] = targets
+		_targets_cache[e_dir] = targets
 	else:
-		_ranges_cache[e_index] = targets
+		_targets_cache[e_index] = targets
 
 
-# Updates the _effect_ranges dictionary to store the listed effect indexes
-# under either the emission point or direction.
-func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array) -> void:
-	if _action.emit_from_center:
-		_ranges_cache[e_dir] = indexes
-	else:
-		_ranges_cache[e_pt] = indexes
+# Changes the state of the targets.
+func _change_target_state(active: bool) -> void:
+	var targets: Array = _get_targets()
+	for t in targets:
+		if active:
+			t.activate_hit_box()
+		else:
+			t.deactivate_hit_box()
 
 
 # Determines if the selector is able to move to the adjacent tile in the
@@ -452,6 +470,16 @@ func _on_SignalBus_player_action_selected(
 	state_machine.transition_to(SELECT_ACTION, {"action": new_action})
 
 
+# Activates the targets and prompts the action to be executed.
+func _on_SignalBus_player_action_confirmed() -> void:
+	if not _state_is_active():
+		return
+	_change_target_state(true)
+	selector.hex_map.selection_tracker.clear_highlights()
+	selector.hex_map.selection_tracker.clear_selector_highlights()
+	_action.execute_action()
+
+
 # Go to the "SelectMove" state when the player action selection is canceled.
 func _on_SignalBus_player_action_type_canceled() -> void:
 	if not _state_is_active():
@@ -464,6 +492,7 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 # Go to the "WAIT" state when a player has signaled that their turn is ended.
 func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	_change_target_state(false)
 	_player_map_index = -1
 	_player_pos = Vector3.ZERO
 	_ranges_cache.clear()
