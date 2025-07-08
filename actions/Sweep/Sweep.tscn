@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://range_type/cone_area.gd" type="Script" id=1]
 [ext_resource path="res://actions/action.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://actions/Sweep/potency.tres" type="Resource" id=4]
 [ext_resource path="res://range_type/ring_area.gd" type="Script" id=5]
 [ext_resource path="res://actions/action_hit_box.gd" type="Script" id=6]
+[ext_resource path="res://effects/Damage/Damage.tscn" type="PackedScene" id=7]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -38,3 +39,5 @@ script = ExtResource( 1 )
 spread = 3
 
 [node name="Effects" type="Node" parent="."]
+
+[node name="Damage" parent="Effects" instance=ExtResource( 7 )]
