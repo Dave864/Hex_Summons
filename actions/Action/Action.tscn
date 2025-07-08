@@ -10,12 +10,14 @@
 
 [node name="Action" type="Node"]
 script = ExtResource( 3 )
+hit_box_ref = NodePath("ActionHitBox")
 potency = ExtResource( 5 )
 
 [node name="ActionHitBox" type="Area" parent="."]
 collision_layer = 16
 collision_mask = 12
 monitoring = false
+monitorable = false
 script = ExtResource( 4 )
 effects_ref = NodePath("../Effects")
 

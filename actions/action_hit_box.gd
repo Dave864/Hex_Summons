@@ -20,11 +20,13 @@ func get_effects() -> Array:
 
 # Activates the collision shape.
 func activate() -> void:
+	monitorable = true
 	_c_shape.disabled = false
 
 
 # Deactivates the collision shape.
 func deactivate() -> void:
+	monitorable = false
 	_c_shape.disabled = true
 
 

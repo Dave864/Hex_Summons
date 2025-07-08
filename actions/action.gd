@@ -10,6 +10,7 @@ const DEAD_RANGE: String = "DeadRange"
 const EFFECT_RANGE: String = "EffectRange"
 const EFFECTS: String = "Effects"
 
+export(NodePath) var hit_box_ref = null
 # The percentage of a character's attack to use for potency calculations.
 export(Resource) var potency = null
 # Flag that denotes if the emission is fixed to the center of the area.
@@ -30,6 +31,8 @@ var dead_range: AreaRange = null
 # The area specifying the tiles affected by the effect.
 var effect_range: AreaRange = null
 
+# The hit box object.
+var _hit_box: ActionHitBox = null
 # The effects of this action
 var _effects: Array setget , get_effects
 # Whether the area range is cardinal or ring.
@@ -40,8 +43,6 @@ var _emission_map_index: int = -1 setget set_emission_map_index, get_emission_ma
 var _emission_transform: Transform = Transform.IDENTITY
 # The direction the effect is emitted. Only updated if the action is cardinal.
 var _emission_direction: int setget set_emission_direction, get_emission_direction
-
-onready var _hit_box: ActionHitBox = $ActionHitBox
 
 
 # Returns the effects of this action.
@@ -68,12 +69,15 @@ func set_emission_pos(pos: Vector3) -> void:
 	_emission_transform.origin = pos
 
 
-# Set the direction of the emission (0 - 5). Only updates the direction if the action
-# is cardinal.
+# Set the direction of the emission (0 - 5). Only updates the direction if
+# the action is emitted from center.
 func set_emission_direction(dir: int) -> void:
-	if _is_cardinal:
+	if emit_from_center:
 		_emission_direction = 0 if dir < 0 else 5 if dir > 5 else dir
-		_emission_transform.basis = Basis(Vector3.UP, 0.0)
+		_emission_transform.basis = Basis(
+				Vector3.UP,
+				HexUtil.dir_rotation(_emission_direction)
+		)
 	else:
 		_emission_direction = -1
 		_emission_transform.basis = Basis.IDENTITY
@@ -94,9 +98,17 @@ func reset_emittor_position() -> void:
 	_emission_map_index = -1
 
 
+# Executes the action.
+func execute_action() -> void:
+	_hit_box.activate()
+	print("Execute %s." % [name])
+	_hit_box.deactivate()
+
+
 func _ready() -> void:
 	_check_for_required_parameters()
 	_initialize_effects()
+	_hit_box = get_node(hit_box_ref)
 	_is_cardinal = source_range is CardinalArea
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
@@ -104,16 +116,20 @@ func _ready() -> void:
 # Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
+			hit_box_ref != null,
+			"Action {s} missing defined hit box reference.".format([name])
+	)
+	assert(
 			potency != null,
-			"Error: ActionStats missing defined potency."
+			"ActionStats missing defined potency."
 	)
 	assert(
 			potency is Potency,
-			"Error: ActionStats potency is not a Potency resource."
+			"ActionStats potency is not a Potency resource."
 	)
 	assert(
 			has_node(EFFECTS),
-			"Error: Action %s is missing the Effects node." % [name]
+			"Action {s} is missing the Effects node.".format([name])
 	)
 	_set_and_check_ranges()
 
@@ -139,27 +155,27 @@ func _set_and_check_ranges() -> void:
 	effect_range = get_node_or_null(EFFECT_RANGE)
 	assert(
 			source_range != null,
-			"Error: Action {s} missing SourceRange node.".format([name])
+			"Action {s} missing SourceRange node.".format([name])
 	)
 	assert(
 			source_range is CardinalArea or source_range is RingArea,
-			"Error: Action {s} SourceRange is neither a CardinalArea " \
+			"Action {s} SourceRange is neither a CardinalArea " \
 			+ "or RingArea.".format([name])
 	)
 	assert(
 			dead_range != null,
-			"Error: Action {s} missing DeadRange node.".format([name])
+			"Action {s} missing DeadRange node.".format([name])
 	)
 	assert(
 			dead_range is CardinalArea or dead_range is RingArea,
-			"Error: Action {s} DeadRange is neither a CardinalArea " \
+			"Action {s} DeadRange is neither a CardinalArea " \
 			+ "or RingArea.".format([name])
 	)
 	assert(
 			effect_range != null,
-			"Error: Action {s} missing EffectRange node.".format([name])
+			"Action {s} missing EffectRange node.".format([name])
 	)
 	assert(
 			effect_range is AreaRange,
-			"Error: Action {s} EffectRange is not an AreaRange.".format([name])
+			"Action {s} EffectRange is not an AreaRange.".format([name])
 	)
