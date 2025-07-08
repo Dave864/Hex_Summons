@@ -156,8 +156,7 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	# Relative top not needed as we are using direct map coordinates.
 	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
 	_action.set_emission_direction(emission_dir)
-	# No need to fix orientation for non-cardinal effect ranges.
-	if not _action.get_is_cardinal() or _fix_orientation():
+	if _fix_orientation():
 		_highlight_effect_range()
 	else:
 		selector.hex_map.selection_tracker.clear_selector_highlights()
@@ -260,29 +259,23 @@ func _get_target_distances() -> Array:
 func _is_target_tile(map_tile: MapTile) -> bool:
 	if map_tile == null:
 		return false
-	var is_target: bool = false
 	var is_caster: bool = map_tile.map_coordinate.get_index() == _player_map_index
 	var targets: Dictionary = _action.get_targets()
 	match map_tile.get_highlight_type():
 		HexHighlighter.Option.RANGE:
-			is_target = true
+			return true
 		HexHighlighter.Option.TARGET:
-			if targets.has(EffectAspect.Target.OPPONENTS):
-				_targets.append(map_tile.occupant.get_current_occupant())
-				is_target = true
+			return targets.has(EffectAspect.Target.OPPONENTS)
 		HexHighlighter.Option.PLAYER:
-			if (
+			return (
 				(
 					targets.has(EffectAspect.Target.SELF) 
 					and is_caster
 				)
 				or targets.has(EffectAspect.Target.ALLIES)
-			):
-				_targets.append(map_tile.occupant.get_current_occupant())
-				is_target = true
+			)
 		_:
-			is_target = false
-	return is_target
+			return false
 
 
 # Updates the selection display to show the source area.
