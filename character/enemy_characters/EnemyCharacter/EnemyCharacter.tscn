@@ -46,6 +46,7 @@ character_stat_ref = NodePath("../Stats")
 [node name="HitBox" type="Area" parent="."]
 collision_layer = 8
 collision_mask = 16
+monitoring = false
 
 [node name="CollisionShape" type="CollisionShape" parent="HitBox"]
 shape = SubResource( 2 )

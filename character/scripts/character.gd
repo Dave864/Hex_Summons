@@ -19,6 +19,7 @@ var _start_set: bool = false setget , get_is_start_set
 # Reference to the Character sprite.
 onready var character_sprite: Sprite3D = $Sprite3D
 onready var map_coordinate: MapCoordinate = $MapCoordinate
+onready var hit_box: Area = $HitBox
 
 
 # Get whether or not the starting location of the character has been set.
@@ -29,6 +30,16 @@ func get_is_start_set() -> bool:
 # Virtual function. Returns the type of the character.
 func get_type() -> int:
 	return Type.NONE
+
+
+# Exposes the hitbox to action collisions.
+func activate_hit_box() -> void:
+	hit_box.monitoring = true
+
+
+# Hides the hitbox from all collisions.
+func deactivate_hit_box() -> void:
+	hit_box.monitoring = false
 
 
 # Called when the node enters the scene tree for the first time.

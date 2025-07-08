@@ -8,7 +8,6 @@ action this hit box is for.
 
 export(NodePath) var effects_ref = null
 
-var caster_id: int = -1
 var _effects: Array = [] setget , get_effects
 
 onready var _c_shape: CollisionShape = $CollisionShape
