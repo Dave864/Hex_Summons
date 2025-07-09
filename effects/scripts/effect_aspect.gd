@@ -96,7 +96,6 @@ func effect_on_target(target_stats: CharacterStats) -> int:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
-	calculation_method.check_for_required_resources()
 
 
 # Check that all required parameters are set.

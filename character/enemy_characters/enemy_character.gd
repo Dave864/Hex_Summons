@@ -35,12 +35,20 @@ func _ready() -> void:
 	stats = $Stats
 	stats.max_cur_health()
 	_actions = $Actions.get_children()
+	_initialize_actions()
 
 
 # Virtual function. Updates emission points for all actions of the chracter.
 func _update_emission_index(_index: int) -> void:
 	for action in _actions:
 		action.set_emission_map_index(_index)
+
+
+# Initializes the action effects.
+func _initialize_actions() -> void:
+	for a in _actions:
+		a.source_stats = stats
+		a.initialize_effects()
 
 
 # Checks that all required parameters are set.

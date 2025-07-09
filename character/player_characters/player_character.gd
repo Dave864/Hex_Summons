@@ -22,6 +22,7 @@ func _ready() -> void:
 	_techniques = _player_class.techniques
 	_spells = _player_class.spells
 	stats = _player_class.stats
+	_initialize_actions()
 
 
 # Get the techniques associated with the character
@@ -37,6 +38,16 @@ func get_spells() -> Array:
 # Returns the type of the character, PLAYER.
 func get_type() -> int:
 	return Type.PLAYER
+
+
+# Initializes the action effects.
+func _initialize_actions() -> void:
+	for t in _techniques:
+		t.source_stats = stats
+		t.initialize_effects()
+	for s in _spells:
+		s.source_stats = stats
+		s.initialize_effects()
 
 
 # Virtual function. Updates emission points for all actions of the chracter.

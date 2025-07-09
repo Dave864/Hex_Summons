@@ -52,10 +52,6 @@ func _set_aspects_source_stats() -> void:
 # Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
-			_action_potency != null,
-			"Error: %s Effect missing defined action_potency." % [name]
-	)
-	assert(
 			_aspects.size() > 0,
 			"Error: %s Effect does not have any EffectAspects." % [name]
 	)

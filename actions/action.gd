@@ -114,9 +114,22 @@ func execute_action() -> void:
 	_hit_box.deactivate()
 
 
+# Initialize the effects list of the action, checking that all effects are valid.
+func initialize_effects() -> void:
+	_effects = get_node("Effects").get_children()
+	assert(
+			len(_effects) > 0,
+			"Error: Action %s does not have any effects" % [name]
+	)
+	for effect in _effects:
+		assert(effect is Effect, "Error: Action %s effect %s is not an Effect")
+		# Type checking for the node referenced at the path.
+		effect.set_source_stats(source_stats)
+		effect.set_action_potency(potency)
+
+
 func _ready() -> void:
 	_check_for_required_parameters()
-	_initialize_effects()
 	_hit_box = get_node(hit_box_ref)
 	_is_cardinal = source_range is CardinalArea
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
@@ -141,20 +154,6 @@ func _check_for_required_parameters() -> void:
 			"Action {s} is missing the Effects node.".format([name])
 	)
 	_set_and_check_ranges()
-
-
-# Initialize the effects list of the action, checking that all effects are valid.
-func _initialize_effects() -> void:
-	_effects = get_node("Effects").get_children()
-	assert(
-			len(_effects) > 0,
-			"Error: Action %s does not have any effects" % [name]
-	)
-	for effect in _effects:
-		assert(effect is Effect, "Error: Action %s effect %s is not an Effect")
-		# Type checking for the node referenced at the path.
-		effect.set_source_stats(source_stats)
-		effect.set_action_potency(potency)
 
 
 # Gets the references to the range nodes, confirming if such nodes exist. 
