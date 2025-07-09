@@ -28,6 +28,8 @@ func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
 	for effect in effects:
 		_flat_change_bus.add_effect(effect)
 		_percentage_change_bus.add_effect(effect)
+#	_flat_change_bus.process_immediate_effects(_character_stats)
+#	_percentage_change_bus.process_immediate_effects(_character_stats)
 
 
 # Check that all required parameters are set.

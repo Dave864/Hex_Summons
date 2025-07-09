@@ -8,14 +8,14 @@ state using the features of the new option.
 """
 
 
-var option_flag: int
+var _option_flag: int
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	option_flag = _msg["option_flag"]
-	encounter_ui.set_current_selection(option_flag)
+	_option_flag = _msg["option_flag"]
+	encounter_ui.set_current_selection(_option_flag)
 	encounter_ui.grab_focus_for_sub_option_at_index(0)
 	SignalBus.emit_player_action_selected(
 			encounter_ui.get_focused_player(),
@@ -92,7 +92,7 @@ func exit() -> void:
 
 # Logic for when a specified option is selected.
 func _option_selected(option: int) -> void:
-	if option_flag == option:
+	if _option_flag == option:
 		_action_type_canceled()
 	else:
 		state_machine.transition_to(ACTION, {"option_flag": option})

@@ -109,6 +109,7 @@ func reset_emittor_position() -> void:
 
 # Executes the action.
 func execute_action() -> void:
+	_hit_box.transform = _emission_transform
 	_hit_box.activate()
 	print("Execute %s." % [name])
 	_hit_box.deactivate()
