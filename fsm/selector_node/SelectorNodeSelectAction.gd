@@ -374,8 +374,8 @@ func _update_targets(effect_range: Array) -> void:
 	var e_index: int = _action.get_emission_map_index()
 	var e_dir: int = _action.get_emission_direction()
 	if (
-		(_action.emit_from_center and _ranges_cache.has(e_dir))
-		or _ranges_cache.has(e_index)
+		(_action.emit_from_center and _targets_cache.has(e_dir))
+		or _targets_cache.has(e_index)
 	):
 		return
 	var targets: Array = []
@@ -383,13 +383,16 @@ func _update_targets(effect_range: Array) -> void:
 		var tile: MapTile = selector.hex_map.get_tile_at(index)
 		var c: Character = tile.occupant.get_current_occupant()
 		if (
-			(
-				c is EnemyCharacter 
-				and _action_targets.has(EffectAspect.Target.OPPONENTS)
-			) or (
-				c.map_coordinate.get_index() == _player_map_index
-				and _action_targets.has(EffectAspect.Target.SELF)
-			) or _action_targets.has(EffectAspect.Target.ALLIES)
+			c != null
+			and (
+				(
+					c is EnemyCharacter 
+					and _action_targets.has(EffectAspect.Target.OPPONENTS)
+				) or (
+					c.map_coordinate.get_index() == _player_map_index
+					and _action_targets.has(EffectAspect.Target.SELF)
+				) or _action_targets.has(EffectAspect.Target.ALLIES)
+			)
 		):
 			targets.append(c)
 	if _action.emit_from_center:
