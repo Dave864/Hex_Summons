@@ -17,11 +17,16 @@ var _movement_area: Array = []
 var _start_index: int = 0
 # The index of tiles in reach of an action. 
 var _action_range: Dictionary = {"type": null, "tiles": null}
+# Flag that tracks if the UI is waiting. Used when changing to another player's
+# turn.
+var _ui_waiting: bool = false
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
+	# UI is active when player turn starts.
+	_ui_waiting = false
 	_active_char = enc.get_current_character()
 	_start_index = _active_char.map_coordinate.get_index()
 	_movement_area = enc.hex_map.range_finder.get_character_travesible_tiles(
@@ -61,6 +66,12 @@ func _ready_connect_signals() -> void:
 			self,
 			"_on_SignalBus_player_turn_ended"
 	)
+	ErrorUtil.connect_signal(
+			enc.ui,
+			"is_waiting",
+			self,
+			"_on_EncounterUI_is_waiting"
+	)
 
 
 # Connect the relevant signals to this state.
@@ -97,6 +108,11 @@ func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 	SignalBus.emit_move_path_created(enc.move_path)
 
 
+# Marks the UI as waiting.
+func _on_EncounterUI_is_waiting() -> void:
+	_ui_waiting = true
+
+
 # Clear the tile movement highlights, update the initiative tracker and
 # transition to either the PlayerTurn state or the EnemyTurn state depending 
 # on the next character.
@@ -106,8 +122,8 @@ func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	var next_character: Character = enc.get_next_character()
 	enc.progress_initiative()
 	if next_character is PlayerCharacter:
-		# Yield until the UI is in the "Wait" state.
-		yield(enc.ui, "is_waiting")
+		if not _ui_waiting:
+			yield(enc.ui, "is_waiting")
 		state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:
 		state_machine.transition_to(ENEMY_TURN)

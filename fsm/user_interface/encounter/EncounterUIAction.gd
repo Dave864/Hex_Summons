@@ -9,6 +9,7 @@ state using the features of the new option.
 
 
 var _option_flag: int
+var _current_action: Action
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
@@ -17,37 +18,24 @@ func enter(_msg := {}) -> void:
 	_option_flag = _msg["option_flag"]
 	encounter_ui.set_current_selection(_option_flag)
 	encounter_ui.grab_focus_for_sub_option_at_index(0)
+	_current_action = encounter_ui.get_sub_option_at_index(0)
 	SignalBus.emit_player_action_selected(
 			encounter_ui.get_focused_player(),
-			encounter_ui.get_sub_option_at_index(0)
+			_current_action
 	)
-	
-	# These signals are used by other states and will be disconnected to avoid
-	# unintended behavior.
-	encounter_ui.technique_button.connect_button_signal(
-			self,
-			"pressed",
-			"_on_TechniqueButton_button_pressed"
-	)
-	encounter_ui.spell_button.connect_button_signal(
-			self,
-			"pressed",
-			"_on_SpellButton_button_pressed"
-	)
-	encounter_ui.end_button.connect_button_signal(
-			self,
-			"pressed",
-			"_on_EndButton_button_pressed"
-	)
-
-
-# Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	pass
+	_connect_signals()
 
 
 # Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(_event: InputEvent) -> void:
+	if (
+		InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE
+		and _event.is_action_pressed("ui_selector_select")
+	):
+		SignalBus.emit_player_action_selected(
+				encounter_ui.get_focused_player(),
+				_current_action
+		)
 	if _event.is_action_pressed("ui_encounter_player_end"):
 		SignalBus.emit_player_turn_ended(encounter_ui.get_focused_player())
 		state_machine.transition_to(WAIT)
@@ -72,7 +60,38 @@ func handle_input(_event: InputEvent) -> void:
 # Use this function to clean up the state.
 func exit() -> void:
 	encounter_ui.sub_options.clear_sub_options()
-	
+	_disconnect_signals()
+
+
+# Connect the relevant signals to this state.
+# These signals are used by other states and will be disconnected to avoid
+# unintended behavior.
+func _connect_signals() -> void:
+	encounter_ui.technique_button.connect_button_signal(
+			self,
+			"pressed",
+			"_on_TechniqueButton_button_pressed"
+	)
+	encounter_ui.spell_button.connect_button_signal(
+			self,
+			"pressed",
+			"_on_SpellButton_button_pressed"
+	)
+	encounter_ui.end_button.connect_button_signal(
+			self,
+			"pressed",
+			"_on_EndButton_button_pressed"
+	)
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"player_action_executed",
+		self,
+		"_on_SignalBus_player_action_executed"
+	)
+
+
+# Disconnect the signals connected to this state.
+func _disconnect_signals() -> void:
 	encounter_ui.technique_button.disconnect_button_signal(
 			self,
 			"pressed",
@@ -87,6 +106,11 @@ func exit() -> void:
 			self,
 			"pressed",
 			"_on_EndButton_button_pressed"
+	)
+	SignalBus.disconnect(
+			"player_action_executed",
+			self,
+			"_on_SignalBus_player_action_executed"
 	)
 
 
@@ -105,6 +129,7 @@ func _action_type_canceled() -> void:
 	state_machine.transition_to(STANDBY)
 
 
+# Logic for what happens when the turn has ended.
 func _end_selected() -> void:
 	SignalBus.emit_player_turn_ended(encounter_ui.get_focused_player())
 	state_machine.transition_to(WAIT)
@@ -129,8 +154,16 @@ func _on_EndButton_button_pressed() -> void:
 # Signal that an action option has been selected from the currently
 # displayed options.
 func _on_SubOptions_option_selected(action_info: Action) -> void:
+	_current_action = action_info
 	SignalBus.emit_player_action_selected(
 			encounter_ui.get_focused_player(),
-			action_info
+			_current_action
 	)
-#	state_machine.transition_to(SUB_ACTION)
+
+
+# Signal that a selected action has been executed.
+func _on_SignalBus_player_action_executed(
+	_player: PlayerCharacter,
+	_action: Action
+) -> void:
+	state_machine.transition_to(WAIT)

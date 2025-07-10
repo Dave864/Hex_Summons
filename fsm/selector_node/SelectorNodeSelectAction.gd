@@ -471,17 +471,21 @@ func _on_SignalBus_player_action_selected(
 ) -> void:
 	if not _state_is_active():
 		return
-	state_machine.transition_to(SELECT_ACTION, {"action": new_action})
+	elif new_action == _action and not _get_targets().empty():
+		print("Execute action")
+		_execute_action()
+	else:
+		state_machine.transition_to(SELECT_ACTION, {"action": new_action})
 
 
 # Activates the targets and prompts the action to be executed.
-func _on_SignalBus_player_action_confirmed() -> void:
-	if not _state_is_active():
-		return
+func _execute_action() -> void:
+	SignalBus.emit_player_action_executed(selector.active_player, _action)
 	_change_target_state(true)
 	selector.hex_map.selection_tracker.clear_highlights()
 	selector.hex_map.selection_tracker.clear_selector_highlights()
 	_action.execute_action()
+	SignalBus.emit_player_turn_ended(selector.active_player)
 
 
 # Go to the "SelectMove" state when the player action selection is canceled.
@@ -494,7 +498,9 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 
 
 # Go to the "WAIT" state when a player has signaled that their turn is ended.
-func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
+func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
+	if player != selector.active_player:
+		return
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	_change_target_state(false)
 	_player_map_index = -1
