@@ -24,6 +24,7 @@ func _ready():
 
 # Connects the effects of an action to this manager.
 func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
+	print("action hit")
 	var effects: Array = hit_box.get_effects()
 	for effect in effects:
 		_flat_change_bus.add_effect(effect)

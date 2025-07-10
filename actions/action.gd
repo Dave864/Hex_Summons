@@ -44,6 +44,8 @@ var _emission_transform: Transform = Transform.IDENTITY
 # The direction the effect is emitted. Only updated if the action is cardinal.
 var _emission_direction: int setget set_emission_direction, get_emission_direction
 
+onready var ani_player: AnimationPlayer = $AnimationPlayer
+
 
 # Returns the effects of this action.
 func get_effects() -> Array:
@@ -76,6 +78,7 @@ func get_emission_map_index() -> int:
 # Updates the origin of the emission transform.
 func set_emission_pos(pos: Vector3) -> void:
 	_emission_transform.origin = pos
+	_hit_box.transform = _emission_transform
 
 
 # Set the direction of the emission (0 - 5). Only updates the direction if
@@ -113,6 +116,7 @@ func execute_action() -> void:
 	_hit_box.transform = _emission_transform
 	_hit_box.activate()
 	print("Execute %s." % [name])
+	yield(ani_player.play("execute"), "animation_completed")
 	_hit_box.deactivate()
 
 

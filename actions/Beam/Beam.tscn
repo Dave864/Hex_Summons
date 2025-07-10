@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://actions/action.gd" type="Script" id=1]
 [ext_resource path="res://range_type/cardinal_area.gd" type="Script" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://effects/Damage/Damage.tscn" type="PackedScene" id=7]
 
 [sub_resource type="BoxShape" id=1]
+
+[sub_resource type="Animation" id=2]
+resource_name = "execute"
 
 [node name="Beam" type="Node"]
 script = ExtResource( 1 )
@@ -42,3 +45,6 @@ distance = 3
 [node name="Effects" type="Node" parent="."]
 
 [node name="Damage" parent="Effects" instance=ExtResource( 7 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/execute = SubResource( 2 )

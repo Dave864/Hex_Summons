@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://actions/action.gd" type="Script" id=1]
 [ext_resource path="res://actions/action_hit_box.gd" type="Script" id=2]
@@ -8,7 +8,10 @@
 
 [sub_resource type="CylinderShape" id=1]
 height = 10.0
-radius = 2.0
+radius = 3.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "execute"
 
 [node name="Nova" type="Node"]
 script = ExtResource( 1 )
@@ -41,3 +44,6 @@ radius = 2
 [node name="Effects" type="Node" parent="."]
 
 [node name="Damage" parent="Effects" instance=ExtResource( 5 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/execute = SubResource( 2 )
