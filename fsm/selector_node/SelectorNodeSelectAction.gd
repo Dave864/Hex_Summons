@@ -129,6 +129,7 @@ func _update_selection(map_tile: MapTile) -> void:
 	elif _is_target_tile(map_tile):
 		selector.tile_hovered = map_tile
 		_action.set_emission_map_index(map_tile.map_coordinate.get_index())
+		_action.set_emission_pos(map_tile.get_character_position())
 		_highlight_effect_range()
 	else:
 		_place_closest_to_tile(map_tile.map_coordinate.get_index())
@@ -137,6 +138,7 @@ func _update_selection(map_tile: MapTile) -> void:
 # Orients the direction of an action cast from the player based on mouse position.
 func _orient_emission_to_mouse() -> void:
 	_action.set_emission_map_index(_player_map_index)
+	_action.set_emission_pos(_player_pos)
 	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
 	var mouse_pt: Vector2 = Vector2(
 		MouseHandler.get_3d_position().x,
@@ -154,6 +156,7 @@ func _orient_emission_to_mouse() -> void:
 # Orients the direction of an action cast from the player based on tile position.
 func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	_action.set_emission_map_index(_player_map_index)
+	_action.set_emission_pos(_player_pos)
 	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
 	var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
 	var vector_dir: Vector2 = (tile_pt - player_pt).normalized()
@@ -216,6 +219,7 @@ func _place_closest_to_target() -> void:
 		return
 	selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
 	_action.set_emission_map_index(closest_index)
+	_action.set_emission_pos(selector.tile_hovered.get_character_position())
 	_highlight_effect_range()
 
 
@@ -238,6 +242,7 @@ func _place_closest_to_tile(tile_index: int) -> void:
 		return
 	selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
 	_action.set_emission_map_index(closest_index)
+	_action.set_emission_pos(selector.tile_hovered.get_character_position())
 	_highlight_effect_range()
 
 
@@ -430,6 +435,16 @@ func _resolve_joystick_for_cardinal(dir: int) -> void:
 			_update_selection(direction_tile)
 
 
+# Activates the targets and prompts the action to be executed.
+func _execute_action() -> void:
+	SignalBus.emit_player_action_executed(selector.active_player, _action)
+	_change_target_state(true)
+	selector.hex_map.selection_tracker.clear_highlights()
+	selector.hex_map.selection_tracker.clear_selector_highlights()
+	_action.execute_action()
+	SignalBus.emit_player_turn_ended(selector.active_player)
+
+
 # Connect signals to this state.
 func _connect_signals() -> void:
 	ErrorUtil.connect_signal(
@@ -472,20 +487,9 @@ func _on_SignalBus_player_action_selected(
 	if not _state_is_active():
 		return
 	elif new_action == _action and not _get_targets().empty():
-		print("Execute action")
 		_execute_action()
 	else:
 		state_machine.transition_to(SELECT_ACTION, {"action": new_action})
-
-
-# Activates the targets and prompts the action to be executed.
-func _execute_action() -> void:
-	SignalBus.emit_player_action_executed(selector.active_player, _action)
-	_change_target_state(true)
-	selector.hex_map.selection_tracker.clear_highlights()
-	selector.hex_map.selection_tracker.clear_selector_highlights()
-	_action.execute_action()
-	SignalBus.emit_player_turn_ended(selector.active_player)
 
 
 # Go to the "SelectMove" state when the player action selection is canceled.

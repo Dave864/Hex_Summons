@@ -90,6 +90,7 @@ func set_emission_direction(dir: int) -> void:
 	else:
 		_emission_direction = -1
 		_emission_transform.basis = Basis.IDENTITY
+	_hit_box.transform = _emission_transform
 
 
 # Get the direction of the emission. Returns -1 if the action is not cardinal.

@@ -162,12 +162,14 @@ static func get_hex_direction(
 
 # Returns the rotation in radians of the given hex direction. Binds the direction
 # to valid hex directions.
-# 0: 1 * PI / 6.0  /\  1: 6 * PI / 6.0
-# 5: 2 * PI / 6.0 |  | 2: 5 * PI / 6.0
-# 4: 3 * PI / 6.0  \/  3: 4 * PI / 6.0
+# 0: -11 * PI / 6.0  /\  1: -1 * PI / 6.0
+# 5: -9 * PI / 6.0  |  | 2: -3 * PI / 6.0
+# 4: -7 * PI / 6.0   \/  3: -5 * PI / 6.0
 static func dir_rotation(dir: int) -> float:
-	var true_dir: int = 0 if dir < 0 else 5 if dir > 5 else dir
-	return (true_dir + 1) * PI / 6.0
+	var true_dir: int = 6 if dir <= 0 else 5 if dir > 5 else dir
+	# Want to position rotation at midpoint of line. Testing revealed that the
+	# rotation needs to be negative in order to align with the direction.
+	return -(2 * true_dir - 1) * PI / 6.0
 
 
 # Get the hexagonal direction relative to the defined top vertex. Used to
