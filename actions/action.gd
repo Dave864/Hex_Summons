@@ -114,11 +114,11 @@ func reset_emittor_position() -> void:
 # Executes the action.
 func execute_action() -> void:
 	_hit_box.transform = _emission_transform
-#	_hit_box.activate()
+	_hit_box.activate()
 	print("Execute %s." % [name])
 	ani_player.play("execute")
 	yield(ani_player, "animation_finished")
-#	_hit_box.deactivate()
+	_hit_box.deactivate()
 
 
 # Initialize the effects list of the action, checking that all effects are valid.

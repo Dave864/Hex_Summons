@@ -441,7 +441,7 @@ func _execute_action() -> void:
 	_change_target_state(true)
 	selector.hex_map.selection_tracker.clear_highlights()
 	selector.hex_map.selection_tracker.clear_selector_highlights()
-	_action.execute_action()
+	yield(_action.execute_action(), "completed")
 	SignalBus.emit_player_turn_ended(selector.active_player)
 
 
