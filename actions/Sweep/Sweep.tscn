@@ -20,7 +20,7 @@ potency = ExtResource( 4 )
 
 [node name="ActionHitBox" type="Area" parent="."]
 collision_layer = 16
-collision_mask = 12
+collision_mask = 0
 monitoring = false
 monitorable = false
 script = ExtResource( 6 )
