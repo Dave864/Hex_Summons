@@ -10,7 +10,7 @@ func base_strength(
 		source_stats: Dictionary,
 		action_potency: Potency
 ) -> float:
-	return _strength_scalar(_get_potency_values(source_stats, action_potency))
+	return _strength_scalar(_get_strength_potency(source_stats, action_potency))
 
 
 # Determines the effectiveness of an action on a given target.
@@ -86,7 +86,7 @@ func _calculate_resisted_strength(
 	target_stats: CharacterStats,
 	action_potency: Potency
 ) -> float:
-	var strength_values: Dictionary = _get_potency_values(
+	var strength_values: Dictionary = _get_strength_potency(
 			source_stats,
 			action_potency
 	)
@@ -104,7 +104,7 @@ func _strength_scalar(strength_data: Dictionary) -> float:
 
 
 # Determines the raw potency values for a given character.
-func _get_potency_values(
+func _get_strength_potency(
 		character_stats: Dictionary,
 		action_potency: Potency
 ) -> Dictionary:
