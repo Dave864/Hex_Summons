@@ -65,16 +65,16 @@ func progress_duration(turn_step: int = 1) -> void:
 # the effects. Character stats are updated.
 func process_effects() -> void:
 	# Remove modifier to prevent stat effects from accumulating.
-	_c_stats.update_modifier(_global_reference[stat], 0)
+	_c_stats.update_modifier(_global_reference[target_stat], 0)
 	var f_change: int = _flat_change_bus.process_immediate_effects(_c_stats)
-	_c_stats.update_modifier(_global_reference[stat], f_change)
+	_c_stats.update_modifier(_global_reference[target_stat], f_change)
 	var p_change: int = _percent_change_bus.process_immediate_effects(_c_stats)
-	_c_stats.update_modifier(_global_reference[stat], f_change + p_change)
+	_c_stats.update_modifier(_global_reference[target_stat], f_change + p_change)
 
 
 # Adds relevant effects to this handler.
 func apply_effects(effects: Array) -> void:
-	print("%s affected" % [stat])
+	print("%s affected" % [stat.keys()[target_stat]])
 	for effect in effects:
 		_flat_change_bus.add_effect(effect)
 		_percent_change_bus.add_effect(effect)
@@ -83,5 +83,5 @@ func apply_effects(effects: Array) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_flat_change_bus = EffectBus.new(_global_reference[stat], false, false)
-	_percent_change_bus = EffectBus.new(_global_reference[stat], true, false)
+	_flat_change_bus = EffectBus.new(_global_reference[target_stat], false, false)
+	_percent_change_bus = EffectBus.new(_global_reference[target_stat], true, false)

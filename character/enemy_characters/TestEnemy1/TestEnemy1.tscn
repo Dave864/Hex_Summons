@@ -9,7 +9,7 @@
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterThink.gd" type="Script" id=7]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterAction.gd" type="Script" id=8]
 [ext_resource path="res://hex_map/scripts/map_coordinate.gd" type="Script" id=9]
-[ext_resource path="res://effects_tracker/effects_tracker.gd" type="Script" id=10]
+[ext_resource path="res://effects_tracker/EffectsTracker.tscn" type="PackedScene" id=10]
 [ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=11]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -39,8 +39,8 @@ texture = ExtResource( 1 )
 script = ExtResource( 11 )
 base_stat_values = ExtResource( 6 )
 
-[node name="EffectsTracker" type="Node" parent="."]
-script = ExtResource( 10 )
+[node name="EffectsTracker" parent="." instance=ExtResource( 10 )]
+character_stat_ref = NodePath("../Stats")
 
 [node name="HitBox" type="Area" parent="."]
 collision_layer = 0
