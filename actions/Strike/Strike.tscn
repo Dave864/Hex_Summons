@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://range_type/cardinal_area.gd" type="Script" id=1]
 [ext_resource path="res://actions/Strike/potency.tres" type="Resource" id=2]
@@ -7,8 +7,12 @@
 [ext_resource path="res://range_type/ring_area.gd" type="Script" id=5]
 [ext_resource path="res://actions/action_hit_box.gd" type="Script" id=6]
 [ext_resource path="res://effects/Damage/Damage.tscn" type="PackedScene" id=7]
+[ext_resource path="res://actions/test_shader_material.tres" type="Material" id=8]
 
 [sub_resource type="SphereShape" id=4]
+
+[sub_resource type="SphereMesh" id=7]
+material = ExtResource( 8 )
 
 [sub_resource type="Animation" id=5]
 length = 0.001
@@ -23,6 +27,30 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector3( 0, 0, -1.73 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ActionHitBox/MeshInstance:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -1.73 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ActionHitBox/MeshInstance:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -39,6 +67,30 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -1.73 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ActionHitBox/MeshInstance:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -1.73 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ActionHitBox/MeshInstance:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [node name="Strike" type="Node"]
@@ -57,6 +109,11 @@ effects_ref = NodePath("../Effects")
 [node name="CollisionShape" type="CollisionShape" parent="ActionHitBox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.73 )
 shape = SubResource( 4 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ActionHitBox"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.73 )
+visible = false
+mesh = SubResource( 7 )
 
 [node name="SourceRange" type="Node" parent="."]
 script = ExtResource( 1 )

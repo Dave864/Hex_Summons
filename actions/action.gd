@@ -119,6 +119,7 @@ func execute_action() -> void:
 	ani_player.play("execute")
 	yield(ani_player, "animation_finished")
 	_hit_box.deactivate()
+	ani_player.play("RESET")
 
 
 # Initialize the effects list of the action, checking that all effects are valid.

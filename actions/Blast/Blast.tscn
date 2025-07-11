@@ -1,16 +1,124 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://actions/action.gd" type="Script" id=1]
 [ext_resource path="res://actions/action_hit_box.gd" type="Script" id=2]
 [ext_resource path="res://range_type/ring_area.gd" type="Script" id=3]
 [ext_resource path="res://actions/Blast/potency.tres" type="Resource" id=4]
 [ext_resource path="res://effects/Damage/Damage.tscn" type="PackedScene" id=5]
+[ext_resource path="res://actions/test_shader_material.tres" type="Material" id=6]
 
 [sub_resource type="CylinderShape" id=1]
+radius = 0.5
+
+[sub_resource type="SphereMesh" id=3]
+material = ExtResource( 6 )
 radius = 3.0
+height = 6.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ActionHitBox/CollisionShape:shape:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ActionHitBox/MeshInstance:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ActionHitBox/MeshInstance:mesh:radius")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 3.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ActionHitBox/MeshInstance:mesh:height")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 6.0 ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "execute"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("ActionHitBox/CollisionShape:shape:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.482966, 2.46229 ),
+"update": 0,
+"values": [ 0.5, 3.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ActionHitBox/MeshInstance:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ActionHitBox/MeshInstance:mesh:radius")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.482968, 2.46229 ),
+"update": 0,
+"values": [ 0.5, 3.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ActionHitBox/MeshInstance:mesh:height")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.482968, 2.46229 ),
+"update": 0,
+"values": [ 0.5, 6.0 ]
+}
 
 [node name="Blast" type="Node"]
 script = ExtResource( 1 )
@@ -31,6 +139,10 @@ effects_ref = NodePath("../Effects")
 shape = SubResource( 1 )
 disabled = true
 
+[node name="MeshInstance" type="MeshInstance" parent="ActionHitBox"]
+visible = false
+mesh = SubResource( 3 )
+
 [node name="SourceRange" type="Node" parent="."]
 script = ExtResource( 3 )
 radius = 3
@@ -48,4 +160,5 @@ radius = 2
 [node name="Damage" parent="Effects" instance=ExtResource( 5 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 4 )
 anims/execute = SubResource( 2 )
