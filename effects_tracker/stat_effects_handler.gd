@@ -1,4 +1,4 @@
-class_name GeneralEffectsHandler
+class_name StatEffectsHandler
 extends Node
 """
 Tracks the effects that modify the specified stat. This is used for attack,
