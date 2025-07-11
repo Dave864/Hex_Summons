@@ -1,11 +1,11 @@
 class_name StatEffectsHandler
-extends Node
+extends EffectsHandler
 """
 Tracks the effects that modify the specified stat. This is used for attack,
 defense, agility, magic, and resistance which follow the same rules for being changed.
 These stats can be raised or lowered by a flat amount or by a percentage. Flat
-changes are all applied first. The total percentage changes are combined into a
-single multiplier that is then applied after the flat values.
+changes are all applied first. The total percentage changes are applied after
+the flat values.
 """
 
 
@@ -50,43 +50,43 @@ var _global_reference: Dictionary = {
 # The stat that is represented.
 export(stat) var target_stat = stat.ATTACK
 
-var _base_value: int setget set_base_value
 # Buses that keep track of the effects that affect the managed stat.
 var _flat_change_bus: EffectBus
-var _percentage_change_bus: EffectBus
-
-# Setter for the base value.
-func set_base_value(new_base: int) -> void:
-	_base_value = new_base
-
-
-# Gets the current value of this stat, applying all of the modifiers.
-func get_cur_value() -> int:
-	return 0
+var _percent_change_bus: EffectBus
 
 
 # Updates the duration for all effects.
 func progress_duration(turn_count: int = 1) -> void:
 	_flat_change_bus.progress_duration(turn_count)
-	_percentage_change_bus.progress_duration(turn_count)
+	_percent_change_bus.progress_duration(turn_count)
 
 
-# Determines the final value of the affected stat after applying all of the effects.
-# Uses the provided character stats as reference. Character stats are updated.
-func process_effects(character_stats: CharacterStats) -> void:
-	var final_value: int = 0
+# Determines the final value of the affected stat after applying all of
+# the effects. Character stats are updated.
+func process_effects() -> void:
+	# Remove modifier to prevent stat effects from accumulating.
+	_c_stats.update_modifier(_global_reference[stat], 0)
+	var f_change: int = _flat_change_bus.process_immediate_effects(_c_stats)
+	_c_stats.update_modifier(_global_reference[stat], f_change)
+	var p_change: int = _percent_change_bus.process_immediate_effects(_c_stats)
+	_c_stats.update_modifier(_global_reference[stat], f_change + p_change)
+
+
+# Adds relevant effects to this handler.
+func apply_effects(effects: Array) -> void:
+	print("%s affected" % [stat])
+	for effect in effects:
+		_flat_change_bus.add_effect(effect)
+		_percent_change_bus.add_effect(effect)
+	process_effects()
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_flat_change_bus = EffectBus.new(_global_reference[stat], false, false)
-	_percentage_change_bus = EffectBus.new(_global_reference[stat], true, false)
+	_percent_change_bus = EffectBus.new(_global_reference[stat], true, false)
 
 
-# Connects the effects of an action to this manager.
-func _on_HitBox_area_entered(_action: Area) -> void:
-	# Go through all of the effects associated with this action
-	# Get the ones that apply to the specified stat.
-	# Apply resistance to all effects that require it
-	# Update the modifier value
-	pass
+# Gets the current value of this stat, applying all of the modifiers.
+func _get_cur_value() -> int:
+	return 0

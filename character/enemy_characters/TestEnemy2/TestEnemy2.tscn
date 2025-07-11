@@ -10,7 +10,7 @@
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterAction.gd" type="Script" id=8]
 [ext_resource path="res://hex_map/scripts/map_coordinate.gd" type="Script" id=9]
 [ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=10]
-[ext_resource path="res://effects/scripts/health_effects_handler.gd" type="Script" id=11]
+[ext_resource path="res://effects_tracker/effects_tracker.gd" type="Script" id=11]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.1
@@ -39,9 +39,8 @@ texture = ExtResource( 1 )
 script = ExtResource( 10 )
 base_stat_values = ExtResource( 6 )
 
-[node name="HealthEffectsHandler" type="Node" parent="."]
+[node name="EffectsTracker" type="Node" parent="."]
 script = ExtResource( 11 )
-character_stat_ref = NodePath("../Stats")
 
 [node name="HitBox" type="Area" parent="."]
 collision_layer = 0
@@ -71,4 +70,4 @@ script = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
-[connection signal="area_entered" from="HitBox" to="HealthEffectsHandler" method="_on_HitBox_area_entered"]
+[connection signal="area_entered" from="HitBox" to="EffectsTracker" method="_on_HitBox_area_entered"]

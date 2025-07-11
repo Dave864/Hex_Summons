@@ -34,3 +34,10 @@ func _ready():
 # Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(character_stat_ref != null, "No reference to character stats provided.")
+
+
+# Connects the effects of an action to this manager.
+func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
+	var effects: Array = hit_box.get_effects()
+	for e_handler in get_children():
+		e_handler.apply_effects(effects)

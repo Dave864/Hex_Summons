@@ -19,14 +19,14 @@ func progress_duration(_turn_step: int = 1) -> void:
 	pass
 
 
-# Virtual function. Applies the effects currently active on the character.
+# Virtual function. Processes the effects currently active on the character.
 func process_effects() -> void:
 	pass
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+# Virtual function. Adds relevant effects to this handler.
+func apply_effects(_effects: Array) -> void:
+	pass
 
 
 # Virtual function. Check that all required parameters are set.

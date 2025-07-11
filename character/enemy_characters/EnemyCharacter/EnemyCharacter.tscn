@@ -5,7 +5,7 @@
 [ext_resource path="res://fsm/state_machine.gd" type="Script" id=3]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterMove.gd" type="Script" id=4]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterWait.gd" type="Script" id=5]
-[ext_resource path="res://effects/scripts/health_effects_handler.gd" type="Script" id=6]
+[ext_resource path="res://effects_tracker/effects_tracker.gd" type="Script" id=6]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterThink.gd" type="Script" id=7]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterAction.gd" type="Script" id=8]
 [ext_resource path="res://character/enemy_characters/EnemyCharacter/stat_data/stat_values.tres" type="Resource" id=9]
@@ -39,9 +39,8 @@ texture = ExtResource( 1 )
 script = ExtResource( 15 )
 base_stat_values = ExtResource( 9 )
 
-[node name="HealthEffectsHandler" type="Node" parent="."]
+[node name="EffectsTracker" type="Node" parent="."]
 script = ExtResource( 6 )
-character_stat_ref = NodePath("../Stats")
 
 [node name="HitBox" type="Area" parent="."]
 collision_layer = 0
@@ -71,4 +70,4 @@ script = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
-[connection signal="area_entered" from="HitBox" to="HealthEffectsHandler" method="_on_HitBox_area_entered"]
+[connection signal="area_entered" from="HitBox" to="EffectsTracker" method="_on_HitBox_area_entered"]
