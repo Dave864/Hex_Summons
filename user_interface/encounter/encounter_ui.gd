@@ -135,7 +135,7 @@ func track_party_member(p: PlayerCharacter) -> void:
 			p.stats.get_stat(Stat.Type.CUR_HEALTH)
 	)
 	p_label.set_text_alignment(Label.ALIGN_LEFT)
-#	p.stats.connect("hp_changed", p_label, "_on_Character_hp_changed")
+	p.stats.connect("health_changed", p_label, "_on_Character_hp_changed")
 	party_stats.add_child(p_label)
 
 
@@ -148,7 +148,7 @@ func track_enemy(e: EnemyCharacter) -> void:
 			e.stats.get_stat(Stat.Type.CUR_HEALTH)
 	)
 	e_label.set_text_alignment(Label.ALIGN_RIGHT)
-#	e.stats.connect("hp_changed", e_label, "_on_Character_hp_changed")
+	e.stats.connect("health_changed", e_label, "_on_Character_hp_changed")
 	enemy_stats.add_child(e_label)
 
 

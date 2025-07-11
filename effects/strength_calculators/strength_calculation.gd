@@ -113,11 +113,11 @@ func _get_potency_values(
 			action_potency.attack_potency \
 			* character_stats[Constants.ATTACK]
 	)
-	for element in Constants.Element:
-		p_vals[Constants.MAGIC][element] = (
-				action_potency.get_elemental_potency(element) \
-				* character_stats[Constants.MAGIC][element]
-		)
+	p_vals[Constants.MAGIC] = {}
+	for element in Constants.Element.values():
+		var elem_pot: float = action_potency.get_elemental_potency(element)
+		var c_stat: int = character_stats[Constants.MAGIC][element]
+		p_vals[Constants.MAGIC][element] = elem_pot + c_stat
 	return p_vals
 
 

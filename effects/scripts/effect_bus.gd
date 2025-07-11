@@ -78,7 +78,7 @@ func process_immediate_effects(char_stats: CharacterStats) -> int:
 				clamp(final_stat_value, 0.0, final_stat_value),
 				TYPE_INT
 		)
-	return final_stat_value
+	return final_stat_value - char_stats.get_stat(_affected_stat)
 
 
 # Determines the amount the affected stat changes after applying all of
@@ -94,7 +94,7 @@ func process_all_effects(char_stats: CharacterStats) -> int:
 				clamp(final_stat_value, 0.0, final_stat_value),
 				TYPE_INT
 		)
-	return final_stat_value
+	return final_stat_value - char_stats.get_stat(_affected_stat)
 
 
 # Called when an instance of this object is created.

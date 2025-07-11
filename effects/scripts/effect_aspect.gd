@@ -85,7 +85,7 @@ func effect_on_target(target_stats: CharacterStats) -> int:
 			return calculation_method.process_operation(
 					b_str,
 					eff,
-					stat_affected,
+					stat_affected.type,
 					operation
 			)
 		_:

@@ -6,7 +6,7 @@ Node that keeps track of all of a character's statistics.
 """
 
 
-signal health_changed(new_value)
+signal health_changed(new_value, old_value)
 
 # Stat values
 export var base_stat_values: Resource = null
@@ -44,10 +44,13 @@ func get_movement_range(with_modifier: bool = true) -> int:
 	return get_stat(Stat.Type.MOVEMENT, with_modifier)
 
 
-func set_cur_health(val: int) -> void:
+# Updates the current health by the given delta.
+func set_cur_health(delta: int) -> void:
+	var val: int = get_stat(Stat.Type.CUR_HEALTH) + delta
 	var mh: int = get_stat(Stat.Type.MAX_HEALTH)
-	_current_health = mh if val > mh else 0 if val < 0 else val
-	emit_signal("health_changed", _current_health)
+	val = int(clamp(val, 0, mh))
+	emit_signal("health_changed", val, _current_health)
+	_current_health = val
 
 
 # Set current health to the maximum value.

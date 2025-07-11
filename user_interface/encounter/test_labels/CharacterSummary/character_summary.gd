@@ -5,11 +5,6 @@ Displays a summary of the listed character.
 """
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_check_for_required_parameters()
-
-
 # Sets the name of the summary.
 func set_name(new_name: String) -> void:
 	$Name.text = new_name
@@ -32,6 +27,11 @@ func set_text_alignment(alignment: int) -> void:
 	else:
 		$Name.set_align(Label.ALIGN_LEFT)
 		$HP.set_align(Label.ALIGN_LEFT)
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_check_for_required_parameters()
 
 
 # Updates the hp values when a character's health is changed.
