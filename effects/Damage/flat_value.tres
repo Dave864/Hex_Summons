@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource( 1 )
-flat_value = 0
+flat_value = 1

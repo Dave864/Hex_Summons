@@ -26,7 +26,7 @@ func efficacy(
 			action_potency
 	)
 	# 0.0 means not effective, 1.0 means fully effective.
-	return clamp(b_str / resisted_strength, 0.0, 1.0)
+	return clamp(resisted_strength / b_str, 0.0, 1.0)
 
 
 # Runs the specified operation on a given stat using the provided strength
@@ -127,7 +127,7 @@ func _apply_resistance(strength: Dictionary, resistance: Dictionary) -> void:
 			strength[Constants.ATTACK],
 			resistance[Constants.DEFENSE]
 	)
-	for element in Constants.Element:
+	for element in Constants.Element.values():
 		strength[Constants.MAGIC][element] = _bind_resistance(
 				strength[Constants.MAGIC][element],
 				resistance[Constants.RESISTANCE][element]

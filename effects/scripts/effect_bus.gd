@@ -54,47 +54,34 @@ func clear() -> void:
 
 # Updates the duration for all effects in the bus. Removes effects whose duration
 # have expired.
-func progress_duration(turn_count: int = 1) -> void:
+func progress_duration(turn_step: int = 1) -> void:
 	for id in _effect_bus.keys():
-		_effect_bus[id][1] += turn_count
+		_effect_bus[id][1] += turn_step
 		if _effect_bus[id][0].turn_duration <= _effect_bus[id][1]:
 			_effect_bus.erase(id)
 
 
 # Determines the amount the affected stat changes after applying effects with a
-# turn count of 0. Uses the provided character stats as reference. Does not
-# update the character stats.
+# turn count of 0. Uses the provided character stats as reference. Removes
+# immediate effects from the bus. Does not update the character stats.
 func process_immediate_effects(char_stats: CharacterStats) -> int:
-	var final_stat_value: int = 0
-	var check_final_value: bool = false
+	var change_amt: int = 0
 	for id in _effect_bus.keys():
 		var effect: EffectAspect = _effect_bus[id][0]
 		if effect.turn_duration == 0:
-			check_final_value = true
-			final_stat_value += effect.effect_on_target(char_stats)
-	if check_final_value:
-		# Stats should never go below zero.
-		final_stat_value = convert(
-				clamp(final_stat_value, 0.0, final_stat_value),
-				TYPE_INT
-		)
-	return final_stat_value - char_stats.get_stat(_affected_stat)
+			change_amt += effect.effect_on_target(char_stats)
+			_effect_bus.erase(id)
+	return change_amt
 
 
 # Determines the amount the affected stat changes after applying all of
 # the effects. Uses the provided character stats as reference. Does not
 # update the character stats.
 func process_all_effects(char_stats: CharacterStats) -> int:
-	var final_stat_value: int = 0
+	var change_amt: int = 0
 	for id in _effect_bus.keys():
-		final_stat_value += _effect_bus[id][0].effect_on_target(char_stats)
-	if _effect_bus.keys().size() > 0:
-		# Stats should never go below zero.
-		final_stat_value = convert(
-				clamp(final_stat_value, 0.0, final_stat_value),
-				TYPE_INT
-		)
-	return final_stat_value - char_stats.get_stat(_affected_stat)
+		change_amt += _effect_bus[id][0].effect_on_target(char_stats)
+	return change_amt
 
 
 # Called when an instance of this object is created.
