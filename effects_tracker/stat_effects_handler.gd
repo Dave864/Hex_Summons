@@ -56,9 +56,9 @@ var _percent_change_bus: EffectBus
 
 
 # Updates the duration for all effects.
-func progress_duration(turn_count: int = 1) -> void:
-	_flat_change_bus.progress_duration(turn_count)
-	_percent_change_bus.progress_duration(turn_count)
+func progress_duration(turn_step: int = 1) -> void:
+	_flat_change_bus.progress_duration(turn_step)
+	_percent_change_bus.progress_duration(turn_step)
 
 
 # Determines the final value of the affected stat after applying all of
@@ -85,8 +85,3 @@ func apply_effects(effects: Array) -> void:
 func _ready():
 	_flat_change_bus = EffectBus.new(_global_reference[stat], false, false)
 	_percent_change_bus = EffectBus.new(_global_reference[stat], true, false)
-
-
-# Gets the current value of this stat, applying all of the modifiers.
-func _get_cur_value() -> int:
-	return 0

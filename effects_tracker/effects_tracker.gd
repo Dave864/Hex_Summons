@@ -40,4 +40,9 @@ func _check_for_required_parameters() -> void:
 func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
 	var effects: Array = hit_box.get_effects()
 	for e_handler in get_children():
-		e_handler.apply_effects(effects)
+		if (
+			e_handler is HealthEffectsHandler
+			or e_handler is StatEffectsHandler
+			or e_handler is MoveEffectsHandler
+		):
+			e_handler.apply_effects(effects)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://effects_tracker/health_effects_handler.gd" type="Script" id=1]
 [ext_resource path="res://effects_tracker/stat_effects_handler.gd" type="Script" id=2]
 [ext_resource path="res://effects_tracker/effects_tracker.gd" type="Script" id=3]
+[ext_resource path="res://effects_tracker/move_effects_handler.gd" type="Script" id=4]
 
 [node name="EffectsTracker" type="Node"]
 script = ExtResource( 3 )
@@ -68,3 +69,6 @@ target_stat = 13
 [node name="ResDarkEffectsHandler" type="Node" parent="."]
 script = ExtResource( 2 )
 target_stat = 14
+
+[node name="MoveEffectsHandler" type="Node" parent="."]
+script = ExtResource( 4 )

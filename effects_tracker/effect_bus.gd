@@ -84,6 +84,11 @@ func process_all_effects(char_stats: CharacterStats) -> int:
 	return change_amt
 
 
+# Returns the current number of effects in the bus.
+func size() -> int:
+	return _effect_bus.size()
+
+
 # Called when an instance of this object is created.
 func _init(affected_stat: int, is_percentage_calc: bool, is_set_op: bool):
 	_affected_stat = affected_stat
