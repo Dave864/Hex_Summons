@@ -6,9 +6,14 @@ collision data and passes it along to the relevant handlers.
 """
 
 
-export(NodePath) var character_stat_ref = null
+var _c_stats: CharacterStats = null setget set_character_stats
 
-var _c_stats: CharacterStats = null
+
+# Sets the reference to the provided CharacterStats.
+func set_character_stats(c_stats: CharacterStats) -> void:
+	_c_stats = c_stats
+	for e_handler in get_children():
+		e_handler.set_character_stats(_c_stats)
 
 
 # Progress the duration of all effects in all handlers by the specified turn step.
@@ -23,26 +28,9 @@ func process_effects() -> void:
 		e_handler.process_effects()
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	_check_for_required_parameters()
-	_c_stats = get_node(character_stat_ref)
-	for e_handler in get_children():
-		e_handler.set_character_stats(_c_stats)
-
-
-# Check that all required parameters are set.
-func _check_for_required_parameters() -> void:
-	assert(character_stat_ref != null, "No reference to character stats provided.")
-
-
 # Connects the effects of an action to this manager.
 func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
 	var effects: Array = hit_box.get_effects()
 	for e_handler in get_children():
-		if (
-			e_handler is HealthEffectsHandler
-			or e_handler is StatEffectsHandler
-			or e_handler is MoveEffectsHandler
-		):
+		if e_handler is EffectsHandler:
 			e_handler.apply_effects(effects)

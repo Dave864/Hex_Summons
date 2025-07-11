@@ -12,19 +12,6 @@ var _techniques: Array
 var _spells: Array
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	"""
-	TODO: Implement logic for loading the details of the currently set player class
-	from data outside of encounter scene.
-	"""
-	_player_class = $Class
-	_techniques = _player_class.techniques
-	_spells = _player_class.spells
-	stats = _player_class.stats
-	_initialize_actions()
-
-
 # Get the techniques associated with the character
 func get_techniques() -> Array:
 	return _techniques
@@ -38,6 +25,20 @@ func get_spells() -> Array:
 # Returns the type of the character, PLAYER.
 func get_type() -> int:
 	return Type.PLAYER
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	"""
+	TODO: Implement logic for loading the details of the currently set player class
+	from data outside of encounter scene.
+	"""
+	_player_class = $Class
+	_techniques = _player_class.techniques
+	_spells = _player_class.spells
+	stats = _player_class.stats
+	_connect_stats_to_effects_tracker()
+	_initialize_actions()
 
 
 # Initializes the action effects.

@@ -44,10 +44,13 @@ func deactivate_hit_box() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	"""
-	TODO: Temporarily sets current hp to max for testing purposes
-	"""
-#	stats.set_current_hp(stats.get_max_hp())
+	_connect_stats_to_effects_tracker()
+
+
+# Sets the CharacterStats reference of the EffectsTracker.
+func _connect_stats_to_effects_tracker() -> void:
+	var effects_tracker: EffectsTracker = $EffectsTracker
+	effects_tracker.set_character_stats(stats)
 
 
 # Virtual function. Updates emission points for all actions of the chracter.

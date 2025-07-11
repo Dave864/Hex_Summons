@@ -34,6 +34,7 @@ func _ready() -> void:
 	_check_for_required_parameters()
 	stats = $Stats
 	stats.max_cur_health()
+	_connect_stats_to_effects_tracker()
 	_actions = $Actions.get_children()
 	_initialize_actions()
 
