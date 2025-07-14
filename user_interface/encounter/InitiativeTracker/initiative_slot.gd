@@ -18,7 +18,7 @@ var _cur_health: float = 0.0
 
 
 # Updates the details of the slot to represent the new character
-func change_character() -> void:
+func change_character(c: Character) -> void:
 	"""
 	TODO: Depends on how the relevant character details are stored and
 	transferred.
@@ -68,3 +68,8 @@ func _check_for_required_parameters() -> void:
 	assert(portrait_ref != null, "Missing reference to portrait.")
 	assert(init_label_ref != null, "Missing reference to initiative label.")
 	assert(health_bar_ref != null, "Missing reference to health bar.")
+
+
+# Updates the health display when the character's health changes.
+func _on_Character_health_changed(new_value: int, old_value: int) -> void:
+	pass

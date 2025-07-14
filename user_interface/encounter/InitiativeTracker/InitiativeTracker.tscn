@@ -19,61 +19,68 @@ __meta__ = {
 [node name="InitiativeSlot1" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 53.0
+margin_right = 47.0
 margin_bottom = 38.0
 
 [node name="InitiativeSlot2" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 57.0
-margin_right = 110.0
+margin_left = 51.0
+margin_right = 99.0
 margin_bottom = 38.0
 
 [node name="InitiativeSlot3" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 114.0
-margin_right = 167.0
+margin_left = 103.0
+margin_right = 150.0
 margin_bottom = 38.0
 
 [node name="InitiativeSlot4" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 171.0
-margin_right = 225.0
+margin_left = 154.0
+margin_right = 202.0
 margin_bottom = 38.0
 
 [node name="InitiativeSlot5" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 229.0
-margin_right = 282.0
+margin_left = 206.0
+margin_right = 253.0
 margin_bottom = 38.0
 
 [node name="InitiativeSlot6" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 286.0
-margin_right = 339.0
+margin_left = 257.0
+margin_right = 305.0
 margin_bottom = 38.0
 
 [node name="InitiativeSlot7" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 343.0
-margin_right = 397.0
+margin_left = 309.0
+margin_right = 357.0
 margin_bottom = 38.0
 
 [node name="InitiativeSlot8" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 401.0
-margin_right = 454.0
+margin_left = 361.0
+margin_right = 408.0
 margin_bottom = 38.0
 
 [node name="InitiativeSlot9" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 458.0
+margin_left = 412.0
+margin_right = 460.0
+margin_bottom = 38.0
+
+[node name="InitiativeSlot10" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 464.0
 margin_right = 512.0
 margin_bottom = 38.0
