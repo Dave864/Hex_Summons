@@ -11,7 +11,6 @@ export(NodePath) var hex_map_path = null
 
 var hex_map: HexMap = null
 
-var initiative_tracker: Array
 var cur_init: int = 0
 
 onready var players: Array = $Players.get_children()
@@ -23,19 +22,17 @@ onready var ui: EncounterUI = $EncounterUI
 
 # Move the initiative counter to the next index or reset it back to the start.
 func progress_initiative() -> void:
-	cur_init = _determine_init_index(cur_init + 1)
-	ui.initiative_tracker.update_initiative(cur_init)
+	ui.initiative_tracker.progress_initiative()
 
 
 # Gets the next character in the intiative track.
 func get_next_character() -> Character:
-	var next_init: int = _determine_init_index(cur_init + 1)
-	return initiative_tracker[next_init]
+	return ui.initiative_tracker.get_next_character()
 
 
 # Gets the character currently in initiative.
 func get_current_character() -> Character:
-	return initiative_tracker[cur_init]
+	return ui.initiative_tracker.get_current_character()
 
 
 # Called when the node enters the scene tree for the first time.
@@ -62,14 +59,6 @@ func _ready() -> void:
 	
 	for e in enemies:
 		ui.track_enemy(e)
-
-
-# Determines which index in the initiative array that a given value corresponds
-# to. Numbers that are larger than the size of the array wrap around to index zero
-# before resuming count. Numbers that are smaller than zero wrap around to the
-# end of the array before resuming count.
-func _determine_init_index(init_value: int) -> int:
-	return wrapi(init_value, 0, initiative_tracker.size())
 
 
 # Connects all map tile "mouse_hovered" signals to the selector.

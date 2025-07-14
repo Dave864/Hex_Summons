@@ -14,7 +14,7 @@ var starting_character: Character
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_up_initative()
-	starting_character = enc.initiative_tracker[enc.cur_init]
+	starting_character = enc.ui.initiative_tracker.get_current_character()
 
 
 # Corresponds to the `_process()` callback.
@@ -36,8 +36,7 @@ func update(_delta: float) -> void:
 
 # Initializes the initiative tracker.
 func _set_up_initative() -> void:
-	enc.initiative_tracker.append_array(enc.players)
-	enc.initiative_tracker.append_array(enc.enemies)
-	enc.initiative_tracker.sort_custom(ArraySorters, "sort_character_initiative")
-	enc.cur_init = 0
-	enc.ui.initiative_tracker.populate_initiative(enc.initiative_tracker)
+	var characters: Array = []
+	characters.append_array(enc.players)
+	characters.append_array(enc.enemies)
+	enc.ui.initiative_tracker.populate_initiative(characters)
