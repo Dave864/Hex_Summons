@@ -12,30 +12,40 @@ initiative slots in the UI.
 
 export(int, 2, 10) var pity_round_count = 2
 
-var _character_init: Dictionary = {}
+var _c_pity_tracker: Dictionary = {}
 var _init_order: Dictionary = {}
+var _cur_init: int = 0
 var _round_pace: int = 0
+var _round_turns: int = 0
 
 
 # Populates the initiative tracker with character details.
 func populate_initiative(characters: Array) -> void:
+	_round_turns = characters.size()
 	for c in characters:
 		var c_agility: int = c.stats.get_stat(Stat.Type.AGILITY)
-		_character_init[c.get_instance_id()] = {
+		_c_pity_tracker[c.get_instance_id()] = {
 			"character": c,
 			"no_turn_count": 0
 		}
 		_round_pace = c_agility if _round_pace < c_agility else _round_pace
 
 
-# Updates the initiative track by the specified step.
-func progress_initiative(initiative_step: int = 1) -> void:
-	pass
+# Updates the initiative track by one.
+func progress_initiative() -> void:
+	_cur_init += 1
+	if _cur_init >= _round_turns:
+		_cur_init = 0
+		for rd in range(_init_order.size() - 1):
+			_init_order[rd] = _init_order[rd + 1]
+		_calculate_round_initiative(_init_order.size() - 1)
+	_update_display()
 
 
-# Updates the display to reflect the current initiative.
-func update_display() -> void:
-	pass
+# Gets the character at the current initiative step.
+func get_current_character() -> Character:
+	var c_id: int = _init_order[0][_cur_init]["c_id"]
+	return _c_pity_tracker[c_id]["character"]
 
 
 # Called when the node enters the scene tree for the first time.
@@ -43,14 +53,39 @@ func _ready() -> void:
 	var init: int = 0
 	var initiative_slots: Array = get_children()
 	for slot in initiative_slots:
-		slot.update_initiative_lanel(String(init))
+		slot.update_initiative_label(String(init))
 		_init_order[init] = []
 		init += 1
 
 
+# Updates the display to reflect the current initiative.
+func _update_display() -> void:
+	var slot_displays: Array = get_children()
+	var char_order: Array = []
+	char_order.resize(slot_displays.size())
+	_populate_display_data(char_order)
+	for i in slot_displays.size():
+		slot_displays[i].change_character(char_order[i])
+
+
+# Helper for _update_display. Populates the char_order array with the characters
+# that will go next from the current round initiative.
+func _populate_display_data(char_order: Array) -> void:
+	var init_step: int = _cur_init
+	var round_index: int = 0
+	var c_index: int = 0
+	while c_index < char_order.size():
+		for i in range(init_step, _round_turns):
+			if _init_order[round_index][i]["present"]:
+				char_order[c_index] = _init_order[round_index][i]["character"]
+				c_index += 1
+		init_step = 0
+		round_index += 1
+
+
 # Determines the initiative order starting from the specified round.
 func _calculate_initiative() -> void:
-	for cur_round in _init_order.keys().size():
+	for cur_round in _init_order.size():
 		if cur_round == 0:
 			_calculate_round_zero_initiative()
 		_calculate_round_initiative(cur_round)
@@ -61,7 +96,7 @@ func _calculate_initiative() -> void:
 func _calculate_round_zero_initiative() -> void:
 	var characters: Array = []
 	var initiative_data: Array = []
-	for details in _character_init.values():
+	for details in _c_pity_tracker.values():
 		characters.append(details["character"])
 	characters.sort_custom(ArraySorters, "sort_character_initiative")
 	for i in characters.size():
@@ -81,35 +116,57 @@ func _calculate_round_zero_initiative() -> void:
 func _calculate_round_initiative(i_round: int) -> void:
 	var initiative_data: Array = _init_order[i_round - 1].duplicate(true)
 	for i in initiative_data.size():
-		var c: Character = _character_init[initiative_data[i]["c_id"]]
+		var c: Character = _c_pity_tracker[initiative_data[i]["c_id"]]
 		var c_id = c.get_instance_id()
 		initiative_data[i]["pace"] += c.stats.get_stat(Stat.Type.AGILITY)
 		if initiative_data[i]["pace"] >= _round_pace:
 			initiative_data[i]["present"] = true
 			initiative_data[i]["pace"] -= _round_pace
-			_character_init[c_id]["no_turn_count"] = 0
-		elif _character_init[c_id]["no_turn_count"] >= pity_round_count:
+			_c_pity_tracker[c_id]["no_turn_count"] = 0
+		elif _c_pity_tracker[c_id]["no_turn_count"] >= pity_round_count:
 			initiative_data[i]["present"] = true
 			initiative_data[i]["pace"] = 0
-			_character_init[c_id]["no_turn_count"] = 0
+			_c_pity_tracker[c_id]["no_turn_count"] = 0
 		else:
 			initiative_data[i]["present"] = false
-			_character_init[c_id]["no_turn_count"] += 1
+			_c_pity_tracker[c_id]["no_turn_count"] += 1
+	_init_order[i_round].clear()
 	_init_order[i_round] = initiative_data
+
+
+# Removes the character from the initiative tracker.
+func _remove_character(c: Character) -> void:
+	var c_id: int = c.get_instance_id()
+	var c_round_init: int = _get_character_round_init(c_id)
+	_c_pity_tracker.erase(c_id)
+	for rd in _init_order.size():
+		_init_order[rd].pop_at(c_round_init)
+	# If the round tracker was referencing the last character, need to shift it
+	# left to keep the index valid.
+	_round_turns -= 1
+	if _cur_init >= _round_turns:
+		_cur_init = _round_turns - 1
+
+
+# Helper for _remove_character. Gets the round initiative of the character.
+func _get_character_round_init(c_id: int) -> int:
+	var rd_i = 0
+	for i in _init_order[0].size():
+		if _init_order[0][i]["c_id"] == c_id:
+			rd_i = i
+	return rd_i
 
 
 # Updates the initiative tracker to match the change in agility.
 func _on_Character_agility_changed(c: Character) -> void:
 	var c_agility: int = c.stats.get_stat(Stat.Type.AGILITY)
-	var c_id: int = c.get_instance_id()
 	_round_pace = c_agility if c_agility > _round_pace else _round_pace
 	_calculate_initiative()
-	update_display()
+	_update_display()
 
 
 # Removes the character from the initiative track when their hp drops tp zero.
 func _on_Character_zero_health(c: Character) -> void:
-	var c_id: int = c.get_instance_id()
-	_character_init.erase(c_id)
+	_remove_character(c)
 	_calculate_initiative()
-	update_display()
+	_update_display()

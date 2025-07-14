@@ -19,11 +19,9 @@ var _cur_health: float = 0.0
 
 # Updates the details of the slot to represent the new character
 func change_character(c: Character) -> void:
-	"""
-	TODO: Depends on how the relevant character details are stored and
-	transferred.
-	"""
-	pass
+	update_cur_health(c.stats.get_stat(Stat.Type.CUR_HEALTH))
+	update_max_health(c.stats.get_stat(Stat.Type.MAX_HEALTH))
+	_update_health_bar()
 
 
 # Updates the portrait.
@@ -71,5 +69,6 @@ func _check_for_required_parameters() -> void:
 
 
 # Updates the health display when the character's health changes.
-func _on_Character_health_changed(new_value: int, old_value: int) -> void:
-	pass
+func _on_Character_health_changed(new_value: int, _old_value: int) -> void:
+	update_cur_health(new_value)
+	_update_health_bar()
