@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://art/icon.png" type="Texture" id=1]
+[ext_resource path="res://user_interface/encounter/InitiativeTracker/initiative_slot.gd" type="Script" id=2]
+
+[node name="InitiativeSlot" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -584.0
+margin_bottom = -319.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+portrait_ref = NodePath("VBoxContainer/HBoxContainer/Portrait")
+init_label_ref = NodePath("VBoxContainer/HBoxContainer/Initiative")
+health_bar_ref = NodePath("VBoxContainer/HealthBar")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 49.0
+margin_bottom = 34.0
+mouse_filter = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 42.0
+margin_bottom = 19.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Portrait" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+margin_right = 19.0
+margin_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 16, 16 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="Initiative" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 23.0
+margin_top = 2.0
+margin_right = 42.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+text = "0"
+align = 1
+valign = 1
+
+[node name="HealthBar" type="ProgressBar" parent="VBoxContainer"]
+margin_top = 23.0
+margin_right = 42.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 0, 4 )
+mouse_filter = 2
+size_flags_vertical = 5
+percent_visible = false

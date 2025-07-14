@@ -1,10 +1,12 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/initiative_tracker.gd" type="Script" id=1]
+[ext_resource path="res://user_interface/encounter/InitiativeTracker/InitiativeSlot.tscn" type="PackedScene" id=2]
 
 [node name="InitiativeTracker" type="HBoxContainer"]
-anchor_right = 1.0
-anchor_bottom = 0.115625
+anchor_left = 0.1
+anchor_right = 0.9
+margin_bottom = 38.0
 mouse_filter = 2
 size_flags_horizontal = 5
 size_flags_vertical = 5
@@ -13,3 +15,65 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
+
+[node name="InitiativeSlot1" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 53.0
+margin_bottom = 38.0
+
+[node name="InitiativeSlot2" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 57.0
+margin_right = 110.0
+margin_bottom = 38.0
+
+[node name="InitiativeSlot3" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 114.0
+margin_right = 167.0
+margin_bottom = 38.0
+
+[node name="InitiativeSlot4" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 171.0
+margin_right = 225.0
+margin_bottom = 38.0
+
+[node name="InitiativeSlot5" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 229.0
+margin_right = 282.0
+margin_bottom = 38.0
+
+[node name="InitiativeSlot6" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 286.0
+margin_right = 339.0
+margin_bottom = 38.0
+
+[node name="InitiativeSlot7" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 343.0
+margin_right = 397.0
+margin_bottom = 38.0
+
+[node name="InitiativeSlot8" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 401.0
+margin_right = 454.0
+margin_bottom = 38.0
+
+[node name="InitiativeSlot9" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 458.0
+margin_right = 512.0
+margin_bottom = 38.0
