@@ -257,6 +257,12 @@ func clear_modifiers() -> void:
 
 func _ready() -> void:
 	_check_for_required_parameters()
+	"""
+	TODO: Eventually set up way to preserve current player health across
+	encounters and set enemy health to max (or relevant value) at encounter
+	start.
+	"""
+	max_cur_health()
 
 
 # Determines the value of a specified magic element for a given level.

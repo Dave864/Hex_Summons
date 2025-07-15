@@ -40,11 +40,13 @@ func populate_initiative(characters: Array) -> void:
 		}
 		_round_pace = c_agility if _round_pace < c_agility else _round_pace
 	_calculate_initiative()
+	_update_display()
 
 
 # Updates the initiative track by one.
 func progress_initiative() -> void:
 	_cur_init = _get_next_init_step()
+	# Initiative goes to the next round.
 	if _cur_init < 0:
 		# Character in first turn of round always goes as they set the pace.
 		_cur_init = 0

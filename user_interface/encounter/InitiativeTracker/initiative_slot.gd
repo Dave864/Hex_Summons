@@ -19,8 +19,12 @@ var _cur_health: float = 0.0
 
 # Updates the details of the slot to represent the new character
 func change_character(c: Character) -> void:
-	update_cur_health(c.stats.get_stat(Stat.Type.CUR_HEALTH))
 	update_max_health(c.stats.get_stat(Stat.Type.MAX_HEALTH))
+	update_cur_health(c.stats.get_stat(Stat.Type.CUR_HEALTH))
+	if c is PlayerCharacter:
+		_health_bar.modulate = Color.aqua
+	else:
+		_health_bar.modulate = Color.red
 	_update_health_bar()
 
 

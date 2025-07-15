@@ -58,7 +58,6 @@ func exit() -> void:
 			self,
 			"_on_EnemyCharacter_enemy_turn_ended"
 	)
-	enc.progress_initiative()
 
 
 # Determines the actions that the enemy character should take given the current
@@ -111,6 +110,7 @@ func _on_EnemyCharacter_enemy_actions_required() -> void:
 
 func _on_EnemyCharacter_enemy_turn_ended() -> void:
 	var next_character: Character = enc.get_next_character()
+	enc.progress_initiative()
 	if next_character is PlayerCharacter:
 		state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:
