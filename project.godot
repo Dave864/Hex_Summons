@@ -192,7 +192,7 @@ _global_script_classes=[ {
 "base": "Path",
 "class": "HexMapMovementPath",
 "language": "GDScript",
-"path": "res://hex_map_movement_path.gd"
+"path": "res://hex_map_movement_path/hex_map_movement_path.gd"
 }, {
 "base": "Object",
 "class": "HexUtil",
