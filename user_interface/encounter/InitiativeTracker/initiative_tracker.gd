@@ -68,7 +68,9 @@ func get_current_character() -> Character:
 func get_next_character() -> Character:
 	var next_init: int = _get_next_init_step()
 	var c_id: int
+	# Initiative goes to next round.
 	if next_init < 0:
+		# Character in first turn of round always goes as they set the pace.
 		c_id = _init_order[1][0]["c_id"]
 	else:
 		c_id = _init_order[0][next_init]["c_id"]
@@ -170,7 +172,6 @@ func _calculate_round_initiative(i_round: int) -> void:
 		else:
 			initiative_data[i]["present"] = false
 			_c_pity_tracker[c_id]["no_turn_count"] += 1
-	_init_order[i_round].clear()
 	_init_order[i_round] = initiative_data
 
 

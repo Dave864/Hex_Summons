@@ -6,6 +6,9 @@ position details.
 """
 
 
+# Indicates that the character is waiting.
+signal is_waiting()
+
 enum Type {
 	ENEMY,
 	PLAYER,
@@ -20,6 +23,11 @@ var _start_set: bool = false setget , get_is_start_set
 onready var character_sprite: Sprite3D = $Sprite3D
 onready var map_coordinate: MapCoordinate = $MapCoordinate
 onready var hit_box: Area = $HitBox
+
+
+# Emits the is_waiting signal.
+func emit_is_waiting() -> void:
+	emit_signal("is_waiting")
 
 
 # Get whether or not the starting location of the character has been set.

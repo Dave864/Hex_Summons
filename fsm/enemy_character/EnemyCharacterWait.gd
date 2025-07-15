@@ -5,6 +5,10 @@ The Enemy Character does nothing until it is called upon to act.
 """
 
 
+func enter(_msg := {}) -> void:
+	ec.emit_is_waiting()
+
+
 # To be called in the _ready function to connect signals to 
 # the state. The signals connected here should not be required by other states.
 func _ready_connect_signals() -> void:

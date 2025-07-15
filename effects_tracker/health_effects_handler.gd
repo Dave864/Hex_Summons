@@ -25,7 +25,6 @@ func process_effects() -> void:
 
 # Adds health changing effects to this handler. Processes immediate effects
 func apply_effects(effects: Array) -> void:
-	print("health affected")
 	for effect in effects:
 		_flat_change_bus.add_effect(effect)
 		_percent_change_bus.add_effect(effect)

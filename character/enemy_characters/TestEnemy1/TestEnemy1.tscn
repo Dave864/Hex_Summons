@@ -40,7 +40,6 @@ script = ExtResource( 11 )
 base_stat_values = ExtResource( 6 )
 
 [node name="EffectsTracker" parent="." instance=ExtResource( 10 )]
-character_stat_ref = NodePath("../Stats")
 
 [node name="HitBox" type="Area" parent="."]
 collision_layer = 0

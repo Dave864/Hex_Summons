@@ -97,11 +97,6 @@ func reset_path() -> void:
 	curve.clear_points()
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
 # Validates that a provided path has at least one point.
 func _assert_path_present(path: PoolVector3Array) -> void:
 	assert(

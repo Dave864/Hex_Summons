@@ -20,7 +20,6 @@ var _command_chain: Array = []
 # Set the starting point for the path.
 func enter(_msg := {}) -> void:
 	_command_chain = _msg["command_chain"]
-#	travel_path = command_chain.pop_back()[1]
 	_movement_path = _command_chain.pop_back()[1]
 	_movement_active = true
 	ErrorUtil.connect_signal(
@@ -45,6 +44,7 @@ func update(delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Resets the interpolation weight an next_point_index.
 func exit() -> void:
+	_movement_active = false
 	_movement_path = null
 	_weight = 0.0
 

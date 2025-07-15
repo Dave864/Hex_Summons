@@ -10,32 +10,21 @@ player characters or all enemy characters are defeated.
 
 
 # The enemy character currently active
-var active_char: EnemyCharacter = null
+var _active_char: EnemyCharacter = null
 # The index of tiles that the enemy can move to.
-var movement_range: Array = []
+var _movement_range: Array = []
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	active_char = enc.get_current_character()
-	movement_range = enc.hex_map.range_finder.get_character_travesible_tiles(
-		active_char,
+	_active_char = enc.get_current_character()
+	_movement_range = enc.hex_map.range_finder.get_character_travesible_tiles(
+		_active_char,
 		enc.players
 	)
-	ErrorUtil.connect_signal(
-			active_char,
-			"enemy_actions_required",
-			self,
-			"_on_EnemyCharacter_enemy_actions_required"
-	)
-	ErrorUtil.connect_signal(
-			active_char,
-			"enemy_turn_ended",
-			self,
-			"_on_EnemyCharacter_enemy_turn_ended"
-	)
-	SignalBus.emit_enemy_turn_started(active_char)
+	_connect_signals()
+	SignalBus.emit_enemy_turn_started(_active_char)
 
 
 # Corresponds to the `_process()` callback.
@@ -48,12 +37,44 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	active_char.disconnect(
+	_active_char.disconnect(
 			"enemy_actions_required",
 			self,
 			"_on_EnemyCharacter_enemy_actions_required"
 	)
-	active_char.disconnect(
+	_active_char.disconnect(
+			"enemy_turn_ended",
+			self,
+			"_on_EnemyCharacter_enemy_turn_ended"
+	)
+
+
+# Connect the relevant signals to this state.
+# These signals are used by other states and will be disconnected to avoid
+# unintended behavior.
+func _connect_signals() -> void:
+	ErrorUtil.connect_signal(
+			_active_char,
+			"enemy_actions_required",
+			self,
+			"_on_EnemyCharacter_enemy_actions_required"
+	)
+	ErrorUtil.connect_signal(
+			_active_char,
+			"enemy_turn_ended",
+			self,
+			"_on_EnemyCharacter_enemy_turn_ended"
+	)
+
+
+# Disconnect the signals connected to this state.
+func _disconnect_signals() -> void:
+	_active_char.disconnect(
+			"enemy_actions_required",
+			self,
+			"_on_EnemyCharacter_enemy_actions_required"
+	)
+	_active_char.disconnect(
 			"enemy_turn_ended",
 			self,
 			"_on_EnemyCharacter_enemy_turn_ended"
@@ -71,11 +92,11 @@ func _determine_action_chain() -> void:
 	var action_chain: Array = []
 	var path: PoolVector3Array = (
 			enc.hex_map.range_finder.get_character_point_path_toward(
-				active_char,
+				_active_char,
 				_determine_closest_player_index(),
 				enc.enemies,
 				enc.players,
-				movement_range
+				_movement_range
 			)
 	)
 	enc.move_path.create_segmented_bezier_path(path)
@@ -93,7 +114,7 @@ func _determine_closest_player_index() -> int:
 		var p_data: Array = [
 			p, 
 			enc.hex_map.range_finder.travel_distance(
-					active_char.map_coordinate.get_index(),
+					_active_char.map_coordinate.get_index(),
 					p.map_coordinate.get_index()
 			)
 		]
@@ -103,12 +124,12 @@ func _determine_closest_player_index() -> int:
 	return player_distances[0][0].map_coordinate.get_index()
 
 
-
 func _on_EnemyCharacter_enemy_actions_required() -> void:
 	_determine_action_chain()
 
 
 func _on_EnemyCharacter_enemy_turn_ended() -> void:
+	yield(_active_char, "is_waiting")
 	var next_character: Character = enc.get_next_character()
 	enc.progress_initiative()
 	if next_character is PlayerCharacter:

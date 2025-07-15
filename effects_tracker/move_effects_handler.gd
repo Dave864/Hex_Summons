@@ -37,7 +37,6 @@ func process_effects() -> void:
 
 # Adds movement changing effects to this handler.
 func apply_effects(effects: Array) -> void:
-	print("Movement affected.")
 	for effect in effects:
 		_flat_change_bus.add_effect(effect)
 		_percent_change_bus.add_effect(effect)
