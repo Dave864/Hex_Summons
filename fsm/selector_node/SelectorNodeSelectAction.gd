@@ -10,6 +10,9 @@ turn has been terminated.
 
 # The action to display the effect area for.
 var _action: Action = null
+# Flag that indicates that an action is running. Used to prevent input from
+# moving selection area.
+var _action_running: bool = false
 # The translation of the player that is using the action.
 var _player_pos: Vector3 = Vector3.ZERO
 # The tile index of the player that is using the action.
@@ -76,8 +79,10 @@ func exit() -> void:
 
 # Handles input events.
 func handle_input(_event: InputEvent) -> void:
+	if _action_running:
+		return
 	# Handles the instances where the mouse goes over an area without a map tile.
-	if InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
+	elif InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
 		if _action.emit_from_center:
 			_orient_emission_to_mouse()
 	elif InputController.get_source() == InputController.Source.GAMEPAD:
@@ -109,6 +114,8 @@ func _determine_changes(action: Action) -> void:
 # Update the selection for a given tile.
 # Passed to the Selector node to be called when the mouse hovers over the tile.
 func _update_selection(map_tile: MapTile) -> void:
+	if _action_running:
+		return
 	assert(map_tile != null, "SelectAction given a null MapTile.")
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	# Actions with dead range need to display the player tile highlight, but
@@ -437,11 +444,13 @@ func _resolve_joystick_for_cardinal(dir: int) -> void:
 
 # Activates the targets and prompts the action to be executed.
 func _execute_action() -> void:
+	_action_running = true
 	SignalBus.emit_player_action_executed(selector.active_player, _action)
 	_change_target_state(true)
 	selector.hex_map.selection_tracker.clear_highlights()
 	selector.hex_map.selection_tracker.clear_selector_highlights()
 	yield(_action.execute_action(), "completed")
+	_action_running = false
 	SignalBus.emit_player_turn_ended(selector.active_player)
 
 
@@ -503,7 +512,7 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 
 # Go to the "WAIT" state when a player has signaled that their turn is ended.
 func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
-	if player != selector.active_player:
+	if _action_running or player != selector.active_player:
 		return
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	_change_target_state(false)
@@ -523,7 +532,7 @@ func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
 # Resolves the left joystick pulse input. Pulses should only be used when the
 # effect is not bound to the caster's position.
 func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
-	if _action.emit_from_center:
+	if _action_running or _action.emit_from_center:
 		return
 	# Relative top needed as joystick direction does not account for camera orientation.
 	var hex_dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
