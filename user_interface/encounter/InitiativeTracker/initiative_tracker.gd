@@ -12,9 +12,11 @@ initiative slots in the UI.
 
 export(int, 2, 10) var pity_round_count = 2
 
-# Tracks the number of turns that a character has not gone, using the instance
-# id as the key. Each entry has the turn count, "no_turn_count", and the
-# character reference, "character".
+# Tracks the character and number of rounds said character has gone without
+# taking a turn using the instance id as the key. Each entry has the
+# following details:
+# "character": <character reference>
+# "no_turn_count": <number of turns passed where character did not act>
 var _c_pity_tracker: Dictionary = {}
 # Stores the initiative details of a number of rounds equal to the number of
 # initiative slot UI elements. The keys are the rounds, starting at round 0.
@@ -44,7 +46,7 @@ func populate_initiative(characters: Array) -> void:
 				"_on_CharacterStats_agility_changed"
 		)
 	_determine_round_pace()
-	_calculate_initiative()
+	_calculate_full_initiative()
 	_update_display()
 
 
@@ -87,7 +89,7 @@ func _ready() -> void:
 	var init: int = 0
 	var initiative_slots: Array = get_children()
 	for slot in initiative_slots:
-		slot.update_initiative_label(String(init))
+		slot.update_initiative_label(init)
 		_init_order[init] = []
 		init += 1
 
@@ -99,6 +101,11 @@ func _get_next_init_step() -> int:
 		if _init_order[0][i]["present"]:
 			return i
 	return -1
+
+
+# Disconnect the character signals from the InitiativeSlot nodes.
+func _disconnect_char_signals() -> void:
+	pass
 
 
 # Updates the display to reflect the current initiative.
@@ -139,7 +146,7 @@ func _populate_display_data(char_order: Array) -> void:
 
 
 # Determines the initiative order starting from the specified round.
-func _calculate_initiative() -> void:
+func _calculate_full_initiative() -> void:
 	for cur_round in _init_order.size():
 		if cur_round == 0:
 			_calculate_round_zero_initiative()
@@ -221,12 +228,12 @@ func _get_character_round_init(c_id: int) -> int:
 # Updates the initiative tracker to match the change in agility.
 func _on_CharacterStats_agility_changed(new_agility: int) -> void:
 	_round_pace = new_agility if new_agility > _round_pace else _round_pace
-	_calculate_initiative()
+	_calculate_full_initiative()
 	_update_display()
 
 
 # Removes the character from the initiative track when their hp drops tp zero.
 func _on_Character_zero_health(c: Character) -> void:
 	_remove_character(c)
-	_calculate_initiative()
+	_calculate_full_initiative()
 	_update_display()

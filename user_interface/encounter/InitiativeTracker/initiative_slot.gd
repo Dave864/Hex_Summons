@@ -9,6 +9,7 @@ export(NodePath) var portrait_ref = null
 export(NodePath) var init_label_ref = null
 export(NodePath) var health_bar_ref = null
 
+var _c: Character = null
 var _portrait: TextureRect = null
 var _initiative: Label = null
 var _health_bar: ProgressBar = null
@@ -19,6 +20,19 @@ var _cur_health: float = 0.0
 
 # Updates the details of the slot to represent the new character
 func change_character(c: Character) -> void:
+	if _c != null:
+		_c.stats.disconnect(
+				"health_changed",
+				self,
+				"_on_Character_health_changed"
+		)
+	ErrorUtil.connect_signal(
+			c.stats,
+			"health_changed",
+			self,
+			"_on_Character_health_changed"
+	)
+	_c = c
 	update_max_health(c.stats.get_stat(Stat.Type.MAX_HEALTH))
 	update_cur_health(c.stats.get_stat(Stat.Type.CUR_HEALTH))
 	if c is PlayerCharacter:
@@ -33,9 +47,9 @@ func update_portrait(new_p: Texture) -> void:
 	_portrait.texture = new_p
 
 
-# Updates the text of the initiative label.
-func update_initiative_label(text: String) -> void:
-	_initiative.text = text
+# Updates the number of the initiative label.
+func update_initiative_label(init_value: int) -> void:
+	_initiative.text = String(init_value)
 
 
 # Updates the health bar to represent the new current health value. Binds the
