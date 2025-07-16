@@ -7,6 +7,7 @@ Node that keeps track of all of a character's statistics.
 
 
 signal health_changed(new_value, old_value)
+signal agility_changed(new_value)
 
 # Stat values
 export var base_stat_values: Resource = null
@@ -214,7 +215,10 @@ func update_modifier(type: int, value: int) -> void:
 		Stat.Type.DEFENSE:
 			_defense_mod = value
 		Stat.Type.AGILITY:
+			var change_vale: int = _agility_mod - value
 			_agility_mod = value
+			if change_vale != 0:
+				emit_signal("agility_changed", get_stat(Stat.Type.AGILITY))
 		Stat.Type.MOVEMENT:
 			_movement_mod = value
 		Stat.Type.MAGIC_EARTH:

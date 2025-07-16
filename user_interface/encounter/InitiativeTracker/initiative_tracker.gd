@@ -33,12 +33,17 @@ var _round_turns: int = 0
 func populate_initiative(characters: Array) -> void:
 	_round_turns = characters.size()
 	for c in characters:
-		var c_agility: int = c.stats.get_stat(Stat.Type.AGILITY)
 		_c_pity_tracker[c.get_instance_id()] = {
 			"character": c,
 			"no_turn_count": 0
 		}
-		_round_pace = c_agility if _round_pace < c_agility else _round_pace
+		ErrorUtil.connect_signal(
+				c.stats,
+				"agility_changed",
+				self,
+				"_on_CharacterStats_agility_changed"
+		)
+	_determine_round_pace()
 	_calculate_initiative()
 	_update_display()
 
@@ -104,6 +109,15 @@ func _update_display() -> void:
 	_populate_display_data(char_order)
 	for i in slot_displays.size():
 		slot_displays[i].change_character(char_order[i])
+
+
+# Determines the round pace based on the current characters.
+func _determine_round_pace() -> void:
+	_round_pace = 0
+	for details in _c_pity_tracker.values():
+		var c: Character = details["character"]
+		var c_agility: int = c.stats.get_stat(Stat.Type.AGILITY)
+		_round_pace = c_agility if _round_pace < c_agility else _round_pace
 
 
 # Helper for _update_display. Populates the char_order array with the characters
@@ -177,6 +191,11 @@ func _calculate_round_initiative(i_round: int) -> void:
 
 # Removes the character from the initiative tracker.
 func _remove_character(c: Character) -> void:
+	c.stats.disconnect(
+			"agility_changed",
+			self,
+			"_on_CharacterStats_agility_changed"
+	)
 	var c_id: int = c.get_instance_id()
 	var c_round_init: int = _get_character_round_init(c_id)
 	_c_pity_tracker.erase(c_id)
@@ -187,6 +206,7 @@ func _remove_character(c: Character) -> void:
 	_round_turns -= 1
 	if _cur_init >= _round_turns:
 		_cur_init = _round_turns - 1
+	_determine_round_pace()
 
 
 # Helper for _remove_character. Gets the round initiative of the character.
@@ -199,9 +219,8 @@ func _get_character_round_init(c_id: int) -> int:
 
 
 # Updates the initiative tracker to match the change in agility.
-func _on_Character_agility_changed(c: Character) -> void:
-	var c_agility: int = c.stats.get_stat(Stat.Type.AGILITY)
-	_round_pace = c_agility if c_agility > _round_pace else _round_pace
+func _on_CharacterStats_agility_changed(new_agility: int) -> void:
+	_round_pace = new_agility if new_agility > _round_pace else _round_pace
 	_calculate_initiative()
 	_update_display()
 
