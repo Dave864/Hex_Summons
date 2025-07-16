@@ -10,12 +10,13 @@ margin_right = -640.0
 margin_bottom = -360.0
 mouse_filter = 2
 script = ExtResource( 2 )
+y_offset = -8.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
-margin_right = 57.0
+margin_right = 48.0
 margin_bottom = 14.0
 mouse_filter = 2
 theme = ExtResource( 1 )
@@ -29,7 +30,7 @@ valign = 1
 [node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HBoxContainer"]
 margin_left = 12.0
 margin_top = 4.0
-margin_right = 57.0
+margin_right = 48.0
 margin_bottom = 9.0
 rect_min_size = Vector2( 0, 5 )
 mouse_filter = 2
