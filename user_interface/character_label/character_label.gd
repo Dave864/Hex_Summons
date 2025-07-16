@@ -6,8 +6,14 @@ and next iniative.
 """
 
 
+enum CharType {
+	ENEMY,
+	PLAYER,
+	NONE
+}
+
 export(float, -20.0, 20.0) var y_offset = 0.0
-export(Character.Type) var character_type = Character.Type.NONE
+export(CharType) var character_type = CharType.NONE
 export(NodePath) var character_pos_ref = null
 
 var _char_pos: Position3D = null
@@ -27,6 +33,11 @@ func set_cur_health(value: int) -> void:
 # Sets the value of max health.
 func set_max_health(value: int) -> void:
 	_health_bar.max_value = value
+
+
+# Updates the initiative label.
+func set_initiative_label(new_iniative: int) -> void:
+	_initiative_label.text = String(new_iniative)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -49,9 +60,9 @@ func _physics_process(_delta: float) -> void:
 # Sets the modulation color of the health bar based on the character type.
 func _set_health_bar_color() -> void:
 	match character_type:
-		Character.Type.PLAYER:
+		CharType.PLAYER:
 			_health_bar.modulate = Color.aqua
-		Character.Type.ENEMY:
+		CharType.ENEMY:
 			_health_bar.modulate = Color.red
 		_:
 			_health_bar.modulate = Color.white
@@ -66,14 +77,10 @@ func _check_for_required_parameters() -> void:
 
 # Updates the current health value of the label.
 func _on_CharacterStats_health_changed(new_value: int, _old_value: int) -> void:
+	print("update health")
 	set_cur_health(new_value)
 
 
 # Updates the max  health value of the label.
 func _on_CharacterStats_max_health_changed(new_value: int) -> void:
 	set_max_health(new_value)
-
-
-# Updates the initiative label.
-func _on_InitiativeTracker_initiative_changed(new_iniative: int) -> void:
-	_initiative_label.text = String(new_iniative)

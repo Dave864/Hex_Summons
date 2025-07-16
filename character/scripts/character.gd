@@ -19,8 +19,8 @@ var stats: CharacterStats
 # Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false setget , get_is_start_set
 
-# Reference to the Character sprite.
 onready var character_sprite: Sprite3D = $Sprite3D
+onready var character_label: CharacterLabel = $CharacterLabel
 onready var map_coordinate: MapCoordinate = $MapCoordinate
 onready var hit_box: Area = $HitBox
 
@@ -59,6 +59,18 @@ func _ready() -> void:
 func _connect_stats_to_effects_tracker() -> void:
 	var effects_tracker: EffectsTracker = $EffectsTracker
 	effects_tracker.set_character_stats(stats)
+
+
+# Connects the relevant stat signals to the character label.
+func _connect_to_character_label() -> void:
+	ErrorUtil.connect_signal(
+			stats,
+			"health_changed",
+			character_label,
+			"_on_CharacterStats_health_changed"
+	)
+	character_label.set_max_health(stats.get_stat(Stat.Type.MAX_HEALTH))
+	character_label.set_cur_health(stats.get_stat(Stat.Type.CUR_HEALTH))
 
 
 # Virtual function. Updates emission points for all actions of the chracter.

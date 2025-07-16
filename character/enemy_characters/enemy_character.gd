@@ -35,6 +35,7 @@ func _ready() -> void:
 	stats = $Stats
 	stats.max_cur_health()
 	_connect_stats_to_effects_tracker()
+	_connect_to_character_label()
 	_actions = $Actions.get_children()
 	_initialize_actions()
 

@@ -38,6 +38,7 @@ func _ready() -> void:
 	_spells = _player_class.spells
 	stats = _player_class.stats
 	_connect_stats_to_effects_tracker()
+	_connect_to_character_label()
 	_initialize_actions()
 
 
