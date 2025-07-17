@@ -5,17 +5,14 @@ Displays the portrait, current health, and initiative slot of a given character.
 """
 
 
-export(NodePath) var portrait_ref = null
-export(NodePath) var init_label_ref = null
-export(NodePath) var health_bar_ref = null
-
 var _c: Character = null
-var _portrait: TextureRect = null
-var _initiative: Label = null
-var _health_bar: ProgressBar = null
 # Used for scaling the health bar.
 var _max_health: float = 0.0
 var _cur_health: float = 0.0
+
+onready var initiative: Label = $VBoxContainer/HBoxContainer/Initiative
+onready var portrait: TextureRect = $VBoxContainer/HBoxContainer/Portrait
+onready var health_bar: ProgressBar = $VBoxContainer/HealthBar
 
 
 # Updates the details of the slot to represent the new character
@@ -36,20 +33,20 @@ func change_character(c: Character) -> void:
 	update_max_health(c.stats.get_stat(Stat.Type.MAX_HEALTH))
 	update_cur_health(c.stats.get_stat(Stat.Type.CUR_HEALTH))
 	if c is PlayerCharacter:
-		_health_bar.modulate = Color.aqua
+		health_bar.modulate = Color.aqua
 	else:
-		_health_bar.modulate = Color.red
+		health_bar.modulate = Color.red
 	_update_health_bar()
 
 
 # Updates the portrait.
 func update_portrait(new_p: Texture) -> void:
-	_portrait.texture = new_p
+	portrait.texture = new_p
 
 
 # Updates the number of the initiative label.
 func update_initiative_label(init_value: int) -> void:
-	_initiative.text = String(init_value)
+	initiative.text = String(init_value)
 
 
 # Updates the health bar to represent the new current health value. Binds the
@@ -65,25 +62,10 @@ func update_max_health(new_max: int) -> void:
 	_update_health_bar()
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	_check_for_required_parameters()
-	_portrait = get_node(portrait_ref)
-	_initiative = get_node(init_label_ref)
-	_health_bar = get_node(health_bar_ref)
-
-
 # Updates the health bar.
 func _update_health_bar() -> void:
-	_health_bar.max_value = _max_health
-	_health_bar.set_value_no_signal(_cur_health)
-
-
-# Checks that the exported parameters are set.
-func _check_for_required_parameters() -> void:
-	assert(portrait_ref != null, "Missing reference to portrait.")
-	assert(init_label_ref != null, "Missing reference to initiative label.")
-	assert(health_bar_ref != null, "Missing reference to health bar.")
+	health_bar.max_value = _max_health
+	health_bar.set_value_no_signal(_cur_health)
 
 
 # Updates the health display when the character's health changes.
