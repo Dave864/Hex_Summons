@@ -94,6 +94,15 @@ func _ready() -> void:
 		init += 1
 
 
+# Determines the round pace based on the current characters.
+func _determine_round_pace() -> void:
+	_round_pace = 0
+	for details in _c_pity_tracker.values():
+		var c: Character = details["character"]
+		var c_agility: int = c.stats.get_stat(Stat.Type.AGILITY)
+		_round_pace = c_agility if _round_pace < c_agility else _round_pace
+
+
 # Determines the next step in the round where a character takes a turn.
 # Returns -1 if the next step is the first index of the next round.
 func _get_next_init_step() -> int:
@@ -103,28 +112,21 @@ func _get_next_init_step() -> int:
 	return -1
 
 
-# Disconnect the character signals from the InitiativeSlot nodes.
-func _disconnect_char_signals() -> void:
-	pass
-
-
 # Updates the display to reflect the current initiative.
 func _update_display() -> void:
 	var slot_displays: Array = get_children()
 	var char_order: Array = []
+	var earliest_init: Dictionary = {}
+	for c_id in _c_pity_tracker.keys():
+		earliest_init[c_id] = -1
 	char_order.resize(slot_displays.size())
 	_populate_display_data(char_order)
 	for i in slot_displays.size():
-		slot_displays[i].change_character(char_order[i])
-
-
-# Determines the round pace based on the current characters.
-func _determine_round_pace() -> void:
-	_round_pace = 0
-	for details in _c_pity_tracker.values():
-		var c: Character = details["character"]
-		var c_agility: int = c.stats.get_stat(Stat.Type.AGILITY)
-		_round_pace = c_agility if _round_pace < c_agility else _round_pace
+		var c: Character = char_order[i]
+		slot_displays[i].change_character(c)
+		if earliest_init[c.get_instance_id()] < 0:
+			earliest_init[c.get_instance_id()] = i
+			c.character_label.set_initiative_label(i)
 
 
 # Helper for _update_display. Populates the char_order array with the characters
