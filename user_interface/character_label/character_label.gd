@@ -18,9 +18,9 @@ export(NodePath) var character_pos_ref = null
 
 var _char_pos: Position3D = null
 
-onready var _data_container: HBoxContainer = $HBoxContainer
-onready var _initiative_label: Label = $HBoxContainer/InitiativeLabel
-onready var _health_bar: ProgressBar = $HBoxContainer/PanelContainer/HealthBar
+onready var _data_container: HBoxContainer = $CanvasLayer/HBoxContainer
+onready var _initiative_label: Label = $CanvasLayer/HBoxContainer/InitiativeLabel
+onready var _health_bar: ProgressBar = $CanvasLayer/HBoxContainer/PanelContainer/HealthBar
 onready var _camera: Camera = get_viewport().get_camera()
 onready var _half_label_length: float = _data_container.rect_size.x / 2.0
 
