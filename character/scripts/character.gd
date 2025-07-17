@@ -20,7 +20,7 @@ var stats: CharacterStats
 var _start_set: bool = false setget , get_is_start_set
 
 onready var character_sprite: Sprite3D = $Sprite3D
-onready var character_label: CharacterLabel = $CharacterLabel
+#onready var character_label: CharacterLabel = $CharacterLabel
 onready var map_coordinate: MapCoordinate = $MapCoordinate
 onready var hit_box: Area = $HitBox
 
@@ -63,6 +63,9 @@ func _connect_stats_to_effects_tracker() -> void:
 
 # Connects the relevant stat signals to the character label.
 func _connect_to_character_label() -> void:
+	var character_label: CharacterLabel = get_node_or_null("CharacterLabel")
+	if character_label == null:
+		return
 	ErrorUtil.connect_signal(
 			stats,
 			"health_changed",

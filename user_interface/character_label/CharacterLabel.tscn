@@ -12,36 +12,34 @@ mouse_filter = 2
 script = ExtResource( 2 )
 y_offset = -8.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
-margin_right = 50.0
-margin_bottom = 12.0
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 32.0
+margin_bottom = 16.0
 mouse_filter = 2
 theme = ExtResource( 1 )
 alignment = 1
 
-[node name="InitiativeLabel" type="Label" parent="CanvasLayer/HBoxContainer"]
+[node name="InitiativeLabel" type="Label" parent="HBoxContainer"]
+margin_top = 2.0
 margin_right = 6.0
-margin_bottom = 12.0
+margin_bottom = 14.0
 text = "0"
 valign = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
 margin_left = 10.0
-margin_top = 3.0
-margin_right = 50.0
-margin_bottom = 9.0
+margin_top = 5.0
+margin_right = 32.0
+margin_bottom = 11.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HBoxContainer/PanelContainer"]
-margin_right = 40.0
+[node name="HealthBar" type="ProgressBar" parent="HBoxContainer/PanelContainer"]
+margin_right = 22.0
 margin_bottom = 6.0
 rect_min_size = Vector2( 0, 6 )
 mouse_filter = 2
 size_flags_horizontal = 3
-size_flags_vertical = 6
+size_flags_vertical = 4
 value = 50.0
 percent_visible = false
