@@ -18,6 +18,7 @@ transform = Transform( 1, 0, 0, 0, 0.60876, 0.793352, 0, -0.793352, 0.60876, 0, 
 transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 15 )
 projection = 1
 size = 15.0
+affect_lod = false
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 4 )
