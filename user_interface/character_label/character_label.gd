@@ -55,7 +55,8 @@ func _process(_delta: float) -> void:
 	var r_pos: Vector2 = _camera.unproject_position(_char_pos.global_translation)
 	r_pos.x -= _half_label_length
 	r_pos.y -= y_offset
-	_data_container.rect_position = r_pos
+	# Round position to snap label to pixel position.
+	_data_container.rect_position = r_pos.round()
 
 
 # Sets the modulation color of the health bar based on the character type.
