@@ -15,6 +15,8 @@ enum Type {
 	NONE
 }
 
+export(Texture) var battle_portrait = null
+
 var stats: CharacterStats
 # Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false setget , get_is_start_set

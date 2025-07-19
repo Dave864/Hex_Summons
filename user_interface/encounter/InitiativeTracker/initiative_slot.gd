@@ -30,6 +30,7 @@ func change_character(c: Character) -> void:
 			"_on_Character_health_changed"
 	)
 	_c = c
+	update_portrait(_c.battle_portrait)
 	update_max_health(_c.stats.get_stat(Stat.Type.MAX_HEALTH))
 	update_cur_health(_c.stats.get_stat(Stat.Type.CUR_HEALTH))
 	if c is PlayerCharacter:

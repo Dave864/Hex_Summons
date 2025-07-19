@@ -6,6 +6,7 @@
 [node name="InitiativeTracker" type="HBoxContainer"]
 anchor_left = 0.1
 anchor_right = 0.9
+anchor_bottom = 0.00555556
 margin_bottom = 38.0
 mouse_filter = 2
 size_flags_horizontal = 5
@@ -20,67 +21,67 @@ __meta__ = {
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 47.0
-margin_bottom = 38.0
+margin_bottom = 40.0
 
 [node name="InitiativeSlot2" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 51.0
 margin_right = 99.0
-margin_bottom = 38.0
+margin_bottom = 40.0
 
 [node name="InitiativeSlot3" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 103.0
 margin_right = 150.0
-margin_bottom = 38.0
+margin_bottom = 40.0
 
 [node name="InitiativeSlot4" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 154.0
 margin_right = 202.0
-margin_bottom = 38.0
+margin_bottom = 40.0
 
 [node name="InitiativeSlot5" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 206.0
 margin_right = 253.0
-margin_bottom = 38.0
+margin_bottom = 40.0
 
 [node name="InitiativeSlot6" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 257.0
 margin_right = 305.0
-margin_bottom = 38.0
+margin_bottom = 40.0
 
 [node name="InitiativeSlot7" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 309.0
 margin_right = 357.0
-margin_bottom = 38.0
+margin_bottom = 40.0
 
 [node name="InitiativeSlot8" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 361.0
 margin_right = 408.0
-margin_bottom = 38.0
+margin_bottom = 40.0
 
 [node name="InitiativeSlot9" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 412.0
 margin_right = 460.0
-margin_bottom = 38.0
+margin_bottom = 40.0
 
 [node name="InitiativeSlot10" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 464.0
 margin_right = 512.0
-margin_bottom = 38.0
+margin_bottom = 40.0

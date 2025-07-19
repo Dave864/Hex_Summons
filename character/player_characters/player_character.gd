@@ -11,6 +11,11 @@ var _player_class: PlayerClass
 var _techniques: Array
 var _spells: Array
 
+onready var _default_portait: Texture = preload(
+		"res://character/player_characters/PlayerCharacter/" + \
+		"PlayerBattlePortrait.atlastex"
+)
+
 
 # Get the techniques associated with the character
 func get_techniques() -> Array:
@@ -37,6 +42,10 @@ func _ready() -> void:
 	_techniques = _player_class.techniques
 	_spells = _player_class.spells
 	stats = _player_class.stats
+	battle_portrait = (
+		_default_portait if battle_portrait == null
+		else battle_portrait
+	)
 	_connect_stats_to_effects_tracker()
 	_connect_to_character_label()
 	_initialize_actions()

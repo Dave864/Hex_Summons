@@ -13,6 +13,11 @@ signal enemy_turn_ended()
 # Contains the actions associated with the enemy character.
 var _actions: Array
 
+onready var _default_portait: Texture = preload(
+		"res://character/enemy_characters/EnemyCharacter/" + \
+		"EnemyBattlePortrait.atlastex"
+)
+
 
 # Returns the type of the character, ENEMY.
 func get_type() -> int:
@@ -32,6 +37,10 @@ func emit_enemy_turn_ended() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_parameters()
+	battle_portrait = (
+		_default_portait if battle_portrait == null
+		else battle_portrait
+	)
 	stats = $Stats
 	stats.max_cur_health()
 	_connect_stats_to_effects_tracker()
