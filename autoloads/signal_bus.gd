@@ -64,7 +64,7 @@ func emit_action_selector_required(action: Action) -> void:
 	emit_signal("action_selector_required", action)
 
 
-func emit_move_path_created(move_path: HexMapMovementPath) -> void:
+func emit_move_path_created(move_path: PoolVector3Array) -> void:
 	emit_signal("move_path_created", move_path)
 
 

@@ -104,8 +104,8 @@ func _on_Selector_move_tile_selected(tile: MapTile) -> void:
 			enc.enemies,
 			_movement_area
 	)
-	enc.move_path.create_segmented_bezier_path(path_data)
-	SignalBus.emit_move_path_created(enc.move_path)
+#	enc.move_path.create_segmented_bezier_path(path_data)
+	SignalBus.emit_move_path_created(path_data)
 
 
 # Marks the UI as waiting.
