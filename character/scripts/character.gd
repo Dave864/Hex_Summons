@@ -25,6 +25,7 @@ onready var character_sprite: Sprite3D = $Sprite3D
 onready var character_label: CharacterLabel = $CharacterLabel
 onready var map_coordinate: MapCoordinate = $MapCoordinate
 onready var hit_box: Area = $HitBox
+onready var hm_move_path: HexMapMovementCurve = HexMapMovementCurve.new()
 
 
 # Emits the is_waiting signal.
