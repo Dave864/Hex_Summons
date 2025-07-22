@@ -7,8 +7,6 @@ state if movement is the last command.
 """
 
 
-# The reference to the movement path.
-var _movement_path: HexMapMovementPath = null
 # Flag indicating if the movement is active.
 var _movement_active: bool = false
 # The current interpolation weight.
@@ -20,33 +18,38 @@ var _command_chain: Array = []
 # Set the starting point for the path.
 func enter(_msg := {}) -> void:
 	_command_chain = _msg["command_chain"]
-	_movement_path = _command_chain.pop_back()[1]
+	ec.hm_move_path.create_segmented_bezier_path(_command_chain.pop_back()[1])
 	_movement_active = true
-	ErrorUtil.connect_signal(
-			_movement_path,
-			"movement_finished",
-			self,
-			"_on_MovementPath_movement_finished"
-	)
 
 
 # Corresponds to the `_process()` callback.
 func update(delta: float) -> void:
 	_weight += delta * Constants.MOVE_SPEED
-	_movement_path.move_offset(_weight)
+	ec.hm_move_path.move_offset(_weight)
 	# Only update the movement position if the movement has not ended.
 	# This is to prevent the character from being moved to an undesired location
 	# after the movement_ended signal has been caught.
 	if _movement_active:
-		ec.translation = _movement_path.get_current_pos()
+		ec.translation = ec.hm_move_path.get_current_pos()
 
 
 # Called by the state machine before changing the active state.
 # Resets the interpolation weight an next_point_index.
 func exit() -> void:
 	_movement_active = false
-	_movement_path = null
+	ec.hm_move_path.reset_path()
 	_weight = 0.0
+
+
+# Virtual function. To be called in the _ready function to connect signals to 
+# the state. The signals connected here should not be required by other states.
+func _ready_connect_signals() -> void:
+	ErrorUtil.connect_signal(
+			ec.hm_move_path,
+			"movement_finished",
+			self,
+			"_on_HexMapMovementCurve_movement_finished"
+	)
 
 
 # Checks the command chain to determine what state to go to next.
@@ -63,13 +66,8 @@ func _move_to_next_state() -> void:
 		state_machine.transition_to(WAIT)
 
 
-func _on_MovementPath_movement_finished(final_position: Vector3) -> void:
+func _on_HexMapMovementCurve_movement_finished(final_position: Vector3) -> void:
 	_movement_active = false
-	_movement_path.disconnect(
-			"movement_finished",
-			self,
-			"_on_MovementPath_movement_finished"
-	)
-	_movement_path.reset_path()
+	ec.hm_move_path.reset_path()
 	ec.translation = final_position
 	_move_to_next_state()

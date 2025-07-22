@@ -59,7 +59,7 @@ const MAX_STAT: int = 1000
 const MAX_MAP_DIST: int = 100
 
 # The speed at which characters move from tile to tile.
-const MOVE_SPEED: float = 8.0
+const MOVE_SPEED: float = 0.5
 
 # The value to use when adjusting the weight of a hex map astar connection point
 # to account for characters of the opposite faction of the current active character.

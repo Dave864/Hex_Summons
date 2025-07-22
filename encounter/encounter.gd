@@ -16,7 +16,6 @@ var cur_init: int = 0
 onready var players: Array = $Players.get_children()
 onready var enemies: Array = $Enemies.get_children()
 onready var selector: Selector = $Selector
-onready var move_path: HexMapMovementPath = $MovementPath
 onready var ui: EncounterUI = $EncounterUI
 
 

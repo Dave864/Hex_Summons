@@ -38,7 +38,7 @@ func exit() -> void:
 
 
 # Hit when the Encounter sets the movement path.
-func _on_SignalBus_move_path_created(move_path: HexMapMovementPath) -> void:
+func _on_SignalBus_move_path_created(move_path: PoolVector3Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": move_path})
 
 
