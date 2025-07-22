@@ -8,7 +8,7 @@ Curve that defines the movement path for a character on a HexMap.
 signal movement_finished(final_position)
 
 # The current offset of the movement path
-var _unit_offset: float = 0.0
+var _offset: float = 0.0
 # The length of the path. Used for converting _unit_offset into the correct
 # offset value for getting the current position.
 var _path_length: float = 0.0
@@ -19,9 +19,9 @@ func move_offset(offset_update: float) -> void:
 	if get_point_count() <= 1:
 		emit_signal("movement_finished", get_current_pos())
 		return
-	_unit_offset += offset_update
-	if _unit_offset >= 1.0:
-		_unit_offset = 1.0
+	_offset = offset_update
+	if _offset >= _path_length:
+		_offset = _path_length
 		emit_signal("movement_finished", get_current_pos())
 
 
@@ -31,7 +31,7 @@ func get_current_pos() -> Vector3:
 	# defined and should be given instead.
 	if get_point_count() == 1:
 		return get_point_position(0)
-	return interpolate_baked(_unit_offset * _path_length)
+	return interpolate_baked(_offset)
 
 
 # Creates a path curve using the provided array of map tile coordinates.
@@ -42,7 +42,7 @@ func create_path(_step_coordinates: PoolVector3Array) -> void:
 # Creates a straight-line path from the starting coordinate to the ending coordinate.
 func create_line_path(step_coordinates: PoolVector3Array) -> void:
 	_assert_path_present(step_coordinates)
-	_unit_offset = 0.0
+	_offset = 0.0
 	add_point(step_coordinates[0])
 	if step_coordinates.size() == 1:
 		return
@@ -54,7 +54,7 @@ func create_line_path(step_coordinates: PoolVector3Array) -> void:
 # coordinate.
 func create_bezier_path(step_coordinates: PoolVector3Array) -> void:
 	_assert_path_present(step_coordinates)
-	_unit_offset = 0.0
+	_offset = 0.0
 	if step_coordinates.size() == 1:
 		add_point(step_coordinates[0])
 		return
@@ -70,7 +70,7 @@ func create_bezier_path(step_coordinates: PoolVector3Array) -> void:
 # Create a series of straight-line paths from one coordinate to the next.
 func create_segmented_line_path(step_coordinates: PoolVector3Array) -> void:
 	_assert_path_present(step_coordinates)
-	_unit_offset = 0.0
+	_offset = 0.0
 	if step_coordinates.size() == 1:
 		add_point(step_coordinates[0])
 		return
@@ -83,7 +83,7 @@ func create_segmented_line_path(step_coordinates: PoolVector3Array) -> void:
 # next, depending on the Y difference of the next coordinate.
 func create_segmented_bezier_path(step_coordinates: PoolVector3Array) -> void:
 	_assert_path_present(step_coordinates)
-	_unit_offset = 0.0
+	_offset = 0.0
 	if step_coordinates.size() == 1:
 		add_point(step_coordinates[0])
 		return
@@ -104,14 +104,14 @@ func create_segmented_bezier_path(step_coordinates: PoolVector3Array) -> void:
 
 # Resets the offset value and the curve shape.
 func reset_path() -> void:
-	_unit_offset = 0.0
+	_offset = 0.0
 	_path_length = 0.0
 	clear_points()
 
 
 # Called when a new instance of this object is created.
 func _init() -> void:
-	_unit_offset = 0.0
+	_offset = 0.0
 	_path_length = 0.0
 
 
