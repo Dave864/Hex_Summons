@@ -194,15 +194,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://hex_map/scripts/hex_map_astar.gd"
 }, {
-"base": "Curve3D",
+"base": "Reference",
 "class": "HexMapMovementCurve",
 "language": "GDScript",
-"path": "res://hex_map_movement_path/hex_map_movement_curve.gd"
-}, {
-"base": "Path",
-"class": "HexMapMovementPath",
-"language": "GDScript",
-"path": "res://hex_map_movement_path/hex_map_movement_path.gd"
+"path": "res://character/scripts/hex_map_movement_curve.gd"
 }, {
 "base": "Object",
 "class": "HexUtil",
@@ -393,7 +388,6 @@ _global_script_class_icons={
 "HexMap": "",
 "HexMapAStar": "",
 "HexMapMovementCurve": "",
-"HexMapMovementPath": "",
 "HexUtil": "",
 "InitiativeSlot": "",
 "InitiativeTracker": "",
