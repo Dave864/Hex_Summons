@@ -19,6 +19,8 @@ signal selector_required(start_index)
 signal selector_paused()
 signal action_selector_required(action)
 signal move_path_created(move_path)
+# Encounter threat update signals
+signal health_changed(caster_id, target_id, change_value)
 # Indicates that the top vertex relative to camera view has been changed.
 # Used for moving the selector around the encounter map using joystick input.
 signal top_vertex_changed(vertex)
@@ -66,6 +68,14 @@ func emit_action_selector_required(action: Action) -> void:
 
 func emit_move_path_created(move_path: PoolVector3Array) -> void:
 	emit_signal("move_path_created", move_path)
+
+
+func emit_health_changed(
+	caster_id: int,
+	target_id: int,
+	change_value: float
+) -> void:
+	emit_signal("health_changed", caster_id, target_id, change_value)
 
 
 func emit_top_vertex_changed(vertex: int) -> void:

@@ -73,7 +73,7 @@ func process_effects() -> void:
 
 
 # Adds relevant effects to this handler.
-func apply_effects(effects: Array) -> void:
+func apply_effects(effects: Array, _caster_id: int, _target_id: int) -> void:
 	for effect in effects:
 		_flat_change_bus.add_effect(effect)
 		_percent_change_bus.add_effect(effect)

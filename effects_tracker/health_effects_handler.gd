@@ -24,13 +24,14 @@ func process_effects() -> void:
 
 
 # Adds health changing effects to this handler. Processes immediate effects
-func apply_effects(effects: Array) -> void:
+func apply_effects(effects: Array, caster_id: int, target_id: int) -> void:
 	for effect in effects:
 		_flat_change_bus.add_effect(effect)
 		_percent_change_bus.add_effect(effect)
 	var f_change: float = _flat_change_bus.process_immediate_effects(_c_stats)
 	var p_change: float = _percent_change_bus.process_immediate_effects(_c_stats)
 	_c_stats.set_cur_health(int(f_change + p_change))
+	SignalBus.emit_health_changed(caster_id, target_id, f_change + p_change)
 
 
 # Called when the node enters the scene tree for the first time.

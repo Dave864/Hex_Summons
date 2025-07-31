@@ -30,7 +30,6 @@ func process_effects() -> void:
 
 # Connects the effects of an action to this manager.
 func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
-	print("Character %d hit target %d" % [hit_box.caster_id, _c_stats.character_id])
 	var effects: Array = hit_box.get_effects()
 	for e_handler in get_children():
 		if e_handler is EffectsHandler:

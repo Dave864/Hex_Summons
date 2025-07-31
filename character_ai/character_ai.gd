@@ -12,7 +12,7 @@ var _h_map: HexMap = null
 var _d_map: Dictionary = {}
 var _players: Array = []
 var _enemies: Array = []
-var _threat_tracker: Object = null
+var _threat_tracker: ThreatTracker = null
 
 
 # Regenerates the distance map for the character's current position.
@@ -38,4 +38,5 @@ func _init(
 	_h_map = h_map
 	_players = players
 	_enemies = enemies
+	_threat_tracker = ThreatTracker.new(_character, _players, _enemies)
 	update_distance_map()
