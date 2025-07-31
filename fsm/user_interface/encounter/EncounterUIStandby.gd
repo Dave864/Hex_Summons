@@ -102,7 +102,7 @@ func _end_selected() -> void:
 
 
 # Triggered when a move tile has been selected and a path created to said tile.
-func _on_SignalBus_move_path_created(_path: HexMapMovementPath) -> void:
+func _on_SignalBus_move_path_created(_path: PoolVector3Array) -> void:
 	if not _state_is_active():
 		return
 	state_machine.transition_to(PAUSE)
