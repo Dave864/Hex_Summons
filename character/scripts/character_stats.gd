@@ -12,6 +12,9 @@ signal agility_changed(new_value)
 # Stat values
 export var base_stat_values: Resource = null
 
+# Reference to the character that the stats describe
+var character_id: int = -1
+
 # Modifier values for all stats
 var _max_health_mod: int = 0
 var _attack_mod: int = 0

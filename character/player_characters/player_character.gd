@@ -42,6 +42,7 @@ func _ready() -> void:
 	_techniques = _player_class.techniques
 	_spells = _player_class.spells
 	stats = _player_class.stats
+	stats.character_id = get_instance_id()
 	battle_portrait = (
 		_default_portait if battle_portrait == null
 		else battle_portrait

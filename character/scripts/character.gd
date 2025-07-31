@@ -55,6 +55,7 @@ func deactivate_hit_box() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	stats.character_id = get_instance_id()
 	_connect_stats_to_effects_tracker()
 
 
