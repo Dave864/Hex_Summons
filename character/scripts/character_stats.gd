@@ -29,9 +29,6 @@ var _res_wind_mod: int = 0
 var _level: int = 1 setget set_level, get_level
 var _current_health: int = 0
 
-# Referene to the scene tree root.
-onready var _root_node: Node = get_tree().edited_scene_root
-
 
 func set_level(val: int) -> void:
 	_level = val if val > 0 else 0

@@ -56,9 +56,11 @@ func _initialize_actions() -> void:
 	for t in _techniques:
 		t.source_stats = stats
 		t.initialize_effects()
+		t.initialize_caster_id(get_instance_id())
 	for s in _spells:
 		s.source_stats = stats
 		s.initialize_effects()
+		s.initialize_caster_id(get_instance_id())
 
 
 # Virtual function. Updates emission points for all actions of the chracter.

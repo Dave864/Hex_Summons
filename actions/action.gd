@@ -115,11 +115,15 @@ func reset_emittor_position() -> void:
 func execute_action() -> void:
 	_hit_box.transform = _emission_transform
 	_hit_box.activate()
-	print("Execute %s." % [name])
 	ani_player.play("execute")
 	yield(ani_player, "animation_finished")
 	_hit_box.deactivate()
 	ani_player.play("RESET")
+
+
+# Sets the caster id reference in the action hit box.
+func initialize_caster_id(caster_id: int) -> void:
+	_hit_box.caster_id = caster_id
 
 
 # Initialize the effects list of the action, checking that all effects are valid.
@@ -127,10 +131,10 @@ func initialize_effects() -> void:
 	_effects = get_node("Effects").get_children()
 	assert(
 			len(_effects) > 0,
-			"Error: Action %s does not have any effects" % [name]
+			"Action %s does not have any effects" % [name]
 	)
 	for effect in _effects:
-		assert(effect is Effect, "Error: Action %s effect %s is not an Effect")
+		assert(effect is Effect, "Action %s effect %s is not an Effect")
 		# Type checking for the node referenced at the path.
 		effect.set_source_stats(source_stats)
 		effect.set_action_potency(potency)

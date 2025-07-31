@@ -59,6 +59,7 @@ func _update_emission_index(_index: int) -> void:
 func _initialize_actions() -> void:
 	for a in _actions:
 		a.source_stats = stats
+		a.initialize_caster_id(get_instance_id())
 		a.initialize_effects()
 
 
