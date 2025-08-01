@@ -59,8 +59,8 @@ func get_player_point_path(
 	_disable_character_tiles(enemies, true)
 	
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(
-		pc.map_coordinate.get_index(),
-		dest_id
+			pc.map_coordinate.get_index(),
+			dest_id
 	)
 	 # Reset for future range finder operations.
 	_hm_astar.set_area_disabled(movement_area_ids, true)
@@ -118,12 +118,12 @@ func get_character_point_path_toward(
 	# Disable connection points of the opposite character type to prevent character
 	# from being able to move into those spaces
 	_disable_character_tiles(
-		enemies,
-		c.get_type() == Character.Type.PLAYER
+			enemies,
+			c.get_type() == Character.Type.PLAYER
 	)
 	_disable_character_tiles(
-		players,
-		c.get_type() == Character.Type.ENEMY
+			players,
+			c.get_type() == Character.Type.ENEMY
 	)
 	# Reenable destination tile to allow a path to be found when target tile 
 	# has an opponent.
@@ -148,7 +148,10 @@ func get_character_point_path_toward(
 		c.get_type() == Character.Type.ENEMY
 	)
 	
-	var point_path: PoolVector3Array = _hm_astar.get_point_path(start_id, true_dest_id)
+	var point_path: PoolVector3Array = _hm_astar.get_point_path(
+			start_id,
+			true_dest_id
+	)
 	# Reset for future range finder operations.
 	_hm_astar.set_area_disabled(movement_area_ids)
 	return point_path
@@ -197,7 +200,10 @@ func _determine_closest_point_toward(
 ) -> int:
 	var true_dest_id: int = dest_id
 	while true:
-		var path_to_dest: PoolIntArray = _hm_astar.get_id_path(start_id, dest_id)
+		var path_to_dest: PoolIntArray = _hm_astar.get_id_path(
+				start_id,
+				dest_id
+		)
 		# Determine the last point in the path that is within the movement 
 		# range. A tile occupied by an opponent is not considered within
 		# movement range.
@@ -237,7 +243,11 @@ func _get_traversible_ids(
 	reach: int
 ) -> Array:
 	_hm_astar.set_area_disabled(section_ids, false)
-	var distances: Dictionary = _hm_astar.get_distance_map(start_index, false, reach)
+	var distances: Dictionary = _hm_astar.get_distance_map(
+			start_index,
+			false,
+			reach
+	)
 	# Reset for future range finder operations.
 	_hm_astar.set_area_disabled(section_ids)
 	return distances.keys()
