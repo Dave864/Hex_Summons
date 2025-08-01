@@ -9,6 +9,7 @@ take and then starts the logic chain.
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
+	ec.ai.update_distance_map()
 	_process_action_chain(ec.ai.determine_action_chain())
 
 
@@ -26,7 +27,7 @@ func _process_action_chain(action_chain: Array) -> void:
 			state_machine.transition_to(MOVE, {"command_chain": action_chain})
 		elif action_chain.back()[0] == ACTION:
 			print("Go to action")
-#			state_machine.transition_to(ACTION, {"command_chain": actions})
+			state_machine.transition_to(ACTION, {"command_chain": action_chain})
 	else:
 		ec.emit_enemy_turn_ended()
 		state_machine.transition_to(WAIT)
