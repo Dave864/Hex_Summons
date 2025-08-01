@@ -12,7 +12,7 @@ const ACTION: String = "Action"
 const MOVE: String = "Move"
 const WAIT: String = "Wait"
 
-# Typed reference to the PlayerCharacter node.
+# Typed reference to the EnemyCharacter node.
 var ec: EnemyCharacter
 
 
@@ -22,11 +22,11 @@ func _ready() -> void:
 	# callback will execute first. That's why we wait for the `owner` 
 	# to be ready first.
 	yield(owner, "ready")
-	# The `as` keyword casts the `owner` variable to the `PlayerCharacter` type.
-	# If the `owner` is not a `PlayerCharacter`, we'll get `null`.
+	# The `as` keyword casts the `owner` variable to the `EnemyCharacter` type.
+	# If the `owner` is not a `EnemyCharacter`, we'll get `null`.
 	ec = owner as EnemyCharacter
 	# This check will tell us if we inadvertently assign a derived state script
-	# in a scene other than the PlayerCharacter scene, which would be 
+	# in a scene other than the EnemyCharacter scene, which would be 
 	# unintended. This can help prevent some bugs that are difficult to 
 	# understand.
 	assert(ec != null)

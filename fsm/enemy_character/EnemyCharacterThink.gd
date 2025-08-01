@@ -9,26 +9,17 @@ take and then starts the logic chain.
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"enemy_actions_confirmed",
-			self,
-			"_on_SignalBus_enemy_actions_confirmed"
-	)
-	ec.emit_enemy_actions_required()
+	_process_action_chain(ec.ai.determine_action_chain())
 
 
 # Called by the state machine before changing the active state. Use this
 # function to clean up the state.
 func exit() -> void:
-	SignalBus.disconnect(
-			"enemy_actions_confirmed",
-			self,
-			"_on_SignalBus_enemy_actions_confirmed"
-	)
+	pass
 
 
-func _on_SignalBus_enemy_actions_confirmed(action_chain: Array) -> void:
+# Processes the action change determined by the character AI.
+func _process_action_chain(action_chain: Array) -> void:
 	if action_chain.size() > 0:
 		if action_chain.back()[0] == MOVE:
 			print("Go to move")

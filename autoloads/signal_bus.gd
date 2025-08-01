@@ -13,7 +13,6 @@ signal player_action_executed(character, action)
 signal player_action_type_canceled()
 # Enemy character related signals.
 signal enemy_turn_started(character)
-signal enemy_actions_confirmed(action_chain)
 # Encounter selection signals
 signal selector_required(start_index)
 signal selector_paused()
@@ -48,10 +47,6 @@ func emit_player_action_type_canceled() -> void:
 
 func emit_enemy_turn_started(ec: EnemyCharacter) -> void:
 	emit_signal("enemy_turn_started", ec)
-
-
-func emit_enemy_actions_confirmed(action_chain: Array) -> void:
-	emit_signal("enemy_actions_confirmed", action_chain)
 
 
 func emit_selector_required(start_index: int) -> void:

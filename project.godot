@@ -54,7 +54,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://character/scripts/character.gd"
 }, {
-"base": "Object",
+"base": "Node",
 "class": "CharacterAI",
 "language": "GDScript",
 "path": "res://character_ai/character_ai.gd"
