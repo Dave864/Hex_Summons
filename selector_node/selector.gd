@@ -5,11 +5,6 @@ Handles the selection of map tiles for player movement and actions.
 """
 
 
-# Indicates a tile has been selected for movement.
-signal move_tile_selected(tile_selected)
-# Indicates that a given action needs the effect area displayed.
-signal effect_area_required(action)
-
 # The MapTile that was last passed over.
 var tile_hovered: MapTile = null
 # Describes which hex vertex is the top with respect to the camera
@@ -31,16 +26,6 @@ var _update_selection_func: FuncRef = null setget set_update_selection_func
 # Sets the _update_selection_func.
 func set_update_selection_func(new_func: FuncRef) -> void:
 	_update_selection_func = new_func
-
-
-# Emits the move_tile_selected signal.
-func emit_move_tile_selected(tile_selected: MapTile) -> void:
-	emit_signal("move_tile_selected", tile_selected)
-
-
-# Emits the effect_area_required.
-func emit_effect_area_required(action: Action) -> void:
-	emit_signal("effect_area_required", action)
 
 
 func _ready() -> void:

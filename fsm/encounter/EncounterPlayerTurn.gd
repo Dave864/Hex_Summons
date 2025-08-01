@@ -11,12 +11,6 @@ player characters or all enemy characters are defeated.
 
 # The player character currently active
 var _active_char: PlayerCharacter = null
-# The index of tiles that the player can move to.
-var _movement_area: Array = []
-# The index of the tile the player starts from.
-var _start_index: int = 0
-# The index of tiles in reach of an action. 
-var _action_range: Dictionary = {"type": null, "tiles": null}
 # Flag that tracks if the UI is waiting. Used when changing to another player's
 # turn.
 var _ui_waiting: bool = false
@@ -28,17 +22,6 @@ func enter(_msg := {}) -> void:
 	# UI is active when player turn starts.
 	_ui_waiting = false
 	_active_char = enc.get_current_character()
-	_start_index = _active_char.map_coordinate.get_index()
-	_movement_area = enc.hex_map.range_finder.get_character_travesible_tiles(
-			_active_char,
-			enc.enemies
-	)
-	enc.hex_map.selection_tracker.highlight_player_movement(
-			_movement_area,
-			_active_char
-	)
-	
-	_connect_signals()
 	SignalBus.emit_player_turn_started(_active_char)
 
 
@@ -55,7 +38,7 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	_disconnect_signals()
+	pass
 
 
 # Connect signals that will persist throughout the life of this state.
@@ -72,39 +55,6 @@ func _ready_connect_signals() -> void:
 			self,
 			"_on_EncounterUI_is_waiting"
 	)
-
-
-# Connect the relevant signals to this state.
-# These signals are used by other states and will be disconnected to avoid
-# unintended behavior.
-func _connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			enc.selector,
-			"move_tile_selected",
-			self,
-			"_on_Selector_move_tile_selected"
-	)
-
-
-# Disconnect the signals connected to this state.
-func _disconnect_signals() -> void:
-	enc.selector.disconnect(
-			"move_tile_selected",
-			self,
-			"_on_Selector_move_tile_selected"
-	)
-
-
-# Determine the path to the selected tile for character movement and signal that
-# the movement tile has been selected.
-func _on_Selector_move_tile_selected(tile: MapTile) -> void:
-	var path_data: PoolVector3Array = enc.hex_map.range_finder.get_player_point_path(
-			_active_char,
-			tile.map_coordinate.get_index(),
-			enc.enemies,
-			_movement_area
-	)
-	SignalBus.emit_move_path_created(path_data)
 
 
 # Marks the UI as waiting.

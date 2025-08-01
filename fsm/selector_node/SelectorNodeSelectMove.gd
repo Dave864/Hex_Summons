@@ -52,10 +52,20 @@ func exit() -> void:
 
 # Handles input events
 func handle_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_selector_select"):
-		if selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY:
-			selector.emit_move_tile_selected(selector.tile_hovered)
-			state_machine.transition_to(PAUSE)
+	if (
+		event.is_action_pressed("ui_selector_select")
+		and selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY
+	):
+		var path_data: PoolVector3Array = (
+			selector.hex_map.range_finder.get_player_point_path(
+					selector.active_player,
+					selector.tile_hovered.map_coordinate.get_index(),
+					selector.enemies_ref,
+					_movement_ids
+			)
+		)
+		SignalBus.emit_move_path_created(path_data)
+		state_machine.transition_to(PAUSE)
 
 
 # Need to keep connection to player_turn_ended signal in order to clear out
