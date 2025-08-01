@@ -61,6 +61,7 @@ shape = SubResource( 2 )
 
 [node name="CharacterAI" type="Node" parent="."]
 script = ExtResource( 14 )
+actions_ref = NodePath("../Actions")
 
 [node name="Actions" type="Node" parent="."]
 

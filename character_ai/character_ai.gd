@@ -13,7 +13,10 @@ the actions available.
 const ACTION: String = "Action"
 const MOVE: String = "Move"
 
+export(NodePath) var actions_ref = null
+
 var _char_id: int = -1
+var _actions: Array = []
 # This variable should be of type HexMap. Defining the type here results in
 # an issue where the class "HexMap" could be found in global scope, but the
 # script couldn't be loaded.
@@ -75,6 +78,11 @@ func connect_encounter_details(
 	)
 
 
+func _ready() -> void:
+	_check_for_required_parameters()
+	_actions = get_node(actions_ref).get_children()
+
+
 # Gets the map index of the player character closest to the active enemy.
 func _determine_closest_player_index() -> int:
 	var player_distances: Array = []
@@ -83,3 +91,11 @@ func _determine_closest_player_index() -> int:
 		player_distances.append([p, travel_dist])
 	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
 	return player_distances[0][0].map_coordinate.get_index()
+
+
+# Check that all required parameters are set.
+func _check_for_required_parameters() -> void:
+	assert(
+			actions_ref != null,
+			"EnemyAI Missing reference to actions."
+	)
