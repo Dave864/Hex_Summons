@@ -9,7 +9,7 @@ different scenes, usually between their state machines.
 signal player_turn_started(character)
 signal player_turn_ended(character)
 signal player_action_selected(character, action)
-signal player_action_executed(character, action)
+signal player_action_executed(character, action, targets)
 signal player_action_type_canceled()
 # Enemy character related signals.
 signal enemy_turn_started(character)
@@ -37,8 +37,12 @@ func emit_player_action_selected(pc: PlayerCharacter, action: Action) -> void:
 	emit_signal("player_action_selected", pc, action)
 
 
-func emit_player_action_executed(pc: PlayerCharacter, action: Action) -> void:
-	emit_signal("player_action_executed", pc, action)
+func emit_player_action_executed(
+	pc: PlayerCharacter,
+	action: Action,
+	targets: Array
+) -> void:
+	emit_signal("player_action_executed", pc, action, targets)
 
 
 func emit_player_action_type_canceled() -> void:

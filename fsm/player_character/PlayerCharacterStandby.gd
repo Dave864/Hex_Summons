@@ -20,6 +20,12 @@ func enter(_msg: Dictionary = {}) -> void:
 			self,
 			"_on_SignalBus_player_turn_ended"
 	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_action_executed",
+			self,
+			"_on_SignalBus_player_action_executed"
+	)
 
 
 # Called by the state machine before changing the active state. Use this 
@@ -35,14 +41,32 @@ func exit() -> void:
 			self,
 			"_on_SignalBus_player_turn_ended"
 	)
+	SignalBus.disconnect(
+			"player_action_executed",
+			self,
+			"_on_SignalBus_player_action_executed"
+	)
 
 
-# Hit when the Encounter sets the movement path.
+# Hit when the Selector sets the movement path.
 func _on_SignalBus_move_path_created(move_path: PoolVector3Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": move_path})
 
 
+# Hit when the Selector confirms an action. 
+func _on_SignalBus_player_action_executed(
+	player: PlayerCharacter,
+	action: Action,
+	targets: Array
+) -> void:
+	if pc.get_instance_id() == player.get_instance_id():
+		state_machine.transition_to(
+				ACTION,
+				{"action": action, "targets": targets}
+		)
+
+
 # Hit when the EncounterUI indicates that a player has finished their turn.
 func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
-	if pc.name == player.name:
+	if pc.get_instance_id() == player.get_instance_id():
 		state_machine.transition_to(WAIT)

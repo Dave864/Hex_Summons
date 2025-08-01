@@ -83,10 +83,16 @@ func _connect_signals() -> void:
 			"_on_EndButton_button_pressed"
 	)
 	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_action_executed",
-		self,
-		"_on_SignalBus_player_action_executed"
+			SignalBus,
+			"player_action_executed",
+			self,
+			"_on_SignalBus_player_action_executed"
+	)
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -112,6 +118,11 @@ func _disconnect_signals() -> void:
 			self,
 			"_on_SignalBus_player_action_executed"
 	)
+	SignalBus.disconnect(
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
+	)
 
 
 # Logic for when a specified option is selected.
@@ -132,7 +143,6 @@ func _action_type_canceled() -> void:
 # Logic for what happens when the turn has ended.
 func _end_selected() -> void:
 	SignalBus.emit_player_turn_ended(encounter_ui.get_focused_player())
-	state_machine.transition_to(WAIT)
 
 
 # Logic for what happens when the Technique button is pressed.
@@ -161,9 +171,18 @@ func _on_SubOptions_option_selected(action_info: Action) -> void:
 	)
 
 
-# Signal that a selected action has been executed.
+# Signal that a selected action has been executed. Hide the UI elements.
 func _on_SignalBus_player_action_executed(
 	_player: PlayerCharacter,
-	_action: Action
+	_action: Action,
+	_targets: Array
 ) -> void:
-	state_machine.transition_to(WAIT)
+	encounter_ui.sub_options.deactivate()
+	encounter_ui.options.hide()
+	encounter_ui.active_player_stats.hide()
+
+
+# Go to the WAIT state when the player turn has ended.
+func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
+	if encounter_ui.get_focused_player() == player:
+		state_machine.transition_to(WAIT)
