@@ -10,6 +10,8 @@ signal enemy_actions_required()
 # Indicates that the enemy's turn has ended.
 signal enemy_turn_ended()
 
+var ai: CharacterAI = null
+
 # Contains the actions associated with the enemy character.
 var _actions: Array
 

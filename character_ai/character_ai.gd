@@ -8,7 +8,10 @@ the actions available.
 
 
 var _character: Character = null
-var _h_map: HexMap = null
+# This variable should be of type HexMap. Defining the type here results in
+# an issue where the class "HexMap" could be found in global scope, but the
+# script couldn't be loaded.
+var _h_map = null
 var _d_map: Dictionary = {}
 var _players: Array = []
 var _enemies: Array = []
@@ -29,14 +32,17 @@ func determine_action_chain() -> Array:
 
 # Initializes the object.
 func _init(
-	reference_char: Character,
-	h_map: HexMap,
+	h_map,
+	character: Character,
 	players: Array,
 	enemies: Array
 ) -> void:
-	_character = reference_char
 	_h_map = h_map
+	_character = character
 	_players = players
 	_enemies = enemies
-	_threat_tracker = ThreatTracker.new(_character, _players, _enemies)
-	update_distance_map()
+	_threat_tracker = ThreatTracker.new(
+			_character.get_instance_id(),
+			_players,
+			_enemies
+	)

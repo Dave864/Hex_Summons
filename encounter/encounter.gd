@@ -57,6 +57,7 @@ func _ready() -> void:
 		ui.track_party_member(p)
 	
 	for e in enemies:
+		e.ai = CharacterAI.new(hex_map, e, players, enemies)
 		ui.track_enemy(e)
 
 

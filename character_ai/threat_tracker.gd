@@ -6,7 +6,7 @@ character.
 """
 
 
-var _observer_char: Character = null
+var _observer_id: int = -1
 var _threat_values: Dictionary = {}
 var _decay_rate: float = 2.0
 
@@ -58,8 +58,8 @@ func reset_active() -> void:
 
 
 # Initializes the object.
-func _init(observer: Character, p_chars: Array, e_chars: Array) -> void:
-	_observer_char = observer
+func _init(observer_id: int, p_chars: Array, e_chars: Array) -> void:
+	_observer_id = observer_id
 	for p_char in p_chars:
 		_threat_values[p_char.get_instance_id()] = {
 			"value": 0.0,
@@ -80,17 +80,21 @@ func _init(observer: Character, p_chars: Array, e_chars: Array) -> void:
 	)
 
 
-# Updates the threat value based on the amount of damage a character deals.
+# Updates the threat value based on the amount of damage or healing a character
+# does. Overhealing and overkilling are not mitigated.
 func _on_SignalBus_health_changed(
 	caster_id: int,
 	target_id: int,
 	change_amount: float
 ) -> void:
-	_threat_values[caster_id]["value"] += change_amount
-	# Double threat if damage is done to this character
+	# Don't adjust threat if caster is observer
+	if caster_id == _observer_id:
+		return
+	_threat_values[caster_id]["value"] += abs(change_amount)
+	# Double threat if damage is done to this observer
 	if (
-		target_id == _observer_char.get_instance_id()
+		target_id == _observer_id
 		and change_amount < 0
 	):
-		_threat_values[caster_id]["value"] += change_amount
+		_threat_values[caster_id]["value"] += abs(change_amount)
 	_threat_values[caster_id]["active"] = true
