@@ -12,6 +12,7 @@ func enter(_msg: Dictionary = {}) -> void:
 			self,
 			"_on_SignalBus_player_turn_started"
 	)
+	pc.emit_is_waiting()
 
 
 # Called by the state machine before changing the active state. Use this 

@@ -16,15 +16,15 @@ func enter(_msg: Dictionary = {}) -> void:
 	)
 	ErrorUtil.connect_signal(
 			SignalBus,
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
-	)
-	ErrorUtil.connect_signal(
-			SignalBus,
 			"player_action_executed",
 			self,
 			"_on_SignalBus_player_action_executed"
+	)
+	ErrorUtil.connect_signal(
+		SignalBus,
+		"player_turn_ended",
+		self,
+		"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -37,14 +37,14 @@ func exit() -> void:
 			"_on_SignalBus_move_path_created"
 	)
 	SignalBus.disconnect(
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
-	)
-	SignalBus.disconnect(
 			"player_action_executed",
 			self,
 			"_on_SignalBus_player_action_executed"
+	)
+	SignalBus.disconnect(
+			"player_turn_ended",
+			self,
+			"_on_SignalBus_player_turn_ended"
 	)
 
 

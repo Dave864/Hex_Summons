@@ -11,9 +11,12 @@ player characters or all enemy characters are defeated.
 
 # The player character currently active
 var _active_char: PlayerCharacter = null
-# Flag that tracks if the UI is waiting. Used when changing to another player's
-# turn.
+# Flag that tracks if the UI is waiting. Used when changing to another
+# character's turn.
 var _ui_waiting: bool = false
+# Flag that tracks if the player is waiting. Used when changing to another
+# character's turn.
+var _player_waiting: bool = false
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
@@ -21,7 +24,9 @@ var _ui_waiting: bool = false
 func enter(_msg := {}) -> void:
 	# UI is active when player turn starts.
 	_ui_waiting = false
+	_player_waiting = false
 	_active_char = enc.get_current_character()
+	_connect_signals()
 	SignalBus.emit_player_turn_started(_active_char)
 
 
@@ -38,7 +43,20 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Use this function to clean up the state.
 func exit() -> void:
-	pass
+	_disconnect_signals()
+	_active_char = null
+
+
+# Connect the relevant signals to this state.
+# These signals are used by other states and will be disconnected to avoid
+# unintended behavior.
+func _connect_signals() -> void:
+	ErrorUtil.connect_signal(
+			_active_char,
+			"is_waiting",
+			self,
+			"_on_PlayerCharacter_is_waiting"
+	)
 
 
 # Connect signals that will persist throughout the life of this state.
@@ -57,9 +75,23 @@ func _ready_connect_signals() -> void:
 	)
 
 
+# Disconnect the signals connected to this state.
+func _disconnect_signals() -> void:
+	_active_char.disconnect(
+			"is_waiting",
+			self,
+			"_on_PlayerCharacter_is_waiting"
+	)
+
+
 # Marks the UI as waiting.
 func _on_EncounterUI_is_waiting() -> void:
 	_ui_waiting = true
+
+
+# Marks the player as waiting.
+func _on_PlayerCharacter_is_waiting() -> void:
+	_player_waiting = true
 
 
 # Clear the tile movement highlights, update the initiative tracker and
@@ -68,11 +100,13 @@ func _on_EncounterUI_is_waiting() -> void:
 func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
 	enc.hex_map.selection_tracker.clear_highlights()
 	enc.hex_map.selection_tracker.clear_selector_highlights()
+	if not _ui_waiting:
+		yield(enc.ui, "is_waiting")
+	if not _player_waiting:
+		yield(_active_char, "is_waiting")
 	var next_character: Character = enc.get_next_character()
 	enc.progress_initiative()
 	if next_character is PlayerCharacter:
-		if not _ui_waiting:
-			yield(enc.ui, "is_waiting")
 		state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:
 		state_machine.transition_to(ENEMY_TURN)
