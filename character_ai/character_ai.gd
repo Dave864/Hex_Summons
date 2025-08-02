@@ -24,7 +24,8 @@ var _h_map = null
 var _d_map: Dictionary = {}
 var _players: Dictionary = {}
 var _enemies: Dictionary = {}
-var _threat_tracker: ThreatTracker = null
+var _p_ttr: ThreatTracker = null
+var _e_ttr: ThreatTracker = null
 
 
 # Regenerates the distance map for the character's current position.
@@ -40,19 +41,25 @@ func determine_action_chain() -> Array:
 	"""
 	TODO: Implement logic for determining what actions to take.
 	For now, the enemy character moves as close as it can to the closest player
-	character.
+	character with the highest threat.
 	"""
 	var action_chain: Array = []
-	var movement_range: Array = _h_map.range_finder.get_character_travesible_tiles(
-			_enemies[_char_id],
-			_players.values()
+	var movement_range: Array = (
+		_h_map.range_finder.get_character_travesible_tiles(
+				_enemies[_char_id],
+				_players.values()
+		)
 	)
-	var path: PoolVector3Array = _h_map.range_finder.get_character_point_path_toward(
-			_enemies[_char_id],
-			_determine_closest_player_index(),
-			_enemies.values(),
-			_players.values(),
-			movement_range
+	var target_ids: Array = _determine_player_threat_order()
+	var target_index: int = _players[target_ids[0]].map_coordinate.get_index()
+	var path: PoolVector3Array = (
+		_h_map.range_finder.get_character_point_path_toward(
+				_enemies[_char_id],
+				target_index,
+				_enemies.values(),
+				_players.values(),
+				movement_range
+		)
 	)
 	action_chain.push_front([MOVE, path])
 	return action_chain
@@ -71,11 +78,8 @@ func connect_encounter_details(
 		_players[p.get_instance_id()] = p
 	for e in enemies:
 		_enemies[e.get_instance_id()] = e
-	_threat_tracker = ThreatTracker.new(
-			_char_id,
-			players,
-			enemies
-	)
+	_p_ttr = ThreatTracker.new(_char_id, players)
+	_e_ttr = ThreatTracker.new(_char_id, enemies)
 
 
 func _ready() -> void:
@@ -83,14 +87,40 @@ func _ready() -> void:
 	_actions = get_node(actions_ref).get_children()
 
 
-# Gets the map index of the player character closest to the active enemy.
-func _determine_closest_player_index() -> int:
-	var player_distances: Array = []
-	for p in _players.values():
-		var travel_dist: float = _d_map[p.map_coordinate.get_index()]["travel"]
-		player_distances.append([p, travel_dist])
-	player_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
-	return player_distances[0][0].map_coordinate.get_index()
+# Gets the threat order of player characters.
+func _determine_player_threat_order() -> Array:
+	var danger_players: Array = _players.keys()
+	danger_players.sort_custom(self, "_sort_player_danger")
+	return danger_players
+
+
+# Gets the threat order of enemy characters.
+func _determine_dangerous_enemy_index() -> Array:
+	var danger_enemies: Array = _enemies.keys()
+	danger_enemies.sort_custom(self, "_sort_enemy_danger")
+	return danger_enemies
+
+
+# Sorts players by their distances and threat values. Threat value is used as
+# the determining factor, but threat value is affected by the targets distance
+# from the observer.
+func _sort_player_danger(p_a: int, p_b: int) -> bool:
+	var dis_a: float = _d_map[_players[p_a].map_coordinate.get_index()]["travel"]
+	var dis_b: float = _d_map[_players[p_b].map_coordinate.get_index()]["travel"]
+	var threat_a: float = _p_ttr.get_threat_values()[p_a]["value"] / dis_a
+	var threat_b: float = _p_ttr.get_threat_values()[p_b]["value"] / dis_b
+	return threat_a > threat_b
+
+
+# Sorts enemies by their distances and threat values. Threat value is used as
+# the determining factor, but threat value is affected by the targets distance
+# from the observer.
+func _sort_enemy_danger(e_a: int, e_b: int) -> bool:
+	var dis_a: float = _d_map[_enemies[e_a].map_coordinate.get_index()]["travel"]
+	var dis_b: float = _d_map[_enemies[e_b].map_coordinate.get_index()]["travel"]
+	var threat_a: float = _e_ttr.get_threat_values()[e_a]["value"] / dis_a
+	var threat_b: float = _e_ttr.get_threat_values()[e_b]["value"] / dis_b
+	return threat_a > threat_b
 
 
 # Check that all required parameters are set.
