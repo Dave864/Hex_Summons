@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "ActionCondition",
 "language": "GDScript",
-"path": "res://character_ai/action_condition.gd"
+"path": "res://character_ai/action_conditions/action_condition.gd"
 }, {
 "base": "Area",
 "class": "ActionHitBox",
@@ -37,7 +37,7 @@ _global_script_classes=[ {
 "base": "ActionCondition",
 "class": "AdjacentCondition",
 "language": "GDScript",
-"path": "res://character_ai/adjacent_condition.gd"
+"path": "res://character_ai/action_conditions/adjacent_condition.gd"
 }, {
 "base": "Node",
 "class": "AreaRange",
@@ -190,9 +190,14 @@ _global_script_classes=[ {
 "path": "res://effects/strength_calculators/flat_value_calculation.gd"
 }, {
 "base": "ActionCondition",
+"class": "GroupCondition",
+"language": "GDScript",
+"path": "res://character_ai/action_conditions/group_condition.gd"
+}, {
+"base": "ActionCondition",
 "class": "HealthCondition",
 "language": "GDScript",
-"path": "res://character_ai/health_condition.gd"
+"path": "res://character_ai/action_conditions/health_condition.gd"
 }, {
 "base": "EffectsHandler",
 "class": "HealthEffectsHandler",
@@ -411,6 +416,7 @@ _global_script_class_icons={
 "EnemyCharacterState": "",
 "ErrorUtil": "",
 "FlatValueCalcultion": "",
+"GroupCondition": "",
 "HealthCondition": "",
 "HealthEffectsHandler": "",
 "HexHighlighter": "",
