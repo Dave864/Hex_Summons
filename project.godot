@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://user_interface/encounter/SubOptionButton/ActionButton/action_button.gd"
 }, {
+"base": "Node",
+"class": "ActionCondition",
+"language": "GDScript",
+"path": "res://character_ai/action_condition.gd"
+}, {
 "base": "Area",
 "class": "ActionHitBox",
 "language": "GDScript",
@@ -28,6 +33,11 @@ _global_script_classes=[ {
 "class": "ActivePlayerStats",
 "language": "GDScript",
 "path": "res://user_interface/encounter/active_player_stats.gd"
+}, {
+"base": "ActionCondition",
+"class": "AdjacentCondition",
+"language": "GDScript",
+"path": "res://character_ai/adjacent_condition.gd"
 }, {
 "base": "Node",
 "class": "AreaRange",
@@ -178,6 +188,11 @@ _global_script_classes=[ {
 "class": "FlatValueCalcultion",
 "language": "GDScript",
 "path": "res://effects/strength_calculators/flat_value_calculation.gd"
+}, {
+"base": "ActionCondition",
+"class": "HealthCondition",
+"language": "GDScript",
+"path": "res://character_ai/health_condition.gd"
 }, {
 "base": "EffectsHandler",
 "class": "HealthEffectsHandler",
@@ -362,8 +377,10 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Action": "",
 "ActionButton": "",
+"ActionCondition": "",
 "ActionHitBox": "",
 "ActivePlayerStats": "",
+"AdjacentCondition": "",
 "AreaRange": "",
 "ArraySorters": "",
 "BaseStats": "",
@@ -394,6 +411,7 @@ _global_script_class_icons={
 "EnemyCharacterState": "",
 "ErrorUtil": "",
 "FlatValueCalcultion": "",
+"HealthCondition": "",
 "HealthEffectsHandler": "",
 "HexHighlighter": "",
 "HexMap": "",
