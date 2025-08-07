@@ -8,14 +8,24 @@ again.
 
 export(int, 0, 10) var turn_count = 0
 
-var _countdown: int = 0
+var _countdown: int = 0 setget , get_countdown
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+# Gets the current value of the countdown.
+func get_countdown() -> int:
+	return _countdown
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+# Checks if the countdown is active.
+func is_active() -> bool:
+	return _countdown == 0
+
+
+# Resets the cooldown countdown.
+func reset() -> void:
+	_countdown = turn_count
+
+
+# Decrement the countdown when a character turn ends.
+func _on_Character_turn_ended() -> void:
+	_countdown = 0 if _countdown == 0 else _countdown - 1

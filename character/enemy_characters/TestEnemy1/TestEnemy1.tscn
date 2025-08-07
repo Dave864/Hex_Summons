@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://character/enemy_characters/TestEnemy1/TestEnemy1BattleSprite.atlastex" type="Texture" id=1]
 [ext_resource path="res://character/enemy_characters/enemy_character.gd" type="Script" id=2]
@@ -14,6 +14,9 @@
 [ext_resource path="res://user_interface/character_label/CharacterLabel.tscn" type="PackedScene" id=12]
 [ext_resource path="res://character/enemy_characters/TestEnemy1/TestEnemy1BattlePortrait.atlastex" type="Texture" id=13]
 [ext_resource path="res://character_ai/character_ai.gd" type="Script" id=14]
+[ext_resource path="res://actions/Strike/Strike.tscn" type="PackedScene" id=15]
+[ext_resource path="res://actions/Nova/Nova.tscn" type="PackedScene" id=16]
+[ext_resource path="res://actions/cooldown.gd" type="Script" id=17]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.1
@@ -65,6 +68,14 @@ actions_ref = NodePath("../Actions")
 
 [node name="Actions" type="Node" parent="."]
 
+[node name="Nova" parent="Actions" instance=ExtResource( 16 )]
+
+[node name="Cooldown" type="Node" parent="Actions/Nova"]
+script = ExtResource( 17 )
+turn_count = 2
+
+[node name="Strike" parent="Actions" instance=ExtResource( 15 )]
+
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )
 initial_state = NodePath("Wait")
@@ -82,4 +93,5 @@ script = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
+[connection signal="turn_ended" from="." to="Actions/Nova/Cooldown" method="_on_Character_turn_ended"]
 [connection signal="area_entered" from="HitBox" to="EffectsTracker" method="_on_HitBox_area_entered"]
