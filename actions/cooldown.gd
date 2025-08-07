@@ -18,7 +18,7 @@ func get_countdown() -> int:
 
 # Checks if the countdown is active.
 func is_active() -> bool:
-	return _countdown == 0
+	return _countdown > 0
 
 
 # Resets the cooldown countdown.
