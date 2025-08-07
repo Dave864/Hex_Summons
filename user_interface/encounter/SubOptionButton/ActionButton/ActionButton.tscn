@@ -10,28 +10,38 @@ size_flags_horizontal = 4
 script = ExtResource( 1 )
 
 [node name="Button" type="Button" parent="."]
-margin_right = 1024.0
-margin_bottom = 60.0
+margin_right = 640.0
+margin_bottom = 34.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 60.0
+margin_right = 640.0
+margin_bottom = 34.0
 mouse_filter = 2
 alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer"]
-margin_left = 464.0
-margin_top = 23.0
-margin_right = 491.0
-margin_bottom = 37.0
+margin_left = 304.0
+margin_top = 10.0
+margin_right = 331.0
+margin_bottom = 24.0
 size_flags_horizontal = 6
 text = "Test"
 
 [node name="RangeDisplay" parent="HBoxContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 960.0
-margin_right = 1024.0
-margin_bottom = 60.0
+margin_left = 640.0
+margin_right = 640.0
+margin_bottom = 34.0
+
+[node name="InactiveFilter" type="Panel" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.498039 )
+margin_right = 640.0
+margin_bottom = 34.0
+
+[node name="Label" type="Label" parent="InactiveFilter"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "cooldown"
+valign = 2
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

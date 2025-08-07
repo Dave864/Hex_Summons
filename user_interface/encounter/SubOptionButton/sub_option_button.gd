@@ -47,9 +47,15 @@ func _ready() -> void:
 	_check_for_required_parameters()
 
 
+# Virtual function. Evaluates the current state of the action to see if the
+# option is confirmed.
+func _process_button_press() -> void:
+	emit_signal("option_selected", _option_details)
+
+
 # Emit a signal indicating that the button was pressed.
 func _on_Button_pressed() -> void:
-	emit_signal("option_selected", _option_details)
+	_process_button_press()
 
 
 # Checks that all required parameters are set.

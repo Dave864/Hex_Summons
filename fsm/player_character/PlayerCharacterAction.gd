@@ -16,6 +16,7 @@ func enter(msg := {}) -> void:
 	yield(action.execute_action(), "completed")
 	_change_target_state(targets, false)
 	pc.emit_turn_ended()
+	_activate_cooldown(action)
 	state_machine.transition_to(WAIT)
 
 
@@ -26,3 +27,10 @@ func _change_target_state(targets: Array, active: bool) -> void:
 			t.activate_hit_box()
 		else:
 			t.deactivate_hit_box()
+
+
+# Activates the cooldown of an action if present.
+func _activate_cooldown(action: Action) -> void:
+	var cooldown: Cooldown = action.get_node_or_null("Cooldown")
+	if cooldown != null:
+		cooldown.start_countdown()
