@@ -7,8 +7,6 @@ Handles actions specific to enemy characters.
 
 # Indicates that the action chain for an enemy character needs to be determined.
 signal enemy_actions_required()
-# Indicates that the enemy's turn has ended.
-signal enemy_turn_ended()
 
 # Contains the actions associated with the enemy character.
 var _actions: Array
@@ -28,11 +26,6 @@ func get_type() -> int:
 # Emit the signal 'enemy_actions_required'
 func emit_enemy_actions_required() -> void:
 	emit_signal("enemy_actions_required")
-
-
-# Emit the signal 'enemy_turn_ended'
-func emit_enemy_turn_ended() -> void:
-	emit_signal("enemy_turn_ended")
 
 
 # Called when the node enters the scene tree for the first time.

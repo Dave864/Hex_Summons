@@ -29,5 +29,5 @@ func _process_action_chain(action_chain: Array) -> void:
 			print("Go to action")
 			state_machine.transition_to(ACTION, {"command_chain": action_chain})
 	else:
-		ec.emit_enemy_turn_ended()
+		ec.emit_turn_ended()
 		state_machine.transition_to(WAIT)
