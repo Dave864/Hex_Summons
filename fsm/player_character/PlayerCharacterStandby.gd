@@ -9,6 +9,12 @@ state.
 # Connect this state to the signals it needs to observe.
 func enter(_msg: Dictionary = {}) -> void:
 	ErrorUtil.connect_signal(
+		pc,
+		"turn_ended",
+		self,
+		"_on_PlayerCharacter_turn_ended"
+	)
+	ErrorUtil.connect_signal(
 			SignalBus,
 			"move_path_created",
 			self,
@@ -19,18 +25,17 @@ func enter(_msg: Dictionary = {}) -> void:
 			"player_action_executed",
 			self,
 			"_on_SignalBus_player_action_executed"
-	)
-	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_ended",
-		self,
-		"_on_SignalBus_player_turn_ended"
 	)
 
 
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
+	pc.disconnect(
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
+	)
 	SignalBus.disconnect(
 			"move_path_created",
 			self,
@@ -40,11 +45,6 @@ func exit() -> void:
 			"player_action_executed",
 			self,
 			"_on_SignalBus_player_action_executed"
-	)
-	SignalBus.disconnect(
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -66,7 +66,6 @@ func _on_SignalBus_player_action_executed(
 		)
 
 
-# Hit when the EncounterUI indicates that a player has finished their turn.
-func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
-	if pc.get_instance_id() == player.get_instance_id():
-		state_machine.transition_to(WAIT)
+# Hit when the player has finished their turn.
+func _on_PlayerCharacter_turn_ended() -> void:
+	state_machine.transition_to(WAIT)

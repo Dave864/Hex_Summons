@@ -8,6 +8,8 @@ position details.
 
 # Indicates that the character is waiting.
 signal is_waiting()
+# Indicates that this character's turn has ended.
+signal turn_ended()
 
 enum Type {
 	ENEMY,
@@ -31,6 +33,11 @@ onready var hm_move_path: HexMapMovementCurve = HexMapMovementCurve.new()
 # Emits the is_waiting signal.
 func emit_is_waiting() -> void:
 	emit_signal("is_waiting")
+
+
+# Emit the signal 'turn_ended'
+func emit_turn_ended() -> void:
+	emit_signal("turn_ended")
 
 
 # Get whether or not the starting location of the character has been set.

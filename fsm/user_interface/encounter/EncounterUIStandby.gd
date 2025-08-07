@@ -97,7 +97,7 @@ func _spell_selected() -> void:
 
 
 func _end_selected() -> void:
-	SignalBus.emit_player_turn_ended(encounter_ui.get_focused_player())
+	encounter_ui.get_focused_player().emit_turn_ended()
 	state_machine.transition_to(WAIT)
 
 

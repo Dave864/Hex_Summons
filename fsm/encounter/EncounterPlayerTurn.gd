@@ -57,16 +57,16 @@ func _connect_signals() -> void:
 			self,
 			"_on_PlayerCharacter_is_waiting"
 	)
+	ErrorUtil.connect_signal(
+			_active_char,
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
+	)
 
 
 # Connect signals that will persist throughout the life of this state.
 func _ready_connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
-	)
 	ErrorUtil.connect_signal(
 			enc.ui,
 			"is_waiting",
@@ -81,6 +81,11 @@ func _disconnect_signals() -> void:
 			"is_waiting",
 			self,
 			"_on_PlayerCharacter_is_waiting"
+	)
+	_active_char.disconnect(
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
 	)
 
 
@@ -97,7 +102,7 @@ func _on_PlayerCharacter_is_waiting() -> void:
 # Clear the tile movement highlights, update the initiative tracker and
 # transition to either the PlayerTurn state or the EnemyTurn state depending 
 # on the next character.
-func _on_SignalBus_player_turn_ended(_player: PlayerCharacter) -> void:
+func _on_PlayerCharacter_turn_ended() -> void:
 	enc.hex_map.selection_tracker.clear_highlights()
 	enc.hex_map.selection_tracker.clear_selector_highlights()
 	if not _ui_waiting:

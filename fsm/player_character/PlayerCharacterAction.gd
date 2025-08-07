@@ -15,7 +15,7 @@ func enter(msg := {}) -> void:
 	_change_target_state(targets, true)
 	yield(action.execute_action(), "completed")
 	_change_target_state(targets, false)
-	SignalBus.emit_player_turn_ended(pc)
+	pc.emit_turn_ended()
 	state_machine.transition_to(WAIT)
 
 

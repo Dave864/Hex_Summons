@@ -7,7 +7,6 @@ different scenes, usually between their state machines.
 
 # Player character related signals.
 signal player_turn_started(character)
-signal player_turn_ended(character)
 signal player_action_selected(character, action)
 signal player_action_executed(character, action, targets)
 signal player_action_type_canceled()
@@ -27,10 +26,6 @@ signal top_vertex_changed(vertex)
 
 func emit_player_turn_started(pc: PlayerCharacter) -> void:
 	emit_signal("player_turn_started", pc)
-
-
-func emit_player_turn_ended(pc: PlayerCharacter) -> void:
-	emit_signal("player_turn_ended", pc)
 
 
 func emit_player_action_selected(pc: PlayerCharacter, action: Action) -> void:

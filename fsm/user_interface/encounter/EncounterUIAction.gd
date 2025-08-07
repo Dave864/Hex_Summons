@@ -37,7 +37,7 @@ func handle_input(_event: InputEvent) -> void:
 				_current_action
 		)
 	if _event.is_action_pressed("ui_encounter_player_end"):
-		SignalBus.emit_player_turn_ended(encounter_ui.get_focused_player())
+		encounter_ui.get_focused_player().emit_turn_ended()
 		state_machine.transition_to(WAIT)
 	if _event.is_action_pressed("ui_encounter_option_1"):
 		_option_selected(EncounterUI.Options.TECHNIQUE)
@@ -83,16 +83,16 @@ func _connect_signals() -> void:
 			"_on_EndButton_button_pressed"
 	)
 	ErrorUtil.connect_signal(
+			encounter_ui.get_focused_player(),
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
+	)
+	ErrorUtil.connect_signal(
 			SignalBus,
 			"player_action_executed",
 			self,
 			"_on_SignalBus_player_action_executed"
-	)
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -113,15 +113,15 @@ func _disconnect_signals() -> void:
 			"pressed",
 			"_on_EndButton_button_pressed"
 	)
+	encounter_ui.get_focused_player().disconnect(
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
+	)
 	SignalBus.disconnect(
 			"player_action_executed",
 			self,
 			"_on_SignalBus_player_action_executed"
-	)
-	SignalBus.disconnect(
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
 	)
 
 
@@ -142,7 +142,7 @@ func _action_type_canceled() -> void:
 
 # Logic for what happens when the turn has ended.
 func _end_selected() -> void:
-	SignalBus.emit_player_turn_ended(encounter_ui.get_focused_player())
+	encounter_ui.get_focused_player().emit_turn_ended()
 
 
 # Logic for what happens when the Technique button is pressed.
@@ -171,6 +171,11 @@ func _on_SubOptions_option_selected(action_info: Action) -> void:
 	)
 
 
+# Go to the WAIT state when the player turn has ended.
+func _on_PlayerCharacter_turn_ended() -> void:
+	state_machine.transition_to(WAIT)
+
+
 # Signal that a selected action has been executed. Hide the UI elements.
 func _on_SignalBus_player_action_executed(
 	_player: PlayerCharacter,
@@ -180,9 +185,3 @@ func _on_SignalBus_player_action_executed(
 	encounter_ui.sub_options.deactivate()
 	encounter_ui.options.hide()
 	encounter_ui.active_player_stats.hide()
-
-
-# Go to the WAIT state when the player turn has ended.
-func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
-	if encounter_ui.get_focused_player() == player:
-		state_machine.transition_to(WAIT)

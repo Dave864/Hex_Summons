@@ -33,21 +33,7 @@ func enter(_msg: Dictionary = {}) -> void:
 # function to clean up the state.
 func exit() -> void:
 	selector.set_update_selection_func(null)
-	SignalBus.disconnect(
-			"player_action_selected",
-			self,
-			"_on_SignalBus_player_action_selected"
-	)
-	SignalBus.disconnect(
-			"top_vertex_changed",
-			self,
-			"_on_SignalBus_top_vertex_changed"
-	)
-	GamepadHandler.disconnect(
-			"left_joystick_pulsed",
-			self,
-			"_on_GamepadHandler_left_joystick_pulsed"
-	)
+	_disconnect_signals()
 
 
 # Handles input events
@@ -68,19 +54,9 @@ func handle_input(event: InputEvent) -> void:
 		state_machine.transition_to(PAUSE)
 
 
-# Need to keep connection to player_turn_ended signal in order to clear out
-# movement details when the turn is ended while in the SelectAction state.
-func _ready_connect_signals():
-	ErrorUtil.connect_signal(
-		SignalBus,
-		"player_turn_ended",
-		self,
-		"_on_SignalBus_player_turn_ended"
-	)
-
-
 # Connect signals to this state.
 func _connect_signals() -> void:
+	_connect_player_turn_ended()
 	ErrorUtil.connect_signal(
 			SignalBus,
 			"player_action_selected",
@@ -95,6 +71,43 @@ func _connect_signals() -> void:
 	)
 	ErrorUtil.connect_signal(
 			GamepadHandler,
+			"left_joystick_pulsed",
+			self,
+			"_on_GamepadHandler_left_joystick_pulsed"
+	)
+
+
+# Need to keep connection to active player's turn_ended signal in order to
+# clear out movement details when the turn is ended while in the SelectAction
+# state.
+func _connect_player_turn_ended():
+	if selector.active_player.is_connected(
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
+	):
+		return
+	ErrorUtil.connect_signal(
+		selector.active_player,
+		"turn_ended",
+		self,
+		"_on_PlayerCharacter_turn_ended"
+	)
+
+
+# Disconnect signals from this state.
+func _disconnect_signals() -> void:
+	SignalBus.disconnect(
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
+	)
+	SignalBus.disconnect(
+			"top_vertex_changed",
+			self,
+			"_on_SignalBus_top_vertex_changed"
+	)
+	GamepadHandler.disconnect(
 			"left_joystick_pulsed",
 			self,
 			"_on_GamepadHandler_left_joystick_pulsed"
@@ -166,18 +179,24 @@ func _on_SignalBus_player_action_selected(
 
 
 # Go to the "WAIT" state when the UI has signaled that a player turn has ended.
-func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
-	if player == selector.active_player:
-		selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
-		_move_origin_index = -1
-		_movement_ids.clear()
+func _on_PlayerCharacter_turn_ended() -> void:
+	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	_move_origin_index = -1
+	_movement_ids.clear()
 	if _state_is_active():
+		selector.active_player.disconnect(
+				"turn_ended",
+				self,
+				"_on_PlayerCharacter_turn_ended"
+		)
 		state_machine.transition_to(WAIT)
 
 
 # Update the mouse tracker when the camera changes orientation.
 func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
-	MouseHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
+	MouseHandler.update_mouse_tracker_3d(
+			selector.tile_hovered.get_character_position()
+	)
 
 
 # Resolves the left joystick pulse input.

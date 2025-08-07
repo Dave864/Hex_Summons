@@ -47,31 +47,7 @@ func enter(msg: Dictionary = {}) -> void:
 # function to clean up the state.
 func exit() -> void:
 	selector.set_update_selection_func(null)
-	SignalBus.disconnect(
-			"player_action_selected",
-			self,
-			"_on_SignalBus_player_action_selected"
-	)
-	SignalBus.disconnect(
-			"player_action_type_canceled",
-			self,
-			"_on_SignalBus_player_action_type_canceled"
-	)
-	SignalBus.disconnect(
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
-	)
-	SignalBus.disconnect(
-			"top_vertex_changed",
-			self,
-			"_on_SignalBus_top_vertex_changed"
-	)
-	GamepadHandler.disconnect(
-			"left_joystick_pulsed",
-			self,
-			"_on_GamepadHandler_left_joystick_pulsed"
-	)
+	_disconnect_signals()
 
 
 # Handles input events.
@@ -451,6 +427,12 @@ func _reset() -> void:
 # Connect signals to this state.
 func _connect_signals() -> void:
 	ErrorUtil.connect_signal(
+			selector.active_player,
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
+	)
+	ErrorUtil.connect_signal(
 			SignalBus,
 			"player_action_selected",
 			self,
@@ -464,18 +446,41 @@ func _connect_signals() -> void:
 	)
 	ErrorUtil.connect_signal(
 			SignalBus,
-			"player_turn_ended",
-			self,
-			"_on_SignalBus_player_turn_ended"
-	)
-	ErrorUtil.connect_signal(
-			SignalBus,
 			"top_vertex_changed",
 			self,
 			"_on_SignalBus_top_vertex_changed"
 	)
 	ErrorUtil.connect_signal(
 			GamepadHandler,
+			"left_joystick_pulsed",
+			self,
+			"_on_GamepadHandler_left_joystick_pulsed"
+	)
+
+
+# Disconnect signals from this state.
+func _disconnect_signals() -> void:
+	selector.active_player.disconnect(
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
+	)
+	SignalBus.disconnect(
+			"player_action_selected",
+			self,
+			"_on_SignalBus_player_action_selected"
+	)
+	SignalBus.disconnect(
+			"player_action_type_canceled",
+			self,
+			"_on_SignalBus_player_action_type_canceled"
+	)
+	SignalBus.disconnect(
+			"top_vertex_changed",
+			self,
+			"_on_SignalBus_top_vertex_changed"
+	)
+	GamepadHandler.disconnect(
 			"left_joystick_pulsed",
 			self,
 			"_on_GamepadHandler_left_joystick_pulsed"
@@ -505,9 +510,7 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 
 
 # Go to the "WAIT" state when a player has signaled that their turn is ended.
-func _on_SignalBus_player_turn_ended(player: PlayerCharacter) -> void:
-	if player != selector.active_player:
-		return
+func _on_PlayerCharacter_turn_ended() -> void:
 	_reset()
 	state_machine.transition_to(WAIT)
 
