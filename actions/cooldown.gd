@@ -21,8 +21,8 @@ func is_active() -> bool:
 	return _countdown > 0
 
 
-# Resets the cooldown countdown.
-func reset() -> void:
+# Starts the cooldown countdown.
+func start_countdown() -> void:
 	_countdown = turn_count
 
 

@@ -55,6 +55,17 @@ func _ready() -> void:
 # Initializes the action effects.
 func _initialize_actions() -> void:
 	for t in _techniques:
+		assert(
+				t.has_node("Cooldown"),
+				"Player class {0} technique {1} is missing a Cooldown " \
+				+"node.".format([_player_class.name, t.name])
+		)
+		ErrorUtil.connect_signal(
+				self,
+				"turn_ended",
+				t.get_node("Cooldown"),
+				"_on_Character_turn_ended"
+		)
 		t.source_stats = stats
 		t.initialize_effects()
 		t.initialize_caster_id(get_instance_id())

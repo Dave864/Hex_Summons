@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://character/player_classes/player_class.gd" type="Script" id=1]
 [ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=2]
 [ext_resource path="res://character/player_classes/TestMeleeClass/stat_data/stat_values.tres" type="Resource" id=3]
 [ext_resource path="res://actions/Strike/Strike.tscn" type="PackedScene" id=4]
 [ext_resource path="res://actions/Sweep/Sweep.tscn" type="PackedScene" id=5]
+[ext_resource path="res://actions/cooldown.gd" type="Script" id=6]
 
 [node name="TestMeleeClass" type="Node"]
 script = ExtResource( 1 )
@@ -17,6 +18,13 @@ base_stat_values = ExtResource( 3 )
 
 [node name="Strike" parent="Techniques" instance=ExtResource( 4 )]
 
+[node name="Cooldown" type="Node" parent="Techniques/Strike"]
+script = ExtResource( 6 )
+
 [node name="Sweep" parent="Techniques" instance=ExtResource( 5 )]
+
+[node name="Cooldown" type="Node" parent="Techniques/Sweep"]
+script = ExtResource( 6 )
+turn_count = 1
 
 [node name="Spells" type="Node" parent="."]
