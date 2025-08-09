@@ -38,31 +38,32 @@ func update_distance_map() -> void:
 # Determines the actions that need to be taken for the character based on the
 # current state of the map.
 func determine_action_chain() -> Array:
-	"""
-	TODO: Implement logic for determining what actions to take.
-	For now, the enemy character moves as close as it can to the closest player
-	character with the highest threat.
-	"""
-	var action_chain: Array = []
-	var movement_range: Array = (
-		_h_map.range_finder.get_character_travesible_tiles(
-				_enemies[_char_id],
-				_players.values()
+	# Go through each action and execute the first one that is available
+	# with valid targets in range.
+	var actionBehavior: ActionBehavior = null
+	var targets: Array
+	for action in _actions:
+		actionBehavior = action.get_node_or_null("ActionBehavior")
+		assert(
+				actionBehavior != null,
+				"Action {s} is missing an ActionBehavior node." \
+				.format([action.name])
 		)
-	)
-	var target_ids: Array = _determine_player_threat_order()
-	var target_index: int = _players[target_ids[0]].map_coordinate.get_index()
-	var path: PoolVector3Array = (
-		_h_map.range_finder.get_character_point_path_toward(
-				_enemies[_char_id],
-				target_index,
-				_enemies.values(),
-				_players.values(),
-				movement_range
-		)
-	)
-	action_chain.push_front([MOVE, path])
-	return action_chain
+		match actionBehavior.target_behavior:
+			ActionBehavior.Target.ALLIES:
+				targets = _enemies.values()
+			ActionBehavior.Target.OPPONENTS:
+				targets = _players.values()
+			_:
+				targets = []
+			
+		if !actionBehavior.conditions_met(_enemies[_char_id], targets, _d_map):
+			continue
+		var target_index: int = _determine_target_index(action)
+		# Check if target is in range of action
+		# Determine move path if action is in range
+		# Determine orientation for action
+	return _default_chain()
 
 
 # Obtains the necessary references to run the AI logic.
@@ -87,6 +88,40 @@ func _ready() -> void:
 	_actions = get_node(actions_ref).get_children()
 
 
+# Default behaviour. The character moves as close as it can to the closest
+# target character with the highest threat.
+func _default_chain() -> Array:
+	var action_chain: Array = []
+	var movement_range: Array = (
+		_h_map.range_finder.get_character_travesible_tiles(
+				_enemies[_char_id],
+				_players.values()
+		)
+	)
+	var target_ids: Array = _determine_player_threat_order()
+	var target_index: int = _players[target_ids[0]].map_coordinate.get_index()
+	var path: PoolVector3Array = (
+		_h_map.range_finder.get_character_point_path_toward(
+				_enemies[_char_id],
+				target_index,
+				_enemies.values(),
+				_players.values(),
+				movement_range
+		)
+	)
+	action_chain.push_front([MOVE, path])
+	return action_chain
+
+
+# Determines the index of the tile the character will target.
+func _determine_target_index(action: Action) -> int:
+	var action_behavior: ActionBehavior = action.get_node("ActionBehavior")
+	if action_behavior.target_group():
+		pass
+	var target_ids: Array = _determine_player_threat_order()
+	return _players[target_ids[0]].map_coordinate.get_index()
+
+
 # Gets the threat order of player characters.
 func _determine_player_threat_order() -> Array:
 	var danger_players: Array = _players.keys()
@@ -95,7 +130,7 @@ func _determine_player_threat_order() -> Array:
 
 
 # Gets the threat order of enemy characters.
-func _determine_dangerous_enemy_index() -> Array:
+func _determine_enemy_threat_order() -> Array:
 	var danger_enemies: Array = _enemies.keys()
 	danger_enemies.sort_custom(self, "_sort_enemy_danger")
 	return danger_enemies
@@ -121,6 +156,14 @@ func _sort_enemy_danger(e_a: int, e_b: int) -> bool:
 	var threat_a: float = _e_ttr.get_threat_values()[e_a]["value"] / dis_a
 	var threat_b: float = _e_ttr.get_threat_values()[e_b]["value"] / dis_b
 	return threat_a > threat_b
+
+
+# Sorts group centers by their distances from the character, closest ones being
+# first.
+func _sort_group_center(center_a: Vector3, center_b: Vector3) -> bool:
+	var index_a: int = HexUtil.cube_to_index(center_a, _h_map.get_x_count())
+	var index_b: int = HexUtil.cube_to_index(center_b, _h_map.get_x_count())
+	return _d_map[index_a]["travel"] < _d_map[index_b]["travel"]
 
 
 # Check that all required parameters are set.
