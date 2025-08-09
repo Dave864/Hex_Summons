@@ -15,8 +15,7 @@ export(bool) var below = false
 # state of the characters and map.
 func is_met(
 	character: Character,
-	_players: Array,
-	_enemies: Array,
+	_targets: Array,
 	_distance_map: Dictionary
 ) -> bool:
 	var cur_health: int = character.stats.get_stat(Stat.Type.CUR_HEALTH)

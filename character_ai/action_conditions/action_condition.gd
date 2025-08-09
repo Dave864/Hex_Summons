@@ -10,8 +10,7 @@ to be considered for use by a CharacterAI.
 # state of the characters and map.
 func is_met(
 	_character: Character,
-	_players: Array,
-	_enemies: Array,
+	_targets: Array,
 	_distance_map: Dictionary
 ) -> bool:
 	return true

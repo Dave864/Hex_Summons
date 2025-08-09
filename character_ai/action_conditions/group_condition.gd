@@ -17,26 +17,30 @@ export(int, 2, 10) var min_group_size = 2
 export(int, 1, 10) var max_distance = 1
 
 var _groups: Dictionary = {}
-var _group_cube_centers: Array = []
 
 
 # Virtual function. Checks if the condition has been met given the current
 # state of the characters and map.
 func is_met(
-	character: Character,
-	players: Array,
-	enemies: Array,
+	_character: Character,
+	targets: Array,
 	_distance_map: Dictionary
 ) -> bool:
 	_groups.clear()
-	_group_cube_centers.clear()
-	match character.get_type():
-		Character.Type.PLAYER:
-			return _determine_groups(enemies)
-		Character.Type.ENEMY:
-			return _determine_groups(players)
-		_:
-			return false
+	return _determine_groups(targets)
+
+
+# Determines the map cube coordinates that best represents the center point of
+# groups. Calculates the centroid to use as the center.
+func find_group_cube_centers() -> Array:
+	var _group_cube_centers: Array = []
+	for g in _groups.values():
+		var center: Vector3 = Vector3.ZERO
+		for c in g:
+			center += c.map_coordinate.get_cube_coord()
+		center /= g.size()
+		_group_cube_centers.append(center.round())
+	return _group_cube_centers
 
 
 # Determines the characters that are grouped together. Returns if any groups
@@ -94,16 +98,3 @@ func _neighbors(reference_char: Character, characters: Array) -> Array:
 		if abs(HexUtil.cube_dist(ref_coord, c_coord)) <= max_distance:
 			n.append(c)
 	return n
-
-
-# Determines the map cube coordinates that best represents the center point of
-# groups. Calculates the centroid to use as the center.
-func _find_group_cube_centers() -> void:
-	for g in _groups.values():
-		var center: Vector3 = Vector3.ZERO
-		for c in g:
-			center += c.map_coordinate.get_cube_coord()
-		center.x /= g.size()
-		center.y /= g.size()
-		center.z /= g.size()
-		_group_cube_centers.append(center.round())

@@ -20,22 +20,10 @@ export(Condition) var check_type = Condition.EQUALS
 # state of the characters and map.
 func is_met(
 	character: Character,
-	players: Array,
-	enemies: Array,
+	targets: Array,
 	distance_map: Dictionary
 ) -> bool:
-	var adjacent_count: int = 0
-	match character.get_type():
-		Character.Type.PLAYER:
-			adjacent_count = _determine_adjacent_count(
-					enemies,
-					distance_map
-			)
-		Character.Type.ENEMY:
-			adjacent_count = _determine_adjacent_count(
-					players,
-					distance_map
-			)
+	var adjacent_count: int = _determine_adjacent_count(targets, distance_map)
 	return (
 			adjacent_check < adjacent_check if check_type == Condition.LESS
 			else adjacent_count > adjacent_check if check_type == Condition.MORE
