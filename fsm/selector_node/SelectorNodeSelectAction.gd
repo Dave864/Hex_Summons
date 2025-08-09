@@ -204,6 +204,8 @@ func _place_closest_to_target() -> void:
 func _place_closest_to_tile(tile_index: int) -> void:
 	var player_index_details: Dictionary = _source_d_map[_player_map_index]
 	var ignore_player_index: bool = _action.dead_range.get_reach() > 0
+	# Remove player index when looking at dead range to prevent player position
+	# from being considered a valid placement spot.
 	if ignore_player_index:
 		_source_d_map.erase(_player_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
