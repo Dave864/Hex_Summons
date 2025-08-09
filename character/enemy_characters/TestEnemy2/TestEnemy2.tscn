@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattleSprite.atlastex" type="Texture" id=1]
 [ext_resource path="res://character/enemy_characters/enemy_character.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://actions/Shot/Shot.tscn" type="PackedScene" id=15]
 [ext_resource path="res://actions/Blast/Blast.tscn" type="PackedScene" id=16]
 [ext_resource path="res://actions/cooldown.gd" type="Script" id=17]
+[ext_resource path="res://character_ai/action_behavior.gd" type="Script" id=18]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.1
@@ -70,11 +71,21 @@ actions_ref = NodePath("../Actions")
 
 [node name="Blast" parent="Actions" instance=ExtResource( 16 )]
 
-[node name="Cooldown" type="Node" parent="Actions/Blast"]
+[node name="ActionBehavior" type="Node" parent="Actions/Blast"]
+script = ExtResource( 18 )
+target_behavior = 2
+movement_behavior = 2
+
+[node name="Cooldown" type="Node" parent="Actions/Blast/ActionBehavior"]
 script = ExtResource( 17 )
 turn_count = 1
 
 [node name="Shot" parent="Actions" instance=ExtResource( 15 )]
+
+[node name="ActionBehavior" type="Node" parent="Actions/Shot"]
+script = ExtResource( 18 )
+target_behavior = 2
+movement_behavior = 2
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )
@@ -93,5 +104,5 @@ script = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
-[connection signal="turn_ended" from="." to="Actions/Blast/Cooldown" method="_on_Character_turn_ended"]
+[connection signal="turn_ended" from="." to="Actions/Blast/ActionBehavior/Cooldown" method="_on_Character_turn_ended"]
 [connection signal="area_entered" from="HitBox" to="EffectsTracker" method="_on_HitBox_area_entered"]
