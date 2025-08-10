@@ -8,8 +8,8 @@ adjacent.
 
 enum Condition {
 	EQUALS,
-	MORE,
-	LESS
+	AT_LEAST,
+	UP_TO
 }
 
 export(int, 0, 10) var adjacent_check = 1
@@ -23,11 +23,11 @@ func is_met(
 	targets: Array,
 	distance_map: Dictionary
 ) -> bool:
-	var adjacent_count: int = _determine_adjacent_count(targets, distance_map)
+	var adj_ct: int = _determine_adjacent_count(targets, distance_map)
 	return (
-			adjacent_check < adjacent_check if check_type == Condition.LESS
-			else adjacent_count > adjacent_check if check_type == Condition.MORE
-			else adjacent_count == adjacent_check
+			adj_ct <= adjacent_check if check_type == Condition.UP_TO
+			else adj_ct >= adjacent_check if check_type == Condition.AT_LEAST
+			else adj_ct == adjacent_check
 	)
 
 

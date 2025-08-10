@@ -59,11 +59,13 @@ func determine_action_chain() -> Array:
 			
 		if !actionBehavior.conditions_met(_enemies[_char_id], targets, _d_map):
 			continue
-		var target_index: int = _determine_target_index(action)
+		var target_index: int = _determine_target_index(actionBehavior)
+		print(target_index)
 		# Check if target is in range of action
 		# Determine move path if action is in range
-		# Determine orientation for action
-	return _default_chain()
+		# Determine orientation for action? Orientation could also be determined
+		# in Action state
+	return [] # _default_chain()
 
 
 # Obtains the necessary references to run the AI logic.
@@ -113,20 +115,19 @@ func _default_chain() -> Array:
 	return action_chain
 
 
-# Determines the index of the tile the character will target. The 'action'
-# parameter is of type Action, but static typing it results in a cyclical error.
-func _determine_target_index(action) -> int:
-	var ab: ActionBehavior = action.get_node("ActionBehavior")
+# Determines the index of the tile the character will target.
+func _determine_target_index(ab: ActionBehavior) -> int:
 	if ab.target_group():
-		return _group_target_index(ab.get_group_condition())
+		print("Find group target")
+		return _group_target_index(ab.get_group_condition(), ab.target_focus)
 	var target_ids: Array = _determine_player_threat_order()
 	return _players[target_ids[0]].map_coordinate.get_index()
 
 
 # Gets the target index based on a group condition.
-func _group_target_index(gc: GroupCondition) -> int:
+func _group_target_index(gc: GroupCondition, target_focus: int) -> int:
 	var groups: Dictionary = gc.find_group_index_centers(_h_map.get_x_count())
-	match gc.target_focus:
+	match target_focus:
 		ActionBehavior.TargetFocus.CLOSEST:
 			var sorted_centers: Array = groups.keys()
 			sorted_centers.sort_custom(self, "_sort_group_center_dist")
