@@ -66,7 +66,7 @@ func _ready():
 			_conditions.append(n)
 			if n is GroupCondition:
 				assert(
-						n == null,
+						_target_group == false,
 						"Multiple GroupCondition nodes assigned to ActionBehavior"
 				)
 				_target_group = true
