@@ -29,6 +29,7 @@ export(Movement) var movement_behavior = Movement.STAND
 var _cooldown: Cooldown = null
 var _conditions: Array = []
 var _target_group: bool = false setget , target_group
+var _group_condition: GroupCondition = null setget , get_group_condition
 
 
 # Evaluates if all conditions have been met.
@@ -47,18 +48,29 @@ func conditions_met(
 	return true
 
 
-# Returns if the action should target a group
+# Returns if the action should target a group.
 func target_group() -> bool:
 	return _target_group
 
 
+# Returns the GroupCondition node reference.
+func get_group_condition() -> GroupCondition:
+	return _group_condition
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	_target_group = false
 	for n in get_children():
 		if n is ActionCondition:
 			_conditions.append(n)
 			if n is GroupCondition:
+				assert(
+						n == null,
+						"Multiple GroupCondition nodes assigned to ActionBehavior"
+				)
 				_target_group = true
+				_group_condition = n
 		elif n is Cooldown:
 			assert(
 					_cooldown == null,

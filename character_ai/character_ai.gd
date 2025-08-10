@@ -49,7 +49,7 @@ func determine_action_chain() -> Array:
 				"Action {s} is missing an ActionBehavior node." \
 				.format([action.name])
 		)
-		match actionBehavior.target_behavior:
+		match actionBehavior.target:
 			ActionBehavior.Target.ALLIES:
 				targets = _enemies.values()
 			ActionBehavior.Target.OPPONENTS:
@@ -113,13 +113,34 @@ func _default_chain() -> Array:
 	return action_chain
 
 
-# Determines the index of the tile the character will target.
-func _determine_target_index(action: Action) -> int:
-	var action_behavior: ActionBehavior = action.get_node("ActionBehavior")
-	if action_behavior.target_group():
-		pass
+# Determines the index of the tile the character will target. The 'action'
+# parameter is of type Action, but static typing it results in a cyclical error.
+func _determine_target_index(action) -> int:
+	var ab: ActionBehavior = action.get_node("ActionBehavior")
+	if ab.target_group():
+		return _group_target_index(ab.get_group_condition())
 	var target_ids: Array = _determine_player_threat_order()
 	return _players[target_ids[0]].map_coordinate.get_index()
+
+
+# Gets the target index based on a group condition.
+func _group_target_index(gc: GroupCondition) -> int:
+	var groups: Dictionary = gc.find_group_index_centers(_h_map.get_x_count())
+	match gc.target_focus:
+		ActionBehavior.TargetFocus.CLOSEST:
+			var sorted_centers: Array = groups.keys()
+			sorted_centers.sort_custom(self, "_sort_group_center_dist")
+			return sorted_centers[0]
+		ActionBehavior.TargetFocus.FARTHEST:
+			var sorted_centers: Array = groups.keys()
+			sorted_centers.sort_custom(self, "_sort_group_center_dist")
+			return sorted_centers[-1]
+		_:
+			var sorted_centers: Array = []
+			for center in groups.keys():
+				sorted_centers.append([center, groups[center]])
+			sorted_centers.sort_custom(self, "_sort_group_center_threat")
+			return sorted_centers[0][0]
 
 
 # Gets the threat order of player characters.
@@ -137,7 +158,7 @@ func _determine_enemy_threat_order() -> Array:
 
 
 # Sorts players by their distances and threat values. Threat value is used as
-# the determining factor, but threat value is affected by the targets distance
+# the determining factor, but threat value is affected by the target's distance
 # from the observer.
 func _sort_player_danger(p_a: int, p_b: int) -> bool:
 	var dis_a: float = _d_map[_players[p_a].map_coordinate.get_index()]["travel"]
@@ -148,7 +169,7 @@ func _sort_player_danger(p_a: int, p_b: int) -> bool:
 
 
 # Sorts enemies by their distances and threat values. Threat value is used as
-# the determining factor, but threat value is affected by the targets distance
+# the determining factor, but threat value is affected by the target's distance
 # from the observer.
 func _sort_enemy_danger(e_a: int, e_b: int) -> bool:
 	var dis_a: float = _d_map[_enemies[e_a].map_coordinate.get_index()]["travel"]
@@ -160,10 +181,33 @@ func _sort_enemy_danger(e_a: int, e_b: int) -> bool:
 
 # Sorts group centers by their distances from the character, closest ones being
 # first.
-func _sort_group_center(center_a: Vector3, center_b: Vector3) -> bool:
-	var index_a: int = HexUtil.cube_to_index(center_a, _h_map.get_x_count())
-	var index_b: int = HexUtil.cube_to_index(center_b, _h_map.get_x_count())
-	return _d_map[index_a]["travel"] < _d_map[index_b]["travel"]
+func _sort_group_center_dist(center_a: int, center_b: int) -> bool:
+	return _d_map[center_a]["travel"] < _d_map[center_b]["travel"]
+
+
+# Sorts group centers by their distances and threat values. Threat value is used
+# as the determining factor, but threat value is affected by the center's distance
+# from the observer.
+func _sort_group_center_threat(group_a: Array, group_b: Array) -> bool:
+	var threat_a: float = 0.0
+	for c in group_a[1]:
+		var dis : float = _d_map[c.map_coordinate.get_index()]["travel"]
+		var raw_threat: float = (
+			_e_ttr.get_threat_values()[c.get_instance_id()]["value"]
+			if c.get_type() == Character.Type.ENEMY
+			else _p_ttr.get_threat_values()[c.get_instance_id()]["value"]
+		)
+		threat_a += raw_threat / dis
+	var threat_b: float = 0.0
+	for c in group_b[1]:
+		var dis : float = _d_map[c.map_coordinate.get_index()]["travel"]
+		var raw_threat: float = (
+			_e_ttr.get_threat_values()[c.get_instance_id()]["value"]
+			if c.get_type() == Character.Type.ENEMY
+			else _p_ttr.get_threat_values()[c.get_instance_id()]["value"]
+		)
+		threat_b += raw_threat / dis
+	return threat_a > threat_b
 
 
 # Check that all required parameters are set.

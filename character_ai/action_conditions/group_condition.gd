@@ -30,17 +30,19 @@ func is_met(
 	return _determine_groups(targets)
 
 
-# Determines the map cube coordinates that best represents the center point of
-# groups. Calculates the centroid to use as the center.
-func find_group_cube_centers() -> Array:
-	var _group_cube_centers: Array = []
+# Determines the map index coordinates that best represents the center point of
+# groups. Calculates the centroid to use as the center. Accepts the number of
+# tiles in a row of a hex map as a parameter. Returns a dictionary with the
+# center points as the key and the group members as the value.
+func find_group_index_centers(x_count: int) -> Dictionary:
+	var _group_centers: Dictionary = {}
 	for g in _groups.values():
 		var center: Vector3 = Vector3.ZERO
 		for c in g:
 			center += c.map_coordinate.get_cube_coord()
 		center /= g.size()
-		_group_cube_centers.append(center.round())
-	return _group_cube_centers
+		_group_centers[HexUtil.cube_to_index(center.round(), x_count)] = g
+	return _group_centers
 
 
 # Determines the characters that are grouped together. Returns if any groups
