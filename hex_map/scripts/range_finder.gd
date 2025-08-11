@@ -193,7 +193,7 @@ func _disable_character_tiles(
 
 
 # Helper function for get_character_point_path_toward. Finds the closest path
-# to a destination within a character's movement area where the final point is
+# to a destination within a character's movement range where the final point is
 # not occupied by an ally.
 func _determine_closest_point_toward(
 	c: Character,

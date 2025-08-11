@@ -38,9 +38,9 @@ func update_distance_map() -> void:
 # Determines the actions that need to be taken for the character based on the
 # current state of the map.
 func determine_action_chain() -> Array:
-	# Go through each action and execute the first one that is available
-	# with valid targets in range.
-	var character: EnemyCharacter = _enemies[_char_id]
+	# This variable should be of type EnemyCharacter. Defining the type here
+	# results in a cyclic reference.
+	var character = _enemies[_char_id]
 	var ab: ActionBehavior = null
 	var targets: Array
 	for action in _actions:
@@ -58,7 +58,7 @@ func determine_action_chain() -> Array:
 			_:
 				targets = []
 			
-		if !ab.conditions_met(_enemies[_char_id], targets, _d_map):
+		if not ab.conditions_met(_enemies[_char_id], targets, _d_map):
 			continue
 		var target_index: int = _determine_target_index(ab)
 		print(target_index)
@@ -67,20 +67,17 @@ func determine_action_chain() -> Array:
 			0 if ab.movement_behavior == ActionBehavior.Movement.STAND
 			else character.stats.get_movement_range() 
 		)
-		if (
-			!_h_map.range_finder.is_in_action_range(
-					target_index,
-					action,
-					character.map_coordinate.get_index(),
-					movement,
-					_players.values()
-			)
+		if not _action_in_range(
+				action,
+				target_index,
+				character.map_coordinate.get_index(),
+				movement
 		):
 			continue
 		# Determine move path if action is in range
 		# Determine orientation for action? Orientation could also be determined
 		# in Action state
-	return [] # _default_chain()
+	return _default_chain()
 
 
 # Obtains the necessary references to run the AI logic.
@@ -171,6 +168,19 @@ func _determine_enemy_threat_order() -> Array:
 	var danger_enemies: Array = _enemies.keys()
 	danger_enemies.sort_custom(self, "_sort_enemy_danger")
 	return danger_enemies
+
+
+# Determines if the action is in range of the target.
+func _action_in_range(
+	action: Action,
+	target: int,
+	source: int,
+	movement: int
+) -> bool:
+	# Process movement
+	# Process action source range
+	# Process action effecct range
+	return false
 
 
 # Sorts players by their distances and threat values. Threat value is used as
