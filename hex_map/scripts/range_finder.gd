@@ -79,24 +79,27 @@ func get_closest_in_area(start_id: int, area_d_map: Dictionary) -> int:
 	return target_id
 
 
-# Determines the tile id within a given area that is closest to a destination.
-func get_closest_index_toward(
+# Determines the path id that gets closest to a destination within a distance
+# limit.
+func get_closest_id_path(
 	start_id: int,
 	dest_id: int,
-	movement_area_ids: Array
-) -> int:
+	max_dist: int,
+	use_tile_dist: bool = false
+) -> PoolIntArray:
 	_hm_astar.set_all_disabled(false)
-	var path_to_dest: PoolIntArray = _hm_astar.get_id_path(start_id, dest_id)
+	if use_tile_dist:
+		_hm_astar.set_cost_to_tile()
+	var path_to_dest: PoolIntArray = _hm_astar.get_closest_id_path(
+			start_id,
+			dest_id,
+			max_dist
+	)
 	# Reset for future range finder operations.
 	_hm_astar.set_all_disabled()
-	
-	var closest_id: int = dest_id
-	for i in range(path_to_dest.size() - 1, 0, -1):
-		if not path_to_dest[i] in movement_area_ids:
-			closest_id = path_to_dest[i - 1]
-		else:
-			break
-	return closest_id
+	if use_tile_dist:
+		_hm_astar.set_cost_to_travel()
+	return path_to_dest
 
 
 # Determines the path within a character's movement area that gets closest
@@ -131,8 +134,7 @@ func get_character_point_path_toward(
 	var true_dest_id: int = _determine_closest_point_toward(
 			c,
 			start_id,
-			dest_id,
-			movement_area_ids
+			dest_id
 	)
 	# Only enable the movement area
 	_hm_astar.set_all_disabled()
@@ -147,7 +149,7 @@ func get_character_point_path_toward(
 		players,
 		c.get_type() == Character.Type.ENEMY
 	)
-	
+
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(
 			start_id,
 			true_dest_id
@@ -172,29 +174,6 @@ func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
 	return move_distances.keys()
 
 
-# Checks if the map tile at the given index is within the range of an action.
-# Requires the character movement and position.
-func is_in_action_range(
-	target_index: int,
-	action: Action,
-	source_index: int,
-	movement: int,
-	opponents: Array
-) -> bool:
-	# Enable all connections to make sure distance can be found.
-	_hm_astar.set_all_disabled(false)
-	_disable_character_tiles(opponents, true)
-	var in_range: bool = _hm_astar.is_in_action_range(
-			target_index,
-			action,
-			source_index,
-			movement
-	)
-	# Reset for future range finder operations.
-	_hm_astar.set_all_disabled()
-	return in_range
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_map_tiles = get_node(map_tiles_reference)
@@ -213,35 +192,34 @@ func _disable_character_tiles(
 		_hm_astar.set_point_disabled(c.map_coordinate.get_index(), disabled)
 
 
-# Helper function for get_character_point_path_toward. Finds the closest point
-# to a destination within a character's movement area that the character can move to.
+# Helper function for get_character_point_path_toward. Finds the closest path
+# to a destination within a character's movement area where the final point is
+# not occupied by an ally.
 func _determine_closest_point_toward(
 	c: Character,
 	start_id: int,
-	dest_id: int,
-	movement_area_ids: Array
+	dest_id: int
 ) -> int:
-	var true_dest_id: int = dest_id
+	var true_dest_id: int
+	var closest_path: PoolIntArray = []
 	while true:
-		var path_to_dest: PoolIntArray = _hm_astar.get_id_path(
+		closest_path = _hm_astar.get_closest_id_path(
 				start_id,
-				dest_id
+				dest_id,
+				c.stats.get_movement_range()
 		)
+		true_dest_id = closest_path[-1]
 		# Determine the last point in the path that is within the movement 
 		# range. A tile occupied by an opponent is not considered within
 		# movement range.
-		for i in range(path_to_dest.size() - 1, 0, -1):
+		for i in range(closest_path.size() - 1, 0, -1):
 			var occupant: Character = (
-					_map_tiles.get_at(path_to_dest[i]) \
+					_map_tiles.get_at(closest_path[i]) \
 					.occupant.get_current_occupant()
 			)
-			if (
-				not path_to_dest[i] in movement_area_ids
-				or (occupant != null and occupant.get_type() != c.get_type())
-			):
-				true_dest_id = path_to_dest[i - 1]
-			else:
+			if occupant == null or occupant.get_type() == c.get_type():
 				break
+			true_dest_id = closest_path[i - 1]
 		# Check if the found destination tile is occupied by an ally other 
 		# than itself. If so, disable that tile and recalculate the shortest path.
 		var dest_occupant: Character = (
@@ -250,7 +228,7 @@ func _determine_closest_point_toward(
 		)
 		if (
 			dest_occupant != null
-			and dest_occupant.name != c.name
+			and dest_occupant.get_instance_id() != c.get_instance_id()
 			and dest_occupant.get_type() == c.get_type()
 		):
 			_hm_astar.set_point_disabled(true_dest_id, true)
