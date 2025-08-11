@@ -19,7 +19,7 @@ export(Condition) var check_type = Condition.EQUALS
 # Virtual function. Checks if the condition has been met given the current
 # state of the characters and map.
 func is_met(
-	character: Character,
+	_character: Character,
 	targets: Array,
 	distance_map: Dictionary
 ) -> bool:
