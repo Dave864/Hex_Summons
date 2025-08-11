@@ -26,7 +26,6 @@ func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictiona
 	while not frontier.empty():
 		var current: Array = frontier.min()
 		frontier.pop_min()
-
 		for next_id in get_point_connections(current[1]):
 			if is_point_disabled(next_id):
 				continue
@@ -43,7 +42,6 @@ func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictiona
 			):
 				id_distances[next_id] = {"travel": travel_dist, "tile": tile_dist}
 				frontier.push(travel_dist, next_id)
-
 	frontier.free()
 	return id_distances
 
@@ -61,25 +59,21 @@ func get_closest_in_area(
 		return -1
 	if area_d_map.size() == 1:
 		return area_d_map.keys()[0]
-	
 	var frontier: PQueue = PQueue.new()
 	var id_distances: Dictionary = {}
 	var closest: Array = [INF, -1]
 	# Used to stop when all area_d_map ids have been checked.
 	var checked_count: int = 0
-
 	frontier.push(0.0, start_id)
 	id_distances[start_id] = 0
 	while not frontier.empty() and checked_count < area_d_map.size():
 		var current: Array = frontier.min()
 		frontier.pop_min()
-		
 		if area_d_map.has(current[1]):
 			checked_count += 1
 			if current[0] < closest[0]:
 				closest = current
 			continue
-
 		for next_id in get_point_connections(current[1]):
 			if is_point_disabled(next_id):
 				continue
@@ -90,10 +84,22 @@ func get_closest_in_area(
 			):
 				id_distances[next_id] = tile_dist
 				frontier.push(tile_dist, next_id)
-
 	frontier.free()
 	id_distances.clear()
 	return closest[1]
+
+
+# Checks if a target tile is within range of a character's action.
+func is_in_action_range(
+	target_index: int,
+	action: Action,
+	source_index: int,
+	movement: int
+) -> bool:
+	# Process movement
+	# Process source range
+	# Process effect range
+	return false
 
 
 # Determines the travel distance from the start to the end.

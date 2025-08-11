@@ -172,6 +172,29 @@ func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
 	return move_distances.keys()
 
 
+# Checks if the map tile at the given index is within the range of an action.
+# Requires the character movement and position.
+func is_in_action_range(
+	target_index: int,
+	action: Action,
+	source_index: int,
+	movement: int,
+	opponents: Array
+) -> bool:
+	# Enable all connections to make sure distance can be found.
+	_hm_astar.set_all_disabled(false)
+	_disable_character_tiles(opponents, true)
+	var in_range: bool = _hm_astar.is_in_action_range(
+			target_index,
+			action,
+			source_index,
+			movement
+	)
+	# Reset for future range finder operations.
+	_hm_astar.set_all_disabled()
+	return in_range
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_map_tiles = get_node(map_tiles_reference)

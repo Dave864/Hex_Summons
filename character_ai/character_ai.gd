@@ -40,16 +40,17 @@ func update_distance_map() -> void:
 func determine_action_chain() -> Array:
 	# Go through each action and execute the first one that is available
 	# with valid targets in range.
-	var actionBehavior: ActionBehavior = null
+	var character: EnemyCharacter = _enemies[_char_id]
+	var ab: ActionBehavior = null
 	var targets: Array
 	for action in _actions:
-		actionBehavior = action.get_node_or_null("ActionBehavior")
+		ab = action.get_node_or_null("ActionBehavior")
 		assert(
-				actionBehavior != null,
+				ab != null,
 				"Action {s} is missing an ActionBehavior node." \
 				.format([action.name])
 		)
-		match actionBehavior.target:
+		match ab.target:
 			ActionBehavior.Target.ALLIES:
 				targets = _enemies.values()
 			ActionBehavior.Target.OPPONENTS:
@@ -57,11 +58,25 @@ func determine_action_chain() -> Array:
 			_:
 				targets = []
 			
-		if !actionBehavior.conditions_met(_enemies[_char_id], targets, _d_map):
+		if !ab.conditions_met(_enemies[_char_id], targets, _d_map):
 			continue
-		var target_index: int = _determine_target_index(actionBehavior)
+		var target_index: int = _determine_target_index(ab)
 		print(target_index)
 		# Check if target is in range of action
+		var movement: int = (
+			0 if ab.movement_behavior == ActionBehavior.Movement.STAND
+			else character.stats.get_movement_range() 
+		)
+		if (
+			!_h_map.range_finder.is_in_action_range(
+					target_index,
+					action,
+					character.map_coordinate.get_index(),
+					movement,
+					_players.values()
+			)
+		):
+			continue
 		# Determine move path if action is in range
 		# Determine orientation for action? Orientation could also be determined
 		# in Action state
