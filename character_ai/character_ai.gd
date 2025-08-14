@@ -18,9 +18,12 @@ export(NodePath) var actions_ref = null
 var _character: Character = null
 var _actions: Array = []
 var _h_map: HexMap = null
+# Distance map of all tiles in the HexMap. Tracks the travel and tile distances.
 var _d_map: Dictionary = {}
+# Tracks allies and opponents by their instance ids
 var _allies: Dictionary = {}
 var _opponents: Dictionary = {}
+# Threat trackers for allies and opponents
 var _a_ttr: ThreatTracker = null
 var _o_ttr: ThreatTracker = null
 
@@ -70,9 +73,12 @@ func determine_action_chain() -> Array:
 			print("action {0} out of range.".format([action.name]))
 			continue
 		print("execute acton {0}".format([action.name]))
-		break
 		# Determine orientation for action? Orientation could also be determined
 		# in Action state
+		return [
+				[MOVE, _determine_move_path(target_index, ab.movement_behavior)],
+				[ACTION, action, target_index]
+		]
 	return _default_chain()
 
 
@@ -96,30 +102,6 @@ func connect_encounter_details(
 func _ready() -> void:
 	_check_for_required_parameters()
 	_actions = get_node(actions_ref).get_children()
-
-
-# Default behaviour. The character moves as close as it can to the closest
-# target character with the highest threat.
-func _default_chain() -> Array:
-	var action_chain: Array = []
-	var movement_range: Array = (
-		_h_map.range_finder.get_character_travesible_tiles(
-				_character,
-				_opponents.values()
-		)
-	)
-	var target_ids: Array = _determine_opponent_threat_order()
-	var target_index: int = _opponents[target_ids[0]].map_coordinate.get_index()
-	var path: PoolVector3Array = (
-		_h_map.range_finder.get_character_point_path_toward(
-				_character,
-				target_index,
-				_opponents.values(),
-				movement_range
-		)
-	)
-	action_chain.push_front([MOVE, path])
-	return action_chain
 
 
 # Determines the index of the tile the character will target.
@@ -151,26 +133,15 @@ func _group_target_index(gc: GroupCondition, target_focus: int) -> int:
 			return sorted_centers[0][0]
 
 
-# Gets the threat order of opponent characters.
-func _determine_opponent_threat_order() -> Array:
-	var danger_opponents: Array = _opponents.keys()
-	danger_opponents.sort_custom(self, "_sort_opponent_danger")
-	return danger_opponents
-
-
-# Gets the threat order of ally characters.
-func _determine_ally_threat_order() -> Array:
-	var danger_allies: Array = _allies.keys()
-	danger_allies.sort_custom(self, "_sort_ally_danger")
-	return danger_allies
-
-
 # Determines if the action is in range of the target.
 func _action_in_range(
 	action: Action,
 	target_index: int,
 	movement: int
 ) -> bool:
+	"""
+	TODO: Add logic to account for dead ranges.
+	"""
 	# Process movement
 	if _d_map[target_index]["travel"] <= movement:
 		return true
@@ -180,8 +151,11 @@ func _action_in_range(
 			_opponents.values(),
 			movement
 	)
+	if _d_map[target_index]["travel"] <= movement:
+		return true
 	# Process action source range
 	var source_stop: int
+	# Source range not applied when action is emitted from center.
 	if action.emit_from_center:
 		source_stop = move_stop
 	else:
@@ -201,6 +175,66 @@ func _action_in_range(
 			action.effect_ignore_heights
 	)[-1]
 	return effect_stop == target_index
+
+
+# Determines the movement path for the action chain.
+func _determine_move_path(
+	target_index: int,
+	movement_behavior: int
+) -> PoolVector3Array:
+	var move_path: PoolVector3Array = []
+	match movement_behavior:
+		ActionBehavior.Movement.STAND:
+			var char_tile_index: int = _character.map_coordinate.get_index()
+			var start_tile: MapTile = _h_map.get_tile_at(char_tile_index)
+			move_path.append(start_tile.get_character_position())
+		ActionBehavior.Movement.TOWARD:
+			move_path = _calculate_move_path(target_index)
+		ActionBehavior.Movement.AWAY:
+			pass
+		_:
+			pass
+	return move_path
+
+
+# Default behaviour. The character moves as close as it can to the closest
+# target character with the highest threat.
+func _default_chain() -> Array:
+	var action_chain: Array = []
+	var target_ids: Array = _determine_opponent_threat_order()
+	var target_index: int = _opponents[target_ids[0]].map_coordinate.get_index()
+	action_chain.push_front([MOVE, _calculate_move_path(target_index)])
+	return action_chain
+
+
+# Calculates the movement path to the destination.
+func _calculate_move_path(dest: int) -> PoolVector3Array:
+	var movement_range: Array = (
+		_h_map.range_finder.get_character_travesible_tiles(
+				_character,
+				_opponents.values()
+		)
+	)
+	return _h_map.range_finder.get_character_point_path_toward(
+			_character,
+			dest,
+			_opponents.values(),
+			movement_range
+	)
+
+
+# Gets the threat order of opponent characters.
+func _determine_opponent_threat_order() -> Array:
+	var danger_opponents: Array = _opponents.keys()
+	danger_opponents.sort_custom(self, "_sort_opponent_danger")
+	return danger_opponents
+
+
+# Gets the threat order of ally characters.
+func _determine_ally_threat_order() -> Array:
+	var danger_allies: Array = _allies.keys()
+	danger_allies.sort_custom(self, "_sort_ally_danger")
+	return danger_allies
 
 
 # Sorts players by their distances and threat values. Threat value is used as
