@@ -41,7 +41,7 @@ func determine_action_chain() -> Array:
 		ab = action.get_node_or_null("ActionBehavior")
 		assert(
 				ab != null,
-				"Action {s} is missing an ActionBehavior node." \
+				"Action {0} is missing an ActionBehavior node." \
 				.format([action.name])
 		)
 		match ab.target:
@@ -53,6 +53,7 @@ func determine_action_chain() -> Array:
 				targets = []
 			
 		if not ab.conditions_met(_character, targets, _d_map):
+			print("action {0} conditions not met.".format([action.name]))
 			continue
 		var target_index: int = _determine_target_index(ab)
 		print(target_index)
@@ -64,10 +65,12 @@ func determine_action_chain() -> Array:
 		if not _action_in_range(
 				action,
 				target_index,
-				_character.map_coordinate.get_index(),
 				movement
 		):
+			print("action {0} out of range.".format([action.name]))
 			continue
+		print("execute acton {0}".format([action.name]))
+		break
 		# Determine orientation for action? Orientation could also be determined
 		# in Action state
 	return _default_chain()
@@ -166,21 +169,38 @@ func _determine_ally_threat_order() -> Array:
 func _action_in_range(
 	action: Action,
 	target_index: int,
-	source_index: int,
 	movement: int
 ) -> bool:
 	# Process movement
-	var move_step: int = _h_map.range_finder.get_character_closest_point_toward(
+	if _d_map[target_index]["travel"] <= movement:
+		return true
+	var move_stop: int = _h_map.range_finder.get_character_closest_point_toward(
 			_character,
 			target_index,
 			_opponents.values(),
 			movement
 	)
 	# Process action source range
-	var source_step: int
+	var source_stop: int
+	if action.emit_from_center:
+		source_stop = move_stop
+	else:
+		source_stop = _h_map.range_finder.get_closest_id_path(
+				move_stop,
+				target_index,
+				action.source_range.get_reach(),
+				action.source_ignore_heights
+		)[-1]
+	if source_stop == target_index:
+		return true
 	# Process action effect range
-	var effect_step: int
-	return false
+	var effect_stop: int = _h_map.range_finder.get_closest_id_path(
+			source_stop,
+			target_index,
+			action.effect_range.get_reach(),
+			action.effect_ignore_heights
+	)[-1]
+	return effect_stop == target_index
 
 
 # Sorts players by their distances and threat values. Threat value is used as
