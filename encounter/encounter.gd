@@ -58,12 +58,7 @@ func _ready() -> void:
 	
 	for e in enemies:
 		var ai_node: CharacterAI = e.get_node("CharacterAI")
-		ai_node.connect_encounter_details(
-				hex_map,
-				e.get_instance_id(),
-				players,
-				enemies
-		)
+		ai_node.connect_encounter_details(hex_map, e, players, enemies)
 		ui.track_enemy(e)
 
 

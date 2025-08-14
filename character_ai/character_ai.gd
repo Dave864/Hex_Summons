@@ -15,19 +15,19 @@ const MOVE: String = "Move"
 
 export(NodePath) var actions_ref = null
 
-var _char_id: int = -1
+var _character: Character = null
 var _actions: Array = []
 var _h_map: HexMap = null
 var _d_map: Dictionary = {}
-var _players: Dictionary = {}
-var _enemies: Dictionary = {}
-var _p_ttr: ThreatTracker = null
-var _e_ttr: ThreatTracker = null
+var _allies: Dictionary = {}
+var _opponents: Dictionary = {}
+var _a_ttr: ThreatTracker = null
+var _o_ttr: ThreatTracker = null
 
 
 # Regenerates the distance map for the character's current position.
 func update_distance_map() -> void:
-	var char_index: int = _enemies[_char_id].map_coordinate.get_index()
+	var char_index: int = _character.map_coordinate.get_index()
 	if !_d_map.has(char_index) or _d_map[char_index]["travel"] > 0:
 		_d_map = _h_map.range_finder.get_distance_map(char_index, true)
 
@@ -35,7 +35,6 @@ func update_distance_map() -> void:
 # Determines the actions that need to be taken for the character based on the
 # current state of the map.
 func determine_action_chain() -> Array:
-	var character: EnemyCharacter = _enemies[_char_id]
 	var ab: ActionBehavior = null
 	var targets: Array
 	for action in _actions:
@@ -47,29 +46,28 @@ func determine_action_chain() -> Array:
 		)
 		match ab.target:
 			ActionBehavior.Target.ALLIES:
-				targets = _enemies.values()
+				targets = _allies.values()
 			ActionBehavior.Target.OPPONENTS:
-				targets = _players.values()
+				targets = _opponents.values()
 			_:
 				targets = []
 			
-		if not ab.conditions_met(_enemies[_char_id], targets, _d_map):
+		if not ab.conditions_met(_character, targets, _d_map):
 			continue
 		var target_index: int = _determine_target_index(ab)
 		print(target_index)
 		# Check if target is in range of action
 		var movement: int = (
 			0 if ab.movement_behavior == ActionBehavior.Movement.STAND
-			else character.stats.get_movement_range() 
+			else _character.stats.get_movement_range() 
 		)
 		if not _action_in_range(
 				action,
 				target_index,
-				character.map_coordinate.get_index(),
+				_character.map_coordinate.get_index(),
 				movement
 		):
 			continue
-		# Determine move path if action is in range
 		# Determine orientation for action? Orientation could also be determined
 		# in Action state
 	return _default_chain()
@@ -78,18 +76,18 @@ func determine_action_chain() -> Array:
 # Obtains the necessary references to run the AI logic.
 func connect_encounter_details(
 	h_map: HexMap,
-	char_id: int,
-	players: Array,
-	enemies: Array
+	character: Character,
+	opponents: Array,
+	allies: Array
 ) -> void:
 	_h_map = h_map
-	_char_id = char_id
-	for p in players:
-		_players[p.get_instance_id()] = p
-	for e in enemies:
-		_enemies[e.get_instance_id()] = e
-	_p_ttr = ThreatTracker.new(_char_id, players)
-	_e_ttr = ThreatTracker.new(_char_id, enemies)
+	_character = character
+	for o in opponents:
+		_opponents[o.get_instance_id()] = o
+	for a in allies:
+		_allies[a.get_instance_id()] = a
+	_o_ttr = ThreatTracker.new(_character.get_instance_id(), opponents)
+	_a_ttr = ThreatTracker.new(_character.get_instance_id(), allies)
 
 
 func _ready() -> void:
@@ -103,18 +101,17 @@ func _default_chain() -> Array:
 	var action_chain: Array = []
 	var movement_range: Array = (
 		_h_map.range_finder.get_character_travesible_tiles(
-				_enemies[_char_id],
-				_players.values()
+				_character,
+				_opponents.values()
 		)
 	)
-	var target_ids: Array = _determine_player_threat_order()
-	var target_index: int = _players[target_ids[0]].map_coordinate.get_index()
+	var target_ids: Array = _determine_opponent_threat_order()
+	var target_index: int = _opponents[target_ids[0]].map_coordinate.get_index()
 	var path: PoolVector3Array = (
 		_h_map.range_finder.get_character_point_path_toward(
-				_enemies[_char_id],
+				_character,
 				target_index,
-				_enemies.values(),
-				_players.values(),
+				_opponents.values(),
 				movement_range
 		)
 	)
@@ -127,8 +124,8 @@ func _determine_target_index(ab: ActionBehavior) -> int:
 	if ab.target_group():
 		print("Find group target")
 		return _group_target_index(ab.get_group_condition(), ab.target_focus)
-	var target_ids: Array = _determine_player_threat_order()
-	return _players[target_ids[0]].map_coordinate.get_index()
+	var target_ids: Array = _determine_opponent_threat_order()
+	return _opponents[target_ids[0]].map_coordinate.get_index()
 
 
 # Gets the target index based on a group condition.
@@ -151,52 +148,60 @@ func _group_target_index(gc: GroupCondition, target_focus: int) -> int:
 			return sorted_centers[0][0]
 
 
-# Gets the threat order of player characters.
-func _determine_player_threat_order() -> Array:
-	var danger_players: Array = _players.keys()
-	danger_players.sort_custom(self, "_sort_player_danger")
-	return danger_players
+# Gets the threat order of opponent characters.
+func _determine_opponent_threat_order() -> Array:
+	var danger_opponents: Array = _opponents.keys()
+	danger_opponents.sort_custom(self, "_sort_opponent_danger")
+	return danger_opponents
 
 
-# Gets the threat order of enemy characters.
-func _determine_enemy_threat_order() -> Array:
-	var danger_enemies: Array = _enemies.keys()
-	danger_enemies.sort_custom(self, "_sort_enemy_danger")
-	return danger_enemies
+# Gets the threat order of ally characters.
+func _determine_ally_threat_order() -> Array:
+	var danger_allies: Array = _allies.keys()
+	danger_allies.sort_custom(self, "_sort_ally_danger")
+	return danger_allies
 
 
 # Determines if the action is in range of the target.
 func _action_in_range(
 	action: Action,
-	target: int,
-	source: int,
+	target_index: int,
+	source_index: int,
 	movement: int
 ) -> bool:
 	# Process movement
+	var move_step: int = _h_map.range_finder.get_character_closest_point_toward(
+			_character,
+			target_index,
+			_opponents.values(),
+			movement
+	)
 	# Process action source range
-	# Process action effecct range
+	var source_step: int
+	# Process action effect range
+	var effect_step: int
 	return false
 
 
 # Sorts players by their distances and threat values. Threat value is used as
 # the determining factor, but threat value is affected by the target's distance
 # from the observer.
-func _sort_player_danger(p_a: int, p_b: int) -> bool:
-	var dis_a: float = _d_map[_players[p_a].map_coordinate.get_index()]["travel"]
-	var dis_b: float = _d_map[_players[p_b].map_coordinate.get_index()]["travel"]
-	var threat_a: float = _p_ttr.get_threat_values()[p_a]["value"] / dis_a
-	var threat_b: float = _p_ttr.get_threat_values()[p_b]["value"] / dis_b
+func _sort_opponent_danger(o_a: int, o_b: int) -> bool:
+	var dis_a: float = _d_map[_opponents[o_a].map_coordinate.get_index()]["travel"]
+	var dis_b: float = _d_map[_opponents[o_b].map_coordinate.get_index()]["travel"]
+	var threat_a: float = _o_ttr.get_threat_values()[o_a]["value"] / dis_a
+	var threat_b: float = _o_ttr.get_threat_values()[o_b]["value"] / dis_b
 	return threat_a > threat_b
 
 
 # Sorts enemies by their distances and threat values. Threat value is used as
 # the determining factor, but threat value is affected by the target's distance
 # from the observer.
-func _sort_enemy_danger(e_a: int, e_b: int) -> bool:
-	var dis_a: float = _d_map[_enemies[e_a].map_coordinate.get_index()]["travel"]
-	var dis_b: float = _d_map[_enemies[e_b].map_coordinate.get_index()]["travel"]
-	var threat_a: float = _e_ttr.get_threat_values()[e_a]["value"] / dis_a
-	var threat_b: float = _e_ttr.get_threat_values()[e_b]["value"] / dis_b
+func _sort_ally_danger(a_a: int, a_b: int) -> bool:
+	var dis_a: float = _d_map[_allies[a_a].map_coordinate.get_index()]["travel"]
+	var dis_b: float = _d_map[_allies[a_b].map_coordinate.get_index()]["travel"]
+	var threat_a: float = _a_ttr.get_threat_values()[a_a]["value"] / dis_a
+	var threat_b: float = _a_ttr.get_threat_values()[a_b]["value"] / dis_b
 	return threat_a > threat_b
 
 
@@ -214,18 +219,18 @@ func _sort_group_center_threat(group_a: Array, group_b: Array) -> bool:
 	for c in group_a[1]:
 		var dis : float = _d_map[c.map_coordinate.get_index()]["travel"]
 		var raw_threat: float = (
-			_e_ttr.get_threat_values()[c.get_instance_id()]["value"]
-			if c.get_type() == Character.Type.ENEMY
-			else _p_ttr.get_threat_values()[c.get_instance_id()]["value"]
+			_a_ttr.get_threat_values()[c.get_instance_id()]["value"]
+			if c.get_type() == _character.get_type()
+			else _o_ttr.get_threat_values()[c.get_instance_id()]["value"]
 		)
 		threat_a += raw_threat / dis
 	var threat_b: float = 0.0
 	for c in group_b[1]:
 		var dis : float = _d_map[c.map_coordinate.get_index()]["travel"]
 		var raw_threat: float = (
-			_e_ttr.get_threat_values()[c.get_instance_id()]["value"]
-			if c.get_type() == Character.Type.ENEMY
-			else _p_ttr.get_threat_values()[c.get_instance_id()]["value"]
+			_a_ttr.get_threat_values()[c.get_instance_id()]["value"]
+			if c.get_type() == _character.get_type()
+			else _o_ttr.get_threat_values()[c.get_instance_id()]["value"]
 		)
 		threat_b += raw_threat / dis
 	return threat_a > threat_b

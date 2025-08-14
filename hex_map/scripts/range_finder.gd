@@ -107,51 +107,26 @@ func get_closest_id_path(
 func get_character_point_path_toward(
 	c: Character,
 	dest_id: int,
-	enemies: Array,
-	players: Array,
+	opponents: Array,
 	movement_area_ids: Array
 ) -> PoolVector3Array:
 	assert(
 			movement_area_ids.size() > 0,
 			"Error: No movement area provided for character %s." % c.name
 	)
-	var start_id: int = c.map_coordinate.get_index()
-	# Enable all connections to make sure the path can be found.
-	_hm_astar.set_all_disabled(false)
-	# Disable connection points of the opposite character type to prevent character
-	# from being able to move into those spaces
-	_disable_character_tiles(
-			enemies,
-			c.get_type() == Character.Type.PLAYER
-	)
-	_disable_character_tiles(
-			players,
-			c.get_type() == Character.Type.ENEMY
-	)
-	# Reenable destination tile to allow a path to be found when target tile 
-	# has an opponent.
-	_hm_astar.set_point_disabled(dest_id, false)
-	var true_dest_id: int = _determine_closest_point_toward(
+	var true_dest_id: int = get_character_closest_point_toward(
 			c,
-			start_id,
-			dest_id
+			dest_id,
+			opponents
 	)
 	# Only enable the movement area
-	_hm_astar.set_all_disabled()
 	_hm_astar.set_area_disabled(movement_area_ids, false)
-	# Disable connection points of the opposite character type to prevent character
+	# Disable connection points of the opponents to prevent character
 	# from being able to move into those spaces
-	_disable_character_tiles(
-		enemies,
-		c.get_type() == Character.Type.PLAYER
-	)
-	_disable_character_tiles(
-		players,
-		c.get_type() == Character.Type.ENEMY
-	)
+	_disable_character_tiles(opponents, true)
 
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(
-			start_id,
+			c.map_coordinate.get_index(),
 			true_dest_id
 	)
 	# Reset for future range finder operations.
@@ -174,39 +149,30 @@ func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
 	return move_distances.keys()
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	_map_tiles = get_node(map_tiles_reference)
-	_hm_astar = HexMapAStar.new(
-			_map_tiles.get_all(),
-			_map_tiles.get_x_count()
-	)
-
-
-# Updates the astar disabled flag for the tiles occupied by the specified characters.
-func _disable_character_tiles(
-	characters: Array,
-	disabled: bool
-) -> void:
-	for c in characters:
-		_hm_astar.set_point_disabled(c.map_coordinate.get_index(), disabled)
-
-
-# Helper function for get_character_point_path_toward. Finds the closest path
-# to a destination within a character's movement range where the final point is
-# not occupied by an ally.
-func _determine_closest_point_toward(
+# Finds the closest path to a destination within a character's movement range
+# where the final point is not occupied by an ally.
+func get_character_closest_point_toward(
 	c: Character,
-	start_id: int,
-	dest_id: int
+	dest_id: int,
+	opponents: Array,
+	move_override: int = -1
 ) -> int:
+	# Enable all connections to make sure the path can be found.
+	_hm_astar.set_all_disabled(false)
+	# Disable connection points of the opponents to prevent character
+	# from being able to move into those spaces
+	_disable_character_tiles(opponents, true)
+	# Reenable destination tile to allow a path to be found when target tile 
+	# has an opponent.
+	_hm_astar.set_point_disabled(dest_id, false)
 	var true_dest_id: int
 	var closest_path: PoolIntArray = []
+	
 	while true:
 		closest_path = _hm_astar.get_closest_id_path(
-				start_id,
+				c.map_coordinate.get_index(),
 				dest_id,
-				c.stats.get_movement_range()
+				c.stats.get_movement_range() if move_override < 0 else move_override
 		)
 		true_dest_id = closest_path[-1]
 		# Determine the last point in the path that is within the movement 
@@ -234,7 +200,27 @@ func _determine_closest_point_toward(
 			_hm_astar.set_point_disabled(true_dest_id, true)
 		else:
 			break
+	# Reset for future range finder operations.
+	_hm_astar.set_all_disabled()
 	return true_dest_id
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_map_tiles = get_node(map_tiles_reference)
+	_hm_astar = HexMapAStar.new(
+			_map_tiles.get_all(),
+			_map_tiles.get_x_count()
+	)
+
+
+# Updates the astar disabled flag for the tiles occupied by the specified characters.
+func _disable_character_tiles(
+	characters: Array,
+	disabled: bool
+) -> void:
+	for c in characters:
+		_hm_astar.set_point_disabled(c.map_coordinate.get_index(), disabled)
 
 
 # Determines which tiles are reachable in a specified map section.
