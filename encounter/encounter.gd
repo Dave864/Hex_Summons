@@ -57,7 +57,8 @@ func _ready() -> void:
 		ui.track_party_member(p)
 	
 	for e in enemies:
-		e.ai.connect_encounter_details(
+		var ai_node: CharacterAI = e.get_node("CharacterAI")
+		ai_node.connect_encounter_details(
 				hex_map,
 				e.get_instance_id(),
 				players,

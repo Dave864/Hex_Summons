@@ -17,10 +17,7 @@ export(NodePath) var actions_ref = null
 
 var _char_id: int = -1
 var _actions: Array = []
-# This variable should be of type HexMap. Defining the type here results in
-# an issue where the class "HexMap" could be found in global scope, but the
-# script couldn't be loaded.
-var _h_map = null
+var _h_map: HexMap = null
 var _d_map: Dictionary = {}
 var _players: Dictionary = {}
 var _enemies: Dictionary = {}
@@ -38,9 +35,7 @@ func update_distance_map() -> void:
 # Determines the actions that need to be taken for the character based on the
 # current state of the map.
 func determine_action_chain() -> Array:
-	# This variable should be of type EnemyCharacter. Defining the type here
-	# results in a cyclic reference.
-	var character = _enemies[_char_id]
+	var character: EnemyCharacter = _enemies[_char_id]
 	var ab: ActionBehavior = null
 	var targets: Array
 	for action in _actions:
@@ -82,7 +77,7 @@ func determine_action_chain() -> Array:
 
 # Obtains the necessary references to run the AI logic.
 func connect_encounter_details(
-	h_map,
+	h_map: HexMap,
 	char_id: int,
 	players: Array,
 	enemies: Array

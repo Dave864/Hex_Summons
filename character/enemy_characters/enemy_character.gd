@@ -11,7 +11,6 @@ signal enemy_actions_required()
 # Contains the actions associated with the enemy character.
 var _actions: Array
 
-onready var ai: CharacterAI = $CharacterAI
 onready var _default_portait: Texture = preload(
 		"res://character/enemy_characters/EnemyCharacter/" + \
 		"EnemyBattlePortrait.atlastex"

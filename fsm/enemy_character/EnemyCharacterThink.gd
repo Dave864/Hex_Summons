@@ -9,8 +9,9 @@ take and then starts the logic chain.
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	ec.ai.update_distance_map()
-	_process_action_chain(ec.ai.determine_action_chain())
+	var ai_node: CharacterAI = ec.get_node("CharacterAI")
+	ai_node.update_distance_map()
+	_process_action_chain(ai_node.determine_action_chain())
 
 
 # Called by the state machine before changing the active state. Use this
