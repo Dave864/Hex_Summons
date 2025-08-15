@@ -73,8 +73,8 @@ func determine_action_chain() -> Array:
 		# Determine orientation for action? Orientation could also be determined
 		# in Action state
 		return [
-				[MOVE, _determine_move_path(target_index, ab.movement_behavior)],
-				[ACTION, action, target_index]
+			[ACTION, action, target_index],
+			[MOVE, _determine_move_path(target_index, ab.movement_behavior)]
 		]
 	return _default_chain()
 
@@ -191,16 +191,14 @@ func _determine_move_path(
 ) -> PoolVector3Array:
 	var move_path: PoolVector3Array = []
 	match movement_behavior:
-		ActionBehavior.Movement.STAND:
-			var char_tile_index: int = _character.map_coordinate.get_index()
-			var start_tile: MapTile = _h_map.get_tile_at(char_tile_index)
-			move_path.append(start_tile.get_character_position())
 		ActionBehavior.Movement.TOWARD:
 			move_path = _calculate_move_path(target_index)
 		ActionBehavior.Movement.AWAY:
 			pass
 		_:
-			pass
+			var char_tile_index: int = _character.map_coordinate.get_index()
+			var start_tile: MapTile = _h_map.get_tile_at(char_tile_index)
+			move_path.append(start_tile.get_character_position())
 	return move_path
 
 
@@ -257,6 +255,8 @@ func _sort_character_dist(c_a: Character, c_b: Character) -> bool:
 func _sort_opponent_danger(o_a: int, o_b: int) -> bool:
 	var dis_a: float = _d_map[_opponents[o_a].map_coordinate.get_index()]["travel"]
 	var dis_b: float = _d_map[_opponents[o_b].map_coordinate.get_index()]["travel"]
+	dis_a = clamp(dis_a, 1.0, dis_a)
+	dis_b = clamp(dis_b, 1.0, dis_b)
 	var threat_a: float = _o_ttr.get_threat_values()[o_a]["value"] / dis_a
 	var threat_b: float = _o_ttr.get_threat_values()[o_b]["value"] / dis_b
 	return threat_a > threat_b
@@ -268,6 +268,8 @@ func _sort_opponent_danger(o_a: int, o_b: int) -> bool:
 func _sort_ally_danger(a_a: int, a_b: int) -> bool:
 	var dis_a: float = _d_map[_allies[a_a].map_coordinate.get_index()]["travel"]
 	var dis_b: float = _d_map[_allies[a_b].map_coordinate.get_index()]["travel"]
+	dis_a = clamp(dis_a, 1.0, dis_a)
+	dis_b = clamp(dis_b, 1.0, dis_b)
 	var threat_a: float = _a_ttr.get_threat_values()[a_a]["value"] / dis_a
 	var threat_b: float = _a_ttr.get_threat_values()[a_b]["value"] / dis_b
 	return threat_a > threat_b

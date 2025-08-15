@@ -84,6 +84,7 @@ turn_count = 2
 
 [node name="GroupCondition" type="Node" parent="Actions/Nova/ActionBehavior"]
 script = ExtResource( 19 )
+max_distance = 2
 
 [node name="AdjacentCondition" type="Node" parent="Actions/Nova/ActionBehavior"]
 script = ExtResource( 20 )
@@ -94,7 +95,6 @@ check_type = 1
 
 [node name="ActionBehavior" type="Node" parent="Actions/Strike"]
 script = ExtResource( 18 )
-target = 2
 movement_behavior = 1
 
 [node name="StateMachine" type="Node" parent="."]

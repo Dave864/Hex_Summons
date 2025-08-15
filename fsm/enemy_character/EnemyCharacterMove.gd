@@ -24,9 +24,9 @@ func enter(_msg := {}) -> void:
 
 # Corresponds to the `_process()` callback.
 func update(delta: float) -> void:
-	_weight += delta * Constants.MOVE_SPEED
-	ec.hm_move_path.move_offset(_weight)
-	# Only update the movement position if the movement has not ended.
+	if _movement_active:
+		_weight += delta * Constants.MOVE_SPEED
+		ec.hm_move_path.move_offset(_weight)
 	# This is to prevent the character from being moved to an undesired location
 	# after the movement_ended signal has been caught.
 	if _movement_active:
