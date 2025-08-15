@@ -7,7 +7,6 @@ conditions that must be met in order for the action to be used.
 
 
 enum Target {
-	NONE,
 	ALLIES,
 	OPPONENTS
 }
@@ -22,7 +21,7 @@ enum Movement {
 	AWAY
 }
 
-export(Target) var target = Target.NONE
+export(Target) var target = Target.OPPONENTS
 export(TargetFocus) var target_focus = TargetFocus.THREAT
 export(Movement) var movement_behavior = Movement.STAND
 

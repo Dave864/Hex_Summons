@@ -47,18 +47,15 @@ func determine_action_chain() -> Array:
 				"Action {0} is missing an ActionBehavior node." \
 				.format([action.name])
 		)
-		match ab.target:
-			ActionBehavior.Target.ALLIES:
-				targets = _allies.values()
-			ActionBehavior.Target.OPPONENTS:
-				targets = _opponents.values()
-			_:
-				targets = []
-			
+		targets = (
+			_allies.values() 
+			if ab.target == ActionBehavior.Target.ALLIES
+			else _opponents.values()
+		)
 		if not ab.conditions_met(_character, targets, _d_map):
 			print("action {0} conditions not met.".format([action.name]))
 			continue
-		var target_index: int = _determine_target_index(ab)
+		var target_index: int = _determine_target_index(ab, targets)
 		print(target_index)
 		# Check if target is in range of action
 		var movement: int = (
@@ -105,12 +102,22 @@ func _ready() -> void:
 
 
 # Determines the index of the tile the character will target.
-func _determine_target_index(ab: ActionBehavior) -> int:
+func _determine_target_index(ab: ActionBehavior, targets: Array) -> int:
 	if ab.target_group():
-		print("Find group target")
 		return _group_target_index(ab.get_group_condition(), ab.target_focus)
-	var target_ids: Array = _determine_opponent_threat_order()
-	return _opponents[target_ids[0]].map_coordinate.get_index()
+	if ab.target_focus == ActionBehavior.TargetFocus.CLOSEST:
+		targets.sort_custom(self, "_sort_character_dist")
+		return targets[0].map_coordinate.get_index()
+	if ab.target_focus == ActionBehavior.TargetFocus.FARTHEST:
+		targets.sort_custom(self, "_sort_character_dist")
+		return targets[-1].map_coordinate.get_index()
+	var target_ids: Array
+	if ab.target == ActionBehavior.Target.OPPONENTS:
+		target_ids = _determine_opponent_threat_order()
+		return _opponents[target_ids[0]].map_coordinate.get_index()
+	else:
+		target_ids = _determine_ally_threat_order()
+		return _allies[target_ids[0]].map_coordinate.get_index()
 
 
 # Gets the target index based on a group condition.
@@ -235,6 +242,13 @@ func _determine_ally_threat_order() -> Array:
 	var danger_allies: Array = _allies.keys()
 	danger_allies.sort_custom(self, "_sort_ally_danger")
 	return danger_allies
+
+
+# Sorts characters by their distances, with the lower distances being first.
+func _sort_character_dist(c_a: Character, c_b: Character) -> bool:
+	var dis_a: float = _d_map[c_a.map_coordinate.get_index()]["travel"]
+	var dis_b: float = _d_map[c_b.map_coordinate.get_index()]["travel"]
+	return dis_a < dis_b
 
 
 # Sorts players by their distances and threat values. Threat value is used as
