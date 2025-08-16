@@ -74,6 +74,7 @@ actions_ref = NodePath("../Actions")
 
 [node name="ActionBehavior" type="Node" parent="Actions/Blast"]
 script = ExtResource( 18 )
+movement_behavior = 1
 
 [node name="Cooldown" type="Node" parent="Actions/Blast/ActionBehavior"]
 script = ExtResource( 17 )
@@ -83,6 +84,7 @@ turn_count = 1
 
 [node name="ActionBehavior" type="Node" parent="Actions/Shot"]
 script = ExtResource( 18 )
+movement_behavior = 1
 
 [node name="Empty" parent="Actions" instance=ExtResource( 19 )]
 

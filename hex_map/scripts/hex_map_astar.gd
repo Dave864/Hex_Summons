@@ -53,10 +53,7 @@ func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictiona
 # tiles from some point, which may not be the same as start. Returns -1 if no
 # closest index could be found.
 # Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
-func get_closest_in_area(
-	start_id: int,
-	area_d_map: Dictionary
-) -> int:
+func get_closest_in_area(start_id: int, area_d_map: Dictionary) -> int:
 	if area_d_map.size() == 0:
 		return -1
 	if area_d_map.size() == 1:
@@ -89,6 +86,25 @@ func get_closest_in_area(
 	frontier.free()
 	id_distances.clear()
 	return closest[1]
+
+
+# Finds the point in the area that is farthest from target. The area is a
+# dicitonary whose keys are the map tile ids and values are the various
+# distances to the tiles from some point, which may not be the same as taregt.
+# Returns -1 if no farthest index could be found.
+func get_farthest_in_area(target_id: int, area_d_map: Dictionary) -> int:
+	if area_d_map.size() == 0:
+		return -1
+	if area_d_map.size() == 1:
+		return area_d_map.keys()[0]
+	var farthest_pt: int = -1
+	var farthest_d: float = 0.0
+	for id in area_d_map.keys():
+		var dist: float = _compute_cost(id, target_id)
+		if dist > farthest_d:
+			farthest_d = dist
+			farthest_pt = id
+	return farthest_pt
 
 
 # Gets the shortest id path from start to target that is within the maximum

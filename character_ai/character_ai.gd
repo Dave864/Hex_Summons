@@ -55,27 +55,33 @@ func determine_action_chain() -> Array:
 		if not ab.conditions_met(_character, targets, _d_map):
 			print("action {0} conditions not met.".format([action.name]))
 			continue
-		var target_index: int = _determine_target_index(ab, targets)
+		var target_index: int = _find_target_index(ab, targets)
 		print(target_index)
 		# Check if target is in range of action
 		var movement: int = (
 			0 if ab.movement_behavior == ActionBehavior.Movement.STAND
 			else _character.stats.get_movement_range() 
 		)
-		if not _action_in_range(
+		
+		# Empty actions default to movement.
+		if action.name == "Empty":
+			print("Default move")
+			return[
+				[MOVE, _find_move_path(target_index, ab.movement_behavior)]
+			]
+		elif action is Action and _action_in_range(
 				action,
 				target_index,
 				movement
 		):
-			print("action {0} out of range.".format([action.name]))
-			continue
-		print("execute acton {0}".format([action.name]))
-		# Determine orientation for action? Orientation could also be determined
-		# in Action state
-		return [
-			[ACTION, action, target_index],
-			[MOVE, _determine_move_path(target_index, ab.movement_behavior)]
-		]
+			print("execute acton {0}".format([action.name]))
+			# Determine orientation for action? Orientation could also be
+			# determined in Action state
+			return [
+				[ACTION, action, target_index],
+				[MOVE, _find_move_path(target_index, ab.movement_behavior)]
+			]
+		print("action {0} out of range".format([action.name]))
 	return _default_chain()
 
 
@@ -102,7 +108,7 @@ func _ready() -> void:
 
 
 # Determines the index of the tile the character will target.
-func _determine_target_index(ab: ActionBehavior, targets: Array) -> int:
+func _find_target_index(ab: ActionBehavior, targets: Array) -> int:
 	if ab.target_group():
 		return _group_target_index(ab.get_group_condition(), ab.target_focus)
 	if ab.target_focus == ActionBehavior.TargetFocus.CLOSEST:
@@ -158,34 +164,35 @@ func _action_in_range(
 			_opponents.values(),
 			movement
 	)
-	if _d_map[target_index]["travel"] <= movement:
-		return true
 	# Process action source range
 	var source_stop: int
+	var path: PoolIntArray = []
 	# Source range not applied when action is emitted from center.
 	if action.emit_from_center:
 		source_stop = move_stop
 	else:
-		source_stop = _h_map.range_finder.get_closest_id_path(
+		path = _h_map.range_finder.get_closest_id_path(
 				move_stop,
 				target_index,
 				action.source_range.get_reach(),
 				action.source_ignore_heights
-		)[-1]
+		)
+		source_stop = path[-1]
 	if source_stop == target_index:
 		return true
 	# Process action effect range
-	var effect_stop: int = _h_map.range_finder.get_closest_id_path(
+	path = _h_map.range_finder.get_closest_id_path(
 			source_stop,
 			target_index,
 			action.effect_range.get_reach(),
 			action.effect_ignore_heights
-	)[-1]
+	)
+	var effect_stop: int = path[-1]
 	return effect_stop == target_index
 
 
 # Determines the movement path for the action chain.
-func _determine_move_path(
+func _find_move_path(
 	target_index: int,
 	movement_behavior: int
 ) -> PoolVector3Array:
@@ -194,7 +201,7 @@ func _determine_move_path(
 		ActionBehavior.Movement.TOWARD:
 			move_path = _calculate_move_path(target_index)
 		ActionBehavior.Movement.AWAY:
-			pass
+			move_path = _calculate_away_path(target_index)
 		_:
 			var char_tile_index: int = _character.map_coordinate.get_index()
 			var start_tile: MapTile = _h_map.get_tile_at(char_tile_index)
@@ -225,6 +232,25 @@ func _calculate_move_path(dest: int) -> PoolVector3Array:
 			dest,
 			_opponents.values(),
 			movement_range
+	)
+
+
+# Calculates the movement path away from the target.
+func _calculate_away_path(target: int) -> PoolVector3Array:
+	var movement_range: Array = (
+		_h_map.range_finder.get_character_travesible_tiles(
+				_character,
+				_opponents.values()
+		)
+	)
+	var movement_d_map: Dictionary = {}
+	for i in movement_range:
+		movement_d_map[i] = _d_map[i]
+	return _h_map.range_finder.get_character_point_path_away(
+			_character,
+			target,
+			_opponents.values(),
+			movement_d_map
 	)
 
 

@@ -134,6 +134,36 @@ func get_character_point_path_toward(
 	return point_path
 
 
+# Determines the path within a character's movement area that moves farthest
+# away from a target.
+func get_character_point_path_away(
+	c: Character,
+	target_id: int,
+	opponents: Array,
+	movement_d_map: Dictionary
+)-> PoolVector3Array:
+	assert(
+			movement_d_map.size() > 0,
+			"Error: No movement area provided for character %s." % c.name
+	)
+	# Only enable the movement area
+	_hm_astar.set_area_disabled(movement_d_map.keys(), false)
+	# Disable connection points of the opponents to prevent character
+	# from being able to move into those spaces
+	_disable_character_tiles(opponents, true)
+	var farthest_id: int = _hm_astar.get_farthest_in_area(
+			target_id,
+			movement_d_map
+	)
+	var point_path: PoolVector3Array = _hm_astar.get_point_path(
+			c.map_coordinate.get_index(),
+			farthest_id
+	)
+	# Reset for future range finder operations.
+	_hm_astar.set_area_disabled(movement_d_map.keys())
+	return point_path
+
+
 # Get the area that can be reached by a character. Takes in an array of the
 # opposing characters for determining the tiles to disable.
 func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
