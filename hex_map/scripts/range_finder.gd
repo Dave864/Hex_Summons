@@ -8,9 +8,9 @@ a reference to the map tiles.
 
 export(NodePath) var map_tiles_reference = null
 
-var _map_tiles: Tiles = null
 var _hm_astar: HexMapAStar = null
 
+onready var _map_tiles: Tiles = get_node(map_tiles_reference)
 
 # Calculates the travel distance from a given start to a specified destination.
 func travel_distance(start_id: int, dest_id: int) -> float:
@@ -187,7 +187,6 @@ func get_character_farthest_point_away(
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_map_tiles = get_node(map_tiles_reference)
 	_hm_astar = HexMapAStar.new(
 			_map_tiles.get_all(),
 			_map_tiles.get_x_count()

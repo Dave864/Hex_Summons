@@ -20,7 +20,6 @@ var h_map: HexMap = null
 var d_map: Dictionary = {}
 
 var _character: Character = null
-var _actions: Array = []
 # Tracks allies and opponents by their instance ids
 var _allies: Dictionary = {}
 var _opponents: Dictionary = {}
@@ -29,6 +28,8 @@ var _a_ttr: ThreatTracker = null
 var _o_ttr: ThreatTracker = null
 # Tracks the index of the final movement tile.
 var _move_dest_id: int = -1 setget , get_move_dest_id
+
+onready var _actions: Array = get_node(actions_ref).get_children()
 
 
 # Returns the index of the movement destination.
@@ -112,7 +113,6 @@ func connect_encounter_details(
 
 func _ready() -> void:
 	_check_for_required_parameters()
-	_actions = get_node(actions_ref).get_children()
 
 
 # Determines the index of the tile the character will target.

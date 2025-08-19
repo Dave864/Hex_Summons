@@ -8,9 +8,10 @@ to the map tiles.
 
 export(NodePath) var map_tiles_reference = null
 
-var _map_tiles: Tiles = null
 var _highlighted_map_indexes: Array = []
 var _selectable_map_indexes: Array = []
+
+onready var _map_tiles: Tiles = get_node(map_tiles_reference)
 
 
 # Highlight the specified tiles as movement for the given player character.
@@ -108,4 +109,4 @@ func clear_selector_highlights() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_map_tiles = get_node(map_tiles_reference)
+	pass

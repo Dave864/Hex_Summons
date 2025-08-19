@@ -31,8 +31,6 @@ var dead_range: AreaRange = null
 # The area specifying the tiles affected by the effect.
 var effect_range: AreaRange = null
 
-# The hit box object.
-var _hit_box: ActionHitBox = null
 # The effects of this action
 var _effects: Array setget , get_effects
 # Whether the area range is cardinal or ring.
@@ -45,6 +43,8 @@ var _emission_transform: Transform = Transform.IDENTITY
 var _emission_direction: int setget set_emission_direction, get_emission_direction
 
 onready var ani_player: AnimationPlayer = $AnimationPlayer
+# The hit box object.
+onready var _hit_box: ActionHitBox = get_node(hit_box_ref)
 
 
 # Returns the effects of this action.
@@ -142,7 +142,6 @@ func initialize_effects() -> void:
 
 func _ready() -> void:
 	_check_for_required_parameters()
-	_hit_box = get_node(hit_box_ref)
 	_is_cardinal = source_range is CardinalArea
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 

@@ -16,8 +16,7 @@ export(float, -20.0, 20.0) var y_offset = 0.0
 export(CharType) var character_type = CharType.NONE
 export(NodePath) var character_pos_ref = null
 
-var _char_pos: Position3D = null
-
+onready var _char_pos: Position3D = get_node(character_pos_ref)
 onready var _data_container: HBoxContainer = $CanvasLayer/HBoxContainer
 onready var _initiative_label: Label = $CanvasLayer/HBoxContainer/InitiativeLabel
 onready var _health_bar: ProgressBar = $CanvasLayer/HBoxContainer/PanelContainer/HealthBar
@@ -44,7 +43,6 @@ func set_initiative_label(new_iniative: int) -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
-	_char_pos = get_node(character_pos_ref)
 	_set_health_bar_color()
 
 

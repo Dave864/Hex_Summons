@@ -1,7 +1,7 @@
 tool
 extends Label3D
 """
-Label for map tiles used for debugging. Will remove once no longer needed.
+Label for map tiles used for debugging. TODO: Will remove once no longer needed.
 """
 
 
