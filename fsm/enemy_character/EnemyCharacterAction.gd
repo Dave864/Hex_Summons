@@ -8,15 +8,16 @@ in the given chain. Goes to the 'Wait' state if the action is the last command.
 
 # The list of commands the enemy will execute.
 var _command_chain: Array = []
-# The details of the action to execute
-var _action_details = null
+# The action to execute
+var _action: Action = null
+
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_command_chain = _msg["command_chain"]
-	_action_details = _command_chain.pop_back()[1]
+	_action = _command_chain.pop_back()[1]
 	_move_to_next_state()
 
 
@@ -28,7 +29,7 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Resets the interpolation weight an next_point_index.
 func exit() -> void:
-	pass
+	_action = null
 
 
 # Checks the command chain to determine what state to go to next.

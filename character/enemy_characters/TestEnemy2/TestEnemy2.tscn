@@ -90,6 +90,7 @@ movement_behavior = 1
 
 [node name="ActionBehavior" type="Node" parent="Actions/Empty"]
 script = ExtResource( 18 )
+target_focus = 1
 movement_behavior = 2
 
 [node name="StateMachine" type="Node" parent="."]
@@ -104,6 +105,7 @@ script = ExtResource( 5 )
 
 [node name="Think" type="Node" parent="StateMachine"]
 script = ExtResource( 7 )
+ai_reference = NodePath("../../CharacterAI")
 
 [node name="Action" type="Node" parent="StateMachine"]
 script = ExtResource( 8 )

@@ -75,6 +75,7 @@ script = ExtResource( 5 )
 
 [node name="Think" type="Node" parent="StateMachine"]
 script = ExtResource( 7 )
+ai_reference = NodePath("../../CharacterAI")
 
 [node name="Action" type="Node" parent="StateMachine"]
 script = ExtResource( 8 )

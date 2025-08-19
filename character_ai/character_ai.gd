@@ -15,24 +15,32 @@ const MOVE: String = "Move"
 
 export(NodePath) var actions_ref = null
 
+var h_map: HexMap = null
+# Distance map of all tiles in the HexMap. Tracks the travel and tile distances.
+var d_map: Dictionary = {}
+
 var _character: Character = null
 var _actions: Array = []
-var _h_map: HexMap = null
-# Distance map of all tiles in the HexMap. Tracks the travel and tile distances.
-var _d_map: Dictionary = {}
 # Tracks allies and opponents by their instance ids
 var _allies: Dictionary = {}
 var _opponents: Dictionary = {}
 # Threat trackers for allies and opponents
 var _a_ttr: ThreatTracker = null
 var _o_ttr: ThreatTracker = null
+# Tracks the index of the final movement tile.
+var _move_dest_id: int = -1 setget , get_move_dest_id
+
+
+# Returns the index of the movement destination.
+func get_move_dest_id() -> int:
+	return _move_dest_id
 
 
 # Regenerates the distance map for the character's current position.
 func update_distance_map() -> void:
 	var char_index: int = _character.map_coordinate.get_index()
-	if !_d_map.has(char_index) or _d_map[char_index]["travel"] > 0:
-		_d_map = _h_map.range_finder.get_distance_map(char_index, true)
+	if !d_map.has(char_index) or d_map[char_index]["travel"] > 0:
+		d_map = h_map.range_finder.get_distance_map(char_index, true)
 
 
 # Determines the actions that need to be taken for the character based on the
@@ -52,7 +60,7 @@ func determine_action_chain() -> Array:
 			if ab.target == ActionBehavior.Target.ALLIES
 			else _opponents.values()
 		)
-		if not ab.conditions_met(_character, targets, _d_map):
+		if not ab.conditions_met(_character, targets, d_map):
 			print("action {0} conditions not met.".format([action.name]))
 			continue
 		var target_index: int = _find_target_index(ab, targets)
@@ -87,12 +95,12 @@ func determine_action_chain() -> Array:
 
 # Obtains the necessary references to run the AI logic.
 func connect_encounter_details(
-	h_map: HexMap,
+	h_map_ref: HexMap,
 	character: Character,
 	opponents: Array,
 	allies: Array
 ) -> void:
-	_h_map = h_map
+	h_map = h_map_ref
 	_character = character
 	for o in opponents:
 		_opponents[o.get_instance_id()] = o
@@ -128,7 +136,7 @@ func _find_target_index(ab: ActionBehavior, targets: Array) -> int:
 
 # Gets the target index based on a group condition.
 func _group_target_index(gc: GroupCondition, target_focus: int) -> int:
-	var groups: Dictionary = gc.find_group_index_centers(_h_map.get_x_count())
+	var groups: Dictionary = gc.find_group_index_centers(h_map.get_x_count())
 	match target_focus:
 		ActionBehavior.TargetFocus.CLOSEST:
 			var sorted_centers: Array = groups.keys()
@@ -156,9 +164,9 @@ func _action_in_range(
 	TODO: Add logic to account for dead ranges.
 	"""
 	# Process movement
-	if _d_map[target_index]["travel"] <= movement:
+	if d_map[target_index]["travel"] <= movement:
 		return true
-	var move_stop: int = _h_map.range_finder.get_character_closest_point_toward(
+	var move_stop: int = h_map.range_finder.get_character_closest_point_toward(
 			_character,
 			target_index,
 			_opponents.values(),
@@ -171,7 +179,7 @@ func _action_in_range(
 	if action.emit_from_center:
 		source_stop = move_stop
 	else:
-		path = _h_map.range_finder.get_closest_id_path(
+		path = h_map.range_finder.get_closest_id_path(
 				move_stop,
 				target_index,
 				action.source_range.get_reach(),
@@ -181,7 +189,7 @@ func _action_in_range(
 	if source_stop == target_index:
 		return true
 	# Process action effect range
-	path = _h_map.range_finder.get_closest_id_path(
+	path = h_map.range_finder.get_closest_id_path(
 			source_stop,
 			target_index,
 			action.effect_range.get_reach(),
@@ -199,12 +207,12 @@ func _find_move_path(
 	var move_path: PoolVector3Array = []
 	match movement_behavior:
 		ActionBehavior.Movement.TOWARD:
-			move_path = _calculate_move_path(target_index)
+			move_path = _calculate_toward_path(target_index)
 		ActionBehavior.Movement.AWAY:
 			move_path = _calculate_away_path(target_index)
 		_:
 			var char_tile_index: int = _character.map_coordinate.get_index()
-			var start_tile: MapTile = _h_map.get_tile_at(char_tile_index)
+			var start_tile: MapTile = h_map.get_tile_at(char_tile_index)
 			move_path.append(start_tile.get_character_position())
 	return move_path
 
@@ -215,21 +223,26 @@ func _default_chain() -> Array:
 	var action_chain: Array = []
 	var target_ids: Array = _determine_opponent_threat_order()
 	var target_index: int = _opponents[target_ids[0]].map_coordinate.get_index()
-	action_chain.push_front([MOVE, _calculate_move_path(target_index)])
+	action_chain.push_front([MOVE, _calculate_toward_path(target_index)])
 	return action_chain
 
 
 # Calculates the movement path to the destination.
-func _calculate_move_path(dest: int) -> PoolVector3Array:
+func _calculate_toward_path(dest: int) -> PoolVector3Array:
 	var movement_range: Array = (
-		_h_map.range_finder.get_character_travesible_tiles(
+		h_map.range_finder.get_character_travesible_tiles(
 				_character,
 				_opponents.values()
 		)
 	)
-	return _h_map.range_finder.get_character_point_path_toward(
+	_move_dest_id = h_map.range_finder.get_character_closest_point_toward(
 			_character,
 			dest,
+			_opponents.values()
+	)
+	return h_map.range_finder.get_character_point_path(
+			_character,
+			_move_dest_id,
 			_opponents.values(),
 			movement_range
 	)
@@ -238,19 +251,23 @@ func _calculate_move_path(dest: int) -> PoolVector3Array:
 # Calculates the movement path away from the target.
 func _calculate_away_path(target: int) -> PoolVector3Array:
 	var movement_range: Array = (
-		_h_map.range_finder.get_character_travesible_tiles(
+		h_map.range_finder.get_character_travesible_tiles(
 				_character,
 				_opponents.values()
 		)
 	)
 	var movement_d_map: Dictionary = {}
 	for i in movement_range:
-		movement_d_map[i] = _d_map[i]
-	return _h_map.range_finder.get_character_point_path_away(
-			_character,
+		movement_d_map[i] = d_map[i]
+	_move_dest_id = h_map.range_finder.get_character_farthest_point_away(
 			target,
-			_opponents.values(),
 			movement_d_map
+	)
+	return h_map.range_finder.get_character_point_path(
+			_character,
+			_move_dest_id,
+			_opponents.values(),
+			movement_range
 	)
 
 
@@ -270,8 +287,8 @@ func _determine_ally_threat_order() -> Array:
 
 # Sorts characters by their distances, with the lower distances being first.
 func _sort_character_dist(c_a: Character, c_b: Character) -> bool:
-	var dis_a: float = _d_map[c_a.map_coordinate.get_index()]["travel"]
-	var dis_b: float = _d_map[c_b.map_coordinate.get_index()]["travel"]
+	var dis_a: float = d_map[c_a.map_coordinate.get_index()]["travel"]
+	var dis_b: float = d_map[c_b.map_coordinate.get_index()]["travel"]
 	return dis_a < dis_b
 
 
@@ -279,8 +296,8 @@ func _sort_character_dist(c_a: Character, c_b: Character) -> bool:
 # the determining factor, but threat value is affected by the target's distance
 # from the observer.
 func _sort_opponent_danger(o_a: int, o_b: int) -> bool:
-	var dis_a: float = _d_map[_opponents[o_a].map_coordinate.get_index()]["travel"]
-	var dis_b: float = _d_map[_opponents[o_b].map_coordinate.get_index()]["travel"]
+	var dis_a: float = d_map[_opponents[o_a].map_coordinate.get_index()]["travel"]
+	var dis_b: float = d_map[_opponents[o_b].map_coordinate.get_index()]["travel"]
 	dis_a = clamp(dis_a, 1.0, dis_a)
 	dis_b = clamp(dis_b, 1.0, dis_b)
 	var threat_a: float = _o_ttr.get_threat_values()[o_a]["value"] / dis_a
@@ -292,8 +309,8 @@ func _sort_opponent_danger(o_a: int, o_b: int) -> bool:
 # the determining factor, but threat value is affected by the target's distance
 # from the observer.
 func _sort_ally_danger(a_a: int, a_b: int) -> bool:
-	var dis_a: float = _d_map[_allies[a_a].map_coordinate.get_index()]["travel"]
-	var dis_b: float = _d_map[_allies[a_b].map_coordinate.get_index()]["travel"]
+	var dis_a: float = d_map[_allies[a_a].map_coordinate.get_index()]["travel"]
+	var dis_b: float = d_map[_allies[a_b].map_coordinate.get_index()]["travel"]
 	dis_a = clamp(dis_a, 1.0, dis_a)
 	dis_b = clamp(dis_b, 1.0, dis_b)
 	var threat_a: float = _a_ttr.get_threat_values()[a_a]["value"] / dis_a
@@ -304,7 +321,7 @@ func _sort_ally_danger(a_a: int, a_b: int) -> bool:
 # Sorts group centers by their distances from the character, closest ones being
 # first.
 func _sort_group_center_dist(center_a: int, center_b: int) -> bool:
-	return _d_map[center_a]["travel"] < _d_map[center_b]["travel"]
+	return d_map[center_a]["travel"] < d_map[center_b]["travel"]
 
 
 # Sorts group centers by their distances and threat values. Threat value is used
@@ -313,7 +330,7 @@ func _sort_group_center_dist(center_a: int, center_b: int) -> bool:
 func _sort_group_center_threat(group_a: Array, group_b: Array) -> bool:
 	var threat_a: float = 0.0
 	for c in group_a[1]:
-		var dis : float = _d_map[c.map_coordinate.get_index()]["travel"]
+		var dis : float = d_map[c.map_coordinate.get_index()]["travel"]
 		var raw_threat: float = (
 			_a_ttr.get_threat_values()[c.get_instance_id()]["value"]
 			if c.get_type() == _character.get_type()
@@ -322,7 +339,7 @@ func _sort_group_center_threat(group_a: Array, group_b: Array) -> bool:
 		threat_a += raw_threat / dis
 	var threat_b: float = 0.0
 	for c in group_b[1]:
-		var dis : float = _d_map[c.map_coordinate.get_index()]["travel"]
+		var dis : float = d_map[c.map_coordinate.get_index()]["travel"]
 		var raw_threat: float = (
 			_a_ttr.get_threat_values()[c.get_instance_id()]["value"]
 			if c.get_type() == _character.get_type()

@@ -43,7 +43,7 @@ func handle_input(event: InputEvent) -> void:
 		and selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY
 	):
 		var path_data: PoolVector3Array = (
-			selector.hex_map.range_finder.get_player_point_path(
+			selector.hex_map.range_finder.get_character_point_path(
 					selector.active_player,
 					selector.tile_hovered.map_coordinate.get_index(),
 					selector.enemies_ref,

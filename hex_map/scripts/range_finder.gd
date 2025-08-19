@@ -46,20 +46,20 @@ func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Diction
 	return d_map
 
 
-# Determines the path to the point within a defined area for a player character.
-func get_player_point_path(
-	pc: PlayerCharacter,
+# Determines the path to the point within a defined area for a character.
+func get_character_point_path(
+	c: Character,
 	dest_id: int,
-	enemies: Array,
+	opponents: Array,
 	movement_area_ids: Array
 ) -> PoolVector3Array:
 	_hm_astar.set_area_disabled(movement_area_ids, false)
 	# Disable connection points of the opposite character type to prevent character
 	# from being able to move into those spaces
-	_disable_character_tiles(enemies, true)
+	_disable_character_tiles(opponents, true)
 	
 	var point_path: PoolVector3Array = _hm_astar.get_point_path(
-			pc.map_coordinate.get_index(),
+			c.map_coordinate.get_index(),
 			dest_id
 	)
 	 # Reset for future range finder operations.
@@ -100,68 +100,6 @@ func get_closest_id_path(
 	if use_tile_dist:
 		_hm_astar.set_cost_to_travel()
 	return path_to_dest
-
-
-# Determines the path within a character's movement area that gets closest
-# to a destination.
-func get_character_point_path_toward(
-	c: Character,
-	dest_id: int,
-	opponents: Array,
-	movement_area_ids: Array
-) -> PoolVector3Array:
-	assert(
-			movement_area_ids.size() > 0,
-			"Error: No movement area provided for character %s." % c.name
-	)
-	var true_dest_id: int = get_character_closest_point_toward(
-			c,
-			dest_id,
-			opponents
-	)
-	# Only enable the movement area
-	_hm_astar.set_area_disabled(movement_area_ids, false)
-	# Disable connection points of the opponents to prevent character
-	# from being able to move into those spaces
-	_disable_character_tiles(opponents, true)
-
-	var point_path: PoolVector3Array = _hm_astar.get_point_path(
-			c.map_coordinate.get_index(),
-			true_dest_id
-	)
-	# Reset for future range finder operations.
-	_hm_astar.set_area_disabled(movement_area_ids)
-	return point_path
-
-
-# Determines the path within a character's movement area that moves farthest
-# away from a target.
-func get_character_point_path_away(
-	c: Character,
-	target_id: int,
-	opponents: Array,
-	movement_d_map: Dictionary
-)-> PoolVector3Array:
-	assert(
-			movement_d_map.size() > 0,
-			"Error: No movement area provided for character %s." % c.name
-	)
-	# Only enable the movement area
-	_hm_astar.set_area_disabled(movement_d_map.keys(), false)
-	# Disable connection points of the opponents to prevent character
-	# from being able to move into those spaces
-	_disable_character_tiles(opponents, true)
-	var farthest_id: int = _hm_astar.get_farthest_in_area(
-			target_id,
-			movement_d_map
-	)
-	var point_path: PoolVector3Array = _hm_astar.get_point_path(
-			c.map_coordinate.get_index(),
-			farthest_id
-	)
-	# Reset for future range finder operations.
-	_hm_astar.set_area_disabled(movement_d_map.keys())
-	return point_path
 
 
 # Get the area that can be reached by a character. Takes in an array of the
@@ -233,6 +171,18 @@ func get_character_closest_point_toward(
 	# Reset for future range finder operations.
 	_hm_astar.set_all_disabled()
 	return true_dest_id
+
+
+# Determines the point within a character's movement area that is the farthest
+# away from a target.
+func get_character_farthest_point_away(
+	target_id: int,
+	movement_d_map: Dictionary
+) -> int:
+	return _hm_astar.get_farthest_in_area(
+			target_id,
+			movement_d_map
+	)
 
 
 # Called when the node enters the scene tree for the first time.
