@@ -15,11 +15,11 @@ var _x_count: int = 0
 
 
 # Gets the distances from the starting point to all tiles within a given reach.
-# A negative reach indicates that all map tiles should be looked at. Specifying
-# get_all determines whether to include tiles that are outside of reach of not.
+# A negative reach indicates that all map tiles should be looked at. The use_tile
+# flag indicates that the tile distance should be used instead of travel distance.
 # Each entry has the travel distance and tile distance stored in a dictionary.
 # Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
-func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictionary:
+func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Dictionary:
 	var frontier: PQueue = PQueue.new()
 	var id_distances: Dictionary = {}
 
@@ -40,7 +40,7 @@ func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictiona
 					or travel_dist < id_distances[next_id]["travel"]
 				)
 				and (reach < 0 or tile_dist <= reach)
-				and (get_all or travel_dist <= reach)
+				and (use_tile or travel_dist <= reach)
 			):
 				id_distances[next_id] = {"travel": travel_dist, "tile": tile_dist}
 				frontier.push(travel_dist, next_id)

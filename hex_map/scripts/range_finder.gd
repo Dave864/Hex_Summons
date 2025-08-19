@@ -33,14 +33,14 @@ func tile_distance(start_id: int, dest_id: int) -> float:
 
 
 # Gets the distances from the starting point to all tiles within a given reach.
-# A negative reach indicates that all map tiles should be looked at. Specifying
-# get_all determines whether to include tiles that are outside of reach of not.
+# A negative reach indicates that all map tiles should be looked at. The use_tile
+# flag indicates that the tile distance should be used instead of travel distance.
 # Each entry has the travel distance and tile distance stored in a Dictionary.
 # Travel distance is under the "travel" key. Tile distance is under the "tile" key.
-func get_distance_map(start_id: int, get_all: bool, reach: int = -1) -> Dictionary:
+func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Dictionary:
 	# Enable all connections to make sure distance can be found.
 	_hm_astar.set_all_disabled(false)
-	var d_map: Dictionary = _hm_astar.get_distance_map(start_id, get_all, reach)
+	var d_map: Dictionary = _hm_astar.get_distance_map(start_id, use_tile, reach)
 	# Reset for future range finder operations.
 	_hm_astar.set_all_disabled()
 	return d_map
