@@ -72,3 +72,4 @@ script = ExtResource( 4 )
 script = ExtResource( 7 )
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
+[connection signal="area_entered" from="HitBox" to="EffectsTracker" method="_on_HitBox_area_entered"]
