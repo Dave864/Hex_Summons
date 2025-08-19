@@ -23,6 +23,7 @@ var _character: Character = null
 # Tracks allies and opponents by their instance ids
 var _allies: Dictionary = {}
 var _opponents: Dictionary = {}
+var _targets: Array = []
 # Threat trackers for allies and opponents
 var _a_ttr: ThreatTracker = null
 var _o_ttr: ThreatTracker = null
@@ -48,7 +49,6 @@ func update_distance_map() -> void:
 # current state of the map.
 func determine_action_chain() -> Array:
 	var ab: ActionBehavior = null
-	var targets: Array
 	for action in _actions:
 		ab = action.get_node_or_null("ActionBehavior")
 		assert(
@@ -56,15 +56,15 @@ func determine_action_chain() -> Array:
 				"Action {0} is missing an ActionBehavior node." \
 				.format([action.name])
 		)
-		targets = (
+		_targets = (
 			_allies.values() 
 			if ab.target == ActionBehavior.Target.ALLIES
 			else _opponents.values()
 		)
-		if not ab.conditions_met(_character, targets, d_map):
+		if not ab.conditions_met(_character, _targets, d_map):
 			print("action {0} conditions not met.".format([action.name]))
 			continue
-		var target_index: int = _find_target_index(ab, targets)
+		var target_index: int = _find_target_index(ab, _targets)
 		print(target_index)
 		# Check if target is in range of action
 		var movement: int = (
@@ -87,7 +87,7 @@ func determine_action_chain() -> Array:
 			# Determine orientation for action? Orientation could also be
 			# determined in Action state
 			return [
-				[ACTION, action, target_index],
+				[ACTION, action, target_index, _targets],
 				[MOVE, _find_move_path(target_index, ab.movement_behavior)]
 			]
 		print("action {0} out of range".format([action.name]))

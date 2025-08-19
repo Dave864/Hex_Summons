@@ -8,16 +8,20 @@ in the given chain. Goes to the 'Wait' state if the action is the last command.
 
 # The list of commands the enemy will execute.
 var _command_chain: Array = []
-# The action to execute
-var _action: Action = null
 
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
-func enter(_msg := {}) -> void:
-	_command_chain = _msg["command_chain"]
-	_action = _command_chain.pop_back()[1]
+func enter(msg := {}) -> void:
+	_command_chain = msg["command_chain"]
+	var action_details: Array = _command_chain.pop_back()
+	var action: Action = action_details[1]
+	var targets: Array = action_details[3]
+	_change_target_state(targets, true)
+	yield(action.execute_action(), "completed")
+	_change_target_state(targets, false)
+	_activate_cooldown(action)
 	_move_to_next_state()
 
 
@@ -29,7 +33,7 @@ func update(_delta: float) -> void:
 # Called by the state machine before changing the active state.
 # Resets the interpolation weight an next_point_index.
 func exit() -> void:
-	_action = null
+	pass
 
 
 # Checks the command chain to determine what state to go to next.
@@ -44,3 +48,19 @@ func _move_to_next_state() -> void:
 	else:
 		ec.emit_turn_ended()
 		state_machine.transition_to(WAIT)
+
+
+# Changes the state of the targets.
+func _change_target_state(targets: Array, active: bool) -> void:
+	for t in targets:
+		if active:
+			t.activate_hit_box()
+		else:
+			t.deactivate_hit_box()
+
+
+# Activates the cooldown of an action if present.
+func _activate_cooldown(action: Action) -> void:
+	var cooldown: Cooldown = action.get_node_or_null("Cooldown")
+	if cooldown != null:
+		cooldown.start_countdown()

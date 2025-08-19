@@ -50,8 +50,10 @@ func exit() -> void:
 # Orients the action emission to the closest valid target.
 func _orient_to_closest_target() -> void:
 	var target_tile: MapTile = _ai_node.h_map.get_tile_at(_target_index)
-	_action.set_emission_map_index(ec.map_coordinate.get_index())
-	var char_pos: Vector3 = ec.translation
+	_action.set_emission_map_index(_move_end_index)
+	var char_pos: Vector3 = (
+		_ai_node.h_map.get_tile_at(_move_end_index).get_character_position()
+	)
 	_action.set_emission_pos(char_pos)
 	var char_pt: Vector2 = Vector2(char_pos.x, char_pos.z)
 	var tile_pt: Vector2 = Vector2(
@@ -75,7 +77,7 @@ func _orient_to_closest_target() -> void:
 # in a direction the player can reach. Returns if the direction was set.
 func _fix_orientation() -> bool:
 	var c_cube: Vector3 = HexUtil.index_to_cube(
-			ec.map_coordinate.get_index(),
+			_move_end_index,
 			_ai_node.h_map.get_x_count()
 	)
 	for i in 6:
