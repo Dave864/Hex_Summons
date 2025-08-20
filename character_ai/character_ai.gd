@@ -64,25 +64,17 @@ func determine_action_chain() -> Array:
 		if not ab.conditions_met(_character, _targets, d_map):
 			print("action {0} conditions not met.".format([action.name]))
 			continue
-		var target_index: int = _find_target_index(ab, _targets)
-		print(target_index)
-		# Check if target is in range of action
-		var movement: int = (
-			0 if ab.movement_behavior == ActionBehavior.Movement.STAND
-			else _character.stats.get_movement_range() 
-		)
-		
+		var target_index: int = _get_target_index_in_range(action, ab)
+		if target_index < 0:
+			print("action {0} out of range of all targets.".format([action.name]))
+			continue
 		# Empty actions default to movement.
 		if action.name == "Empty":
 			print("Default move")
 			return[
 				[MOVE, _find_move_path(target_index, ab.movement_behavior)]
 			]
-		elif action is Action and _action_in_range(
-				action,
-				target_index,
-				movement
-		):
+		else:
 			print("execute acton {0}".format([action.name]))
 			# Determine orientation for action? Orientation could also be
 			# determined in Action state
@@ -90,7 +82,6 @@ func determine_action_chain() -> Array:
 				[ACTION, action, target_index, _targets],
 				[MOVE, _find_move_path(target_index, ab.movement_behavior)]
 			]
-		print("action {0} out of range".format([action.name]))
 	return _default_chain()
 
 
@@ -115,43 +106,77 @@ func _ready() -> void:
 	_check_for_required_parameters()
 
 
-# Determines the index of the tile the character will target.
-func _find_target_index(ab: ActionBehavior, targets: Array) -> int:
+# Goes through all relevant target indexes and gets the first one that is within
+# range. Returns -1 if no target is within range.
+func _get_target_index_in_range(
+	action: Action,
+	ab: ActionBehavior
+) -> int:
+	var target_indexes: Array = _get_sorted_target_indexes(ab)
+	# Check if target is in range of action
+	var movement: int = (
+		0 if ab.movement_behavior == ActionBehavior.Movement.STAND
+		else _character.stats.get_movement_range() 
+	)
+	# Empty actions default to movement.
+	if action.name == "Empty":
+		return target_indexes[0]
+	for target_index in target_indexes:
+		if _action_in_range(
+				action,
+				target_index,
+				movement
+		):
+			return target_index
+	return -1
+
+
+# Determines the indexes of the tiles the character can target.
+func _get_sorted_target_indexes(ab: ActionBehavior) -> Array:
 	if ab.target_group():
-		return _group_target_index(ab.get_group_condition(), ab.target_focus)
+		return _get_group_target_indexes(ab.get_group_condition(), ab.target_focus)
+	var target_indexes: Array
 	if ab.target_focus == ActionBehavior.TargetFocus.CLOSEST:
-		targets.sort_custom(self, "_sort_character_dist")
-		return targets[0].map_coordinate.get_index()
+		_targets.sort_custom(self, "_sort_character_dist")
+		for t in _targets:
+			target_indexes.append(t.map_coordinate.get_index())
+		return target_indexes
 	if ab.target_focus == ActionBehavior.TargetFocus.FARTHEST:
-		targets.sort_custom(self, "_sort_character_dist")
-		return targets[-1].map_coordinate.get_index()
-	var target_ids: Array
+		_targets.sort_custom(self, "_sort_character_dist")
+		for t in _targets:
+			target_indexes.append(t.map_coordinate.get_index())
+		target_indexes.invert()
+		return target_indexes
 	if ab.target == ActionBehavior.Target.OPPONENTS:
-		target_ids = _determine_opponent_threat_order()
-		return _opponents[target_ids[0]].map_coordinate.get_index()
+		target_indexes = _determine_opponent_index_threat_order()
+		return target_indexes
 	else:
-		target_ids = _determine_ally_threat_order()
-		return _allies[target_ids[0]].map_coordinate.get_index()
+		target_indexes = _determine_ally_index_threat_order()
+		return target_indexes
 
 
 # Gets the target index based on a group condition.
-func _group_target_index(gc: GroupCondition, target_focus: int) -> int:
+func _get_group_target_indexes(gc: GroupCondition, target_focus: int) -> Array:
 	var groups: Dictionary = gc.find_group_index_centers(h_map.get_x_count())
 	match target_focus:
 		ActionBehavior.TargetFocus.CLOSEST:
 			var sorted_centers: Array = groups.keys()
 			sorted_centers.sort_custom(self, "_sort_group_center_dist")
-			return sorted_centers[0]
+			return sorted_centers
 		ActionBehavior.TargetFocus.FARTHEST:
 			var sorted_centers: Array = groups.keys()
 			sorted_centers.sort_custom(self, "_sort_group_center_dist")
-			return sorted_centers[-1]
+			sorted_centers.invert()
+			return sorted_centers
 		_:
-			var sorted_centers: Array = []
+			var sorted_group_data: Array = []
 			for center in groups.keys():
-				sorted_centers.append([center, groups[center]])
-			sorted_centers.sort_custom(self, "_sort_group_center_threat")
-			return sorted_centers[0][0]
+				sorted_group_data.append([center, groups[center]])
+			sorted_group_data.sort_custom(self, "_sort_group_center_threat")
+			var sorted_centers: Array = []
+			for gd in sorted_group_data:
+				sorted_centers.append(gd[0])
+			return sorted_centers
 
 
 # Determines if the action is in range of the target.
@@ -221,9 +246,8 @@ func _find_move_path(
 # target character with the highest threat.
 func _default_chain() -> Array:
 	var action_chain: Array = []
-	var target_ids: Array = _determine_opponent_threat_order()
-	var target_index: int = _opponents[target_ids[0]].map_coordinate.get_index()
-	action_chain.push_front([MOVE, _calculate_toward_path(target_index)])
+	var target_indexes: Array = _determine_opponent_index_threat_order()
+	action_chain.push_front([MOVE, _calculate_toward_path(target_indexes[0])])
 	return action_chain
 
 
@@ -272,17 +296,23 @@ func _calculate_away_path(target: int) -> PoolVector3Array:
 
 
 # Gets the threat order of opponent characters.
-func _determine_opponent_threat_order() -> Array:
+func _determine_opponent_index_threat_order() -> Array:
 	var danger_opponents: Array = _opponents.keys()
 	danger_opponents.sort_custom(self, "_sort_opponent_danger")
-	return danger_opponents
+	var indexes: Array = []
+	for o in danger_opponents:
+		indexes.append(_opponents[o].map_coordinate.get_index())
+	return indexes
 
 
 # Gets the threat order of ally characters.
-func _determine_ally_threat_order() -> Array:
+func _determine_ally_index_threat_order() -> Array:
 	var danger_allies: Array = _allies.keys()
 	danger_allies.sort_custom(self, "_sort_ally_danger")
-	return danger_allies
+	var indexes: Array = []
+	for a in danger_allies:
+		indexes.append(_allies[a].map_coordinate.get_index())
+	return indexes
 
 
 # Sorts characters by their distances, with the lower distances being first.
