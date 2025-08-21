@@ -147,6 +147,7 @@ func _get_sorted_target_indexes(ab: ActionBehavior) -> Array:
 			target_indexes.append(t.map_coordinate.get_index())
 		target_indexes.invert()
 		return target_indexes
+	# ab.target_focus == ActionBehavior.TargetFocus.THREAT
 	if ab.target == ActionBehavior.Target.OPPONENTS:
 		target_indexes = _determine_opponent_index_threat_order()
 		return target_indexes
@@ -177,6 +178,26 @@ func _get_group_target_indexes(gc: GroupCondition, target_focus: int) -> Array:
 			for gd in sorted_group_data:
 				sorted_centers.append(gd[0])
 			return sorted_centers
+
+
+# Gets the threat order of opponent characters.
+func _determine_opponent_index_threat_order() -> Array:
+	var danger_opponents: Array = _opponents.keys()
+	danger_opponents.sort_custom(self, "_sort_opponent_danger")
+	var indexes: Array = []
+	for o in danger_opponents:
+		indexes.append(_opponents[o].map_coordinate.get_index())
+	return indexes
+
+
+# Gets the threat order of ally characters.
+func _determine_ally_index_threat_order() -> Array:
+	var danger_allies: Array = _allies.keys()
+	danger_allies.sort_custom(self, "_sort_ally_danger")
+	var indexes: Array = []
+	for a in danger_allies:
+		indexes.append(_allies[a].map_coordinate.get_index())
+	return indexes
 
 
 # Determines if the action is in range of the target.
@@ -293,26 +314,6 @@ func _calculate_away_path(target: int) -> PoolVector3Array:
 			_opponents.values(),
 			movement_range
 	)
-
-
-# Gets the threat order of opponent characters.
-func _determine_opponent_index_threat_order() -> Array:
-	var danger_opponents: Array = _opponents.keys()
-	danger_opponents.sort_custom(self, "_sort_opponent_danger")
-	var indexes: Array = []
-	for o in danger_opponents:
-		indexes.append(_opponents[o].map_coordinate.get_index())
-	return indexes
-
-
-# Gets the threat order of ally characters.
-func _determine_ally_index_threat_order() -> Array:
-	var danger_allies: Array = _allies.keys()
-	danger_allies.sort_custom(self, "_sort_ally_danger")
-	var indexes: Array = []
-	for a in danger_allies:
-		indexes.append(_allies[a].map_coordinate.get_index())
-	return indexes
 
 
 # Sorts characters by their distances, with the lower distances being first.

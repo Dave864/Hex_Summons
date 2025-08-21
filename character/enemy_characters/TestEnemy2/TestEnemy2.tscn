@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattleSprite.atlastex" type="Texture" id=1]
 [ext_resource path="res://character/enemy_characters/enemy_character.gd" type="Script" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://actions/cooldown.gd" type="Script" id=17]
 [ext_resource path="res://character_ai/action_behavior.gd" type="Script" id=18]
 [ext_resource path="res://actions/Empty/Empty.tscn" type="PackedScene" id=19]
+[ext_resource path="res://character_ai/action_conditions/group_condition.gd" type="Script" id=20]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.1
@@ -79,6 +80,9 @@ movement_behavior = 1
 [node name="Cooldown" type="Node" parent="Actions/Blast/ActionBehavior"]
 script = ExtResource( 17 )
 turn_count = 1
+
+[node name="GroupCondition" type="Node" parent="Actions/Blast/ActionBehavior"]
+script = ExtResource( 20 )
 
 [node name="Shot" parent="Actions" instance=ExtResource( 15 )]
 

@@ -251,7 +251,7 @@ func _get_closest_path(
 			):
 				distances[next_id] = {
 					"travel": travel_d,
-					"to_target": _compute_cost(cur[1], target_id)
+					"to_target": _compute_cost(next_id, target_id)
 				}
 				came_from[next_id] = cur[1]
 				frontier.push(distances[next_id]["to_target"], next_id)
