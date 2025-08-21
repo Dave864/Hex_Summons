@@ -6,6 +6,10 @@ in the given chain. Goes to the 'Wait' state if the action is the last command.
 """
 
 
+# The path to the cooldown node of an action. Should always be a child of
+# ActionBehavior.
+const COOLDOWN_PATH: String = "ActionBehavior/Cooldown"
+
 # The list of commands the enemy will execute.
 var _command_chain: Array = []
 
@@ -61,6 +65,6 @@ func _change_target_state(targets: Array, active: bool) -> void:
 
 # Activates the cooldown of an action if present.
 func _activate_cooldown(action: Action) -> void:
-	var cooldown: Cooldown = action.get_node_or_null("Cooldown")
+	var cooldown: Cooldown = action.get_node_or_null(COOLDOWN_PATH)
 	if cooldown != null:
-		cooldown.start_countdown()
+		cooldown.start_countdown_on_turn()

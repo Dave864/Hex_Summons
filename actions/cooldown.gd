@@ -1,8 +1,7 @@
 class_name Cooldown
 extends Node
 """
-Represents the number of turns that need to pass before an action can be used
-again.
+A timer that updates whenever a character's turn ends.
 """
 
 
@@ -24,6 +23,13 @@ func is_active() -> bool:
 # Starts the cooldown countdown.
 func start_countdown() -> void:
 	_countdown = turn_count
+
+
+# Starts the cooldown countdown. Used when the countdown is started during the
+# character's turn. Need to add one extra count so that cooldown duration
+# matches turn_count.
+func start_countdown_on_turn() -> void:
+	_countdown = turn_count + 1
 
 
 # Decrement the countdown when a character turn ends.
