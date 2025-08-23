@@ -76,8 +76,6 @@ func determine_action_chain() -> Array:
 			]
 		else:
 			print("execute acton {0}".format([action.name]))
-			# Determine orientation for action? Orientation could also be
-			# determined in Action state
 			return [
 				[ACTION, action, target_index, _targets],
 				[MOVE, _find_move_path(target_index, ab.movement_behavior)]
@@ -306,6 +304,7 @@ func _calculate_away_path(target: int) -> PoolVector3Array:
 		movement_d_map[i] = d_map[i]
 	_move_dest_id = h_map.range_finder.get_character_farthest_point_away(
 			target,
+			_opponents.values(),
 			movement_d_map
 	)
 	return h_map.range_finder.get_character_point_path(

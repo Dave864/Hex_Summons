@@ -100,6 +100,8 @@ func get_farthest_in_area(target_id: int, area_d_map: Dictionary) -> int:
 	var farthest_pt: int = -1
 	var farthest_d: float = 0.0
 	for id in area_d_map.keys():
+		if is_point_disabled(id):
+			continue
 		var dist: float = _compute_cost(id, target_id)
 		if dist > farthest_d:
 			farthest_d = dist

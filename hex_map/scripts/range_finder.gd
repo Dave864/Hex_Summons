@@ -177,12 +177,22 @@ func get_character_closest_point_toward(
 # away from a target.
 func get_character_farthest_point_away(
 	target_id: int,
+	opponents: Array,
 	movement_d_map: Dictionary
 ) -> int:
-	return _hm_astar.get_farthest_in_area(
+	# Enable all connections to make sure the point can be found.
+	_hm_astar.set_all_disabled(false)
+	# Disable connection points of the opponents to prevent character
+	# from being able to move into those spaces
+	_disable_character_tiles(opponents, true)
+	var farthest_pt: int = _hm_astar.get_farthest_in_area(
 			target_id,
 			movement_d_map
 	)
+	# Reset for future range finder operations.
+	_hm_astar.set_all_disabled()
+	return farthest_pt
+	
 
 
 # Called when the node enters the scene tree for the first time.
