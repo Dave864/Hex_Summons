@@ -36,7 +36,6 @@ margin_bottom = 18.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 text = "0"
-align = 1
 valign = 1
 
 [node name="Portrait" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
@@ -60,7 +59,6 @@ margin_bottom = 26.0
 rect_min_size = Vector2( 0, 4 )
 mouse_filter = 2
 size_flags_vertical = 1
-theme = ExtResource( 3 )
 step = 1.0
 value = 50.0
 percent_visible = false
