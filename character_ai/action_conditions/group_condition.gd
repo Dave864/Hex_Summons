@@ -16,6 +16,8 @@ enum groupStatus {
 export(int, 2, 10) var min_group_size = 2
 export(int, 1, 10) var max_distance = 1
 
+# Stores an array of Characters that are part of a group as the values,
+# referenced by a group number.
 var _groups: Dictionary = {}
 
 
@@ -33,7 +35,7 @@ func is_met(
 # Determines the map index coordinates that best represents the center point of
 # groups. Calculates the centroid to use as the center. Accepts the number of
 # tiles in a row of a hex map as a parameter. Returns a dictionary with the
-# center points as the key and the group members as the value.
+# center points as the key and an array of the Character members as the value.
 func find_group_index_centers(x_count: int) -> Dictionary:
 	var _group_centers: Dictionary = {}
 	for g in _groups.values():

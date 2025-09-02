@@ -111,21 +111,26 @@ func _get_target_index_in_range(
 	ab: ActionBehavior
 ) -> int:
 	var target_indexes: Array = _get_sorted_target_indexes(ab)
-	# Check if target is in range of action
 	var movement: int = (
 		0 if ab.movement_behavior == ActionBehavior.Movement.STAND
 		else _character.stats.get_movement_range() 
 	)
-	# Empty actions default to movement.
 	if action.name == "Empty":
 		return target_indexes[0]
+	# The number of spaces that can be moved in the direction defined by
+	# ab.movement_bahavior while still remaining in range of target.
+	var move_tolerance: int
 	for target_index in target_indexes:
-		if _action_in_range(
+		move_tolerance = _get_move_tolerance(
 				action,
+				ab.movement_behavior,
 				target_index,
 				movement
-		):
-			return target_index
+		)
+		if move_tolerance < 0:
+			continue
+		# Determine true target index to account for movement behavior
+		return target_index
 	return -1
 
 
@@ -145,7 +150,6 @@ func _get_sorted_target_indexes(ab: ActionBehavior) -> Array:
 			target_indexes.append(t.map_coordinate.get_index())
 		target_indexes.invert()
 		return target_indexes
-	# ab.target_focus == ActionBehavior.TargetFocus.THREAT
 	if ab.target == ActionBehavior.Target.OPPONENTS:
 		target_indexes = _determine_opponent_index_threat_order()
 		return target_indexes
@@ -198,49 +202,115 @@ func _determine_ally_index_threat_order() -> Array:
 	return indexes
 
 
-# Determines if the action is in range of the target.
-func _action_in_range(
+# Calculates the amount of movement required for the character to be at the
+# maximum range of an action given a specific movement direction.
+# Returns -1 if target is out of range.
+func _get_move_tolerance(
 	action: Action,
+	move_dir: int,
 	target_index: int,
 	movement: int
-) -> bool:
+) -> int:
 	"""
 	TODO: Add logic to account for dead ranges.
 	"""
-	# Process movement
-	if d_map[target_index]["travel"] <= movement:
-		return true
-	var move_stop: int = h_map.range_finder.get_character_closest_point_toward(
-			_character,
-			target_index,
-			_opponents.values(),
-			movement
-	)
-	# Process action source range
-	var source_stop: int
+	var e_step: Array = _effect_step(target_index, action, move_dir, movement)
+	if e_step[0] >= 0:
+		return e_step[0]
+	var s_step: Array = _source_step(e_step[1], action, move_dir, movement)
+	if s_step[0] >= 0:
+		return s_step[0]
+	return _move_step(s_step[1], movement)
+
+
+# Helper function for _get_move_tolerance. Determines if the character is within
+# effect range of the target and gets the movement tolerance if so. Returns an
+# array where the first element is the movement tolerance and the second element
+# is the farthest point from the target to the character that can be reached using
+# effect range. Tolerance is -1 if the character is outside effect range. 
+func _effect_step(
+	target_index: int,
+	action: Action,
+	move_dir: int,
+	movement: int
+) -> Array:
 	var path: PoolIntArray = []
-	# Source range not applied when action is emitted from center.
-	if action.emit_from_center:
-		source_stop = move_stop
-	else:
-		path = h_map.range_finder.get_closest_id_path(
-				move_stop,
-				target_index,
-				action.source_range.get_reach(),
-				action.source_ignore_heights
-		)
-		source_stop = path[-1]
-	if source_stop == target_index:
-		return true
-	# Process action effect range
+	var results: Array = [0, 0]
 	path = h_map.range_finder.get_closest_id_path(
-			source_stop,
 			target_index,
+			_character.map_coordinate.get_index(),
 			action.effect_range.get_reach(),
 			action.effect_ignore_heights
 	)
 	var effect_stop: int = path[-1]
-	return effect_stop == target_index
+	if effect_stop == _character.map_coordinate.get_index():
+		if move_dir == ActionBehavior.Movement.AWAY:
+			results[0] = int(min(action.source_range.get_reach(), movement))
+		else:
+			results[0] = 0
+	else:
+		results[0] = -1
+	results[1] = effect_stop
+	return results
+
+
+# Helper function for _get_move_tolerance. Determines if the character is within
+# source range of the target and gets the movement tolerance if so. Returns an
+# array where the first element is the movement tolerance and the second element
+# is the farthest point from the target to the character that can be reached using
+# source and effect range. Tolerance is -1 if the character is outside this range. 
+func _source_step(
+	effect_stop: int,
+	action: Action,
+	move_dir: int,
+	movement: int
+) -> Array:
+	var source_stop: int
+	var results: Array = [0, 0]
+	# Source range not applied when action is emitted from center.
+	if action.emit_from_center:
+		source_stop = effect_stop
+	else:
+		var path: PoolIntArray = []
+		path = h_map.range_finder.get_closest_id_path(
+				effect_stop,
+				_character.map_coordinate.get_index(),
+				action.source_range.get_reach(),
+				action.source_ignore_heights
+		)
+		source_stop = path[-1]
+	if source_stop == _character.map_coordinate.get_index():
+		if move_dir == ActionBehavior.Movement.AWAY:
+			var base_tol: float = min(action.source_range.get_reach(), movement)
+			var s_dist: float
+			if action.source_ignore_heights:
+				s_dist = d_map[source_stop]["tile"] - d_map[effect_stop]["tile"]
+			else:
+				s_dist = d_map[source_stop]["travel"] - d_map[effect_stop]["travel"]
+			var s_tol: float = action.source_range.get_reach() - s_dist
+			results[0] = int(min(base_tol, s_tol))
+		else:
+			results[0] = 0
+	else:
+		results[0] = -1
+	results[1] = source_stop
+	return results
+
+
+# Helper function for _get_move_tolerance. Determines if the character is within
+# movement range of the target after source step and gets the movement tolerance
+# if so. Returns the movement tolerance. Returns -1 if the character is outside
+# this range.
+func _move_step(source_stop: int, movement: int) -> int:
+	var move_stop: int = h_map.range_finder.get_character_closest_point_toward(
+			_character,
+			source_stop,
+			_opponents.values(),
+			movement
+	)
+	if source_stop == move_stop:
+		return d_map[source_stop]["travel"]
+	return -1
 
 
 # Determines the movement path for the action chain.
