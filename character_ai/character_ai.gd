@@ -318,7 +318,7 @@ func _source_step(
 				s_dist = d_map[source_stop]["tile"] - d_map[effect_stop]["tile"]
 			else:
 				s_dist = d_map[source_stop]["travel"] - d_map[effect_stop]["travel"]
-			var s_tol: float = action.source_range.get_reach() - s_dist
+			var s_tol: float = action.source_range.get_reach() - abs(s_dist)
 			results[0] = int(min(base_tol, s_tol))
 		else:
 			results[0] = 0
