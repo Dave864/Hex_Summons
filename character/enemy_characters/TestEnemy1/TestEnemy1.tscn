@@ -76,7 +76,6 @@ actions_ref = NodePath("../Actions")
 
 [node name="ActionBehavior" type="Node" parent="Actions/Nova"]
 script = ExtResource( 18 )
-movement_behavior = 1
 
 [node name="Cooldown" type="Node" parent="Actions/Nova/ActionBehavior"]
 script = ExtResource( 17 )

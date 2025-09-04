@@ -104,13 +104,21 @@ func get_closest_id_path(
 
 # Get the area that can be reached by a character. Takes in an array of the
 # opposing characters for determining the tiles to disable.
-func get_character_travesible_tiles(c: Character, opponents: Array) -> Array:
+func get_character_travesible_tiles(
+	c: Character,
+	opponents: Array,
+	move_override: int = -1
+) -> Array:
 	_hm_astar.set_all_disabled(false)
 	_disable_character_tiles(opponents, true)
+	var move: int = (
+			c.stats.get_movement_range() if move_override < 0
+			else move_override
+	)
 	var move_distances: Dictionary = _hm_astar.get_distance_map(
 			c.map_coordinate.get_index(),
 			false,
-			c.stats.get_movement_range()
+			move
 	)
 	# Reset for future range finder operations.
 	_hm_astar.set_all_disabled()
@@ -136,11 +144,15 @@ func get_character_closest_point_toward(
 	var true_dest_id: int
 	var closest_path: PoolIntArray = []
 	
+	var move: int = (
+			c.stats.get_movement_range() if move_override < 0
+			else move_override
+	)
 	while true:
 		closest_path = _hm_astar.get_closest_id_path(
 				c.map_coordinate.get_index(),
 				dest_id,
-				c.stats.get_movement_range() if move_override < 0 else move_override
+				move
 		)
 		true_dest_id = closest_path[-1]
 		# Determine the last point in the path that is within the movement 

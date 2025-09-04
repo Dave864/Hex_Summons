@@ -12,6 +12,8 @@ the actions available.
 # constants directly from EnemyCharacterState results in a cyclic reference.
 const ACTION: String = "Action"
 const MOVE: String = "Move"
+# Name of the Action node that represents only movement
+const MOVE_ACTION_NAME: String = "Empty"
 
 export(NodePath) var actions_ref = null
 
@@ -64,21 +66,25 @@ func determine_action_chain() -> Array:
 		if not ab.conditions_met(_character, _targets, d_map):
 			print("action {0} conditions not met.".format([action.name]))
 			continue
-		var target_index: int = _get_target_index_in_range(action, ab)
-		if target_index < 0:
+		var details: Array = _determine_action_details(action, ab)
+		if details.size() == 0:
 			print("action {0} out of range of all targets.".format([action.name]))
 			continue
 		# Empty actions default to movement.
-		if action.name == "Empty":
+		if action.name == MOVE_ACTION_NAME:
 			print("Default move")
 			return[
-				[MOVE, _find_move_path(target_index, ab.movement_behavior)]
+				[MOVE, details[0]]
 			]
 		else:
 			print("execute acton {0}".format([action.name]))
+			"""
+			TODO: Add logic to isolate the targets that will be hit by the action
+			"""
+			var active_targets: Array = _targets
 			return [
-				[ACTION, action, target_index, _targets],
-				[MOVE, _find_move_path(target_index, ab.movement_behavior)]
+				[ACTION, action, details[1], active_targets],
+				[MOVE, details[0]]
 			]
 	return _default_chain()
 
@@ -104,34 +110,48 @@ func _ready() -> void:
 	_check_for_required_parameters()
 
 
-# Goes through all relevant target indexes and gets the first one that is within
-# range. Returns -1 if no target is within range.
-func _get_target_index_in_range(
+# Goes through all relevant target indexes and determines the movement
+# path for the character and emission index of the action for the
+# first target that is within range. Returns these details as an array:
+# [movement_path, target_index]
+# Returns an empty array if no targets are within range.
+func _determine_action_details(
 	action: Action,
 	ab: ActionBehavior
-) -> int:
+) -> Array:
+	var details: Array = []
 	var target_indexes: Array = _get_sorted_target_indexes(ab)
 	var movement: int = (
 		0 if ab.movement_behavior == ActionBehavior.Movement.STAND
 		else _character.stats.get_movement_range() 
 	)
-	if action.name == "Empty":
-		return target_indexes[0]
+	if action.name == MOVE_ACTION_NAME:
+		details.append(_calc_move_path(target_indexes[0], ab.movement_behavior))
+		return details
 	# The number of spaces that can be moved in the direction defined by
 	# ab.movement_bahavior while still remaining in range of target.
-	var move_tolerance: int
-	for target_index in target_indexes:
-		move_tolerance = _get_move_tolerance(
+	var m_path: PoolVector3Array
+	for t_index in target_indexes:
+		m_path = _get_move_path(
 				action,
 				ab.movement_behavior,
-				target_index,
+				t_index,
 				movement
 		)
-		if move_tolerance < 0:
+		if m_path.size() == 0:
 			continue
+		# Maybe add logic to randomize the tolerance?
+		details.append(m_path)
 		# Determine true target index to account for movement behavior
-		return target_index
-	return -1
+		var true_target: int = h_map.range_finder.get_closest_id_path(
+				_move_dest_id,
+				t_index,
+				action.source_range.get_reach(),
+				action.source_ignore_heights
+		)[-1]
+		details.append(true_target)
+		break
+	return details
 
 
 # Determines the indexes of the tiles the character can target.
@@ -202,25 +222,36 @@ func _determine_ally_index_threat_order() -> Array:
 	return indexes
 
 
-# Calculates the amount of movement required for the character to be at the
+# Determines the movement path required for the character to be at the
 # maximum range of an action given a specific movement direction.
-# Returns -1 if target is out of range.
-func _get_move_tolerance(
+# Returns an empty array if target is out of range.
+func _get_move_path(
 	action: Action,
 	move_dir: int,
 	target_index: int,
 	movement: int
-) -> int:
+) -> PoolVector3Array:
 	"""
 	TODO: Add logic to account for dead ranges.
 	"""
+	# Check if target is within the effect distance from the character.
 	var e_step: Array = _effect_step(target_index, action, move_dir, movement)
 	if e_step[0] >= 0:
-		return e_step[0]
+		return _calc_move_path(target_index, move_dir, e_step[0])
+	# Check if target is within effect + source distance from character.
 	var s_step: Array = _source_step(e_step[1], action, move_dir, movement)
 	if s_step[0] >= 0:
-		return s_step[0]
-	return _move_step(s_step[1], movement)
+		return _calc_move_path(target_index, move_dir, s_step[0])
+	var m_step: int = _move_step(s_step[1], movement)
+	if m_step < 0:
+		return PoolVector3Array([])
+	# Character should always move forward when they are required to move to be
+	# in range of target.
+	move_dir = (
+			ActionBehavior.Movement.TOWARD if move_dir == ActionBehavior.Movement.AWAY
+			else move_dir
+	)
+	return _calc_move_path(target_index, move_dir, m_step)
 
 
 # Helper function for _get_move_tolerance. Determines if the character is within
@@ -313,17 +344,19 @@ func _move_step(source_stop: int, movement: int) -> int:
 	return -1
 
 
-# Determines the movement path for the action chain.
-func _find_move_path(
+# Calculates the movement path for the action chain. The move_override parameter
+# is defaulted to -1 which indicates that the character's movement should be used.
+func _calc_move_path(
 	target_index: int,
-	movement_behavior: int
+	movement_behavior: int,
+	move_override: int = -1
 ) -> PoolVector3Array:
 	var move_path: PoolVector3Array = []
 	match movement_behavior:
 		ActionBehavior.Movement.TOWARD:
-			move_path = _calculate_toward_path(target_index)
+			move_path = _calculate_toward_path(target_index, move_override)
 		ActionBehavior.Movement.AWAY:
-			move_path = _calculate_away_path(target_index)
+			move_path = _calculate_away_path(target_index, move_override)
 		_:
 			var char_tile_index: int = _character.map_coordinate.get_index()
 			var start_tile: MapTile = h_map.get_tile_at(char_tile_index)
@@ -340,18 +373,21 @@ func _default_chain() -> Array:
 	return action_chain
 
 
-# Calculates the movement path to the destination.
-func _calculate_toward_path(dest: int) -> PoolVector3Array:
+# Calculates the movement path to the destination. The move_override parameter
+# is defaulted to -1 which indicates that the character's movement should be used.
+func _calculate_toward_path(dest: int, move_override: int = -1) -> PoolVector3Array:
 	var movement_range: Array = (
 		h_map.range_finder.get_character_travesible_tiles(
 				_character,
-				_opponents.values()
+				_opponents.values(),
+				move_override
 		)
 	)
 	_move_dest_id = h_map.range_finder.get_character_closest_point_toward(
 			_character,
 			dest,
-			_opponents.values()
+			_opponents.values(),
+			move_override
 	)
 	return h_map.range_finder.get_character_point_path(
 			_character,
@@ -361,12 +397,17 @@ func _calculate_toward_path(dest: int) -> PoolVector3Array:
 	)
 
 
-# Calculates the movement path away from the target.
-func _calculate_away_path(target: int) -> PoolVector3Array:
+# Calculates the movement path away from the target. The move_override parameter
+# is defaulted to -1 which indicates that the character's movement should be used.
+func _calculate_away_path(
+		target: int,
+		move_override: int = -1
+) -> PoolVector3Array:
 	var movement_range: Array = (
 		h_map.range_finder.get_character_travesible_tiles(
 				_character,
-				_opponents.values()
+				_opponents.values(),
+				move_override
 		)
 	)
 	var movement_d_map: Dictionary = {}

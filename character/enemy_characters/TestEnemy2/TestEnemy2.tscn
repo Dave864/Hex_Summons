@@ -88,7 +88,7 @@ script = ExtResource( 20 )
 
 [node name="ActionBehavior" type="Node" parent="Actions/Shot"]
 script = ExtResource( 18 )
-movement_behavior = 1
+movement_behavior = 2
 
 [node name="Empty" parent="Actions" instance=ExtResource( 19 )]
 
