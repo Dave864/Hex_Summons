@@ -25,7 +25,7 @@ var _character: Character = null
 # Tracks allies and opponents by their instance ids
 var _allies: Dictionary = {}
 var _opponents: Dictionary = {}
-var _targets: Array = []
+var _possible_targets: Array = []
 # Threat trackers for allies and opponents
 var _a_ttr: ThreatTracker = null
 var _o_ttr: ThreatTracker = null
@@ -58,19 +58,18 @@ func determine_action_chain() -> Array:
 				"Action {0} is missing an ActionBehavior node." \
 				.format([action.name])
 		)
-		_targets = (
+		_possible_targets = (
 			_allies.values() 
 			if ab.target == ActionBehavior.Target.ALLIES
 			else _opponents.values()
 		)
-		if not ab.conditions_met(_character, _targets, d_map):
+		if not ab.conditions_met(_character, _possible_targets, d_map):
 			print("action {0} conditions not met.".format([action.name]))
 			continue
 		var details: Array = _determine_action_details(action, ab)
 		if details.size() == 0:
 			print("action {0} out of range of all targets.".format([action.name]))
 			continue
-		# Empty actions default to movement.
 		if action.name == MOVE_ACTION_NAME:
 			print("Default move")
 			return[
@@ -78,12 +77,8 @@ func determine_action_chain() -> Array:
 			]
 		else:
 			print("execute acton {0}".format([action.name]))
-			"""
-			TODO: Add logic to isolate the targets that will be hit by the action
-			"""
-			var active_targets: Array = _targets
 			return [
-				[ACTION, action, details[1], active_targets],
+				[ACTION, action, details[1], _possible_targets],
 				[MOVE, details[0]]
 			]
 	return _default_chain()
@@ -160,13 +155,13 @@ func _get_sorted_target_indexes(ab: ActionBehavior) -> Array:
 		return _get_group_target_indexes(ab.get_group_condition(), ab.target_focus)
 	var target_indexes: Array
 	if ab.target_focus == ActionBehavior.TargetFocus.CLOSEST:
-		_targets.sort_custom(self, "_sort_character_dist")
-		for t in _targets:
+		_possible_targets.sort_custom(self, "_sort_character_dist")
+		for t in _possible_targets:
 			target_indexes.append(t.map_coordinate.get_index())
 		return target_indexes
 	if ab.target_focus == ActionBehavior.TargetFocus.FARTHEST:
-		_targets.sort_custom(self, "_sort_character_dist")
-		for t in _targets:
+		_possible_targets.sort_custom(self, "_sort_character_dist")
+		for t in _possible_targets:
 			target_indexes.append(t.map_coordinate.get_index())
 		target_indexes.invert()
 		return target_indexes
@@ -278,7 +273,7 @@ func _get_move_path(
 	)
 	if movement + m_step[0] == 0 or not ab.randomize_move_dist:
 		move_dist = m_step[0]
-	# When movement randomized, always want to movement to be between full movement
+	# When movement randomized, always want movement to be between full movement
 	# and movement step, as movement step is the minimum to be within range of target.
 	else:
 		move_dist = randi() % movement + m_step[0]
