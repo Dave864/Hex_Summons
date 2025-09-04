@@ -76,10 +76,10 @@ actions_ref = NodePath("../Actions")
 [node name="ActionBehavior" type="Node" parent="Actions/Blast"]
 script = ExtResource( 18 )
 movement_behavior = 1
+randomize_move_dist = true
 
 [node name="Cooldown" type="Node" parent="Actions/Blast/ActionBehavior"]
 script = ExtResource( 17 )
-turn_count = 1
 
 [node name="GroupCondition" type="Node" parent="Actions/Blast/ActionBehavior"]
 script = ExtResource( 20 )

@@ -186,8 +186,9 @@ func get_character_closest_point_toward(
 
 
 # Determines the point within a character's movement area that is the farthest
-# away from a target.
+# away from a target where the final point is not occupied by an ally.
 func get_character_farthest_point_away(
+	c: Character,
 	target_id: int,
 	opponents: Array,
 	movement_d_map: Dictionary
@@ -197,13 +198,47 @@ func get_character_farthest_point_away(
 	# Disable connection points of the opponents to prevent character
 	# from being able to move into those spaces
 	_disable_character_tiles(opponents, true)
-	var farthest_pt: int = _hm_astar.get_farthest_in_area(
-			target_id,
-			movement_d_map
-	)
+	var farthest_pt: int
+	var true_farthest_pt: int
+	var farthest_path: PoolIntArray = []
+	while true:
+		farthest_pt = _hm_astar.get_farthest_in_area(
+				target_id,
+				movement_d_map
+		)
+		farthest_path = _hm_astar.get_id_path(
+				c.map_coordinate.get_index(),
+				farthest_pt
+		)
+		true_farthest_pt = farthest_path[-1]
+		# Determine the last point in the path that is within the movement 
+		# range. A tile occupied by an opponent is not considered within
+		# movement range.
+		for i in range(farthest_path.size() - 1, 0, -1):
+			var occupant: Character = (
+					_map_tiles.get_at(farthest_path[i]) \
+					.occupant.get_current_occupant()
+			)
+			if occupant == null or occupant.get_type() == c.get_type():
+				break
+			true_farthest_pt = farthest_path[i - 1]
+		# Check if the found destination tile is occupied by an ally other 
+		# than itself. If so, disable that tile and recalculate the shortest path.
+		var dest_occupant: Character = (
+				_map_tiles.get_at(true_farthest_pt) \
+				.occupant.get_current_occupant()
+		)
+		if (
+			dest_occupant != null
+			and dest_occupant.get_instance_id() != c.get_instance_id()
+			and dest_occupant.get_type() == c.get_type()
+		):
+			_hm_astar.set_point_disabled(true_farthest_pt, true)
+		else:
+			break
 	# Reset for future range finder operations.
 	_hm_astar.set_all_disabled()
-	return farthest_pt
+	return true_farthest_pt
 	
 
 

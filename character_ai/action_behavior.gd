@@ -24,6 +24,7 @@ enum Movement {
 export(Target) var target = Target.OPPONENTS
 export(TargetFocus) var target_focus = TargetFocus.THREAT
 export(Movement) var movement_behavior = Movement.STAND
+export(bool) var randomize_move_dist = false
 
 var _cooldown: Cooldown = null
 var _conditions: Array = []

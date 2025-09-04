@@ -50,6 +50,7 @@ func update_distance_map() -> void:
 # Determines the actions that need to be taken for the character based on the
 # current state of the map.
 func determine_action_chain() -> Array:
+	randomize()
 	var ab: ActionBehavior = null
 	for action in _actions:
 		ab = action.get_node_or_null("ActionBehavior")
@@ -134,7 +135,7 @@ func _determine_action_details(
 	for t_index in target_indexes:
 		m_path = _get_move_path(
 				action,
-				ab.movement_behavior,
+				ab,
 				t_index,
 				movement
 		)
@@ -227,23 +228,33 @@ func _determine_ally_index_threat_order() -> Array:
 # Returns an empty array if target is out of range.
 func _get_move_path(
 	action: Action,
-	move_dir: int,
+	ab: ActionBehavior,
 	target_index: int,
 	movement: int
 ) -> PoolVector3Array:
 	"""
 	TODO: Add logic to account for dead ranges.
 	"""
+	var move_dir: int = ab.movement_behavior
+	var move_dist: int = 0
 	# Check if target is within the effect distance from the character.
 	var e_step: Array = _effect_step(target_index, action, move_dir, movement)
 	if e_step[0] >= 0:
-		return _calc_move_path(target_index, move_dir, e_step[0])
+		move_dist = (
+				e_step[0] if e_step[0] == 0 or not ab.randomize_move_dist
+				else randi() % e_step[0]
+		)
+		return _calc_move_path(target_index, move_dir, move_dist)
 	# Check if target is within effect + source distance from character.
 	var s_step: Array = _source_step(e_step[1], action, move_dir, movement)
 	if s_step[0] >= 0:
-		return _calc_move_path(target_index, move_dir, s_step[0])
-	var m_step: int = _move_step(s_step[1], movement)
-	if m_step < 0:
+		move_dist = (
+				s_step[0] if s_step[0] == 0 or not ab.randomize_move_dist
+				else randi() % s_step[0]
+		)
+		return _calc_move_path(target_index, move_dir, move_dist)
+	var m_step: Array = _move_step(s_step[1], movement)
+	if m_step.size() == 0:
 		return PoolVector3Array([])
 	# Character should always move forward when they are required to move to be
 	# in range of target.
@@ -251,7 +262,11 @@ func _get_move_path(
 			ActionBehavior.Movement.TOWARD if move_dir == ActionBehavior.Movement.AWAY
 			else move_dir
 	)
-	return _calc_move_path(target_index, move_dir, m_step)
+	move_dist = (
+				m_step[0] if movement + m_step[0] == 0 or not ab.randomize_move_dist
+				else randi() % movement + m_step[0]
+	)
+	return _calc_move_path(m_step[1], move_dir, move_dist)
 
 
 # Helper function for _get_move_tolerance. Determines if the character is within
@@ -329,10 +344,11 @@ func _source_step(
 
 
 # Helper function for _get_move_tolerance. Determines if the character is within
-# movement range of the target after source step and gets the movement tolerance
-# if so. Returns the movement tolerance. Returns -1 if the character is outside
-# this range.
-func _move_step(source_stop: int, movement: int) -> int:
+# movement range of the target after source + effect steps and gets the movement
+# tolerance if so. Returns an array where the first element is the movement
+# tolerance and the second element is the tile reached via movement. Returns
+# an empty array if the character is outside this range.
+func _move_step(source_stop: int, movement: int) -> Array:
 	var move_stop: int = h_map.range_finder.get_character_closest_point_toward(
 			_character,
 			source_stop,
@@ -340,8 +356,8 @@ func _move_step(source_stop: int, movement: int) -> int:
 			movement
 	)
 	if source_stop == move_stop:
-		return d_map[source_stop]["travel"]
-	return -1
+		return [d_map[source_stop]["travel"], move_stop]
+	return []
 
 
 # Calculates the movement path for the action chain. The move_override parameter
@@ -414,6 +430,7 @@ func _calculate_away_path(
 	for i in movement_range:
 		movement_d_map[i] = d_map[i]
 	_move_dest_id = h_map.range_finder.get_character_farthest_point_away(
+			_character,
 			target,
 			_opponents.values(),
 			movement_d_map
