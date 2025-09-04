@@ -75,7 +75,7 @@ actions_ref = NodePath("../Actions")
 
 [node name="ActionBehavior" type="Node" parent="Actions/Blast"]
 script = ExtResource( 18 )
-movement_behavior = 1
+movement_behavior = 2
 randomize_move_dist = true
 
 [node name="Cooldown" type="Node" parent="Actions/Blast/ActionBehavior"]
@@ -88,7 +88,8 @@ script = ExtResource( 20 )
 
 [node name="ActionBehavior" type="Node" parent="Actions/Shot"]
 script = ExtResource( 18 )
-movement_behavior = 2
+movement_behavior = 1
+randomize_move_dist = true
 
 [node name="Empty" parent="Actions" instance=ExtResource( 19 )]
 

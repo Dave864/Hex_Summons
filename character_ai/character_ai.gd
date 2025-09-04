@@ -50,7 +50,6 @@ func update_distance_map() -> void:
 # Determines the actions that need to be taken for the character based on the
 # current state of the map.
 func determine_action_chain() -> Array:
-	randomize()
 	var ab: ActionBehavior = null
 	for action in _actions:
 		ab = action.get_node_or_null("ActionBehavior")
@@ -235,23 +234,38 @@ func _get_move_path(
 	"""
 	TODO: Add logic to account for dead ranges.
 	"""
+	randomize()
 	var move_dir: int = ab.movement_behavior
 	var move_dist: int = 0
 	# Check if target is within the effect distance from the character.
 	var e_step: Array = _effect_step(target_index, action, move_dir, movement)
 	if e_step[0] >= 0:
-		move_dist = (
-				e_step[0] if e_step[0] == 0 or not ab.randomize_move_dist
-				else randi() % e_step[0]
-		)
+		if not ab.randomize_move_dist:
+			move_dist = e_step[0]
+		elif move_dir == ActionBehavior.Movement.TOWARD:
+			move_dist = randi() % movement
+		# Prevent divide by zero error
+		elif e_step[0] == 0 and move_dir == ActionBehavior.Movement.AWAY:
+			move_dist = e_step[0]
+		elif move_dir == ActionBehavior.Movement.AWAY:
+			move_dist = randi() % e_step[0]
+		else:
+			move_dist = 0
 		return _calc_move_path(target_index, move_dir, move_dist)
 	# Check if target is within effect + source distance from character.
 	var s_step: Array = _source_step(e_step[1], action, move_dir, movement)
 	if s_step[0] >= 0:
-		move_dist = (
-				s_step[0] if s_step[0] == 0 or not ab.randomize_move_dist
-				else randi() % s_step[0]
-		)
+		if not ab.randomize_move_dist:
+			move_dist = s_step[0]
+		elif move_dir == ActionBehavior.Movement.TOWARD:
+			move_dist = randi() % movement
+		# Prevent divide by zero error
+		elif s_step[0] == 0 and move_dir == ActionBehavior.Movement.AWAY:
+			move_dist = s_step[0]
+		elif move_dir == ActionBehavior.Movement.AWAY:
+			move_dist = randi() % s_step[0]
+		else:
+			move_dist = 0
 		return _calc_move_path(target_index, move_dir, move_dist)
 	var m_step: Array = _move_step(s_step[1], movement)
 	if m_step.size() == 0:
@@ -262,10 +276,12 @@ func _get_move_path(
 			ActionBehavior.Movement.TOWARD if move_dir == ActionBehavior.Movement.AWAY
 			else move_dir
 	)
-	move_dist = (
-				m_step[0] if movement + m_step[0] == 0 or not ab.randomize_move_dist
-				else randi() % movement + m_step[0]
-	)
+	if movement + m_step[0] == 0 or not ab.randomize_move_dist:
+		move_dist = m_step[0]
+	# When movement randomized, always want to movement to be between full movement
+	# and movement step, as movement step is the minimum to be within range of target.
+	else:
+		move_dist = randi() % movement + m_step[0]
 	return _calc_move_path(m_step[1], move_dir, move_dist)
 
 
