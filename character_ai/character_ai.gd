@@ -416,6 +416,9 @@ func _calculate_toward_path(dest: int, move_override: int = -1) -> PoolVector3Ar
 			_opponents.values(),
 			move_override
 	)
+	"""
+	TODO: Refactor so that thread-safe get_id_path is used instead of get_point_path
+	"""
 	return h_map.range_finder.get_character_point_path(
 			_character,
 			_move_dest_id,
@@ -446,6 +449,9 @@ func _calculate_away_path(
 			_opponents.values(),
 			movement_d_map
 	)
+	"""
+	TODO: Refactor so that thread-safe get_id_path is used instead of get_point_path
+	"""
 	return h_map.range_finder.get_character_point_path(
 			_character,
 			_move_dest_id,

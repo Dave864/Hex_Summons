@@ -17,6 +17,8 @@ var _target_index: int = -1
 var _move_end_index: int = -1
 # Stores the distance map of the source range at the end of character movement.
 var _source_d_map: Dictionary = {}
+# Runs the AI logic in a separate thread.
+var _ai_thread: Thread
 
 # The CharacterAI node.
 onready var _ai_node: CharacterAI = get_node(ai_reference)
@@ -25,8 +27,15 @@ onready var _ai_node: CharacterAI = get_node(ai_reference)
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	_ai_node.update_distance_map()
-	var action_chain: Array = _ai_node.determine_action_chain()
+	# Run AI logic in separate thread to hopefully allow logic to run across
+	# multiple frames if needed.
+	_ai_thread = Thread.new()
+	_ai_thread.start(_ai_node, "update_distance_map")
+	_ai_thread.wait_to_finish()
+	_ai_thread = Thread.new()
+	_ai_thread.start(_ai_node, "determine_action_chain")
+	var action_chain: Array = _ai_thread.wait_to_finish()
+	
 	if action_chain.size() <= 1:
 		_process_action_chain(action_chain)
 		return
