@@ -2,9 +2,8 @@ class_name DistanceMap
 extends Object
 """
 Records the travel and tile distances of all points in a hex map from a specific
-origin point. The logic for actually populating the distance map are in
-HexMapAStar. This object serves as a way to provide more explicit operations for
-interacting with the data of the distance map.
+origin point. The logic for actually populating the distance map is in
+HexMapAStar.
 """
 
 
@@ -15,6 +14,11 @@ const TRAVEL_KEY = "travel"
 var origin: int = -1
 # Stores the travel and tile distances from the origin point.
 var _d_map: Dictionary = {}
+
+
+# Returns the number of elements in the DistanceMap.
+func size() -> int:
+	return _d_map.size()
 
 
 # Gets the tile distance of the given tile. Returns -1 if the index is not present.

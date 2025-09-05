@@ -5,15 +5,15 @@ Stores the distance maps for all tiles for a given hex map.
 """
 
 
-var _d_maps: Dictionary = {}
+export(Dictionary) var d_maps = {}
 
 
 # Gets the distance map at the given map index. Returns null if the index is not
 # present.
-func distances_at(index: int) -> DistanceMap:
-	if not _d_maps.has(index):
+func at(index: int) -> DistanceMap:
+	if not d_maps.has(index):
 		return null
-	return _d_maps[index]
+	return d_maps[index]
 
 
 # Creates the distance maps for a given map.
@@ -23,11 +23,18 @@ func create_from_map(map_tiles: Array, hm_astar: HexMapAStar) -> void:
 	var index: int
 	for tile in map_tiles:
 		index = tile.map_coordinate.get_index()
-		_d_maps[index] = hm_astar.get_full_distance_map(index)
+		d_maps[index] = hm_astar.get_full_distance_map(index)
 	# Reset for future range finder operations.
 	hm_astar.set_all_disabled()
 
 
-# Checks if the distances has been created.
+# Clears out the recorded DistanceMaps.
+func clear() -> void:
+	for i in d_maps.keys():
+		d_maps[i].free()
+		d_maps.erase(i)
+
+
+# Checks if distances have been created.
 func distances_present() -> bool:
-	return _d_maps.empty()
+	return not d_maps.empty()
