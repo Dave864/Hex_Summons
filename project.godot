@@ -124,6 +124,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://user_interface/encounter/DisplayPanel/display_panel.gd"
 }, {
+"base": "Object",
+"class": "DistanceMap",
+"language": "GDScript",
+"path": "res://hex_map/scripts/distance_map.gd"
+}, {
 "base": "Node",
 "class": "Effect",
 "language": "GDScript",
@@ -413,6 +418,7 @@ _global_script_class_icons={
 "DamageEffect": "",
 "DisplayMatrix": "",
 "DisplayPanel": "",
+"DistanceMap": "",
 "Effect": "",
 "EffectAspect": "",
 "EffectBus": "",
