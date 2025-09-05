@@ -296,6 +296,10 @@ func _get_source_range() -> Array:
 			_action.source_ignore_heights,
 			_action.source_range.get_reach()
 	)
+#	var d_map: DistanceMap = (
+#			selector.hex_map.range_finder \
+#			.distance_maps.at(_player_map_index)
+#	)
 	var dead_indexes: Array = _action.dead_range.get_area_indexes(
 			_player_map_index,
 			selector.hex_map
