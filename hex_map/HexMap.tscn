@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://hex_map/scripts/hex_map.gd" type="Script" id=1]
 [ext_resource path="res://hex_map/scripts/tiles.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://hex_map/resources/hex_map_floor.tres" type="PlaneMesh" id=4]
 [ext_resource path="res://hex_map/scripts/range_finder.gd" type="Script" id=5]
 [ext_resource path="res://hex_map/scripts/selection_tracker.gd" type="Script" id=6]
+[ext_resource path="res://hex_map/hex_map_distances.tres" type="Resource" id=7]
 
 [node name="HexMap" type="Spatial"]
 script = ExtResource( 1 )
@@ -16,6 +17,7 @@ map_tiles_reference = NodePath("../Tiles")
 
 [node name="RangeFinder" type="Node" parent="."]
 script = ExtResource( 5 )
+distance_maps = ExtResource( 7 )
 map_tiles_reference = NodePath("../Tiles")
 
 [node name="FloorMesh" type="MeshInstance" parent="."]

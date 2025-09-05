@@ -6,11 +6,13 @@ a reference to the map tiles.
 """
 
 
+export(Resource) var distance_maps = null
 export(NodePath) var map_tiles_reference = null
 
 var _hm_astar: HexMapAStar = null
 
 onready var _map_tiles: Tiles = get_node(map_tiles_reference)
+
 
 # Calculates the travel distance from a given start to a specified destination.
 func travel_distance(start_id: int, dest_id: int) -> float:
@@ -267,10 +269,13 @@ func get_character_farthest_point_away(
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	_check_for_required_parameters()
 	_hm_astar = HexMapAStar.new(
 			_map_tiles.get_all(),
 			_map_tiles.get_x_count()
 	)
+	if not distance_maps.distances_present():
+		distance_maps.create_from_map(_map_tiles.get_all(), _hm_astar)
 
 
 # Updates the astar disabled flag for the tiles occupied by the specified characters.
@@ -297,3 +302,15 @@ func _get_traversible_ids(
 	# Reset for future range finder operations.
 	_hm_astar.set_area_disabled(section_ids)
 	return distances.keys()
+
+
+# Check that all required parameters are set.
+func _check_for_required_parameters() -> void:
+	assert(
+			distance_maps != null,
+			"RangeFinder distance_maps has not been set."
+	)
+	assert(
+			distance_maps is HexMapDistances,
+			"RangeFinder distance_maps is not of type HexMapDistances."
+	)

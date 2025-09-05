@@ -48,6 +48,33 @@ func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Diction
 	return id_distances
 
 
+# Gets the distances from the starting point to all tiles within the map.
+# Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
+func get_full_distance_map(start_id: int) -> DistanceMap:
+	var frontier: PQueue = PQueue.new()
+	var id_distances: Dictionary = {}
+
+	frontier.push(0.0, start_id)
+	id_distances[start_id] = {"travel": 0.0, "tile": 0}
+	while not frontier.empty():
+		var current: Array = frontier.min()
+		frontier.pop_min()
+		for next_id in get_point_connections(current[1]):
+			if is_point_disabled(next_id):
+				continue
+			var dist: Dictionary = id_distances[current[1]]
+			var travel_dist: float = _travel_dist(current[1], next_id) + dist["travel"]
+			var tile_dist: int = int(_cube_dist(start_id, next_id))
+			if (
+				not id_distances.has(next_id)
+				or travel_dist < id_distances[next_id]["travel"]
+			):
+				id_distances[next_id] = {"travel": travel_dist, "tile": tile_dist}
+				frontier.push(travel_dist, next_id)
+	frontier.free()
+	return DistanceMap.new(start_id, id_distances)
+
+
 # Finds the point in the area that is closest to start. The area is a dicitonary
 # whose keys are the map tile ids and values are the various distances to the
 # tiles from some point, which may not be the same as start. Returns -1 if no

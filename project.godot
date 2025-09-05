@@ -234,6 +234,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://hex_map/scripts/hex_map_astar.gd"
 }, {
+"base": "Resource",
+"class": "HexMapDistances",
+"language": "GDScript",
+"path": "res://hex_map/scripts/hex_map_distances.gd"
+}, {
 "base": "Curve3D",
 "class": "HexMapMovementCurve",
 "language": "GDScript",
@@ -440,6 +445,7 @@ _global_script_class_icons={
 "HexHighlighter": "",
 "HexMap": "",
 "HexMapAStar": "",
+"HexMapDistances": "",
 "HexMapMovementCurve": "",
 "HexUtil": "",
 "InitiativeSlot": "",
