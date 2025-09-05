@@ -3,7 +3,8 @@ extends Node
 """
 Node that determines the actions a character should take given the current
 state of the encounter. Requires references to all characters, the HexMap, and
-the actions available.
+the actions available. The function 'determine_action_chain' is usually called
+as part of a separate thread.
 """
 
 
@@ -416,15 +417,13 @@ func _calculate_toward_path(dest: int, move_override: int = -1) -> PoolVector3Ar
 			_opponents.values(),
 			move_override
 	)
-	"""
-	TODO: Refactor so that thread-safe get_id_path is used instead of get_point_path
-	"""
-	return h_map.range_finder.get_character_point_path(
+	var id_path: PoolIntArray = h_map.range_finder.get_character_id_path(
 			_character,
 			_move_dest_id,
 			_opponents.values(),
 			movement_range
 	)
+	return _get_pt_path_from_ids(id_path)
 
 
 # Calculates the movement path away from the target. The move_override parameter
@@ -449,15 +448,22 @@ func _calculate_away_path(
 			_opponents.values(),
 			movement_d_map
 	)
-	"""
-	TODO: Refactor so that thread-safe get_id_path is used instead of get_point_path
-	"""
-	return h_map.range_finder.get_character_point_path(
+	var id_path: PoolIntArray = h_map.range_finder.get_character_id_path(
 			_character,
 			_move_dest_id,
 			_opponents.values(),
 			movement_range
 	)
+	return _get_pt_path_from_ids(id_path)
+
+
+# Gets the vector point path from a path of map tile ids.
+func _get_pt_path_from_ids(id_path: PoolIntArray) -> PoolVector3Array:
+	var pt_path: PoolVector3Array = []
+	pt_path.resize(id_path.size())
+	for i in range(id_path.size()):
+		pt_path[i] = h_map.get_tile_at(id_path[i]).get_character_position()
+	return pt_path
 
 
 # Sorts characters by their distances, with the lower distances being first.

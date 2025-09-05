@@ -46,7 +46,9 @@ func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Diction
 	return d_map
 
 
-# Determines the path to the point within a defined area for a character.
+# Determines the point path to the point within a defined area for a character.
+# This is likely not thread safe as it calls AStar's get_point_path, which is
+# noted to not be thread safe.
 func get_character_point_path(
 	c: Character,
 	dest_id: int,
@@ -65,6 +67,27 @@ func get_character_point_path(
 	 # Reset for future range finder operations.
 	_hm_astar.set_area_disabled(movement_area_ids, true)
 	return point_path
+
+
+# Determines the id path to the point within a defined area for a character.
+func get_character_id_path(
+	c: Character,
+	dest_id: int,
+	opponents: Array,
+	movement_area_ids: Array
+) -> PoolIntArray:
+	_hm_astar.set_area_disabled(movement_area_ids, false)
+	# Disable connection points of the opposite character type to prevent character
+	# from being able to move into those spaces
+	_disable_character_tiles(opponents, true)
+	
+	var id_path: PoolIntArray = _hm_astar.get_id_path(
+			c.map_coordinate.get_index(),
+			dest_id
+	)
+	 # Reset for future range finder operations.
+	_hm_astar.set_area_disabled(movement_area_ids, true)
+	return id_path
 
 
 # Finds the point in the area that is closest to start. The area is a dicitonary
