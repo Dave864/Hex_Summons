@@ -275,9 +275,10 @@ func _ready():
 			_map_tiles.get_x_count()
 	)
 	if not distance_maps.distances_present():
-		print("Generate distance maps")
 		distance_maps.create_from_map(_map_tiles.get_all(), _hm_astar)
-	print("Number of distance maps: {0}".format([distance_maps.d_maps.size()]))
+		var err: int = ResourceSaver.save(distance_maps.resource_path, distance_maps)
+		if err != OK:
+			printerr("Failed to save distance maps")
 
 
 # Updates the astar disabled flag for the tiles occupied by the specified characters.

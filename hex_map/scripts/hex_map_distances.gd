@@ -13,7 +13,7 @@ export(Dictionary) var d_maps = {}
 func at(index: int) -> DistanceMap:
 	if not d_maps.has(index):
 		return null
-	return d_maps[index]
+	return DistanceMap.new(index, d_maps[index])
 
 
 # Creates the distance maps for a given map.

@@ -54,6 +54,6 @@ func create_map_for_travel_area(radius: int) -> Dictionary:
 
 
 # Initializes the data for this DistanceMap.
-func _init(o: int, d_map: Dictionary) -> void:
+func _init(o: int = -1, d_map: Dictionary = {}) -> void:
 	origin = o
 	_d_map = d_map
