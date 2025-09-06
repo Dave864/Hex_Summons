@@ -7,8 +7,8 @@ HexMapAStar.
 """
 
 
-const TILE_KEY = "tile"
-const TRAVEL_KEY = "travel"
+const TILE_KEY: String = "tile"
+const TRAVEL_KEY: String = "travel"
 
 # The origin point for the distance map.
 var origin: int = -1

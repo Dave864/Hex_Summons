@@ -75,44 +75,23 @@ func get_full_distance_map(start_id: int) -> DistanceMap:
 	return DistanceMap.new(start_id, id_distances)
 
 
-# Finds the point in the area that is closest to start. The area is a dicitonary
+# Finds the point in the area that is closest to target. The area is a dicitonary
 # whose keys are the map tile ids and values are the various distances to the
-# tiles from some point, which may not be the same as start. Returns -1 if no
+# tiles from some point, which may not be the same as target. Returns -1 if no
 # closest index could be found.
-# Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
-func get_closest_in_area(start_id: int, area_d_map: Dictionary) -> int:
+func get_closest_in_area(target_id: int, area_d_map: Dictionary) -> int:
 	if area_d_map.size() == 0:
 		return -1
 	if area_d_map.size() == 1:
 		return area_d_map.keys()[0]
-	var frontier: PQueue = PQueue.new()
-	var id_distances: Dictionary = {}
-	var closest: Array = [INF, -1]
-	# Used to stop when all area_d_map ids have been checked.
-	var checked_count: int = 0
-	frontier.push(0.0, start_id)
-	id_distances[start_id] = 0
-	while not frontier.empty() and checked_count < area_d_map.size():
-		var current: Array = frontier.min()
-		frontier.pop_min()
-		if area_d_map.has(current[1]):
-			checked_count += 1
-			if current[0] < closest[0]:
-				closest = current
-			continue
-		for next_id in get_point_connections(current[1]):
-			if is_point_disabled(next_id):
-				continue
-			var tile_dist: int = int(_cube_dist(start_id, next_id))
-			if (
-				not id_distances.has(next_id)
-				or tile_dist < id_distances[next_id]
-			):
-				id_distances[next_id] = tile_dist
-				frontier.push(tile_dist, next_id)
-	frontier.free()
-	id_distances.clear()
-	return closest[1]
+	var closest: Array = [-1, INF]
+	for id in area_d_map.keys():
+		if id == target_id:
+			return target_id
+		if closest[1] > area_d_map[id]["tile"]:
+			closest[0] = id
+			closest[1] = area_d_map[id]["tile"]
+	return closest[0]
 
 
 # Finds the point in the area that is farthest from target. The area is a
