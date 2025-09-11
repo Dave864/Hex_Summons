@@ -6,8 +6,7 @@ Stores the distance maps for all tiles for a given hex map.
 
 
 export(Dictionary) var d_maps = {}
-
-var map_hash: int = -1
+export(int) var map_hash = -1
 
 
 # Gets the distance map at the given map index. Returns null if the index is not

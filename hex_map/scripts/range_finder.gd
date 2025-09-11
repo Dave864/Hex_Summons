@@ -315,7 +315,11 @@ func _ready():
 # Updates the distance map if necessary. Should only ever be called when running
 # the RangeFinder script in inspector.
 func _update_distance_map() -> void:
-	if dist_maps == null:
+	var d_hash: int = hash(get_parent().name)
+	if (
+			dist_maps == null 
+			or (dist_maps.map_hash == d_hash and dist_maps.d_maps.size() > 0)
+	):
 		return
 	var d_maps: Dictionary = {}
 
@@ -335,6 +339,7 @@ func _update_distance_map() -> void:
 	_hm_astar.set_all_disabled()
 
 	dist_maps.d_maps = d_maps
+	dist_maps.map_hash = d_hash
 	var err: int = ResourceSaver.save(dist_maps.resource_path, dist_maps)
 	if err != OK:
 		printerr("Failed to save distance maps")
