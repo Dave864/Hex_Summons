@@ -1,3 +1,4 @@
+tool
 class_name RangeFinder
 extends Node
 """
@@ -6,12 +7,46 @@ a reference to the map tiles.
 """
 
 
-export(Resource) var distance_maps = null
-export(NodePath) var map_tiles_reference = null
+export(NodePath) var map_tiles_reference = null setget set_map_tiles
+export(Resource) var dist_maps = null setget set_distance_map
 
 var _hm_astar: HexMapAStar = null
 
 onready var _map_tiles: Tiles = get_node(map_tiles_reference)
+
+
+# Updates the reference path for map tiles node. Is intended only for use when
+# running the RangeFinder script in the inspector for the purposes of saving
+# the distance map resource data.
+func set_map_tiles(ref_path: NodePath) -> void:
+	if not Engine.is_editor_hint():
+		return
+	map_tiles_reference = ref_path
+	property_list_changed_notify()
+	# Allow for the _map_tiles variable to be set in the _ready function.
+	if is_node_ready():
+		_map_tiles = get_node(map_tiles_reference)
+		_update_distance_map()
+
+
+# Updates the distance map when the reference is changed. Is intended only for
+# use when running the RangeFinder script in the inspector for the purposes of
+# saving the distance map resource data.
+func set_distance_map(new_dist_map: Resource) -> void:
+	if not Engine.is_editor_hint():
+		return
+	if new_dist_map == null:
+		dist_maps = null
+		return
+	if not new_dist_map is HexMapDistances:
+		printerr("Resource is not of type HexMapDistances.")
+		dist_maps = null
+		property_list_changed_notify()
+		return
+	dist_maps = new_dist_map
+	# Allow for the distance_map to be updated in the _ready function.
+	if is_node_ready():
+		_update_distance_map()
 
 
 # Calculates the travel distance from a given start to a specified destination.
@@ -270,15 +305,43 @@ func get_character_farthest_point_away(
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
-	_hm_astar = HexMapAStar.new(
-			_map_tiles.get_all(),
-			_map_tiles.get_x_count()
-	)
-	if not distance_maps.distances_present():
-		distance_maps.create_from_map(_map_tiles.get_all(), _hm_astar)
-		var err: int = ResourceSaver.save(distance_maps.resource_path, distance_maps)
-		if err != OK:
-			printerr("Failed to save distance maps")
+	# Waiting for _map_tiles to be ready allows for RangeFinder node being
+	# able to be placed in any position relative to node with map tiles data.
+	# Without this, RangeFinder node would always need to be after map tiles
+	# node.
+	yield(_map_tiles, "ready")
+	_hm_astar = HexMapAStar.new(_map_tiles.get_all(), _map_tiles.get_x_count())
+	if Engine.is_editor_hint():
+		_update_distance_map()
+
+
+# Updates the distance map if necessary. Should only ever be called when running
+# the RangeFinder script in inspector.
+func _update_distance_map() -> void:
+	if dist_maps == null:
+		printerr("No distance map has been defined in RangeFinder.")
+		return
+	var d_maps: Dictionary = {}
+
+	if _hm_astar == null:
+		_hm_astar = HexMapAStar.new(
+				_map_tiles.get_all(),
+				_map_tiles.get_x_count()
+		)
+	
+	# Enable all connections to make sure distance can be found.
+	_hm_astar.set_all_disabled(false)
+	var index: int
+	for tile in _map_tiles.get_all():
+		index = tile.map_coordinate.get_index()
+		d_maps[index] = _hm_astar.get_full_distance_map(index)
+	# Reset for future range finder operations.
+	_hm_astar.set_all_disabled()
+
+	dist_maps.d_maps = d_maps
+	var err: int = ResourceSaver.save(dist_maps.resource_path, dist_maps)
+	if err != OK:
+		printerr("Failed to save distance maps")
 
 
 # Updates the astar disabled flag for the tiles occupied by the specified characters.
@@ -310,10 +373,10 @@ func _get_traversible_ids(
 # Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
-			distance_maps != null,
+			dist_maps != null,
 			"RangeFinder distance_maps has not been set."
 	)
 	assert(
-			distance_maps is HexMapDistances,
+			dist_maps is HexMapDistances,
 			"RangeFinder distance_maps is not of type HexMapDistances."
 	)

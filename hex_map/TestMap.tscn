@@ -15,6 +15,15 @@ script = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
 mesh = ExtResource( 5 )
 
+[node name="SelectionTracker" type="Node" parent="."]
+script = ExtResource( 6 )
+map_tiles_reference = NodePath("../Tiles")
+
+[node name="RangeFinder" type="Node" parent="."]
+script = ExtResource( 2 )
+dist_maps = ExtResource( 7 )
+map_tiles_reference = NodePath("../Tiles")
+
 [node name="Tiles" type="Spatial" parent="."]
 script = ExtResource( 1 )
 x_count = 10
@@ -325,12 +334,3 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, 6 )
 
 [node name="MapTile89" parent="Tiles" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, 6 )
-
-[node name="SelectionTracker" type="Node" parent="."]
-script = ExtResource( 6 )
-map_tiles_reference = NodePath("../Tiles")
-
-[node name="RangeFinder" type="Node" parent="."]
-script = ExtResource( 2 )
-distance_maps = ExtResource( 7 )
-map_tiles_reference = NodePath("../Tiles")
