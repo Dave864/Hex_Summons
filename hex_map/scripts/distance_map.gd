@@ -21,6 +21,11 @@ func size() -> int:
 	return _d_map.size()
 
 
+# Checks if the DistanceMap has a given index.
+func has(index: int) -> bool:
+	return _d_map.has(index)
+
+
 # Gets the tile distance of the given tile. Returns -1 if the index is not present.
 func tile_dist_at(index: int) -> int:
 	if not _d_map.has(index):
