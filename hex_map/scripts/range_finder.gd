@@ -19,12 +19,10 @@ onready var _map_tiles: Tiles = get_node(map_tiles_reference)
 # running the RangeFinder script in the inspector for the purposes of saving
 # the distance map resource data.
 func set_map_tiles(ref_path: NodePath) -> void:
-	if not Engine.is_editor_hint():
-		return
 	map_tiles_reference = ref_path
 	property_list_changed_notify()
 	# Allow for the _map_tiles variable to be set in the _ready function.
-	if is_node_ready():
+	if Engine.is_editor_hint() and is_node_ready():
 		_map_tiles = get_node(map_tiles_reference)
 		_update_distance_map()
 
@@ -33,10 +31,9 @@ func set_map_tiles(ref_path: NodePath) -> void:
 # use when running the RangeFinder script in the inspector for the purposes of
 # saving the distance map resource data.
 func set_distance_map(new_dist_map: Resource) -> void:
-	if not Engine.is_editor_hint():
-		return
 	if new_dist_map == null:
 		dist_maps = null
+		printerr("RangeFinder distance map needs to be defined.")
 		return
 	if not new_dist_map is HexMapDistances:
 		printerr("Resource is not of type HexMapDistances.")
@@ -45,7 +42,7 @@ func set_distance_map(new_dist_map: Resource) -> void:
 		return
 	dist_maps = new_dist_map
 	# Allow for the distance_map to be updated in the _ready function.
-	if is_node_ready():
+	if Engine.is_editor_hint() and is_node_ready():
 		_update_distance_map()
 
 
@@ -319,7 +316,6 @@ func _ready():
 # the RangeFinder script in inspector.
 func _update_distance_map() -> void:
 	if dist_maps == null:
-		printerr("No distance map has been defined in RangeFinder.")
 		return
 	var d_maps: Dictionary = {}
 
