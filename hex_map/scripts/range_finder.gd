@@ -124,16 +124,23 @@ func get_character_id_path(
 	return id_path
 
 
-# Finds the point in the area that is closest to start. The area is a dicitonary
-# whose keys are the map tile ids and values are the various distances to the
-# tiles from some point, which may not be the same as start.
-func get_closest_in_area(start_id: int, area_d_map: Dictionary) -> int:
-	# Enable all connections to make sure the closest point can be found.
-	_hm_astar.set_all_disabled(false)
-	var target_id: int = _hm_astar.get_closest_in_area(start_id, area_d_map)
-	# Reset for future range finder operations.
-	_hm_astar.set_all_disabled()
-	return target_id
+# Finds the point in the area that is closest to target_id. The area is a
+# dicitonary whose keys are the map tile ids and values are the various
+# distances to the tiles from some point, which may not be the same as target.
+# Returns -1 if no closest index could be found.
+func get_closest_in_area(target_id: int, area_d_map: Dictionary) -> int:
+	if area_d_map.size() == 0:
+		return -1
+	if area_d_map.size() == 1:
+		return area_d_map.keys()[0]
+	var closest: Array = [-1, INF]
+	for id in area_d_map.keys():
+		if id == target_id:
+			return target_id
+		if closest[1] > area_d_map[id]["tile"]:
+			closest[0] = id
+			closest[1] = area_d_map[id]["tile"]
+	return closest[0]
 
 
 # Determines the path id that gets closest to a destination within a distance

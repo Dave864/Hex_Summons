@@ -75,25 +75,6 @@ func get_full_distance_map(start_id: int) -> Dictionary:
 	return id_distances
 
 
-# Finds the point in the area that is closest to target. The area is a dicitonary
-# whose keys are the map tile ids and values are the various distances to the
-# tiles from some point, which may not be the same as target. Returns -1 if no
-# closest index could be found.
-func get_closest_in_area(target_id: int, area_d_map: Dictionary) -> int:
-	if area_d_map.size() == 0:
-		return -1
-	if area_d_map.size() == 1:
-		return area_d_map.keys()[0]
-	var closest: Array = [-1, INF]
-	for id in area_d_map.keys():
-		if id == target_id:
-			return target_id
-		if closest[1] > area_d_map[id]["tile"]:
-			closest[0] = id
-			closest[1] = area_d_map[id]["tile"]
-	return closest[0]
-
-
 # Finds the point in the area that is farthest from target. The area is a
 # dicitonary whose keys are the map tile ids and values are the various
 # distances to the tiles from some point, which may not be the same as taregt.
