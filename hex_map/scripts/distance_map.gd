@@ -26,6 +26,26 @@ func has(index: int) -> bool:
 	return _d_map.has(index)
 
 
+# Adds the specific distance details for the given index.
+func add(index: int, distance_details: Dictionary) -> void:
+	_d_map[index] = distance_details
+
+
+# Removes the data at the given index from the distance map. Returns the data
+# that was removed. Returns an empty Dictionary if the index is not present.
+func remove(index: int) -> Dictionary:
+	if not _d_map.has(index):
+		return {}
+	var removed_details: Dictionary = _d_map[index]
+	_d_map.erase(index)
+	return removed_details
+
+
+# Returns the map indexes the distance map tracks.
+func tile_indexes() -> Array:
+	return _d_map.keys()
+
+
 # Gets the tile distance of the given tile. Returns -1 if the index is not present.
 func tile_dist_at(index: int) -> int:
 	if not _d_map.has(index):
@@ -40,8 +60,16 @@ func travel_dist_at(index: int) -> float:
 	return _d_map[index][TRAVEL_KEY]
 
 
+# Returns a Dictionary describing all distances of the given tile. Returns an empty
+# Dictionaru if the index is not present.
+func all_dist_at(index: int) -> Dictionary:
+	if not _d_map.has(index):
+		return {}
+	return _d_map[index]
+
+
 # Gets the area map that reaches out to a given tile radius.
-func create_map_for_tile_area(radius: int) -> Dictionary:
+func map_from_tile_dist(radius: int) -> Dictionary:
 	var area_map: Dictionary = {}
 	for id in _d_map.keys():
 		if _d_map[id][TILE_KEY] <= radius:
@@ -50,7 +78,7 @@ func create_map_for_tile_area(radius: int) -> Dictionary:
 
 
 # Gets the area map that reaches out to a given travel radius.
-func create_map_for_travel_area(radius: int) -> Dictionary:
+func map_from_travel_dist(radius: int) -> Dictionary:
 	var area_map: Dictionary = {}
 	for id in _d_map.keys():
 		if _d_map[id][TRAVEL_KEY] <= radius:

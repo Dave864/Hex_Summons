@@ -16,7 +16,7 @@ export(bool) var below = false
 func is_met(
 	character: Character,
 	_targets: Array,
-	_distance_map: Dictionary
+	_distance_map: DistanceMap
 ) -> bool:
 	var cur_health: int = character.stats.get_stat(Stat.Type.CUR_HEALTH)
 	var max_health: int = character.stats.get_stat(Stat.Type.MAX_HEALTH)

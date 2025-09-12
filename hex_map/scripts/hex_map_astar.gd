@@ -79,14 +79,14 @@ func get_full_distance_map(start_id: int) -> Dictionary:
 # dicitonary whose keys are the map tile ids and values are the various
 # distances to the tiles from some point, which may not be the same as taregt.
 # Returns -1 if no farthest index could be found.
-func get_farthest_in_area(target_id: int, area_d_map: Dictionary) -> int:
-	if area_d_map.size() == 0:
+func get_farthest_in_area(target_id: int, area_indexes: Array) -> int:
+	if area_indexes.size() == 0:
 		return -1
-	if area_d_map.size() == 1:
-		return area_d_map.keys()[0]
+	if area_indexes.size() == 1:
+		return area_indexes[0]
 	var farthest_pt: int = -1
 	var farthest_d: float = 0.0
-	for id in area_d_map.keys():
+	for id in area_indexes:
 		if is_point_disabled(id):
 			continue
 		var dist: float = _compute_cost(id, target_id)

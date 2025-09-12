@@ -36,7 +36,7 @@ var _group_condition: GroupCondition = null setget , get_group_condition
 func conditions_met(
 	character: Character,
 	targets: Array,
-	distance_map: Dictionary
+	distance_map: DistanceMap
 ) -> bool:
 	if _cooldown != null and _cooldown.is_active():
 		return false

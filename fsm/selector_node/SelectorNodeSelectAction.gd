@@ -15,7 +15,7 @@ var _player_pos: Vector3 = Vector3.ZERO
 # The tile index of the player that is using the action.
 var _player_map_index: int = -1
 # Stores the distance map of the source range.
-var _source_d_map: Dictionary = {}
+var _source_d_map: DistanceMap = null
 # The type of targets the action will hit.
 var _action_targets: Dictionary = {}
 # Caches the tile ids of the effect area at different emission points.
@@ -77,7 +77,8 @@ func _determine_changes(action: Action) -> void:
 		_player_pos = selector.active_player.translation
 		need_new_ranges = true
 	if need_new_ranges:
-		_source_d_map.clear()
+		if _source_d_map != null:
+			_source_d_map.free()
 		_ranges_cache.clear()
 		_targets_cache.clear()
 
@@ -179,17 +180,17 @@ func _fix_orientation() -> bool:
 func _place_closest_to_target() -> void:
 	var target_details: Array = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_index()
-	var player_index_details: Dictionary = _source_d_map[_player_map_index]
+	var player_index_details: Dictionary = _source_d_map.all_dist_at(_player_map_index)
 	var ignore_player_index: bool = _action.dead_range.get_reach() > 0
 	if ignore_player_index:
-		_source_d_map.erase(_player_map_index)
+		_source_d_map.remove(_player_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
 			target_index,
 			_source_d_map
 	)
 	# Add back in player details if they were removed to preserve details.
 	if ignore_player_index:
-		_source_d_map[_player_map_index] = player_index_details
+		_source_d_map.add(_player_map_index, player_index_details)
 	if closest_index < 0:
 		selector.hex_map.selection_tracker.clear_selector_highlights()
 		return
@@ -202,19 +203,19 @@ func _place_closest_to_target() -> void:
 # Places the effect emission so that it is on the source tile closest to the
 # specified tile. Emission is not placed if no valid source tile could be found.
 func _place_closest_to_tile(tile_index: int) -> void:
-	var player_index_details: Dictionary = _source_d_map[_player_map_index]
+	var player_index_details: Dictionary = _source_d_map.all_dist_at(_player_map_index)
 	var ignore_player_index: bool = _action.dead_range.get_reach() > 0
 	# Remove player index when looking at dead range to prevent player position
 	# from being considered a valid placement spot.
 	if ignore_player_index:
-		_source_d_map.erase(_player_map_index)
+		_source_d_map.remove(_player_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
 			tile_index,
 			_source_d_map
 	)
 	# Add back in player details if they were removed to preserve distance map.
 	if ignore_player_index:
-		_source_d_map[_player_map_index] = player_index_details
+		_source_d_map.add(_player_map_index, player_index_details)
 	if closest_index < 0:
 		selector.hex_map.selection_tracker.clear_selector_highlights()
 		return
@@ -291,23 +292,23 @@ func _highlight_effect_range() -> void:
 
 # Gets the tile ids of all tiles within the source range. Accounts for dead range.
 func _get_source_range() -> Array:
-	_source_d_map = selector.hex_map.range_finder.get_distance_map(
-			_player_map_index,
-			_action.source_ignore_heights,
-			_action.source_range.get_reach()
+	var d_map: DistanceMap = (
+			selector.hex_map.range_finder \
+			.dist_maps.at(_player_map_index)
 	)
-#	var d_map: DistanceMap = (
-#			selector.hex_map.range_finder \
-#			.distance_maps.at(_player_map_index)
-#	)
+	_source_d_map = DistanceMap.new(
+			_player_map_index,
+			d_map.map_from_travel_dist(_action.source_range.get_reach())
+	)
+	d_map.free()
 	var dead_indexes: Array = _action.dead_range.get_area_indexes(
 			_player_map_index,
 			selector.hex_map
 	)
 	for index in dead_indexes:
 		if index != _player_map_index and _source_d_map.has(index):
-			_source_d_map.erase(index)
-	return _source_d_map.keys()
+			_source_d_map.remove(index)
+	return _source_d_map.tile_indexes()
 
 
 # Gets the tile ids of all tiles within the effect range.
@@ -326,11 +327,11 @@ func _get_effect_range() -> Array:
 	if _action.effect_ignore_heights:
 		_update_effect_ranges(e_index, e_dir, effect_indexes)
 		return effect_indexes
-	var effect_d_map: Dictionary = selector.hex_map.range_finder.get_distance_map(
-			e_index,
-			false,
-			_action.effect_range.get_reach()
+	var d_map: DistanceMap = selector.hex_map.range_finder.dist_maps.at(e_index)
+	var effect_d_map: Dictionary = (
+			d_map.map_from_travel_dist(_action.effect_range.get_reach())
 	)
+	d_map.free()
 	var valid_effect_indexes: Array = []
 	for index in effect_indexes:
 		if effect_d_map.has(index):

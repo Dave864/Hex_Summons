@@ -48,36 +48,41 @@ func set_distance_map(new_dist_map: Resource) -> void:
 
 # Calculates the travel distance from a given start to a specified destination.
 func travel_distance(start_id: int, dest_id: int) -> float:
-	# Enable all connections to make sure distance can be found.
-	_hm_astar.set_all_disabled(false)
-	var dist: float = _hm_astar.travel_distance(start_id, dest_id)
-	# Reset for future range finder operations.
-	_hm_astar.set_all_disabled()
+	var d_map: DistanceMap = dist_maps.at(start_id)
+	var dist: float = d_map.travel_dist_at(dest_id)
+	d_map.free()
 	return dist
 
 
 # Calculates the travel distance from a given start to a specified destination.
 func tile_distance(start_id: int, dest_id: int) -> float:
-	# Enable all connections to make sure distance can be found.
-	_hm_astar.set_all_disabled(false)
-	var dist: float = _hm_astar.tile_distance(start_id, dest_id)
-	# Reset for future range finder operations.
-	_hm_astar.set_all_disabled()
+	var d_map: DistanceMap = dist_maps.at(start_id)
+	var dist: float = d_map.tile_dist_at(dest_id)
+	d_map.free()
 	return dist
 
 
 # Gets the distances from the starting point to all tiles within a given reach.
 # A negative reach indicates that all map tiles should be looked at. The use_tile
 # flag indicates that the tile distance should be used instead of travel distance.
-# Each entry has the travel distance and tile distance stored in a Dictionary.
-# Travel distance is under the "travel" key. Tile distance is under the "tile" key.
-func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Dictionary:
-	# Enable all connections to make sure distance can be found.
-	_hm_astar.set_all_disabled(false)
-	var d_map: Dictionary = _hm_astar.get_distance_map(start_id, use_tile, reach)
-	# Reset for future range finder operations.
-	_hm_astar.set_all_disabled()
-	return d_map
+func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> DistanceMap:
+	var d_map: DistanceMap = dist_maps.at(start_id)
+	if reach < 0:
+		return d_map
+	if use_tile:
+		var tile_map: DistanceMap = DistanceMap.new(
+				start_id,
+				d_map.map_from_tile_dist(reach)
+		)
+		d_map.free()
+		return tile_map
+	else:
+		var travel_map: DistanceMap = DistanceMap.new(
+				start_id,
+				d_map.map_from_travel_dist(reach)
+		)
+		d_map.free()
+		return travel_map
 
 
 # Determines the point path to the point within a defined area for a character.
@@ -128,18 +133,18 @@ func get_character_id_path(
 # dicitonary whose keys are the map tile ids and values are the various
 # distances to the tiles from some point, which may not be the same as target.
 # Returns -1 if no closest index could be found.
-func get_closest_in_area(target_id: int, area_d_map: Dictionary) -> int:
+func get_closest_in_area(target_id: int, area_d_map: DistanceMap) -> int:
 	if area_d_map.size() == 0:
 		return -1
 	if area_d_map.size() == 1:
-		return area_d_map.keys()[0]
+		return area_d_map.tile_indexes()[0]
 	var closest: Array = [-1, INF]
-	for id in area_d_map.keys():
+	for id in area_d_map.tile_indexes():
 		if id == target_id:
 			return target_id
-		if closest[1] > area_d_map[id]["tile"]:
+		if closest[1] > area_d_map.tile_dist_at(id):
 			closest[0] = id
-			closest[1] = area_d_map[id]["tile"]
+			closest[1] = area_d_map.tile_dist_at(id)
 	return closest[0]
 
 
@@ -255,7 +260,7 @@ func get_character_farthest_point_away(
 	c: Character,
 	target_id: int,
 	opponents: Array,
-	movement_d_map: Dictionary
+	movement_indexes: Array
 ) -> int:
 	# Enable all connections to make sure the point can be found.
 	_hm_astar.set_all_disabled(false)
@@ -268,7 +273,7 @@ func get_character_farthest_point_away(
 	while true:
 		farthest_pt = _hm_astar.get_farthest_in_area(
 				target_id,
-				movement_d_map
+				movement_indexes
 		)
 		farthest_path = _hm_astar.get_id_path(
 				c.map_coordinate.get_index(),
@@ -363,19 +368,11 @@ func _disable_character_tiles(
 
 # Determines which tiles are reachable in a specified map section.
 func _get_traversible_ids(
-	section_ids: Array,
 	start_index: int,
 	reach: int
 ) -> Array:
-	_hm_astar.set_area_disabled(section_ids, false)
-	var distances: Dictionary = _hm_astar.get_distance_map(
-			start_index,
-			false,
-			reach
-	)
-	# Reset for future range finder operations.
-	_hm_astar.set_area_disabled(section_ids)
-	return distances.keys()
+	var d_map: DistanceMap = get_distance_map(start_index, false, reach)
+	return d_map.tile_indexes()
 
 
 # Check that all required parameters are set.

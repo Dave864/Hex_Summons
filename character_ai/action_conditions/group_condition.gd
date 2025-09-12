@@ -26,7 +26,7 @@ var _groups: Dictionary = {}
 func is_met(
 	_character: Character,
 	targets: Array,
-	_distance_map: Dictionary
+	_distance_map: DistanceMap
 ) -> bool:
 	_groups.clear()
 	return _determine_groups(targets)

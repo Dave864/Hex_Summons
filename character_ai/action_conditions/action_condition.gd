@@ -11,6 +11,6 @@ to be considered for use by a CharacterAI.
 func is_met(
 	_character: Character,
 	_targets: Array,
-	_distance_map: Dictionary
+	_distance_map: DistanceMap
 ) -> bool:
 	return true
