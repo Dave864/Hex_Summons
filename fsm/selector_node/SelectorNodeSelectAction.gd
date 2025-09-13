@@ -306,7 +306,14 @@ func _get_source_range() -> Array:
 			selector.hex_map
 	)
 	for index in dead_indexes:
-		if index != _player_map_index and _source_d_map.has(index):
+		if (
+			index != _player_map_index 
+			and _source_d_map.has(index)
+			and (
+				_action.source_ignore_heights or
+				_source_d_map.travel_dist_at(index) <= _action.dead_range.get_reach()
+			)
+		):
 			_source_d_map.remove(index)
 	return _source_d_map.tile_indexes()
 
