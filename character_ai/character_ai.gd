@@ -33,6 +33,7 @@ var _o_ttr: ThreatTracker = null
 var _move_dest_id: int = -1 setget , get_move_dest_id
 
 onready var _actions: Array = get_node(actions_ref).get_children()
+onready var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 
 # Returns the index of the movement destination.
@@ -106,6 +107,7 @@ func connect_encounter_details(
 
 func _ready() -> void:
 	_check_for_required_parameters()
+	_rng.randomize()
 
 
 # Goes through all relevant target indexes and determines the movement
@@ -126,8 +128,6 @@ func _determine_action_details(
 	if action.name == MOVE_ACTION_NAME:
 		details.append(_calc_move_path(target_indexes[0], ab.movement_behavior))
 		return details
-	# The number of spaces that can be moved in the direction defined by
-	# ab.movement_bahavior while still remaining in range of target.
 	var m_path: PoolVector3Array
 	for t_index in target_indexes:
 		m_path = _get_move_path(
@@ -138,7 +138,6 @@ func _determine_action_details(
 		)
 		if m_path.size() == 0:
 			continue
-		# Maybe add logic to randomize the tolerance?
 		details.append(m_path)
 		# Determine true target index to account for movement behavior
 		var true_target: int = h_map.range_finder.get_closest_id_path(
@@ -220,20 +219,19 @@ func _determine_ally_index_threat_order() -> Array:
 	return indexes
 
 
-# Determines the movement path required for the character to be at the
-# maximum range of an action given a specific movement direction.
-# Returns an empty array if target is out of range.
+# Determines the movement path required for the character to be within range
+# of an action given a specific movement direction. By default, determines the
+# path to be at maximum range distace, while randomizing the steps when required
+# by the ActionBehavior. Returns an empty array if target is out of range.
 func _get_move_path(
 	action: Action,
 	ab: ActionBehavior,
 	target_index: int,
 	movement: int
 ) -> PoolVector3Array:
-	"""
-	TODO: Add logic to account for dead ranges.
-	"""
-	randomize()
 	var move_dir: int = ab.movement_behavior
+	if _target_in_dead_range(action, target_index):
+		return _dead_step(target_index, action, move_dir, movement)
 	var move_dist: int = 0
 	# Check if target is within the effect distance from the character.
 	var e_step: Array = _effect_step(target_index, action, move_dir, movement)
@@ -256,12 +254,12 @@ func _get_move_path(
 		if not ab.randomize_move_dist:
 			move_dist = s_step[0]
 		elif move_dir == ActionBehavior.Movement.TOWARD:
-			move_dist = randi() % movement
+			move_dist = _rng.randi() % movement
 		# Prevent divide by zero error
 		elif s_step[0] == 0 and move_dir == ActionBehavior.Movement.AWAY:
 			move_dist = s_step[0]
 		elif move_dir == ActionBehavior.Movement.AWAY:
-			move_dist = randi() % s_step[0]
+			move_dist = _rng.randi() % s_step[0]
 		else:
 			move_dist = 0
 		return _calc_move_path(target_index, move_dir, move_dist)
@@ -279,11 +277,34 @@ func _get_move_path(
 	# When movement randomized, always want movement to be between full movement
 	# and movement step, as movement step is the minimum to be within range of target.
 	else:
-		move_dist = randi() % movement + m_step[0]
+		move_dist = _rng.randi_range(m_step[0], movement)
 	return _calc_move_path(m_step[1], move_dir, move_dist)
 
 
-# Helper function for _get_move_tolerance. Determines if the character is within
+# Checks if the target id is within the dead range of an action.
+func _target_in_dead_range(action: Action, target_id: int) -> bool:
+	return (
+			(
+				action.source_ignore_heights
+				and d_map.tile_dist_at(target_id) <= action.dead_range.get_reach()
+			)
+			or d_map.travel_dist_at(target_id) <= action.dead_range.get_reach()
+	)
+
+
+# Helper function for _get_move_path. Determines the move path when a
+# target is within an action's dead range. Returns an empty array if the
+# character is unable to move in a way that lets it hit the target.
+func _dead_step(
+	target_index: int,
+	action: Action,
+	move_dir: int,
+	movement: int
+) -> PoolVector3Array:
+	return PoolVector3Array([])
+
+
+# Helper function for _get_move_path. Determines if the character is within
 # effect range of the target and gets the movement tolerance if so. Returns an
 # array where the first element is the movement tolerance and the second element
 # is the farthest point from the target to the character that can be reached using
@@ -314,7 +335,7 @@ func _effect_step(
 	return results
 
 
-# Helper function for _get_move_tolerance. Determines if the character is within
+# Helper function for _get_move_path. Determines if the character is within
 # source range of the target and gets the movement tolerance if so. Returns an
 # array where the first element is the movement tolerance and the second element
 # is the farthest point from the target to the character that can be reached using
@@ -363,7 +384,7 @@ func _source_step(
 	return results
 
 
-# Helper function for _get_move_tolerance. Determines if the character is within
+# Helper function for _get_move_path. Determines if the character is within
 # movement range of the target after source + effect steps and gets the movement
 # tolerance if so. Returns an array where the first element is the movement
 # tolerance and the second element is the tile reached via movement. Returns
