@@ -296,10 +296,12 @@ func _get_source_range() -> Array:
 			selector.hex_map.range_finder \
 			.dist_maps.at(_player_map_index)
 	)
-	_source_d_map = DistanceMap.new(
-			_player_map_index,
-			d_map.map_from_travel_dist(_action.source_range.get_reach())
+	var src_area: Dictionary = (
+			d_map.map_from_tile_dist(_action.source_range.get_reach())
+			if _action.source_ignore_heights
+			else d_map.map_from_travel_dist(_action.source_range.get_reach())
 	)
+	_source_d_map = DistanceMap.new(_player_map_index, src_area)
 	d_map.free()
 	var dead_indexes: Array = _action.dead_range.get_area_indexes(
 			_player_map_index,
