@@ -130,9 +130,7 @@ func get_character_id_path(
 
 
 # Finds the point in the area that is closest to target_id. The area is a
-# dicitonary whose keys are the map tile ids and values are the various
-# distances to the tiles from some point, which may not be the same as target.
-# Returns -1 if no closest index could be found.
+# DistanceMap map object. Returns -1 if no closest index could be found.
 func get_closest_in_area(target_id: int, area_d_map: DistanceMap) -> int:
 	if area_d_map.size() == 0:
 		return -1
