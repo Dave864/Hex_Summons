@@ -128,26 +128,15 @@ func _determine_action_details(
 	if action.name == MOVE_ACTION_NAME:
 		details.append(_calc_move_path(target_indexes[0], ab.movement_behavior))
 		return details
-	var m_path: PoolVector3Array
 	for t_index in target_indexes:
-		m_path = _get_move_path(
-				action,
-				ab,
-				t_index,
-				movement
-		)
-		if m_path.size() == 0:
+		if _target_in_dead_range(action, t_index):
+			details = _dead_range_details(action, ab, t_index, movement)
+		else:
+			details = _normal_range_details(action, ab, t_index, movement)
+		if details.size() == 0:
 			continue
-		details.append(m_path)
-		# Determine true target index to account for movement behavior
-		var true_target: int = h_map.range_finder.get_closest_id_path(
-				_move_dest_id,
-				t_index,
-				action.source_range.get_reach(),
-				action.source_ignore_heights
-		)[-1]
-		details.append(true_target)
-		break
+		else:
+			break
 	return details
 
 
@@ -219,6 +208,79 @@ func _determine_ally_index_threat_order() -> Array:
 	return indexes
 
 
+# Checks if the target id is within the dead range of an action.
+func _target_in_dead_range(action: Action, target_id: int) -> bool:
+	return (
+			(
+				action.source_ignore_heights
+				and d_map.tile_dist_at(target_id) <= action.dead_range.get_reach()
+			)
+			or d_map.travel_dist_at(target_id) <= action.dead_range.get_reach()
+	)
+
+
+# Determines the move path and true target when a target is within an action's
+# dead range. Returns an empty array if the character is unable to move in a way
+# that lets it hit the original target.
+func _dead_range_details(
+	action: Action,
+	ab: ActionBehavior,
+	target_index: int,
+	movement: int
+) -> Array:
+	var details: Array = []
+	var src_area: Dictionary = (
+			d_map.map_from_tile_dist(action.source_range.get_reach())
+			if action.source_ignore_heights
+			else d_map.map_from_travel_dist(action.source_range.get_reach())
+	)
+	var src_map: DistanceMap = DistanceMap.new(d_map.origin, src_area)
+	var closest_src: int = h_map.range_finder.get_closest_in_area(
+			target_index,
+			src_map
+	)
+	# If closest_src is negative, no closest source point was found, meaning that
+	# there is no source range.
+	if closest_src < 0:
+		return []
+	# This function is called when the target is within the dead range, so there
+	# is no need to handle the case where the closest_src is the target_index.
+	return details
+
+
+# Determines the move path and true target that is required to hit the given
+# target. Returns an empty array if the character is unable to move in a way
+# that lets it hit the original target.
+func _normal_range_details(
+	action: Action,
+	ab: ActionBehavior,
+	target_index: int,
+	movement: int
+) -> Array:
+	"""
+	TODO: Add logic to account for cardinal shaped ranges.
+	"""
+	var details: Array = []
+	var m_path: PoolVector3Array = _get_move_path(
+				action,
+				ab,
+				target_index,
+				movement
+		)
+	if m_path.size() == 0:
+		return []
+	details.append(m_path)
+	# Determine true target index to account for movement behavior
+	var true_target: int = h_map.range_finder.get_closest_id_path(
+			_move_dest_id,
+			target_index,
+			action.source_range.get_reach(),
+			action.source_ignore_heights
+	)[-1]
+	details.append(true_target)
+	return details
+
+
 # Determines the movement path required for the character to be within range
 # of an action given a specific movement direction. By default, determines the
 # path to be at maximum range distace, while randomizing the steps when required
@@ -229,9 +291,10 @@ func _get_move_path(
 	target_index: int,
 	movement: int
 ) -> PoolVector3Array:
+	"""
+	TODO: Add logic to account for cardinal shaped ranges.
+	"""
 	var move_dir: int = ab.movement_behavior
-	if _target_in_dead_range(action, target_index):
-		return _dead_step(target_index, action, move_dir, movement)
 	var move_dist: int = 0
 	# Check if target is within the effect distance from the character.
 	var e_step: Array = _effect_step(target_index, action, move_dir, movement)
@@ -279,29 +342,6 @@ func _get_move_path(
 	else:
 		move_dist = _rng.randi_range(m_step[0], movement)
 	return _calc_move_path(m_step[1], move_dir, move_dist)
-
-
-# Checks if the target id is within the dead range of an action.
-func _target_in_dead_range(action: Action, target_id: int) -> bool:
-	return (
-			(
-				action.source_ignore_heights
-				and d_map.tile_dist_at(target_id) <= action.dead_range.get_reach()
-			)
-			or d_map.travel_dist_at(target_id) <= action.dead_range.get_reach()
-	)
-
-
-# Helper function for _get_move_path. Determines the move path when a
-# target is within an action's dead range. Returns an empty array if the
-# character is unable to move in a way that lets it hit the target.
-func _dead_step(
-	target_index: int,
-	action: Action,
-	move_dir: int,
-	movement: int
-) -> PoolVector3Array:
-	return PoolVector3Array([])
 
 
 # Helper function for _get_move_path. Determines if the character is within
