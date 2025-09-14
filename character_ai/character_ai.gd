@@ -130,7 +130,7 @@ func _determine_action_details(
 		return details
 	for t_index in target_indexes:
 		if _target_in_dead_range(action, t_index):
-			details = _dead_range_details(action, ab, t_index, movement)
+			details = _dead_range_details(action, t_index, movement)
 		else:
 			details = _normal_range_details(action, ab, t_index, movement)
 		if details.size() == 0:
@@ -220,36 +220,69 @@ func _target_in_dead_range(action: Action, target_id: int) -> bool:
 
 
 # Determines the move path and true target when a target is within an action's
-# dead range. Returns an empty array if the character is unable to move in a way
-# that lets it hit the original target.
+# dead range. Returns the details as an array:
+# [movement_path, target_index]
+# Returns an empty array if the character is unable to move in a way that lets
+# it hit the original target.
 func _dead_range_details(
 	action: Action,
-	ab: ActionBehavior,
-	target_index: int,
+	t_index: int,
 	movement: int
 ) -> Array:
 	var details: Array = []
+	var src_map: DistanceMap = _get_source_d_map(action)
+	var c_src: int = h_map.range_finder.get_closest_in_area(
+			t_index,
+			src_map.tile_indexes()
+	)
+	# If c_src is negative, no closest source point was found, meaning that
+	# there is no source range.
+	if c_src < 0:
+		return []
+	var dist_to_src: float = (
+			h_map.range_finder.tile_distance(t_index, c_src)
+			if action.effect_ignore_heights
+			else h_map.range_finder.travel_distance(t_index, c_src)
+	)
+	if dist_to_src <= action.effect_range.get_reach():
+		details.append(PoolVector3Array([_character.map_coordinate.translation]))
+		details.append(c_src)
+	return details
+
+
+# Gets the distance map for the source range of the action, accounting for
+# dead range.
+func _get_source_d_map(action: Action) -> DistanceMap:
 	var src_area: Dictionary = (
 			d_map.map_from_tile_dist(action.source_range.get_reach())
 			if action.source_ignore_heights
 			else d_map.map_from_travel_dist(action.source_range.get_reach())
 	)
 	var src_map: DistanceMap = DistanceMap.new(d_map.origin, src_area)
-	var closest_src: int = h_map.range_finder.get_closest_in_area(
-			target_index,
-			src_map
+	# The overall distance map has its origin defined at the character position.
+	var dead_indexes: Array = action.dead_range.get_area_indexes(
+			d_map.origin,
+			h_map
 	)
-	# If closest_src is negative, no closest source point was found, meaning that
-	# there is no source range.
-	if closest_src < 0:
-		return []
-	# This function is called when the target is within the dead range, so there
-	# is no need to handle the case where the closest_src is the target_index.
-	return details
+	for index in dead_indexes:
+		if (
+			# The overall distance map has its origin defined at the
+			# character position.
+			index != d_map.origin 
+			and src_map.has(index)
+			and (
+				action.source_ignore_heights or
+				src_map.travel_dist_at(index) <= action.dead_range.get_reach()
+			)
+		):
+			src_map.remove(index)
+	return src_map
 
 
 # Determines the move path and true target that is required to hit the given
-# target. Returns an empty array if the character is unable to move in a way
+# target. Returns the details as an array:
+# [movement_path, target_index]
+# Returns an empty array if the character is unable to move in a way
 # that lets it hit the original target.
 func _normal_range_details(
 	action: Action,

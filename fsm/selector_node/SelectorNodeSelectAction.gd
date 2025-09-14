@@ -186,7 +186,7 @@ func _place_closest_to_target() -> void:
 		_source_d_map.remove(_player_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
 			target_index,
-			_source_d_map
+			_source_d_map.tile_indexes()
 	)
 	# Add back in player details if they were removed to preserve details.
 	if ignore_player_index:
@@ -211,7 +211,7 @@ func _place_closest_to_tile(tile_index: int) -> void:
 		_source_d_map.remove(_player_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
 			tile_index,
-			_source_d_map
+			_source_d_map.tile_indexes()
 	)
 	# Add back in player details if they were removed to preserve distance map.
 	if ignore_player_index:

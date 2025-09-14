@@ -129,20 +129,21 @@ func get_character_id_path(
 	return id_path
 
 
-# Finds the point in the area that is closest to target_id. The area is a
-# DistanceMap map object. Returns -1 if no closest index could be found.
-func get_closest_in_area(target_id: int, area_d_map: DistanceMap) -> int:
-	if area_d_map.size() == 0:
+# Finds the point in the area that is closest to target_id. The area is an array
+# of tile ids. Returns -1 if no closest index could be found.
+func get_closest_in_area(target_id: int, area_indices: Array) -> int:
+	if area_indices.size() == 0:
 		return -1
-	if area_d_map.size() == 1:
-		return area_d_map.tile_indexes()[0]
+	var d_map: DistanceMap = dist_maps.at(target_id)
+	if area_indices.size() == 1:
+		return d_map.tile_indexes()[0]
 	var closest: Array = [-1, INF]
-	for id in area_d_map.tile_indexes():
+	for id in area_indices:
 		if id == target_id:
 			return target_id
-		if closest[1] > area_d_map.tile_dist_at(id):
+		if closest[1] > d_map.tile_dist_at(id):
 			closest[0] = id
-			closest[1] = area_d_map.tile_dist_at(id)
+			closest[1] = d_map.tile_dist_at(id)
 	return closest[0]
 
 
