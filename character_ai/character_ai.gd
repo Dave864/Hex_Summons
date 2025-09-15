@@ -252,46 +252,37 @@ func _dead_range_details(
 		details.append(
 				_calc_move_path(
 					_character.map_coordinate.get_index(),
-					ActionBehavior.Movement.AWAY,
-					movement
+					ActionBehavior.Movement.STAND
 				)
 		)
 		details.append(c_src)
 		src_map.free()
 		return details
-	var dist_from_effect: int = int(action.effect_range.get_reach() - dist_to_src)
+	var dist_from_effect: int = int(dist_to_src - action.effect_range.get_reach())
 	if dist_from_effect > movement:
 		src_map.free()
 		return []
 	if ab.randomize_move_dist:
-		dist_from_effect = _rng.randi_range(
-				dist_from_effect,
-				action.effect_range.get_reach()
-		)
-	var move_area_map: DistanceMap = DistanceMap.new(
-			d_map.origin,
-			src_map.map_from_travel_dist(dist_from_effect)
-	)
-	var move_dest: int = h_map.range_finder.get_character_farthest_point_away(
-			_character,
-			t_index,
-			_opponents.values(),
-			move_area_map.tile_ids()
-	)
+		"""
+		TODO: Add logic to randomize move distance.
+		"""
+		pass
 	details.append(
 			_calc_move_path(
-				move_dest,
+				t_index,
 				ActionBehavior.Movement.AWAY,
 				dist_from_effect
 			)
 	)
-	var target_path: PoolIntArray = h_map.range_finder.get_closest_id_path(
+	d_map.free()
+	d_map = h_map.range_finder.get_distance_map(_move_dest_id, true)
+	src_map.free()
+	src_map = _get_source_d_map(action)
+	var true_target: int  = h_map.range_finder.get_closest_in_area(
 			t_index,
-			move_dest,
-			movement
+			src_map.tile_ids()
 	)
-	details.append(target_path[-1])
-	move_area_map.free()
+	details.append(true_target)
 	src_map.free()
 	return details
 
@@ -312,10 +303,7 @@ func _get_source_d_map(action: Action) -> DistanceMap:
 	)
 	for index in dead_indexes:
 		if (
-			# The overall distance map has its origin defined at the
-			# character position.
-			index != d_map.origin 
-			and src_map.has(index)
+			src_map.has(index)
 			and (
 				action.source_ignore_heights or
 				src_map.travel_dist_at(index) <= action.dead_range.get_reach()
