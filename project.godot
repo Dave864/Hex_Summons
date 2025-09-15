@@ -169,6 +169,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://fsm/encounter/camera/encounter_camera_state.gd"
 }, {
+"base": "Sprite3D",
+"class": "EncounterSprite",
+"language": "GDScript",
+"path": "res://character/scripts/encounter_sprite.gd"
+}, {
 "base": "State",
 "class": "EncounterState",
 "language": "GDScript",
@@ -432,6 +437,7 @@ _global_script_class_icons={
 "Encounter": "",
 "EncounterCamera": "",
 "EncounterCameraState": "",
+"EncounterSprite": "",
 "EncounterState": "",
 "EncounterUI": "",
 "EncounterUIState": "",
