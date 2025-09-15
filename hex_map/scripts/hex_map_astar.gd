@@ -75,10 +75,8 @@ func get_full_distance_map(start_id: int) -> Dictionary:
 	return id_distances
 
 
-# Finds the point in the area that is farthest from target. The area is a
-# dicitonary whose keys are the map tile ids and values are the various
-# distances to the tiles from some point, which may not be the same as taregt.
-# Returns -1 if no farthest index could be found.
+# Finds the point in the area that is farthest from target. The area is an
+# array of map tile ids. Returns -1 if no farthest index could be found.
 func get_farthest_in_area(target_id: int, area_indexes: Array) -> int:
 	if area_indexes.size() == 0:
 		return -1

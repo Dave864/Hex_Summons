@@ -219,8 +219,9 @@ func _target_in_dead_range(action: Action, target_id: int) -> bool:
 	)
 
 
-# Determines the move path and true target when a target is within an action's
-# dead range. Returns the details as an array:
+# Determines the movement path and true target when a target is within an action's
+# dead range. Movement will always be away from the target. Returns the details
+# as an array:
 # [movement_path, target_index]
 # Returns an empty array if the character is unable to move in a way that lets
 # it hit the original target.
@@ -229,6 +230,9 @@ func _dead_range_details(
 	t_index: int,
 	movement: int
 ) -> Array:
+	"""
+	TODO: Add logic to account for cardinal shaped ranges.
+	"""
 	var details: Array = []
 	var src_map: DistanceMap = _get_source_d_map(action)
 	var c_src: int = h_map.range_finder.get_closest_in_area(
@@ -238,6 +242,7 @@ func _dead_range_details(
 	# If c_src is negative, no closest source point was found, meaning that
 	# there is no source range.
 	if c_src < 0:
+		src_map.free()
 		return []
 	var dist_to_src: float = (
 			h_map.range_finder.tile_distance(t_index, c_src)
@@ -247,6 +252,38 @@ func _dead_range_details(
 	if dist_to_src <= action.effect_range.get_reach():
 		details.append(PoolVector3Array([_character.map_coordinate.translation]))
 		details.append(c_src)
+		src_map.free()
+		return details
+	var dist_from_effect: int = int(action.effect_range.get_reach() - dist_to_src)
+	if dist_from_effect > movement:
+		src_map.free()
+		return []
+	# Get farthest point away from t_index to use as movement destination.
+	var move_area_map: DistanceMap = DistanceMap.new(
+			d_map.origin,
+			src_map.map_from_travel_dist(dist_from_effect)
+	)
+	var move_dest: int = h_map.range_finder.get_character_farthest_point_away(
+			_character,
+			t_index,
+			_opponents.values(),
+			move_area_map.tile_indexes()
+	)
+	details.append(
+			_calc_move_path(
+				move_dest,
+				ActionBehavior.Movement.AWAY,
+				dist_from_effect
+			)
+	)
+	var target_path: PoolIntArray = h_map.range_finder.get_closest_id_path(
+			t_index,
+			move_dest,
+			movement
+	)
+	details.append(target_path[-1])
+	move_area_map.free()
+	src_map.free()
 	return details
 
 
@@ -290,9 +327,6 @@ func _normal_range_details(
 	target_index: int,
 	movement: int
 ) -> Array:
-	"""
-	TODO: Add logic to account for cardinal shaped ranges.
-	"""
 	var details: Array = []
 	var m_path: PoolVector3Array = _get_move_path(
 				action,
@@ -314,10 +348,11 @@ func _normal_range_details(
 	return details
 
 
-# Determines the movement path required for the character to be within range
-# of an action given a specific movement direction. By default, determines the
-# path to be at maximum range distace, while randomizing the steps when required
-# by the ActionBehavior. Returns an empty array if target is out of range.
+# Helper function for _normal_range_details. Determines the movement path
+# required for the character to be within range of an action given a specific
+# movement direction. By default, determines the path to be at maximum range
+# distace, while randomizing the steps when required by the ActionBehavior.
+# Returns an empty array if target is out of range.
 func _get_move_path(
 	action: Action,
 	ab: ActionBehavior,
