@@ -267,13 +267,16 @@ func _dead_range_details(
 		TODO: Add logic to randomize move distance.
 		"""
 		pass
-	details.append(
-			_calc_move_path(
-				t_index,
-				ActionBehavior.Movement.AWAY,
-				dist_from_effect
-			)
+	var move_path: PoolVector3Array = _calc_move_path(
+			t_index,
+			ActionBehavior.Movement.AWAY,
+			dist_from_effect
 	)
+	# Handles case where character is not able to move away. Currently just
+	# determines that the action is impossible.
+	if _move_dest_id == d_map.origin:
+		src_map.free()
+		return []
 	d_map.free()
 	d_map = h_map.range_finder.get_distance_map(_move_dest_id, true)
 	src_map.free()
@@ -282,6 +285,7 @@ func _dead_range_details(
 			t_index,
 			src_map.tile_ids()
 	)
+	details.append(move_path)
 	details.append(true_target)
 	src_map.free()
 	return details
