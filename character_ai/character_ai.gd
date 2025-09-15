@@ -130,7 +130,7 @@ func _determine_action_details(
 		return details
 	for t_index in target_indexes:
 		if _target_in_dead_range(action, t_index):
-			details = _dead_range_details(action, t_index, movement)
+			details = _dead_range_details(action, ab, t_index, movement)
 		else:
 			details = _normal_range_details(action, ab, t_index, movement)
 		if details.size() == 0:
@@ -227,6 +227,7 @@ func _target_in_dead_range(action: Action, target_id: int) -> bool:
 # it hit the original target.
 func _dead_range_details(
 	action: Action,
+	ab: ActionBehavior,
 	t_index: int,
 	movement: int
 ) -> Array:
@@ -237,10 +238,8 @@ func _dead_range_details(
 	var src_map: DistanceMap = _get_source_d_map(action)
 	var c_src: int = h_map.range_finder.get_closest_in_area(
 			t_index,
-			src_map.tile_indexes()
+			src_map.tile_ids()
 	)
-	# If c_src is negative, no closest source point was found, meaning that
-	# there is no source range.
 	if c_src < 0:
 		src_map.free()
 		return []
@@ -250,7 +249,13 @@ func _dead_range_details(
 			else h_map.range_finder.travel_distance(t_index, c_src)
 	)
 	if dist_to_src <= action.effect_range.get_reach():
-		details.append(PoolVector3Array([_character.map_coordinate.translation]))
+		details.append(
+				_calc_move_path(
+					_character.map_coordinate.get_index(),
+					ActionBehavior.Movement.AWAY,
+					movement
+				)
+		)
 		details.append(c_src)
 		src_map.free()
 		return details
@@ -258,7 +263,11 @@ func _dead_range_details(
 	if dist_from_effect > movement:
 		src_map.free()
 		return []
-	# Get farthest point away from t_index to use as movement destination.
+	if ab.randomize_move_dist:
+		dist_from_effect = _rng.randi_range(
+				dist_from_effect,
+				action.effect_range.get_reach()
+		)
 	var move_area_map: DistanceMap = DistanceMap.new(
 			d_map.origin,
 			src_map.map_from_travel_dist(dist_from_effect)
@@ -267,7 +276,7 @@ func _dead_range_details(
 			_character,
 			t_index,
 			_opponents.values(),
-			move_area_map.tile_indexes()
+			move_area_map.tile_ids()
 	)
 	details.append(
 			_calc_move_path(

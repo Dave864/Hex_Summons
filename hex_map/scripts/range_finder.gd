@@ -136,7 +136,7 @@ func get_closest_in_area(target_id: int, area_indices: Array) -> int:
 		return -1
 	var d_map: DistanceMap = dist_maps.at(target_id)
 	if area_indices.size() == 1:
-		return d_map.tile_indexes()[0]
+		return d_map.tile_ids()[0]
 	var closest: Array = [-1, INF]
 	for id in area_indices:
 		if id == target_id:
@@ -371,7 +371,7 @@ func _get_traversible_ids(
 	reach: int
 ) -> Array:
 	var d_map: DistanceMap = get_distance_map(start_index, false, reach)
-	return d_map.tile_indexes()
+	return d_map.tile_ids()
 
 
 # Check that all required parameters are set.

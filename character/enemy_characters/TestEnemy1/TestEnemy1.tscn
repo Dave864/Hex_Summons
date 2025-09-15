@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://character/enemy_characters/TestEnemy1/TestEnemy1BattleSprite.atlastex" type="Texture" id=1]
 [ext_resource path="res://character/enemy_characters/enemy_character.gd" type="Script" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://character_ai/action_conditions/group_condition.gd" type="Script" id=19]
 [ext_resource path="res://character_ai/action_conditions/adjacent_condition.gd" type="Script" id=20]
 [ext_resource path="res://actions/Empty/Empty.tscn" type="PackedScene" id=21]
+[ext_resource path="res://actions/Lob/Lob.tscn" type="PackedScene" id=22]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.1
@@ -72,6 +73,21 @@ actions_ref = NodePath("../Actions")
 
 [node name="Actions" type="Node" parent="."]
 
+[node name="Lob" parent="Actions" instance=ExtResource( 22 )]
+
+[node name="ActionBehavior" type="Node" parent="Actions/Lob"]
+script = ExtResource( 18 )
+target_focus = 1
+movement_behavior = 1
+
+[node name="Cooldown" type="Node" parent="Actions/Lob/ActionBehavior"]
+script = ExtResource( 17 )
+turn_count = 1
+
+[node name="AdjacentCondition" type="Node" parent="Actions/Lob/ActionBehavior"]
+script = ExtResource( 20 )
+check_type = 2
+
 [node name="Nova" parent="Actions" instance=ExtResource( 16 )]
 
 [node name="ActionBehavior" type="Node" parent="Actions/Nova"]
@@ -120,5 +136,6 @@ ai_reference = NodePath("../../CharacterAI")
 script = ExtResource( 8 )
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
+[connection signal="turn_ended" from="." to="Actions/Lob/ActionBehavior/Cooldown" method="_on_Character_turn_ended"]
 [connection signal="turn_ended" from="." to="Actions/Nova/ActionBehavior/Cooldown" method="_on_Character_turn_ended"]
 [connection signal="area_entered" from="HitBox" to="EffectsTracker" method="_on_HitBox_area_entered"]

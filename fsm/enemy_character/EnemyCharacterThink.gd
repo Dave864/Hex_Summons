@@ -27,14 +27,16 @@ onready var _ai_node: CharacterAI = get_node(ai_reference)
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	# Run AI logic in separate thread to hopefully allow logic to run across
-	# multiple frames if needed.
-	_ai_thread = Thread.new()
-	_ai_thread.start(_ai_node, "update_distance_map")
-	_ai_thread.wait_to_finish()
-	_ai_thread = Thread.new()
-	_ai_thread.start(_ai_node, "determine_action_chain")
-	var action_chain: Array = _ai_thread.wait_to_finish()
+#	# Run AI logic in separate thread to hopefully allow logic to run across
+#	# multiple frames if needed.
+#	_ai_thread = Thread.new()
+#	_ai_thread.start(_ai_node, "update_distance_map")
+#	_ai_thread.wait_to_finish()
+#	_ai_thread = Thread.new()
+#	_ai_thread.start(_ai_node, "determine_action_chain")
+#	var action_chain: Array = _ai_thread.wait_to_finish()
+	_ai_node.update_distance_map()
+	var action_chain: Array = _ai_node.determine_action_chain()
 	
 	if action_chain.size() <= 1:
 		_process_action_chain(action_chain)

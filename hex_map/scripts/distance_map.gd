@@ -42,7 +42,7 @@ func remove(index: int) -> Dictionary:
 
 
 # Returns the map indexes the distance map tracks.
-func tile_indexes() -> Array:
+func tile_ids() -> Array:
 	return _d_map.keys()
 
 
