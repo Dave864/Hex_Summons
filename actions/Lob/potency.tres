@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://actions/potency.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+attack_potency = 0.75
+earth_alignment = 0
+fire_alignment = 0
+water_alignment = 0
+wind_alignment = 0
+light_alignment = 0
+dark_alignment = 0
