@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://character/enemy_characters/EnemyCharacter/EnemyBattleSprite.atlastex" type="Texture" id=1]
 [ext_resource path="res://character/enemy_characters/enemy_character.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://hex_map/scripts/map_coordinate.gd" type="Script" id=10]
 [ext_resource path="res://user_interface/character_label/CharacterLabel.tscn" type="PackedScene" id=11]
 [ext_resource path="res://character_ai/character_ai.gd" type="Script" id=12]
+[ext_resource path="res://character/scripts/encounter_sprite.gd" type="Script" id=13]
 [ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=15]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -41,6 +42,8 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.9,
 pixel_size = 0.05
 billboard = 1
 texture = ExtResource( 1 )
+script = ExtResource( 13 )
+character_pos_ref = NodePath("../MapCoordinate")
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource( 15 )
