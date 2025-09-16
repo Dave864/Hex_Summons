@@ -238,10 +238,10 @@ func _check_for_required_parameters() -> void:
 			"EncounterCamera projection is not Orthogonal."
 	)
 	assert(
-			_camera.translation.x == 0.0 and _camera.translation.y == 0.0,
+			is_zero_approx(_camera.translation.x) and is_zero_approx(_camera.translation.y),
 			"EncounterCamera camera distance translation not bound along z-axis."
 	)
 	assert(
-			_camera.rotation == Vector3.ZERO,
+			_camera.rotation.is_zero_approx(),
 			"EncounterCamera camera rotation is not zero"
 	)
