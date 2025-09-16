@@ -187,6 +187,7 @@ func get_closest_vertex_radian() -> float:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
+	_camera.size = get_viewport().size.x * HexUtil.WORLD_PIXEL_SIZE / 2
 	_focus_pt.rotation = Vector3(deg2rad(_vert_pan_midpoint), 0.0, 0.0)
 	_default_orientation = _focus_pt.rotation
 	set_camera_distance(default_distance)

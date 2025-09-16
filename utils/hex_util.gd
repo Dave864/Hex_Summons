@@ -32,6 +32,10 @@ const CUBE_DIRECTION_VECTORS: Dictionary = {
 # the distance from the center of a hexagon to the midpoint of one of its edges.
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
+# This size corresponds to 16 pixels within a world size equal to the
+# HEX_EDGE_RATIO.
+const WORLD_PIXEL_SIZE: float = HEX_EDGE_RATIO / 16.0
+
 # Defines the positions of a unit circle that correspond to the vertices of
 # a hexagon.
 #    0
