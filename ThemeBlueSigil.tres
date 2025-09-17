@@ -295,6 +295,9 @@ anti_aliasing = false
 
 [resource]
 Button/fonts/font = ExtResource( 1 )
+CheckBox/colors/font_color_hover = Color( 0, 1, 1, 1 )
+CheckBox/colors/font_color_hover_pressed = Color( 0, 1, 1, 1 )
+CheckBox/colors/font_color_pressed = Color( 1, 0.666667, 0.152941, 1 )
 HScrollBar/icons/decrement = SubResource( 12 )
 HScrollBar/icons/decrement_highlight = SubResource( 13 )
 HScrollBar/icons/decrement_pressed = SubResource( 14 )
