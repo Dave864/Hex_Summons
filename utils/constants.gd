@@ -46,6 +46,10 @@ const RESISTANCE: String = "Resistance"
 # The path to a default icon.
 const DEFAULT_ICON_PATH: String = "res://art/icon.png"
 
+# This is the number that was found to best conform a fixed size sprite image
+# to the pixel size of the viewport dimensions 640 x 360.
+const WORLD_PIXEL_SIZE: float = 0.0054
+
 # The length value of a unit of height for an encounter map hex tile.
 const HEX_TILE_UNIT_HEIGHT: float = 0.5
 

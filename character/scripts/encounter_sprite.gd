@@ -21,7 +21,9 @@ onready var _y_offset: float = translation.y
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
-	pixel_size = HexUtil.WORLD_PIXEL_SIZE
+	pixel_size = Constants.WORLD_PIXEL_SIZE
+	fixed_size = true
+	billboard = Material3D.BILLBOARD_ENABLED
 
 
 # Called every frame. Adjusts the sprite position so that it is aligned with
