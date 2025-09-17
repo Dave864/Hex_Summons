@@ -1,0 +1,342 @@
+[gd_resource type="Theme" load_steps=45 format=2]
+
+[ext_resource path="res://fonts/pixel_12.fnt" type="BitmapFont" id=1]
+[ext_resource path="res://art/ui/Health.png" type="Texture" id=2]
+[ext_resource path="res://fonts/pixel_10.fnt" type="BitmapFont" id=3]
+[ext_resource path="res://art/ui/arrow_down.png" type="Texture" id=4]
+[ext_resource path="res://art/ui/option_arrow_h.png" type="Texture" id=5]
+[ext_resource path="res://art/ui/arrow_right.png" type="Texture" id=6]
+[ext_resource path="res://art/ui/option_arrow_v.png" type="Texture" id=7]
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 12, 14 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 14, 12, 14 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 28, 12, 14 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 5 )
+region = Rect2( 12, 0, 12, 14 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 5 )
+region = Rect2( 12, 14, 12, 14 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 5 )
+region = Rect2( 12, 28, 12, 14 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0, 0.45098, 1, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=18]
+bg_color = Color( 0, 1, 1, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=19]
+bg_color = Color( 1, 0.501961, 0.25098, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.992157, 0.847059, 0, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=20]
+bg_color = Color( 1, 1, 1, 1 )
+border_width_top = 6
+border_width_bottom = 6
+border_color = Color( 1, 1, 1, 0 )
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+anti_aliasing = false
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 8, 10 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 4 )
+region = Rect2( 16, 0, 8, 10 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 4 )
+region = Rect2( 8, 0, 8, 10 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0, 0.45098, 1, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 0 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 1, 0.501961, 0.25098, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 0 )
+
+[sub_resource type="StyleBoxLine" id=8]
+color = Color( 1, 1, 1, 1 )
+thickness = 4
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.45098, 1, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 4
+shadow_color = Color( 0.74902, 0.74902, 0.74902, 1 )
+shadow_size = 1
+shadow_offset = Vector2( 1, 1 )
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=38]
+bg_color = Color( 0, 0.176471, 1, 1 )
+border_width_left = 2
+border_width_top = 12
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 4
+expand_margin_top = 10.0
+shadow_color = Color( 0.74902, 0.74902, 0.74902, 1 )
+shadow_size = 1
+shadow_offset = Vector2( 1, 1 )
+anti_aliasing = false
+
+[sub_resource type="StyleBoxTexture" id=2]
+content_margin_left = 11.0
+content_margin_right = 11.0
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 1, 1, 100, 16 )
+margin_left = 12.0
+margin_right = 12.0
+margin_top = 2.0
+margin_bottom = 2.0
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 1, 1, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 1, 1, 1, 0 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 14, 12 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 7 )
+region = Rect2( 14, 0, 14, 12 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 7 )
+region = Rect2( 28, 0, 14, 12 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 12, 14, 12 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 7 )
+region = Rect2( 14, 12, 14, 12 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 7 )
+region = Rect2( 28, 12, 14, 12 )
+
+[sub_resource type="StyleBoxFlat" id=27]
+bg_color = Color( 0, 0.45098, 1, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=28]
+bg_color = Color( 0, 1, 1, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=29]
+bg_color = Color( 1, 0.501961, 0.25098, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.992157, 0.847059, 0, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=30]
+bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 6
+border_width_right = 6
+border_color = Color( 1, 1, 1, 0 )
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+anti_aliasing = false
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 10, 8 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 16, 10, 8 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 8, 10, 8 )
+
+[sub_resource type="StyleBoxFlat" id=35]
+bg_color = Color( 0, 0.45098, 1, 1 )
+border_width_left = 1
+border_width_right = 1
+border_color = Color( 1, 1, 1, 0 )
+
+[sub_resource type="StyleBoxFlat" id=36]
+bg_color = Color( 1, 0.501961, 0.25098, 1 )
+border_width_left = 1
+border_width_right = 1
+border_color = Color( 1, 1, 1, 0 )
+
+[sub_resource type="StyleBoxLine" id=31]
+color = Color( 1, 1, 1, 1 )
+thickness = 4
+vertical = true
+
+[sub_resource type="StyleBoxFlat" id=37]
+bg_color = Color( 0, 0.176471, 1, 1 )
+border_width_left = 2
+border_width_top = 17
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 4
+expand_margin_top = 15.0
+shadow_color = Color( 0.74902, 0.74902, 0.74902, 1 )
+shadow_size = 1
+shadow_offset = Vector2( 1, 1 )
+anti_aliasing = false
+
+[resource]
+Button/fonts/font = ExtResource( 1 )
+HScrollBar/icons/decrement = SubResource( 12 )
+HScrollBar/icons/decrement_highlight = SubResource( 13 )
+HScrollBar/icons/decrement_pressed = SubResource( 14 )
+HScrollBar/icons/increment = SubResource( 15 )
+HScrollBar/icons/increment_highlight = SubResource( 16 )
+HScrollBar/icons/increment_pressed = SubResource( 17 )
+HScrollBar/styles/grabber = SubResource( 11 )
+HScrollBar/styles/grabber_highlight = SubResource( 18 )
+HScrollBar/styles/grabber_pressed = SubResource( 19 )
+HScrollBar/styles/scroll = SubResource( 20 )
+HSlider/icons/grabber = SubResource( 5 )
+HSlider/icons/grabber_disabled = SubResource( 6 )
+HSlider/icons/grabber_highlight = SubResource( 7 )
+HSlider/styles/grabber_area = SubResource( 9 )
+HSlider/styles/grabber_area_highlight = SubResource( 10 )
+HSlider/styles/slider = SubResource( 8 )
+Label/fonts/font = ExtResource( 1 )
+Panel/styles/panel = SubResource( 1 )
+PopupDialog/styles/panel = SubResource( 38 )
+ProgressBar/colors/font_color = Color( 0, 0.45098, 1, 1 )
+ProgressBar/fonts/font = ExtResource( 3 )
+ProgressBar/styles/bg = SubResource( 2 )
+ProgressBar/styles/fg = SubResource( 3 )
+VScrollBar/icons/decrement = SubResource( 21 )
+VScrollBar/icons/decrement_highlight = SubResource( 22 )
+VScrollBar/icons/decrement_pressed = SubResource( 23 )
+VScrollBar/icons/increment = SubResource( 24 )
+VScrollBar/icons/increment_highlight = SubResource( 25 )
+VScrollBar/icons/increment_pressed = SubResource( 26 )
+VScrollBar/styles/grabber = SubResource( 27 )
+VScrollBar/styles/grabber_highlight = SubResource( 28 )
+VScrollBar/styles/grabber_pressed = SubResource( 29 )
+VScrollBar/styles/scroll = SubResource( 30 )
+VSlider/icons/grabber = SubResource( 32 )
+VSlider/icons/grabber_disabled = SubResource( 33 )
+VSlider/icons/grabber_highlight = SubResource( 34 )
+VSlider/styles/grabber_area = SubResource( 35 )
+VSlider/styles/grabber_area_highlight = SubResource( 36 )
+VSlider/styles/slider = SubResource( 31 )
+WindowDialog/colors/title_color = Color( 0, 0.45098, 1, 1 )
+WindowDialog/constants/close_h_ofs = 18
+WindowDialog/constants/close_v_ofs = 14
+WindowDialog/constants/title_height = 13
+WindowDialog/fonts/title_font = ExtResource( 1 )
+WindowDialog/styles/panel = SubResource( 37 )
