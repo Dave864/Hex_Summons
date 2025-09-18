@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=45 format=2]
+[gd_resource type="Theme" load_steps=76 format=2]
 
 [ext_resource path="res://fonts/pixel_12.fnt" type="BitmapFont" id=1]
 [ext_resource path="res://art/ui/Health.png" type="Texture" id=2]
@@ -7,6 +7,110 @@
 [ext_resource path="res://art/ui/option_arrow_h.png" type="Texture" id=5]
 [ext_resource path="res://art/ui/arrow_right.png" type="Texture" id=6]
 [ext_resource path="res://art/ui/option_arrow_v.png" type="Texture" id=7]
+[ext_resource path="res://art/ui/Checkbox.png" type="Texture" id=8]
+[ext_resource path="res://art/ui/Button_Simple.png" type="Texture" id=10]
+
+[sub_resource type="AtlasTexture" id=47]
+atlas = ExtResource( 10 )
+region = Rect2( 69, 0, 23, 20 )
+
+[sub_resource type="StyleBoxTexture" id=48]
+texture = SubResource( 47 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 2.0
+margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id=79]
+
+[sub_resource type="AtlasTexture" id=78]
+atlas = ExtResource( 10 )
+region = Rect2( 23, 0, 23, 20 )
+
+[sub_resource type="StyleBoxTexture" id=53]
+texture = SubResource( 78 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 5.0
+
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 10 )
+region = Rect2( 0, 0, 23, 20 )
+
+[sub_resource type="StyleBoxTexture" id=49]
+texture = SubResource( 50 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 5.0
+
+[sub_resource type="AtlasTexture" id=58]
+atlas = ExtResource( 10 )
+region = Rect2( 46, 0, 23, 20 )
+
+[sub_resource type="StyleBoxTexture" id=59]
+texture = SubResource( 58 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 5.0
+
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 8 )
+region = Rect2( 32, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 8 )
+region = Rect2( 48, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 8 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 8 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=46]
+atlas = ExtResource( 8 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 8 )
+region = Rect2( 16, 16, 16, 16 )
+
+[sub_resource type="StyleBoxEmpty" id=76]
+
+[sub_resource type="StyleBoxEmpty" id=77]
+
+[sub_resource type="StyleBoxEmpty" id=72]
+
+[sub_resource type="StyleBoxEmpty" id=73]
+
+[sub_resource type="StyleBoxEmpty" id=74]
+
+[sub_resource type="StyleBoxEmpty" id=75]
+
+[sub_resource type="StyleBoxEmpty" id=80]
+
+[sub_resource type="StyleBoxEmpty" id=81]
+
+[sub_resource type="StyleBoxEmpty" id=82]
+
+[sub_resource type="StyleBoxEmpty" id=83]
+
+[sub_resource type="StyleBoxEmpty" id=84]
+
+[sub_resource type="StyleBoxEmpty" id=85]
 
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 5 )
@@ -146,14 +250,14 @@ shadow_offset = Vector2( 1, 1 )
 anti_aliasing = false
 
 [sub_resource type="StyleBoxTexture" id=2]
-content_margin_left = 11.0
-content_margin_right = 11.0
-content_margin_top = 3.0
-content_margin_bottom = 3.0
+content_margin_left = 13.0
+content_margin_right = 13.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
 texture = ExtResource( 2 )
-region_rect = Rect2( 1, 1, 100, 16 )
-margin_left = 12.0
-margin_right = 12.0
+region_rect = Rect2( 0, 1, 102, 16 )
+margin_left = 13.0
+margin_right = 13.0
 margin_top = 2.0
 margin_bottom = 2.0
 expand_margin_left = 8.0
@@ -174,6 +278,10 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 4
 
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 12, 14, 12 )
+
 [sub_resource type="AtlasTexture" id=21]
 atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 14, 12 )
@@ -185,10 +293,6 @@ region = Rect2( 14, 0, 14, 12 )
 [sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 7 )
 region = Rect2( 28, 0, 14, 12 )
-
-[sub_resource type="AtlasTexture" id=24]
-atlas = ExtResource( 7 )
-region = Rect2( 0, 12, 14, 12 )
 
 [sub_resource type="AtlasTexture" id=25]
 atlas = ExtResource( 7 )
@@ -294,10 +398,44 @@ shadow_offset = Vector2( 1, 1 )
 anti_aliasing = false
 
 [resource]
+Button/colors/font_color = Color( 1, 1, 1, 1 )
+Button/colors/font_color_disabled = Color( 0.74902, 0.74902, 0.74902, 1 )
+Button/colors/font_color_hover = Color( 0, 1, 1, 1 )
 Button/fonts/font = ExtResource( 1 )
+Button/styles/disabled = SubResource( 48 )
+Button/styles/focus = SubResource( 79 )
+Button/styles/hover = SubResource( 53 )
+Button/styles/normal = SubResource( 49 )
+Button/styles/pressed = SubResource( 59 )
+CheckBox/colors/font_color_disabled = Color( 0.74902, 0.74902, 0.74902, 1 )
+CheckBox/colors/font_color_focus = Color( 0, 1, 1, 1 )
 CheckBox/colors/font_color_hover = Color( 0, 1, 1, 1 )
 CheckBox/colors/font_color_hover_pressed = Color( 0, 1, 1, 1 )
 CheckBox/colors/font_color_pressed = Color( 1, 0.666667, 0.152941, 1 )
+CheckBox/fonts/font = ExtResource( 3 )
+CheckBox/icons/checked = SubResource( 39 )
+CheckBox/icons/checked_disabled = SubResource( 40 )
+CheckBox/icons/radio_checked = SubResource( 43 )
+CheckBox/icons/radio_checked_disabled = SubResource( 44 )
+CheckBox/icons/radio_unchecked = SubResource( 45 )
+CheckBox/icons/radio_unchecked_disabled = SubResource( 46 )
+CheckBox/icons/unchecked = SubResource( 41 )
+CheckBox/icons/unchecked_disabled = SubResource( 42 )
+CheckBox/styles/disabled = SubResource( 76 )
+CheckBox/styles/focus = SubResource( 77 )
+CheckBox/styles/hover = SubResource( 72 )
+CheckBox/styles/hover_pressed = SubResource( 73 )
+CheckBox/styles/normal = SubResource( 74 )
+CheckBox/styles/pressed = SubResource( 75 )
+CheckButton/colors/font_color_hover = Color( 0, 1, 1, 1 )
+CheckButton/colors/font_color_hover_pressed = Color( 0, 1, 1, 1 )
+CheckButton/colors/font_color_pressed = Color( 1, 0.666667, 0.152941, 1 )
+CheckButton/styles/disabled = SubResource( 80 )
+CheckButton/styles/focus = SubResource( 81 )
+CheckButton/styles/hover = SubResource( 82 )
+CheckButton/styles/hover_pressed = SubResource( 83 )
+CheckButton/styles/normal = SubResource( 84 )
+CheckButton/styles/pressed = SubResource( 85 )
 HScrollBar/icons/decrement = SubResource( 12 )
 HScrollBar/icons/decrement_highlight = SubResource( 13 )
 HScrollBar/icons/decrement_pressed = SubResource( 14 )
@@ -317,10 +455,27 @@ HSlider/styles/slider = SubResource( 8 )
 Label/fonts/font = ExtResource( 1 )
 Panel/styles/panel = SubResource( 1 )
 PopupDialog/styles/panel = SubResource( 38 )
+PopupMenu/colors/font_color = Color( 1, 1, 1, 1 )
+PopupMenu/colors/font_color_hover = Color( 0, 1, 1, 1 )
+PopupMenu/colors/font_color_separator = Color( 1, 0.501961, 0.25098, 1 )
+PopupMenu/constants/vseparation = 12
+PopupMenu/fonts/font = ExtResource( 1 )
+PopupMenu/icons/radio_checked = SubResource( 43 )
+PopupMenu/icons/radio_unchecked = SubResource( 45 )
 ProgressBar/colors/font_color = Color( 0, 0.45098, 1, 1 )
 ProgressBar/fonts/font = ExtResource( 3 )
 ProgressBar/styles/bg = SubResource( 2 )
 ProgressBar/styles/fg = SubResource( 3 )
+Tree/colors/font_color = Color( 1, 1, 1, 1 )
+Tree/colors/font_color_selected = Color( 0, 1, 1, 1 )
+Tree/colors/relationship_line_color = Color( 1, 1, 1, 1 )
+Tree/fonts/font = ExtResource( 1 )
+Tree/fonts/title_button_font = ExtResource( 1 )
+Tree/icons/arrow = SubResource( 24 )
+Tree/icons/arrow_collapsed = SubResource( 15 )
+Tree/icons/checked = SubResource( 39 )
+Tree/icons/select_arrow = SubResource( 5 )
+Tree/icons/unchecked = SubResource( 41 )
 VScrollBar/icons/decrement = SubResource( 21 )
 VScrollBar/icons/decrement_highlight = SubResource( 22 )
 VScrollBar/icons/decrement_pressed = SubResource( 23 )
