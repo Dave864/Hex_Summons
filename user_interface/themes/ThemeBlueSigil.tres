@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=98 format=2]
+[gd_resource type="Theme" load_steps=103 format=2]
 
 [ext_resource path="res://fonts/pixel_12.fnt" type="BitmapFont" id=1]
 [ext_resource path="res://art/ui/ThemeBlueSigil/Health.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://art/ui/ThemeBlueSigil/Checkbox.png" type="Texture" id=8]
 [ext_resource path="res://art/ui/ThemeBlueSigil/option_updown.png" type="Texture" id=9]
 [ext_resource path="res://art/ui/ThemeBlueSigil/Button_Simple.png" type="Texture" id=10]
+[ext_resource path="res://art/ui/ThemeBlueSigil/CheckButton.png" type="Texture" id=11]
 
 [sub_resource type="AtlasTexture" id=47]
 atlas = ExtResource( 10 )
@@ -104,6 +105,22 @@ region = Rect2( 16, 16, 16, 16 )
 [sub_resource type="StyleBoxEmpty" id=74]
 
 [sub_resource type="StyleBoxEmpty" id=75]
+
+[sub_resource type="AtlasTexture" id=110]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 35, 13 )
+
+[sub_resource type="AtlasTexture" id=111]
+atlas = ExtResource( 11 )
+region = Rect2( 35, 0, 35, 13 )
+
+[sub_resource type="AtlasTexture" id=112]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 13, 35, 13 )
+
+[sub_resource type="AtlasTexture" id=113]
+atlas = ExtResource( 11 )
+region = Rect2( 35, 13, 35, 13 )
 
 [sub_resource type="StyleBoxEmpty" id=80]
 
@@ -769,6 +786,11 @@ CheckButton/colors/font_color_disabled = Color( 0.498039, 0.498039, 0.498039, 1 
 CheckButton/colors/font_color_hover = Color( 0, 1, 1, 1 )
 CheckButton/colors/font_color_hover_pressed = Color( 0, 1, 1, 1 )
 CheckButton/colors/font_color_pressed = Color( 1, 0.666667, 0.152941, 1 )
+CheckButton/constants/check_vadjust = 10
+CheckButton/icons/off = SubResource( 110 )
+CheckButton/icons/off_disabled = SubResource( 111 )
+CheckButton/icons/on = SubResource( 112 )
+CheckButton/icons/on_disabled = SubResource( 113 )
 CheckButton/styles/disabled = SubResource( 80 )
 CheckButton/styles/focus = SubResource( 81 )
 CheckButton/styles/hover = SubResource( 82 )
