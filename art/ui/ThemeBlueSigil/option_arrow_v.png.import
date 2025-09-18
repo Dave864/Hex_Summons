@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Health.png-ea86aa38954037dcd5576be19e47b321.stex"
+path="res://.import/option_arrow_v.png-8b855a54bfe863397e716470f0e43841.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/Health.png"
-dest_files=[ "res://.import/Health.png-ea86aa38954037dcd5576be19e47b321.stex" ]
+source_file="res://art/ui/ThemeBlueSigil/option_arrow_v.png"
+dest_files=[ "res://.import/option_arrow_v.png-8b855a54bfe863397e716470f0e43841.stex" ]
 
 [params]
 

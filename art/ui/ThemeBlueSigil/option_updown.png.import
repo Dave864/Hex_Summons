@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Button_Simple.png-6ebaeb04c051fa4ac88e3a541fad046b.stex"
+path="res://.import/option_updown.png-43e5bc268aa843cac07de3d6221278b8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/Button_Simple.png"
-dest_files=[ "res://.import/Button_Simple.png-6ebaeb04c051fa4ac88e3a541fad046b.stex" ]
+source_file="res://art/ui/ThemeBlueSigil/option_updown.png"
+dest_files=[ "res://.import/option_updown.png-43e5bc268aa843cac07de3d6221278b8.stex" ]
 
 [params]
 

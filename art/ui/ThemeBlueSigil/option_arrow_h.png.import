@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/option_arrow_v.png-9f48dffa13d2fc633746952a7461d4d8.stex"
+path="res://.import/option_arrow_h.png-e92bd7b4876e32630a5c058244ff350c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/option_arrow_v.png"
-dest_files=[ "res://.import/option_arrow_v.png-9f48dffa13d2fc633746952a7461d4d8.stex" ]
+source_file="res://art/ui/ThemeBlueSigil/option_arrow_h.png"
+dest_files=[ "res://.import/option_arrow_h.png-e92bd7b4876e32630a5c058244ff350c.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/option_updown.png-f58c414d198276307cc61038b7c349a3.stex"
+path="res://.import/Checkbox.png-d6b26c18cb218e76c4c771c35c071af9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/option_updown.png"
-dest_files=[ "res://.import/option_updown.png-f58c414d198276307cc61038b7c349a3.stex" ]
+source_file="res://art/ui/ThemeBlueSigil/Checkbox.png"
+dest_files=[ "res://.import/Checkbox.png-d6b26c18cb218e76c4c771c35c071af9.stex" ]
 
 [params]
 
