@@ -786,7 +786,6 @@ CheckButton/colors/font_color_disabled = Color( 0.498039, 0.498039, 0.498039, 1 
 CheckButton/colors/font_color_hover = Color( 0, 1, 1, 1 )
 CheckButton/colors/font_color_hover_pressed = Color( 0, 1, 1, 1 )
 CheckButton/colors/font_color_pressed = Color( 1, 0.666667, 0.152941, 1 )
-CheckButton/constants/check_vadjust = 10
 CheckButton/icons/off = SubResource( 110 )
 CheckButton/icons/off_disabled = SubResource( 111 )
 CheckButton/icons/on = SubResource( 112 )

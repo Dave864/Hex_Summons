@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://user_interface/encounter/LabeledIconButton/LabeledIconButton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://user_interface/encounter/encounter_ui.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://fsm/user_interface/encounter/EncounterUIWait.gd" type="Script" id=5]
 [ext_resource path="res://fsm/user_interface/encounter/EncounterUIStandby.gd" type="Script" id=6]
 [ext_resource path="res://fsm/user_interface/encounter/EncounterUIPause.gd" type="Script" id=7]
+[ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=8]
 [ext_resource path="res://fsm/user_interface/encounter/EncounterUIAction.gd" type="Script" id=9]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" type="PackedScene" id=10]
 [ext_resource path="res://art/icon_green.png" type="Texture" id=11]
@@ -16,6 +17,7 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+theme = ExtResource( 8 )
 script = ExtResource( 2 )
 
 [node name="InitiativeTracker" parent="." instance=ExtResource( 10 )]
@@ -47,29 +49,29 @@ margin_right = 0.319992
 script = ExtResource( 12 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ActivePlayerStats"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 113.0
-margin_bottom = 90.52
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 118.0
+margin_bottom = 95.52
 
 [node name="Icon" type="TextureRect" parent="ActivePlayerStats/VBoxContainer"]
-margin_right = 106.0
-margin_bottom = 47.0
+margin_right = 116.0
+margin_bottom = 69.0
 size_flags_vertical = 3
 texture = ExtResource( 11 )
 expand = true
 stretch_mode = 5
 
 [node name="Health" type="Label" parent="ActivePlayerStats/VBoxContainer"]
-margin_top = 51.0
-margin_right = 106.0
-margin_bottom = 65.0
+margin_top = 73.0
+margin_right = 116.0
+margin_bottom = 81.0
 text = "0"
 
 [node name="Name" type="Label" parent="ActivePlayerStats/VBoxContainer"]
-margin_top = 69.0
-margin_right = 106.0
-margin_bottom = 83.0
+margin_top = 85.0
+margin_right = 116.0
+margin_bottom = 93.0
 text = "Name"
 
 [node name="EnemyStats" type="VBoxContainer" parent="."]
@@ -92,10 +94,10 @@ mouse_filter = 2
 alignment = 1
 
 [node name="Options" type="HBoxContainer" parent="."]
-anchor_left = 0.1875
-anchor_top = 0.890625
+anchor_left = 0.192188
+anchor_top = 0.891667
 anchor_right = 1.0
-anchor_bottom = 0.996875
+anchor_bottom = 0.997222
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -103,31 +105,31 @@ __meta__ = {
 [node name="TechniqueButton" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 127.0
+margin_right = 126.0
 margin_bottom = 38.0
 label = "Technique"
 
 [node name="SpellButton" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 131.0
-margin_right = 258.0
+margin_left = 130.0
+margin_right = 256.0
 margin_bottom = 38.0
 label = "Spell"
 
 [node name="SummonButton" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 262.0
-margin_right = 389.0
+margin_left = 260.0
+margin_right = 386.0
 margin_bottom = 38.0
 label = "Summon"
 
 [node name="EndButton" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 393.0
-margin_right = 520.0
+margin_left = 390.0
+margin_right = 517.0
 margin_bottom = 38.0
 label = "End"
 

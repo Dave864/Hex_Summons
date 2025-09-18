@@ -7,7 +7,3 @@ margin_right = 33.0
 margin_bottom = -34.375
 size_flags_horizontal = 7
 action_mode = 0
-
-[node name="Tree" type="Tree" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
