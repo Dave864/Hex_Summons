@@ -16,6 +16,7 @@ region = Rect2( 69, 0, 23, 20 )
 
 [sub_resource type="StyleBoxTexture" id=48]
 texture = SubResource( 47 )
+region_rect = Rect2( 0, 0, 23, 20 )
 margin_left = 6.0
 margin_right = 6.0
 margin_top = 2.0
@@ -29,6 +30,7 @@ region = Rect2( 23, 0, 23, 20 )
 
 [sub_resource type="StyleBoxTexture" id=53]
 texture = SubResource( 78 )
+region_rect = Rect2( 0, 0, 23, 20 )
 margin_left = 6.0
 margin_right = 6.0
 margin_top = 6.0
@@ -40,6 +42,7 @@ region = Rect2( 0, 0, 23, 20 )
 
 [sub_resource type="StyleBoxTexture" id=49]
 texture = SubResource( 50 )
+region_rect = Rect2( 0, 0, 23, 20 )
 margin_left = 6.0
 margin_right = 6.0
 margin_top = 6.0
@@ -51,6 +54,7 @@ region = Rect2( 46, 0, 23, 20 )
 
 [sub_resource type="StyleBoxTexture" id=59]
 texture = SubResource( 58 )
+region_rect = Rect2( 0, 0, 23, 20 )
 margin_left = 6.0
 margin_right = 6.0
 margin_top = 6.0
