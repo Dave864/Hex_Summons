@@ -1,9 +1,149 @@
-[gd_scene format=2]
+[gd_scene load_steps=29 format=2]
 
-[node name="TechniqueButton" type="Button"]
-anchor_right = 0.0859375
-anchor_bottom = 0.184375
-margin_right = 33.0
-margin_bottom = -34.375
+[ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=1]
+[ext_resource path="res://art/ui/Option Button.png" type="Texture" id=2]
+[ext_resource path="res://art/ui/Option Button Hover 0.png" type="Texture" id=3]
+[ext_resource path="res://art/ui/Option Button Hover 1.png" type="Texture" id=4]
+[ext_resource path="res://art/ui/Option Button Hover 2.png" type="Texture" id=5]
+[ext_resource path="res://art/ui/Sigil Spritesheet.png" type="Texture" id=6]
+[ext_resource path="res://art/ui/Technique Spritesheet.png" type="Texture" id=7]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 96, 50 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 192, 0, 96, 50 )
+
+[sub_resource type="AnimatedTexture" id=4]
+frames = 3
+oneshot = true
+fps = 12.0
+frame_0/texture = ExtResource( 3 )
+frame_1/texture = ExtResource( 4 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 5 )
+frame_2/delay_sec = 0.0
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 0, 96, 50 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 34, 34 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 34, 34 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 6 )
+region = Rect2( 34, 0, 34, 34 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 6 )
+region = Rect2( 68, 0, 34, 34 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 6 )
+region = Rect2( 102, 0, 34, 34 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 6 )
+region = Rect2( 136, 0, 34, 34 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 6 )
+region = Rect2( 170, 0, 34, 34 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 6 )
+region = Rect2( 204, 0, 34, 34 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 6 )
+region = Rect2( 238, 0, 34, 34 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 6 )
+region = Rect2( 272, 0, 34, 34 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 6 )
+region = Rect2( 306, 0, 34, 34 )
+
+[sub_resource type="SpriteFrames" id=16]
+animations = [ {
+"frames": [ SubResource( 5 ) ],
+"loop": false,
+"name": "default",
+"speed": 12.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
+"loop": true,
+"name": "rotate",
+"speed": 12.0
+} ]
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 7 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 7 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=21]
+animations = [ {
+"frames": [ SubResource( 17 ) ],
+"loop": false,
+"name": "default",
+"speed": 12.0
+}, {
+"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
+"loop": false,
+"name": "select",
+"speed": 12.0
+} ]
+
+[node name="TechniqueButton" type="TextureButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -544.0
+margin_bottom = -310.0
 size_flags_horizontal = 7
+theme = ExtResource( 1 )
+theme_type_variation = "OptionButton"
+toggle_mode = true
 action_mode = 0
+texture_normal = SubResource( 1 )
+texture_pressed = SubResource( 2 )
+texture_hover = SubResource( 4 )
+texture_disabled = SubResource( 3 )
+stretch_mode = 5
+
+[node name="Sigil" type="AnimatedSprite" parent="."]
+position = Vector2( 48, 19 )
+frames = SubResource( 16 )
+
+[node name="Icon" type="AnimatedSprite" parent="."]
+position = Vector2( 48, 19 )
+frames = SubResource( 21 )
+
+[node name="Label" type="Label" parent="."]
+margin_top = 34.0
+margin_right = 96.0
+margin_bottom = 50.0
+text = "TECHNIQUE"
+align = 1
+valign = 1
