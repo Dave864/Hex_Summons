@@ -36,6 +36,7 @@ region = Rect2( 1, 1, 32, 32 )
 
 [sub_resource type="Animation" id=25]
 length = 0.001
+step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("Icon:texture:region")
 tracks/0/interp = 1
@@ -152,7 +153,8 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=29]
 resource_name = "selected"
-length = 0.2
+length = 0.166667
+step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sigil:texture:region")
 tracks/0/interp = 1
@@ -160,10 +162,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 0, 0, 34, 34 ) ]
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 34, 34 ), Rect2( 34, 0, 34, 34 ), Rect2( 68, 0, 34, 34 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Icon:texture:region")
@@ -184,7 +186,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ Rect2( 0, 100, 96, 50 ), Rect2( 96, 100, 96, 50 ), Rect2( 192, 100, 96, 50 ) ]
@@ -196,7 +198,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ Rect2( 0, 100, 96, 50 ), Rect2( 96, 100, 96, 50 ), Rect2( 192, 100, 96, 50 ) ]
@@ -204,8 +206,9 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=28]
 resource_name = "toggled"
-length = 0.9
+length = 0.833333
 loop = true
+step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sigil:texture:region")
 tracks/0/interp = 1
@@ -213,10 +216,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Rect2( 0, 0, 34, 34 ), Rect2( 34, 0, 34, 34 ), Rect2( 68, 0, 34, 34 ), Rect2( 102, 0, 34, 34 ), Rect2( 136, 0, 34, 34 ), Rect2( 170, 0, 34, 34 ), Rect2( 204, 0, 34, 34 ), Rect2( 238, 0, 34, 34 ), Rect2( 272, 0, 34, 34 ), Rect2( 306, 0, 34, 34 ) ]
+"values": [ Rect2( 102, 0, 34, 34 ), Rect2( 136, 0, 34, 34 ), Rect2( 170, 0, 34, 34 ), Rect2( 204, 0, 34, 34 ), Rect2( 238, 0, 34, 34 ), Rect2( 272, 0, 34, 34 ), Rect2( 306, 0, 34, 34 ), Rect2( 0, 0, 34, 34 ), Rect2( 34, 0, 34, 34 ), Rect2( 68, 0, 34, 34 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Icon:texture:region")
