@@ -1,10 +1,8 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=1]
 [ext_resource path="res://art/ui/Option Button.png" type="Texture" id=2]
-[ext_resource path="res://art/ui/Option Button Hover 0.png" type="Texture" id=3]
-[ext_resource path="res://art/ui/Option Button Hover 1.png" type="Texture" id=4]
-[ext_resource path="res://art/ui/Option Button Hover 2.png" type="Texture" id=5]
+[ext_resource path="res://user_interface/encounter/LabeledIconButton/player_option_button.gd" type="Script" id=3]
 [ext_resource path="res://art/ui/Sigil Spritesheet.png" type="Texture" id=6]
 [ext_resource path="res://art/ui/Technique Spritesheet.png" type="Texture" id=7]
 
@@ -14,113 +12,225 @@ region = Rect2( 0, 0, 96, 50 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
-region = Rect2( 192, 0, 96, 50 )
+region = Rect2( 0, 100, 96, 50 )
 
-[sub_resource type="AnimatedTexture" id=4]
-frames = 3
-oneshot = true
-fps = 12.0
-frame_0/texture = ExtResource( 3 )
-frame_1/texture = ExtResource( 4 )
-frame_1/delay_sec = 0.0
-frame_2/texture = ExtResource( 5 )
-frame_2/delay_sec = 0.0
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 50, 96, 50 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
 region = Rect2( 96, 0, 96, 50 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 34, 34 )
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 34, 34 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 6 )
-region = Rect2( 34, 0, 34, 34 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 6 )
-region = Rect2( 68, 0, 34, 34 )
-
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 6 )
-region = Rect2( 102, 0, 34, 34 )
-
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 6 )
-region = Rect2( 136, 0, 34, 34 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 6 )
-region = Rect2( 170, 0, 34, 34 )
-
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 6 )
-region = Rect2( 204, 0, 34, 34 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 6 )
-region = Rect2( 238, 0, 34, 34 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 6 )
-region = Rect2( 272, 0, 34, 34 )
-
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 6 )
-region = Rect2( 306, 0, 34, 34 )
-
-[sub_resource type="SpriteFrames" id=16]
-animations = [ {
-"frames": [ SubResource( 5 ) ],
-"loop": false,
-"name": "default",
-"speed": 12.0
-}, {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
-"loop": true,
-"name": "rotate",
-"speed": 12.0
-} ]
-
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=24]
 atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 7 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="Animation" id=25]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Icon:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 0, 0, 32, 32 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sigil:texture:region")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 0, 0, 34, 34 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:texture_hover:region")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 0, 50, 96, 50 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:texture_focused:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 0, 100, 96, 50 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:texture_pressed:region")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 0, 100, 96, 50 ) ]
+}
 
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 7 )
-region = Rect2( 32, 0, 32, 32 )
+[sub_resource type="Animation" id=26]
+resource_name = "hover"
+length = 0.166667
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/path = NodePath("Icon:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 32, 32 ), Rect2( 32, 0, 32, 32 ), Rect2( 64, 0, 32, 32 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sigil:texture:region")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 0, 0, 34, 34 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:texture_hover:region")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 50, 96, 50 ), Rect2( 96, 50, 96, 50 ), Rect2( 192, 50, 96, 50 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:texture_focused:region")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 50, 96, 50 ), Rect2( 96, 50, 96, 50 ), Rect2( 192, 50, 96, 50 ) ]
+}
 
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 7 )
-region = Rect2( 64, 0, 32, 32 )
+[sub_resource type="Animation" id=29]
+resource_name = "selected"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sigil:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 0, 0, 34, 34 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Icon:texture:region")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 64, 0, 32, 32 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:texture_pressed:region")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 100, 96, 50 ), Rect2( 96, 100, 96, 50 ), Rect2( 192, 100, 96, 50 ) ]
+}
 
-[sub_resource type="SpriteFrames" id=21]
-animations = [ {
-"frames": [ SubResource( 17 ) ],
-"loop": false,
-"name": "default",
-"speed": 12.0
-}, {
-"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
-"loop": false,
-"name": "select",
-"speed": 12.0
-} ]
+[sub_resource type="Animation" id=28]
+resource_name = "toggled"
+length = 0.9
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sigil:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 34, 34 ), Rect2( 34, 0, 34, 34 ), Rect2( 68, 0, 34, 34 ), Rect2( 102, 0, 34, 34 ), Rect2( 136, 0, 34, 34 ), Rect2( 170, 0, 34, 34 ), Rect2( 204, 0, 34, 34 ), Rect2( 238, 0, 34, 34 ), Rect2( 272, 0, 34, 34 ), Rect2( 306, 0, 34, 34 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Icon:texture:region")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 64, 0, 32, 32 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:texture_pressed:region")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 192, 100, 96, 50 ) ]
+}
 
 [node name="TechniqueButton" type="TextureButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = -544.0
-margin_bottom = -310.0
+anchor_right = 0.15
+anchor_bottom = 0.139
+margin_bottom = -0.0400047
 size_flags_horizontal = 7
 theme = ExtResource( 1 )
 theme_type_variation = "OptionButton"
@@ -128,17 +238,27 @@ toggle_mode = true
 action_mode = 0
 texture_normal = SubResource( 1 )
 texture_pressed = SubResource( 2 )
-texture_hover = SubResource( 4 )
+texture_hover = SubResource( 22 )
 texture_disabled = SubResource( 3 )
 stretch_mode = 5
+script = ExtResource( 3 )
+sigil_ref = NodePath("Sigil")
+icon_ref = NodePath("Icon")
 
-[node name="Sigil" type="AnimatedSprite" parent="."]
-position = Vector2( 48, 19 )
-frames = SubResource( 16 )
+[node name="Sigil" type="TextureRect" parent="."]
+margin_left = 31.0
+margin_top = 2.0
+margin_right = 65.0
+margin_bottom = 36.0
+texture = SubResource( 23 )
+stretch_mode = 4
 
-[node name="Icon" type="AnimatedSprite" parent="."]
-position = Vector2( 48, 19 )
-frames = SubResource( 21 )
+[node name="Icon" type="TextureRect" parent="."]
+margin_left = 32.0
+margin_top = 3.0
+margin_right = 64.0
+margin_bottom = 35.0
+texture = SubResource( 24 )
 
 [node name="Label" type="Label" parent="."]
 margin_top = 34.0
@@ -147,3 +267,15 @@ margin_bottom = 50.0
 text = "TECHNIQUE"
 align = 1
 valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 25 )
+anims/hover = SubResource( 26 )
+anims/selected = SubResource( 29 )
+anims/toggled = SubResource( 28 )
+
+[connection signal="focus_entered" from="." to="." method="_on_PlayerOptionButton_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_PlayerOptionButton_focus_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_PlayerOptionButton_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_PlayerOptionButton_mouse_exited"]
+[connection signal="toggled" from="." to="." method="_on_PlayerOptionButton_toggled"]
