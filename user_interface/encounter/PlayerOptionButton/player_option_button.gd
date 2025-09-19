@@ -19,6 +19,14 @@ onready var label: Label = $Label
 onready var ap: AnimationPlayer = $AnimationPlayer
 
 
+# Resets the button.
+func reset() -> void:
+	if not disabled:
+		pressed = false
+		ap.stop()
+		ap.play("RESET")
+
+
 # Sets the disabled value, updating label and all images to match.
 func set_disabled(d: bool = true) -> void:
 	disabled = d

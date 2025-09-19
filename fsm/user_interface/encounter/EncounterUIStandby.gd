@@ -14,30 +14,7 @@ to the `Wait` state when the user chooses to end their turn. Moves to the
 func enter(_msg := {}) -> void:
 	encounter_ui.sub_options.activate()
 	encounter_ui.options.show()
-	
-	# These signals are used by other states and will be disconnected to avoid
-	# unintended behavior.
-	ErrorUtil.connect_signal(
-		SignalBus,
-		"move_path_created",
-		self,
-		"_on_SignalBus_move_path_created"
-	)
-	encounter_ui.technique_button.connect_button_signal(
-			self,
-			"pressed",
-			"_on_TechniqueButton_button_pressed"
-	)
-	encounter_ui.spell_button.connect_button_signal(
-			self,
-			"pressed",
-			"_on_SpellButton_button_pressed"
-	)
-	encounter_ui.end_button.connect_button_signal(
-			self,
-			"pressed",
-			"_on_EndButton_button_pressed"
-	)
+	_connect_signals()
 
 
 # Virtual function. Receives events from the `_unhandled_input()` callback.
@@ -49,42 +26,93 @@ func handle_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("ui_encounter_option_2"):
 		_spell_selected()
 	if _event.is_action_pressed("ui_encounter_option_3"):
-		"""
-		TODO: Eventually add button for items.
-		"""
-		pass
+		_item_selected()
 	if _event.is_action_pressed("ui_encounter_option_4"):
-		"""
-		TODO: Eventually add functionality for summons.
-		"""
-		pass
+		_summon_selected()
 
 
 # Virtual function. Called by the state machine before changing the active 
 # state. Use this function to clean up the state.
 func exit() -> void:
+	_disconnect_signals()
+
+# These signals are used by other states and will be later disconnected to avoid
+# unintended behavior.
+func _connect_signals() -> void:
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"move_path_created",
+			self,
+			"_on_SignalBus_move_path_created"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.technique_button,
+			"pressed",
+			self,
+			"_on_TechniqueButton_pressed"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.spell_button,
+			"pressed",
+			self,
+			"_on_SpellButton_pressed"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.summon_button,
+			"pressed",
+			self,
+			"_on_SummonButton_pressed"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.item_button,
+			"pressed",
+			self,
+			"_on_ItemButton_pressed"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.end_button,
+			"pressed",
+			self,
+			"_on_EndButton_pressed"
+	)
+
+
+# Disconnect signals that will be used by other states in this FSM.
+func _disconnect_signals() -> void:
 	SignalBus.disconnect(
 		"move_path_created",
 		self,
 		"_on_SignalBus_move_path_created"
 	)
-	encounter_ui.technique_button.disconnect_button_signal(
-			self,
+	encounter_ui.technique_button.disconnect(
 			"pressed",
-			"_on_TechniqueButton_button_pressed"
+			self,
+			"_on_TechniqueButton_pressed"
 	)
-	encounter_ui.spell_button.disconnect_button_signal(
-			self,
+	encounter_ui.spell_button.disconnect(
 			"pressed",
-			"_on_SpellButton_button_pressed"
+			self,
+			"_on_SpellButton_pressed"
 	)
-	encounter_ui.end_button.disconnect_button_signal(
-			self,
+	encounter_ui.summon_button.disconnect(
 			"pressed",
-			"_on_EndButton_button_pressed"
+			self,
+			"_on_SummonButton_pressed"
+	)
+	encounter_ui.item_button.disconnect(
+			"pressed",
+			self,
+			"_on_ItemButton_pressed"
+	)
+	encounter_ui.end_button.disconnect(
+			"pressed",
+			self,
+			"_on_EndButton_pressed"
 	)
 
 
+# Handles behavior for when the "TECHNIQUE" option is chosen. Goes to the ACTION
+# state, specifying TECHNIQUE as the option.
 func _technique_selected() -> void:
 	state_machine.transition_to(
 			ACTION, 
@@ -92,10 +120,22 @@ func _technique_selected() -> void:
 	)
 
 
+# Handles behavior for when the "SPELL" option is chosen.
 func _spell_selected() -> void:
 	print("Selecting a spell")
 
 
+# Handles behavior for when the "SUMMON" option is chosen.
+func _summon_selected() -> void:
+	print("Selecting a summon")
+
+
+# Handles behavior for when the "ITEM" option is chosen.
+func _item_selected() -> void:
+	print("Selecting an item")
+
+
+# Handles behavior for when the "END" option is chosen.
 func _end_selected() -> void:
 	encounter_ui.get_focused_player().emit_turn_ended()
 	state_machine.transition_to(WAIT)
@@ -108,13 +148,21 @@ func _on_SignalBus_move_path_created(_path: PoolVector3Array) -> void:
 	state_machine.transition_to(PAUSE)
 
 
-func _on_TechniqueButton_button_pressed() -> void:
+func _on_TechniqueButton_pressed() -> void:
 	_technique_selected()
 
 
-func _on_SpellButton_button_pressed() -> void:
+func _on_SpellButton_pressed() -> void:
 	_spell_selected()
 
 
-func _on_EndButton_button_pressed() -> void:
+func _on_SummonButton_pressed() -> void:
+	_summon_selected()
+
+
+func _on_ItemButton_pressed() -> void:
+	_item_selected()
+
+
+func _on_EndButton_pressed() -> void:
 	_end_selected()

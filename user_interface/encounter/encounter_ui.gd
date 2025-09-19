@@ -37,11 +37,11 @@ onready var enemy_stats: VBoxContainer = $EnemyStats
 onready var party_stats: VBoxContainer = $PartyStats
 onready var options: HBoxContainer = $Options
 onready var sub_options: SubOptions = $SubOptions
-onready var technique_button: LabeledIconButton = $Options/TechniqueButton
-onready var spell_button: LabeledIconButton = $Options/SpellButton
-onready var summon_button: LabeledIconButton = $Options/SummonButton
-#onready var item_button: LabeledIconButton = $Options/ItemButton
-onready var end_button: LabeledIconButton = $Options/EndButton
+onready var technique_button: PlayerOptionButton = $Options/TechniqueButton
+onready var spell_button: PlayerOptionButton = $Options/SpellButton
+onready var summon_button: PlayerOptionButton = $Options/SummonButton
+onready var item_button: PlayerOptionButton = $Options/ItemButton
+onready var end_button: PlayerOptionButton = $Options/EndButton
 
 
 # Emits the is_waiting signal.
@@ -69,18 +69,8 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	active_player_stats.set_stats(_player)
 	active_player_stats.show()
 	
-	if _techniques.size() > 0:
-		technique_button.show()
-	else:
-		technique_button.hide()
-	if _spells.size() > 0:
-		spell_button.show()
-	else:
-		spell_button.hide()
-	"""
-	TODO: summon option will depend on different logic that has yet to be implemented.
-	"""
-	summon_button.hide()
+	activate_active_options()
+	reset_all_options()
 
 
 # Get the current player the UI is focused on.
@@ -118,12 +108,37 @@ func grab_focus_for_sub_option_at_index(index: int) -> void:
 	sub_options.grab_focus_at_index(index)
 
 
-# Toggle the disabled flag for options.
-func toggle_options() -> void:
-	technique_button.disabled = !technique_button.disabled
-	spell_button.disabled = !spell_button.disabled
-	summon_button.disabled = !summon_button.disabled
-	end_button.disabled = !end_button.disabled
+# Updates the disabled flag for all player options depending on respective
+# criteria.
+func activate_active_options() -> void:
+	technique_button.set_disabled(_techniques.size() <= 0)
+	spell_button.set_disabled(_spells.size() <= 0)
+	"""
+	TODO: summon option will depend on different logic that has yet to be implemented.
+	"""
+	summon_button.set_disabled(true)
+	"""
+	TODO: item option will depend on different logic that has yet to be implemented.
+	"""
+	item_button.set_disabled(true)
+
+
+# Set all player options to disabled.
+func disable_all_options() -> void:
+	technique_button.set_disabled(true)
+	spell_button.set_disabled(true)
+	summon_button.set_disabled(true)
+	item_button.set_disabled(true)
+	end_button.set_disabled(true)
+
+
+# Reset all PlayerOptionButtons.
+func reset_all_options() -> void:
+	technique_button.reset()
+	spell_button.reset()
+	summon_button.reset()
+	item_button.reset()
+	end_button.reset()
 
 
 # Adds the player character details to the UI.

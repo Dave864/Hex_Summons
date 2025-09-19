@@ -67,20 +67,35 @@ func exit() -> void:
 # These signals are used by other states and will be disconnected to avoid
 # unintended behavior.
 func _connect_signals() -> void:
-	encounter_ui.technique_button.connect_button_signal(
-			self,
+	ErrorUtil.connect_signal(
+			encounter_ui.technique_button,
 			"pressed",
-			"_on_TechniqueButton_button_pressed"
+			self,
+			"_on_TechniqueButton_pressed"
 	)
-	encounter_ui.spell_button.connect_button_signal(
-			self,
+	ErrorUtil.connect_signal(
+			encounter_ui.spell_button,
 			"pressed",
-			"_on_SpellButton_button_pressed"
+			self,
+			"_on_SpellButton_pressed"
 	)
-	encounter_ui.end_button.connect_button_signal(
-			self,
+	ErrorUtil.connect_signal(
+			encounter_ui.summon_button,
 			"pressed",
-			"_on_EndButton_button_pressed"
+			self,
+			"_on_SummonButton_pressed"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.item_button,
+			"pressed",
+			self,
+			"_on_ItemButton_pressed"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.end_button,
+			"pressed",
+			self,
+			"_on_EndButton_pressed"
 	)
 	ErrorUtil.connect_signal(
 			encounter_ui.get_focused_player(),
@@ -98,20 +113,30 @@ func _connect_signals() -> void:
 
 # Disconnect the signals connected to this state.
 func _disconnect_signals() -> void:
-	encounter_ui.technique_button.disconnect_button_signal(
-			self,
+	encounter_ui.technique_button.disconnect(
 			"pressed",
-			"_on_TechniqueButton_button_pressed"
+			self,
+			"_on_TechniqueButton_pressed"
 	)
-	encounter_ui.spell_button.disconnect_button_signal(
-			self,
+	encounter_ui.spell_button.disconnect(
 			"pressed",
-			"_on_SpellButton_button_pressed"
+			self,
+			"_on_SpellButton_pressed"
 	)
-	encounter_ui.end_button.disconnect_button_signal(
-			self,
+	encounter_ui.summon_button.disconnect(
 			"pressed",
-			"_on_EndButton_button_pressed"
+			self,
+			"_on_SummonButton_pressed"
+	)
+	encounter_ui.item_button.disconnect(
+			"pressed",
+			self,
+			"_on_ItemButton_pressed"
+	)
+	encounter_ui.end_button.disconnect(
+			"pressed",
+			self,
+			"_on_EndButton_pressed"
 	)
 	encounter_ui.get_focused_player().disconnect(
 			"turn_ended",
@@ -146,18 +171,30 @@ func _end_selected() -> void:
 
 
 # Logic for what happens when the Technique button is pressed.
-func _on_TechniqueButton_button_pressed() -> void:
+func _on_TechniqueButton_pressed() -> void:
 	_option_selected(EncounterUI.Options.TECHNIQUE)
 
 
 # Logic for what happens when the Spell button is pressed.
-func _on_SpellButton_button_pressed() -> void:
+func _on_SpellButton_pressed() -> void:
 	print("Spell option selected")
 #	_option_selected(EncounterUI.Options.SPELL)
 
 
+# Logic for what happens when the Summon button is pressed.
+func _on_SummonButton_pressed() -> void:
+	print("Summon option selected")
+#	_option_selected(EncounterUI.Options.SUMMON)
+
+
+# Logic for what happens when the Item button is pressed.
+func _on_ItemButton_pressed() -> void:
+	print("Item option selected")
+#	_option_selected(EncounterUI.Options.ITEM)
+
+
 # Logic for what happens when the End button is pressed.
-func _on_EndButton_button_pressed() -> void:
+func _on_EndButton_pressed() -> void:
 	_end_selected()
 
 

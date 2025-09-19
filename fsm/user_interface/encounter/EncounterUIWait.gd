@@ -1,7 +1,7 @@
 extends EncounterUIState
 """
 The logic for what happens when an EncounterUI scene is in the `Wait` state.
-Hides the options and suboptions menus. Goes to the 'Select' state when a player
+Hides the options and suboptions menus. Goes to the 'Standby' state when a player
 turn starts.
 """
 

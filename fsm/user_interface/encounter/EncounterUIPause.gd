@@ -9,7 +9,7 @@ Disables all interactable UI elements until they are needed.
 # The `msg` parameter is a dictionary with arbitrary data the state can use to 
 # initialize itself.
 func enter(_msg := {}) -> void:
-	encounter_ui.toggle_options()
+	encounter_ui.disable_all_options()
 	
 	# This signal is used by other states and will be disconnected to avoid
 	# unintended behavior.
@@ -24,7 +24,7 @@ func enter(_msg := {}) -> void:
 # Virtual function. Called by the state machine before changing the active 
 # state. Use this function to clean up the state.
 func exit() -> void:
-	encounter_ui.toggle_options()
+	encounter_ui.activate_active_options()
 	SignalBus.disconnect(
 			"selector_required",
 			self,
