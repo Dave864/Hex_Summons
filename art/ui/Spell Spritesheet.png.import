@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Option Button Hover 2.png-c6c1f8cd14191a172b225acc35837d4d.stex"
+path="res://.import/Spell Spritesheet.png-4a33ac6af9440f515e66189fc1e646b4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/Option Button Hover 2.png"
-dest_files=[ "res://.import/Option Button Hover 2.png-c6c1f8cd14191a172b225acc35837d4d.stex" ]
+source_file="res://art/ui/Spell Spritesheet.png"
+dest_files=[ "res://.import/Spell Spritesheet.png-4a33ac6af9440f515e66189fc1e646b4.stex" ]
 
 [params]
 
