@@ -97,7 +97,7 @@ func _on_PlayerOptionButton_toggled(button_pressed: bool):
 	if button_pressed and not disabled:
 		ap.play("selected")
 		yield(ap,"animation_finished")
-		ap.play("toggled")
+		ap.play("toggle_on")
 	else:
 		ap.stop()
-		ap.play("hover")
+		ap.play("toggle_off")
