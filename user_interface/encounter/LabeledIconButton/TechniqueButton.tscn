@@ -246,24 +246,30 @@ sigil_ref = NodePath("Sigil")
 icon_ref = NodePath("Icon")
 
 [node name="Sigil" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 31.0
 margin_top = 2.0
-margin_right = 65.0
-margin_bottom = 36.0
+margin_right = -31.0
+margin_bottom = -14.0
+mouse_filter = 2
 texture = SubResource( 23 )
 stretch_mode = 4
 
 [node name="Icon" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 32.0
 margin_top = 3.0
-margin_right = 64.0
-margin_bottom = 35.0
+margin_right = -32.0
+margin_bottom = -15.0
+mouse_filter = 2
 texture = SubResource( 24 )
 
 [node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_top = 34.0
-margin_right = 96.0
-margin_bottom = 50.0
 text = "TECHNIQUE"
 align = 1
 valign = 1
