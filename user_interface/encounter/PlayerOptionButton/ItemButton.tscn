@@ -227,7 +227,7 @@ tracks/2/keys = {
 "values": [ Rect2( 192, 100, 96, 50 ) ]
 }
 
-[node name="SpellButton" type="TextureButton"]
+[node name="ItemButton" type="TextureButton"]
 anchor_right = 0.15
 anchor_bottom = 0.139
 margin_bottom = -0.0400047
@@ -271,7 +271,7 @@ stretch_mode = 4
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 34.0
-text = "TECHNIQUE"
+text = "ITEM"
 align = 1
 valign = 1
 
