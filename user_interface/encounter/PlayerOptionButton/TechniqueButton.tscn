@@ -1,33 +1,33 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=1]
-[ext_resource path="res://art/ui/Option Button.png" type="Texture" id=2]
-[ext_resource path="res://user_interface/encounter/LabeledIconButton/player_option_button.gd" type="Script" id=3]
-[ext_resource path="res://art/ui/Sigil Spritesheet.png" type="Texture" id=6]
-[ext_resource path="res://art/ui/Technique Spritesheet.png" type="Texture" id=7]
+[ext_resource path="res://art/ui/Option Button.png" type="Texture" id=1]
+[ext_resource path="res://art/ui/Sigil Spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://art/ui/Technique Spritesheet.png" type="Texture" id=3]
+[ext_resource path="res://user_interface/encounter/PlayerOptionButton/player_option_button.gd" type="Script" id=4]
+[ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 96, 50 )
 
 [sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 0, 100, 96, 50 )
 
 [sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 0, 50, 96, 50 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 1 )
 region = Rect2( 96, 0, 96, 50 )
 
 [sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 6 )
+atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 34, 34 )
 
 [sub_resource type="AtlasTexture" id=24]
-atlas = ExtResource( 7 )
+atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="Animation" id=25]
@@ -232,7 +232,7 @@ anchor_right = 0.15
 anchor_bottom = 0.139
 margin_bottom = -0.0400047
 size_flags_horizontal = 7
-theme = ExtResource( 1 )
+theme = ExtResource( 5 )
 theme_type_variation = "OptionButton"
 toggle_mode = true
 action_mode = 0
@@ -241,7 +241,7 @@ texture_pressed = SubResource( 2 )
 texture_hover = SubResource( 22 )
 texture_disabled = SubResource( 3 )
 stretch_mode = 5
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 sigil_ref = NodePath("Sigil")
 icon_ref = NodePath("Icon")
 
