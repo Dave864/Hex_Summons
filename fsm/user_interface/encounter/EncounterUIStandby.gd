@@ -20,14 +20,31 @@ func enter(_msg := {}) -> void:
 # Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("ui_encounter_player_end"):
+		encounter_ui.end_button.pressed = true
 		_end_selected()
-	if _event.is_action_pressed("ui_encounter_option_1"):
+	if (
+		not encounter_ui.technique_button.disabled
+		and _event.is_action_pressed("ui_encounter_option_1")
+	):
+		encounter_ui.technique_button.pressed = true
 		_technique_selected()
-	if _event.is_action_pressed("ui_encounter_option_2"):
+	if (
+		not encounter_ui.spell_button.disabled
+		and _event.is_action_pressed("ui_encounter_option_2")
+	):
+		encounter_ui.spell_button.pressed = true
 		_spell_selected()
-	if _event.is_action_pressed("ui_encounter_option_3"):
+	if (
+		not encounter_ui.item_button.disabled
+		and _event.is_action_pressed("ui_encounter_option_3")
+	):
+		encounter_ui.item_button.pressed = true
 		_item_selected()
-	if _event.is_action_pressed("ui_encounter_option_4"):
+	if (
+		not encounter_ui.summon_button.disabled
+		and _event.is_action_pressed("ui_encounter_option_4")
+	):
+		encounter_ui.summon_button.pressed = true
 		_summon_selected()
 
 

@@ -39,21 +39,33 @@ func handle_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("ui_encounter_player_end"):
 		encounter_ui.get_focused_player().emit_turn_ended()
 		state_machine.transition_to(WAIT)
-	if _event.is_action_pressed("ui_encounter_option_1"):
+	if (
+		not encounter_ui.technique_button.disabled
+		and _event.is_action_pressed("ui_encounter_option_1")
+	):
+		encounter_ui.technique_button.pressed = true
 		_option_selected(EncounterUI.Options.TECHNIQUE)
-	if _event.is_action_pressed("ui_encounter_option_2"):
+	if (
+		not encounter_ui.spell_button.disabled
+		and _event.is_action_pressed("ui_encounter_option_2")
+	):
 		print("Spell option selected")
+		encounter_ui.spell_button.pressed = true
 #		_option_selected(EncounterUI.Options.SPELL)
-	if _event.is_action_pressed("ui_encounter_option_3"):
-		"""
-		TODO: Eventually add button for items.
-		"""
-		pass
-	if _event.is_action_pressed("ui_encounter_option_4"):
-		"""
-		TODO: Eventually add functionality for summons.
-		"""
-		pass
+	if (
+		not encounter_ui.item_button.disabled
+		and _event.is_action_pressed("ui_encounter_option_3")
+	):
+		print("Item option selected")
+		encounter_ui.item_button.pressed = true
+#		_option_selected(EncounterUI.Options.ITEM)
+	if (
+		not encounter_ui.summon_button.disabled
+		and _event.is_action_pressed("ui_encounter_option_4")
+	):
+		print("Summon option selected")
+		encounter_ui.summon_button.pressed = true
+#		_option_selected(EncounterUI.Options.SUMMON)
 
 
 # Called by the state machine before changing the active state.
@@ -153,6 +165,18 @@ func _disconnect_signals() -> void:
 # Logic for when a specified option is selected.
 func _option_selected(option: int) -> void:
 	if _option_flag == option:
+		if InputController.get_source() == InputController.Source.GAMEPAD:
+			match _option_flag:
+				EncounterUI.Options.TECHNIQUE:
+					encounter_ui.technique_button.pressed = false
+				EncounterUI.Options.SPELL:
+					encounter_ui.spell_button.pressed = false
+				EncounterUI.Options.SUMMON:
+					encounter_ui.summon_button.pressed = false
+				EncounterUI.Options.ITEM:
+					encounter_ui.item_button.pressed = false
+				_:
+					pass
 		_action_type_canceled()
 	else:
 		state_machine.transition_to(ACTION, {"option_flag": option})

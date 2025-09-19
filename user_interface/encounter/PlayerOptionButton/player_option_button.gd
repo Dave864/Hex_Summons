@@ -63,6 +63,7 @@ func _on_PlayerOptionButton_mouse_entered():
 		return
 	# Keep the current animation if the button is toggled.
 	if not pressed and not disabled:
+		print("MOUSE ENTER")
 		ap.play("hover")
 
 
@@ -73,6 +74,7 @@ func _on_PlayerOptionButton_mouse_exited():
 		return
 	# Keep the current animation if the button is toggled.
 	if not pressed and not disabled:
+		print("MOUSE EXIT")
 		ap.play("RESET")
 
 
@@ -81,6 +83,7 @@ func _on_PlayerOptionButton_focus_entered():
 		return
 	# Keep the current animation if the button is toggled.
 	if not pressed and not disabled:
+		print("FOCUS ENTER")
 		ap.play("hover")
 
 
@@ -89,15 +92,18 @@ func _on_PlayerOptionButton_focus_exited():
 		return
 	# Keep the current animation if the button is toggled.
 	if not pressed and not disabled:
+		print("FOCUS EXIT")
 		ap.play("RESET")
 
 
 # Plays the appropriate animations when the button is toggled.
 func _on_PlayerOptionButton_toggled(button_pressed: bool):
 	if button_pressed and not disabled:
+		print("TOGGLE ON")
 		ap.play("selected")
 		yield(ap,"animation_finished")
 		ap.play("toggle_on")
 	else:
+		print("TOGGLE OFF")
 		ap.stop()
 		ap.play("toggle_off")

@@ -228,5 +228,7 @@ func _update_sub_options() -> void:
 			sub_options.populate(_player, _spells)
 		Options.SUMMON:
 			pass
+		Options.ITEM:
+			pass
 		_:
 			pass
