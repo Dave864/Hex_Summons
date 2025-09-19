@@ -59,6 +59,8 @@ func _check_for_required_params() -> void:
 # Plays the hover animation when the mouse enters the button area and the button
 # is not toggled on.
 func _on_PlayerOptionButton_mouse_entered():
+	if InputController.get_source() != InputController.Source.KEYBOARD_AND_MOUSE:
+		return
 	# Keep the current animation if the button is toggled.
 	if not pressed and not disabled:
 		ap.play("hover")
@@ -67,17 +69,27 @@ func _on_PlayerOptionButton_mouse_entered():
 # Plays the RESET animation when the mouse leaves the button area and the button
 # is not toggled on.
 func _on_PlayerOptionButton_mouse_exited():
+	if InputController.get_source() != InputController.Source.KEYBOARD_AND_MOUSE:
+		return
 	# Keep the current animation if the button is toggled.
 	if not pressed and not disabled:
 		ap.play("RESET")
 
 
 func _on_PlayerOptionButton_focus_entered():
-	print("focus entered")
+	if InputController.get_source() != InputController.Source.GAMEPAD:
+		return
+	# Keep the current animation if the button is toggled.
+	if not pressed and not disabled:
+		ap.play("hover")
 
 
 func _on_PlayerOptionButton_focus_exited():
-	print("focus exited")
+	if InputController.get_source() != InputController.Source.GAMEPAD:
+		return
+	# Keep the current animation if the button is toggled.
+	if not pressed and not disabled:
+		ap.play("RESET")
 
 
 # Plays the appropriate animations when the button is toggled.
