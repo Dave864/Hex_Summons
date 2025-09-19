@@ -10,8 +10,8 @@ option.
 const COLOR_WHITE: Color = Color.white
 const COLOR_GREY: Color = Color("7f7f7f")
 
-export(NodePath) var sigil_ref = null
-export(NodePath) var icon_ref = null
+export(NodePath) var sigil_ref = NodePath("")
+export(NodePath) var icon_ref = NodePath("")
 
 onready var sigil: TextureRect = get_node_or_null(sigil_ref)
 onready var icon: TextureRect = get_node_or_null(icon_ref)
