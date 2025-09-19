@@ -70,6 +70,7 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	active_player_stats.show()
 	
 	activate_active_options()
+	_set_player_option_focus_neighbors()
 	reset_all_options()
 
 
@@ -121,6 +122,8 @@ func activate_active_options() -> void:
 	TODO: item option will depend on different logic that has yet to be implemented.
 	"""
 	item_button.set_disabled(true)
+	end_button.set_disabled(false)
+	_set_player_option_focus()
 
 
 # Set all player options to disabled.
@@ -165,6 +168,55 @@ func track_enemy(e: EnemyCharacter) -> void:
 	e_label.set_text_alignment(Label.ALIGN_RIGHT)
 	e.stats.connect("health_changed", e_label, "_on_Character_hp_changed")
 	enemy_stats.add_child(e_label)
+
+
+# Sets the focus for the currently selected player option.
+func _set_player_option_focus() -> void:
+	match _current_selection:
+		Options.TECHNIQUE:
+			technique_button.call_deferred("grab_focus")
+		Options.SPELL:
+			spell_button.call_deferred("grab_focus")
+		Options.SUMMON:
+			summon_button.call_deferred("grab_focus")
+		Options.ITEM:
+			item_button.call_deferred("grab_focus")
+		_:
+			if not technique_button.disabled:
+				technique_button.call_deferred("grab_focus")
+			elif not spell_button.disabled:
+				spell_button.call_deferred("grab_focus")
+			elif not summon_button.disabled:
+				summon_button.call_deferred("grab_focus")
+			elif not item_button.disabled:
+				item_button.call_deferred("grab_focus")
+			else:
+				end_button.call_deferred("grab_focus")
+
+
+# Sets the focus neighbors for the player options.
+func _set_player_option_focus_neighbors() -> void:
+	var a_ops: Array = []
+	for p_op in options.get_children():
+		if not p_op.disabled:
+			a_ops.append(p_op)
+		else:
+			p_op.focus_neighbour_top = p_op.get_path()
+			p_op.focus_neighbour_bottom = p_op.get_path()
+			p_op.focus_neighbour_left = p_op.get_path()
+			p_op.focus_previous = p_op.get_path()
+			p_op.focus_neighbour_right = p_op.get_path()
+			p_op.focus_next = p_op.get_path()
+	
+	for i in range(a_ops.size()):
+		a_ops[i].focus_neighbour_top = a_ops[i].get_path()
+		a_ops[i].focus_neighbour_bottom = a_ops[i].get_path()
+		# Arrays indexed at -1 refers to the last element.
+		a_ops[i].focus_neighbour_left = a_ops[i - 1].get_path()
+		a_ops[i].focus_previous = a_ops[i - 1].get_path()
+		var n: int = i + 1 if i < a_ops.size() - 1 else 0
+		a_ops[i].focus_neighbour_right = a_ops[n].get_path()
+		a_ops[i].focus_next = a_ops[n].get_path()
 
 
 # Update the SubOptions element with the currently selected option
