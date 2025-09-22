@@ -24,7 +24,19 @@ margin_right = 6.0
 margin_top = 2.0
 margin_bottom = 2.0
 
-[sub_resource type="StyleBoxEmpty" id=79]
+[sub_resource type="StyleBoxFlat" id=114]
+bg_color = Color( 0, 0, 0, 0 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 1, 1, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 4
+anti_aliasing = false
 
 [sub_resource type="AtlasTexture" id=78]
 atlas = ExtResource( 10 )
@@ -757,7 +769,7 @@ Button/colors/font_color_disabled = Color( 0.498039, 0.498039, 0.498039, 1 )
 Button/colors/font_color_hover = Color( 0, 1, 1, 1 )
 Button/fonts/font = ExtResource( 1 )
 Button/styles/disabled = SubResource( 48 )
-Button/styles/focus = SubResource( 79 )
+Button/styles/focus = SubResource( 114 )
 Button/styles/hover = SubResource( 53 )
 Button/styles/normal = SubResource( 49 )
 Button/styles/pressed = SubResource( 59 )
