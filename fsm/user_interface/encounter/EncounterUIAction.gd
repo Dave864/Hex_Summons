@@ -83,6 +83,12 @@ func exit() -> void:
 # unintended behavior.
 func _connect_signals() -> void:
 	ErrorUtil.connect_signal(
+			encounter_ui.get_focused_player(),
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
+	)
+	ErrorUtil.connect_signal(
 			encounter_ui.technique_button,
 			"pressed",
 			self,
@@ -122,6 +128,11 @@ func _connect_signals() -> void:
 
 # Disconnect the signals connected to this state.
 func _disconnect_signals() -> void:
+	encounter_ui.get_focused_player().disconnect(
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
+	)
 	encounter_ui.technique_button.disconnect(
 			"pressed",
 			self,
@@ -203,6 +214,11 @@ func _on_ItemButton_pressed() -> void:
 # Logic for what happens when the End button is pressed.
 func _on_EndButton_pressed() -> void:
 	_end_selected()
+
+
+# Go to the WAIT state when the player turn has ended.
+func _on_PlayerCharacter_turn_ended() -> void:
+	state_machine.transition_to(WAIT)
 
 
 # Signal that an action option has been selected from the currently
