@@ -21,10 +21,7 @@ onready var ap: AnimationPlayer = $AnimationPlayer
 
 # Resets the button.
 func reset() -> void:
-	if not disabled:
-		pressed = false
-		ap.stop()
-		ap.play("RESET")
+	pass
 
 
 # Sets the disabled value, updating label and all images to match.
@@ -59,50 +56,23 @@ func _check_for_required_params() -> void:
 # Plays the hover animation when the mouse enters the button area and the button
 # is not toggled on.
 func _on_PlayerOptionButton_mouse_entered():
-	if InputController.get_source() != InputController.Source.KEYBOARD_AND_MOUSE:
-		return
-	# Keep the current animation if the button is toggled.
-	if not pressed and not disabled:
-		ap.play("hover")
+	pass
 
 
 # Plays the RESET animation when the mouse leaves the button area and the button
 # is not toggled on.
 func _on_PlayerOptionButton_mouse_exited():
-	if InputController.get_source() != InputController.Source.KEYBOARD_AND_MOUSE:
-		return
-	# Keep the current animation if the button is toggled.
-	if not pressed and not disabled:
-		ap.play("RESET")
+	pass
 
 
 func _on_PlayerOptionButton_focus_entered():
-	if InputController.get_source() != InputController.Source.GAMEPAD:
-		return
-	# Keep the current animation if the button is toggled.
-	if not pressed and not disabled:
-		ap.play("hover")
+	pass
 
 
 func _on_PlayerOptionButton_focus_exited():
-	if InputController.get_source() != InputController.Source.GAMEPAD:
-		return
-	# Keep the current animation if the button is toggled.
-	if not pressed and not disabled:
-		ap.play("RESET")
+	pass
 
 
 # Plays the appropriate animations when the button is toggled.
-func _on_PlayerOptionButton_toggled(button_pressed: bool):
-	if disabled:
-		return
-	elif button_pressed:
-		ap.play("selected")
-		yield(ap,"animation_finished")
-		ap.play("toggle_on")
-	else:
-		ap.stop()
-		if get_draw_mode() == DRAW_HOVER:
-			ap.play("toggle_off_hover")
-		else:
-			ap.play("toggle_off")
+func _on_PlayerOptionButton_toggled(_button_pressed: bool):
+	pass

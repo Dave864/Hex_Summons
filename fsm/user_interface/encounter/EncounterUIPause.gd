@@ -24,7 +24,7 @@ func enter(_msg := {}) -> void:
 # Virtual function. Called by the state machine before changing the active 
 # state. Use this function to clean up the state.
 func exit() -> void:
-	encounter_ui.activate_active_options()
+	encounter_ui.set_active_options()
 	SignalBus.disconnect(
 			"selector_required",
 			self,

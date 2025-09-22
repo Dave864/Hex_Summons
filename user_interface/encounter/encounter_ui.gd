@@ -69,7 +69,7 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	active_player_stats.set_stats(_player)
 	active_player_stats.show()
 	
-	activate_active_options()
+	set_active_options()
 	_set_player_option_focus_neighbors()
 	reset_all_options()
 
@@ -111,7 +111,7 @@ func grab_focus_for_sub_option_at_index(index: int) -> void:
 
 # Updates the disabled flag for all player options depending on respective
 # criteria.
-func activate_active_options() -> void:
+func set_active_options() -> void:
 	technique_button.set_disabled(_techniques.size() <= 0)
 	spell_button.set_disabled(_spells.size() <= 0)
 	"""

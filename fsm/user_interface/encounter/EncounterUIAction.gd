@@ -42,32 +42,24 @@ func handle_input(_event: InputEvent) -> void:
 		not encounter_ui.technique_button.disabled
 		and _event.is_action_pressed("ui_encounter_option_1")
 	):
-		encounter_ui.technique_button.pressed = _option_flag != EncounterUI.Options.TECHNIQUE
-		encounter_ui.technique_button.call_deferred("grab_focus")
 		_option_selected(EncounterUI.Options.TECHNIQUE)
 	if (
 		not encounter_ui.spell_button.disabled
 		and _event.is_action_pressed("ui_encounter_option_2")
 	):
 		print("Spell option selected")
-		encounter_ui.spell_button.pressed = _option_flag != EncounterUI.Options.SPELL
-		encounter_ui.spell_button.call_deferred("grab_focus")
 #		_option_selected(EncounterUI.Options.SPELL)
 	if (
 		not encounter_ui.item_button.disabled
 		and _event.is_action_pressed("ui_encounter_option_3")
 	):
 		print("Item option selected")
-		encounter_ui.item_button.pressed = _option_flag != EncounterUI.Options.ITEM
-		encounter_ui.item_button.call_deferred("grab_focus")
 #		_option_selected(EncounterUI.Options.ITEM)
 	if (
 		not encounter_ui.summon_button.disabled
 		and _event.is_action_pressed("ui_encounter_option_4")
 	):
 		print("Summon option selected")
-		encounter_ui.summon_button.pressed = _option_flag != EncounterUI.Options.SUMMON
-		encounter_ui.summon_button.call_deferred("grab_focus")
 #		_option_selected(EncounterUI.Options.SUMMON)
 
 
@@ -183,8 +175,8 @@ func _action_type_canceled() -> void:
 # Logic for what happens when the turn has ended.
 func _end_selected() -> void:
 	encounter_ui.end_button.call_deferred("grab_focus")
-	encounter_ui.get_focused_player().emit_turn_ended()
 	encounter_ui.reset_all_options()
+	encounter_ui.get_focused_player().emit_turn_ended()
 	state_machine.transition_to(WAIT)
 
 
