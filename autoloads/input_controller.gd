@@ -18,6 +18,16 @@ func get_source() -> int:
 	return _source
 
 
+# Determines if the input source is from gamepad.
+func source_is_gamepad() -> bool:
+	return _source == Source.GAMEPAD
+
+
+# Determines if the input source is from keyboard and mouse
+func source_is_keymouse() -> bool:
+	return _source == Source.KEYBOARD_AND_MOUSE
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
