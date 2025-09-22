@@ -37,6 +37,7 @@ onready var enemy_stats: VBoxContainer = $EnemyStats
 onready var party_stats: VBoxContainer = $PartyStats
 onready var options: HBoxContainer = $Options
 onready var sub_options: SubOptions = $SubOptions
+onready var movement_button: PlayerOptionButton = $Options/MovementButton
 onready var technique_button: PlayerOptionButton = $Options/TechniqueButton
 onready var spell_button: PlayerOptionButton = $Options/SpellButton
 onready var summon_button: PlayerOptionButton = $Options/SummonButton
@@ -112,31 +113,34 @@ func grab_focus_for_sub_option_at_index(index: int) -> void:
 # Updates the disabled flag for all player options depending on respective
 # criteria.
 func set_active_options() -> void:
+	movement_button.set_disabled(false)
 	technique_button.set_disabled(_techniques.size() <= 0)
 	spell_button.set_disabled(_spells.size() <= 0)
 	"""
 	TODO: summon option will depend on different logic that has yet to be implemented.
 	"""
-	summon_button.set_disabled(true)
+	summon_button.set_disabled()
 	"""
 	TODO: item option will depend on different logic that has yet to be implemented.
 	"""
-	item_button.set_disabled(true)
+	item_button.set_disabled()
 	end_button.set_disabled(false)
-	_set_player_option_focus()
+	movement_button.call_deferred("grab_focus")
 
 
 # Set all player options to disabled.
 func disable_all_options() -> void:
-	technique_button.set_disabled(true)
-	spell_button.set_disabled(true)
-	summon_button.set_disabled(true)
-	item_button.set_disabled(true)
-	end_button.set_disabled(true)
+	movement_button.set_disabled()
+	technique_button.set_disabled()
+	spell_button.set_disabled()
+	summon_button.set_disabled()
+	item_button.set_disabled()
+	end_button.set_disabled()
 
 
 # Reset all PlayerOptionButtons.
 func reset_all_options() -> void:
+	movement_button.reset()
 	technique_button.reset()
 	spell_button.reset()
 	summon_button.reset()
@@ -168,30 +172,6 @@ func track_enemy(e: EnemyCharacter) -> void:
 	e_label.set_text_alignment(Label.ALIGN_RIGHT)
 	e.stats.connect("health_changed", e_label, "_on_Character_hp_changed")
 	enemy_stats.add_child(e_label)
-
-
-# Sets the focus for the currently selected player option.
-func _set_player_option_focus() -> void:
-	match _current_selection:
-		Options.TECHNIQUE:
-			technique_button.call_deferred("grab_focus")
-		Options.SPELL:
-			spell_button.call_deferred("grab_focus")
-		Options.SUMMON:
-			summon_button.call_deferred("grab_focus")
-		Options.ITEM:
-			item_button.call_deferred("grab_focus")
-		_:
-			if not technique_button.disabled:
-				technique_button.call_deferred("grab_focus")
-			elif not spell_button.disabled:
-				spell_button.call_deferred("grab_focus")
-			elif not summon_button.disabled:
-				summon_button.call_deferred("grab_focus")
-			elif not item_button.disabled:
-				item_button.call_deferred("grab_focus")
-			else:
-				end_button.call_deferred("grab_focus")
 
 
 # Sets the focus neighbors for the player options.

@@ -27,37 +27,39 @@ func enter(_msg := {}) -> void:
 
 
 # Virtual function. Receives events from the `_unhandled_input()` callback.
-func handle_input(_event: InputEvent) -> void:
+func handle_input(event: InputEvent) -> void:
 	if (
 		InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE
-		and _event.is_action_pressed("ui_selector_select")
+		and event.is_action_pressed("ui_selector_select")
 	):
 		SignalBus.emit_player_action_selected(
 				encounter_ui.get_focused_player(),
 				_current_action
 		)
-	if _event.is_action_pressed("ui_encounter_player_end"):
+	if event.is_action_pressed("ui_encounter_movement"):
+		_movement_selected()
+	if event.is_action_pressed("ui_encounter_player_end"):
 		_end_selected()
 	if (
 		not encounter_ui.technique_button.disabled
-		and _event.is_action_pressed("ui_encounter_option_1")
+		and event.is_action_pressed("ui_encounter_option_1")
 	):
 		_option_selected(EncounterUI.Options.TECHNIQUE)
 	if (
 		not encounter_ui.spell_button.disabled
-		and _event.is_action_pressed("ui_encounter_option_2")
+		and event.is_action_pressed("ui_encounter_option_2")
 	):
 		print("Spell option selected")
 #		_option_selected(EncounterUI.Options.SPELL)
 	if (
 		not encounter_ui.item_button.disabled
-		and _event.is_action_pressed("ui_encounter_option_3")
+		and event.is_action_pressed("ui_encounter_option_3")
 	):
 		print("Item option selected")
 #		_option_selected(EncounterUI.Options.ITEM)
 	if (
 		not encounter_ui.summon_button.disabled
-		and _event.is_action_pressed("ui_encounter_option_4")
+		and event.is_action_pressed("ui_encounter_option_4")
 	):
 		print("Summon option selected")
 #		_option_selected(EncounterUI.Options.SUMMON)
@@ -79,6 +81,12 @@ func _connect_signals() -> void:
 			"turn_ended",
 			self,
 			"_on_PlayerCharacter_turn_ended"
+	)
+	ErrorUtil.connect_signal(
+			encounter_ui.movement_button,
+			"pressed",
+			self,
+			"_on_MovementButton_pressed"
 	)
 	ErrorUtil.connect_signal(
 			encounter_ui.technique_button,
@@ -124,6 +132,11 @@ func _disconnect_signals() -> void:
 			"turn_ended",
 			self,
 			"_on_PlayerCharacter_turn_ended"
+	)
+	encounter_ui.movement_button.disconnect(
+			"pressed",
+			self,
+			"_on_MovementButton_pressed"
 	)
 	encounter_ui.technique_button.disconnect(
 			"pressed",
@@ -172,12 +185,21 @@ func _action_type_canceled() -> void:
 	state_machine.transition_to(STANDBY)
 
 
+func _movement_selected() -> void:
+	encounter_ui.movement_button.call_deferred("grab_focus")
+	state_machine.transition_to(STANDBY)
+
+
 # Logic for what happens when the turn has ended.
 func _end_selected() -> void:
 	encounter_ui.end_button.call_deferred("grab_focus")
 	encounter_ui.reset_all_options()
 	encounter_ui.get_focused_player().emit_turn_ended()
-	state_machine.transition_to(WAIT)
+
+
+# Logic for what happens when the Movement button is pressed.
+func _on_MovementButton_pressed() -> void:
+	_movement_selected()
 
 
 # Logic for what happens when the Technique button is pressed.
