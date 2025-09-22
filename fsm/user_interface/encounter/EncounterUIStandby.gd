@@ -21,30 +21,35 @@ func enter(_msg := {}) -> void:
 func handle_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("ui_encounter_player_end"):
 		encounter_ui.end_button.pressed = true
+		encounter_ui.end_button.call_deferred("grab_focus")
 		_end_selected()
 	if (
 		not encounter_ui.technique_button.disabled
 		and _event.is_action_pressed("ui_encounter_option_1")
 	):
 		encounter_ui.technique_button.pressed = true
+		encounter_ui.technique_button.call_deferred("grab_focus")
 		_technique_selected()
 	if (
 		not encounter_ui.spell_button.disabled
 		and _event.is_action_pressed("ui_encounter_option_2")
 	):
 		encounter_ui.spell_button.pressed = true
+		encounter_ui.spell_button.call_deferred("grab_focus")
 		_spell_selected()
 	if (
 		not encounter_ui.item_button.disabled
 		and _event.is_action_pressed("ui_encounter_option_3")
 	):
 		encounter_ui.item_button.pressed = true
+		encounter_ui.item_button.call_deferred("grab_focus")
 		_item_selected()
 	if (
 		not encounter_ui.summon_button.disabled
 		and _event.is_action_pressed("ui_encounter_option_4")
 	):
 		encounter_ui.summon_button.pressed = true
+		encounter_ui.summon_button.call_deferred("grab_focus")
 		_summon_selected()
 
 
@@ -155,6 +160,7 @@ func _item_selected() -> void:
 # Handles behavior for when the "END" option is chosen.
 func _end_selected() -> void:
 	encounter_ui.get_focused_player().emit_turn_ended()
+	encounter_ui.reset_all_options()
 	state_machine.transition_to(WAIT)
 
 
