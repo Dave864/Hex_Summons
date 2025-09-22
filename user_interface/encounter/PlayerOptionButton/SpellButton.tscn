@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://art/ui/Sigil Spritesheet.png" type="Texture" id=2]
 [ext_resource path="res://art/ui/Spell Spritesheet.png" type="Texture" id=3]
@@ -6,11 +6,11 @@
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=5]
 [ext_resource path="res://art/ui/Option Button Circle.png" type="Texture" id=6]
 
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id=38]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 80, 50 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=39]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 100, 80, 50 )
 
@@ -18,9 +18,13 @@ region = Rect2( 0, 100, 80, 50 )
 atlas = ExtResource( 6 )
 region = Rect2( 0, 150, 80, 50 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=40]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 50, 80, 50 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 150, 80, 50 )
 
 [sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 2 )
@@ -339,10 +343,11 @@ theme = ExtResource( 5 )
 theme_type_variation = "OptionButton"
 toggle_mode = true
 action_mode = 0
-texture_normal = SubResource( 1 )
-texture_pressed = SubResource( 2 )
+texture_normal = SubResource( 38 )
+texture_pressed = SubResource( 39 )
 texture_hover = SubResource( 22 )
-texture_disabled = SubResource( 3 )
+texture_disabled = SubResource( 40 )
+texture_focused = SubResource( 41 )
 stretch_mode = 5
 script = ExtResource( 4 )
 sigil_ref = NodePath("Sigil")

@@ -12,11 +12,11 @@ region = Rect2( 0, 0, 80, 50 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 7 )
-region = Rect2( 160, 200, 80, 50 )
+region = Rect2( 0, 100, 80, 50 )
 
 [sub_resource type="AtlasTexture" id=22]
 atlas = ExtResource( 7 )
-region = Rect2( 160, 150, 80, 50 )
+region = Rect2( 0, 150, 80, 50 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 7 )
@@ -24,7 +24,7 @@ region = Rect2( 0, 50, 80, 50 )
 
 [sub_resource type="AtlasTexture" id=35]
 atlas = ExtResource( 7 )
-region = Rect2( 0, 50, 80, 50 )
+region = Rect2( 0, 150, 80, 50 )
 
 [sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 2 )
