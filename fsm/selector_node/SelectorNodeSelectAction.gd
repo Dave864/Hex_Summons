@@ -53,10 +53,10 @@ func exit() -> void:
 # Handles input events.
 func handle_input(_event: InputEvent) -> void:
 	# Handles the instances where the mouse goes over an area without a map tile.
-	if InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
+	if InputController.source_is_keymouse():
 		if _action.emit_from_center:
 			_orient_emission_to_mouse()
-	elif InputController.get_source() == InputController.Source.GAMEPAD:
+	elif InputController.source_is_gamepad():
 		var joy_dir: Vector2 = GamepadHandler.left_joystick_dir()
 		if _action.emit_from_center and not joy_dir.is_zero_approx():
 			var dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
