@@ -16,7 +16,7 @@ export(NodePath) var icon_ref = NodePath("")
 onready var sigil: TextureRect = get_node_or_null(sigil_ref)
 onready var icon: TextureRect = get_node_or_null(icon_ref)
 onready var label: Label = $Label
-onready var ap: AnimationPlayer = $AnimationPlayer
+onready var ap: AnimationPlayer = get_node_or_null("AnimationPlayer")
 
 
 # Resets the button.

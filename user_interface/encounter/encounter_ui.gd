@@ -139,7 +139,7 @@ func disable_all_options() -> void:
 
 # Reset all PlayerOptionButtons.
 func reset_all_options() -> void:
-	movement_button.reset()
+#	movement_button.reset()
 	technique_button.reset()
 	spell_button.reset()
 	summon_button.reset()

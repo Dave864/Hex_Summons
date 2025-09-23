@@ -62,7 +62,7 @@ func get_action_at_index(index: int) -> Action:
 
 # Sets the focus for the SubOption at the given index.
 func grab_focus_at_index(index: int) -> void:
-	_sub_options_container.get_child(index).get_button().grab_focus()
+	_sub_options_container.get_child(index).get_button().call_deferred("grab_focus")
 
 
 # Create new buttons for the given player actions.
