@@ -8,7 +8,7 @@ when coding the EncounterUI's states.
 
 # The states the Encounter UI can be in.
 const WAIT: String = "Wait"
-const STANDBY: String = "Standby"
+const MOVE: String = "Move"
 const PAUSE: String = "Pause"
 const ACTION: String = "Action"
 

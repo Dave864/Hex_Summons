@@ -16,6 +16,7 @@ signal enemy_turn_started(character)
 signal selector_required(start_index)
 signal selector_paused()
 signal action_selector_required(action)
+signal move_path_requested()
 signal move_path_created(move_path)
 # Encounter threat update signals
 signal health_changed(caster_id, target_id, change_value)
@@ -58,6 +59,10 @@ func emit_selector_paused() -> void:
 
 func emit_action_selector_required(action: Action) -> void:
 	emit_signal("action_selector_required", action)
+
+
+func emit_move_path_requested() -> void:
+	emit_signal("move_path_requested")
 
 
 func emit_move_path_created(move_path: PoolVector3Array) -> void:

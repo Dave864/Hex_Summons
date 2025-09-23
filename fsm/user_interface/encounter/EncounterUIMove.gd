@@ -1,6 +1,6 @@
 extends EncounterUIState
 """
-The logic for what happens when an EncounterUI scene is in the `Standby` state.
+The logic for what happens when an EncounterUI scene is in the `Move` state.
 UI elements relevant to user options become active and are made visible. Moves
 to the `Wait` state when the user chooses to end their turn. Moves to the
 `Pause` state when a PlayerCharacter moves to a new tile. Moves to the
@@ -20,27 +20,30 @@ func enter(_msg := {}) -> void:
 
 
 # Virtual function. Receives events from the `_unhandled_input()` callback.
-func handle_input(_event: InputEvent) -> void:
-	if _event.is_action_pressed("ui_encounter_player_end"):
+func handle_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_select"):
+		if encounter_ui.get_focus_owner() == encounter_ui.movement_button:
+			SignalBus.emit_move_path_requested()
+	if event.is_action_pressed("ui_encounter_player_end"):
 		_end_selected()
 	if (
 		not encounter_ui.technique_button.disabled
-		and _event.is_action_pressed("ui_encounter_option_1")
+		and event.is_action_pressed("ui_encounter_option_1")
 	):
 		_technique_selected()
 	if (
 		not encounter_ui.spell_button.disabled
-		and _event.is_action_pressed("ui_encounter_option_2")
+		and event.is_action_pressed("ui_encounter_option_2")
 	):
 		_spell_selected()
 	if (
 		not encounter_ui.item_button.disabled
-		and _event.is_action_pressed("ui_encounter_option_3")
+		and event.is_action_pressed("ui_encounter_option_3")
 	):
 		_item_selected()
 	if (
 		not encounter_ui.summon_button.disabled
-		and _event.is_action_pressed("ui_encounter_option_4")
+		and event.is_action_pressed("ui_encounter_option_4")
 	):
 		_summon_selected()
 

@@ -1,7 +1,7 @@
 extends EncounterUIState
 """
 The logic for what happens when an EncounterUI scene is in the `Wait` state.
-Hides the options and suboptions menus. Goes to the 'Standby' state when a player
+Hides the options and suboptions menus. Goes to the 'Move' state when a player
 turn starts.
 """
 
@@ -40,4 +40,4 @@ func _on_SignalBus_player_turn_started(character: PlayerCharacter) -> void:
 	if not _state_is_active():
 		return
 	encounter_ui.set_focused_player(character)
-	state_machine.transition_to(STANDBY)
+	state_machine.transition_to(MOVE)

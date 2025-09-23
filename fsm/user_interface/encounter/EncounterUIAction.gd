@@ -179,7 +179,8 @@ func _end_selected() -> void:
 
 # Logic for when movement has been selected.
 func _movement_selected() -> void:
-	state_machine.transition_to(STANDBY)
+	_toggle_off_current_option()
+	_action_type_canceled()
 
 
 # Logic for when a specified option is selected.
@@ -207,15 +208,14 @@ func _toggle_off_current_option() -> void:
 
 
 # Signal that an action type is no longer being looked at before transitioning
-# to the 'Standby` state.
+# to the 'Move' state.
 func _action_type_canceled() -> void:
 	SignalBus.emit_player_action_type_canceled()
-	state_machine.transition_to(STANDBY)
+	state_machine.transition_to(MOVE)
 
 
 # Logic for what happens when the Movement button is pressed.
 func _on_MovementButton_pressed() -> void:
-	_toggle_off_current_option()
 	_movement_selected()
 
 

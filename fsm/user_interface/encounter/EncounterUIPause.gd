@@ -32,8 +32,9 @@ func exit() -> void:
 	)
 
 
-# Wait for the signal that the selector is required.
+# Wait for the signal that the selector is required in order to go back to the
+# 'Move' state.
 func _on_SignalBus_selector_required(_start_index: int) -> void:
 	if not _state_is_active():
 		return
-	state_machine.transition_to(STANDBY)
+	state_machine.transition_to(MOVE)

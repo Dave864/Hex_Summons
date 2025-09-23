@@ -36,27 +36,15 @@ func exit() -> void:
 	_disconnect_signals()
 
 
-# Handles input events
-func handle_input(event: InputEvent) -> void:
-	if (
-		event.is_action_pressed("ui_selector_select")
-		and selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY
-	):
-		var path_data: PoolVector3Array = (
-			selector.hex_map.range_finder.get_character_point_path(
-					selector.active_player,
-					selector.tile_hovered.map_coordinate.get_index(),
-					selector.enemies_ref,
-					_movement_ids
-			)
-		)
-		SignalBus.emit_move_path_created(path_data)
-		state_machine.transition_to(PAUSE)
-
-
 # Connect signals to this state.
 func _connect_signals() -> void:
 	_connect_player_turn_ended()
+	ErrorUtil.connect_signal(
+			SignalBus,
+			"move_path_requested",
+			self,
+			"_on_SignalBus_move_path_requested"
+	)
 	ErrorUtil.connect_signal(
 			SignalBus,
 			"player_action_selected",
@@ -97,6 +85,11 @@ func _connect_player_turn_ended():
 
 # Disconnect signals from this state.
 func _disconnect_signals() -> void:
+	SignalBus.disconnect(
+			"move_path_requested",
+			self,
+			"_on_SignalBus_move_path_requested"
+	)
 	SignalBus.disconnect(
 			"player_action_selected",
 			self,
@@ -169,15 +162,6 @@ func _resolve_joystick_direction(direction: int) -> void:
 			_update_selection(adjacent_tile)
 
 
-# Go to the "SelectAction" state when the UI signals that an action was selected.
-func _on_SignalBus_player_action_selected(
-	_player: PlayerCharacter,
-	action: Action
-) -> void:
-	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
-	state_machine.transition_to(SELECT_ACTION, {"action": action})
-
-
 # Go to the "WAIT" state when the UI has signaled that a player turn has ended.
 func _on_PlayerCharacter_turn_ended() -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
@@ -190,6 +174,30 @@ func _on_PlayerCharacter_turn_ended() -> void:
 				"_on_PlayerCharacter_turn_ended"
 		)
 		state_machine.transition_to(WAIT)
+
+
+# Creates the movement path to the selected tile if said tile is valid.
+func _on_SignalBus_move_path_requested() -> void:
+	if selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY:
+		var path_data: PoolVector3Array = (
+			selector.hex_map.range_finder.get_character_point_path(
+					selector.active_player,
+					selector.tile_hovered.map_coordinate.get_index(),
+					selector.enemies_ref,
+					_movement_ids
+			)
+		)
+		SignalBus.emit_move_path_created(path_data)
+		state_machine.transition_to(PAUSE)
+
+
+# Go to the "SelectAction" state when the UI signals that an action was selected.
+func _on_SignalBus_player_action_selected(
+	_player: PlayerCharacter,
+	action: Action
+) -> void:
+	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	state_machine.transition_to(SELECT_ACTION, {"action": action})
 
 
 # Update the mouse tracker when the camera changes orientation.
