@@ -129,7 +129,8 @@ func _disconnect_signals() -> void:
 # state, specifying TECHNIQUE as the option.
 func _technique_selected() -> void:
 	encounter_ui.technique_button.call_deferred("grab_focus")
-	encounter_ui.movement_button.pressed = false
+	encounter_ui.technique_button.pressed = true
+	encounter_ui.movement_button.set_pressed_no_signal(false)
 	state_machine.transition_to(
 			ACTION, 
 			{"option_flag": encounter_ui.Options.TECHNIQUE}
@@ -157,7 +158,8 @@ func _item_selected() -> void:
 # Handles behavior for when the "END" option is chosen.
 func _end_selected() -> void:
 	encounter_ui.end_button.call_deferred("grab_focus")
-	encounter_ui.movement_button.pressed = false
+	encounter_ui.end_button.pressed = true
+	encounter_ui.movement_button.set_pressed_no_signal(false)
 	encounter_ui.get_focused_player().emit_turn_ended()
 	encounter_ui.reset_all_options()
 	state_machine.transition_to(WAIT)

@@ -184,10 +184,26 @@ func _movement_selected() -> void:
 
 # Logic for when a specified option is selected.
 func _option_selected(option: int) -> void:
+	_toggle_off_current_option()
 	if _option_flag == option:
 		_action_type_canceled()
 	else:
 		state_machine.transition_to(ACTION, {"option_flag": option})
+
+
+# Toggles off the currently active option.
+func _toggle_off_current_option() -> void:
+	match _option_flag:
+		EncounterUI.Options.TECHNIQUE:
+			encounter_ui.technique_button.pressed = false
+		EncounterUI.Options.SPELL:
+			encounter_ui.spell_button.pressed = false
+		EncounterUI.Options.SUMMON:
+			encounter_ui.summon_button.pressed = false
+		EncounterUI.Options.ITEM:
+			encounter_ui.item_button.pressed = false
+		_:
+			pass
 
 
 # Signal that an action type is no longer being looked at before transitioning
@@ -199,17 +215,7 @@ func _action_type_canceled() -> void:
 
 # Logic for what happens when the Movement button is pressed.
 func _on_MovementButton_pressed() -> void:
-	match _option_flag:
-		EncounterUI.Options.TECHNIQUE:
-			pass
-		EncounterUI.Options.SPELL:
-			pass
-		EncounterUI.Options.SUMMON:
-			pass
-		EncounterUI.Options.ITEM:
-			pass
-		_:
-			pass
+	_toggle_off_current_option()
 	_movement_selected()
 
 
