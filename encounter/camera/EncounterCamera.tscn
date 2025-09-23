@@ -17,7 +17,7 @@ transform = Transform( 1, 0, 0, 0, 0.60876, 0.793352, 0, -0.793352, 0.60876, 0, 
 [node name="Camera" type="Camera" parent="FocusPoint"]
 transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, -4.76837e-07, 15 )
 projection = 1
-size = 15.0
+size = 10.0
 affect_lod = false
 
 [node name="StateMachine" type="Node" parent="."]
