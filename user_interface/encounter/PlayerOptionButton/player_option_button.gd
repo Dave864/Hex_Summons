@@ -21,7 +21,8 @@ onready var ap: AnimationPlayer = $AnimationPlayer
 
 # Resets the button.
 func reset() -> void:
-	pass
+	if not disabled:
+		pressed = false
 
 
 # Sets the disabled value, updating label and all images to match.
@@ -53,26 +54,25 @@ func _check_for_required_params() -> void:
 	pass
 
 
-# Plays the hover animation when the mouse enters the button area and the button
-# is not toggled on.
+# Grabs the focus for the UI.
 func _on_PlayerOptionButton_mouse_entered():
-	pass
+	if disabled:
+		return
+	call_deferred("grab_focus")
 
 
-# Plays the RESET animation when the mouse leaves the button area and the button
-# is not toggled on.
-func _on_PlayerOptionButton_mouse_exited():
-	pass
-
-
+# Plays focused animation.
 func _on_PlayerOptionButton_focus_entered():
-	pass
+	print("{0} focus entered".format([name]))
 
 
 func _on_PlayerOptionButton_focus_exited():
-	pass
+	print("{0} focus left".format([name]))
 
 
 # Plays the appropriate animations when the button is toggled.
-func _on_PlayerOptionButton_toggled(_button_pressed: bool):
-	pass
+func _on_PlayerOptionButton_toggled(button_pressed: bool):
+	if button_pressed:
+		print("{0} toggled on".format([name]))
+	else:
+		print("{0} toggled off".format([name]))

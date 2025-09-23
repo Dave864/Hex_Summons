@@ -29,7 +29,7 @@ func enter(_msg := {}) -> void:
 # Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(event: InputEvent) -> void:
 	if (
-		InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE
+		InputController.source_is_keymouse()
 		and event.is_action_pressed("ui_selector_select")
 	):
 		SignalBus.emit_player_action_selected(
@@ -170,6 +170,18 @@ func _disconnect_signals() -> void:
 	)
 
 
+# Logic for what happens when the turn has ended.
+func _end_selected() -> void:
+	encounter_ui.end_button.call_deferred("grab_focus")
+	encounter_ui.reset_all_options()
+	encounter_ui.get_focused_player().emit_turn_ended()
+
+
+# Logic for when movement has been selected.
+func _movement_selected() -> void:
+	state_machine.transition_to(STANDBY)
+
+
 # Logic for when a specified option is selected.
 func _option_selected(option: int) -> void:
 	if _option_flag == option:
@@ -185,20 +197,19 @@ func _action_type_canceled() -> void:
 	state_machine.transition_to(STANDBY)
 
 
-func _movement_selected() -> void:
-	encounter_ui.movement_button.call_deferred("grab_focus")
-	state_machine.transition_to(STANDBY)
-
-
-# Logic for what happens when the turn has ended.
-func _end_selected() -> void:
-	encounter_ui.end_button.call_deferred("grab_focus")
-	encounter_ui.reset_all_options()
-	encounter_ui.get_focused_player().emit_turn_ended()
-
-
 # Logic for what happens when the Movement button is pressed.
 func _on_MovementButton_pressed() -> void:
+	match _option_flag:
+		EncounterUI.Options.TECHNIQUE:
+			pass
+		EncounterUI.Options.SPELL:
+			pass
+		EncounterUI.Options.SUMMON:
+			pass
+		EncounterUI.Options.ITEM:
+			pass
+		_:
+			pass
 	_movement_selected()
 
 

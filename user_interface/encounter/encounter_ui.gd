@@ -70,9 +70,9 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	active_player_stats.set_stats(_player)
 	active_player_stats.show()
 	
+	reset_all_options()
 	set_active_options()
 	_set_player_option_focus_neighbors()
-	reset_all_options()
 
 
 # Get the current player the UI is focused on.
@@ -125,7 +125,6 @@ func set_active_options() -> void:
 	"""
 	item_button.set_disabled()
 	end_button.set_disabled(false)
-	movement_button.call_deferred("grab_focus")
 
 
 # Set all player options to disabled.

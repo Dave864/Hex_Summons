@@ -14,6 +14,8 @@ to the `Wait` state when the user chooses to end their turn. Moves to the
 func enter(_msg := {}) -> void:
 	encounter_ui.sub_options.activate()
 	encounter_ui.options.show()
+	encounter_ui.movement_button.pressed = true
+	encounter_ui.movement_button.call_deferred("grab_focus")
 	_connect_signals()
 
 
@@ -126,6 +128,8 @@ func _disconnect_signals() -> void:
 # Handles behavior for when the "TECHNIQUE" option is chosen. Goes to the ACTION
 # state, specifying TECHNIQUE as the option.
 func _technique_selected() -> void:
+	encounter_ui.technique_button.call_deferred("grab_focus")
+	encounter_ui.movement_button.pressed = false
 	state_machine.transition_to(
 			ACTION, 
 			{"option_flag": encounter_ui.Options.TECHNIQUE}
@@ -134,21 +138,26 @@ func _technique_selected() -> void:
 
 # Handles behavior for when the "SPELL" option is chosen.
 func _spell_selected() -> void:
+	encounter_ui.spell_button.call_deferred("grab_focus")
 	print("Selecting a spell")
 
 
 # Handles behavior for when the "SUMMON" option is chosen.
 func _summon_selected() -> void:
+	encounter_ui.summon_button.call_deferred("grab_focus")
 	print("Selecting a summon")
 
 
 # Handles behavior for when the "ITEM" option is chosen.
 func _item_selected() -> void:
+	encounter_ui.item_button.call_deferred("grab_focus")
 	print("Selecting an item")
 
 
 # Handles behavior for when the "END" option is chosen.
 func _end_selected() -> void:
+	encounter_ui.end_button.call_deferred("grab_focus")
+	encounter_ui.movement_button.pressed = false
 	encounter_ui.get_focused_player().emit_turn_ended()
 	encounter_ui.reset_all_options()
 	state_machine.transition_to(WAIT)
