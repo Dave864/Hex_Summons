@@ -17,19 +17,19 @@ region = Rect2( 0, 100, 80, 50 )
 atlas = ExtResource( 2 )
 region = Rect2( 0, 50, 80, 50 )
 
-[sub_resource type="AtlasTexture" id=35]
-atlas = ExtResource( 2 )
-region = Rect2( 160, 150, 80, 50 )
-
 [sub_resource type="AtlasTexture" id=24]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 50, 34 )
+
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 100, 80, 50 )
 
 [sub_resource type="Animation" id=25]
 length = 0.001
 step = 0.0833333
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:texture_focused:region")
+tracks/0/path = NodePath("Selector:texture:region")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -37,8 +37,8 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ Rect2( 160, 150, 80, 50 ) ]
+"update": 0,
+"values": [ Rect2( 80, 100, 80, 50 ) ]
 }
 
 [sub_resource type="Animation" id=31]
@@ -46,7 +46,7 @@ resource_name = "focus"
 length = 0.166667
 step = 0.0833333
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:texture_focused:region")
+tracks/0/path = NodePath("Selector:texture:region")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -63,7 +63,7 @@ resource_name = "focus_selected"
 length = 0.166667
 step = 0.0833333
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:texture_focused:region")
+tracks/0/path = NodePath("Selector:texture:region")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -137,7 +137,6 @@ toggle_mode = true
 texture_normal = SubResource( 32 )
 texture_pressed = SubResource( 2 )
 texture_disabled = SubResource( 3 )
-texture_focused = SubResource( 35 )
 stretch_mode = 5
 script = ExtResource( 3 )
 icon_ref = NodePath("Icon")
@@ -151,6 +150,11 @@ margin_right = -15.0
 margin_bottom = -14.0
 mouse_filter = 2
 texture = SubResource( 24 )
+
+[node name="Selector" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = SubResource( 39 )
 
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
