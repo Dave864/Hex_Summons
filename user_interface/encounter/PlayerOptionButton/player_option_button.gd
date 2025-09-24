@@ -13,8 +13,6 @@ const COLOR_GREY: Color = Color("7f7f7f")
 export(NodePath) var sigil_ref = NodePath("")
 export(NodePath) var icon_ref = NodePath("")
 
-var is_active: bool = false
-
 onready var sigil: TextureRect = get_node_or_null(sigil_ref)
 onready var icon: TextureRect = get_node_or_null(icon_ref)
 onready var label: Label = $Label
@@ -67,7 +65,6 @@ func _on_PlayerOptionButton_mouse_entered():
 # Plays focused animation.
 func _on_PlayerOptionButton_focus_entered():
 	if pressed:
-		is_active = true
 		ap_focus.play("focus_selected")
 		ap_icon.play("selected_start")
 		yield(ap_icon, "animation_finished")
@@ -79,14 +76,14 @@ func _on_PlayerOptionButton_focus_entered():
 
 # Resets all animations when focus is gone.
 func _on_PlayerOptionButton_focus_exited():
-	ap_icon.play("RESET")
+	if not pressed:
+		ap_icon.play("RESET")
 	ap_focus.play("RESET")
 
 
 # Plays the appropriate animations when the button is toggled.
 func _on_PlayerOptionButton_toggled(button_pressed: bool):
 	if button_pressed:
-		is_active = true
 		ap_focus.play("focus_selected")
 		ap_icon.play("selected_loop")
 	elif has_focus():
@@ -95,4 +92,3 @@ func _on_PlayerOptionButton_toggled(button_pressed: bool):
 	else:
 		ap_focus.play("RESET")
 		ap_icon.play("RESET")
-	is_active = false
