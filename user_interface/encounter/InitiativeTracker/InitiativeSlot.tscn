@@ -6,11 +6,12 @@
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=4]
 [ext_resource path="res://art/ui/Number Panel.png" type="Texture" id=5]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/circle_mask.gdshader" type="Shader" id=6]
-[ext_resource path="res://user_interface/encounter/InitiativeTracker/modulate_white.tres" type="Shader" id=7]
+[ext_resource path="res://user_interface/encounter/InitiativeTracker/change_color.gdshader" type="Shader" id=7]
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 7 )
-shader_param/mod_color = Color( 1, 1, 1, 1 )
+shader_param/old_color = Color( 1, 1, 1, 1 )
+shader_param/new_color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )

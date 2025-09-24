@@ -14,9 +14,9 @@ onready var p_frame: TextureRect = $PortraitFrame
 func change_character(c: Character) -> void:
 	update_portrait(c.battle_portrait)
 	if c is PlayerCharacter:
-		p_frame.material.set_shader_param("mod_color", Color.aqua)
+		p_frame.material.set_shader_param("new_color", Color.aqua)
 	else:
-		p_frame.material.set_shader_param("mod_color", Color.red)
+		p_frame.material.set_shader_param("new_color", Color.red)
 
 
 # Updates the portrait.
