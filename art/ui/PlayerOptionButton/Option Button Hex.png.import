@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Movement Spritesheet.png-b63141a86aa8522d1e196f544fc4016e.stex"
+path="res://.import/Option Button Hex.png-225b2bf025021850695d3dd4a2e4ea75.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/Movement Spritesheet.png"
-dest_files=[ "res://.import/Movement Spritesheet.png-b63141a86aa8522d1e196f544fc4016e.stex" ]
+source_file="res://art/ui/PlayerOptionButton/Option Button Hex.png"
+dest_files=[ "res://.import/Option Button Hex.png-225b2bf025021850695d3dd4a2e4ea75.stex" ]
 
 [params]
 

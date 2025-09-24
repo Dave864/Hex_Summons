@@ -1,10 +1,10 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://art/ui/Sigil Spritesheet.png" type="Texture" id=2]
-[ext_resource path="res://art/ui/Spell Spritesheet.png" type="Texture" id=3]
+[ext_resource path="res://art/ui/PlayerOptionButton/Sigil Spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://art/ui/PlayerOptionButton/Spell Spritesheet.png" type="Texture" id=3]
 [ext_resource path="res://user_interface/encounter/PlayerOptionButton/player_option_button.gd" type="Script" id=4]
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=5]
-[ext_resource path="res://art/ui/Option Button Circle.png" type="Texture" id=6]
+[ext_resource path="res://art/ui/PlayerOptionButton/Option Button Circle.png" type="Texture" id=6]
 
 [sub_resource type="AtlasTexture" id=38]
 atlas = ExtResource( 6 )

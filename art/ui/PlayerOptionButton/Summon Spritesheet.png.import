@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Sigil Spritesheet.png-ffad22f899774acbfbc0a6cedcd636aa.stex"
+path="res://.import/Summon Spritesheet.png-4f500779a6f26f3d8319f9a430062336.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/Sigil Spritesheet.png"
-dest_files=[ "res://.import/Sigil Spritesheet.png-ffad22f899774acbfbc0a6cedcd636aa.stex" ]
+source_file="res://art/ui/PlayerOptionButton/Summon Spritesheet.png"
+dest_files=[ "res://.import/Summon Spritesheet.png-4f500779a6f26f3d8319f9a430062336.stex" ]
 
 [params]
 

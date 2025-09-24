@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://art/ui/Movement Spritesheet.png" type="Texture" id=1]
-[ext_resource path="res://art/ui/Option Button Hex.png" type="Texture" id=2]
+[ext_resource path="res://art/ui/PlayerOptionButton/Movement Spritesheet.png" type="Texture" id=1]
+[ext_resource path="res://art/ui/PlayerOptionButton/Option Button Hex.png" type="Texture" id=2]
 [ext_resource path="res://user_interface/encounter/PlayerOptionButton/movement_button.gd" type="Script" id=3]
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=5]
 

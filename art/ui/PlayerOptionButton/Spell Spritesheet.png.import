@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Item Spritesheet.png-6c885e0ff68a6ef4c9df01692ca0167a.stex"
+path="res://.import/Spell Spritesheet.png-4e4752e4bea521dc03e63d8f3d060f0f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/Item Spritesheet.png"
-dest_files=[ "res://.import/Item Spritesheet.png-6c885e0ff68a6ef4c9df01692ca0167a.stex" ]
+source_file="res://art/ui/PlayerOptionButton/Spell Spritesheet.png"
+dest_files=[ "res://.import/Spell Spritesheet.png-4e4752e4bea521dc03e63d8f3d060f0f.stex" ]
 
 [params]
 

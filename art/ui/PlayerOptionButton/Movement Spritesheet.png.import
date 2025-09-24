@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Option Button Circle.png-0380dd54acc0de0a6777a3d030712a10.stex"
+path="res://.import/Movement Spritesheet.png-8dea50cab6aa7a6a98f7608073a196a5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/Option Button Circle.png"
-dest_files=[ "res://.import/Option Button Circle.png-0380dd54acc0de0a6777a3d030712a10.stex" ]
+source_file="res://art/ui/PlayerOptionButton/Movement Spritesheet.png"
+dest_files=[ "res://.import/Movement Spritesheet.png-8dea50cab6aa7a6a98f7608073a196a5.stex" ]
 
 [params]
 
