@@ -20,7 +20,7 @@ region = Rect2( 0, 50, 80, 50 )
 
 [sub_resource type="AtlasTexture" id=44]
 atlas = ExtResource( 1 )
-region = Rect2( 0, 100, 80, 50 )
+region = Rect2( 0, 150, 80, 50 )
 
 [sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 2 )
@@ -30,10 +30,15 @@ region = Rect2( 0, 0, 34, 34 )
 atlas = ExtResource( 3 )
 region = Rect2( 1, 1, 32, 32 )
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 1 )
+region = Rect2( 80, 100, 80, 50 )
+
+[sub_resource type="Animation" id=46]
 length = 0.001
+step = 0.0833333
 tracks/0/type = "value"
-tracks/0/path = NodePath("Icon:texture:region")
+tracks/0/path = NodePath("Selector:texture:region")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -42,39 +47,15 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Rect2( 1, 1, 32, 32 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sigil:texture:region")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 0, 0, 34, 34 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:texture_focused:region")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 0, 150, 80, 50 ) ]
+"values": [ Rect2( 80, 100, 80, 50 ) ]
 }
 
-[sub_resource type="Animation" id=26]
-resource_name = "hover"
+[sub_resource type="Animation" id=47]
+resource_name = "focus"
 length = 0.166667
 step = 0.0833333
 tracks/0/type = "value"
-tracks/0/path = NodePath("Icon:texture:region")
+tracks/0/path = NodePath("Selector:texture:region")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -83,65 +64,28 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.0833333, 0.166667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Rect2( 1, 1, 32, 32 ), Rect2( 35, 1, 32, 32 ), Rect2( 69, 1, 32, 32 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sigil:texture:region")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 0, 0, 34, 34 ) ]
+"values": [ Rect2( 0, 150, 80, 50 ), Rect2( 80, 150, 80, 50 ), Rect2( 160, 150, 80, 50 ) ]
 }
 
-[sub_resource type="Animation" id=29]
-resource_name = "selected"
+[sub_resource type="Animation" id=48]
+resource_name = "focus_selected"
 length = 0.166667
 step = 0.0833333
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sigil:texture:region")
+tracks/0/path = NodePath("Selector:texture:region")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ Rect2( 0, 0, 34, 34 ), Rect2( 34, 0, 34, 34 ), Rect2( 68, 0, 34, 34 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Icon:texture:region")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 69, 1, 32, 32 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:texture_focused:region")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
 "times": PoolRealArray( 0, 0.0833333, 0.166667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ Rect2( 0, 200, 80, 50 ), Rect2( 80, 200, 80, 50 ), Rect2( 160, 200, 80, 50 ) ]
 }
 
-[sub_resource type="Animation" id=31]
-resource_name = "toggle_off"
-length = 0.166667
+[sub_resource type="Animation" id=49]
+length = 0.001
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("Icon:texture:region")
@@ -152,7 +96,7 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
+"update": 0,
 "values": [ Rect2( 1, 1, 32, 32 ) ]
 }
 tracks/1/type = "value"
@@ -168,9 +112,10 @@ tracks/1/keys = {
 "values": [ Rect2( 0, 0, 34, 34 ) ]
 }
 
-[sub_resource type="Animation" id=32]
-resource_name = "toggle_off_hover"
-length = 0.166667
+[sub_resource type="Animation" id=50]
+resource_name = "selected_loop"
+length = 0.833333
+loop = true
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("Icon:texture:region")
@@ -191,94 +136,39 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 34, 34 ), Rect2( 34, 0, 34, 34 ), Rect2( 68, 0, 34, 34 ), Rect2( 102, 0, 34, 34 ), Rect2( 136, 0, 34, 34 ), Rect2( 170, 0, 34, 34 ), Rect2( 204, 0, 34, 34 ), Rect2( 238, 0, 34, 34 ), Rect2( 272, 0, 34, 34 ), Rect2( 306, 0, 34, 34 ) ]
+}
+
+[sub_resource type="Animation" id=51]
+resource_name = "selected_start"
+length = 0.166667
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/path = NodePath("Icon:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 1, 1, 32, 32 ), Rect2( 34, 1, 32, 32 ), Rect2( 69, 1, 32, 32 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sigil:texture:region")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
+"update": 1,
 "values": [ Rect2( 0, 0, 34, 34 ) ]
-}
-
-[sub_resource type="Animation" id=28]
-resource_name = "toggle_on"
-length = 0.833333
-loop = true
-step = 0.0833333
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sigil:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Rect2( 102, 0, 34, 34 ), Rect2( 136, 0, 34, 34 ), Rect2( 170, 0, 34, 34 ), Rect2( 204, 0, 34, 34 ), Rect2( 238, 0, 34, 34 ), Rect2( 272, 0, 34, 34 ), Rect2( 306, 0, 34, 34 ), Rect2( 0, 0, 34, 34 ), Rect2( 34, 0, 34, 34 ), Rect2( 68, 0, 34, 34 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Icon:texture:region")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 69, 1, 32, 32 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:texture_focused:region")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 0, 100, 80, 50 ) ]
-}
-
-[sub_resource type="Animation" id=39]
-resource_name = "toggle_on_hover"
-length = 0.833333
-loop = true
-step = 0.0833333
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sigil:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ Rect2( 102, 0, 34, 34 ), Rect2( 136, 0, 34, 34 ), Rect2( 170, 0, 34, 34 ), Rect2( 204, 0, 34, 34 ), Rect2( 238, 0, 34, 34 ), Rect2( 272, 0, 34, 34 ), Rect2( 306, 0, 34, 34 ), Rect2( 0, 0, 34, 34 ), Rect2( 34, 0, 34, 34 ), Rect2( 68, 0, 34, 34 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Icon:texture:region")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 69, 1, 32, 32 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:texture_focused:region")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 160, 200, 80, 50 ) ]
 }
 
 [node name="ItemButton" type="TextureButton"]
@@ -321,6 +211,11 @@ mouse_filter = 2
 texture = SubResource( 24 )
 stretch_mode = 4
 
+[node name="Selector" type="TextureRect" parent="."]
+margin_right = 80.0
+margin_bottom = 50.0
+texture = SubResource( 45 )
+
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -329,14 +224,15 @@ text = "ITEM"
 align = 1
 valign = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 25 )
-anims/hover = SubResource( 26 )
-anims/selected = SubResource( 29 )
-anims/toggle_off = SubResource( 31 )
-anims/toggle_off_hover = SubResource( 32 )
-anims/toggle_on = SubResource( 28 )
-anims/toggle_on_hover = SubResource( 39 )
+[node name="APFocus" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 46 )
+anims/focus = SubResource( 47 )
+anims/focus_selected = SubResource( 48 )
+
+[node name="APIcon" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 49 )
+anims/selected_loop = SubResource( 50 )
+anims/selected_start = SubResource( 51 )
 
 [connection signal="focus_entered" from="." to="." method="_on_PlayerOptionButton_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_PlayerOptionButton_focus_exited"]

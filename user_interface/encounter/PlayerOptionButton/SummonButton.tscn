@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://art/ui/Option Button Circle.png" type="Texture" id=1]
 [ext_resource path="res://art/ui/Summon Spritesheet.png" type="Texture" id=2]
@@ -11,21 +11,71 @@ region = Rect2( 0, 0, 80, 50 )
 
 [sub_resource type="AtlasTexture" id=34]
 atlas = ExtResource( 1 )
-region = Rect2( 160, 200, 80, 50 )
+region = Rect2( 0, 100, 80, 50 )
 
 [sub_resource type="AtlasTexture" id=36]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 50, 80, 50 )
 
-[sub_resource type="AtlasTexture" id=39]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 150, 80, 50 )
-
 [sub_resource type="AtlasTexture" id=24]
 atlas = ExtResource( 2 )
 region = Rect2( 1, 1, 32, 32 )
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 1 )
+region = Rect2( 80, 100, 80, 50 )
+
+[sub_resource type="Animation" id=41]
+length = 0.001
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/path = NodePath("Selector:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 80, 100, 80, 50 ) ]
+}
+
+[sub_resource type="Animation" id=42]
+resource_name = "focus"
+length = 0.166667
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/path = NodePath("Selector:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 150, 80, 50 ), Rect2( 80, 150, 80, 50 ), Rect2( 160, 150, 80, 50 ) ]
+}
+
+[sub_resource type="Animation" id=43]
+resource_name = "focus_selected"
+length = 0.166667
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/path = NodePath("Selector:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 200, 80, 50 ), Rect2( 80, 200, 80, 50 ), Rect2( 160, 200, 80, 50 ) ]
+}
+
+[sub_resource type="Animation" id=44]
 length = 0.001
 step = 0.0833333
 tracks/0/type = "value"
@@ -40,38 +90,9 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Rect2( 1, 1, 32, 32 ) ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:texture_focused:region")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 0, 150, 80, 50 ) ]
-}
 
-[sub_resource type="Animation" id=26]
-resource_name = "hover"
-length = 0.166667
-step = 0.0833333
-tracks/0/type = "value"
-tracks/0/path = NodePath("Icon:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ Rect2( 1, 1, 32, 32 ), Rect2( 35, 1, 32, 32 ), Rect2( 69, 1, 32, 32 ) ]
-}
-
-[sub_resource type="Animation" id=29]
-resource_name = "selected"
+[sub_resource type="Animation" id=45]
+resource_name = "selected_loop"
 length = 0.25
 step = 0.0833333
 tracks/0/type = "value"
@@ -86,111 +107,22 @@ tracks/0/keys = {
 "update": 1,
 "values": [ Rect2( 1, 35, 32, 32 ), Rect2( 35, 35, 32, 32 ), Rect2( 69, 35, 32, 32 ), Rect2( 103, 35, 32, 32 ) ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:texture_focused:region")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
+
+[sub_resource type="Animation" id=46]
+resource_name = "selected_start"
+length = 0.25
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/path = NodePath("Icon:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
 "times": PoolRealArray( 0, 0.0833333, 0.166667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Rect2( 0, 200, 80, 50 ), Rect2( 80, 200, 80, 50 ), Rect2( 160, 200, 80, 50 ) ]
-}
-
-[sub_resource type="Animation" id=32]
-resource_name = "toggle_off"
-length = 0.166667
-step = 0.0833333
-tracks/0/type = "value"
-tracks/0/path = NodePath("Icon:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ Rect2( 1, 1, 32, 32 ) ]
-}
-
-[sub_resource type="Animation" id=31]
-resource_name = "toggle_off_hover"
-length = 0.166667
-step = 0.0833333
-tracks/0/type = "value"
-tracks/0/path = NodePath("Icon:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ Rect2( 69, 1, 32, 32 ) ]
-}
-
-[sub_resource type="Animation" id=28]
-resource_name = "toggle_on"
-length = 0.001
-loop = true
-step = 0.0833333
-tracks/0/type = "value"
-tracks/0/path = NodePath("Icon:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 103, 35, 32, 32 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:texture_focused:region")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 0, 100, 80, 50 ) ]
-}
-
-[sub_resource type="Animation" id=38]
-resource_name = "toggle_on_hover"
-length = 0.001
-loop = true
-step = 0.0833333
-tracks/0/type = "value"
-tracks/0/path = NodePath("Icon:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 103, 35, 32, 32 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:texture_focused:region")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 160, 200, 80, 50 ) ]
+"values": [ Rect2( 1, 1, 32, 32 ), Rect2( 35, 1, 32, 32 ), Rect2( 69, 1, 32, 32 ) ]
 }
 
 [node name="SummonButton" type="TextureButton"]
@@ -205,7 +137,6 @@ action_mode = 0
 texture_normal = SubResource( 33 )
 texture_pressed = SubResource( 34 )
 texture_disabled = SubResource( 36 )
-texture_focused = SubResource( 39 )
 stretch_mode = 5
 script = ExtResource( 4 )
 icon_ref = NodePath("Icon")
@@ -221,6 +152,11 @@ mouse_filter = 2
 texture = SubResource( 24 )
 stretch_mode = 4
 
+[node name="Selector" type="TextureRect" parent="."]
+margin_right = 80.0
+margin_bottom = 50.0
+texture = SubResource( 40 )
+
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -229,14 +165,15 @@ text = "SUMMON"
 align = 1
 valign = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 25 )
-anims/hover = SubResource( 26 )
-anims/selected = SubResource( 29 )
-anims/toggle_off = SubResource( 32 )
-anims/toggle_off_hover = SubResource( 31 )
-anims/toggle_on = SubResource( 28 )
-anims/toggle_on_hover = SubResource( 38 )
+[node name="APFocus" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 41 )
+anims/focus = SubResource( 42 )
+anims/focus_selected = SubResource( 43 )
+
+[node name="APIcon" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 44 )
+anims/selected_loop = SubResource( 45 )
+anims/selected_start = SubResource( 46 )
 
 [connection signal="focus_entered" from="." to="." method="_on_PlayerOptionButton_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_PlayerOptionButton_focus_exited"]

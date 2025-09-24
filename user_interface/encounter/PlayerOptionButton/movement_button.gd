@@ -6,10 +6,6 @@ associated with selecting this option.
 """
 
 
-onready var ap_focus: AnimationPlayer = $APFocus
-onready var ap_icon: AnimationPlayer = $APIcon
-
-
 # Grabs the focus for the UI.
 func _on_MovementButton_mouse_entered() -> void:
 	if disabled:
