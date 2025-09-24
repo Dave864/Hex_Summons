@@ -3,7 +3,7 @@
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/initiative_tracker.gd" type="Script" id=1]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/InitiativeSlot.tscn" type="PackedScene" id=2]
 
-[node name="InitiativeTracker" type="HBoxContainer"]
+[node name="InitiativeTracker" type="Control"]
 anchor_left = 0.1
 anchor_right = 0.9
 anchor_bottom = 0.00555556
@@ -11,45 +11,42 @@ margin_bottom = 38.0
 mouse_filter = 2
 size_flags_horizontal = 5
 size_flags_vertical = 5
-alignment = 1
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
 [node name="InitiativeSlot1" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 47.0
-margin_bottom = 40.0
+margin_left = 8.0
+margin_right = 44.0
+margin_bottom = 36.0
 
 [node name="InitiativeSlot2" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 51.0
-margin_right = 99.0
-margin_bottom = 40.0
+margin_right = 88.0
+margin_bottom = 36.0
 
 [node name="InitiativeSlot3" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 103.0
-margin_right = 150.0
-margin_bottom = 40.0
+margin_left = 100.0
+margin_right = 134.0
+margin_bottom = 32.0
 
 [node name="InitiativeSlot4" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 154.0
-margin_right = 202.0
-margin_bottom = 40.0
+margin_left = 148.0
+margin_right = 182.0
+margin_bottom = 32.0
 
 [node name="InitiativeSlot5" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 206.0
-margin_right = 253.0
-margin_bottom = 40.0
+margin_left = 192.0
+margin_right = 227.0
+margin_bottom = 32.0
 
 [node name="InitiativeSlot6" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0

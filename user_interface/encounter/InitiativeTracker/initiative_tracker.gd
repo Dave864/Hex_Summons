@@ -1,5 +1,5 @@
 class_name InitiativeTracker
-extends HBoxContainer
+extends Control
 """
 Displays the current characters in initiative as well as the current active
 character. Initiative works by comparing the agility stat of all characters,
