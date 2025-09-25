@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/initiative_tracker.gd" type="Script" id=1]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/InitiativeSlot.tscn" type="PackedScene" id=2]
+[ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=3]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/change_color.gdshader" type="Shader" id=14]
 
 [sub_resource type="ShaderMaterial" id=1]
@@ -22,32 +23,165 @@ shader = ExtResource( 14 )
 shader_param/old_color = Color( 1, 1, 1, 1 )
 shader_param/new_color = Color( 1, 1, 1, 1 )
 
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 14 )
+shader_param/old_color = Color( 1, 1, 1, 1 )
+shader_param/new_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = ExtResource( 14 )
+shader_param/old_color = Color( 1, 1, 1, 1 )
+shader_param/new_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = ExtResource( 14 )
+shader_param/old_color = Color( 1, 1, 1, 1 )
+shader_param/new_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=7]
+resource_local_to_scene = true
+shader = ExtResource( 14 )
+shader_param/old_color = Color( 1, 1, 1, 1 )
+shader_param/new_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=8]
+resource_local_to_scene = true
+shader = ExtResource( 14 )
+shader_param/old_color = Color( 1, 1, 1, 1 )
+shader_param/new_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=9]
+resource_local_to_scene = true
+shader = ExtResource( 14 )
+shader_param/old_color = Color( 1, 1, 1, 1 )
+shader_param/new_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=10]
+resource_local_to_scene = true
+shader = ExtResource( 14 )
+shader_param/old_color = Color( 1, 1, 1, 1 )
+shader_param/new_color = Color( 1, 1, 1, 1 )
+
 [node name="InitiativeTracker" type="Control"]
 anchor_right = 1.0
-margin_left = 71.0
-margin_right = -177.0
+margin_left = 66.0
+margin_top = 4.0
+margin_right = -62.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 512, 40 )
+theme = ExtResource( 3 )
 script = ExtResource( 1 )
 
-[node name="InitiativeSlot" parent="." instance=ExtResource( 2 )]
+[node name="Active" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -476.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Pending" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InitiativeSlot0" parent="." instance=ExtResource( 2 )]
 material = SubResource( 1 )
 anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = -214.0
+anchor_bottom = 1.0
+margin_top = 3.0
+margin_right = 34.0
+margin_bottom = -3.0
+
+[node name="InitiativeSlot1" parent="." instance=ExtResource( 2 )]
+material = SubResource( 2 )
+anchor_left = 0.1
+anchor_right = 0.1
+anchor_bottom = 1.0
+margin_left = 0.0839996
+margin_top = 3.0
+margin_right = 34.084
+margin_bottom = -3.0
 
 [node name="InitiativeSlot2" parent="." instance=ExtResource( 2 )]
-material = SubResource( 2 )
-anchor_left = 0.102
-anchor_right = 0.102
-anchor_bottom = 0.0
-margin_left = 0.0159988
-margin_right = -213.984
-margin_bottom = 34.0
+material = SubResource( 3 )
+anchor_left = 0.2
+anchor_right = 0.2
+anchor_bottom = 1.0
+margin_left = 0.254005
+margin_top = 3.0
+margin_right = 34.254
+margin_bottom = -3.0
 
 [node name="InitiativeSlot3" parent="." instance=ExtResource( 2 )]
-material = SubResource( 3 )
-anchor_left = 0.204
-anchor_right = 0.204
-anchor_bottom = 0.0
-margin_left = 0.0319977
-margin_right = -213.968
-margin_bottom = 34.0
+material = SubResource( 4 )
+anchor_left = 0.301
+anchor_right = 0.301
+anchor_bottom = 1.0
+margin_left = -0.172028
+margin_top = 3.0
+margin_right = 33.828
+margin_bottom = -3.0
+
+[node name="InitiativeSlot4" parent="." instance=ExtResource( 2 )]
+material = SubResource( 5 )
+anchor_left = 0.4
+anchor_right = 0.4
+anchor_bottom = 1.0
+margin_left = 0.194031
+margin_top = 3.0
+margin_right = 34.194
+margin_bottom = -3.0
+
+[node name="InitiativeSlot5" parent="." instance=ExtResource( 2 )]
+material = SubResource( 6 )
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 0.180023
+margin_top = 3.0
+margin_right = 34.18
+margin_bottom = -3.0
+
+[node name="InitiativeSlot6" parent="." instance=ExtResource( 2 )]
+material = SubResource( 7 )
+anchor_left = 0.6
+anchor_right = 0.6
+anchor_bottom = 1.0
+margin_left = 0.0780029
+margin_top = 3.0
+margin_right = 34.078
+margin_bottom = -3.0
+
+[node name="InitiativeSlot7" parent="." instance=ExtResource( 2 )]
+material = SubResource( 8 )
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+margin_left = 0.0519714
+margin_top = 3.0
+margin_right = 34.052
+margin_bottom = -3.0
+
+[node name="InitiativeSlot8" parent="." instance=ExtResource( 2 )]
+material = SubResource( 9 )
+anchor_left = 0.8
+anchor_right = 0.8
+anchor_bottom = 1.0
+margin_left = 0.163971
+margin_top = 3.0
+margin_right = 34.164
+margin_bottom = -3.0
+
+[node name="InitiativeSlot9" parent="." instance=ExtResource( 2 )]
+material = SubResource( 10 )
+anchor_left = 0.9
+anchor_right = 0.9
+anchor_bottom = 1.0
+margin_top = 3.0
+margin_right = 34.0
+margin_bottom = -3.0

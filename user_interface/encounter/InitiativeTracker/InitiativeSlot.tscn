@@ -36,42 +36,47 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 4 )
 texture = SubResource( 5 )
+stretch_mode = 6
 script = ExtResource( 2 )
 
 [node name="Portrait" type="TextureRect" parent="."]
 show_behind_parent = true
 material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 6.0
 margin_top = 6.0
-margin_right = 28.0
-margin_bottom = 28.0
+margin_right = -6.0
+margin_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 22, 22 )
 mouse_filter = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 5
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 6
 
 [node name="InitPanel" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 19.0
 margin_top = 17.0
-margin_right = 31.0
-margin_bottom = 31.0
+margin_right = -3.0
+margin_bottom = -3.0
 texture = ExtResource( 5 )
+stretch_mode = 6
 
 [node name="Initiative" type="Label" parent="InitPanel"]
-anchor_left = -1.583
-anchor_top = -1.214
-anchor_right = -1.583
-anchor_bottom = -1.214
-margin_left = 21.996
-margin_top = 19.996
-margin_right = 27.996
-margin_bottom = 27.996
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.004
+margin_top = 3.0
+margin_right = -2.996
+margin_bottom = -3.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 text = "0"
+align = 1
 valign = 1
