@@ -1,7 +1,7 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform float radius : hint_range(0.0, 1.0) = 0.5;
+uniform float radius : hint_range(0.0, 1.0) = 1.0;
 uniform float center_x : hint_range(0.0, 1.0) = 0.5;
 uniform float center_y : hint_range(0.0, 1.0) = 0.5;
 

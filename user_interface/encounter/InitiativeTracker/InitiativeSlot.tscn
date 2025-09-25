@@ -5,43 +5,40 @@
 [ext_resource path="res://art/ui/Init.png" type="Texture" id=3]
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=4]
 [ext_resource path="res://art/ui/Number Panel.png" type="Texture" id=5]
-[ext_resource path="res://user_interface/encounter/InitiativeTracker/circle_mask.gdshader" type="Shader" id=6]
+[ext_resource path="res://user_interface/encounter/InitiativeTracker/atlas_circle_mask.gdshader" type="Shader" id=6]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/change_color.gdshader" type="Shader" id=7]
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
 shader = ExtResource( 7 )
 shader_param/old_color = Color( 1, 1, 1, 1 )
 shader_param/new_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 34, 34 )
 
 [sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
 shader = ExtResource( 6 )
+shader_param/region = Plane( 0, 0, 64, 64 )
 shader_param/radius = 1.0
 shader_param/center_x = 0.5
 shader_param/center_y = 0.5
 
-[node name="InitiativeSlot" type="Control"]
-anchor_right = 0.056
+[node name="InitiativeSlot" type="TextureRect"]
+material = SubResource( 6 )
+anchor_right = 0.053
 anchor_bottom = 0.094
-margin_right = -35.84
-margin_bottom = -33.84
+margin_right = 0.079998
+margin_bottom = 0.16
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 4 )
+texture = SubResource( 5 )
 script = ExtResource( 2 )
 
-[node name="PortraitFrame" type="TextureRect" parent="."]
-material = SubResource( 4 )
-margin_right = 34.0
-margin_bottom = 34.0
-rect_min_size = Vector2( 0, 4 )
-mouse_filter = 2
-texture = SubResource( 1 )
-
-[node name="Portrait" type="TextureRect" parent="PortraitFrame"]
+[node name="Portrait" type="TextureRect" parent="."]
 show_behind_parent = true
 material = SubResource( 3 )
 margin_left = 6.0
@@ -50,7 +47,6 @@ margin_right = 28.0
 margin_bottom = 28.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 18, 18 )
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -58,22 +54,22 @@ texture = ExtResource( 1 )
 expand = true
 stretch_mode = 6
 
-[node name="InitPanel" type="TextureRect" parent="PortraitFrame"]
+[node name="InitPanel" type="TextureRect" parent="."]
 margin_left = 19.0
 margin_top = 17.0
 margin_right = 31.0
 margin_bottom = 31.0
 texture = ExtResource( 5 )
 
-[node name="Initiative" type="Label" parent="PortraitFrame/InitPanel"]
+[node name="Initiative" type="Label" parent="InitPanel"]
 anchor_left = -1.583
 anchor_top = -1.214
 anchor_right = -1.583
 anchor_bottom = -1.214
-margin_left = 21.7206
-margin_top = 19.5745
-margin_right = 27.7206
-margin_bottom = 27.5745
+margin_left = 21.996
+margin_top = 19.996
+margin_right = 27.996
+margin_bottom = 27.996
 size_flags_horizontal = 3
 size_flags_vertical = 7
 text = "0"
