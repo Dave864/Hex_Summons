@@ -20,7 +20,7 @@ onready var ui: EncounterUI = $EncounterUI
 
 # Move the initiative counter to the next index or reset it back to the start.
 func progress_initiative() -> void:
-	ui.initiative_tracker.progress_initiative()
+	yield(ui.initiative_tracker.progress_initiative(), "completed")
 
 
 # Gets the next character in the intiative track.

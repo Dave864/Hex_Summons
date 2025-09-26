@@ -110,7 +110,7 @@ func _on_PlayerCharacter_turn_ended() -> void:
 	if not _player_waiting:
 		yield(_active_char, "is_waiting")
 	var next_character: Character = enc.get_next_character()
-	enc.progress_initiative()
+	yield(enc.progress_initiative(), "completed")
 	if next_character is PlayerCharacter:
 		state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:

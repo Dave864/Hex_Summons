@@ -30,6 +30,9 @@ var _cur_init: int = 0
 var _round_pace: int = 0
 var _round_turns: int = 0
 
+onready var init_slots: Array = $InitiativeSlots.get_children()
+onready var ap: AnimationPlayer = $AnimationPlayer
+
 
 # Populates the initiative tracker with character details.
 func populate_initiative(characters: Array) -> void:
@@ -63,6 +66,22 @@ func progress_initiative() -> void:
 			_init_order[rd] = _init_order[rd + 1]
 		_calculate_round_initiative(_init_order.size() - 1)
 	_update_display()
+	ap.play("shift")
+	yield(ap, "animation_finished")
+
+
+# Called during the "shift" animation. Sets the initiative labels to the previous
+# value.
+func preceding_init_labels() -> void:
+	for i in init_slots.size() - 1:
+		init_slots[i].update_initiative_label(i + 1)
+
+
+# Called during the "shift" animation. Sets the initiative labels to the current
+# value.
+func current_init_labels() -> void:
+	for i in init_slots.size() - 1:
+		init_slots[i].update_initiative_label(i)
 
 
 # Gets the character at the current initiative step.
@@ -87,8 +106,7 @@ func get_next_character() -> Character:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var init: int = 0
-	var initiative_slots: Array = $InitiativeSlots.get_children()
-	for slot in initiative_slots:
+	for slot in init_slots:
 		slot.update_initiative_label(init)
 		_init_order[init] = []
 		init += 1
@@ -114,19 +132,17 @@ func _get_next_init_step() -> int:
 
 # Updates the display to reflect the current initiative.
 func _update_display() -> void:
-	var slot_displays: Array = get_children()
 	var char_order: Array = []
 	var earliest_init: Dictionary = {}
 	for c_id in _c_pity_tracker.keys():
 		earliest_init[c_id] = -1
-	char_order.resize(slot_displays.size())
+	char_order.resize(init_slots.size())
 	_populate_display_data(char_order)
-	for i in slot_displays.size():
+	for i in init_slots.size():
 		var c: Character = char_order[i]
-		slot_displays[i].change_character(c)
+		init_slots[i].change_character(c)
 		if earliest_init[c.get_instance_id()] < 0:
 			earliest_init[c.get_instance_id()] = i
-			c.character_label.set_initiative_label(i)
 
 
 # Helper for _update_display. Populates the char_order array with the characters

@@ -411,6 +411,23 @@ tracks/11/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
+tracks/12/type = "method"
+tracks/12/path = NodePath(".")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "preceding_init_labels"
+}, {
+"args": [  ],
+"method": "current_init_labels"
+} ]
+}
 
 [node name="InitiativeTracker" type="Control"]
 anchor_right = 1.0
@@ -445,111 +462,112 @@ anchor_bottom = 1.0
 material = SubResource( 1 )
 anchor_left = 0.035
 anchor_right = 0.035
-anchor_bottom = 1.0
+anchor_bottom = 0.0
 margin_left = -17.0
 margin_top = 3.0
 margin_right = 17.0
-margin_bottom = -3.0
+margin_bottom = 37.0
 texture = SubResource( 13 )
 
 [node name="InitiativeSlot1" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 2 )
 anchor_left = 0.1
 anchor_right = 0.1
-anchor_bottom = 1.0
+anchor_bottom = 0.0
 margin_left = 0.0839958
 margin_top = 3.0
 margin_right = 34.084
-margin_bottom = -3.0
+margin_bottom = 37.0
 texture = SubResource( 14 )
 
 [node name="InitiativeSlot2" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 3 )
 anchor_left = 0.2
 anchor_right = 0.2
-anchor_bottom = 1.0
+anchor_bottom = 0.0
 margin_left = 0.254005
 margin_top = 3.0
-margin_right = 34.2576
-margin_bottom = -3.0
+margin_right = 34.254
+margin_bottom = 37.0
 texture = SubResource( 15 )
 
 [node name="InitiativeSlot3" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 4 )
 anchor_left = 0.301
 anchor_right = 0.301
-anchor_bottom = 1.0
+anchor_bottom = 0.0
 margin_left = -0.172028
 margin_top = 3.0
 margin_right = 33.828
-margin_bottom = -3.0
+margin_bottom = 37.0
 texture = SubResource( 16 )
 
 [node name="InitiativeSlot4" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 5 )
 anchor_left = 0.4
 anchor_right = 0.4
-anchor_bottom = 1.0
+anchor_bottom = 0.0
 margin_left = 0.194016
 margin_top = 3.0
-margin_right = 34.1941
-margin_bottom = -3.0
+margin_right = 34.194
+margin_bottom = 37.0
 texture = SubResource( 17 )
 
 [node name="InitiativeSlot5" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 6 )
 anchor_left = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
+anchor_bottom = 0.0
 margin_left = 0.180023
 margin_top = 3.0
 margin_right = 34.18
-margin_bottom = -3.0
+margin_bottom = 37.0
 texture = SubResource( 18 )
 
 [node name="InitiativeSlot6" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 7 )
 anchor_left = 0.6
 anchor_right = 0.6
-anchor_bottom = 1.0
+anchor_bottom = 0.0
 margin_left = 0.0780029
 margin_top = 3.0
 margin_right = 34.078
-margin_bottom = -3.0
+margin_bottom = 37.0
 texture = SubResource( 19 )
 
 [node name="InitiativeSlot7" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 8 )
 anchor_left = 0.7
 anchor_right = 0.7
-anchor_bottom = 1.0
+anchor_bottom = 0.0
 margin_left = 0.0519714
 margin_top = 3.0
 margin_right = 34.052
-margin_bottom = -3.0
+margin_bottom = 37.0
 texture = SubResource( 20 )
 
 [node name="InitiativeSlot8" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 9 )
 anchor_left = 0.8
 anchor_right = 0.8
-anchor_bottom = 1.0
+anchor_bottom = 0.0
 margin_left = 0.163971
 margin_top = 3.0
 margin_right = 34.164
-margin_bottom = -3.0
+margin_bottom = 37.0
 texture = SubResource( 21 )
 
 [node name="InitiativeSlot9" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 10 )
 anchor_left = 0.9
 anchor_right = 0.9
-anchor_bottom = 1.0
+anchor_bottom = 0.0
 margin_top = 3.0
 margin_right = 34.0
-margin_bottom = -3.0
+margin_bottom = 37.0
 texture = SubResource( 22 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+method_call_mode = 1
 anims/RESET = SubResource( 11 )
 anims/shift = SubResource( 12 )
