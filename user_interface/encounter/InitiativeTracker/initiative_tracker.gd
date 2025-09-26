@@ -87,7 +87,7 @@ func get_next_character() -> Character:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var init: int = 0
-	var initiative_slots: Array = get_children()
+	var initiative_slots: Array = $InitiativeSlots.get_children()
 	for slot in initiative_slots:
 		slot.update_initiative_label(init)
 		_init_order[init] = []
