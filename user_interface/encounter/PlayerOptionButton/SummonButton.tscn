@@ -47,14 +47,14 @@ length = 0.166667
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("Selector:texture:region")
-tracks/0/interp = 1
+tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.0833333, 0.166667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
+"update": 0,
 "values": [ Rect2( 0, 150, 80, 50 ), Rect2( 80, 150, 80, 50 ), Rect2( 160, 150, 80, 50 ) ]
 }
 
@@ -64,14 +64,14 @@ length = 0.166667
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("Selector:texture:region")
-tracks/0/interp = 1
+tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.0833333, 0.166667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
+"update": 0,
 "values": [ Rect2( 0, 200, 80, 50 ), Rect2( 80, 200, 80, 50 ), Rect2( 160, 200, 80, 50 ) ]
 }
 
@@ -97,14 +97,14 @@ length = 0.25
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("Icon:texture:region")
-tracks/0/interp = 1
+tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
+"update": 0,
 "values": [ Rect2( 1, 35, 32, 32 ), Rect2( 35, 35, 32, 32 ), Rect2( 69, 35, 32, 32 ), Rect2( 103, 35, 32, 32 ) ]
 }
 
@@ -114,14 +114,14 @@ length = 0.25
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("Icon:texture:region")
-tracks/0/interp = 1
+tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.0833333, 0.166667 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
+"update": 0,
 "values": [ Rect2( 1, 1, 32, 32 ), Rect2( 35, 1, 32, 32 ), Rect2( 69, 1, 32, 32 ) ]
 }
 
