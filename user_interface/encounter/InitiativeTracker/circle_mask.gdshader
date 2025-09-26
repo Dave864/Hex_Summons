@@ -1,3 +1,4 @@
+// Reference: https://godotshaders.com/snippet/circle/
 shader_type canvas_item;
 render_mode unshaded;
 

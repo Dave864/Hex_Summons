@@ -1,19 +1,21 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/initiative_tracker.gd" type="Script" id=1]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/InitiativeSlot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=3]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/dither_gradient.gdshader" type="Shader" id=4]
+[ext_resource path="res://art/bayer2tile16.png" type="Texture" id=5]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/change_color.gdshader" type="Shader" id=14]
 
 [sub_resource type="ShaderMaterial" id=12]
 shader = ExtResource( 4 )
 shader_param/override_color = Color( 0, 0.45098, 1, 1 )
-shader_param/color_1 = Color( 1, 1, 1, 1 )
-shader_param/color_2 = Color( 0, 0, 0, 1 )
-shader_param/position = -0.411
-shader_param/size = 0.545
-shader_param/angle = 0.0
+shader_param/color_1 = Color( 0, 0.45098, 1, 1 )
+shader_param/color_2 = Color( 0, 0.14902, 1, 1 )
+shader_param/position = -0.184
+shader_param/size = 0.913
+shader_param/angle = 314.717
+shader_param/u_dither_tex = ExtResource( 5 )
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -101,7 +103,11 @@ margin_left = 0.16
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="InitiativeSlot0" parent="." instance=ExtResource( 2 )]
+[node name="InitiativeSlots" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="InitiativeSlot0" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 1 )
 anchor_left = 0.035
 anchor_right = 0.035
@@ -111,17 +117,17 @@ margin_top = 3.0
 margin_right = 17.08
 margin_bottom = -3.0
 
-[node name="InitiativeSlot1" parent="." instance=ExtResource( 2 )]
+[node name="InitiativeSlot1" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 2 )
 anchor_left = 0.1
 anchor_right = 0.1
 anchor_bottom = 1.0
-margin_left = 0.0839996
+margin_left = 0.0839958
 margin_top = 3.0
 margin_right = 34.084
 margin_bottom = -3.0
 
-[node name="InitiativeSlot2" parent="." instance=ExtResource( 2 )]
+[node name="InitiativeSlot2" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 3 )
 anchor_left = 0.2
 anchor_right = 0.2
@@ -131,7 +137,7 @@ margin_top = 3.0
 margin_right = 34.254
 margin_bottom = -3.0
 
-[node name="InitiativeSlot3" parent="." instance=ExtResource( 2 )]
+[node name="InitiativeSlot3" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 4 )
 anchor_left = 0.301
 anchor_right = 0.301
@@ -141,17 +147,17 @@ margin_top = 3.0
 margin_right = 33.828
 margin_bottom = -3.0
 
-[node name="InitiativeSlot4" parent="." instance=ExtResource( 2 )]
+[node name="InitiativeSlot4" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 5 )
 anchor_left = 0.4
 anchor_right = 0.4
 anchor_bottom = 1.0
-margin_left = 0.194031
+margin_left = 0.194016
 margin_top = 3.0
 margin_right = 34.194
 margin_bottom = -3.0
 
-[node name="InitiativeSlot5" parent="." instance=ExtResource( 2 )]
+[node name="InitiativeSlot5" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 6 )
 anchor_left = 0.5
 anchor_right = 0.5
@@ -161,7 +167,7 @@ margin_top = 3.0
 margin_right = 34.18
 margin_bottom = -3.0
 
-[node name="InitiativeSlot6" parent="." instance=ExtResource( 2 )]
+[node name="InitiativeSlot6" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 7 )
 anchor_left = 0.6
 anchor_right = 0.6
@@ -171,7 +177,7 @@ margin_top = 3.0
 margin_right = 34.078
 margin_bottom = -3.0
 
-[node name="InitiativeSlot7" parent="." instance=ExtResource( 2 )]
+[node name="InitiativeSlot7" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 8 )
 anchor_left = 0.7
 anchor_right = 0.7
@@ -181,7 +187,7 @@ margin_top = 3.0
 margin_right = 34.052
 margin_bottom = -3.0
 
-[node name="InitiativeSlot8" parent="." instance=ExtResource( 2 )]
+[node name="InitiativeSlot8" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 9 )
 anchor_left = 0.8
 anchor_right = 0.8
@@ -191,7 +197,7 @@ margin_top = 3.0
 margin_right = 34.164
 margin_bottom = -3.0
 
-[node name="InitiativeSlot9" parent="." instance=ExtResource( 2 )]
+[node name="InitiativeSlot9" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 10 )
 anchor_left = 0.9
 anchor_right = 0.9

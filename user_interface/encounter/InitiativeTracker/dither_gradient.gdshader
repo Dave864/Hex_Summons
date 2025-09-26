@@ -1,7 +1,7 @@
-// https://godotshaders.com/shader/dither-gradient-shader/
 shader_type canvas_item;
 render_mode unshaded;
 
+uniform sampler2D u_dither_tex;
 uniform vec4 override_color : hint_color = vec4(1.0);
 uniform vec4 color_1 : hint_color = vec4(1.0);
 uniform vec4 color_2 : hint_color = vec4(0.0, 0.0, 0.0, 1.0);
@@ -12,18 +12,14 @@ uniform float size : hint_range(0.5, 2) = 0.5;
 // rotation angle of gradient
 uniform float angle : hint_range(0.0, 360.0) = 0.0;
 
-// Reference: https://maximmcnair.com/p/webgl-dithering
-const float bayer_2x2[4] =  {
-	0.0, 3.0,  
-	2.0, 1.0
-};
+const vec4 black = vec4(0.0, 0.0, 0.0, 1.0);
+const vec4 white = vec4(1.0);
 
 /*
 Gets the interpolation value for the UV.
 Reference: https://godotshaders.com/shader/linear-gradient/
 */
-float get_pos(vec2 uv)
-{
+float get_pos(vec2 uv) {
 	float p = position + 0.5;
 	vec2 p_uv = uv - p;
 	float rot = p_uv.x * cos(radians(angle)) - p_uv.y * sin(radians(angle)); 
@@ -31,24 +27,49 @@ float get_pos(vec2 uv)
 }
 
 /*
-Gets the threshold data for a UV given the 4x4 bayer dither matrix.
-Reference: https://maximmcnair.com/p/webgl-dithering
+Gets the gradient color.
+Reference: https://godotshaders.com/shader/dither-gradient-shader/
 */
-vec4 dither4x4(vec2 uv, float g) {
-	float dither_amount = 2.0;
-	int x = int(mod(uv.x, dither_amount));
-	int y = int(mod(uv.y, dither_amount));
-	int index = x + y * int(dither_amount);
-	float limit = (float(bayer_2x2[index]) + 1.0) / (1.0 + 4.0);
-	return g < limit ? color_1 : color_2;
+vec4 dither_gradient(vec2 uv, sampler2D t) {
+	/*
+	Multiply by 5.0 to try and match pixel size on screen. Need to update
+	this to determine the correct value based on texture size.
+	*/
+	vec2 t_size = vec2(textureSize(t, 0)) * 5.0;
+	vec2 t_uv = floor(uv * t_size) / t_size;
+	vec4 g_col = mix(black, white, get_pos(t_uv));
+
+	/*
+	calculate pixel luminosity
+	(https://stackoverflow.com/questions/596216/formula-to-determine-brightness-of-rgb-color)
+	*/
+	float lum = (g_col.r * 0.299) + (g_col.g * 0.587) + (g_col.b * 0.114);
+	lum = clamp(lum, 0.0, 1.0);
+	
+	// map the dither texture.
+	ivec2 noise_size = textureSize(u_dither_tex, 0);
+	vec2 inv_noise_size = vec2(1.0 / float(noise_size.x), 1.0 / float(noise_size.y));
+	vec2 noise_uv = uv * inv_noise_size * vec2(float(t_size.x), float(t_size.y));
+	float threshold = texture(u_dither_tex, noise_uv).r;
+	
+	/*
+	adjust the dither slightly so min and max aren't quite at 0.0 and 1.0
+	otherwise we wouldn't get fullly dark and fully light dither patterns
+	at lum 0.0 and 1.0
+	*/
+	threshold = threshold * 0.99 + 0.005;
+	
+	/*
+	The lower lum is, the fewer pixels will be below the dither threshold,
+	 and thus will use color_1, and vice-versa.
+	*/
+	return lum < threshold ? color_1 : color_2;
 }
 
-void fragment()
-{
+void fragment() {
 	vec4 p_color = texture(TEXTURE, UV);
-	// Only apply gradient to override color.
-	if(override_color == p_color) {
-		COLOR = dither4x4(UV, get_pos(UV));
+	if (override_color == p_color) {
+		COLOR = dither_gradient(UV, TEXTURE);
 	} else {
 		COLOR = p_color;
 	}
