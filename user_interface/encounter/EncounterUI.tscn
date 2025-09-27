@@ -26,6 +26,8 @@ theme = ExtResource( 8 )
 script = ExtResource( 2 )
 
 [node name="InitiativeTracker" parent="." instance=ExtResource( 10 )]
+margin_top = 2.0
+margin_bottom = 36.0
 
 [node name="SubOptions" type="ScrollContainer" parent="."]
 anchor_left = 0.189

@@ -137,7 +137,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.92, 3 ) ]
+"values": [ Vector2( 0.92, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("InitiativeSlots/InitiativeSlot0:texture:region")
@@ -161,7 +161,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 51.284, 3 ) ]
+"values": [ Vector2( 51.284, 0 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("InitiativeSlots/InitiativeSlot2:rect_position")
@@ -173,7 +173,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 102.654, 3 ) ]
+"values": [ Vector2( 102.654, 0 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("InitiativeSlots/InitiativeSlot3:rect_position")
@@ -185,7 +185,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 153.94, 3 ) ]
+"values": [ Vector2( 153.94, 0 ) ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("InitiativeSlots/InitiativeSlot4:rect_position")
@@ -197,7 +197,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 204.994, 3 ) ]
+"values": [ Vector2( 204.994, 0 ) ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("InitiativeSlots/InitiativeSlot5:rect_position")
@@ -209,7 +209,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 256.18, 3 ) ]
+"values": [ Vector2( 256.18, 0 ) ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("InitiativeSlots/InitiativeSlot6:rect_position")
@@ -221,7 +221,7 @@ tracks/7/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 307.278, 3 ) ]
+"values": [ Vector2( 307.278, 0 ) ]
 }
 tracks/8/type = "value"
 tracks/8/path = NodePath("InitiativeSlots/InitiativeSlot7:rect_position")
@@ -233,7 +233,7 @@ tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 358.452, 3 ) ]
+"values": [ Vector2( 358.452, 0 ) ]
 }
 tracks/9/type = "value"
 tracks/9/path = NodePath("InitiativeSlots/InitiativeSlot8:rect_position")
@@ -245,7 +245,7 @@ tracks/9/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 409.764, 3 ) ]
+"values": [ Vector2( 409.764, 0 ) ]
 }
 tracks/10/type = "value"
 tracks/10/path = NodePath("InitiativeSlots/InitiativeSlot9:rect_position")
@@ -257,7 +257,7 @@ tracks/10/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 460.8, 3 ) ]
+"values": [ Vector2( 460.8, 0 ) ]
 }
 tracks/11/type = "value"
 tracks/11/path = NodePath("InitiativeSlots/InitiativeSlot9:modulate")
@@ -278,15 +278,15 @@ length = 0.583333
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/path = NodePath("InitiativeSlots/InitiativeSlot0:rect_position")
-tracks/0/interp = 0
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.583333 ),
+"transitions": PoolRealArray( 0.5, 4 ),
 "update": 0,
-"values": [ Vector2( 50.92, 3 ), Vector2( 37.655, 3 ), Vector2( 26.43, 3 ), Vector2( 17.247, 3 ), Vector2( 10.107, 3 ), Vector2( 5.002, 3 ), Vector2( 1.94, 3 ), Vector2( 0.92, 3 ) ]
+"values": [ Vector2( 50.92, 0 ), Vector2( 0.92, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("InitiativeSlots/InitiativeSlot0:texture:region")
@@ -302,99 +302,99 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("InitiativeSlots/InitiativeSlot1:rect_position")
-tracks/2/interp = 0
+tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.583333 ),
+"transitions": PoolRealArray( 0.5, 4 ),
 "update": 0,
-"values": [ Vector2( 103.284, 3 ), Vector2( 89.488, 3 ), Vector2( 77.815, 3 ), Vector2( 68.264, 3 ), Vector2( 60.835, 3 ), Vector2( 55.529, 3 ), Vector2( 52.345, 3 ), Vector2( 51.284, 3 ) ]
+"values": [ Vector2( 103.284, 0 ), Vector2( 51.284, 0 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("InitiativeSlots/InitiativeSlot2:rect_position")
-tracks/3/interp = 0
+tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.583333 ),
+"transitions": PoolRealArray( 0.5, 4 ),
 "update": 0,
-"values": [ Vector2( 153.654, 3 ), Vector2( 140.123, 3 ), Vector2( 128.674, 3 ), Vector2( 119.307, 3 ), Vector2( 112.021, 3 ), Vector2( 106.817, 3 ), Vector2( 103.695, 3 ), Vector2( 102.654, 3 ) ]
+"values": [ Vector2( 153.654, 0 ), Vector2( 102.654, 0 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("InitiativeSlots/InitiativeSlot3:rect_position")
-tracks/4/interp = 0
+tracks/4/interp = 2
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.583333 ),
+"transitions": PoolRealArray( 0.5, 4 ),
 "update": 0,
-"values": [ Vector2( 204.94, 3 ), Vector2( 191.409, 3 ), Vector2( 179.96, 3 ), Vector2( 170.593, 3 ), Vector2( 163.307, 3 ), Vector2( 158.103, 3 ), Vector2( 154.981, 3 ), Vector2( 153.94, 3 ) ]
+"values": [ Vector2( 204.94, 0 ), Vector2( 153.94, 0 ) ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("InitiativeSlots/InitiativeSlot4:rect_position")
-tracks/5/interp = 0
+tracks/5/interp = 2
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.583333 ),
+"transitions": PoolRealArray( 0.5, 4 ),
 "update": 0,
-"values": [ Vector2( 255.994, 3 ), Vector2( 242.463, 3 ), Vector2( 231.014, 3 ), Vector2( 221.647, 3 ), Vector2( 214.361, 3 ), Vector2( 209.157, 3 ), Vector2( 206.035, 3 ), Vector2( 204.994, 3 ) ]
+"values": [ Vector2( 255.994, 0 ), Vector2( 204.994, 0 ) ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("InitiativeSlots/InitiativeSlot5:rect_position")
-tracks/6/interp = 0
+tracks/6/interp = 2
 tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.583333 ),
+"transitions": PoolRealArray( 0.5, 4 ),
 "update": 0,
-"values": [ Vector2( 307.18, 3 ), Vector2( 293.644, 3 ), Vector2( 282.2, 3 ), Vector2( 272.833, 3 ), Vector2( 265.547, 3 ), Vector2( 260.343, 3 ), Vector2( 257.221, 3 ), Vector2( 256.18, 3 ) ]
+"values": [ Vector2( 307.18, 0 ), Vector2( 256.18, 0 ) ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("InitiativeSlots/InitiativeSlot6:rect_position")
-tracks/7/interp = 0
+tracks/7/interp = 2
 tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.583333 ),
+"transitions": PoolRealArray( 0.5, 4 ),
 "update": 0,
-"values": [ Vector2( 358.278, 3 ), Vector2( 344.747, 3 ), Vector2( 333.298, 3 ), Vector2( 323.931, 3 ), Vector2( 316.645, 3 ), Vector2( 311.441, 3 ), Vector2( 308.319, 3 ), Vector2( 307.278, 3 ) ]
+"values": [ Vector2( 358.278, 0 ), Vector2( 307.278, 0 ) ]
 }
 tracks/8/type = "value"
 tracks/8/path = NodePath("InitiativeSlots/InitiativeSlot7:rect_position")
-tracks/8/interp = 0
+tracks/8/interp = 2
 tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.583333 ),
+"transitions": PoolRealArray( 0.5, 4 ),
 "update": 0,
-"values": [ Vector2( 410.452, 3 ), Vector2( 396.656, 3 ), Vector2( 384.983, 3 ), Vector2( 375.432, 3 ), Vector2( 368.003, 3 ), Vector2( 362.697, 3 ), Vector2( 359.513, 3 ), Vector2( 358.452, 3 ) ]
+"values": [ Vector2( 410.452, 0 ), Vector2( 358.452, 0 ) ]
 }
 tracks/9/type = "value"
 tracks/9/path = NodePath("InitiativeSlots/InitiativeSlot8:rect_position")
-tracks/9/interp = 0
+tracks/9/interp = 2
 tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.583333 ),
+"transitions": PoolRealArray( 0.5, 4 ),
 "update": 0,
-"values": [ Vector2( 460.764, 3 ), Vector2( 447.233, 3 ), Vector2( 435.788, 3 ), Vector2( 426.417, 3 ), Vector2( 419.131, 3 ), Vector2( 413.927, 3 ), Vector2( 410.805, 3 ), Vector2( 409.764, 3 ) ]
+"values": [ Vector2( 460.764, 0 ), Vector2( 409.764, 0 ) ]
 }
 tracks/10/type = "value"
 tracks/10/path = NodePath("InitiativeSlots/InitiativeSlot9:rect_position")
@@ -406,7 +406,7 @@ tracks/10/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 460.8, 3 ) ]
+"values": [ Vector2( 460.8, 0 ) ]
 }
 tracks/11/type = "value"
 tracks/11/path = NodePath("InitiativeSlots/InitiativeSlot9:modulate")
@@ -443,8 +443,8 @@ anchor_right = 1.0
 margin_left = 66.0
 margin_top = 4.0
 margin_right = -62.0
-margin_bottom = 44.0
-rect_min_size = Vector2( 512, 40 )
+margin_bottom = 38.0
+rect_min_size = Vector2( 512, 0 )
 mouse_filter = 2
 theme = ExtResource( 3 )
 script = ExtResource( 1 )
@@ -475,110 +475,121 @@ mouse_filter = 2
 [node name="InitiativeSlot0" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 1 )
 anchor_left = 0.035
+anchor_top = 0.5
 anchor_right = 0.035
-anchor_bottom = 0.0
+anchor_bottom = 0.5
 margin_left = -17.0
-margin_top = 3.0
+margin_top = -17.0
 margin_right = 17.0
-margin_bottom = 37.0
+margin_bottom = 17.0
 texture = SubResource( 13 )
 
 [node name="InitiativeSlot1" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 2 )
-anchor_left = 0.1
-anchor_right = 0.1
-anchor_bottom = 0.0
-margin_left = 0.0839996
-margin_top = 3.0
-margin_right = 34.084
-margin_bottom = 37.0
+anchor_left = 0.133
+anchor_top = 0.5
+anchor_right = 0.133
+anchor_bottom = 0.5
+margin_left = -16.812
+margin_top = -17.0
+margin_right = 17.1881
+margin_bottom = 17.0
 texture = SubResource( 14 )
 
 [node name="InitiativeSlot2" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 3 )
-anchor_left = 0.2
-anchor_right = 0.2
-anchor_bottom = 0.0
-margin_left = 0.253998
-margin_top = 3.0
-margin_right = 34.254
-margin_bottom = 37.0
+anchor_left = 0.234
+anchor_top = 0.5
+anchor_right = 0.234
+anchor_bottom = 0.5
+margin_left = -17.154
+margin_top = -17.0
+margin_right = 16.8461
+margin_bottom = 17.0
 texture = SubResource( 15 )
 
 [node name="InitiativeSlot3" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 4 )
-anchor_left = 0.301
-anchor_right = 0.301
-anchor_bottom = 0.0
-margin_left = -0.171997
-margin_top = 3.0
-margin_right = 33.828
-margin_bottom = 37.0
+anchor_left = 0.334
+anchor_top = 0.5
+anchor_right = 0.334
+anchor_bottom = 0.5
+margin_left = -17.068
+margin_top = -17.0
+margin_right = 16.932
+margin_bottom = 17.0
 texture = SubResource( 16 )
 
 [node name="InitiativeSlot4" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 5 )
-anchor_left = 0.4
-anchor_right = 0.4
-anchor_bottom = 0.0
-margin_left = 0.194
-margin_top = 3.0
-margin_right = 34.194
-margin_bottom = 37.0
+anchor_left = 0.434
+anchor_top = 0.5
+anchor_right = 0.434
+anchor_bottom = 0.5
+margin_left = -17.214
+margin_top = -17.0
+margin_right = 16.7873
+margin_bottom = 17.0
 texture = SubResource( 17 )
 
 [node name="InitiativeSlot5" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 6 )
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.0
-margin_left = 0.179993
-margin_top = 3.0
-margin_right = 34.18
-margin_bottom = 37.0
+anchor_left = 0.534
+anchor_top = 0.5
+anchor_right = 0.534
+anchor_bottom = 0.5
+margin_left = -17.228
+margin_top = -17.0
+margin_right = 16.772
+margin_bottom = 17.0
 texture = SubResource( 18 )
 
 [node name="InitiativeSlot6" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 7 )
-anchor_left = 0.6
-anchor_right = 0.6
-anchor_bottom = 0.0
-margin_left = 0.0780029
-margin_top = 3.0
-margin_right = 34.078
-margin_bottom = 37.0
+anchor_left = 0.633
+anchor_top = 0.5
+anchor_right = 0.633
+anchor_bottom = 0.5
+margin_left = -16.818
+margin_top = -17.0
+margin_right = 17.182
+margin_bottom = 17.0
 texture = SubResource( 19 )
 
 [node name="InitiativeSlot7" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 8 )
-anchor_left = 0.7
-anchor_right = 0.7
-anchor_bottom = 0.0
-margin_left = 0.052002
-margin_top = 3.0
-margin_right = 34.0521
-margin_bottom = 37.0
+anchor_left = 0.733
+anchor_top = 0.5
+anchor_right = 0.733
+anchor_bottom = 0.5
+margin_left = -16.844
+margin_top = -17.0
+margin_right = 17.156
+margin_bottom = 17.0
 texture = SubResource( 20 )
 
 [node name="InitiativeSlot8" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 9 )
-anchor_left = 0.8
-anchor_right = 0.8
-anchor_bottom = 0.0
-margin_left = 0.164001
-margin_top = 3.0
-margin_right = 34.164
-margin_bottom = 37.0
+anchor_left = 0.834
+anchor_top = 0.5
+anchor_right = 0.834
+anchor_bottom = 0.5
+margin_left = -17.244
+margin_top = -17.0
+margin_right = 16.756
+margin_bottom = 17.0
 texture = SubResource( 21 )
 
 [node name="InitiativeSlot9" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 10 )
-anchor_left = 0.9
-anchor_right = 0.9
-anchor_bottom = 0.0
-margin_top = 3.0
-margin_right = 34.0
-margin_bottom = 37.0
+anchor_left = 0.933
+anchor_top = 0.5
+anchor_right = 0.933
+anchor_bottom = 0.5
+margin_left = -16.896
+margin_top = -17.0
+margin_right = 17.104
+margin_bottom = 17.0
 texture = SubResource( 22 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
