@@ -5,7 +5,7 @@
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=3]
 [ext_resource path="res://art/ui/Init.png" type="Texture" id=4]
 [ext_resource path="res://art/ui/ThemeBlueSigil/panel.png" type="Texture" id=5]
-[ext_resource path="res://user_interface/encounter/InitiativeTracker/change_color.gdshader" type="Shader" id=14]
+[ext_resource path="res://user_interface/shaders/change_color.gdshader" type="Shader" id=14]
 
 [sub_resource type="StyleBoxTexture" id=24]
 texture = ExtResource( 5 )
@@ -445,6 +445,7 @@ margin_top = 4.0
 margin_right = -62.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 512, 40 )
+mouse_filter = 2
 theme = ExtResource( 3 )
 script = ExtResource( 1 )
 
@@ -452,6 +453,7 @@ script = ExtResource( 1 )
 anchor_right = 0.07
 anchor_bottom = 1.0
 margin_right = 0.16
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 24 )
@@ -461,12 +463,14 @@ anchor_left = 0.07
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 0.16
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="InitiativeSlots" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
 [node name="InitiativeSlot0" parent="InitiativeSlots" instance=ExtResource( 2 )]
 material = SubResource( 1 )

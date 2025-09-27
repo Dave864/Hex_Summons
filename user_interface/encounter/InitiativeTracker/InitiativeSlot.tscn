@@ -5,8 +5,8 @@
 [ext_resource path="res://art/ui/Init.png" type="Texture" id=3]
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=4]
 [ext_resource path="res://art/ui/Number Panel.png" type="Texture" id=5]
-[ext_resource path="res://user_interface/encounter/InitiativeTracker/atlas_circle_mask.gdshader" type="Shader" id=6]
-[ext_resource path="res://user_interface/encounter/InitiativeTracker/change_color.gdshader" type="Shader" id=7]
+[ext_resource path="res://user_interface/shaders/atlas_circle_mask.gdshader" type="Shader" id=6]
+[ext_resource path="res://user_interface/shaders/change_color.gdshader" type="Shader" id=7]
 
 [sub_resource type="ShaderMaterial" id=6]
 resource_local_to_scene = true
@@ -33,6 +33,7 @@ anchor_right = 0.053
 anchor_bottom = 0.094
 margin_right = 0.079998
 margin_bottom = 0.16
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 4 )
@@ -66,6 +67,7 @@ margin_left = 19.0
 margin_top = 17.0
 margin_right = -3.0
 margin_bottom = -3.0
+mouse_filter = 2
 texture = ExtResource( 5 )
 stretch_mode = 6
 
