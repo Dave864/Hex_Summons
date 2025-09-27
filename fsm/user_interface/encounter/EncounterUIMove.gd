@@ -21,9 +21,14 @@ func enter(_msg := {}) -> void:
 
 # Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_select"):
-		if encounter_ui.get_focus_owner() == encounter_ui.movement_button:
-			SignalBus.emit_move_path_requested()
+	if (
+		event.is_action_pressed("ui_select")
+		and (
+			InputController.source_is_keymouse()
+			or encounter_ui.get_focus_owner() == encounter_ui.movement_button
+		)
+	):
+		SignalBus.emit_move_path_requested()
 	if event.is_action_pressed("ui_encounter_player_end"):
 		_end_selected()
 	if (
