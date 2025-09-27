@@ -1,10 +1,19 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/initiative_tracker.gd" type="Script" id=1]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/InitiativeSlot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=3]
 [ext_resource path="res://art/ui/Init.png" type="Texture" id=4]
+[ext_resource path="res://art/ui/ThemeBlueSigil/panel.png" type="Texture" id=5]
 [ext_resource path="res://user_interface/encounter/InitiativeTracker/change_color.gdshader" type="Shader" id=14]
+
+[sub_resource type="StyleBoxTexture" id=24]
+texture = ExtResource( 5 )
+region_rect = Rect2( 24, 0, 12, 12 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -445,6 +454,7 @@ anchor_bottom = 1.0
 margin_right = 0.16
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/panel = SubResource( 24 )
 
 [node name="Pending" type="Panel" parent="."]
 anchor_left = 0.07
@@ -474,7 +484,7 @@ material = SubResource( 2 )
 anchor_left = 0.1
 anchor_right = 0.1
 anchor_bottom = 0.0
-margin_left = 0.0839958
+margin_left = 0.0839996
 margin_top = 3.0
 margin_right = 34.084
 margin_bottom = 37.0
@@ -485,7 +495,7 @@ material = SubResource( 3 )
 anchor_left = 0.2
 anchor_right = 0.2
 anchor_bottom = 0.0
-margin_left = 0.254005
+margin_left = 0.253998
 margin_top = 3.0
 margin_right = 34.254
 margin_bottom = 37.0
@@ -496,7 +506,7 @@ material = SubResource( 4 )
 anchor_left = 0.301
 anchor_right = 0.301
 anchor_bottom = 0.0
-margin_left = -0.172028
+margin_left = -0.171997
 margin_top = 3.0
 margin_right = 33.828
 margin_bottom = 37.0
@@ -507,7 +517,7 @@ material = SubResource( 5 )
 anchor_left = 0.4
 anchor_right = 0.4
 anchor_bottom = 0.0
-margin_left = 0.194016
+margin_left = 0.194
 margin_top = 3.0
 margin_right = 34.194
 margin_bottom = 37.0
@@ -518,7 +528,7 @@ material = SubResource( 6 )
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.0
-margin_left = 0.180023
+margin_left = 0.179993
 margin_top = 3.0
 margin_right = 34.18
 margin_bottom = 37.0
@@ -540,9 +550,9 @@ material = SubResource( 8 )
 anchor_left = 0.7
 anchor_right = 0.7
 anchor_bottom = 0.0
-margin_left = 0.0519714
+margin_left = 0.052002
 margin_top = 3.0
-margin_right = 34.052
+margin_right = 34.0521
 margin_bottom = 37.0
 texture = SubResource( 20 )
 
@@ -551,7 +561,7 @@ material = SubResource( 9 )
 anchor_left = 0.8
 anchor_right = 0.8
 anchor_bottom = 0.0
-margin_left = 0.163971
+margin_left = 0.164001
 margin_top = 3.0
 margin_right = 34.164
 margin_bottom = 37.0

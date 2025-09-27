@@ -1,7 +1,14 @@
+/*
+TODO: Come back to this shader when more help is obtained. There are still issues
+with getting the dither effect to match the screen resolution and currently has
+to be manually set. There is also an issue where this shader does not work well
+with StyleBoxTextures as the pattern gets compressed within the texture margins.
+*/
 shader_type canvas_item;
 render_mode unshaded;
 
 uniform sampler2D u_dither_tex;
+uniform vec2 u_pix_size = vec2(1.0, 1.0);
 uniform vec4 override_color : hint_color = vec4(1.0);
 uniform vec4 color_1 : hint_color = vec4(1.0);
 uniform vec4 color_2 : hint_color = vec4(0.0, 0.0, 0.0, 1.0);
@@ -31,11 +38,8 @@ Gets the gradient color.
 Reference: https://godotshaders.com/shader/dither-gradient-shader/
 */
 vec4 dither_gradient(vec2 uv, sampler2D t) {
-	/*
-	Multiply by 5.0 to try and match pixel size on screen. Need to update
-	this to determine the correct value based on texture size.
-	*/
-	vec2 t_size = vec2(textureSize(t, 0)) * 5.0;
+	// Set the pixel size by dividing the texture size by a defined scale
+	vec2 t_size = vec2(textureSize(t, 0)) / u_pix_size;
 	vec2 t_uv = floor(uv * t_size) / t_size;
 	vec4 g_col = mix(black, white, get_pos(t_uv));
 

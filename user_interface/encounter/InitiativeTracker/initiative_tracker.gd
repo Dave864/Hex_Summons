@@ -65,8 +65,8 @@ func progress_initiative() -> void:
 		for rd in range(_init_order.size() - 1):
 			_init_order[rd] = _init_order[rd + 1]
 		_calculate_round_initiative(_init_order.size() - 1)
-	_update_display()
 	ap.play("shift")
+	_update_display()
 	yield(ap, "animation_finished")
 
 
