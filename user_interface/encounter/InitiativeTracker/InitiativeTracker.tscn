@@ -528,7 +528,7 @@ anchor_right = 0.434
 anchor_bottom = 0.5
 margin_left = -17.214
 margin_top = -17.0
-margin_right = 16.7873
+margin_right = 16.7874
 margin_bottom = 17.0
 texture = SubResource( 17 )
 

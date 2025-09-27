@@ -13,6 +13,8 @@ const COLOR_GREY: Color = Color("7f7f7f")
 export(NodePath) var sigil_ref = NodePath("")
 export(NodePath) var icon_ref = NodePath("")
 
+var _mouse_came_back: bool = false
+
 onready var sigil: TextureRect = get_node_or_null(sigil_ref)
 onready var icon: TextureRect = get_node_or_null(icon_ref)
 onready var label: Label = $Label
@@ -56,14 +58,23 @@ func _check_for_required_params() -> void:
 
 
 # Grabs the focus for the UI.
-func _on_PlayerOptionButton_mouse_entered():
+func _on_PlayerOptionButton_mouse_entered() -> void:
 	if disabled:
 		return
+	_mouse_came_back = true
 	call_deferred("grab_focus")
 
 
 # Plays focused animation.
-func _on_PlayerOptionButton_focus_entered():
+func _on_PlayerOptionButton_focus_entered() -> void:
+	# Don't do anything if the mouse was still hovering over button when focus
+	# came back. Weird animation errors happen.
+	if (
+		InputController.source_is_keymouse()
+		and is_hovered()
+		and not _mouse_came_back
+	):
+		return
 	if pressed:
 		ap_focus.play("focus_selected")
 		ap_icon.play("selected_start")
@@ -75,14 +86,15 @@ func _on_PlayerOptionButton_focus_entered():
 
 
 # Resets all animations when focus is gone.
-func _on_PlayerOptionButton_focus_exited():
+func _on_PlayerOptionButton_focus_exited() -> void:
+	_mouse_came_back = false
 	if not pressed:
 		ap_icon.play("RESET")
 	ap_focus.play("RESET")
 
 
 # Plays the appropriate animations when the button is toggled.
-func _on_PlayerOptionButton_toggled(button_pressed: bool):
+func _on_PlayerOptionButton_toggled(button_pressed: bool) -> void:
 	if button_pressed:
 		ap_focus.play("focus_selected")
 		ap_icon.play("selected_loop")
