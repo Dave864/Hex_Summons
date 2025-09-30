@@ -7,7 +7,6 @@ with StyleBoxTextures as the pattern gets compressed within the texture margins.
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform sampler2D u_dither_tex;
 uniform vec2 u_pix_size = vec2(1.0, 1.0);
 uniform vec4 override_color : hint_color = vec4(1.0);
 uniform vec4 color_1 : hint_color = vec4(1.0);
@@ -21,6 +20,8 @@ uniform float angle : hint_range(0.0, 360.0) = 0.0;
 
 const vec4 black = vec4(0.0, 0.0, 0.0, 1.0);
 const vec4 white = vec4(1.0);
+// Bayer Matrix
+const float bm2x2[4] = float[4] (0.0, 2.0, 3.0, 1.0);
 
 /*
 Gets the interpolation value for the UV.
@@ -50,11 +51,13 @@ vec4 dither_gradient(vec2 uv, sampler2D t) {
 	float lum = (g_col.r * 0.299) + (g_col.g * 0.587) + (g_col.b * 0.114);
 	lum = clamp(lum, 0.0, 1.0);
 	
-	// map the dither texture.
-	ivec2 noise_size = textureSize(u_dither_tex, 0);
-	vec2 inv_noise_size = vec2(1.0 / float(noise_size.x), 1.0 / float(noise_size.y));
-	vec2 noise_uv = uv * inv_noise_size * vec2(float(t_size.x), float(t_size.y));
-	float threshold = texture(u_dither_tex, noise_uv).r;
+	/*
+	map the dither texture.
+	https://blog.maximeheckel.com/posts/the-art-of-dithering-and-retro-shading-web/
+	*/
+	int x = int(uv.x * t_size.x) % 2;
+	int y = int(uv.y * t_size.y) % 2;
+	float threshold = bm2x2[y * 2 + x] / 4.0;
 	
 	/*
 	adjust the dither slightly so min and max aren't quite at 0.0 and 1.0
@@ -71,10 +74,10 @@ vec4 dither_gradient(vec2 uv, sampler2D t) {
 }
 
 void fragment() {
-	vec4 p_color = texture(TEXTURE, UV);
-	if (override_color == p_color) {
+//	vec4 p_color = texture(TEXTURE, UV);
+//	if (override_color == p_color) {
 		COLOR = dither_gradient(UV, TEXTURE);
-	} else {
-		COLOR = p_color;
-	}
+//	} else {
+//		COLOR = p_color;
+//	}
 }
