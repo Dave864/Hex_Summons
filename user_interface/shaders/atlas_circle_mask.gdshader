@@ -27,5 +27,5 @@ vec2 texture_to_region_uv(vec2 uv, vec2 tps) {
 void fragment() {
 	COLOR = texture(TEXTURE, UV);
 	vec2 region_uv = texture_to_region_uv(UV, TEXTURE_PIXEL_SIZE);
-	COLOR.a = 1.0 - circle(region_uv - vec2(center_x, center_x), radius, 0.0);
+	COLOR.a = 1.0 - circle(region_uv - vec2(center_x, center_y), radius, 0.0);
 }
