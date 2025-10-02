@@ -15,11 +15,6 @@ var _polarities: Dictionary = {
 }
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_set_to_default()
-
-
 # Swap the polarities of the given elements.
 func swap_elements(element_1: int, element_2: int) -> void:
 	if (
@@ -60,7 +55,7 @@ func invert_right_polarities() -> void:
 	_swap_polarities_at_index(1)
 
 
-# Shift the polarities of all elements counter-clockwise.
+# Shift the polarities of all elements "counter-clockwise".
 # L: [0, 1] => [1, 3]
 # D: [2, 3] => [0, 2]
 func shift_polarities_ccw() -> void:
@@ -71,7 +66,7 @@ func shift_polarities_ccw() -> void:
 	_polarities[DARK][0] = first_light_element
 
 
-# Shift the polarities of all elements clockwise.
+# Shift the polarities of all elements "clockwise".
 # L: [0, 1] => [2, 0]
 # D: [2, 3] => [3, 1]
 func shift_polarities_cw() -> void:
@@ -90,7 +85,7 @@ func set_elements_to_light(element_1: int, element_2: int) -> void:
 	):
 		printerr("Cannot assign polarity to a non-core element.")
 		return
-	_set_elements_to_polarity(LIGHT, DARK, element_1, element_2)
+	_set_elements_to_polarity(LIGHT, element_1, element_2)
 
 
 # Changes the elements that are of the Dark polarity.
@@ -101,7 +96,7 @@ func set_elements_to_dark(element_1: int, element_2: int) -> void:
 	):
 		printerr("Cannot assign polarity to a non-core element.")
 		return
-	_set_elements_to_polarity(DARK, LIGHT, element_1, element_2)
+	_set_elements_to_polarity(DARK, element_1, element_2)
 
 
 # Get the elements of the Light polarity.
@@ -115,7 +110,7 @@ func get_dark_elements() -> Array:
 
 
 # Gets the polarity of the given element, as defined by ElementalStat.
-func get_element_polarity(element: int) -> int:
+func get_polarity(element: int) -> int:
 	if element == LIGHT or element == DARK:
 		return element
 	elif element == _polarities[LIGHT][0] or element == _polarities[LIGHT][1]:
@@ -126,13 +121,22 @@ func get_element_polarity(element: int) -> int:
 		return -1
 
 
-# 
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_set_to_default()
+
+
+# Sets the two elements to the specified polarity.
 func _set_elements_to_polarity(
 	target_polarity: int,
-	inverse_polarity: int,
 	element_1: int,
 	element_2: int
 ) -> void:
+	assert(
+			target_polarity == LIGHT or target_polarity == DARK,
+			"target_polarity is a core element, not a 'polar' element."
+	)
+	var inverse_polarity: int = LIGHT if target_polarity == DARK else DARK
 	var element_1_details: Array = _get_polarity_and_index(element_1)
 	var element_2_details: Array = _get_polarity_and_index(element_2)
 	
@@ -168,7 +172,8 @@ func _set_elements_to_polarity(
 	_polarities[target_polarity][1] = element_2
 
 
-# Gets the polarity and index of a given element.
+# Gets the polarity and index of a given element. Returns the details in an
+# array: [polarity, index]
 func _get_polarity_and_index(element: int) -> Array:
 	for p in _polarities:
 		for i in len(p):
