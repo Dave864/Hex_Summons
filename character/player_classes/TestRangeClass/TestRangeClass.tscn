@@ -7,7 +7,7 @@
 [ext_resource path="res://actions/Beam/Beam.tscn" type="PackedScene" id=5]
 [ext_resource path="res://actions/Nova/Nova.tscn" type="PackedScene" id=6]
 [ext_resource path="res://actions/Blast/Blast.tscn" type="PackedScene" id=7]
-[ext_resource path="res://actions/cooldown.gd" type="Script" id=8]
+[ext_resource path="res://character_ai/action_conditions/cooldown.gd" type="Script" id=8]
 
 [node name="TestRangeClass" type="Node"]
 script = ExtResource( 1 )

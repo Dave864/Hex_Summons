@@ -16,11 +16,12 @@
 [ext_resource path="res://character_ai/character_ai.gd" type="Script" id=14]
 [ext_resource path="res://actions/Shot/Shot.tscn" type="PackedScene" id=15]
 [ext_resource path="res://actions/Blast/Blast.tscn" type="PackedScene" id=16]
-[ext_resource path="res://actions/cooldown.gd" type="Script" id=17]
+[ext_resource path="res://character_ai/action_conditions/cooldown.gd" type="Script" id=17]
 [ext_resource path="res://character_ai/action_behavior.gd" type="Script" id=18]
 [ext_resource path="res://actions/Empty/Empty.tscn" type="PackedScene" id=19]
 [ext_resource path="res://character_ai/action_conditions/group_condition.gd" type="Script" id=20]
 [ext_resource path="res://character/scripts/encounter_sprite.gd" type="Script" id=21]
+
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.1
