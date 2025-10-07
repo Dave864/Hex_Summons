@@ -14,5 +14,5 @@ enum Element {
 }
 
 export(Element) var element = Element.EARTH
-export var portrait: Texture = null
+export var portrait: Texture = preload("res://art/icon.png")
 export(Resource) var effect_bonus =  null
