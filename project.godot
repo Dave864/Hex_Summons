@@ -107,7 +107,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Cooldown",
 "language": "GDScript",
-"path": "res://actions/cooldown.gd"
+"path": "res://character_ai/action_conditions/cooldown.gd"
 }, {
 "base": "Effect",
 "class": "DamageEffect",
@@ -413,6 +413,16 @@ _global_script_classes=[ {
 "class": "Tiles",
 "language": "GDScript",
 "path": "res://hex_map/scripts/tiles.gd"
+}, {
+"base": "ActionCondition",
+"class": "WispCost",
+"language": "GDScript",
+"path": "res://character_ai/action_conditions/wisp_cost.gd"
+}, {
+"base": "Node",
+"class": "WispPool",
+"language": "GDScript",
+"path": "res://wisps/wisp_pool.gd"
 } ]
 _global_script_class_icons={
 "Action": "",
@@ -495,7 +505,9 @@ _global_script_class_icons={
 "SubOptionButton": "",
 "SubOptions": "",
 "ThreatTracker": "",
-"Tiles": ""
+"Tiles": "",
+"WispCost": "",
+"WispPool": ""
 }
 
 [application]
