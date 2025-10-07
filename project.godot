@@ -414,10 +414,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://hex_map/scripts/tiles.gd"
 }, {
+"base": "Resource",
+"class": "Wisp",
+"language": "GDScript",
+"path": "res://wisps/wisp.gd"
+}, {
 "base": "ActionCondition",
 "class": "WispCost",
 "language": "GDScript",
 "path": "res://character_ai/action_conditions/wisp_cost.gd"
+}, {
+"base": "Resource",
+"class": "WispEffect",
+"language": "GDScript",
+"path": "res://wisps/wisp_effect.gd"
 }, {
 "base": "Node",
 "class": "WispPool",
@@ -506,7 +516,9 @@ _global_script_class_icons={
 "SubOptions": "",
 "ThreatTracker": "",
 "Tiles": "",
+"Wisp": "",
 "WispCost": "",
+"WispEffect": "",
 "WispPool": ""
 }
 

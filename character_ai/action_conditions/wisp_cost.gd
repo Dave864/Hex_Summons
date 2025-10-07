@@ -54,8 +54,3 @@ func _ready():
 			assert(light_count > 0, SPENT_TYPE_ERROR)
 		Constants.Element.DARK:
 			assert(dark_count > 0, SPENT_TYPE_ERROR)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
