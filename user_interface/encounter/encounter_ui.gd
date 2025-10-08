@@ -168,6 +168,7 @@ func track_enemy(e: EnemyCharacter) -> void:
 			e.stats.get_stat(Stat.Type.CUR_HEALTH),
 			e.stats.get_stat(Stat.Type.CUR_HEALTH)
 	)
+	e_label.set_enemy_wisp_count()
 	e_label.set_text_alignment(Label.ALIGN_RIGHT)
 	e.stats.connect("health_changed", e_label, "_on_Character_hp_changed")
 	enemy_stats.add_child(e_label)
