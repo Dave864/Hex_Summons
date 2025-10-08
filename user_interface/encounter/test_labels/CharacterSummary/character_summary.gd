@@ -28,7 +28,7 @@ func set_player_wisp_count(wisp_pool: PlayerWispPool) -> void:
 	var text_format: String = "L: {0}\n{1}: {2}, {3}: {4}\n{5}: {6}, {7}: {8}\nD: {9}"
 	var l_elems: Array = ElementalPolarity.get_light_elements()
 	var d_elems: Array = ElementalPolarity.get_dark_elements()
-	text_format.format(
+	$WispCount.text = text_format.format(
 			[
 				wisp_pool.active_light_count(),
 				ELEMENT_TAGS[l_elems[0]],
