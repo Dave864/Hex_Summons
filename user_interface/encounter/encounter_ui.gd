@@ -155,6 +155,7 @@ func track_party_member(p: PlayerCharacter) -> void:
 			p.stats.get_stat(Stat.Type.CUR_HEALTH),
 			p.stats.get_stat(Stat.Type.CUR_HEALTH)
 	)
+	p_label.set_player_wisp_count(p.wisp_pool)
 	p_label.set_text_alignment(Label.ALIGN_LEFT)
 	p.stats.connect("health_changed", p_label, "_on_Character_hp_changed")
 	party_stats.add_child(p_label)
