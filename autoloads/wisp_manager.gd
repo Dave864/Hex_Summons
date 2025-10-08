@@ -16,6 +16,11 @@ func _ready():
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+# Gets all earth wisps, initializing their status.
+func _load_earth() -> void:
+	pass
+
+
+# Gets all fire wisps, initializing their status.
+func _load_fire() -> void:
+	pass

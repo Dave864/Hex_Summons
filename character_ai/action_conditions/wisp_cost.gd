@@ -19,7 +19,7 @@ export(int, 0, 4) var dark_count = 0
 # given type.
 export(Constants.Element) var spent_type = Constants.Element.EARTH
 
-onready var _wisp_pool = get_node(wisp_pool_ref)
+onready var _wisp_pool: WispPool = get_node(wisp_pool_ref)
 
 
 # Virtual function. Checks if the condition has been met given the current
