@@ -32,13 +32,13 @@ func set_player_wisp_count(wisp_pool: PlayerWispPool) -> void:
 			[
 				wisp_pool.active_light_count(),
 				ELEMENT_TAGS[l_elems[0]],
-				0,
+				wisp_pool.active_element_count(l_elems[0]),
 				ELEMENT_TAGS[l_elems[1]],
-				0,
+				wisp_pool.active_element_count(l_elems[1]),
 				ELEMENT_TAGS[d_elems[0]],
-				0,
+				wisp_pool.active_element_count(d_elems[0]),
 				ELEMENT_TAGS[d_elems[1]],
-				0,
+				wisp_pool.active_element_count(d_elems[1]),
 				wisp_pool.active_dark_count()
 			]
 	)
