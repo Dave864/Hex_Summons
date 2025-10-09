@@ -5,6 +5,11 @@ Base class for tracking the wisp pool for a character in an encounter.
 """
 
 
+# warning-ignore:unused_signal
+# This signal will be emitted in child classes.
+signal active_count_changed(element, count)
+
+
 var _active_count: Dictionary = {
 	Constants.Element.EARTH: 0,
 	Constants.Element.FIRE: 0,

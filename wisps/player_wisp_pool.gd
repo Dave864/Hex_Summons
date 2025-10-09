@@ -15,18 +15,23 @@ var wind: Dictionary = {}
 
 # Updates the state of the specified wisp to "active"
 func set_active(wisp_key: int) -> void:
+	var element: int
 	if earth.has(wisp_key):
+		element = Constants.Element.EARTH
 		earth[wisp_key] = true
-		_active_count[Constants.Element.EARTH] += 1
-	if fire.has(wisp_key):
+	elif fire.has(wisp_key):
+		element = Constants.Element.FIRE
 		fire[wisp_key] = true
-		_active_count[Constants.Element.FIRE] += 1
-	if water.has(wisp_key):
+	elif water.has(wisp_key):
+		element = Constants.Element.WATER
 		water[wisp_key] = true
-		_active_count[Constants.Element.WATER] += 1
-	if wind.has(wisp_key):
+	elif wind.has(wisp_key):
+		element = Constants.Element.WIND
 		wind[wisp_key] = true
-		_active_count[Constants.Element.WIND] += 1
+	else:
+		return
+	_active_count[element] += 1
+	emit_signal("active_count_changed", element, _active_count[element])
 
 
 # Gets the keys for the wisps that are used to pay for the specified element.
@@ -36,26 +41,30 @@ func pay_for_element(element: int) -> Array:
 	match element:
 		Constants.Element.EARTH:
 			var id: int = _deactivate_first_active(earth, element)
-			if id < 0:
+			if id >= 0:
 				return [id]
 		Constants.Element.FIRE:
 			var id: int = _deactivate_first_active(fire, element)
-			if id < 0:
+			if id >= 0:
 				return [id]
 		Constants.Element.WATER:
 			var id: int = _deactivate_first_active(water, element)
-			if id < 0:
+			if id >= 0:
 				return [id]
 		Constants.Element.WIND:
 			var id: int = _deactivate_first_active(wind, element)
-			if id < 0:
+			if id >= 0:
 				return [id]
 		Constants.Element.LIGHT:
 			var elems: Array = ElementalPolarity.get_light_elements()
-			return _deactivate_polar_active(elems[0], elems[1])
+			var ids: Array = _deactivate_polar_active(elems[0], elems[1])
+			emit_signal("active_count_changed", element, _active_count[element])
+			return ids
 		Constants.Element.DARK:
 			var elems: Array = ElementalPolarity.get_dark_elements()
-			return _deactivate_polar_active(elems[0], elems[1])
+			var ids: Array = _deactivate_polar_active(elems[0], elems[1])
+			emit_signal("active_count_changed", element, _active_count[element])
+			return ids
 	return []
 
 
@@ -79,6 +88,7 @@ func _deactivate_first_active(wisps: Dictionary, element: int) -> int:
 		if wisps[id]:
 			wisps[id] = false
 			_active_count[element] -= 1
+			emit_signal("active_count_changed", element, _active_count[element])
 			return id
 	return -1
 
