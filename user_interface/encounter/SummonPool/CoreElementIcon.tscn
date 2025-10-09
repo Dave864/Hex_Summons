@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://art/ui/SummonPool/Summon Core Gem.png" type="Texture" id=1]
+[ext_resource path="res://user_interface/encounter/SummonPool/core_element_icon.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -164,6 +165,11 @@ margin_right = 0.32
 margin_bottom = 0.0799994
 texture = SubResource( 1 )
 stretch_mode = 4
+script = ExtResource( 2 )
+earth_region = Vector2( 1, 31 )
+fire_region = Vector2( 1, 11 )
+water_region = Vector2( 1, 51 )
+wind_region = Vector2( 1, 71 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 3 )
@@ -175,3 +181,5 @@ anims/water_from = SubResource( 5 )
 anims/water_to = SubResource( 9 )
 anims/wind_from = SubResource( 6 )
 anims/wind_to = SubResource( 10 )
+
+[connection signal="animation_changed" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_changed"]

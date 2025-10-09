@@ -1,0 +1,78 @@
+tool
+class_name CoreElementIcon
+extends TextureRect
+"""
+Represents a core element in the UI, earth, fire, water, or wind. Manages
+the changes from one element to another.
+"""
+
+
+signal element_changed
+
+export(Constants.CoreElement) var element = Constants.CoreElement.EARTH setget set_element
+export var earth_region: Vector2 = Vector2(0,0)
+export var fire_region: Vector2 = Vector2(0,0)
+export var water_region: Vector2 = Vector2(0,0)
+export var wind_region: Vector2 = Vector2(0,0)
+
+onready var ap: AnimationPlayer = $AnimationPlayer
+
+
+# Sets the icon texture region to display the new element.
+func set_element(new_element: int) -> void:
+	if Engine.editor_hint and not is_node_ready():
+		yield(self, "ready")
+	match new_element:
+		Constants.CoreElement.EARTH:
+			_change_animation(new_element)
+			texture.region.position = earth_region
+		Constants.CoreElement.FIRE:
+			_change_animation(new_element)
+			texture.region.position = fire_region
+		Constants.CoreElement.WATER:
+			_change_animation(new_element)
+			texture.region.position = water_region
+		Constants.CoreElement.WIND:
+			_change_animation(new_element)
+			texture.region.position = wind_region
+		_:
+			return
+	element = new_element
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_check_for_required_parameters()
+
+
+# Changes the icon to match the new element, playing the corresponding animations
+# and signaling when the elements change.
+func _change_animation(new_element: int) -> void:
+	match element:
+		Constants.CoreElement.EARTH:
+			ap.play("earth_from")
+		Constants.CoreElement.FIRE:
+			ap.play("fire_from")
+		Constants.CoreElement.WATER:
+			ap.play("water_from")
+		Constants.CoreElement.WIND:
+			ap.play("wind_from")
+	match new_element:
+		Constants.CoreElement.EARTH:
+			ap.queue("earth_to")
+		Constants.CoreElement.FIRE:
+			ap.queue("fire_to")
+		Constants.CoreElement.WATER:
+			ap.queue("water_to")
+		Constants.CoreElement.WIND:
+			ap.queue("wind_to")
+
+
+# Checks that all required parameters are given.
+func _check_for_required_parameters() -> void:
+	assert(texture is AtlasTexture, "Icon texture is not an AtlasTexture.")
+
+
+# Emits a ping when the icon is changing to a new element.
+func _on_AnimationPlayer_animation_changed(_old: String, _new: String) -> void:
+	emit_signal("element_changed")
