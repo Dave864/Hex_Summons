@@ -60,6 +60,9 @@ func change_element(new_element: int) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Keep the icon from using the RESET position when set to default element.
+	if element == Constants.CoreElement.EARTH:
+		texture.region.position = earth_region
 	_check_for_required_parameters()
 
 

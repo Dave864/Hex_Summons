@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=1]
 [ext_resource path="res://art/ui/SummonPool/Summon Pool Base.png" type="Texture" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://user_interface/encounter/SummonPool/CoreElementIcon.tscn" type="PackedScene" id=4]
 [ext_resource path="res://art/ui/SummonPool/Summon Core Gem.png" type="Texture" id=5]
 [ext_resource path="res://art/ui/SummonPool/Summon Polar Gem.png" type="Texture" id=6]
+[ext_resource path="res://user_interface/encounter/SummonPool/summon_pool.gd" type="Script" id=7]
+[ext_resource path="res://wisps/summon_wisp_pool.gd" type="Script" id=8]
 
 [sub_resource type="AtlasTexture" id=1]
 resource_local_to_scene = true
@@ -44,6 +46,22 @@ margin_right = -0.159996
 margin_bottom = -0.119999
 rect_min_size = Vector2( 60, 60 )
 theme = ExtResource( 1 )
+script = ExtResource( 7 )
+light_label_ref = NodePath("LightCount")
+light_icon_ref = NodePath("SigilBase/LightIcon")
+light_elem_1_label_ref = NodePath("LightElemCount1")
+light_elem_1_icon_ref = NodePath("SigilBase/LightCore1Icon")
+light_elem_2_label_ref = NodePath("LightElemCount2")
+light_elem_2_icon_ref = NodePath("SigilBase/LightCore2Icon")
+dark_label_ref = NodePath("DarkCount")
+dark_icon_ref = NodePath("SigilBase/DarkIcon")
+dark_elem_1_label_ref = NodePath("DarkElemCount1")
+dark_elem_1_icon_ref = NodePath("SigilBase/DarkCore1Icon")
+dark_elem_2_label_ref = NodePath("DarkElemCount2")
+dark_elem_2_icon_ref = NodePath("SigilBase/DarkCore2Icon")
+
+[node name="SummonWispPool" type="Node" parent="."]
+script = ExtResource( 8 )
 
 [node name="LightCount" type="Label" parent="."]
 anchor_right = 1.0
