@@ -424,7 +424,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://wisps/summon_wisp_pool.gd"
 }, {
-"base": "Reference",
+"base": "WispPoolUI",
 "class": "SummonWispPoolUI",
 "language": "GDScript",
 "path": "res://user_interface/encounter/SummonPool/summon_wisp_pool_ui.gd"
@@ -438,6 +438,11 @@ _global_script_classes=[ {
 "class": "Tiles",
 "language": "GDScript",
 "path": "res://hex_map/scripts/tiles.gd"
+}, {
+"base": "Timer",
+"class": "VariableTimer",
+"language": "GDScript",
+"path": "res://utils/variable_timer.gd"
 }, {
 "base": "Resource",
 "class": "Wisp",
@@ -551,6 +556,7 @@ _global_script_class_icons={
 "SummonWispPoolUI": "",
 "ThreatTracker": "",
 "Tiles": "",
+"VariableTimer": "",
 "Wisp": "",
 "WispCost": "",
 "WispEffect": "",
