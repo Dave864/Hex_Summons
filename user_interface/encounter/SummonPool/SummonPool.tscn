@@ -6,7 +6,7 @@
 [ext_resource path="res://user_interface/encounter/SummonPool/CoreElementIcon.tscn" type="PackedScene" id=4]
 [ext_resource path="res://art/ui/SummonPool/Summon Core Gem.png" type="Texture" id=5]
 [ext_resource path="res://art/ui/SummonPool/Summon Polar Gem.png" type="Texture" id=6]
-[ext_resource path="res://user_interface/encounter/SummonPool/summon_pool.gd" type="Script" id=7]
+[ext_resource path="res://user_interface/encounter/SummonPool/summon_wisp_pool_ui.gd" type="Script" id=7]
 [ext_resource path="res://wisps/summon_wisp_pool.gd" type="Script" id=8]
 
 [sub_resource type="AtlasTexture" id=1]

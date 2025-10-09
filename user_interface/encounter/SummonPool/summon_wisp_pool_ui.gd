@@ -1,4 +1,4 @@
-class_name SummonPool
+class_name SummonWispPoolUI
 extends WispPoolUI
 """
 Represents the wisp pool for the summon pool.
