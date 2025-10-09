@@ -18,13 +18,20 @@ enum Element {
 	DARK,
 }
 
-# The elements that define magic and resistance. FIRE, EARTH, WATER, and WIND
+# The core elements that define magic and resistance. FIRE, EARTH, WATER, and WIND
 # are core elements and can each be aligned to either of the polar elements.
 enum CoreElement {
 	EARTH,
 	FIRE,
 	WATER,
 	WIND,
+}
+
+# The polar elements that define magic and resistance. LIGHT and DARK
+# are polar elements and two core elements are assigned to each.
+enum PolarElement {
+	LIGHT,
+	DARK,
 }
 
 # What the range finder is being used for.

@@ -2,12 +2,12 @@ tool
 class_name CoreElementIcon
 extends TextureRect
 """
-Represents a core element in the UI, earth, fire, water, or wind. Manages
+Represents a core element in the UI: earth, fire, water, or wind. Manages
 the changes from one element to another.
 """
 
 
-signal element_changed
+signal element_ping
 
 export(Constants.CoreElement) var element = Constants.CoreElement.EARTH setget set_element
 export var earth_region: Vector2 = Vector2(0,0)
@@ -75,4 +75,4 @@ func _check_for_required_parameters() -> void:
 
 # Emits a ping when the icon is changing to a new element.
 func _on_AnimationPlayer_animation_changed(_old: String, _new: String) -> void:
-	emit_signal("element_changed")
+	emit_signal("element_ping")
