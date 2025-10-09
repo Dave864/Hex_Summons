@@ -167,12 +167,12 @@ func _on_PlayerCharacter_turn_ended() -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	_move_origin_index = -1
 	_movement_ids.clear()
+	selector.active_player.disconnect(
+			"turn_ended",
+			self,
+			"_on_PlayerCharacter_turn_ended"
+	)
 	if _state_is_active():
-		selector.active_player.disconnect(
-				"turn_ended",
-				self,
-				"_on_PlayerCharacter_turn_ended"
-		)
 		state_machine.transition_to(WAIT)
 
 
