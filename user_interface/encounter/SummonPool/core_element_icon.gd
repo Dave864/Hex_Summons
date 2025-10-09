@@ -20,34 +20,23 @@ onready var ap: AnimationPlayer = $AnimationPlayer
 
 # Sets the icon texture region to display the new element.
 func set_element(new_element: int) -> void:
-	if Engine.editor_hint and not is_node_ready():
-		yield(self, "ready")
 	match new_element:
 		Constants.CoreElement.EARTH:
-			_change_animation(new_element)
 			texture.region.position = earth_region
 		Constants.CoreElement.FIRE:
-			_change_animation(new_element)
 			texture.region.position = fire_region
 		Constants.CoreElement.WATER:
-			_change_animation(new_element)
 			texture.region.position = water_region
 		Constants.CoreElement.WIND:
-			_change_animation(new_element)
 			texture.region.position = wind_region
 		_:
 			return
 	element = new_element
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	_check_for_required_parameters()
-
-
 # Changes the icon to match the new element, playing the corresponding animations
 # and signaling when the elements change.
-func _change_animation(new_element: int) -> void:
+func change_element(new_element: int) -> void:
 	match element:
 		Constants.CoreElement.EARTH:
 			ap.play("earth_from")
@@ -66,6 +55,12 @@ func _change_animation(new_element: int) -> void:
 			ap.queue("water_to")
 		Constants.CoreElement.WIND:
 			ap.queue("wind_to")
+	set_element(new_element)
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_check_for_required_parameters()
 
 
 # Checks that all required parameters are given.

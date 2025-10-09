@@ -1,13 +1,47 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=1]
 [ext_resource path="res://art/ui/SummonPool/Summon Pool Base.png" type="Texture" id=2]
+[ext_resource path="res://user_interface/encounter/SummonPool/PolarElementIcon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://user_interface/encounter/SummonPool/CoreElementIcon.tscn" type="PackedScene" id=4]
+[ext_resource path="res://art/ui/SummonPool/Summon Core Gem.png" type="Texture" id=5]
+[ext_resource path="res://art/ui/SummonPool/Summon Polar Gem.png" type="Texture" id=6]
+
+[sub_resource type="AtlasTexture" id=1]
+resource_local_to_scene = true
+atlas = ExtResource( 6 )
+region = Rect2( 1, 1, 8, 6 )
+
+[sub_resource type="AtlasTexture" id=2]
+resource_local_to_scene = true
+atlas = ExtResource( 5 )
+region = Rect2( 1, 1, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=4]
+resource_local_to_scene = true
+atlas = ExtResource( 5 )
+region = Rect2( 1, 1, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=3]
+resource_local_to_scene = true
+atlas = ExtResource( 6 )
+region = Rect2( 1, 1, 8, 6 )
+
+[sub_resource type="AtlasTexture" id=5]
+resource_local_to_scene = true
+atlas = ExtResource( 5 )
+region = Rect2( 1, 1, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=6]
+resource_local_to_scene = true
+atlas = ExtResource( 5 )
+region = Rect2( 1, 1, 8, 8 )
 
 [node name="SummonPool" type="Panel"]
 anchor_right = 0.094
 anchor_bottom = 0.167
-margin_right = -0.160004
-margin_bottom = -0.120003
+margin_right = -0.159996
+margin_bottom = -0.119999
 rect_min_size = Vector2( 60, 60 )
 theme = ExtResource( 1 )
 
@@ -86,3 +120,73 @@ margin_right = -14.0
 margin_bottom = -14.0
 texture = ExtResource( 2 )
 stretch_mode = 4
+
+[node name="LightIcon" parent="SigilBase" instance=ExtResource( 3 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -4.0
+margin_top = -14.0
+margin_right = 4.0
+margin_bottom = -8.0
+texture = SubResource( 1 )
+
+[node name="LightCore1Icon" parent="SigilBase" instance=ExtResource( 4 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -11.0
+margin_top = -11.0
+margin_right = -3.0
+margin_bottom = -3.0
+texture = SubResource( 2 )
+element = 1
+
+[node name="LightCore2Icon" parent="SigilBase" instance=ExtResource( 4 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 3.0
+margin_top = -11.0
+margin_right = 11.0
+margin_bottom = -3.0
+texture = SubResource( 4 )
+element = 3
+
+[node name="DarkIcon" parent="SigilBase" instance=ExtResource( 3 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -4.0
+margin_top = 8.0
+margin_right = 4.0
+margin_bottom = 14.0
+texture = SubResource( 3 )
+element = 1
+
+[node name="DarkCore1Icon" parent="SigilBase" instance=ExtResource( 4 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -11.0
+margin_top = 3.0
+margin_right = -3.0
+margin_bottom = 11.0
+texture = SubResource( 5 )
+
+[node name="DarkCore2Icon" parent="SigilBase" instance=ExtResource( 4 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 11.0
+margin_bottom = 11.0
+texture = SubResource( 6 )
+element = 2
