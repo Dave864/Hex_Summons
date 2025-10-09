@@ -68,8 +68,8 @@ script = ExtResource( 8 )
 
 [node name="VariableTimer" type="Timer" parent="."]
 script = ExtResource( 9 )
-lower_time = 5.0
-upper_time = 10.0
+lower_time = 15.0
+upper_time = 20.0
 
 [node name="LightCount" type="Label" parent="."]
 anchor_right = 1.0
