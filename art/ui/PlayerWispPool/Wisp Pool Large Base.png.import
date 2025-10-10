@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Summon Polar Gem.png-03ea5986083fda5b7648ed649ac15f66.stex"
+path="res://.import/Wisp Pool Large Base.png-5362f088ac1385e0a24af8468402c759.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/SummonPool/Summon Polar Gem.png"
-dest_files=[ "res://.import/Summon Polar Gem.png-03ea5986083fda5b7648ed649ac15f66.stex" ]
+source_file="res://art/ui/PlayerWispPool/Wisp Pool Large Base.png"
+dest_files=[ "res://.import/Wisp Pool Large Base.png-5362f088ac1385e0a24af8468402c759.stex" ]
 
 [params]
 

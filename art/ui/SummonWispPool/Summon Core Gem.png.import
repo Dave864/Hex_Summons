@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Summon Pool Base.png-b44b7a92a12b78ce3de6bfe6fcfc88cb.stex"
+path="res://.import/Summon Core Gem.png-0ca189dfcbbcd654424be18f10d4d886.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/SummonPool/Summon Pool Base.png"
-dest_files=[ "res://.import/Summon Pool Base.png-b44b7a92a12b78ce3de6bfe6fcfc88cb.stex" ]
+source_file="res://art/ui/SummonWispPool/Summon Core Gem.png"
+dest_files=[ "res://.import/Summon Core Gem.png-0ca189dfcbbcd654424be18f10d4d886.stex" ]
 
 [params]
 
