@@ -44,6 +44,7 @@ anchor_right = 0.116
 anchor_bottom = 0.267
 margin_right = -0.240005
 margin_bottom = -0.12001
+mouse_filter = 2
 texture = ExtResource( 1 )
 stretch_mode = 4
 script = ExtResource( 7 )
