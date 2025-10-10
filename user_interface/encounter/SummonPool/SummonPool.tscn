@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=1]
 [ext_resource path="res://art/ui/SummonPool/Summon Pool Base.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://user_interface/encounter/SummonPool/summon_wisp_pool_ui.gd" type="Script" id=7]
 [ext_resource path="res://wisps/summon_wisp_pool.gd" type="Script" id=8]
 [ext_resource path="res://utils/variable_timer.gd" type="Script" id=9]
+[ext_resource path="res://test_button.gd" type="Script" id=10]
 
 [sub_resource type="AtlasTexture" id=1]
 resource_local_to_scene = true
@@ -43,7 +44,8 @@ region = Rect2( 1, 1, 8, 8 )
 [node name="SummonPool" type="Panel"]
 anchor_right = 0.094
 anchor_bottom = 0.167
-margin_right = -0.159996
+margin_left = 60.0
+margin_right = 59.84
 margin_bottom = -0.119999
 rect_min_size = Vector2( 60, 60 )
 mouse_filter = 2
@@ -68,8 +70,8 @@ script = ExtResource( 8 )
 
 [node name="VariableTimer" type="Timer" parent="."]
 script = ExtResource( 9 )
-lower_time = 3.0
-upper_time = 5.0
+lower_time = 15.0
+upper_time = 20.0
 
 [node name="LightCount" type="Label" parent="."]
 anchor_right = 1.0
@@ -158,7 +160,6 @@ margin_top = -14.0
 margin_right = 4.0
 margin_bottom = -8.0
 texture = SubResource( 1 )
-element = 4
 
 [node name="LightCore1Icon" parent="SigilBase" instance=ExtResource( 4 )]
 anchor_left = 0.5
@@ -194,7 +195,7 @@ margin_top = 8.0
 margin_right = 4.0
 margin_bottom = 14.0
 texture = SubResource( 3 )
-element = 4
+element = 5
 
 [node name="DarkCore1Icon" parent="SigilBase" instance=ExtResource( 4 )]
 anchor_left = 0.5
@@ -219,4 +220,58 @@ margin_bottom = 11.0
 texture = SubResource( 6 )
 element = 2
 
+[node name="TestButtons" type="Control" parent="."]
+margin_left = 66.0
+margin_right = 106.0
+margin_bottom = 40.0
+
+[node name="PolarityLeft" type="Button" parent="TestButtons"]
+margin_left = -120.0
+margin_top = 18.0
+margin_right = -72.0
+margin_bottom = 45.0
+text = "Swap
+Left"
+script = ExtResource( 10 )
+
+[node name="PolarityRight" type="Button" parent="TestButtons"]
+margin_left = 6.0
+margin_top = 18.0
+margin_right = 36.0
+margin_bottom = 37.0
+text = "Swap
+Right"
+script = ExtResource( 10 )
+
+[node name="PolarityInvert" type="Button" parent="TestButtons"]
+margin_left = -54.0
+margin_top = 66.0
+margin_right = -24.0
+margin_bottom = 85.0
+text = "180"
+script = ExtResource( 10 )
+
+[node name="PolarityCW" type="Button" parent="TestButtons"]
+margin_left = -102.0
+margin_top = 66.0
+margin_right = -60.0
+margin_bottom = 85.0
+text = "CW 90"
+script = ExtResource( 10 )
+
+[node name="PolarityCCW" type="Button" parent="TestButtons"]
+margin_left = -18.0
+margin_top = 66.0
+margin_right = 12.0
+margin_bottom = 85.0
+text = "CCW 90"
+script = ExtResource( 10 )
+
 [connection signal="timeout" from="VariableTimer" to="." method="_on_Timer_timeout"]
+[connection signal="shine_ping" from="SigilBase/LightIcon" to="." method="_on_PolarElementIcon_shine_ping"]
+[connection signal="shine_ping" from="SigilBase/DarkIcon" to="." method="_on_PolarElementIcon_shine_ping"]
+[connection signal="pressed" from="TestButtons/PolarityLeft" to="TestButtons/PolarityLeft" method="_on_Button_polarity_left_pressed"]
+[connection signal="pressed" from="TestButtons/PolarityRight" to="TestButtons/PolarityRight" method="_on_Button_polarity_right_pressed"]
+[connection signal="pressed" from="TestButtons/PolarityInvert" to="TestButtons/PolarityInvert" method="_on_Button_polarity_invert_pressed"]
+[connection signal="pressed" from="TestButtons/PolarityCW" to="TestButtons/PolarityCW" method="_on_Button_polarity_cw_pressed"]
+[connection signal="pressed" from="TestButtons/PolarityCCW" to="TestButtons/PolarityCCW" method="_on_Button_polarity_ccw_pressed"]

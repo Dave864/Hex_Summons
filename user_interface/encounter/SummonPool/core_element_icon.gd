@@ -7,7 +7,7 @@ the changes from one element to another.
 """
 
 
-signal element_ping
+signal element_ping(e)
 
 export(Constants.CoreElement) var element = Constants.CoreElement.EARTH setget set_element
 export var earth_region: Vector2 = Vector2(0,0)
@@ -73,4 +73,4 @@ func _check_for_required_parameters() -> void:
 
 # Emits a ping when the icon is changing to a new element.
 func _on_AnimationPlayer_animation_changed(_old: String, _new: String) -> void:
-	emit_signal("element_ping")
+	emit_signal("element_ping", element)

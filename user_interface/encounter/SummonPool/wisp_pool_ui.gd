@@ -44,12 +44,17 @@ onready var dark_elem_2_icon: CoreElementIcon = get_node(dark_elem_2_icon_ref)
 onready var timer: VariableTimer = get_node(timer_ref)
 
 onready var _polarities: Dictionary = {
-	LIGHT: ElementalPolarity.get_light_elements(),
-	DARK: ElementalPolarity.get_dark_elements()
+	LIGHT: ElementalPolarity.get_light_elements().duplicate(),
+	DARK: ElementalPolarity.get_dark_elements().duplicate()
 }
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	ElementalPolarity.connect(
+			"polarity_changed",
+			self,
+			"_on_ElementalPolarity_polarity_changed"
+	)
 	_set_wisp_pool()
 	_set_icons()
 	_set_labels_on_ready()
@@ -122,19 +127,30 @@ func _on_ElementalPolarity_polarity_changed() -> void:
 		light_icon.shine()
 	if dark_changed:
 		dark_icon.shine()
-	_polarities[LIGHT] = light_elems
-	_polarities[DARK] = dark_elems
+	_polarities[LIGHT] = light_elems.duplicate()
+	_polarities[DARK] = dark_elems.duplicate()
 	timer.reset()
 	timer.paused = false
 
 
+# Update the count label for the pinged element.
+func _on_CoreElementIcon_element_ping(core_elem: int) -> void:
+	pass
+
+
+# Update the count label for the pinged element
+func _on_PolarElementIcon_shine_ping(polar_elem: int) -> void:
+	if polar_elem == LIGHT and String(pool.active_light_count()) != light_label.text:
+		light_label.text = String(pool.active_light_count())
+	elif polar_elem == DARK and String(pool.active_dark_count()) != dark_label.text:
+		dark_label.text = String(pool.active_dark_count())
+
+
 # Update the label for the corresponding element.
 func _on_WispPool_active_count_changed(element: int, count: int) -> void:
-	match element:
-		Constants.Element.LIGHT:
-			pass
-		Constants.Element.DARK:
-			pass
-		_:
-			if not element in Constants.CoreElement.keys():
-				return
+	if element == Constants.Element.LIGHT:
+		pass
+	elif element == Constants.Element.DARK:
+		pass
+	elif element in Constants.CoreElement.keys():
+		pass

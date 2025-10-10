@@ -11,10 +11,10 @@ signal active_count_changed(element, count)
 
 
 var _active_count: Dictionary = {
-	Constants.Element.EARTH: 0,
-	Constants.Element.FIRE: 0,
-	Constants.Element.WATER: 0,
-	Constants.Element.WIND: 0,
+	Constants.CoreElement.EARTH: 0,
+	Constants.CoreElement.FIRE: 0,
+	Constants.CoreElement.WATER: 0,
+	Constants.CoreElement.WIND: 0,
 }
 
 

@@ -8,10 +8,10 @@ Tracks the wisp states for a summon character.
 # Tracks which wisps are set to the summon, i.e. which wisps are available
 # to be used for actions.
 var pool: Dictionary = {
-	Constants.Element.EARTH: [],
-	Constants.Element.FIRE: [],
-	Constants.Element.WATER: [],
-	Constants.Element.WIND: [],
+	Constants.CoreElement.EARTH: [0, 1],
+	Constants.CoreElement.FIRE: [2],
+	Constants.CoreElement.WATER: [3, 4, 5],
+	Constants.CoreElement.WIND: [],
 }
 
 
@@ -67,3 +67,8 @@ func pay_for_element(element: int) -> Array:
 			_active_count[element] -= 1
 			emit_signal("active_count_changed", element, _active_count[element])
 			return [pool[element].pop_front()]
+
+
+func _ready() -> void:
+	for element in Constants.CoreElement.values():
+		_active_count[element] = pool[element].size()

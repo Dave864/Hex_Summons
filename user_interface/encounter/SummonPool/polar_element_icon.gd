@@ -7,7 +7,7 @@ the icon.
 """
 
 
-signal shine_ping
+signal shine_ping(e)
 
 export(Constants.PolarElement) var element = Constants.PolarElement.LIGHT setget set_element
 export var light_region: Vector2 = Vector2(0,0)
@@ -48,4 +48,4 @@ func _check_for_required_parameters() -> void:
 
 # Called during the shine animation of the corresponding element. Emits a ping.
 func _emit_ping() -> void:
-	emit_signal("shine_ping")
+	emit_signal("shine_ping", element)

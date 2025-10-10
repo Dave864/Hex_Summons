@@ -111,7 +111,8 @@ func get_dark_elements() -> Array:
 	return _polarities[DARK]
 
 
-# Gets the polarity of the given element, as defined by ElementalStat.
+# Gets the polarity of the given element, as defined by the Constants enum,
+# PolarElement.
 func get_polarity(element: int) -> int:
 	if element == LIGHT or element == DARK:
 		return element
