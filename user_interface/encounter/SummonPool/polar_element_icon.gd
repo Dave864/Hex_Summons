@@ -2,7 +2,7 @@ tool
 class_name PolarElementIcon
 extends TextureRect
 """
-Represents a polar  element in the UI: light or dark. Manages the shine of
+Represents a polar element in the UI: light or dark. Manages the shine of
 the icon.
 """
 
