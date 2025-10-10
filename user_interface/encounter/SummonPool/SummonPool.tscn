@@ -269,7 +269,11 @@ script = ExtResource( 10 )
 
 [connection signal="timeout" from="VariableTimer" to="." method="_on_Timer_timeout"]
 [connection signal="shine_ping" from="SigilBase/LightIcon" to="." method="_on_PolarElementIcon_shine_ping"]
+[connection signal="element_ping" from="SigilBase/LightCore1Icon" to="." method="_on_CoreElementIcon_element_ping"]
+[connection signal="element_ping" from="SigilBase/LightCore2Icon" to="." method="_on_CoreElementIcon_element_ping"]
 [connection signal="shine_ping" from="SigilBase/DarkIcon" to="." method="_on_PolarElementIcon_shine_ping"]
+[connection signal="element_ping" from="SigilBase/DarkCore1Icon" to="." method="_on_CoreElementIcon_element_ping"]
+[connection signal="element_ping" from="SigilBase/DarkCore2Icon" to="." method="_on_CoreElementIcon_element_ping"]
 [connection signal="pressed" from="TestButtons/PolarityLeft" to="TestButtons/PolarityLeft" method="_on_Button_polarity_left_pressed"]
 [connection signal="pressed" from="TestButtons/PolarityRight" to="TestButtons/PolarityRight" method="_on_Button_polarity_right_pressed"]
 [connection signal="pressed" from="TestButtons/PolarityInvert" to="TestButtons/PolarityInvert" method="_on_Button_polarity_invert_pressed"]
