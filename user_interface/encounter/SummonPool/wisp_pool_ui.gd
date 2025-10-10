@@ -27,18 +27,18 @@ export(NodePath) var timer_ref = NodePath("")
 
 var pool: WispPool = null
 
-onready var light_label: Label = get_node(light_label_ref)
+onready var light_label: AnimatedLabel = get_node(light_label_ref)
 onready var light_icon: PolarElementIcon = get_node(light_icon_ref)
-onready var light_elem_1_label: Label = get_node(light_elem_1_label_ref)
+onready var light_elem_1_label: AnimatedLabel = get_node(light_elem_1_label_ref)
 onready var light_elem_1_icon: CoreElementIcon = get_node(light_elem_1_icon_ref)
-onready var light_elem_2_label: Label = get_node(light_elem_2_label_ref)
+onready var light_elem_2_label: AnimatedLabel = get_node(light_elem_2_label_ref)
 onready var light_elem_2_icon: CoreElementIcon = get_node(light_elem_2_icon_ref)
 
-onready var dark_label: Label = get_node(dark_label_ref)
+onready var dark_label: AnimatedLabel = get_node(dark_label_ref)
 onready var dark_icon: PolarElementIcon = get_node(dark_icon_ref)
-onready var dark_elem_1_label: Label = get_node(dark_elem_1_label_ref)
+onready var dark_elem_1_label: AnimatedLabel = get_node(dark_elem_1_label_ref)
 onready var dark_elem_1_icon: CoreElementIcon = get_node(dark_elem_1_icon_ref)
-onready var dark_elem_2_label: Label = get_node(dark_elem_2_label_ref)
+onready var dark_elem_2_label: AnimatedLabel = get_node(dark_elem_2_label_ref)
 onready var dark_elem_2_icon: CoreElementIcon = get_node(dark_elem_2_icon_ref)
 
 onready var timer: VariableTimer = get_node(timer_ref)
@@ -135,34 +135,22 @@ func _on_ElementalPolarity_polarity_changed() -> void:
 
 # Update the count label for the pinged element.
 func _on_CoreElementIcon_element_ping(core_elem: int) -> void:
-	if (
-		_polarities[LIGHT][0] == core_elem
-		and String(pool.active_element_count(core_elem)) != light_elem_1_label.text
-	):
-		light_elem_1_label.text = String(pool.active_element_count(core_elem))
-	elif (
-		_polarities[LIGHT][1] == core_elem
-		and String(pool.active_element_count(core_elem)) != light_elem_2_label.text
-	):
-		light_elem_2_label.text = String(pool.active_element_count(core_elem))
-	elif (
-		_polarities[DARK][0] == core_elem
-		and String(pool.active_element_count(core_elem)) != dark_elem_1_label.text
-	):
-		dark_elem_1_label.text = String(pool.active_element_count(core_elem))
-	elif (
-		_polarities[DARK][1] == core_elem
-		and String(pool.active_element_count(core_elem)) != dark_elem_2_label.text
-	):
-		dark_elem_2_label.text = String(pool.active_element_count(core_elem))
+	if _polarities[LIGHT][0] == core_elem:
+		light_elem_1_label.update_text(String(pool.active_element_count(core_elem)))
+	elif _polarities[LIGHT][1] == core_elem:
+		light_elem_2_label.update_text(String(pool.active_element_count(core_elem)))
+	elif _polarities[DARK][0] == core_elem:
+		dark_elem_1_label.update_text(String(pool.active_element_count(core_elem)))
+	elif _polarities[DARK][1] == core_elem:
+		dark_elem_2_label.update_text(String(pool.active_element_count(core_elem)))
 
 
 # Update the count label for the pinged element
 func _on_PolarElementIcon_shine_ping(polar_elem: int) -> void:
 	if polar_elem == LIGHT and String(pool.active_light_count()) != light_label.text:
-		light_label.text = String(pool.active_light_count())
+		light_label.update_text(String(pool.active_light_count()))
 	elif polar_elem == DARK and String(pool.active_dark_count()) != dark_label.text:
-		dark_label.text = String(pool.active_dark_count())
+		dark_label.update_text(String(pool.active_dark_count()))
 
 
 # Update the label for the corresponding element.
