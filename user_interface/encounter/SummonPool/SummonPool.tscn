@@ -44,8 +44,7 @@ region = Rect2( 1, 1, 8, 8 )
 [node name="SummonPool" type="Panel"]
 anchor_right = 0.094
 anchor_bottom = 0.167
-margin_left = 72.0
-margin_right = 71.84
+margin_right = -0.159996
 margin_bottom = -0.119999
 rect_min_size = Vector2( 60, 60 )
 mouse_filter = 2
