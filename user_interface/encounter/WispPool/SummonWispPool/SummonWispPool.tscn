@@ -2,14 +2,14 @@
 
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=1]
 [ext_resource path="res://art/ui/SummonPool/Summon Pool Base.png" type="Texture" id=2]
-[ext_resource path="res://user_interface/encounter/WispPool/SummonPool/PolarElementIcon.tscn" type="PackedScene" id=3]
-[ext_resource path="res://user_interface/encounter/WispPool/SummonPool/CoreElementIcon.tscn" type="PackedScene" id=4]
+[ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/PolarElementIcon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/CoreElementIcon.tscn" type="PackedScene" id=4]
 [ext_resource path="res://art/ui/SummonPool/Summon Core Gem.png" type="Texture" id=5]
 [ext_resource path="res://art/ui/SummonPool/Summon Polar Gem.png" type="Texture" id=6]
-[ext_resource path="res://user_interface/encounter/WispPool/SummonPool/summon_wisp_pool_ui.gd" type="Script" id=7]
+[ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/summon_wisp_pool_ui.gd" type="Script" id=7]
 [ext_resource path="res://wisps/summon_wisp_pool.gd" type="Script" id=8]
 [ext_resource path="res://utils/variable_timer.gd" type="Script" id=9]
-[ext_resource path="res://user_interface/encounter/WispPool/SummonPool/AnimatedLabel.tscn" type="PackedScene" id=12]
+[ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/AnimatedLabel.tscn" type="PackedScene" id=12]
 
 [sub_resource type="AtlasTexture" id=1]
 resource_local_to_scene = true

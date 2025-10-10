@@ -17,21 +17,21 @@ var wind: Dictionary = {}
 func set_active(wisp_key: int) -> void:
 	var element: int
 	if earth.has(wisp_key):
-		element = Constants.Element.EARTH
+		element = Constants.CoreElement.EARTH
 		earth[wisp_key] = true
 	elif fire.has(wisp_key):
-		element = Constants.Element.FIRE
+		element = Constants.CoreElement.FIRE
 		fire[wisp_key] = true
 	elif water.has(wisp_key):
-		element = Constants.Element.WATER
+		element = Constants.CoreElement.WATER
 		water[wisp_key] = true
 	elif wind.has(wisp_key):
-		element = Constants.Element.WIND
+		element = Constants.CoreElement.WIND
 		wind[wisp_key] = true
 	else:
 		return
 	_active_count[element] += 1
-	emit_signal("active_count_changed", element, _active_count[element])
+	emit_signal("active_count_changed", element)
 
 
 # Gets the keys for the wisps that are used to pay for the specified element.
@@ -58,12 +58,12 @@ func pay_for_element(element: int) -> Array:
 		Constants.Element.LIGHT:
 			var elems: Array = ElementalPolarity.get_light_elements()
 			var ids: Array = _deactivate_polar_active(elems[0], elems[1])
-			emit_signal("active_count_changed", element, _active_count[element])
+			emit_signal("active_count_changed", element)
 			return ids
 		Constants.Element.DARK:
 			var elems: Array = ElementalPolarity.get_dark_elements()
 			var ids: Array = _deactivate_polar_active(elems[0], elems[1])
-			emit_signal("active_count_changed", element, _active_count[element])
+			emit_signal("active_count_changed", element)
 			return ids
 	return []
 
@@ -71,13 +71,13 @@ func pay_for_element(element: int) -> Array:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for is_active in earth.values():
-		_active_count[Constants.Element.EARTH] += 1 if is_active else 0
+		_active_count[Constants.CoreElement.EARTH] += 1 if is_active else 0
 	for is_active in fire.values():
-		_active_count[Constants.Element.FIRE] += 1 if is_active else 0
+		_active_count[Constants.CoreElement.FIRE] += 1 if is_active else 0
 	for is_active in water.values():
-		_active_count[Constants.Element.WATER] += 1 if is_active else 0
+		_active_count[Constants.CoreElement.WATER] += 1 if is_active else 0
 	for is_active in wind.values():
-		_active_count[Constants.Element.WIND] += 1 if is_active else 0
+		_active_count[Constants.CoreElement.WIND] += 1 if is_active else 0
 
 
 # Helper function for pay_for_element. Deactivates the first active wisp in the
@@ -88,7 +88,7 @@ func _deactivate_first_active(wisps: Dictionary, element: int) -> int:
 		if wisps[id]:
 			wisps[id] = false
 			_active_count[element] -= 1
-			emit_signal("active_count_changed", element, _active_count[element])
+			emit_signal("active_count_changed", element)
 			return id
 	return -1
 
@@ -109,12 +109,12 @@ func _deactivate_polar_active(elem_1: int, elem_2: int) -> Array:
 # if no corresponding tracker is found.
 func _get_element_tracker(element: int) -> Dictionary:
 	match element:
-		Constants.Element.EARTH:
+		Constants.CoreElement.EARTH:
 			return earth
-		Constants.Element.FIRE:
+		Constants.CoreElement.FIRE:
 			return fire
-		Constants.Element.WATER:
+		Constants.CoreElement.WATER:
 			return water
-		Constants.Element.WIND:
+		Constants.CoreElement.WIND:
 			return wind
 	return {}

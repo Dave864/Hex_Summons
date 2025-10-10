@@ -432,7 +432,7 @@ _global_script_classes=[ {
 "base": "WispPoolUI",
 "class": "SummonWispPoolUI",
 "language": "GDScript",
-"path": "res://user_interface/encounter/WispPool/SummonPool/summon_wisp_pool_ui.gd"
+"path": "res://user_interface/encounter/WispPool/SummonWispPool/summon_wisp_pool_ui.gd"
 }, {
 "base": "Object",
 "class": "ThreatTracker",
