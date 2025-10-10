@@ -10,8 +10,13 @@ export(float, 0.001, 4096.0) var lower_time = 1.0
 export(float, 0.001, 4096.0) var upper_time = 1.0
 
 
+# Resets the timer to a new random time.
+func reset() -> void:
+	start(rand_range(lower_time, upper_time))
+
+
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	assert(lower_time <= upper_time, "lower_time is higher than upper_time.")
 	self.connect("timeout", self, "_on_Timer_timeout")
 	start(rand_range(lower_time, upper_time))
@@ -19,4 +24,4 @@ func _ready():
 
 # Restarts the timer with a new random time.
 func _on_Timer_timeout() -> void:
-	start(rand_range(lower_time, upper_time))
+	reset()
