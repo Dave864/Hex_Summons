@@ -69,11 +69,11 @@ func shift_polarities_ccw() -> void:
 # L: [0, 1] => [2, 0]
 # D: [2, 3] => [3, 1]
 func shift_polarities_cw() -> void:
-	var first_dark_element: int = _polarities[DARK][0]
+	var first_light_element: int = _polarities[LIGHT][0]
 	_polarities[LIGHT][0] = _polarities[DARK][0]
 	_polarities[DARK][0] = _polarities[DARK][1]
 	_polarities[DARK][1] = _polarities[LIGHT][1]
-	_polarities[LIGHT][1] = first_dark_element
+	_polarities[LIGHT][1] = first_light_element
 	emit_signal("polarity_changed")
 
 
