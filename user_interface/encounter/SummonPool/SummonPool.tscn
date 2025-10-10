@@ -196,6 +196,7 @@ margin_bottom = 11.0
 texture = SubResource( 6 )
 element = 2
 
+[connection signal="active_count_changed" from="SummonWispPool" to="." method="_on_WispPool_active_count_changed"]
 [connection signal="timeout" from="VariableTimer" to="." method="_on_Timer_timeout"]
 [connection signal="shine_ping" from="SigilBase/LightIcon" to="." method="_on_PolarElementIcon_shine_ping"]
 [connection signal="element_ping" from="SigilBase/LightCore1Icon" to="." method="_on_CoreElementIcon_element_ping"]
