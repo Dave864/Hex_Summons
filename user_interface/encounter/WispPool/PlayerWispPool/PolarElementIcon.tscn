@@ -86,10 +86,10 @@ tracks/1/keys = {
 }
 
 [node name="PolarElementIcon" type="TextureRect"]
-anchor_right = 0.012
-anchor_bottom = 0.017
-margin_right = 0.32
-margin_bottom = -0.12
+anchor_right = 0.031
+anchor_bottom = 0.053
+margin_right = -11.84
+margin_bottom = -13.08
 mouse_filter = 2
 texture = SubResource( 1 )
 stretch_mode = 4
