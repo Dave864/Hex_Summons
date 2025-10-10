@@ -71,6 +71,6 @@ func _check_for_required_parameters() -> void:
 	assert(texture is AtlasTexture, "Icon texture is not an AtlasTexture.")
 
 
-# Emits a ping when the icon is changing to a new element.
-func _on_AnimationPlayer_animation_changed(_old: String, _new: String) -> void:
+# Called during the a "from" animation. Emits a ping.
+func _emit_ping() -> void:
 	emit_signal("element_ping", element)

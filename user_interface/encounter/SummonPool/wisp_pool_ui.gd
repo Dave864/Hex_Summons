@@ -135,14 +135,15 @@ func _on_ElementalPolarity_polarity_changed() -> void:
 
 # Update the count label for the pinged element.
 func _on_CoreElementIcon_element_ping(core_elem: int) -> void:
-	if _polarities[LIGHT][0] == core_elem:
-		light_elem_1_label.update_text(String(pool.active_element_count(core_elem)))
-	elif _polarities[LIGHT][1] == core_elem:
-		light_elem_2_label.update_text(String(pool.active_element_count(core_elem)))
-	elif _polarities[DARK][0] == core_elem:
-		dark_elem_1_label.update_text(String(pool.active_element_count(core_elem)))
-	elif _polarities[DARK][1] == core_elem:
-		dark_elem_2_label.update_text(String(pool.active_element_count(core_elem)))
+	var count: String = String(pool.active_element_count(core_elem))
+	if _polarities[LIGHT][0] == core_elem and light_elem_1_label.text != count:
+		light_elem_1_label.update_text(count)
+	elif _polarities[LIGHT][1] == core_elem and light_elem_2_label.text != count:
+		light_elem_2_label.update_text(count)
+	elif _polarities[DARK][0] == core_elem and dark_elem_1_label.text != count:
+		dark_elem_1_label.update_text(count)
+	elif _polarities[DARK][1] == core_elem and dark_elem_2_label.text != count:
+		dark_elem_2_label.update_text(count)
 
 
 # Update the count label for the pinged element
