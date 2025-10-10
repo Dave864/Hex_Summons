@@ -5,6 +5,10 @@ Manages the labels and element icons of the wisp pool.
 """
 
 
+const LIGHT: int = Constants.PolarElement.LIGHT
+const DARK: int = Constants.PolarElement.DARK
+
+
 export(NodePath) var light_label_ref = NodePath("")
 export(NodePath) var light_icon_ref = NodePath("")
 export(NodePath) var light_elem_1_label_ref = NodePath("")
@@ -37,8 +41,12 @@ onready var dark_elem_1_icon: CoreElementIcon = get_node(dark_elem_1_icon_ref)
 onready var dark_elem_2_label: Label = get_node(dark_elem_2_label_ref)
 onready var dark_elem_2_icon: CoreElementIcon = get_node(dark_elem_2_icon_ref)
 
-onready var timer: Timer = get_node(timer_ref)
+onready var timer: VariableTimer = get_node(timer_ref)
 
+onready var _polarities: Dictionary = {
+	LIGHT: ElementalPolarity.get_light_elements(),
+	DARK: ElementalPolarity.get_dark_elements()
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -54,12 +62,10 @@ func _set_wisp_pool() -> void:
 
 # Sets the icons for the core elements.
 func _set_icons() -> void:
-	var light_elems: Array = ElementalPolarity.get_light_elements()
-	var dark_elems: Array = ElementalPolarity.get_dark_elements()
-	light_elem_1_icon.set_element(light_elems[0])
-	light_elem_2_icon.set_element(light_elems[1])
-	dark_elem_1_icon.set_element(dark_elems[0])
-	dark_elem_2_icon.set_element(dark_elems[1])
+	light_elem_1_icon.set_element(_polarities[LIGHT][0])
+	light_elem_2_icon.set_element(_polarities[LIGHT][1])
+	dark_elem_1_icon.set_element(_polarities[DARK][0])
+	dark_elem_2_icon.set_element(_polarities[DARK][1])
 
 
 # Sets the labels for the elements.
@@ -85,12 +91,50 @@ func _set_labels() -> void:
 
 # Shines all the element icons at set intervals.
 func _on_Timer_timeout() -> void:
+	light_icon.shine()
+	light_elem_1_icon.change_element(_polarities[LIGHT][0])
+	light_elem_2_icon.change_element(_polarities[LIGHT][1])
+	dark_icon.shine()
+	dark_elem_1_icon.change_element(_polarities[DARK][0])
+	dark_elem_2_icon.change_element(_polarities[DARK][1])
+
+
+# Changes the core element icons and all labels to reflect the change in polarity.
+func _on_ElementalPolarity_polarity_changed() -> void:
+	timer.paused = true
 	var light_elems: Array = ElementalPolarity.get_light_elements()
 	var dark_elems: Array = ElementalPolarity.get_dark_elements()
-	
-	light_icon.shine()
-	light_elem_1_icon.change_element(light_elems[0])
-	light_elem_2_icon.change_element(light_elems[1])
-	dark_icon.shine()
-	dark_elem_1_icon.change_element(dark_elems[0])
-	dark_elem_2_icon.change_element(dark_elems[1])
+	var light_changed: bool = false
+	var dark_changed: bool = false
+	if light_elems[0] != _polarities[LIGHT][0]:
+		light_changed = true
+		light_elem_1_icon.change_element(light_elems[0])
+	if light_elems[1] != _polarities[LIGHT][1]:
+		light_changed = true
+		light_elem_2_icon.change_element(light_elems[1])
+	if dark_elems[0] != _polarities[DARK][0]:
+		dark_changed = true
+		dark_elem_1_icon.change_element(dark_elems[0])
+	if dark_elems[1] != _polarities[DARK][1]:
+		dark_changed = true
+		dark_elem_2_icon.change_element(dark_elems[1])
+	if light_changed:
+		light_icon.shine()
+	if dark_changed:
+		dark_icon.shine()
+	_polarities[LIGHT] = light_elems
+	_polarities[DARK] = dark_elems
+	timer.reset()
+	timer.paused = false
+
+
+# Update the label for the corresponding element.
+func _on_WispPool_active_count_changed(element: int, count: int) -> void:
+	match element:
+		Constants.Element.LIGHT:
+			pass
+		Constants.Element.DARK:
+			pass
+		_:
+			if not element in Constants.CoreElement.keys():
+				return

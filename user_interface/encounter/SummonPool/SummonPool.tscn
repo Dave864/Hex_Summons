@@ -68,8 +68,8 @@ script = ExtResource( 8 )
 
 [node name="VariableTimer" type="Timer" parent="."]
 script = ExtResource( 9 )
-lower_time = 15.0
-upper_time = 20.0
+lower_time = 3.0
+upper_time = 5.0
 
 [node name="LightCount" type="Label" parent="."]
 anchor_right = 1.0
@@ -158,6 +158,7 @@ margin_top = -14.0
 margin_right = 4.0
 margin_bottom = -8.0
 texture = SubResource( 1 )
+element = 4
 
 [node name="LightCore1Icon" parent="SigilBase" instance=ExtResource( 4 )]
 anchor_left = 0.5
@@ -193,7 +194,7 @@ margin_top = 8.0
 margin_right = 4.0
 margin_bottom = 14.0
 texture = SubResource( 3 )
-element = 1
+element = 4
 
 [node name="DarkCore1Icon" parent="SigilBase" instance=ExtResource( 4 )]
 anchor_left = 0.5
