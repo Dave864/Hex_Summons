@@ -47,7 +47,7 @@ _global_script_classes=[ {
 "base": "Label",
 "class": "AnimatedLabel",
 "language": "GDScript",
-"path": "res://user_interface/encounter/SummonPool/animated_label.gd"
+"path": "res://user_interface/encounter/WispPool/animated_label.gd"
 }, {
 "base": "Node",
 "class": "AreaRange",
@@ -117,7 +117,7 @@ _global_script_classes=[ {
 "base": "TextureRect",
 "class": "CoreElementIcon",
 "language": "GDScript",
-"path": "res://user_interface/encounter/SummonPool/core_element_icon.gd"
+"path": "res://user_interface/encounter/WispPool/core_element_icon.gd"
 }, {
 "base": "Effect",
 "class": "DamageEffect",
@@ -342,7 +342,7 @@ _global_script_classes=[ {
 "base": "TextureRect",
 "class": "PolarElementIcon",
 "language": "GDScript",
-"path": "res://user_interface/encounter/SummonPool/polar_element_icon.gd"
+"path": "res://user_interface/encounter/WispPool/polar_element_icon.gd"
 }, {
 "base": "Resource",
 "class": "Potency",
@@ -432,7 +432,7 @@ _global_script_classes=[ {
 "base": "WispPoolUI",
 "class": "SummonWispPoolUI",
 "language": "GDScript",
-"path": "res://user_interface/encounter/SummonPool/summon_wisp_pool_ui.gd"
+"path": "res://user_interface/encounter/WispPool/SummonPool/summon_wisp_pool_ui.gd"
 }, {
 "base": "Object",
 "class": "ThreatTracker",
@@ -472,7 +472,7 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "WispPoolUI",
 "language": "GDScript",
-"path": "res://user_interface/encounter/SummonPool/wisp_pool_ui.gd"
+"path": "res://user_interface/encounter/WispPool/wisp_pool_ui.gd"
 } ]
 _global_script_class_icons={
 "Action": "",
