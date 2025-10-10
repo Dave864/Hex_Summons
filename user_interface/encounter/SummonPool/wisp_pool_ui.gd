@@ -97,11 +97,11 @@ func _set_labels() -> void:
 # Shines all the element icons at set intervals.
 func _on_Timer_timeout() -> void:
 	light_icon.shine()
-	light_elem_1_icon.change_element(_polarities[LIGHT][0])
-	light_elem_2_icon.change_element(_polarities[LIGHT][1])
+	light_elem_1_icon.change_element(_polarities[LIGHT][0], false)
+	light_elem_2_icon.change_element(_polarities[LIGHT][1], false)
 	dark_icon.shine()
-	dark_elem_1_icon.change_element(_polarities[DARK][0])
-	dark_elem_2_icon.change_element(_polarities[DARK][1])
+	dark_elem_1_icon.change_element(_polarities[DARK][0], false)
+	dark_elem_2_icon.change_element(_polarities[DARK][1], false)
 
 
 # Changes the core element icons and all labels to reflect the change in polarity.
@@ -158,10 +158,18 @@ func _on_PolarElementIcon_shine_ping(polar_elem: int) -> void:
 
 
 # Update the label for the corresponding element.
-func _on_WispPool_active_count_changed(element: int, count: int) -> void:
+func _on_WispPool_active_count_changed(element: int) -> void:
 	if element == Constants.Element.LIGHT:
-		pass
+		light_icon.shine()
 	elif element == Constants.Element.DARK:
-		pass
-	elif element in Constants.CoreElement.keys():
-		pass
+		dark_icon.shine()
+	elif not element in Constants.CoreElement.keys():
+		return
+	elif _polarities[LIGHT][0] == element:
+		light_elem_1_icon.change_element(element)
+	elif _polarities[LIGHT][1] == element:
+		light_elem_2_icon.change_element(element)
+	elif _polarities[DARK][0] == element:
+		dark_elem_1_icon.change_element(element)
+	elif _polarities[DARK][1] == element:
+		dark_elem_2_icon.change_element(element)

@@ -15,7 +15,7 @@ export var fire_region: Vector2 = Vector2(0,0)
 export var water_region: Vector2 = Vector2(0,0)
 export var wind_region: Vector2 = Vector2(0,0)
 
-var _element_changed: bool = false
+var _ping: bool = false
 
 onready var ap: AnimationPlayer = $AnimationPlayer
 
@@ -38,8 +38,8 @@ func set_element(new_element: int) -> void:
 
 # Changes the icon to match the new element, playing the corresponding animations
 # and signaling when the elements change.
-func change_element(new_element: int) -> void:
-	_element_changed = element != new_element
+func change_element(new_element: int, ping: bool = true) -> void:
+	_ping = ping
 	match element:
 		Constants.CoreElement.EARTH:
 			ap.play("earth_from")
@@ -76,5 +76,5 @@ func _check_for_required_parameters() -> void:
 
 # Called during the a "from" animation. Emits a ping.
 func _emit_ping() -> void:
-	if _element_changed:
+	if _ping:
 		emit_signal("element_ping", element)

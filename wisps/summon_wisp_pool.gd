@@ -30,21 +30,13 @@ func add_wisps(wisp_ids: Array, element: int) -> void:
 			pool[elems[1]].append(wisp_ids[i + half_size])
 		_active_count[elems[0]] += half_size
 		_active_count[elems[1]] += half_size
-		emit_signal("active_count_changed", elems[0], _active_count[elems[0]])
-		emit_signal("active_count_changed", elems[1], _active_count[elems[1]])
-		emit_signal(
-				"active_count_changed",
-				element,
-				(
-					active_light_count()
-					if element == Constants.PolarElement.LIGHT
-					else active_dark_count()
-				)
-		)
+		emit_signal("active_count_changed", elems[0])
+		emit_signal("active_count_changed", elems[1])
+		emit_signal("active_count_changed", element)
 	elif element in Constants.CoreElement.keys():
 		pool[element].append_array(wisp_ids)
 		_active_count[element] += wisp_ids.size()
-		emit_signal("active_count_changed", element, _active_count[element])
+		emit_signal("active_count_changed", element)
 
 
 # Gets the keys for the wisps that are used to pay for the specified element.
@@ -59,23 +51,15 @@ func pay_for_element(element: int, amount: int = 1) -> Array:
 		)
 		_active_count[elems[0]] -= amount
 		_active_count[elems[1]] -= amount
-		emit_signal("active_count_changed", elems[0], _active_count[elems[0]])
-		emit_signal("active_count_changed", elems[1], _active_count[elems[1]])
-		emit_signal(
-				"active_count_changed",
-				element,
-				(
-					active_light_count()
-					if element == Constants.PolarElement.LIGHT
-					else active_dark_count()
-				)
-		)
+		emit_signal("active_count_changed", elems[0])
+		emit_signal("active_count_changed", elems[1])
+		emit_signal("active_count_changed", element)
 		for i in amount:
 			wisps_paid.append(pool[elems[0]].pop_front())
 			wisps_paid.append(pool[elems[1]].pop_front())
 	elif element in Constants.CoreElement.keys():
 		_active_count[element] -= amount
-		emit_signal("active_count_changed", element, _active_count[element])
+		emit_signal("active_count_changed", element)
 		for i in amount:
 			wisps_paid.append(pool[element].pop_front())
 	return wisps_paid

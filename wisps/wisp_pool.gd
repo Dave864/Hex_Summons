@@ -7,7 +7,7 @@ Base class for tracking the wisp pool for a character in an encounter.
 
 # warning-ignore:unused_signal
 # This signal will be emitted in child classes.
-signal active_count_changed(element, count)
+signal active_count_changed(element)
 
 
 var _active_count: Dictionary = {
