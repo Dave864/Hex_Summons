@@ -6,8 +6,10 @@ Each polarity always has two core elements.
 """
 
 
-const LIGHT: int = Constants.Element.LIGHT
-const DARK: int = Constants.Element.DARK
+signal polarity_changed()
+
+const LIGHT: int = Constants.PolarElement.LIGHT
+const DARK: int = Constants.PolarElement.DARK
 
 var _polarities: Dictionary = {
 	LIGHT: [-1, -1],
@@ -18,41 +20,37 @@ var _polarities: Dictionary = {
 # Swap the polarities of the given elements.
 func swap_elements(element_1: int, element_2: int) -> void:
 	if (
-		not element_1 in Constants.Element.keys()
-		or not element_2 in Constants.Element.keys()
+		not _is_valid_core_element(element_1)
+		or not _is_valid_core_element(element_2)
 	):
-		printerr("Cannot swap the polarity of a nonexistant element.")
-		return
-	if (
-		element_1 == LIGHT
-		or element_1 == DARK
-		or element_2 == LIGHT
-		or element_2 == DARK
-	):
-		printerr("Cannot swap polarities of Light or Dark elements.")
+		printerr("Cannot swap the polarity of a nonexistant core element.")
 		return
 	var element_1_details: Array = _get_polarity_and_index(element_1)
 	var element_2_details: Array = _get_polarity_and_index(element_2)
 	_polarities[element_1_details[0]][element_1_details[1]] = element_2
 	_polarities[element_2_details[0]][element_2_details[1]] = element_1
+	emit_signal("polarity_changed")
 
 
 # Swap the polarities of all elements.
 func invert_all_polarities() -> void:
-	invert_left_polarities()
-	invert_right_polarities()
+	_swap_polarities_at_index(0)
+	_swap_polarities_at_index(1)
+	emit_signal("polarity_changed")
 
 
 # Swap the polarities of the elements on the left side of the hex.
 # Corresponds to index 0 of each polarity array.
 func invert_left_polarities() -> void:
 	_swap_polarities_at_index(0)
+	emit_signal("polarity_changed")
 
 
 # Swap the polarities of the elements on the right side of the hex.
 # Corresponds to index 1 of each polarity array.
 func invert_right_polarities() -> void:
 	_swap_polarities_at_index(1)
+	emit_signal("polarity_changed")
 
 
 # Shift the polarities of all elements "counter-clockwise".
@@ -64,6 +62,7 @@ func shift_polarities_ccw() -> void:
 	_polarities[LIGHT][1] = _polarities[DARK][1]
 	_polarities[DARK][1] = _polarities[DARK][0]
 	_polarities[DARK][0] = first_light_element
+	emit_signal("polarity_changed")
 
 
 # Shift the polarities of all elements "clockwise".
@@ -75,6 +74,7 @@ func shift_polarities_cw() -> void:
 	_polarities[DARK][0] = _polarities[DARK][1]
 	_polarities[DARK][1] = _polarities[LIGHT][1]
 	_polarities[LIGHT][1] = first_dark_element
+	emit_signal("polarity_changed")
 
 
 # Changes the elements that are of the Light polarity.
@@ -86,6 +86,7 @@ func set_elements_to_light(element_1: int, element_2: int) -> void:
 		printerr("Cannot assign polarity to a non-core element.")
 		return
 	_set_elements_to_polarity(LIGHT, element_1, element_2)
+	emit_signal("polarity_changed")
 
 
 # Changes the elements that are of the Dark polarity.
@@ -97,6 +98,7 @@ func set_elements_to_dark(element_1: int, element_2: int) -> void:
 		printerr("Cannot assign polarity to a non-core element.")
 		return
 	_set_elements_to_polarity(DARK, element_1, element_2)
+	emit_signal("polarity_changed")
 
 
 # Get the elements of the Light polarity.
@@ -132,10 +134,9 @@ func _set_elements_to_polarity(
 	element_1: int,
 	element_2: int
 ) -> void:
-	assert(
-			target_polarity == LIGHT or target_polarity == DARK,
-			"target_polarity is a core element, not a 'polar' element."
-	)
+	if target_polarity in Constants.PolarElement.keys():
+		printerr("target_polarity is not a 'polar' element.")
+		return
 	var inverse_polarity: int = LIGHT if target_polarity == DARK else DARK
 	var element_1_details: Array = _get_polarity_and_index(element_1)
 	var element_2_details: Array = _get_polarity_and_index(element_2)
@@ -191,17 +192,12 @@ func _swap_polarities_at_index(index: int) -> void:
 
 # Checks if a given value corresponds to an elemental type.
 func _is_valid_core_element(element: int) -> bool:
-	return (
-		element == Constants.Element.EARTH
-		or element == Constants.Element.FIRE
-		or element == Constants.Element.WATER
-		or element == Constants.Element.WIND
-	)
+	return element in Constants.CoreElement.keys()
 
 
 # Sets Fire and Wind to Light. Sets Earth and Water to Dark.
 func _set_to_default() -> void:
-	_polarities[LIGHT][0] = Constants.Element.FIRE
-	_polarities[LIGHT][1] = Constants.Element.WIND
-	_polarities[DARK][0] = Constants.Element.EARTH
-	_polarities[DARK][1] = Constants.Element.WATER
+	_polarities[LIGHT][0] = Constants.CoreElement.FIRE
+	_polarities[LIGHT][1] = Constants.CoreElement.WIND
+	_polarities[DARK][0] = Constants.CoreElement.EARTH
+	_polarities[DARK][1] = Constants.CoreElement.WATER

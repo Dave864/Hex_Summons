@@ -28,10 +28,11 @@ enum CoreElement {
 }
 
 # The polar elements that define magic and resistance. LIGHT and DARK
-# are polar elements and two core elements are assigned to each.
+# are polar elements and two core elements are assigned to each. Values are
+# consistent with the Element enum.
 enum PolarElement {
-	LIGHT,
-	DARK,
+	LIGHT = 4,
+	DARK = 5,
 }
 
 # What the range finder is being used for.
