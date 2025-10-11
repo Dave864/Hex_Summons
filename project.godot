@@ -34,10 +34,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://actions/action_hit_box.gd"
 }, {
-"base": "PanelContainer",
+"base": "Control",
 "class": "ActivePlayerStats",
 "language": "GDScript",
-"path": "res://user_interface/encounter/active_player_stats.gd"
+"path": "res://user_interface/encounter/ActivePlayerStats/active_player_stats.gd"
 }, {
 "base": "ActionCondition",
 "class": "AdjacentCondition",

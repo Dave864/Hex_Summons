@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://user_interface/encounter/WispPool/PlayerWispPool/PlayerWispPool.tscn" type="PackedScene" id=1]
+[ext_resource path="res://art/icon.png" type="Texture" id=2]
+[ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=3]
+[ext_resource path="res://art/ui/ThemeBlueSigil/HealthBorder.png" type="Texture" id=4]
+[ext_resource path="res://art/ui/ThemeBlueSigil/HealthBar.png" type="Texture" id=5]
+[ext_resource path="res://user_interface/encounter/ActivePlayerStats/active_player_stats.gd" type="Script" id=6]
+
+[node name="ActivePlayerStats" type="Control"]
+anchor_right = 0.156
+anchor_bottom = 0.333
+margin_right = 0.159996
+margin_bottom = 0.119995
+theme = ExtResource( 3 )
+script = ExtResource( 6 )
+
+[node name="NameLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -50.0
+margin_right = 50.0
+margin_bottom = 8.0
+text = "NAME"
+align = 1
+
+[node name="HealthNumberLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -50.0
+margin_top = -8.0
+margin_right = 50.0
+text = "00/00"
+align = 1
+
+[node name="HealthBar" type="TextureProgress" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = 34.0
+margin_right = 50.0
+margin_bottom = 50.0
+value = 60.0
+rounded = true
+texture_under = ExtResource( 4 )
+texture_progress = ExtResource( 5 )
+texture_progress_offset = Vector2( 11, 3 )
+
+[node name="PlayerWispPool" parent="." instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -37.0
+margin_top = -50.0
+margin_right = 37.0
+margin_bottom = 46.0
+
+[node name="PlayerPortrait" type="TextureRect" parent="PlayerWispPool"]
+show_behind_parent = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -23.0
+margin_top = -23.0
+margin_right = 23.0
+margin_bottom = 23.0
+texture = ExtResource( 2 )
+expand = true
