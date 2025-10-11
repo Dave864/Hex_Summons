@@ -32,7 +32,7 @@ var _techniques: Array = [] setget , get_techniques
 var _spells: Array = [] setget , get_spells
 
 onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
-onready var active_player_stats: ActivePlayerStats = $ActivePlayerStats
+onready var active_player_stats: PlayerStats = $ActivePlayerStats
 onready var enemy_stats: VBoxContainer = $EnemyStats
 onready var party_stats: VBoxContainer = $PartyStats
 onready var options: HBoxContainer = $Options
