@@ -8,6 +8,10 @@ Manages the various UI elements of an encounter.
 # Inidicates that the UI is waiting to be activated.
 signal is_waiting()
 
+const MAX_PARTY_SIZE: int = 4
+const PART_PARTY_HEIGHT: int = 168
+const FULL_PARTY_HEIGHT: int = 224
+
 enum Options {
 	MOVE,
 	TECHNIQUE,
@@ -26,7 +30,6 @@ var _character_summary: PackedScene = preload(
 	"res://user_interface/encounter/test_labels/CharacterSummary/CharacterSummary.tscn"
 )
 var _current_selection: int = Options.NONE setget set_current_selection, get_current_selection
-# The player character that will interface with the UI.
 var _focused_player: PlayerCharacter = null setget set_focused_player, get_focused_player
 var _party_stat_map: Dictionary = {}
 var _techniques: Array = [] setget , get_techniques
@@ -85,6 +88,7 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	_techniques = _focused_player.get_techniques()
 	_spells = _focused_player.get_spells()
 	
+	party_stats.rect_size.y = PART_PARTY_HEIGHT
 	active_player_stats.set_stats(_focused_player)
 	active_player_stats.show()
 	
@@ -150,6 +154,10 @@ func set_active_options() -> void:
 func hide_active_stats() -> void:
 	active_player_stats.hide()
 	if _focused_player != null:
+		party_stats.rect_size.y = (
+				FULL_PARTY_HEIGHT if _party_stat_map.size() == MAX_PARTY_SIZE
+				else PART_PARTY_HEIGHT
+		)
 		_party_stat_map[_focused_player.get_instance_id()].show()
 
 
@@ -175,7 +183,11 @@ func reset_all_options() -> void:
 
 # Initializes the party character details in the UI.
 func track_party_members(players: Array) -> void:
-	var p_count: int = int(min(players.size(), 4))
+	var p_count: int = int(min(players.size(), MAX_PARTY_SIZE))
+	party_stats.rect_size.y = (
+			FULL_PARTY_HEIGHT if p_count == MAX_PARTY_SIZE
+			else PART_PARTY_HEIGHT
+	)
 	for i in p_count:
 		var player_stats: PlayerStats = party_stats.get_child(i)
 		var player: PlayerCharacter = players[i]

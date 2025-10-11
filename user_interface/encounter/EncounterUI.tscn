@@ -75,26 +75,29 @@ visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 128.0
-margin_bottom = 39.0
+margin_bottom = 168.0
 
 [node name="PartyPlayerStats2" parent="PartyStats" instance=ExtResource( 12 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_top = 86.0
 margin_right = 128.0
-margin_bottom = 53.0
+margin_bottom = 168.0
 
 [node name="PartyPlayerStats3" parent="PartyStats" instance=ExtResource( 12 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_top = 114.0
 margin_right = 128.0
-margin_bottom = 82.0
+margin_bottom = 168.0
 
 [node name="PartyPlayerStats4" parent="PartyStats" instance=ExtResource( 12 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_top = 129.0
 margin_right = 128.0
 margin_bottom = 168.0
 
