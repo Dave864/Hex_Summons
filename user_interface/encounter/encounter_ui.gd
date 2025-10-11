@@ -27,7 +27,8 @@ var _character_summary: PackedScene = preload(
 )
 var _current_selection: int = Options.NONE setget set_current_selection, get_current_selection
 # The player character that will interface with the UI.
-var _player: PlayerCharacter = null setget set_focused_player, get_focused_player
+var _focused_player: PlayerCharacter = null setget set_focused_player, get_focused_player
+var _party_stat_map: Dictionary = {}
 var _techniques: Array = [] setget , get_techniques
 var _spells: Array = [] setget , get_spells
 
@@ -64,24 +65,27 @@ func get_current_selection() -> int:
 # Updates the player character being focused on.
 func set_focused_player(new_player: PlayerCharacter) -> void:
 	var player_connected: bool = (
-			_player != null 
-			and _player.stats.is_connected(
+			_focused_player != null 
+			and _focused_player.stats.is_connected(
 				"health_changed",
 				active_player_stats,
 				"_on_Character_hp_changed"
 			)
 	)
 	if player_connected:
-		_player.stats.disconnect(
+		_focused_player.stats.disconnect(
 				"health_changed",
 				active_player_stats,
 				"_on_Character_hp_changed"
 		)
-	_player = new_player
-	_techniques = _player.get_techniques()
-	_spells = _player.get_spells()
+	if _focused_player != null:
+		_party_stat_map[_focused_player.get_instance_id()].show()
+	_party_stat_map[new_player.get_instance_id()].hide()
+	_focused_player = new_player
+	_techniques = _focused_player.get_techniques()
+	_spells = _focused_player.get_spells()
 	
-	active_player_stats.set_stats(_player)
+	active_player_stats.set_stats(_focused_player)
 	active_player_stats.show()
 	
 	reset_all_options()
@@ -91,7 +95,7 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 
 # Get the current player the UI is focused on.
 func get_focused_player() -> PlayerCharacter:
-	return _player
+	return _focused_player
 
 
 # Get the techniques of the focused player.
@@ -141,6 +145,14 @@ func set_active_options() -> void:
 	end_button.set_disabled(false)
 
 
+# Hides the active player stats and reveals the relevant party summary for the
+# "active" character.
+func hide_active_stats() -> void:
+	active_player_stats.hide()
+	if _focused_player != null:
+		_party_stat_map[_focused_player.get_instance_id()].show()
+
+
 # Set all player options to disabled.
 func disable_all_options() -> void:
 	movement_button.set_disabled()
@@ -167,6 +179,7 @@ func track_party_members(players: Array) -> void:
 	for i in p_count:
 		var player_stats: PlayerStats = party_stats.get_child(i)
 		var player: PlayerCharacter = players[i]
+		_party_stat_map[player.get_instance_id()] = player_stats
 		player_stats.set_stats(player)
 		player_stats.show()
 
@@ -214,9 +227,9 @@ func _set_player_option_focus_neighbors() -> void:
 func _update_sub_options() -> void:
 	match _current_selection:
 		Options.TECHNIQUE:
-			sub_options.populate(_player, _techniques)
+			sub_options.populate(_focused_player, _techniques)
 		Options.SPELL:
-			sub_options.populate(_player, _spells)
+			sub_options.populate(_focused_player, _spells)
 		Options.SUMMON:
 			pass
 		Options.ITEM:

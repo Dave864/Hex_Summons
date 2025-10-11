@@ -11,7 +11,7 @@ turn starts.
 func enter(_msg := {}) -> void:
 	encounter_ui.sub_options.deactivate()
 	encounter_ui.options.hide()
-	encounter_ui.active_player_stats.hide()
+	encounter_ui.hide_active_stats()
 	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
