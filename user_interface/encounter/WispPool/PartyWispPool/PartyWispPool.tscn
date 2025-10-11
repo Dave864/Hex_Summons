@@ -195,3 +195,11 @@ margin_left = 8.0
 margin_top = 7.0
 margin_right = 13.0
 margin_bottom = 14.0
+
+[connection signal="timeout" from="VariableTimer" to="." method="_on_Timer_timeout"]
+[connection signal="shine_ping" from="LightIcon" to="." method="_on_PolarElementIcon_shine_ping"]
+[connection signal="element_ping" from="LightCore1Icon" to="." method="_on_CoreElementIcon_element_ping"]
+[connection signal="element_ping" from="LightCore2Icon" to="." method="_on_CoreElementIcon_element_ping"]
+[connection signal="shine_ping" from="DarkIcon" to="." method="_on_PolarElementIcon_shine_ping"]
+[connection signal="element_ping" from="DarkCore1Icon" to="." method="_on_CoreElementIcon_element_ping"]
+[connection signal="element_ping" from="DarkCore2Icon" to="." method="_on_CoreElementIcon_element_ping"]
