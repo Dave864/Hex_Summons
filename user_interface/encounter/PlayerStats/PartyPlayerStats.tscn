@@ -11,6 +11,8 @@
 anchor_right = 0.2
 anchor_bottom = 0.133
 margin_bottom = 0.119999
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource( 2 )
 script = ExtResource( 6 )
 portrait_size = Vector2( 22, 22 )

@@ -29,7 +29,18 @@ func set_stats(player: PlayerCharacter) -> void:
 #	_wisp_pool.set_wisp_pool(player.wisp_pool)
 	_player_portrait.texture = _default_portrait
 	_player_portrait.rect_size = portrait_size
-	_health_bar.max_value = max_health
-	_health_bar.value = cur_health
-	_health_label.text = "{0}/{1}".format([cur_health, max_health])
 	_name_label.text = player.name
+	player.stats.connect("health_changed", self, "_on_Character_hp_changed")
+	set_hp(cur_health, max_health)
+
+
+# Sets the hp values of the summary.
+func set_hp(cur_hp: int, max_hp: int) -> void:
+	_health_label.text = "{0}/{1}".format([cur_hp, max_hp])
+	_health_bar.max_value = max_hp
+	_health_bar.value = cur_hp
+
+
+# Updates the hp values when a character's health is changed.
+func _on_Character_hp_changed(new_cur: int, new_max: int) -> void:
+	set_hp(new_cur, new_max)

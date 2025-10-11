@@ -53,7 +53,7 @@ func _ready() -> void:
 		TODO: Implement logic to load player stats from out of scene details.
 		"""
 		p.stats.max_cur_health()
-		ui.track_party_member(p)
+	ui.track_party_members(players)
 	
 	for e in enemies:
 		var ai_node: CharacterAI = e.get_node("CharacterAI")

@@ -147,18 +147,14 @@ func reset_all_options() -> void:
 	end_button.reset()
 
 
-# Adds the player character details to the UI.
-func track_party_member(p: PlayerCharacter) -> void:
-	var p_label: CharacterSummary = _character_summary.instance()
-	p_label.set_name(p.name)
-	p_label.set_hp(
-			p.stats.get_stat(Stat.Type.CUR_HEALTH),
-			p.stats.get_stat(Stat.Type.CUR_HEALTH)
-	)
-	p_label.set_player_wisp_count(p.wisp_pool)
-	p_label.set_text_alignment(Label.ALIGN_LEFT)
-	p.stats.connect("health_changed", p_label, "_on_Character_hp_changed")
-	party_stats.add_child(p_label)
+# Initializes the party character details in the UI.
+func track_party_members(players: Array) -> void:
+	var p_count: int = int(min(players.size(), 4))
+	for i in p_count:
+		var player_stats: PlayerStats = party_stats.get_child(i)
+		var player: PlayerCharacter = players[i]
+		player_stats.set_stats(player)
+		player_stats.show()
 
 
 # Adds the enemy character details to the UI.
