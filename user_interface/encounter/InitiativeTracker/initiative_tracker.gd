@@ -143,6 +143,7 @@ func _update_display() -> void:
 		init_slots[i].change_character(c)
 		if earliest_init[c.get_instance_id()] < 0:
 			earliest_init[c.get_instance_id()] = i
+			c.character_label.set_initiative_label(i)
 
 
 # Helper for _update_display. Populates the char_order array with the characters
