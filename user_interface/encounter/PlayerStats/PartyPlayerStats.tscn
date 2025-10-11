@@ -11,6 +11,7 @@
 anchor_right = 0.2
 anchor_bottom = 0.133
 margin_bottom = 0.119999
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 2 )
@@ -52,6 +53,7 @@ margin_left = -38.0
 margin_top = -8.0
 margin_right = 62.0
 margin_bottom = 8.0
+mouse_filter = 2
 value = 60.0
 rounded = true
 texture_under = ExtResource( 3 )
@@ -67,6 +69,7 @@ margin_left = -64.0
 margin_top = -24.0
 margin_right = -56.208
 margin_bottom = -17.496
+mouse_filter = 2
 
 [node name="PlayerPortrait" type="TextureRect" parent="PartyWispPool"]
 show_behind_parent = true
@@ -78,5 +81,6 @@ margin_left = -11.0
 margin_top = -11.0
 margin_right = 11.0
 margin_bottom = 11.0
+mouse_filter = 2
 texture = ExtResource( 4 )
 expand = true

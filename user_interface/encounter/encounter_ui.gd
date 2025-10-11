@@ -63,6 +63,20 @@ func get_current_selection() -> int:
 
 # Updates the player character being focused on.
 func set_focused_player(new_player: PlayerCharacter) -> void:
+	var player_connected: bool = (
+			_player != null 
+			and _player.stats.is_connected(
+				"health_changed",
+				active_player_stats,
+				"_on_Character_hp_changed"
+			)
+	)
+	if player_connected:
+		_player.stats.disconnect(
+				"health_changed",
+				active_player_stats,
+				"_on_Character_hp_changed"
+		)
 	_player = new_player
 	_techniques = _player.get_techniques()
 	_spells = _player.get_spells()

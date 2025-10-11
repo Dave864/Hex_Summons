@@ -22,16 +22,12 @@ onready var _name_label: Label = $NameLabel
 func set_stats(player: PlayerCharacter) -> void:
 	var cur_health: int = player.stats.get_stat(Stat.Type.CUR_HEALTH)
 	var max_health: int = player.stats.get_stat(Stat.Type.MAX_HEALTH)
-	"""
-	TODO: Update logic to load the player portrait if available. Update logic
-	to set the player wisp pool.
-	"""
-#	_wisp_pool.set_wisp_pool(player.wisp_pool)
+	_wisp_pool.set_wisp_pool(player.wisp_pool)
 	_player_portrait.texture = _default_portrait
 	_player_portrait.rect_size = portrait_size
 	_name_label.text = player.name
-	player.stats.connect("health_changed", self, "_on_Character_hp_changed")
 	set_hp(cur_health, max_health)
+	player.stats.connect("health_changed", self, "_on_Character_hp_changed")
 
 
 # Sets the hp values of the summary.

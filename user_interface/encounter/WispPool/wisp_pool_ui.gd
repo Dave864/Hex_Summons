@@ -137,6 +137,9 @@ func _on_ElementalPolarity_polarity_changed() -> void:
 # be emitted when the element for an icon changes, allowing for periodic
 # shines to not play the text change animation.
 func _on_CoreElementIcon_element_ping(core_elem: int) -> void:
+	# Not able to update labels if no wisp pool is connected.
+	if pool == null:
+		return
 	var count: String = String(pool.active_element_count(core_elem))
 	if _polarities[LIGHT][0] == core_elem:
 		light_elem_1_label.update_text(count)
@@ -151,6 +154,9 @@ func _on_CoreElementIcon_element_ping(core_elem: int) -> void:
 # Update the count label for the pinged polar element. Will play the update text
 # animation if the text updates.
 func _on_PolarElementIcon_shine_ping(polar_elem: int) -> void:
+	# Not able to update labels if no wisp pool is connected.
+	if pool == null:
+		return
 	if polar_elem == LIGHT and String(pool.active_light_count()) != light_label.text:
 		light_label.update_text(String(pool.active_light_count()))
 	elif polar_elem == DARK and String(pool.active_dark_count()) != dark_label.text:
