@@ -36,7 +36,7 @@ var _water: Dictionary = {
 }
 var _wind: Dictionary = {
 	"test_wind_1": _initialize_data("test_wind_1", WIND),
-	"test_wind_2": _initialize_data("text_wind_2", WIND),
+	"test_wind_2": _initialize_data("test_wind_2", WIND),
 }
 
 
@@ -168,13 +168,13 @@ func _get_wisp_data(name: String, element: int) -> Wisp:
 	var path_format: String
 	match element:
 		EARTH:
-			path_format = "res://wisps/earth/{0}/{0}"
+			path_format = "res://wisps/earth/{0}/{0}.tres"
 		FIRE:
-			path_format = "res://wisps/fire/{0}/{0}"
+			path_format = "res://wisps/fire/{0}/{0}.tres"
 		WATER:
-			path_format = "res://wisps/water/{0}/{0}"
+			path_format = "res://wisps/water/{0}/{0}.tres"
 		WIND:
-			path_format = "res://wisps/wind/{0}/{0}"
+			path_format = "res://wisps/wind/{0}/{0}.tres"
 		_:
 			printerr("An invalid element was provided.")
 			return null
