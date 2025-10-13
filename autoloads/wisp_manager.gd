@@ -20,52 +20,20 @@ enum WispState {
 }
 
 var _earth: Dictionary = {
-	"test_earth_1": {
-		"data": _get_wisp_data("test_earth_1", EARTH),
-		"bonded_player": NO_PLAYER,
-		"encounter_state": WispState.INACTIVE,
-	},
-	"test_earth_2": {
-		"data": _get_wisp_data("test_earth_2", EARTH),
-		"bonded_player": NO_PLAYER,
-		"encounter_state": WispState.INACTIVE,
-	},
+	"test_earth_1": _initialize_data("test_earth_1", EARTH),
+	"test_earth_2": _initialize_data("test_earth_2", EARTH),
 }
 var _fire: Dictionary = {
-	"test_fire_1": {
-		"data": _get_wisp_data("test_fire_1", FIRE),
-		"bonded_player": NO_PLAYER,
-		"encounter_state": WispState.INACTIVE,
-	},
-	"test_fire_2": {
-		"data": _get_wisp_data("test_fire_2", FIRE),
-		"bonded_player": NO_PLAYER,
-		"encounter_state": WispState.INACTIVE,
-	},
+	"test_fire_1": _initialize_data("test_fire_1", FIRE),
+	"test_fire_2": _initialize_data("test_fire_2", FIRE)
 }
 var _water: Dictionary = {
-	"test_water_1": {
-		"data": _get_wisp_data("test_water_1", WATER),
-		"bonded_player": NO_PLAYER,
-		"encounter_state": WispState.INACTIVE,
-	},
-	"test_water_2": {
-		"data": _get_wisp_data("test_water_2", WATER),
-		"bonded_player": NO_PLAYER,
-		"encounter_state": WispState.INACTIVE,
-	},
+	"test_water_1": _initialize_data("test_water_1", WATER),
+	"test_water_2": _initialize_data("test_water_2", WATER),
 }
 var _wind: Dictionary = {
-	"test_wind_1": {
-		"data": _get_wisp_data("test_wind_1", WIND),
-		"bonded_player": NO_PLAYER,
-		"encounter_state": WispState.INACTIVE,
-	},
-	"test_wind_2": {
-		"data": _get_wisp_data("test_wind_2", WIND),
-		"bonded_player": NO_PLAYER,
-		"encounter_state": WispState.INACTIVE,
-	},
+	"test_wind_1": _initialize_data("test_wind_1", WIND),
+	"test_wind_2": _initialize_data("text_wind_2", WIND),
 }
 
 
@@ -177,6 +145,15 @@ func save_data(save_data_path: String) -> bool:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+
+
+# Initializes the data for a wisp.
+func _initialize_data(name: String, element: int) -> Dictionary:
+	return {
+		"data": _get_wisp_data(name, element),
+		"bonded_player": NO_PLAYER,
+		"encounter_state": WispState.INACTIVE
+	}
 
 
 # Gets the wisp data for a given name and element, returning null if there is
