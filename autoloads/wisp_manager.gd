@@ -7,6 +7,9 @@ interacted with in game.
 
 
 const NO_PLAYER: String = "NONE"
+const DATA: String = "data"
+const BONDED_PLAYER: String = "bonded_player"
+const ENCOUNTER_STATE: String = "encounter_state"
 const EARTH: int = Constants.CoreElement.EARTH
 const FIRE: int = Constants.CoreElement.FIRE
 const WATER: int = Constants.CoreElement.WATER
@@ -48,16 +51,16 @@ func get_data(wisp: String, element: int = -1) -> Wisp:
 	match element:
 		EARTH:
 			if _earth.has(wisp):
-				return _earth[wisp]["data"]
+				return _earth[wisp][DATA]
 		FIRE:
 			if _fire.has(wisp):
-				return _fire[wisp]["data"]
+				return _fire[wisp][DATA]
 		WATER:
 			if _water.has(wisp):
-				return _water[wisp]["data"]
+				return _water[wisp][DATA]
 		WIND:
 			if _wind.has(wisp):
-				return _wind[wisp]["data"]
+				return _wind[wisp][DATA]
 		_:
 			printerr("Wisp {0} not in any element pool".format([wisp]))
 			return null
@@ -74,13 +77,13 @@ func set_bonded_player(wisp: String, player: String = NO_PLAYER) -> bool:
 	var element: int = _wisp_element(wisp)
 	match element:
 		Constants.CoreElement.EARTH:
-			_earth[wisp]["bonded_player"] = player
+			_earth[wisp][BONDED_PLAYER] = player
 		Constants.CoreElement.FIRE:
-			_fire[wisp]["bonded_player"] = player
+			_fire[wisp][BONDED_PLAYER] = player
 		Constants.CoreElement.WATER:
-			_water[wisp]["bonded_player"] = player
+			_water[wisp][BONDED_PLAYER] = player
 		Constants.CoreElement.WIND:
-			_wind[wisp]["bonded_player"] = player
+			_wind[wisp][BONDED_PLAYER] = player
 		_:
 			return false
 	if player == NO_PLAYER:
@@ -126,20 +129,23 @@ func set_state_to_inactive(wisp: String) -> bool:
 	return set_bonded_player(wisp)
 
 
-# Loads the save data for the wisps. Returns if the operation was successful.
-func load_save(save_data_path: String) -> bool:
-	"""
-	TODO: implement the logic for loading the save.
-	"""
-	return false
+# Loads the save data for the wisps.
+func load_save_data(save_data: Dictionary) -> void:
+	_load_pool_save_data(_earth, save_data[EARTH])
+	_load_pool_save_data(_fire, save_data[FIRE])
+	_load_pool_save_data(_water, save_data[WATER])
+	_load_pool_save_data(_wind, save_data[WIND])
 
 
-# Saves the current wisp data. Returns if the operation was successful.
-func save_data(save_data_path: String) -> bool:
-	"""
-	TODO: implement the logic for saving the data.
-	"""
-	return false
+# Gets the current state of the wisp manager for the purposes of saving the data.
+func get_save_data() -> Dictionary:
+	var save_data: Dictionary = {
+		EARTH: _get_pool_save_data(_earth),
+		FIRE: _get_pool_save_data(_fire),
+		WATER: _get_pool_save_data(_water),
+		WIND: _get_pool_save_data(_wind)
+	}
+	return save_data
 
 
 # Called when the node enters the scene tree for the first time.
@@ -150,9 +156,9 @@ func _ready():
 # Initializes the data for a wisp.
 func _initialize_data(name: String, element: int) -> Dictionary:
 	return {
-		"data": _get_wisp_data(name, element),
-		"bonded_player": NO_PLAYER,
-		"encounter_state": WispState.INACTIVE
+		DATA: _get_wisp_data(name, element),
+		BONDED_PLAYER: NO_PLAYER,
+		ENCOUNTER_STATE: WispState.INACTIVE
 	}
 
 
@@ -200,13 +206,13 @@ func _update_encounter_state(wisp: String, new_state: int) -> bool:
 	var element: int = _wisp_element(wisp)
 	match element:
 		EARTH:
-			_earth[wisp]["encounter_state"] = new_state
+			_earth[wisp][ENCOUNTER_STATE] = new_state
 		FIRE:
-			_fire[wisp]["encounter_state"] = new_state
+			_fire[wisp][ENCOUNTER_STATE] = new_state
 		WATER:
-			_water[wisp]["encounter_state"] = new_state
+			_water[wisp][ENCOUNTER_STATE] = new_state
 		WIND:
-			_wind[wisp]["encounter_state"] = new_state
+			_wind[wisp][ENCOUNTER_STATE] = new_state
 		_:
 			return false
 	return true
@@ -217,6 +223,26 @@ func _update_encounter_state(wisp: String, new_state: int) -> bool:
 func _get_bonded_wisps_from_data(wisp_data: Dictionary, player: String) -> Array:
 	var bonded_wisps: Array = []
 	for wisp in wisp_data.keys():
-		if wisp_data[wisp]["bonded_player"] == player:
+		if wisp_data[wisp][BONDED_PLAYER] == player:
 			bonded_wisps.append(wisp)
 	return bonded_wisps
+
+
+# Helper function for load_save_data. Updates the specified wisp pool with the
+# given data.
+func _load_pool_save_data(wisp_pool: Dictionary, save_data: Dictionary) -> void:
+	for wisp in save_data.keys():
+		wisp_pool[wisp][BONDED_PLAYER] = save_data[wisp][BONDED_PLAYER]
+		wisp_pool[wisp][ENCOUNTER_STATE] = save_data[wisp][ENCOUNTER_STATE]
+
+
+# Helper function for get_save_data. Gets the relevant data from the specified
+# wisp pool for the purposes of saving. Gets the bonded player and encounter state.
+func _get_pool_save_data(wisp_pool: Dictionary) -> Dictionary:
+	var save_data: Dictionary = {}
+	for wisp in wisp_pool.keys():
+		save_data[wisp] = {
+			BONDED_PLAYER: wisp_pool[wisp][BONDED_PLAYER],
+			ENCOUNTER_STATE: wisp_pool[wisp][ENCOUNTER_STATE]
+		}
+	return save_data
