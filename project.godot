@@ -588,6 +588,7 @@ SignalBus="*res://autoloads/signal_bus.gd"
 GamepadHandler="*res://autoloads/gamepad_handler.gd"
 MouseHandler="*res://autoloads/mouse_handler.gd"
 InputController="*res://autoloads/input_controller.gd"
+WispManager="*res://autoloads/wisp_manager.gd"
 
 [display]
 
