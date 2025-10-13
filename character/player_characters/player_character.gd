@@ -40,6 +40,7 @@ func _ready() -> void:
 	TODO: Implement logic for loading the details of the currently set player class
 	from data outside of encounter scene.
 	"""
+	wisp_pool.player_name = name
 	_player_class = $Class
 	_techniques = _player_class.techniques
 	_spells = _player_class.spells

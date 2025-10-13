@@ -44,7 +44,7 @@ var _wind: Dictionary = {
 # element if none is specified.
 func get_data(wisp: String, element: int = -1) -> Wisp:
 	if element < 0:
-		element = _wisp_element(wisp)
+		element = wisp_element(wisp)
 	elif element in Constants.CoreElement:
 		printerr("Invalid element specified.")
 		return null
@@ -62,11 +62,25 @@ func get_data(wisp: String, element: int = -1) -> Wisp:
 			if _wind.has(wisp):
 				return _wind[wisp][DATA]
 		_:
-			printerr("Wisp {0} not in any element pool".format([wisp]))
 			return null
 	var elem_name: String = Constants.CoreElement.find_key(element)
 	print("Wisp {0} is not in the {1} pool.".format([wisp, elem_name]))
 	return null
+
+
+# Gets the element the wisp is part of. Returns -1 if the given name is not in
+# any wisp pool.
+func wisp_element(wisp: String) -> int:
+	if _earth.has(wisp):
+		return EARTH
+	if _fire.has(wisp):
+		return FIRE
+	if _water.has(wisp):
+		return WATER
+	if _wind.has(wisp):
+		return WIND
+	printerr("Wisp {0} not in any element pool".format([wisp]))
+	return -1
 
 
 # Updates the player the wisp is bonded to. Player defaults to NO_PLAYER, which
@@ -74,7 +88,7 @@ func get_data(wisp: String, element: int = -1) -> Wisp:
 # NO_PLAYER is specified. Returns if the operation was successful or not, such
 # as if the provided wisp is valid.
 func set_bonded_player(wisp: String, player: String = NO_PLAYER) -> bool:
-	var element: int = _wisp_element(wisp)
+	var element: int = wisp_element(wisp)
 	match element:
 		Constants.CoreElement.EARTH:
 			_earth[wisp][BONDED_PLAYER] = player
@@ -99,6 +113,22 @@ func get_bonded_wisps(player: String) -> Dictionary:
 		WATER: _get_bonded_wisps_from_data(_water, player),
 		WIND: _get_bonded_wisps_from_data(_wind, player),
 	}
+
+
+# Checks if the wisp is intended to be set to a player.
+func is_player_set(wisp: String) -> bool:
+	var element: int = wisp_element(wisp)
+	match element:
+		EARTH:
+			return _earth[wisp][ENCOUNTER_STATE] == WispState.PLAYER_SET
+		FIRE:
+			return _fire[wisp][ENCOUNTER_STATE] == WispState.PLAYER_SET
+		WATER:
+			return _water[wisp][ENCOUNTER_STATE] == WispState.PLAYER_SET
+		WIND:
+			return _wind[wisp][ENCOUNTER_STATE] == WispState.PLAYER_SET
+		_:
+			return false
 
 
 # Updates the state of the wisp to indicate it is in the bonded player's pool.
@@ -186,24 +216,10 @@ func _get_wisp_data(name: String, element: int) -> Wisp:
 	return wisp_data
 
 
-# Gets the element the wisp is part of. Returns -1 if the given name is not in
-# any wisp pool.
-func _wisp_element(wisp: String) -> int:
-	if _earth.has(wisp):
-		return EARTH
-	if _fire.has(wisp):
-		return FIRE
-	if _water.has(wisp):
-		return WATER
-	if _wind.has(wisp):
-		return WIND
-	return -1
-
-
 # Updates the encounter state, returning if the operation was successful,
 # such as if the provided wisp is valid.
 func _update_encounter_state(wisp: String, new_state: int) -> bool:
-	var element: int = _wisp_element(wisp)
+	var element: int = wisp_element(wisp)
 	match element:
 		EARTH:
 			_earth[wisp][ENCOUNTER_STATE] = new_state

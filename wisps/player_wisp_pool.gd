@@ -5,6 +5,9 @@ Tracks the wisp states for a Player character.
 """
 
 
+const NONE: String = ""
+
+var player_name: String = ""
 # Tracks which wisps are "active", i.e. which wisps are available to be used
 # for actions.
 var earth: Dictionary = {}
@@ -13,21 +16,64 @@ var water: Dictionary = {}
 var wind: Dictionary = {}
 
 
+# Adds wisp to the appropriate pool. Updates WispManager.
+func add_wisp(wisp: String) -> void:
+	var element: int = WispManager.wisp_element(wisp)
+	match element:
+		Constants.CoreElement.EARTH:
+			earth[wisp] = false
+		Constants.CoreElement.FIRE:
+			fire[wisp] = false
+		Constants.CoreElement.WATER:
+			water[wisp] = false
+		Constants.CoreElement.WIND:
+			wind[wisp] = false
+		_:
+			printerr("Wisp {0} is not of valid element.".format([wisp]))
+			return
+	WispManager.set_bonded_player(wisp, player_name)
+	if WispManager.is_player_set(wisp):
+		set_active(wisp)
+
+
+# Removes the wisp from the pool. Updates WispManager.
+func remove_wisp(wisp: String) -> void:
+	if earth.has(wisp):
+		if earth[wisp]:
+			_active_count[Constants.CoreElement.EARTH] -= 1
+		earth.erase(wisp)
+	elif fire.has(wisp):
+		if fire[wisp]:
+			_active_count[Constants.CoreElement.FIRE] -= 1
+		fire.erase(wisp)
+	elif water.has(wisp):
+		if water[wisp]:
+			_active_count[Constants.CoreElement.WATER] -= 1
+		water.erase(wisp)
+	elif wind.has(wisp):
+		if wind[wisp]:
+			_active_count[Constants.CoreElement.WIND] -= 1
+		wind.erase(wisp)
+	else:
+		return
+	WispManager.set_bonded_player(wisp)
+
+
 # Updates the state of the specified wisp to "active"
-func set_active(wisp_key: int) -> void:
+func set_active(wisp: String) -> void:
 	var element: int
-	if earth.has(wisp_key):
+	if earth.has(wisp):
 		element = Constants.CoreElement.EARTH
-		earth[wisp_key] = true
-	elif fire.has(wisp_key):
+		earth[wisp] = true
+	elif fire.has(wisp):
 		element = Constants.CoreElement.FIRE
-		fire[wisp_key] = true
-	elif water.has(wisp_key):
+		fire[wisp] = true
+	elif water.has(wisp):
 		element = Constants.CoreElement.WATER
-		water[wisp_key] = true
-	elif wind.has(wisp_key):
+		water[wisp] = true
+	elif wind.has(wisp):
 		element = Constants.CoreElement.WIND
-		wind[wisp_key] = true
+		wind[wisp] = true
 	else:
 		return
 	_active_count[element] += 1
@@ -40,20 +86,20 @@ func set_active(wisp_key: int) -> void:
 func pay_for_element(element: int) -> Array:
 	match element:
 		Constants.Element.EARTH:
-			var id: int = _deactivate_first_active(earth, element)
-			if id >= 0:
+			var id: String = _deactivate_first_active(earth, element)
+			if id != NONE:
 				return [id]
 		Constants.Element.FIRE:
-			var id: int = _deactivate_first_active(fire, element)
-			if id >= 0:
+			var id: String = _deactivate_first_active(fire, element)
+			if id != NONE:
 				return [id]
 		Constants.Element.WATER:
-			var id: int = _deactivate_first_active(water, element)
-			if id >= 0:
+			var id: String = _deactivate_first_active(water, element)
+			if id != NONE:
 				return [id]
 		Constants.Element.WIND:
-			var id: int = _deactivate_first_active(wind, element)
-			if id >= 0:
+			var id: String = _deactivate_first_active(wind, element)
+			if id != NONE:
 				return [id]
 		Constants.Element.LIGHT:
 			var elems: Array = ElementalPolarity.get_light_elements()
@@ -83,14 +129,14 @@ func _ready():
 # Helper function for pay_for_element. Deactivates the first active wisp in the
 # given category. Returns the key of said wisp, if any. Returns -1 if none are
 # found.
-func _deactivate_first_active(wisps: Dictionary, element: int) -> int:
+func _deactivate_first_active(wisps: Dictionary, element: int) -> String:
 	for id in wisps.keys():
 		if wisps[id]:
 			wisps[id] = false
 			_active_count[element] -= 1
 			emit_signal("active_count_changed", element)
 			return id
-	return -1
+	return NONE
 
 
 # Helper function for pay_for_element. Deactivates the first active wisps for the
