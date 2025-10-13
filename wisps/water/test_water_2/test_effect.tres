@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://wisps/wisp_effect.gd" type="Script" id=1]
+[ext_resource path="res://wisps/earth/test_earth_1/flat_increase.tres" type="Resource" id=2]
+[ext_resource path="res://stat_types/movement.tres" type="Resource" id=3]
+
+[resource]
+script = ExtResource( 1 )
+stat_affected = ExtResource( 3 )
+operation = 0
+calculation_method = ExtResource( 2 )
