@@ -9,7 +9,7 @@ export var portrait_size: Vector2 = Vector2(0.0, 0.0)
 export var portrait_ref: NodePath = NodePath("")
 export var wisp_pool_ref: NodePath = NodePath("")
 
-var _default_portrait: Texture = preload("res://art/icon.png")
+var _default_portrait: Texture = load(Constants.DEFAULT_ICON_PATH)
 
 onready var _player_portrait: TextureRect = get_node(portrait_ref)
 onready var _wisp_pool: WispPoolUI = get_node(wisp_pool_ref)
