@@ -5,9 +5,9 @@
 [ext_resource path="res://character/player_classes/TestRangeClass/stat_data/stat_values.tres" type="Resource" id=3]
 [ext_resource path="res://actions/Shot/Shot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://actions/Beam/Beam.tscn" type="PackedScene" id=5]
-[ext_resource path="res://actions/Nova/Nova.tscn" type="PackedScene" id=6]
 [ext_resource path="res://actions/Blast/Blast.tscn" type="PackedScene" id=7]
 [ext_resource path="res://character_ai/action_conditions/cooldown.gd" type="Script" id=8]
+[ext_resource path="res://character_ai/action_conditions/wisp_cost.gd" type="Script" id=9]
 
 [node name="TestRangeClass" type="Node"]
 script = ExtResource( 1 )
@@ -23,22 +23,18 @@ base_stat_values = ExtResource( 3 )
 [node name="Cooldown" type="Node" parent="Techniques/Shot"]
 script = ExtResource( 8 )
 
-[node name="Blast" parent="Techniques" instance=ExtResource( 7 )]
-
-[node name="Cooldown" type="Node" parent="Techniques/Blast"]
-script = ExtResource( 8 )
-turn_count = 2
-
-[node name="Nova" parent="Techniques" instance=ExtResource( 6 )]
-
-[node name="Cooldown" type="Node" parent="Techniques/Nova"]
-script = ExtResource( 8 )
-turn_count = 2
-
-[node name="Beam" parent="Techniques" instance=ExtResource( 5 )]
-
-[node name="Cooldown" type="Node" parent="Techniques/Beam"]
-script = ExtResource( 8 )
-turn_count = 3
-
 [node name="Spells" type="Node" parent="."]
+
+[node name="Blast" parent="Spells" instance=ExtResource( 7 )]
+
+[node name="WispCost" type="Node" parent="Spells/Blast"]
+script = ExtResource( 9 )
+fire_req = 1
+fire_cost = 1
+
+[node name="Beam" parent="Spells" instance=ExtResource( 5 )]
+
+[node name="WispCost" type="Node" parent="Spells/Beam"]
+script = ExtResource( 9 )
+fire_req = 2
+fire_cost = 1
