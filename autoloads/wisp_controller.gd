@@ -27,12 +27,23 @@ func pay_cost_from_summon_pool(cost: WispCost) -> void:
 	pass
 
 
-# Returns the specified number of wisps in the summon pool back to the specified
-# player. Will return as many wisps as possible up to the provided count. The
-# wisps returned are ones that are bonded to the player, but which ones that
-# are returned is random.
+# Moves the specified number of wisps in the summon pool back to the specified
+# player. Will move as many wisps as possible up to the provided count. The
+# moved wisps will always have been bonded to the player. The wisps that are
+# moved are otherwise randomly chosen.
 func recall_for_player(player_pool: PlayerWispPool, recall_count: int) -> void:
-	pass
+	var bonded_wisps: Dictionary = WispTracker.get_bonded_wisps(player_pool.player_name)
+	var summon_pool_wisps: Array = []
+	for wisps in bonded_wisps.values():
+		for wisp in wisps:
+			if WispTracker.is_summon_pool(wisp):
+				summon_pool_wisps.append(wisp)
+	summon_pool_wisps.shuffle()
+	var random_wisps: Array = summon_pool_wisps.slice(0, recall_count - 1)
+	if not WispTracker.set_state_to_player(random_wisps):
+		printerr("failed to recall all requested wisps.")
+	for wisp in random_wisps:
+		player_pool.set_active(wisp)
 
 
 # Pays the cost from the active summon pool, transferring the spent wisps to

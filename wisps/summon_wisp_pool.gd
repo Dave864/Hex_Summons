@@ -40,7 +40,8 @@ func add_wisps(wisp_ids: Array, element: int) -> void:
 
 
 # Gets the keys for the wisps that are used to pay for the specified element.
-# Returns an empty array if no wisps are available for the given element.
+# These wisps are also removed from this pool. Returns an empty array if no
+# wisps are available for the given element.
 func pay_for_element(element: int, amount: int = 1) -> Array:
 	var wisps_paid: Array = []
 	if element in Constants.PolarElement.keys():

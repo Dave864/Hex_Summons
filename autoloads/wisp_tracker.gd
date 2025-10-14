@@ -117,18 +117,22 @@ func get_bonded_wisps(player: String) -> Dictionary:
 
 # Checks if the wisp is intended to be set to a player.
 func is_player_set(wisp: String) -> bool:
-	var element: int = wisp_element(wisp)
-	match element:
-		EARTH:
-			return _earth[wisp][ENCOUNTER_STATE] == WispState.PLAYER_SET
-		FIRE:
-			return _fire[wisp][ENCOUNTER_STATE] == WispState.PLAYER_SET
-		WATER:
-			return _water[wisp][ENCOUNTER_STATE] == WispState.PLAYER_SET
-		WIND:
-			return _wind[wisp][ENCOUNTER_STATE] == WispState.PLAYER_SET
-		_:
-			return false
+	return _is_in_state(wisp, WispState.PLAYER_SET)
+
+
+# Checks if the wisp is in the summmon pool.
+func is_summon_pool(wisp: String) -> bool:
+	return _is_in_state(wisp, WispState.SUMMON_POOL)
+
+
+# Checks if the wisp is in the pool for an active summon.
+func is_summon_set(wisp: String) -> bool:
+	return _is_in_state(wisp, WispState.SUMMON_SET)
+
+
+# Checks if the wisp is inactive.
+func is_inactive(wisp: String) -> bool:
+	return _is_in_state(wisp, WispState.INACTIVE)
 
 
 # Updates the state of wisps to indicate it is in the bonded player's pool.
@@ -254,6 +258,22 @@ func _get_bonded_wisps_from_data(wisp_data: Dictionary, player: String) -> Array
 		if wisp_data[wisp][BONDED_PLAYER] == player:
 			bonded_wisps.append(wisp)
 	return bonded_wisps
+
+
+# Checks if the wisp is in the specified state.
+func _is_in_state(wisp: String, wisp_state: int) -> bool:
+	var element: int = wisp_element(wisp)
+	match element:
+		EARTH:
+			return _earth[wisp][ENCOUNTER_STATE] == wisp_state
+		FIRE:
+			return _fire[wisp][ENCOUNTER_STATE] == wisp_state
+		WATER:
+			return _water[wisp][ENCOUNTER_STATE] == wisp_state
+		WIND:
+			return _wind[wisp][ENCOUNTER_STATE] == wisp_state
+		_:
+			return false
 
 
 # Helper function for load_save_data. Updates the specified wisp pool with the
