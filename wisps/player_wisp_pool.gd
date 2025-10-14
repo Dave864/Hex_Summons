@@ -83,34 +83,34 @@ func set_active(wisp: String) -> void:
 # Gets the keys for the wisps that are used to pay for the specified element.
 # Deactivates the wisps that are spent. Returns an empty array if no wisps
 # are available for the given element.
-func pay_for_element(element: int) -> Array:
+func pay_for_element(element: int, count: int) -> Array:
 	match element:
 		Constants.Element.EARTH:
-			var id: String = _deactivate_first_active(earth, element)
-			if id != NONE:
-				return [id]
+			var wisps: Array = _deactivate_active_count(earth, element, count)
+			if wisps.size() > 0:
+				return wisps
 		Constants.Element.FIRE:
-			var id: String = _deactivate_first_active(fire, element)
-			if id != NONE:
-				return [id]
+			var wisps: Array = _deactivate_active_count(fire, element, count)
+			if wisps.size() > 0:
+				return wisps
 		Constants.Element.WATER:
-			var id: String = _deactivate_first_active(water, element)
-			if id != NONE:
-				return [id]
+			var wisps: Array = _deactivate_active_count(water, element, count)
+			if wisps.size() > 0:
+				return wisps
 		Constants.Element.WIND:
-			var id: String = _deactivate_first_active(wind, element)
-			if id != NONE:
-				return [id]
+			var wisps: Array = _deactivate_active_count(wind, element, count)
+			if wisps.size() > 0:
+				return wisps
 		Constants.Element.LIGHT:
 			var elems: Array = ElementalPolarity.get_light_elements()
-			var ids: Array = _deactivate_polar_active(elems[0], elems[1])
+			var wisps: Array = _deactivate_polar_active(elems[0], elems[1], count)
 			emit_signal("active_count_changed", element)
-			return ids
+			return wisps
 		Constants.Element.DARK:
 			var elems: Array = ElementalPolarity.get_dark_elements()
-			var ids: Array = _deactivate_polar_active(elems[0], elems[1])
+			var wisps: Array = _deactivate_polar_active(elems[0], elems[1], count)
 			emit_signal("active_count_changed", element)
-			return ids
+			return wisps
 	return []
 
 
@@ -126,29 +126,43 @@ func _ready():
 		_active_count[Constants.CoreElement.WIND] += 1 if is_active else 0
 
 
-# Helper function for pay_for_element. Deactivates the first active wisp in the
-# given category. Returns the key of said wisp, if any. Returns -1 if none are
-# found.
-func _deactivate_first_active(wisps: Dictionary, element: int) -> String:
-	for id in wisps.keys():
-		if wisps[id]:
-			wisps[id] = false
+# Helper function for pay_for_element. Deactivates a number of active wisps in the
+# given category. Returns the keys of said wisp, if any. Returns an empty array
+# if none are found.
+func _deactivate_active_count(wisps: Dictionary, element: int, count: int) -> Array:
+	var count_tracker: int = 0
+	var deactivated_wisps: Array = []
+	for wisp in wisps.keys():
+		if count_tracker < count and wisps[wisp]:
+			wisps[wisp] = false
 			_active_count[element] -= 1
-			emit_signal("active_count_changed", element)
-			return id
-	return NONE
+			count_tracker += 1
+			deactivated_wisps.append(wisp)
+	if count_tracker > 0:
+		emit_signal("active_count_changed", element)
+	return deactivated_wisps
 
 
 # Helper function for pay_for_element. Deactivates the first active wisps for the
 # relevant polar elements. Return an empty array if not enough elements are
 # active.
-func _deactivate_polar_active(elem_1: int, elem_2: int) -> Array:
+func _deactivate_polar_active(elem_1: int, elem_2: int, count: int) -> Array:
+	var wisps: Array = []
 	if _active_count[elem_1] == 0 or _active_count[elem_2] == 0:
-		return []
-	return [
-		_deactivate_first_active(_get_element_tracker(elem_1), elem_1),
-		_deactivate_first_active(_get_element_tracker(elem_2), elem_2)
-	]
+		return wisps
+	var elem_1_wisps: Array = _deactivate_active_count(
+			_get_element_tracker(elem_1),
+			elem_1,
+			count
+	)
+	var elem_2_wisps: Array = _deactivate_active_count(
+			_get_element_tracker(elem_2),
+			elem_2,
+			count
+	)
+	wisps.append_array(elem_1_wisps)
+	wisps.append_array(elem_2_wisps)
+	return wisps
 
 
 # Gets the tracker Dictionary for the given element. Returns an empty Dictionary

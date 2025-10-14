@@ -131,24 +131,36 @@ func is_player_set(wisp: String) -> bool:
 			return false
 
 
-# Updates the state of the wisp to indicate it is in the bonded player's pool.
+# Updates the state of wisps to indicate it is in the bonded player's pool.
 # Returns if the operation was successful or not, such as if the provided wisp
 # is valid.
-func set_state_to_player(wisp: String) -> bool:
-	return _update_encounter_state(wisp, WispState.PLAYER_SET)
+func set_state_to_player(wisps: Array) -> bool:
+	var success: bool = true
+	for wisp in wisps:
+		if not _update_encounter_state(wisp, WispState.PLAYER_SET):
+			success = false
+	return success
 
 
-# Updates the state of the wisp to indicate it is in the summon pool. Returns
+# Updates the state of wisps to indicate it is in the summon pool. Returns
 # if the operation was successful or not, such as if the provided wisp is valid.
-func set_state_to_summon_pool(wisp: String) -> bool:
-	return _update_encounter_state(wisp, WispState.SUMMON_POOL)
+func set_state_to_summon_pool(wisps: Array) -> bool:
+	var success: bool = true
+	for wisp in wisps:
+		if not _update_encounter_state(wisp, WispState.SUMMON_POOL):
+			success = false
+	return success
 
 
-# Updates the state of the wisp to indicate it is part of the active summon's
+# Updates the state of wisps to indicate it is part of the active summon's
 # pool. Returns if the operation was successful or not, such as if the
 # provided wisp is valid.
-func set_state_to_summon_set(wisp: String) -> bool:
-	return _update_encounter_state(wisp, WispState.SUMMON_SET)
+func set_state_to_summon_set(wisps: Array) -> bool:
+	var success: bool = true
+	for wisp in wisps:
+		if not _update_encounter_state(wisp, WispState.SUMMON_SET):
+			success = false
+	return success
 
 
 # Updates the state of the wisp to mark it as inactive, indicating that it is

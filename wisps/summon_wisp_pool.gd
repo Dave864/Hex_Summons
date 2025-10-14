@@ -20,7 +20,7 @@ var pool: Dictionary = {
 func add_wisps(wisp_ids: Array, element: int) -> void:
 	if element in Constants.PolarElement.keys():
 		var elems: Array = (
-			ElementalPolarity.get_light_elements() 
+			ElementalPolarity.get_light_elements()
 			if element == Constants.PolarElement.LIGHT
 			else ElementalPolarity.get_dark_elements()
 		)

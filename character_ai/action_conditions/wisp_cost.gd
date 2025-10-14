@@ -20,6 +20,8 @@ export(int, 0, 4) var light_cost = 0
 export(int, 0, 4) var dark_req = 0
 export(int, 0, 4) var dark_cost = 0
 
+var summary: Dictionary = _get_costs()
+
 onready var _wisp_pool: WispPool = get_node(wisp_pool_ref)
 
 
@@ -43,6 +45,24 @@ func is_met(
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
+
+
+# Gets the elements with cost values.
+func _get_costs() -> Dictionary:
+	var element_costs: Dictionary = {}
+	if earth_cost > 0:
+		element_costs[Constants.Element.EARTH] = earth_cost
+	if fire_cost > 0:
+			element_costs[Constants.Element.FIRE] = fire_cost
+	if water_cost > 0:
+			element_costs[Constants.Element.WATER] = water_cost
+	if wind_cost > 0:
+			element_costs[Constants.Element.WIND] = wind_cost
+	if light_cost > 0:
+			element_costs[Constants.Element.LIGHT] = light_cost
+	if dark_cost > 0:
+			element_costs[Constants.Element.DARK] = dark_cost
+	return element_costs
 
 
 # Check that all required parameters are set and valid.

@@ -11,7 +11,14 @@ var summon_pool: SummonWispPool
 # Pays the cost from the player's wisp pool, transferring the spent wisps to
 # the summon pool.
 func pay_cost_from_player(player_pool: PlayerWispPool, cost: WispCost) -> void:
-	pass
+	for element in cost.summary.keys():
+		var spent_wisps: Array = player_pool.pay_for_element(
+				element,
+				cost.summary[element]
+		)
+		if not WispTracker.set_state_to_summon_pool(spent_wisps):
+			printerr("Failed to set all spent wisps.")
+		summon_pool.add_wisps(spent_wisps, element)
 
 
 # Pays the cost from the summon pool, transferring the spent wisps to the active
