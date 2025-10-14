@@ -135,7 +135,6 @@ func _deactivate_first_active(wisps: Dictionary, element: int) -> String:
 			wisps[id] = false
 			_active_count[element] -= 1
 			emit_signal("active_count_changed", element)
-			WispTracker.set_state_to_summon_pool(id)
 			return id
 	return NONE
 
