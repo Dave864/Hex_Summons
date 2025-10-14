@@ -8,6 +8,7 @@ interacted with in game.
 
 const NO_PLAYER: String = "NONE"
 const DATA: String = "data"
+const ELEMENT: String = "element"
 const BONDED_PLAYER: String = "bonded_player"
 const ENCOUNTER_STATE: String = "encounter_state"
 const EARTH: int = Constants.CoreElement.EARTH
@@ -22,65 +23,31 @@ enum WispState {
 	INACTIVE
 }
 
-var _earth: Dictionary = {
+var _tracked_wisps: Dictionary = {
 	"test_earth_1": _initialize_data("test_earth_1", EARTH),
 	"test_earth_2": _initialize_data("test_earth_2", EARTH),
-}
-var _fire: Dictionary = {
 	"test_fire_1": _initialize_data("test_fire_1", FIRE),
-	"test_fire_2": _initialize_data("test_fire_2", FIRE)
-}
-var _water: Dictionary = {
+	"test_fire_2": _initialize_data("test_fire_2", FIRE),
 	"test_water_1": _initialize_data("test_water_1", WATER),
 	"test_water_2": _initialize_data("test_water_2", WATER),
-}
-var _wind: Dictionary = {
 	"test_wind_1": _initialize_data("test_wind_1", WIND),
 	"test_wind_2": _initialize_data("test_wind_2", WIND),
 }
 
 
-# Gets the data for the wisp of the specified element. Searches for the wisp
-# element if none is specified.
-func get_data(wisp: String, element: int = -1) -> Wisp:
-	if element < 0:
-		element = wisp_element(wisp)
-	elif element in Constants.CoreElement:
-		printerr("Invalid element specified.")
+# Gets the data for the specified wisp.
+func get_data(wisp: String) -> Wisp:
+	if not _is_tracked(wisp):
 		return null
-	match element:
-		EARTH:
-			if _earth.has(wisp):
-				return _earth[wisp][DATA]
-		FIRE:
-			if _fire.has(wisp):
-				return _fire[wisp][DATA]
-		WATER:
-			if _water.has(wisp):
-				return _water[wisp][DATA]
-		WIND:
-			if _wind.has(wisp):
-				return _wind[wisp][DATA]
-		_:
-			return null
-	var elem_name: String = Constants.CoreElement.find_key(element)
-	print("Wisp {0} is not in the {1} pool.".format([wisp, elem_name]))
-	return null
+	return _tracked_wisps[wisp][DATA]
 
 
 # Gets the element the wisp is part of. Returns -1 if the given name is not in
 # any wisp pool.
 func wisp_element(wisp: String) -> int:
-	if _earth.has(wisp):
-		return EARTH
-	if _fire.has(wisp):
-		return FIRE
-	if _water.has(wisp):
-		return WATER
-	if _wind.has(wisp):
-		return WIND
-	printerr("Wisp {0} not in any element pool".format([wisp]))
-	return -1
+	if not _is_tracked(wisp):
+		return -1
+	return _tracked_wisps[wisp][ELEMENT]
 
 
 # Updates the player the wisp is bonded to. Player defaults to NO_PLAYER, which
@@ -88,18 +55,9 @@ func wisp_element(wisp: String) -> int:
 # NO_PLAYER is specified. Returns if the operation was successful or not, such
 # as if the provided wisp is valid.
 func set_bonded_player(wisp: String, player: String = NO_PLAYER) -> bool:
-	var element: int = wisp_element(wisp)
-	match element:
-		Constants.CoreElement.EARTH:
-			_earth[wisp][BONDED_PLAYER] = player
-		Constants.CoreElement.FIRE:
-			_fire[wisp][BONDED_PLAYER] = player
-		Constants.CoreElement.WATER:
-			_water[wisp][BONDED_PLAYER] = player
-		Constants.CoreElement.WIND:
-			_wind[wisp][BONDED_PLAYER] = player
-		_:
-			return false
+	if not _is_tracked(wisp):
+		return false
+	_tracked_wisps[wisp][BONDED_PLAYER] = player
 	if player == NO_PLAYER:
 		return _update_encounter_state(wisp, WispState.INACTIVE)
 	return true
@@ -107,12 +65,11 @@ func set_bonded_player(wisp: String, player: String = NO_PLAYER) -> bool:
 
 # Gets all the wisps that are bonded to a specified player.
 func get_bonded_wisps(player: String) -> Dictionary:
-	return {
-		EARTH: _get_bonded_wisps_from_data(_earth, player),
-		FIRE: _get_bonded_wisps_from_data(_fire, player),
-		WATER: _get_bonded_wisps_from_data(_water, player),
-		WIND: _get_bonded_wisps_from_data(_wind, player),
-	}
+	var bonded_wisps: Dictionary = {EARTH: [], FIRE: [], WATER: [], WIND: []}
+	for wisp in _tracked_wisps.keys():
+		if _tracked_wisps[wisp][BONDED_PLAYER] == player:
+			bonded_wisps[_tracked_wisps[wisp[ELEMENT]]].append(wisp)
+	return bonded_wisps
 
 
 # Checks if the wisp is intended to be set to a player.
@@ -177,20 +134,21 @@ func set_state_to_inactive(wisp: String) -> bool:
 
 # Loads the save data for the wisps.
 func load_save_data(save_data: Dictionary) -> void:
-	_load_pool_save_data(_earth, save_data[EARTH])
-	_load_pool_save_data(_fire, save_data[FIRE])
-	_load_pool_save_data(_water, save_data[WATER])
-	_load_pool_save_data(_wind, save_data[WIND])
+	for wisp in save_data.keys():
+		_tracked_wisps[wisp][ELEMENT] = save_data[wisp][ELEMENT]
+		_tracked_wisps[wisp][BONDED_PLAYER] = save_data[wisp][BONDED_PLAYER]
+		_tracked_wisps[wisp][ENCOUNTER_STATE] = save_data[wisp][ENCOUNTER_STATE]
 
 
 # Gets the current state of the wisp manager for the purposes of saving the data.
 func get_save_data() -> Dictionary:
-	var save_data: Dictionary = {
-		EARTH: _get_pool_save_data(_earth),
-		FIRE: _get_pool_save_data(_fire),
-		WATER: _get_pool_save_data(_water),
-		WIND: _get_pool_save_data(_wind)
-	}
+	var save_data: Dictionary = {}
+	for wisp in _tracked_wisps.keys():
+		save_data[wisp] = {
+			ELEMENT: _tracked_wisps[wisp][ELEMENT],
+			BONDED_PLAYER: _tracked_wisps[wisp][BONDED_PLAYER],
+			ENCOUNTER_STATE: _tracked_wisps[wisp][ENCOUNTER_STATE]
+		}
 	return save_data
 
 
@@ -203,9 +161,18 @@ func _ready():
 func _initialize_data(name: String, element: int) -> Dictionary:
 	return {
 		DATA: _get_wisp_data(name, element),
+		ELEMENT: element,
 		BONDED_PLAYER: NO_PLAYER,
 		ENCOUNTER_STATE: WispState.INACTIVE
 	}
+
+
+# Checks if there is a wisp of the given name being tracked.
+func _is_tracked(wisp: String) -> bool:
+	if not _tracked_wisps.has(wisp):
+		"No wisp named {0} is tracked".format([wisp])
+		return false
+	return true
 
 
 # Gets the wisp data for a given name and element, returning null if there is
@@ -235,62 +202,14 @@ func _get_wisp_data(name: String, element: int) -> Wisp:
 # Updates the encounter state, returning if the operation was successful,
 # such as if the provided wisp is valid.
 func _update_encounter_state(wisp: String, new_state: int) -> bool:
-	var element: int = wisp_element(wisp)
-	match element:
-		EARTH:
-			_earth[wisp][ENCOUNTER_STATE] = new_state
-		FIRE:
-			_fire[wisp][ENCOUNTER_STATE] = new_state
-		WATER:
-			_water[wisp][ENCOUNTER_STATE] = new_state
-		WIND:
-			_wind[wisp][ENCOUNTER_STATE] = new_state
-		_:
-			return false
+	if not _is_tracked(wisp):
+		return false
+	_tracked_wisps[wisp][ENCOUNTER_STATE] = new_state
 	return true
-
-
-# Helper function for get_bonded_wisps. Gets the wisps bonded to the specified
-# player from the provided wisp pool.
-func _get_bonded_wisps_from_data(wisp_data: Dictionary, player: String) -> Array:
-	var bonded_wisps: Array = []
-	for wisp in wisp_data.keys():
-		if wisp_data[wisp][BONDED_PLAYER] == player:
-			bonded_wisps.append(wisp)
-	return bonded_wisps
 
 
 # Checks if the wisp is in the specified state.
 func _is_in_state(wisp: String, wisp_state: int) -> bool:
-	var element: int = wisp_element(wisp)
-	match element:
-		EARTH:
-			return _earth[wisp][ENCOUNTER_STATE] == wisp_state
-		FIRE:
-			return _fire[wisp][ENCOUNTER_STATE] == wisp_state
-		WATER:
-			return _water[wisp][ENCOUNTER_STATE] == wisp_state
-		WIND:
-			return _wind[wisp][ENCOUNTER_STATE] == wisp_state
-		_:
-			return false
-
-
-# Helper function for load_save_data. Updates the specified wisp pool with the
-# given data.
-func _load_pool_save_data(wisp_pool: Dictionary, save_data: Dictionary) -> void:
-	for wisp in save_data.keys():
-		wisp_pool[wisp][BONDED_PLAYER] = save_data[wisp][BONDED_PLAYER]
-		wisp_pool[wisp][ENCOUNTER_STATE] = save_data[wisp][ENCOUNTER_STATE]
-
-
-# Helper function for get_save_data. Gets the relevant data from the specified
-# wisp pool for the purposes of saving. Gets the bonded player and encounter state.
-func _get_pool_save_data(wisp_pool: Dictionary) -> Dictionary:
-	var save_data: Dictionary = {}
-	for wisp in wisp_pool.keys():
-		save_data[wisp] = {
-			BONDED_PLAYER: wisp_pool[wisp][BONDED_PLAYER],
-			ENCOUNTER_STATE: wisp_pool[wisp][ENCOUNTER_STATE]
-		}
-	return save_data
+	if not _is_tracked(wisp):
+		return false
+	return _tracked_wisps[wisp][ENCOUNTER_STATE] == wisp_state
