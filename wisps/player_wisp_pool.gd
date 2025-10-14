@@ -16,9 +16,9 @@ var water: Dictionary = {}
 var wind: Dictionary = {}
 
 
-# Adds wisp to the appropriate pool. Updates WispManager.
+# Adds wisp to the appropriate pool. Updates WispTracker.
 func add_wisp(wisp: String) -> void:
-	var element: int = WispManager.wisp_element(wisp)
+	var element: int = WispTracker.wisp_element(wisp)
 	match element:
 		Constants.CoreElement.EARTH:
 			earth[wisp] = false
@@ -31,12 +31,12 @@ func add_wisp(wisp: String) -> void:
 		_:
 			printerr("Wisp {0} is not of valid element.".format([wisp]))
 			return
-	WispManager.set_bonded_player(wisp, player_name)
-	if WispManager.is_player_set(wisp):
+	WispTracker.set_bonded_player(wisp, player_name)
+	if WispTracker.is_player_set(wisp):
 		set_active(wisp)
 
 
-# Removes the wisp from the pool. Updates WispManager.
+# Removes the wisp from the pool. Updates WispTracker.
 func remove_wisp(wisp: String) -> void:
 	if earth.has(wisp):
 		if earth[wisp]:
@@ -56,7 +56,7 @@ func remove_wisp(wisp: String) -> void:
 		wind.erase(wisp)
 	else:
 		return
-	WispManager.set_bonded_player(wisp)
+	WispTracker.set_bonded_player(wisp)
 
 
 # Updates the state of the specified wisp to "active"
@@ -135,7 +135,7 @@ func _deactivate_first_active(wisps: Dictionary, element: int) -> String:
 			wisps[id] = false
 			_active_count[element] -= 1
 			emit_signal("active_count_changed", element)
-			WispManager.set_state_to_summon_pool(id)
+			WispTracker.set_state_to_summon_pool(id)
 			return id
 	return NONE
 
