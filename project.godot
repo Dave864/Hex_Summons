@@ -589,6 +589,7 @@ GamepadHandler="*res://autoloads/gamepad_handler.gd"
 MouseHandler="*res://autoloads/mouse_handler.gd"
 InputController="*res://autoloads/input_controller.gd"
 WispTracker="*res://autoloads/wisp_tracker.gd"
+WispController="*res://autoloads/wisp_controller.gd"
 
 [display]
 

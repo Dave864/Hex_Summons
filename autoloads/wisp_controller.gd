@@ -5,6 +5,9 @@ active summon.
 """
 
 
+var summon_pool: SummonWispPool
+
+
 # Pays the cost from the player's wisp pool, transferring the spent wisps to
 # the summon pool.
 func pay_cost_from_player(player_pool: PlayerWispPool, cost: WispCost) -> void:
@@ -29,3 +32,10 @@ func recall_for_player(player_pool: PlayerWispPool, recall_count: int) -> void:
 # their bonded player's pool.
 func pay_cost_from_active_summon(cost: WispCost) -> void:
 	pass
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	summon_pool = SummonWispPool.new()
+	summon_pool.name = "SummonWispPool"
+	add_child(summon_pool)

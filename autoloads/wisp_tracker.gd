@@ -1,6 +1,6 @@
 extends Node
 """
-Tracks the condition of all wisps, whether they are set to a player, and what
+Tracks the condition of all wisps, whether they are bonded to a player, and what
 state they are in. If a wisp is not listed within this class, it will not be
 interacted with in game.
 """

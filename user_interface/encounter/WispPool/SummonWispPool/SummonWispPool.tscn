@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=1]
 [ext_resource path="res://art/ui/SummonWispPool/Summon Pool Base.png" type="Texture" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://art/ui/SummonWispPool/Summon Core Gem.png" type="Texture" id=5]
 [ext_resource path="res://art/ui/SummonWispPool/Summon Polar Gem.png" type="Texture" id=6]
 [ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/summon_wisp_pool_ui.gd" type="Script" id=7]
-[ext_resource path="res://wisps/summon_wisp_pool.gd" type="Script" id=8]
 [ext_resource path="res://utils/variable_timer.gd" type="Script" id=9]
 [ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/AnimatedLabel.tscn" type="PackedScene" id=12]
 
@@ -63,9 +62,6 @@ dark_elem_1_icon_ref = NodePath("SigilBase/DarkCore1Icon")
 dark_elem_2_label_ref = NodePath("DarkElemCount2")
 dark_elem_2_icon_ref = NodePath("SigilBase/DarkCore2Icon")
 timer_ref = NodePath("VariableTimer")
-
-[node name="SummonWispPool" type="Node" parent="."]
-script = ExtResource( 8 )
 
 [node name="VariableTimer" type="Timer" parent="."]
 script = ExtResource( 9 )
@@ -195,7 +191,6 @@ margin_bottom = 11.0
 texture = SubResource( 6 )
 element = 2
 
-[connection signal="active_count_changed" from="SummonWispPool" to="." method="_on_WispPool_active_count_changed"]
 [connection signal="timeout" from="VariableTimer" to="." method="_on_Timer_timeout"]
 [connection signal="shine_ping" from="SigilBase/LightIcon" to="." method="_on_PolarElementIcon_shine_ping"]
 [connection signal="element_ping" from="SigilBase/LightCore1Icon" to="." method="_on_CoreElementIcon_element_ping"]
