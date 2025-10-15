@@ -134,17 +134,17 @@ func _ready() -> void:
 func _check_for_required_parameters() -> void:
 	assert(
 			hit_box_ref != null,
-			"Action {s} missing defined hit box reference.".format([name])
+			"Action {0} missing defined hit box reference.".format([name])
 	)
 	assert(
 			stats != null,
-			"Action {s} missing stats.".format([name])
+			"Action {0} missing stats.".format([name])
 	)
 	assert(
 			stats is ActionStats,
-			"Action {s} stats is not of type ActionStats.".format([name])
+			"Action {0} stats is not of type ActionStats.".format([name])
 	)
 	assert(
 			has_node(EFFECTS),
-			"Action {s} is missing the Effects node.".format([name])
+			"Action {0} is missing the Effects node.".format([name])
 	)

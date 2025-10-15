@@ -37,7 +37,7 @@ func enter(msg: Dictionary = {}) -> void:
 	_highlight_source_range()
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
-	if _action.emit_from_center:
+	if _action.stats.emit_from_center:
 		_orient_to_closest_target()
 	else:
 		_place_closest_to_target()
@@ -54,11 +54,11 @@ func exit() -> void:
 func handle_input(_event: InputEvent) -> void:
 	# Handles the instances where the mouse goes over an area without a map tile.
 	if InputController.source_is_keymouse():
-		if _action.emit_from_center:
+		if _action.stats.emit_from_center:
 			_orient_emission_to_mouse()
 	elif InputController.source_is_gamepad():
 		var joy_dir: Vector2 = GamepadHandler.left_joystick_dir()
-		if _action.emit_from_center and not joy_dir.is_zero_approx():
+		if _action.stats.emit_from_center and not joy_dir.is_zero_approx():
 			var dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
 			_resolve_joystick_for_cardinal(dir)
 
@@ -93,12 +93,12 @@ func _update_selection(map_tile: MapTile) -> void:
 	if (
 		!map_tile.is_active()
 		or (
-			_action.dead_range.get_reach() > 0
+			_action.stats.dead_range.get_reach() > 0
 			and map_tile.map_coordinate.get_index() == _player_map_index
 		)
 	):
 		return
-	if _action.emit_from_center:
+	if _action.stats.emit_from_center:
 		selector.tile_hovered = map_tile
 		# Orienting to mouse position is handled by handle_input.
 		if InputController.get_source() == InputController.Source.GAMEPAD:
@@ -181,7 +181,7 @@ func _place_closest_to_target() -> void:
 	var target_details: Array = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_index()
 	var player_index_details: Dictionary = _source_d_map.all_dist_at(_player_map_index)
-	var ignore_player_index: bool = _action.dead_range.get_reach() > 0
+	var ignore_player_index: bool = _action.stats.dead_range.get_reach() > 0
 	if ignore_player_index:
 		_source_d_map.remove(_player_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
@@ -204,7 +204,7 @@ func _place_closest_to_target() -> void:
 # specified tile. Emission is not placed if no valid source tile could be found.
 func _place_closest_to_tile(tile_index: int) -> void:
 	var player_index_details: Dictionary = _source_d_map.all_dist_at(_player_map_index)
-	var ignore_player_index: bool = _action.dead_range.get_reach() > 0
+	var ignore_player_index: bool = _action.stats.dead_range.get_reach() > 0
 	# Remove player index when looking at dead range to prevent player position
 	# from being considered a valid placement spot.
 	if ignore_player_index:
@@ -285,7 +285,7 @@ func _highlight_effect_range() -> void:
 			effect_range,
 			_player_map_index,
 			_action.get_emission_map_index(),
-			_action.effect_ignores_caster,
+			_action.stats.effect_ignores_caster,
 			_action.get_is_cardinal()
 	)
 
@@ -297,13 +297,13 @@ func _get_source_range() -> Array:
 			.dist_maps.at(_player_map_index)
 	)
 	var src_area: Dictionary = (
-			d_map.map_from_tile_dist(_action.source_range.get_reach())
-			if _action.source_ignore_heights
-			else d_map.map_from_travel_dist(_action.source_range.get_reach())
+			d_map.map_from_tile_dist(_action.stats.source_range.get_reach())
+			if _action.stats.source_ignore_heights
+			else d_map.map_from_travel_dist(_action.stats.source_range.get_reach())
 	)
 	_source_d_map = DistanceMap.new(_player_map_index, src_area)
 	d_map.free()
-	var dead_indexes: Array = _action.dead_range.get_area_indexes(
+	var dead_indexes: Array = _action.stats.dead_range.get_area_indexes(
 			_player_map_index,
 			selector.hex_map
 	)
@@ -312,8 +312,8 @@ func _get_source_range() -> Array:
 			index != _player_map_index 
 			and _source_d_map.has(index)
 			and (
-				_action.source_ignore_heights or
-				_source_d_map.travel_dist_at(index) <= _action.dead_range.get_reach()
+				_action.stats.source_ignore_heights or
+				_source_d_map.travel_dist_at(index) <= _action.stats.dead_range.get_reach()
 			)
 		):
 			_source_d_map.remove(index)
@@ -324,21 +324,21 @@ func _get_source_range() -> Array:
 func _get_effect_range() -> Array:
 	var e_index: int = _action.get_emission_map_index()
 	var e_dir: int = _action.get_emission_direction()
-	if _action.emit_from_center and _ranges_cache.has(e_dir):
+	if _action.stats.emit_from_center and _ranges_cache.has(e_dir):
 		return _ranges_cache[e_dir]
 	elif _ranges_cache.has(e_index):
 		return _ranges_cache[e_index]
-	var effect_indexes: Array = _action.effect_range.get_dir_area_indexes(
+	var effect_indexes: Array = _action.stats.effect_range.get_dir_area_indexes(
 			e_index,
 			e_dir,
 			selector.hex_map
 	)
-	if _action.effect_ignore_heights:
+	if _action.stats.effect_ignore_heights:
 		_update_effect_ranges(e_index, e_dir, effect_indexes)
 		return effect_indexes
 	var d_map: DistanceMap = selector.hex_map.range_finder.dist_maps.at(e_index)
 	var effect_d_map: Dictionary = (
-			d_map.map_from_travel_dist(_action.effect_range.get_reach())
+			d_map.map_from_travel_dist(_action.stats.effect_range.get_reach())
 	)
 	d_map.free()
 	var valid_effect_indexes: Array = []
@@ -351,7 +351,7 @@ func _get_effect_range() -> Array:
 
 # Gets the targets for the current emission area.
 func _get_targets() -> Array:
-	if _action.emit_from_center:
+	if _action.stats.emit_from_center:
 		return _targets_cache[_action.get_emission_direction()]
 	else:
 		return _targets_cache[_action.get_emission_map_index()]
@@ -360,7 +360,7 @@ func _get_targets() -> Array:
 # Updates the _effect_ranges dictionary to store the listed effect indexes
 # under either the emission point or direction.
 func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array) -> void:
-	if _action.emit_from_center:
+	if _action.stats.emit_from_center:
 		_ranges_cache[e_dir] = indexes
 	else:
 		_ranges_cache[e_pt] = indexes
@@ -371,7 +371,7 @@ func _update_targets(effect_range: Array) -> void:
 	var e_index: int = _action.get_emission_map_index()
 	var e_dir: int = _action.get_emission_direction()
 	if (
-		(_action.emit_from_center and _targets_cache.has(e_dir))
+		(_action.stats.emit_from_center and _targets_cache.has(e_dir))
 		or _targets_cache.has(e_index)
 	):
 		return
@@ -392,7 +392,7 @@ func _update_targets(effect_range: Array) -> void:
 			)
 		):
 			targets.append(c)
-	if _action.emit_from_center:
+	if _action.stats.emit_from_center:
 		_targets_cache[e_dir] = targets
 	else:
 		_targets_cache[e_index] = targets
@@ -539,7 +539,7 @@ func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
 # Resolves the left joystick pulse input. Pulses should only be used when the
 # effect is not bound to the caster's position.
 func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
-	if _action.emit_from_center:
+	if _action.stats.emit_from_center:
 		return
 	# Relative top needed as joystick direction does not account for camera orientation.
 	var hex_dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)

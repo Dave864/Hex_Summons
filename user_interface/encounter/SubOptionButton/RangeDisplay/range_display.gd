@@ -126,30 +126,29 @@ func _init_origin_vertices(outline_offset: float = 0.0) -> PoolVector2Array:
 
 # Determine the hex colors that will represent the source range.
 func _determine_source_hexes() -> void:
-	_action.source_range.update_range_display(
+	_action.stats.source_range.update_range_display(
 			Vector2(1, _mid_row),
 			DisplayMatrix.Detail.SOURCE_RANGE,
 			DisplayMatrix.Detail.SOURCE_RANGE,
 			_d_matrix
 	)
-	if _action.dead_range != null:
-		_action.dead_range.update_range_display(
-				Vector2(1, _mid_row),
-				DisplayMatrix.Detail.EMPTY,
-				DisplayMatrix.Detail.EMPTY,
-				_d_matrix
-		)
+	_action.stats.dead_range.update_range_display(
+			Vector2(1, _mid_row),
+			DisplayMatrix.Detail.EMPTY,
+			DisplayMatrix.Detail.EMPTY,
+			_d_matrix
+	)
 
 
 # Determine the hex colors that will represent the effect range.
 func _determine_effect_hexes() -> void:
-	if not _action.emit_from_center:
+	if not _action.stats.emit_from_center:
 		# Determine the emission point.
 		for x in range(2, col_count):
 			var index: Vector2 = Vector2(x, _mid_row)
 			if _d_matrix.fill_at(index) == DisplayMatrix.Detail.SOURCE_RANGE:
 				_emission_index.x = x
-	_action.effect_range.update_range_display(
+	_action.stats.effect_range.update_range_display(
 			_emission_index,
 			DisplayMatrix.Detail.EFFECT_RANGE,
 			DisplayMatrix.Detail.EFFECT_RANGE,
