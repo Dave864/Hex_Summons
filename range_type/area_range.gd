@@ -1,5 +1,5 @@
 class_name AreaRange
-extends Node
+extends Resource
 """
 Describes the function signatures for area ranges.
 """

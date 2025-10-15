@@ -5,32 +5,13 @@ Describes the details of an action.
 """
 
 
-const SOURCE_RANGE: String = "SourceRange"
-const DEAD_RANGE: String = "DeadRange"
-const EFFECT_RANGE: String = "EffectRange"
 const EFFECTS: String = "Effects"
 
 export(NodePath) var hit_box_ref = null
-# The percentage of a character's attack to use for potency calculations.
-export(Resource) var potency = null
-# Flag that denotes if the emission is fixed to the center of the area.
-export(bool) var emit_from_center = true
-# Flag that denotes if the effect should include the casting character tile.
-export(bool) var effect_ignores_caster = true
-# Flag that denotes if the possible source of the emmision is affected by tile heights.
-export(bool) var source_ignore_heights = false
-# Flag that denotes if the emission area is affected by tile heights.
-export(bool) var effect_ignore_heights = false
+export(Resource) var stats = null
 
 # The path to the stats of the character that owns this action.
 var source_stats: CharacterStats = null
-# The area specifying the possible tiles for effect emmision.
-var source_range: AreaRange = null
-# The area that is ignored when determining the possible tiles for effect emmision.
-var dead_range: AreaRange = null
-# The area specifying the tiles affected by the effect.
-var effect_range: AreaRange = null
-
 # The effects of this action
 var _effects: Array setget , get_effects
 # Whether the area range is cardinal or ring.
@@ -84,7 +65,7 @@ func set_emission_pos(pos: Vector3) -> void:
 # Set the direction of the emission (0 - 5). Only updates the direction if
 # the action is emitted from center.
 func set_emission_direction(dir: int) -> void:
-	if emit_from_center:
+	if stats.emit_from_center:
 		_emission_direction = 0 if dir < 0 else 5 if dir > 5 else dir
 		_emission_transform.basis = Basis(
 				Vector3.UP,
@@ -134,15 +115,18 @@ func initialize_effects() -> void:
 			"Action %s does not have any effects" % [name]
 	)
 	for effect in _effects:
-		assert(effect is Effect, "Action %s effect %s is not an Effect")
+		assert(
+				effect is Effect,
+				"Action %s effect %s is not an Effect" % [name, effect.name]
+		)
 		# Type checking for the node referenced at the path.
 		effect.set_source_stats(source_stats)
-		effect.set_action_potency(potency)
+		effect.set_action_potency(stats.potency)
 
 
 func _ready() -> void:
 	_check_for_required_parameters()
-	_is_cardinal = source_range is CardinalArea
+	_is_cardinal = stats.source_range is CardinalArea
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
@@ -153,48 +137,14 @@ func _check_for_required_parameters() -> void:
 			"Action {s} missing defined hit box reference.".format([name])
 	)
 	assert(
-			potency != null,
-			"ActionStats missing defined potency."
+			stats != null,
+			"Action {s} missing stats.".format([name])
 	)
 	assert(
-			potency is Potency,
-			"ActionStats potency is not a Potency resource."
+			stats is ActionStats,
+			"Action {s} stats is not of type ActionStats.".format([name])
 	)
 	assert(
 			has_node(EFFECTS),
 			"Action {s} is missing the Effects node.".format([name])
-	)
-	_set_and_check_ranges()
-
-
-# Gets the references to the range nodes, confirming if such nodes exist. 
-func _set_and_check_ranges() -> void:
-	source_range = get_node_or_null(SOURCE_RANGE)
-	dead_range = get_node_or_null(DEAD_RANGE)
-	effect_range = get_node_or_null(EFFECT_RANGE)
-	assert(
-			source_range != null,
-			"Action {s} missing SourceRange node.".format([name])
-	)
-	assert(
-			source_range is CardinalArea or source_range is RingArea,
-			"Action {s} SourceRange is neither a CardinalArea " \
-			+ "or RingArea.".format([name])
-	)
-	assert(
-			dead_range != null,
-			"Action {s} missing DeadRange node.".format([name])
-	)
-	assert(
-			dead_range is CardinalArea or dead_range is RingArea,
-			"Action {s} DeadRange is neither a CardinalArea " \
-			+ "or RingArea.".format([name])
-	)
-	assert(
-			effect_range != null,
-			"Action {s} missing EffectRange node.".format([name])
-	)
-	assert(
-			effect_range is AreaRange,
-			"Action {s} EffectRange is not an AreaRange.".format([name])
 	)

@@ -1,10 +1,7 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://range_type/cone_area.gd" type="Script" id=1]
 [ext_resource path="res://actions/action.gd" type="Script" id=2]
-[ext_resource path="res://range_type/cardinal_area.gd" type="Script" id=3]
-[ext_resource path="res://actions/Sweep/potency.tres" type="Resource" id=4]
-[ext_resource path="res://range_type/ring_area.gd" type="Script" id=5]
+[ext_resource path="res://actions/Sweep/action_stats.tres" type="Resource" id=4]
 [ext_resource path="res://actions/action_hit_box.gd" type="Script" id=6]
 [ext_resource path="res://effects/Damage/Damage.tscn" type="PackedScene" id=7]
 [ext_resource path="res://actions/test_shader_material.tres" type="Material" id=8]
@@ -123,7 +120,7 @@ tracks/3/keys = {
 [node name="Sweep" type="Node"]
 script = ExtResource( 2 )
 hit_box_ref = NodePath("ActionHitBox")
-potency = ExtResource( 4 )
+stats = ExtResource( 4 )
 
 [node name="ActionHitBox" type="Area" parent="."]
 collision_layer = 16
@@ -140,16 +137,6 @@ disabled = true
 [node name="MeshInstance" type="MeshInstance" parent="ActionHitBox"]
 visible = false
 mesh = SubResource( 5 )
-
-[node name="SourceRange" type="Node" parent="."]
-script = ExtResource( 3 )
-
-[node name="DeadRange" type="Node" parent="."]
-script = ExtResource( 5 )
-
-[node name="EffectRange" type="Node" parent="."]
-script = ExtResource( 1 )
-spread = 3
 
 [node name="Effects" type="Node" parent="."]
 

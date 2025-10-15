@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://actions/action_stats.gd" type="Script" id=1]
+[ext_resource path="res://actions/Empty/potency.tres" type="Resource" id=2]
+[ext_resource path="res://actions/Empty/source_range.tres" type="Resource" id=3]
+[ext_resource path="res://actions/Empty/dead_range.tres" type="Resource" id=4]
+[ext_resource path="res://actions/Empty/effect_range.tres" type="Resource" id=5]
+
+[resource]
+script = ExtResource( 1 )
+potency = ExtResource( 2 )
+source_range = ExtResource( 3 )
+dead_range = ExtResource( 4 )
+effect_range = ExtResource( 5 )
+emit_from_center = false
+effect_ignores_caster = false
+source_ignore_heights = false
+effect_ignore_heights = false

@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://actions/action_hit_box.gd"
 }, {
+"base": "Resource",
+"class": "ActionStats",
+"language": "GDScript",
+"path": "res://actions/action_stats.gd"
+}, {
 "base": "ActionCondition",
 "class": "AdjacentCondition",
 "language": "GDScript",
@@ -44,7 +49,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://user_interface/encounter/WispPool/animated_label.gd"
 }, {
-"base": "Node",
+"base": "Resource",
 "class": "AreaRange",
 "language": "GDScript",
 "path": "res://range_type/area_range.gd"
@@ -485,6 +490,7 @@ _global_script_class_icons={
 "ActionButton": "",
 "ActionCondition": "",
 "ActionHitBox": "",
+"ActionStats": "",
 "AdjacentCondition": "",
 "AnimatedLabel": "",
 "AreaRange": "",
