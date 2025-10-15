@@ -45,7 +45,7 @@ func enter(_msg := {}) -> void:
 	_target_index = action_chain[0][2]
 	var possible_targets: Array = action_chain[0][3]
 	_move_end_index = _ai_node.get_move_dest_id()
-	if _action != null and _action.emit_from_center:
+	if _action != null and _action.stats.emit_from_center:
 		action_chain[0][3] = _orient_to_target(possible_targets)
 	elif _action != null:
 		action_chain[0][3] = _place_on_target(possible_targets)
@@ -97,14 +97,14 @@ func _get_targets(possible_targets: Array) -> Array:
 	var p_t_set: Dictionary = {}
 	for pt in possible_targets:
 		p_t_set[pt.get_instance_id()] = pt
-	if _action.emit_from_center:
-		effect_area = _action.effect_range.get_dir_area_indexes(
+	if _action.stats.emit_from_center:
+		effect_area = _action.stats.effect_range.get_dir_area_indexes(
 				_target_index,
 				_action.get_emission_direction(),
 				_ai_node.h_map
 		)
 	else:
-		effect_area = _action.effect_range.get_area_indexes(
+		effect_area = _action.stats.effect_range.get_area_indexes(
 				_target_index,
 				_ai_node.h_map
 		)

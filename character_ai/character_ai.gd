@@ -212,10 +212,10 @@ func _determine_ally_index_threat_order() -> Array:
 func _target_in_dead_range(action: Action, target_id: int) -> bool:
 	return (
 			(
-				action.source_ignore_heights
-				and d_map.tile_dist_at(target_id) <= action.dead_range.get_reach()
+				action.stats.source_ignore_heights
+				and d_map.tile_dist_at(target_id) <= action.stats.dead_range.get_reach()
 			)
-			or d_map.travel_dist_at(target_id) <= action.dead_range.get_reach()
+			or d_map.travel_dist_at(target_id) <= action.stats.dead_range.get_reach()
 	)
 
 
@@ -245,10 +245,10 @@ func _dead_range_details(
 		return []
 	var dist_to_src: float = (
 			h_map.range_finder.tile_distance(t_index, c_src)
-			if action.effect_ignore_heights
+			if action.stats.effect_ignore_heights
 			else h_map.range_finder.travel_distance(t_index, c_src)
 	)
-	if dist_to_src <= action.effect_range.get_reach():
+	if dist_to_src <= action.stats.effect_range.get_reach():
 		details.append(
 				_calc_move_path(
 					_character.map_coordinate.get_index(),
@@ -258,7 +258,7 @@ func _dead_range_details(
 		details.append(c_src)
 		src_map.free()
 		return details
-	var dist_from_effect: int = int(dist_to_src - action.effect_range.get_reach())
+	var dist_from_effect: int = int(dist_to_src - action.stats.effect_range.get_reach())
 	if dist_from_effect > movement:
 		src_map.free()
 		return []
@@ -295,13 +295,13 @@ func _dead_range_details(
 # dead range.
 func _get_source_d_map(action: Action) -> DistanceMap:
 	var src_area: Dictionary = (
-			d_map.map_from_tile_dist(action.source_range.get_reach())
-			if action.source_ignore_heights
-			else d_map.map_from_travel_dist(action.source_range.get_reach())
+			d_map.map_from_tile_dist(action.stats.source_range.get_reach())
+			if action.stats.source_ignore_heights
+			else d_map.map_from_travel_dist(action.stats.source_range.get_reach())
 	)
 	var src_map: DistanceMap = DistanceMap.new(d_map.origin, src_area)
 	# The overall distance map has its origin defined at the character position.
-	var dead_indexes: Array = action.dead_range.get_area_indexes(
+	var dead_indexes: Array = action.stats.dead_range.get_area_indexes(
 			d_map.origin,
 			h_map
 	)
@@ -309,8 +309,8 @@ func _get_source_d_map(action: Action) -> DistanceMap:
 		if (
 			src_map.has(index)
 			and (
-				action.source_ignore_heights or
-				src_map.travel_dist_at(index) <= action.dead_range.get_reach()
+				action.stats.source_ignore_heights or
+				src_map.travel_dist_at(index) <= action.stats.dead_range.get_reach()
 			)
 		):
 			src_map.remove(index)
@@ -342,8 +342,8 @@ func _normal_range_details(
 	var true_target: int = h_map.range_finder.get_closest_id_path(
 			_move_dest_id,
 			target_index,
-			action.source_range.get_reach(),
-			action.source_ignore_heights
+			action.stats.source_range.get_reach(),
+			action.stats.source_ignore_heights
 	)[-1]
 	details.append(true_target)
 	return details
@@ -429,13 +429,13 @@ func _effect_step(
 	path = h_map.range_finder.get_closest_id_path(
 			target_index,
 			_character.map_coordinate.get_index(),
-			action.effect_range.get_reach(),
-			action.effect_ignore_heights
+			action.stats.effect_range.get_reach(),
+			action.stats.effect_ignore_heights
 	)
 	var effect_stop: int = path[-1]
 	if effect_stop == _character.map_coordinate.get_index():
 		if move_dir == ActionBehavior.Movement.AWAY:
-			results[0] = int(min(action.source_range.get_reach(), movement))
+			results[0] = int(min(action.stats.source_range.get_reach(), movement))
 		else:
 			results[0] = 0
 	else:
@@ -458,22 +458,22 @@ func _source_step(
 	var source_stop: int
 	var results: Array = [0, 0]
 	# Source range not applied when action is emitted from center.
-	if action.emit_from_center:
+	if action.stats.emit_from_center:
 		source_stop = effect_stop
 	else:
 		var path: PoolIntArray = []
 		path = h_map.range_finder.get_closest_id_path(
 				effect_stop,
 				_character.map_coordinate.get_index(),
-				action.source_range.get_reach(),
-				action.source_ignore_heights
+				action.stats.source_range.get_reach(),
+				action.stats.source_ignore_heights
 		)
 		source_stop = path[-1]
 	if source_stop == _character.map_coordinate.get_index():
 		if move_dir == ActionBehavior.Movement.AWAY:
-			var base_tol: float = min(action.source_range.get_reach(), movement)
+			var base_tol: float = min(action.stats.source_range.get_reach(), movement)
 			var s_dist: float
-			if action.source_ignore_heights:
+			if action.stats.source_ignore_heights:
 				s_dist = (
 						d_map.tile_dist_at(source_stop) \
 						- d_map.tile_dist_at(effect_stop)
@@ -483,7 +483,7 @@ func _source_step(
 						d_map.travel_dist_at(source_stop) \
 						- d_map.travel_dist_at(effect_stop)
 				)
-			var s_tol: float = action.source_range.get_reach() - abs(s_dist)
+			var s_tol: float = action.stats.source_range.get_reach() - abs(s_dist)
 			results[0] = int(min(base_tol, s_tol))
 		else:
 			results[0] = 0
