@@ -11,6 +11,9 @@ const FLOOR_MESH: String = "FloorMesh"
 const SELECTION_TRACKER: String = "SelectionTracker"
 const RANGE_FINDER: String = "RangeFinder"
 
+export var player_start_tiles: PoolIntArray = [0, 1, 2, 3]
+export var enemy_start_tiles: PoolIntArray = []
+
 var selection_tracker: SelectionTracker = null
 var range_finder: RangeFinder = null
 var _floor_mesh: PlaneMesh = preload("res://hex_map/resources/hex_map_floor.tres")
@@ -53,6 +56,7 @@ func _ready() -> void:
 	_create_floor_mesh()
 	_create_tiles_node()
 	_map_tiles = _tiles_node.get_children()
+	_check_for_required_parameters()
 
 
 # Creates a Tiles node if not already present.
@@ -100,3 +104,34 @@ func _create_pathfinder() -> void:
 		range_finder.set_owner(_root_node)
 	else:
 		range_finder = get_node(RANGE_FINDER)
+
+
+# Check that all required parameters are set and/or valid.
+func _check_for_required_parameters() -> void:
+	var tile_count: int = get_z_count() * get_x_count()
+	assert(
+			player_start_tiles.size() >= 4,
+			"Not enough tiles specified for player starting options."
+	)
+	assert(
+			enemy_start_tiles.size() > 0,
+			"No tiles specified for enemy starting options."
+	)
+	for tile_index in player_start_tiles:
+		assert(
+				tile_index < tile_count,
+				"Not all player starting options are within map bounds."
+		)
+		assert(
+				not enemy_start_tiles.has(tile_index),
+				"Some player starting options are also enemy starting options."
+		)
+	for tile_index in enemy_start_tiles:
+		assert(
+				tile_index < tile_count,
+				"Not all enemy starting options are within map bounds."
+		)
+		assert(
+				not player_start_tiles.has(tile_index),
+				"Some enemy starting options are also player starting options."
+		)

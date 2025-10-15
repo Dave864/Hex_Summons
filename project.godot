@@ -583,11 +583,12 @@ config/icon="res://art/icon.png"
 
 [autoload]
 
-ElementalPolarity="*res://autoloads/elemental_polarity.gd"
 SignalBus="*res://autoloads/signal_bus.gd"
-GamepadHandler="*res://autoloads/gamepad_handler.gd"
-MouseHandler="*res://autoloads/mouse_handler.gd"
 InputController="*res://autoloads/input_controller.gd"
+MouseHandler="*res://autoloads/mouse_handler.gd"
+GamepadHandler="*res://autoloads/gamepad_handler.gd"
+ElementalPolarity="*res://autoloads/elemental_polarity.gd"
+PartyController="*res://autoloads/party_controller.gd"
 WispTracker="*res://autoloads/wisp_tracker.gd"
 WispController="*res://autoloads/wisp_controller.gd"
 

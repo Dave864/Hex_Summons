@@ -10,6 +10,7 @@
 
 [node name="HexMap" type="Spatial"]
 script = ExtResource( 1 )
+enemy_start_tiles = PoolIntArray( 16, 17, 18, 19 )
 
 [node name="SelectionTracker" type="Node" parent="."]
 script = ExtResource( 6 )

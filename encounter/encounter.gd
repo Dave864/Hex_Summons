@@ -11,7 +11,7 @@ export(NodePath) var hex_map_path = null
 
 var cur_init: int = 0
 
-onready var players: Array = $Players.get_children()
+onready var players: Array = PartyController.get_party_members()
 onready var enemies: Array = $Enemies.get_children()
 onready var selector: Selector = $Selector
 onready var hex_map: HexMap = get_node(hex_map_path)
@@ -49,9 +49,7 @@ func _ready() -> void:
 	"""
 	
 	for p in players:
-		"""
-		TODO: Implement logic to load player stats from out of scene details.
-		"""
+		$Players.add_child(p)
 		p.stats.max_cur_health()
 	ui.track_party_members(players)
 	
