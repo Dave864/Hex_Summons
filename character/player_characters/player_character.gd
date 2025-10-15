@@ -26,6 +26,7 @@ func assign_class(new_class: PlayerClass) -> void:
 	_spells = _player_class.spells
 	stats = _player_class.stats
 	stats.character_id = get_instance_id()
+	_connect_to_character_label()
 	_connect_stats_to_effects_tracker()
 	_initialize_actions()
 
@@ -52,6 +53,7 @@ func _ready() -> void:
 		_default_portait if battle_portrait == null
 		else battle_portrait
 	)
+	assign_class($Class)
 
 
 # Initializes the action effects.
@@ -60,7 +62,7 @@ func _initialize_actions() -> void:
 		assert(
 				t.has_node("Cooldown"),
 				"Player class {0} technique {1} is missing a Cooldown " \
-				+"node.".format([_player_class.name, t.name])
+				+ "node.".format([_player_class.name, t.name])
 		)
 		ErrorUtil.connect_signal(
 				self,
@@ -72,6 +74,12 @@ func _initialize_actions() -> void:
 		t.initialize_effects()
 		t.initialize_caster_id(get_instance_id())
 	for s in _spells:
+		assert(
+				s.has_node("WispCost"),
+				"Player class {0} spell {1} is missing a WispCost " \
+				+ "node.".format([_player_class.name, s.name])
+		)
+		s.get_node("WispCost").wisp_pool = wisp_pool
 		s.source_stats = stats
 		s.initialize_effects()
 		s.initialize_caster_id(get_instance_id())

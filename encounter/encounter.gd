@@ -11,7 +11,7 @@ export(NodePath) var hex_map_path = null
 
 var cur_init: int = 0
 
-onready var players: Array = PartyController.get_party_members()
+onready var players: Array = $Players.get_children()#PartyController.get_party_members()
 onready var enemies: Array = $Enemies.get_children()
 onready var selector: Selector = $Selector
 onready var hex_map: HexMap = get_node(hex_map_path)
@@ -40,23 +40,26 @@ func _ready() -> void:
 	TODO: implement logic to load the HexMap, based on some details determined
 	out of scene.
 	"""
-	hex_map = get_node(hex_map_path)
 	_connect_map_to_selector()
 	
-	"""
-	TODO: implement logic to load the players and enemies, placing them at
-	appropriate spots on the HexMap.
-	"""
-	
+	var p_index: int = 0
 	for p in players:
-		$Players.add_child(p)
+#		$Players.add_child(p)
 		p.stats.max_cur_health()
+		hex_map.place_character_at_tile(p, hex_map.player_start_tiles[p_index])
+		p_index += 1
 	ui.track_party_members(players)
 	
+	"""
+	TODO: implement logic to load enemies from out of scene.
+	"""
+	var e_index: int = 0
 	for e in enemies:
 		var ai_node: CharacterAI = e.get_node("CharacterAI")
 		ai_node.connect_encounter_details(hex_map, e, players, enemies)
 		ui.track_enemy(e)
+		hex_map.place_character_at_tile(e, hex_map.enemy_start_tiles[e_index])
+		e_index += 1
 
 
 # Connects all map tile "mouse_hovered" signals to the selector.

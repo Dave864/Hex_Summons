@@ -6,7 +6,6 @@ to be usable.
 """
 
 
-export var wisp_pool_ref: NodePath = NodePath("")
 export(int, 0, 4) var earth_req = 0
 export(int, 0, 4) var earth_cost = 0
 export(int, 0, 4) var fire_req = 0
@@ -21,8 +20,7 @@ export(int, 0, 4) var dark_req = 0
 export(int, 0, 4) var dark_cost = 0
 
 var summary: Dictionary = _get_costs()
-
-onready var _wisp_pool: WispPool = get_node(wisp_pool_ref)
+var wisp_pool: WispPool = null
 
 
 # Virtual function. Checks if the condition has been met given the current
@@ -33,12 +31,12 @@ func is_met(
 	_distance_map: DistanceMap
 ) -> bool:
 	return (
-		_wisp_pool.active_earth_count() >= earth_req
-		and _wisp_pool.active_fire_count() >= fire_req
-		and _wisp_pool.active_water_count() >= water_req
-		and _wisp_pool.active_wind_count() >= wind_req
-		and _wisp_pool.active_light_count() >= light_req
-		and _wisp_pool.active_dark_count() >= dark_req
+		wisp_pool.active_earth_count() >= earth_req
+		and wisp_pool.active_fire_count() >= fire_req
+		and wisp_pool.active_water_count() >= water_req
+		and wisp_pool.active_wind_count() >= wind_req
+		and wisp_pool.active_light_count() >= light_req
+		and wisp_pool.active_dark_count() >= dark_req
 	)
 
 

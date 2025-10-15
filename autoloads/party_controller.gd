@@ -11,16 +11,15 @@ const CLASS: String = "class"
 const IN_PARTY: String = "in_party"
 const NODE: String = "node"
 
-var party_details: Dictionary = {
+onready var base_player_node: PackedScene = preload(
+		"res://character/player_characters/PlayerCharacter/PlayerCharacter.tscn"
+)
+onready var party_details: Dictionary = {
 	"Player1": _initialize_details("Melee", "TestMeleeClass", true),
 	"Player2": _initialize_details("Range", "TestRangeClass", true),
 	"Player3": _initialize_details("Player3", "TestClass", false),
 	"Player4": _initialize_details("Player4", "TestClass", false),
 }
-
-onready var base_player_node: PackedScene = preload(
-		"res://character/player_characters/PlayerCharacter/PlayerCharacter.tscn"
-)
 
 
 # Gets all characters that are currently in the party.
@@ -72,7 +71,9 @@ func get_save_data() -> Dictionary:
 func _ready():
 	for player in party_details.keys():
 		var class_path: String = CLASS_PATH_FORMAT.format([party_details[player][CLASS]])
-		var class_node: PackedScene = load(class_path)
+		var class_scene: PackedScene = load(class_path)
+		var class_node: PlayerClass = class_scene.instance()
+		yield(class_node, "ready")
 		party_details[player][NODE].add_child(class_node)
 		party_details[player][NODE].assign_class(class_node)
 

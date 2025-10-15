@@ -35,6 +35,12 @@ func get_z_count() -> int:
 	return _tiles_node.get_z_count()
 
 
+# Places the character at the tile at the given index.
+func place_character_at_tile(character: Character, tile_index: int) -> void:
+	var position: Vector3 = get_tile_at(tile_index).get_character_position()
+	character.translation = position
+
+
 # Retrieve the map tiles of this hex map.
 func get_map_tiles() -> Array:
 	return _map_tiles
