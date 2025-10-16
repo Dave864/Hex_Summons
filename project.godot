@@ -322,7 +322,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "PlayerCharacterDetails",
 "language": "GDScript",
-"path": "res://character/scripts/player_character_details.gd"
+"path": "res://character/player_characters/player_character_details.gd"
 }, {
 "base": "State",
 "class": "PlayerCharacterState",
