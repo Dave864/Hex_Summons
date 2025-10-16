@@ -404,6 +404,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://fsm/selector_node/selector_state.gd"
 }, {
+"base": "ActionStats",
+"class": "SpellStats",
+"language": "GDScript",
+"path": "res://actions/spell_stats.gd"
+}, {
 "base": "Resource",
 "class": "Stat",
 "language": "GDScript",
@@ -448,6 +453,11 @@ _global_script_classes=[ {
 "class": "SummonWispPoolUI",
 "language": "GDScript",
 "path": "res://user_interface/encounter/WispPool/SummonWispPool/summon_wisp_pool_ui.gd"
+}, {
+"base": "ActionStats",
+"class": "TechniqueStats",
+"language": "GDScript",
+"path": "res://actions/technique_stats.gd"
 }, {
 "base": "Object",
 "class": "ThreatTracker",
@@ -569,6 +579,7 @@ _global_script_class_icons={
 "SelectionTracker": "",
 "Selector": "",
 "SelectorState": "",
+"SpellStats": "",
 "Stat": "",
 "StatEffectsHandler": "",
 "State": "",
@@ -578,6 +589,7 @@ _global_script_class_icons={
 "SubOptions": "",
 "SummonWispPool": "",
 "SummonWispPoolUI": "",
+"TechniqueStats": "",
 "ThreatTracker": "",
 "Tiles": "",
 "VariableTimer": "",
