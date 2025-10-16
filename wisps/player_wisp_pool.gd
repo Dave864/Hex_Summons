@@ -17,7 +17,7 @@ var wind: Dictionary = {}
 
 
 # Adds wisp to the appropriate pool. Updates WispTracker.
-func add_wisp(wisp: String) -> void:
+func add_new_wisp(wisp: String) -> void:
 	var element: int = WispTracker.wisp_element(wisp)
 	match element:
 		Constants.CoreElement.EARTH:
@@ -116,6 +116,21 @@ func pay_for_element(element: int, count: int) -> Array:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	_set_active_count()
+
+
+# Called when creating a new node.
+func _init(new_player_name: String) -> void:
+	player_name = new_player_name
+	var bonded_wisps: Dictionary = WispTracker.get_bonded_wisps(player_name)
+	for element_wisps in bonded_wisps.values():
+		for wisp in element_wisps:
+			add_new_wisp(wisp)
+	_set_active_count()
+
+
+# Gets the active count for each element pool.
+func _set_active_count() -> void:
 	for is_active in earth.values():
 		_active_count[Constants.CoreElement.EARTH] += 1 if is_active else 0
 	for is_active in fire.values():

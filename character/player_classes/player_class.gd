@@ -39,8 +39,3 @@ func _ready():
 		stats = get_node(STATS)
 		techniques = get_node(TECHNIQUES).get_children()
 		spells = get_node(SPELLS).get_children()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

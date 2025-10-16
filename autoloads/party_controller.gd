@@ -9,6 +9,7 @@ const CLASS_PATH_FORMAT: String = "res://character/player_classes/{0}/{0}.tscn"
 const NAME: String = "name"
 const CLASS: String = "class"
 const IN_PARTY: String = "in_party"
+const WISP_POOL: String = "wisp_pool"
 const NODE: String = "node"
 
 onready var base_player_node: PackedScene = preload(
@@ -80,9 +81,12 @@ func _ready():
 
 # Populates the party parameters with initial details.
 func _initialize_details(name: String, p_class: String, in_party: bool) -> Dictionary:
+	yield(WispTracker, "ready")
+	var wisp_pool: PlayerWispPool = PlayerWispPool.new(name)
+#	var class_details: PlayerClass = load()
 	return {
 		NAME: name,
 		CLASS: p_class,
 		IN_PARTY: in_party,
-		NODE: base_player_node.instance()
+		WISP_POOL: wisp_pool
 	}
