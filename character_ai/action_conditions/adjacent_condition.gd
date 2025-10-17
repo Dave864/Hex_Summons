@@ -39,7 +39,7 @@ func _determine_adjacent_count(
 	var adjacent_count: int = 0
 	var char_coord: int
 	for character in characters_to_check:
-		char_coord = character.map_coordinate.get_index()
+		char_coord = character.map_coordinate.get_tile_index()
 		if distance_map.travel_dist_at(char_coord) == 1.0:
 			adjacent_count += 1
 	return adjacent_count

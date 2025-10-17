@@ -20,11 +20,11 @@ var hex_map: HexMap = null
 
 # Reference to a function that will update the map tile highlights. Different
 # states will use different logic for updating the highlights.
-var _update_selection_func: FuncRef = null: set = set_update_selection_func
+var _update_selection_func: Callable: set = set_update_selection_func
 
 
 # Sets the _update_selection_func.
-func set_update_selection_func(new_func: FuncRef) -> void:
+func set_update_selection_func(new_func: Callable) -> void:
 	_update_selection_func = new_func
 
 
@@ -40,7 +40,7 @@ func _ready() -> void:
 # Gets the tile that the mouse last hovered over.
 func _on_MapTile_mouse_hovered(new_tile: MapTile) -> void:
 	if _update_selection_func != null:
-		_update_selection_func.call_func(new_tile)
+		_update_selection_func.call(new_tile)
 
 
 # Updates the relative top vertex when the camera changes orientation.

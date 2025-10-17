@@ -7,9 +7,9 @@ pathfinding and area-finding.
 
 
 # The cost function that should be used when calculating distance.
-var _cost_func: Callable = Callable(self, "")
+var _cost_func: Callable = Callable(self, "_travel_dist")
 # The function that should be used when adding another item to the closest path.
-var _add_path_item_func: Callable = Callable(self, "")
+var _add_path_item_func: Callable = Callable(self, "_add_id")
 # Tracks how many tiles are along the x-axis of the hex map this object represents.
 var _x_count: int = 0
 
@@ -180,11 +180,11 @@ func _init(hex_map_tiles: Array, x_count: int) -> void:
 		are eventually created
 		"""
 		add_point(
-				tile.map_coordinate.get_index(),
+				tile.map_coordinate.get_tile_index(),
 				tile.get_character_position(),
 				1.0
 		)
-		set_point_disabled(tile.map_coordinate.get_index())
+		set_point_disabled(tile.map_coordinate.get_tile_index())
 	_connect_tiles(hex_map_tiles)
 
 
@@ -197,8 +197,8 @@ func _connect_tiles(map_tiles: Array) -> void:
 			if neighbor == null or not neighbor.is_active():
 				continue
 			connect_points(
-					tile.map_coordinate.get_index(),
-					neighbor.map_coordinate.get_index()
+					tile.map_coordinate.get_tile_index(),
+					neighbor.map_coordinate.get_tile_index()
 			)
 
 

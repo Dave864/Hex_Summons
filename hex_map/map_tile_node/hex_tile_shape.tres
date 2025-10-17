@@ -1,8 +1,9 @@
 [gd_resource type="CylinderMesh" format=3 uid="uid://bfmxst1fcnorm"]
 
 [resource]
+resource_local_to_scene = true
 top_radius = 1.0
 bottom_radius = 1.0
-height = 0.5
+height = 1.0
 radial_segments = 6
 rings = 0

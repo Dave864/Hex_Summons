@@ -71,7 +71,7 @@ func _determine_changes(action: Action) -> void:
 		_action = action
 		_action_targets = _action.get_targets()
 		need_new_ranges = true
-	var player_map_index: int = selector.active_player.map_coordinate.get_index()
+	var player_map_index: int = selector.active_player.map_coordinate.get_tile_index()
 	if _player_map_index != player_map_index:
 		_player_map_index = player_map_index
 		_player_pos = selector.active_player.position
@@ -94,7 +94,7 @@ func _update_selection(map_tile: MapTile) -> void:
 		!map_tile.is_active()
 		or (
 			_action.stats.dead_range.get_reach() > 0
-			and map_tile.map_coordinate.get_index() == _player_map_index
+			and map_tile.map_coordinate.get_tile_index() == _player_map_index
 		)
 	):
 		return
@@ -105,11 +105,11 @@ func _update_selection(map_tile: MapTile) -> void:
 			_orient_emission_to_tile(map_tile)
 	elif _is_target_tile(map_tile):
 		selector.tile_hovered = map_tile
-		_action.set_emission_map_index(map_tile.map_coordinate.get_index())
+		_action.set_emission_map_index(map_tile.map_coordinate.get_tile_index())
 		_action.set_emission_pos(map_tile.get_character_position())
 		_highlight_effect_range()
 	else:
-		_place_closest_to_tile(map_tile.map_coordinate.get_index())
+		_place_closest_to_tile(map_tile.map_coordinate.get_tile_index())
 
 
 # Orients the direction of an action cast from the player based on mouse position.
@@ -150,7 +150,7 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 # Orients the action emission to the closest valid target.
 func _orient_to_closest_target() -> void:
 	var target_distances: Array = _get_target_distances()
-	var target_index: int = target_distances[0][0].map_coordinate.get_index()
+	var target_index: int = target_distances[0][0].map_coordinate.get_tile_index()
 	var target_tile: MapTile = selector.hex_map.get_tile_at(target_index)
 	_orient_emission_to_tile(target_tile)
 
@@ -179,7 +179,7 @@ func _fix_orientation() -> bool:
 # target. Emission is not placed if no valid tile could be found.
 func _place_closest_to_target() -> void:
 	var target_details: Array = _get_target_distances()[0]
-	var target_index: int = target_details[0].map_coordinate.get_index()
+	var target_index: int = target_details[0].map_coordinate.get_tile_index()
 	var player_index_details: Dictionary = _source_d_map.all_dist_at(_player_map_index)
 	var ignore_player_index: bool = _action.stats.dead_range.get_reach() > 0
 	if ignore_player_index:
@@ -238,7 +238,7 @@ func _get_target_distances() -> Array:
 	for option in potential_targets:
 		var dist: float = selector.hex_map.range_finder.travel_distance(
 				_player_map_index,
-				option.map_coordinate.get_index()
+				option.map_coordinate.get_tile_index()
 		)
 		target_distances.append([option, dist])
 	target_distances.sort_custom(Callable(ArraySorters, "sort_distance_to_character_asc"))
@@ -249,7 +249,7 @@ func _get_target_distances() -> Array:
 func _is_target_tile(map_tile: MapTile) -> bool:
 	if map_tile == null:
 		return false
-	var is_caster: bool = map_tile.map_coordinate.get_index() == _player_map_index
+	var is_caster: bool = map_tile.map_coordinate.get_tile_index() == _player_map_index
 	match map_tile.get_highlight_type():
 		HexHighlighter.Option.RANGE:
 			return true
@@ -386,7 +386,7 @@ func _update_targets(effect_range: Array) -> void:
 					c is EnemyCharacter 
 					and _action_targets.has(EffectAspect.Target.OPPONENTS)
 				) or (
-					c.map_coordinate.get_index() == _player_map_index
+					c.map_coordinate.get_tile_index() == _player_map_index
 					and _action_targets.has(EffectAspect.Target.SELF)
 				) or _action_targets.has(EffectAspect.Target.ALLIES)
 			)

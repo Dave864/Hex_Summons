@@ -13,7 +13,7 @@ const HIGHLIGHTER_Y_OFFSET = 0.01
 const SELECTOR_Y_OFFSET = 0.125
 
 # The height of the tile.
-@export var height = 0: set = set_height
+@export_range(0, 100) var height = 0: set = set_height
 
 @onready var map_coordinate: MapCoordinate = $MapCoordinate
 @onready var occupant: Occupant = $Occupant

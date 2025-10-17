@@ -23,7 +23,7 @@ func highlight_player_movement(
 	player_index: int = -1
 ) -> void:
 	# Activate the selector at the player's current position.
-	var player_tile: MapTile = _map_tiles.get_at(pc.map_coordinate.get_index())
+	var player_tile: MapTile = _map_tiles.get_at(pc.map_coordinate.get_tile_index())
 	player_tile.set_selector_type(HexHighlighter.Option.MOVE)
 	
 	# Set the tile highlights.
@@ -40,20 +40,20 @@ func highlight_player_movement(
 		):
 			tile.set_highlight_type(HexHighlighter.Option.NONE)
 		elif tile.occupant.get_current_occupant().name == pc.name:
-			if player_index < 0 or player_index == pc.map_coordinate.get_index():
+			if player_index < 0 or player_index == pc.map_coordinate.get_tile_index():
 				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 			else:
 				tile.set_highlight_type(HexHighlighter.Option.RANGE)
 		else:
 			tile.set_highlight_type(HexHighlighter.Option.ALLY)
-		_highlighted_map_indexes.append(tile.map_coordinate.get_index())
+		_highlighted_map_indexes.append(tile.map_coordinate.get_tile_index())
 
 
 # Highlight the specified tiles as being within the source range of an action.
 func highlight_action_source_area(tile_ids: Array, pc: PlayerCharacter) -> void:
 	for index in tile_ids:
 		var tile: MapTile = _map_tiles.get_at(index)
-		if index == pc.map_coordinate.get_index():
+		if index == pc.map_coordinate.get_tile_index():
 			tile.set_highlight_type(HexHighlighter.Option.PLAYER)
 		elif tile.occupant.get_current_occupant() == null:
 			tile.set_highlight_type(HexHighlighter.Option.RANGE)
@@ -76,7 +76,7 @@ func select_effect_range(
 	var map_section: Array = _map_tiles.get_from_ids(tile_ids)
 	for tile in map_section:
 		var occupant: Character = tile.occupant.get_current_occupant()
-		var tile_index: int = tile.map_coordinate.get_index()
+		var tile_index: int = tile.map_coordinate.get_tile_index()
 		if tile_index == emission_index:
 			tile.set_selector_type(HexHighlighter.Option.EFFECT_ORIGIN)
 		elif occupant == null:

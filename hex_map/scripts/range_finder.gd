@@ -100,7 +100,7 @@ func get_character_point_path(
 	_disable_character_tiles(opponents, true)
 	
 	var point_path: PackedVector3Array = _hm_astar.get_point_path(
-			c.map_coordinate.get_index(),
+			c.map_coordinate.get_tile_index(),
 			dest_id
 	)
 	 # Reset for future range finder operations.
@@ -121,7 +121,7 @@ func get_character_id_path(
 	_disable_character_tiles(opponents, true)
 	
 	var id_path: PackedInt64Array = _hm_astar.get_id_path(
-			c.map_coordinate.get_index(),
+			c.map_coordinate.get_tile_index(),
 			dest_id
 	)
 	 # Reset for future range finder operations.
@@ -184,7 +184,7 @@ func get_character_travesible_tiles(
 			else move_override
 	)
 	var move_distances: Dictionary = _hm_astar.get_distance_map(
-			c.map_coordinate.get_index(),
+			c.map_coordinate.get_tile_index(),
 			false,
 			move
 	)
@@ -218,7 +218,7 @@ func get_character_closest_point_toward(
 	)
 	while true:
 		closest_path = _hm_astar.get_closest_id_path(
-				c.map_coordinate.get_index(),
+				c.map_coordinate.get_tile_index(),
 				dest_id,
 				move
 		)
@@ -275,7 +275,7 @@ func get_character_farthest_point_away(
 				movement_indexes
 		)
 		farthest_path = _hm_astar.get_id_path(
-				c.map_coordinate.get_index(),
+				c.map_coordinate.get_tile_index(),
 				farthest_pt
 		)
 		true_farthest_pt = farthest_path[-1]
@@ -344,7 +344,7 @@ func _update_distance_map() -> void:
 	_hm_astar.set_all_disabled(false)
 	var index: int
 	for tile in _map_tiles.get_all():
-		index = tile.map_coordinate.get_index()
+		index = tile.map_coordinate.get_tile_index()
 		d_maps[index] = _hm_astar.get_full_distance_map(index)
 	# Reset for future range finder operations.
 	_hm_astar.set_all_disabled()
@@ -362,7 +362,7 @@ func _disable_character_tiles(
 	disabled: bool
 ) -> void:
 	for c in characters:
-		_hm_astar.set_point_disabled(c.map_coordinate.get_index(), disabled)
+		_hm_astar.set_point_disabled(c.map_coordinate.get_tile_index(), disabled)
 
 
 # Determines which tiles are reachable in a specified map section.

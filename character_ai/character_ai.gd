@@ -16,7 +16,7 @@ const MOVE: String = "Move"
 # Name of the Action node that represents only movement
 const MOVE_ACTION_NAME: String = "Empty"
 
-@export var actions_ref: NodePath = null
+@export var actions_ref: NodePath = NodePath("")
 
 var h_map: HexMap = null
 var d_map: DistanceMap = null
@@ -43,7 +43,7 @@ func get_move_dest_id() -> int:
 
 # Regenerates the distance map for the character's current position.
 func update_distance_map() -> void:
-	var char_index: int = _character.map_coordinate.get_index()
+	var char_index: int = _character.map_coordinate.get_tile_index()
 	if d_map == null:
 		d_map = h_map.range_finder.get_distance_map(char_index, true)
 	elif !d_map.has(char_index) or d_map.travel_dist_at(char_index) > 0:
@@ -60,7 +60,7 @@ func determine_action_chain() -> Array:
 		assert(
 				ab != null,
 				"Action {0} is missing an ActionBehavior node." \
-				super.format([action.name])
+				.format([action.name])
 		)
 		_possible_targets = (
 			_allies.values() 
@@ -148,13 +148,13 @@ func _get_sorted_target_indexes(ab: ActionBehavior) -> Array:
 	if ab.target_focus == ActionBehavior.TargetFocus.CLOSEST:
 		_possible_targets.sort_custom(Callable(self, "_sort_character_dist"))
 		for t in _possible_targets:
-			target_indexes.append(t.map_coordinate.get_index())
+			target_indexes.append(t.map_coordinate.get_tile_index())
 		return target_indexes
 	if ab.target_focus == ActionBehavior.TargetFocus.FARTHEST:
 		_possible_targets.sort_custom(Callable(self, "_sort_character_dist"))
 		for t in _possible_targets:
-			target_indexes.append(t.map_coordinate.get_index())
-		target_indexes.invert()
+			target_indexes.append(t.map_coordinate.get_tile_index())
+		target_indexes.reverse()
 		return target_indexes
 	if ab.target == ActionBehavior.Target.OPPONENTS:
 		target_indexes = _determine_opponent_index_threat_order()
@@ -175,7 +175,7 @@ func _get_group_target_indexes(gc: GroupCondition, target_focus: int) -> Array:
 		ActionBehavior.TargetFocus.FARTHEST:
 			var sorted_centers: Array = groups.keys()
 			sorted_centers.sort_custom(Callable(self, "_sort_group_center_dist"))
-			sorted_centers.invert()
+			sorted_centers.reverse()
 			return sorted_centers
 		_:
 			var sorted_group_data: Array = []
@@ -194,7 +194,7 @@ func _determine_opponent_index_threat_order() -> Array:
 	danger_opponents.sort_custom(Callable(self, "_sort_opponent_danger"))
 	var indexes: Array = []
 	for o in danger_opponents:
-		indexes.append(_opponents[o].map_coordinate.get_index())
+		indexes.append(_opponents[o].map_coordinate.get_tile_index())
 	return indexes
 
 
@@ -204,7 +204,7 @@ func _determine_ally_index_threat_order() -> Array:
 	danger_allies.sort_custom(Callable(self, "_sort_ally_danger"))
 	var indexes: Array = []
 	for a in danger_allies:
-		indexes.append(_allies[a].map_coordinate.get_index())
+		indexes.append(_allies[a].map_coordinate.get_tile_index())
 	return indexes
 
 
@@ -251,7 +251,7 @@ func _dead_range_details(
 	if dist_to_src <= action.stats.effect_range.get_reach():
 		details.append(
 				_calc_move_path(
-					_character.map_coordinate.get_index(),
+					_character.map_coordinate.get_tile_index(),
 					ActionBehavior.Movement.STAND
 				)
 		)
@@ -428,12 +428,12 @@ func _effect_step(
 	var results: Array = [0, 0]
 	path = h_map.range_finder.get_closest_id_path(
 			target_index,
-			_character.map_coordinate.get_index(),
+			_character.map_coordinate.get_tile_index(),
 			action.stats.effect_range.get_reach(),
 			action.stats.effect_ignore_heights
 	)
 	var effect_stop: int = path[-1]
-	if effect_stop == _character.map_coordinate.get_index():
+	if effect_stop == _character.map_coordinate.get_tile_index():
 		if move_dir == ActionBehavior.Movement.AWAY:
 			results[0] = int(min(action.stats.source_range.get_reach(), movement))
 		else:
@@ -464,12 +464,12 @@ func _source_step(
 		var path: PackedInt32Array = []
 		path = h_map.range_finder.get_closest_id_path(
 				effect_stop,
-				_character.map_coordinate.get_index(),
+				_character.map_coordinate.get_tile_index(),
 				action.stats.source_range.get_reach(),
 				action.stats.source_ignore_heights
 		)
 		source_stop = path[-1]
-	if source_stop == _character.map_coordinate.get_index():
+	if source_stop == _character.map_coordinate.get_tile_index():
 		if move_dir == ActionBehavior.Movement.AWAY:
 			var base_tol: float = min(action.stats.source_range.get_reach(), movement)
 			var s_dist: float
@@ -524,7 +524,7 @@ func _calc_move_path(
 		ActionBehavior.Movement.AWAY:
 			move_path = _calculate_away_path(target_index, move_override)
 		_:
-			var char_tile_index: int = _character.map_coordinate.get_index()
+			var char_tile_index: int = _character.map_coordinate.get_tile_index()
 			var start_tile: MapTile = h_map.get_tile_at(char_tile_index)
 			move_path.append(start_tile.get_character_position())
 	return move_path
@@ -555,7 +555,7 @@ func _calculate_toward_path(dest: int, move_override: int = -1) -> PackedVector3
 			_opponents.values(),
 			move_override
 	)
-	var id_path: PackedInt32Array = h_map.range_finder.get_character_id_path(
+	var id_path: PackedInt64Array = h_map.range_finder.get_character_id_path(
 			_character,
 			_move_dest_id,
 			_opponents.values(),
@@ -583,7 +583,7 @@ func _calculate_away_path(
 			_opponents.values(),
 			movement_range
 	)
-	var id_path: PackedInt32Array = h_map.range_finder.get_character_id_path(
+	var id_path: PackedInt64Array = h_map.range_finder.get_character_id_path(
 			_character,
 			_move_dest_id,
 			_opponents.values(),
@@ -593,7 +593,7 @@ func _calculate_away_path(
 
 
 # Gets the vector point path from a path of map tile ids.
-func _get_pt_path_from_ids(id_path: PackedInt32Array) -> PackedVector3Array:
+func _get_pt_path_from_ids(id_path: PackedInt64Array) -> PackedVector3Array:
 	var pt_path: PackedVector3Array = []
 	pt_path.resize(id_path.size())
 	for i in range(id_path.size()):
@@ -603,8 +603,8 @@ func _get_pt_path_from_ids(id_path: PackedInt32Array) -> PackedVector3Array:
 
 # Sorts characters by their distances, with the lower distances being first.
 func _sort_character_dist(c_a: Character, c_b: Character) -> bool:
-	var index_a: int = c_a.map_coordinate.get_index()
-	var index_b: int = c_b.map_coordinate.get_index()
+	var index_a: int = c_a.map_coordinate.get_tile_index()
+	var index_b: int = c_b.map_coordinate.get_tile_index()
 	var dis_a: float = d_map.travel_dist_at(index_a)
 	var dis_b: float = d_map.travel_dist_at(index_b)
 	return dis_a < dis_b
@@ -614,8 +614,8 @@ func _sort_character_dist(c_a: Character, c_b: Character) -> bool:
 # the determining factor, but threat value is affected by the target's distance
 # from the observer.
 func _sort_opponent_danger(o_a: int, o_b: int) -> bool:
-	var index_a: int = _opponents[o_a].map_coordinate.get_index()
-	var index_b: int = _opponents[o_b].map_coordinate.get_index()
+	var index_a: int = _opponents[o_a].map_coordinate.get_tile_index()
+	var index_b: int = _opponents[o_b].map_coordinate.get_tile_index()
 	var dis_a: float = d_map.travel_dist_at(index_a)
 	var dis_b: float = d_map.travel_dist_at(index_b)
 	dis_a = clamp(dis_a, 1.0, dis_a)
@@ -629,8 +629,8 @@ func _sort_opponent_danger(o_a: int, o_b: int) -> bool:
 # the determining factor, but threat value is affected by the target's distance
 # from the observer.
 func _sort_ally_danger(a_a: int, a_b: int) -> bool:
-	var dis_a: float = d_map[_allies[a_a].map_coordinate.get_index()]["travel"]
-	var dis_b: float = d_map[_allies[a_b].map_coordinate.get_index()]["travel"]
+	var dis_a: float = d_map[_allies[a_a].map_coordinate.get_tile_index()]["travel"]
+	var dis_b: float = d_map[_allies[a_b].map_coordinate.get_tile_index()]["travel"]
 	dis_a = clamp(dis_a, 1.0, dis_a)
 	dis_b = clamp(dis_b, 1.0, dis_b)
 	var threat_a: float = _a_ttr.get_threat_values()[a_a]["value"] / dis_a
@@ -650,7 +650,7 @@ func _sort_group_center_dist(center_a: int, center_b: int) -> bool:
 func _sort_group_center_threat(group_a: Array, group_b: Array) -> bool:
 	var threat_a: float = 0.0
 	for c in group_a[1]:
-		var dis : float = d_map[c.map_coordinate.get_index()]["travel"]
+		var dis : float = d_map[c.map_coordinate.get_tile_index()]["travel"]
 		var raw_threat: float = (
 			_a_ttr.get_threat_values()[c.get_instance_id()]["value"]
 			if c.get_type() == _character.get_type()
@@ -659,7 +659,7 @@ func _sort_group_center_threat(group_a: Array, group_b: Array) -> bool:
 		threat_a += raw_threat / dis
 	var threat_b: float = 0.0
 	for c in group_b[1]:
-		var dis : float = d_map[c.map_coordinate.get_index()]["travel"]
+		var dis : float = d_map[c.map_coordinate.get_tile_index()]["travel"]
 		var raw_threat: float = (
 			_a_ttr.get_threat_values()[c.get_instance_id()]["value"]
 			if c.get_type() == _character.get_type()

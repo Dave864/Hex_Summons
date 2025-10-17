@@ -15,12 +15,12 @@ var _move_origin_index: int = -1
 var _movement_ids: Array = []
 
 # Reference to the function that will update the tile highlights.
-@onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
+@onready var _update_selection_ref: Callable = Callable(self, "_update_selection")
 
 
 # Reveal the selector shape and enable the ability to update tile highlights.
 func enter(_msg: Dictionary = {}) -> void:
-	var player_index: int = selector.active_player.map_coordinate.get_index()
+	var player_index: int = selector.active_player.map_coordinate.get_tile_index()
 	if _move_origin_index < 0:
 		_move_origin_index = player_index
 	_determine_movement_ids()
@@ -32,7 +32,7 @@ func enter(_msg: Dictionary = {}) -> void:
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	selector.set_update_selection_func(null)
+	selector.set_update_selection_func(Callable())
 	_disconnect_signals()
 
 
@@ -71,8 +71,7 @@ func _connect_signals() -> void:
 func _connect_player_turn_ended():
 	if selector.active_player.is_connected(
 			"turn_ended",
-			self,
-			"_on_PlayerCharacter_turn_ended"
+			Callable(self, "_on_PlayerCharacter_turn_ended")
 	):
 		return
 	ErrorUtil.connect_signal(
@@ -87,23 +86,19 @@ func _connect_player_turn_ended():
 func _disconnect_signals() -> void:
 	SignalBus.disconnect(
 			"move_path_requested",
-			self,
-			"_on_SignalBus_move_path_requested"
+			Callable(self, "_on_SignalBus_move_path_requested")
 	)
 	SignalBus.disconnect(
 			"player_action_selected",
-			self,
-			"_on_SignalBus_player_action_selected"
+			Callable(self, "_on_SignalBus_player_action_selected")
 	)
 	SignalBus.disconnect(
 			"top_vertex_changed",
-			self,
-			"_on_SignalBus_top_vertex_changed"
+			Callable(self, "_on_SignalBus_top_vertex_changed")
 	)
 	GamepadHandler.disconnect(
 			"left_joystick_pulsed",
-			self,
-			"_on_GamepadHandler_left_joystick_pulsed"
+			Callable(self, "_on_GamepadHandler_left_joystick_pulsed")
 	)
 
 
@@ -169,8 +164,7 @@ func _on_PlayerCharacter_turn_ended() -> void:
 	_movement_ids.clear()
 	selector.active_player.disconnect(
 			"turn_ended",
-			self,
-			"_on_PlayerCharacter_turn_ended"
+			Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
 	if _state_is_active():
 		state_machine.transition_to(WAIT)
@@ -182,7 +176,7 @@ func _on_SignalBus_move_path_requested() -> void:
 		var path_data: PackedVector3Array = (
 			selector.hex_map.range_finder.get_character_point_path(
 					selector.active_player,
-					selector.tile_hovered.map_coordinate.get_index(),
+					selector.tile_hovered.map_coordinate.get_tile_index(),
 					selector.enemies_ref,
 					_movement_ids
 			)

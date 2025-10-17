@@ -46,7 +46,7 @@ func exit() -> void:
 	_selector_paused = false
 	pc.hm_move_path.reset_path()
 	SignalBus.disconnect("selector_paused", Callable(self, "_on_SignalBus_selector_paused"))
-	SignalBus.emit_selector_required(pc.map_coordinate.get_index())
+	SignalBus.emit_selector_required(pc.map_coordinate.get_tile_index())
 
 
 # Virtual function. To be called in the _ready function to connect signals to 
