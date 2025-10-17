@@ -412,7 +412,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "SpellStats",
 "language": "GDScript",
-"path": "res://actions/spell_stats.gd"
+"path": "res://character/player_classes/spell_stats.gd"
 }, {
 "base": "Resource",
 "class": "Stat",
@@ -462,7 +462,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "TechniqueStats",
 "language": "GDScript",
-"path": "res://actions/technique_stats.gd"
+"path": "res://character/player_classes/technique_stats.gd"
 }, {
 "base": "Object",
 "class": "ThreatTracker",
