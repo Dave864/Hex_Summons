@@ -30,7 +30,7 @@ func update(delta: float) -> void:
 	# This is to prevent the character from being moved to an undesired location
 	# after the movement_ended signal has been caught.
 	if _movement_active:
-		ec.translation = ec.hm_move_path.get_current_pos()
+		ec.position = ec.hm_move_path.get_current_pos()
 
 
 # Called by the state machine before changing the active state.
@@ -69,5 +69,5 @@ func _move_to_next_state() -> void:
 func _on_HexMapMovementCurve_movement_finished(final_position: Vector3) -> void:
 	_movement_active = false
 	ec.hm_move_path.reset_path()
-	ec.translation = final_position
+	ec.position = final_position
 	_move_to_next_state()

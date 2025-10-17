@@ -6,12 +6,12 @@ to the map tiles.
 """
 
 
-export(NodePath) var map_tiles_reference = null
+@export var map_tiles_reference: NodePath = NodePath("")
 
 var _highlighted_map_indexes: Array = []
 var _selectable_map_indexes: Array = []
 
-onready var _map_tiles: Tiles = get_node(map_tiles_reference)
+@onready var _map_tiles: Tiles = get_node(map_tiles_reference)
 
 
 # Highlight the specified tiles as movement for the given player character.

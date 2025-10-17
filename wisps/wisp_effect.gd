@@ -7,12 +7,12 @@ a specified character stat.
 
 
 # The stat of the target that is affected by this effect.
-export(Resource) var stat_affected = null
+@export var stat_affected: Resource = null
 # How the targeted stat is modified.
-export(Constants.Operation) var operation = Constants.Operation.SET
+@export var operation = Constants.Operation.SET # (Constants.Operation)
 # The method that determines the strength of this effect. Should either be
 # a flat_value_calculation or percentage_calculation.
-export(Resource) var calculation_method = null
+@export var calculation_method: Resource = null
 
 
 # Determines the numerical result of this effect on a target set of character stats.

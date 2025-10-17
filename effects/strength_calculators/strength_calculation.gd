@@ -33,17 +33,17 @@ func efficacy(
 # and efficacy.
 func process_operation(
 	strength: float,
-	efficacy: float,
+	efficacy_percent: float,
 	stat_value: int,
 	operation: int
 ) -> int:
 	match operation:
 		Constants.Operation.SET:
-			return _set_operation(strength, efficacy, stat_value)
+			return _set_operation(strength, efficacy_percent, stat_value)
 		Constants.Operation.INCREASE:
-			return _increase_operation(strength, efficacy, stat_value)
+			return _increase_operation(strength, efficacy_percent, stat_value)
 		Constants.Operation.DECREASE:
-			return _decrease_operation(strength, efficacy, stat_value)
+			return _decrease_operation(strength, efficacy_percent, stat_value)
 		_:
 			return 0
 
@@ -51,32 +51,32 @@ func process_operation(
 # Determines the value that will be used to change the stat to be the desired value.
 func _set_operation(
 	target_strength: float,
-	efficacy: float,
+	efficacy_percent: float,
 	stat_value: int
 ) -> int:
 	var diff: float = target_strength - stat_value
 	if diff >= 0.0:
-		return convert(diff * efficacy, TYPE_INT)
+		return convert(diff * efficacy_percent, TYPE_INT)
 	else:
-		return -convert(diff * efficacy, TYPE_INT)
+		return -convert(diff * efficacy_percent, TYPE_INT)
 
 
 # Determines the value to increase the target stat by.
 func _increase_operation(
-	base_strength: float,
-	efficacy: float,
+	base_strength_value: float,
+	efficacy_percent: float,
 	_stat_value: int
 ) -> int:
-	return convert(base_strength * efficacy, TYPE_INT)
+	return convert(base_strength_value * efficacy_percent, TYPE_INT)
 
 
 # Determines the value to decrease the target stat by.
 func _decrease_operation(
-	base_strength: float,
-	efficacy: float,
+	base_strength_value: float,
+	efficacy_percent: float,
 	_stat_value: int
 ) -> int:
-	return -convert(base_strength * efficacy, TYPE_INT) 
+	return -convert(base_strength_value * efficacy_percent, TYPE_INT) 
 
 
 # Determines the strength of the effect for a given character when resisted

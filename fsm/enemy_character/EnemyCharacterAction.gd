@@ -23,7 +23,7 @@ func enter(msg := {}) -> void:
 	var action: Action = action_details[1]
 	var targets: Array = action_details[3]
 	_change_target_state(targets, true)
-	yield(action.execute_action(), "completed")
+	await action.execute_action().completed
 	_change_target_state(targets, false)
 	_activate_cooldown(action)
 	_move_to_next_state()

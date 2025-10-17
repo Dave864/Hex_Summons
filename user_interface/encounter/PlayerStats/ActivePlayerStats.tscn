@@ -3,16 +3,16 @@
 [ext_resource path="res://user_interface/encounter/WispPool/PlayerWispPool/PlayerWispPool.tscn" type="PackedScene" id=1]
 [ext_resource path="res://user_interface/encounter/PlayerStats/player_stats_ui.gd" type="Script" id=2]
 [ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=3]
-[ext_resource path="res://art/ui/ThemeBlueSigil/HealthBorder.png" type="Texture" id=4]
-[ext_resource path="res://art/icon.png" type="Texture" id=5]
-[ext_resource path="res://art/ui/ThemeBlueSigil/HealthBar.png" type="Texture" id=6]
+[ext_resource path="res://art/ui/ThemeBlueSigil/HealthBorder.png" type="Texture2D" id=4]
+[ext_resource path="res://art/icon.png" type="Texture2D" id=5]
+[ext_resource path="res://art/ui/ThemeBlueSigil/HealthBar.png" type="Texture2D" id=6]
 
 
 [node name="ActivePlayerStats" type="Control"]
 anchor_right = 0.156
 anchor_bottom = 0.333
-margin_right = 0.159996
-margin_bottom = 0.119995
+offset_right = 0.159996
+offset_bottom = 0.119995
 mouse_filter = 2
 theme = ExtResource( 3 )
 script = ExtResource( 2 )
@@ -23,9 +23,9 @@ wisp_pool_ref = NodePath("PlayerWispPool")
 [node name="NameLabel" type="Label" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -50.0
-margin_right = 50.0
-margin_bottom = 8.0
+offset_left = -50.0
+offset_right = 50.0
+offset_bottom = 8.0
 text = "NAME"
 align = 1
 
@@ -34,21 +34,21 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -50.0
-margin_top = -8.0
-margin_right = 50.0
+offset_left = -50.0
+offset_top = -8.0
+offset_right = 50.0
 text = "00/00"
 align = 1
 
-[node name="HealthBar" type="TextureProgress" parent="."]
+[node name="HealthBar" type="TextureProgressBar" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -50.0
-margin_top = 34.0
-margin_right = 50.0
-margin_bottom = 50.0
+offset_left = -50.0
+offset_top = 34.0
+offset_right = 50.0
+offset_bottom = 50.0
 mouse_filter = 2
 value = 60.0
 rounded = true
@@ -61,10 +61,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -37.0
-margin_top = -50.0
-margin_right = 37.0
-margin_bottom = 46.0
+offset_left = -37.0
+offset_top = -50.0
+offset_right = 37.0
+offset_bottom = 46.0
 
 [node name="PlayerPortrait" type="TextureRect" parent="PlayerWispPool"]
 show_behind_parent = true
@@ -72,10 +72,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -23.0
-margin_top = -23.0
-margin_right = 23.0
-margin_bottom = 23.0
+offset_left = -23.0
+offset_top = -23.0
+offset_right = 23.0
+offset_bottom = 23.0
 mouse_filter = 2
 texture = ExtResource( 5 )
 expand = true

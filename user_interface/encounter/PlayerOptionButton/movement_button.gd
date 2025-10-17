@@ -34,7 +34,7 @@ func _on_MovementButton_toggled(button_pressed: bool) -> void:
 	if button_pressed:
 		ap_focus.play("focus_selected")
 		ap_icon.play("selected_start")
-		yield(ap_icon, "animation_finished")
+		await ap_icon.animation_finished
 		ap_icon.play("selected_loop")
 	elif has_focus():
 		set_pressed_no_signal(true)

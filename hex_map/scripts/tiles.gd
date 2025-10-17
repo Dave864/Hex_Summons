@@ -1,6 +1,6 @@
-tool
+@tool
 class_name Tiles
-extends Spatial
+extends Node3D
 """
 A container for map tiles. Generates an array of map tiles with z rows and 
 x columns. Positions each tile and sets up the connections between them.
@@ -9,18 +9,18 @@ x columns. Positions each tile and sets up the connections between them.
 const MAP_TILE = "MapTile"
 
 # The number of tiles along the X axis.
-export(int, 1, 50) var x_count = 2 setget set_x_count, get_x_count
+@export var x_count = 2: get = get_x_count, set = set_x_count # (int, 1, 50)
 # The number of tiles along the Z axis.
-export(int, 1, 50) var z_count = 3 setget set_z_count, get_z_count
+@export var z_count = 3: get = get_z_count, set = set_z_count # (int, 1, 50)
 # Indicates that the map tiles are to be regenerated. Workaround for creating
 # an Inspector plugin. Should NEVER be set outside of Inspector.
-export(bool) var regenerate = false setget _regenerate_grid
+@export var regenerate: bool = false: set = _regenerate_grid
 
 var _grid_start: Vector3 = _calculate_grid_start()
 var _map_tile: PackedScene = preload("res://hex_map/map_tile_node/MapTile.tscn")
 
 # Referene to the scene tree root.
-onready var _root_node: Node = get_tree().edited_scene_root
+@onready var _root_node: Node = get_tree().edited_scene_root
 
 
 # Update the z_count parameter and regenerate the grid.
@@ -140,7 +140,7 @@ func _generate_grid() -> void:
 # Instantiates the hex grid map tile at the specified offset with the HexMap
 # node position being considered origin.
 func _instantiate_tile(offset: Vector3) -> void:
-	var tile = _map_tile.instance()
+	var tile = _map_tile.instantiate()
 	add_child(tile)
 	tile.set_owner(_root_node)
 	tile.translate_object_local(offset + _grid_start)
@@ -150,7 +150,7 @@ func _instantiate_tile(offset: Vector3) -> void:
 func _set_coordinates() -> void:
 	var index: int = 0
 	for tile in get_children():
-		tile.name = MAP_TILE + String(index)
+		tile.name = MAP_TILE + String.num_int64(index)
 		tile.map_coordinate.set_index(index)
 		tile.map_coordinate.set_cube_coord(HexUtil.index_to_cube(index, get_x_count()))
 		index += 1
@@ -173,7 +173,7 @@ func _determine_adjacencies() -> void:
 		var is_bottom: bool = z_place == (z_count - 1)
 		
 		# Determine which tile is adjacent to the top left edge.
-		var index_0_tile: Spatial = (
+		var index_0_tile: Node3D = (
 			null if is_top
 			else null if is_left and even_z_place
 			else get_child(index - x_count - 1) if even_z_place
@@ -182,7 +182,7 @@ func _determine_adjacencies() -> void:
 		tile.set_adjacent_tile(HexUtil.HexDirection.UPPER_LEFT, index_0_tile)
 		
 		# Determine which tile is adjacent to the top right edge.
-		var index_1_tile: Spatial = (
+		var index_1_tile: Node3D = (
 			null if is_top
 			else null if is_right and !even_z_place
 			else get_child(index - x_count) if even_z_place
@@ -191,11 +191,11 @@ func _determine_adjacencies() -> void:
 		tile.set_adjacent_tile(HexUtil.HexDirection.UPPER_RIGHT, index_1_tile)
 		
 		# Determine which tile is adjacent to the center right edge.
-		var index_2_tile: Spatial = null if is_right else get_child(index + 1)
+		var index_2_tile: Node3D = null if is_right else get_child(index + 1)
 		tile.set_adjacent_tile(HexUtil.HexDirection.RIGHT, index_2_tile)
 		
 		# Determine which tile is adjacent to the bottom right edge.
-		var index_3_tile: Spatial = (
+		var index_3_tile: Node3D = (
 			null if is_bottom 
 			else null if is_right and !even_z_place
 			else get_child(index + x_count) if even_z_place
@@ -204,7 +204,7 @@ func _determine_adjacencies() -> void:
 		tile.set_adjacent_tile(HexUtil.HexDirection.BOTTOM_RIGHT, index_3_tile)
 		
 		# Determine which tile is adjacent to the bottom left edge.
-		var index_4_tile: Spatial = (
+		var index_4_tile: Node3D = (
 			null if is_bottom
 			else null if is_left and even_z_place
 			else get_child(index + x_count - 1) if even_z_place
@@ -213,7 +213,7 @@ func _determine_adjacencies() -> void:
 		tile.set_adjacent_tile(HexUtil.HexDirection.BOTTOM_LEFT, index_4_tile)
 		
 		# Determine which tile is adjacent to the center left edge.
-		var index_5_tile: Spatial = null if is_left else get_child(index - 1)
+		var index_5_tile: Node3D = null if is_left else get_child(index - 1)
 		tile.set_adjacent_tile(HexUtil.HexDirection.LEFT, index_5_tile)
 
 

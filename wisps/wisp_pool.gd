@@ -5,8 +5,8 @@ Base class for tracking the wisp pool for a character in an encounter.
 """
 
 
-# warning-ignore:unused_signal
 # This signal will be emitted in child classes.
+@warning_ignore("unused_signal")
 signal active_count_changed(element)
 
 

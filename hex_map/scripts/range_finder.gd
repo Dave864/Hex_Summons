@@ -1,4 +1,4 @@
-tool
+@tool
 class_name RangeFinder
 extends Node
 """
@@ -7,12 +7,12 @@ a reference to the map tiles.
 """
 
 
-export(NodePath) var map_tiles_reference = null setget set_map_tiles
-export(Resource) var dist_maps = null setget set_distance_map
+@export var map_tiles_reference: NodePath = NodePath(""): set = set_map_tiles
+@export var dist_maps: Resource = null: set = set_distance_map
 
 var _hm_astar: HexMapAStar = null
 
-onready var _map_tiles: Tiles = get_node(map_tiles_reference)
+@onready var _map_tiles: Tiles = get_node(map_tiles_reference)
 
 
 # Updates the reference path for map tiles node. Is intended only for use when
@@ -20,7 +20,7 @@ onready var _map_tiles: Tiles = get_node(map_tiles_reference)
 # the distance map resource data.
 func set_map_tiles(ref_path: NodePath) -> void:
 	map_tiles_reference = ref_path
-	property_list_changed_notify()
+	notify_property_list_changed()
 	# Allow for the _map_tiles variable to be set in the _ready function.
 	if Engine.is_editor_hint() and is_node_ready():
 		_map_tiles = get_node(map_tiles_reference)
@@ -38,7 +38,7 @@ func set_distance_map(new_dist_map: Resource) -> void:
 	if not new_dist_map is HexMapDistances:
 		printerr("Resource is not of type HexMapDistances.")
 		dist_maps = null
-		property_list_changed_notify()
+		notify_property_list_changed()
 		return
 	dist_maps = new_dist_map
 	# Allow for the distance_map to be updated in the _ready function.
@@ -93,13 +93,13 @@ func get_character_point_path(
 	dest_id: int,
 	opponents: Array,
 	movement_area_ids: Array
-) -> PoolVector3Array:
+) -> PackedVector3Array:
 	_hm_astar.set_area_disabled(movement_area_ids, false)
 	# Disable connection points of the opposite character type to prevent character
 	# from being able to move into those spaces
 	_disable_character_tiles(opponents, true)
 	
-	var point_path: PoolVector3Array = _hm_astar.get_point_path(
+	var point_path: PackedVector3Array = _hm_astar.get_point_path(
 			c.map_coordinate.get_index(),
 			dest_id
 	)
@@ -114,13 +114,13 @@ func get_character_id_path(
 	dest_id: int,
 	opponents: Array,
 	movement_area_ids: Array
-) -> PoolIntArray:
+) -> PackedInt64Array:
 	_hm_astar.set_area_disabled(movement_area_ids, false)
 	# Disable connection points of the opposite character type to prevent character
 	# from being able to move into those spaces
 	_disable_character_tiles(opponents, true)
 	
-	var id_path: PoolIntArray = _hm_astar.get_id_path(
+	var id_path: PackedInt64Array = _hm_astar.get_id_path(
 			c.map_coordinate.get_index(),
 			dest_id
 	)
@@ -154,11 +154,11 @@ func get_closest_id_path(
 	dest_id: int,
 	max_dist: int,
 	use_tile_dist: bool = false
-) -> PoolIntArray:
+) -> PackedInt32Array:
 	_hm_astar.set_all_disabled(false)
 	if use_tile_dist:
 		_hm_astar.set_cost_to_tile()
-	var path_to_dest: PoolIntArray = _hm_astar.get_closest_id_path(
+	var path_to_dest: PackedInt32Array = _hm_astar.get_closest_id_path(
 			start_id,
 			dest_id,
 			max_dist
@@ -210,7 +210,7 @@ func get_character_closest_point_toward(
 	# has an opponent.
 	_hm_astar.set_point_disabled(dest_id, false)
 	var true_dest_id: int
-	var closest_path: PoolIntArray = []
+	var closest_path: PackedInt32Array = []
 	
 	var move: int = (
 			c.stats.get_movement_range() if move_override < 0
@@ -268,7 +268,7 @@ func get_character_farthest_point_away(
 	_disable_character_tiles(opponents, true)
 	var farthest_pt: int
 	var true_farthest_pt: int
-	var farthest_path: PoolIntArray = []
+	var farthest_path: PackedInt64Array = []
 	while true:
 		farthest_pt = _hm_astar.get_farthest_in_area(
 				target_id,
@@ -317,7 +317,7 @@ func _ready():
 	# able to be placed in any position relative to node with map tiles data.
 	# Without this, RangeFinder node would always need to be after map tiles
 	# node.
-	yield(_map_tiles, "ready")
+	await _map_tiles.ready
 	_hm_astar = HexMapAStar.new(_map_tiles.get_all(), _map_tiles.get_x_count())
 	if Engine.is_editor_hint():
 		_update_distance_map()
@@ -351,7 +351,7 @@ func _update_distance_map() -> void:
 
 	dist_maps.d_maps = d_maps
 	dist_maps.map_hash = d_hash
-	var err: int = ResourceSaver.save(dist_maps.resource_path, dist_maps)
+	var err: int = ResourceSaver.save(dist_maps, dist_maps.resource_path)
 	if err != OK:
 		printerr("Failed to save distance maps")
 

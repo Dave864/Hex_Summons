@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://art/ui/PartyWispPool/Polar Gem S.png" type="Texture" id=1]
+[ext_resource path="res://art/ui/PartyWispPool/Polar Gem S.png" type="Texture2D" id=1]
 [ext_resource path="res://user_interface/encounter/WispPool/polar_element_icon.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=5]
@@ -17,8 +17,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Rect2( 1, 1, 14, 10 ) ]
 }
@@ -34,8 +34,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Rect2( 1, 13, 14, 10 ), Rect2( 17, 13, 14, 10 ), Rect2( 33, 13, 14, 10 ), Rect2( 49, 13, 14, 10 ), Rect2( 65, 13, 14, 10 ), Rect2( 81, 13, 14, 10 ), Rect2( 97, 13, 14, 10 ), Rect2( 113, 13, 14, 10 ), Rect2( 129, 13, 14, 10 ), Rect2( 145, 13, 14, 10 ) ]
 }
@@ -46,8 +46,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.333333 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.333333 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [  ],
 "method": "_emit_ping"
@@ -65,8 +65,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Rect2( 1, 1, 14, 10 ), Rect2( 17, 1, 14, 10 ), Rect2( 33, 1, 14, 10 ), Rect2( 49, 1, 14, 10 ), Rect2( 65, 1, 14, 10 ), Rect2( 81, 1, 14, 10 ), Rect2( 97, 1, 14, 10 ), Rect2( 113, 1, 14, 10 ), Rect2( 129, 1, 14, 10 ), Rect2( 145, 1, 14, 10 ) ]
 }
@@ -77,8 +77,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.333333 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.333333 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [  ],
 "method": "_emit_ping"
@@ -88,8 +88,8 @@ tracks/1/keys = {
 [node name="PolarElementIcon" type="TextureRect"]
 anchor_right = 0.022
 anchor_bottom = 0.028
-margin_right = -6.08
-margin_bottom = -4.08
+offset_right = -6.08
+offset_bottom = -4.08
 mouse_filter = 2
 texture = SubResource( 5 )
 stretch_mode = 4

@@ -6,7 +6,7 @@ Describes an area whose area is constrained by the six directions of a hexagon.
 
 
 # How many tiles out the range will reach.
-export(int, 1, 1000) var distance = 1
+@export var distance = 1 # (int, 1, 1000)
 
 
 # Returns the reach of the CardinalArea. Used when determining which tiles are
@@ -19,10 +19,7 @@ func get_reach() -> int:
 # Does not account for tile heights.
 func get_area_indexes(start: int, hm: HexMap) -> Array:
 	var tile_ids: Array = []
-	var start_coord: Vector3 = (
-			hm.get_tile_at(start) \
-			.map_coordinate.get_cube_coord()
-	)
+	var start_coord: Vector3 = hm.get_tile_at(start).map_coordinate.get_cube_coord()
 	tile_ids.append(start)
 	for d in range(1, distance + 1):
 		for n in range(6):

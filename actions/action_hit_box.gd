@@ -1,18 +1,18 @@
 class_name ActionHitBox
-extends Area
+extends Area3D
 """
 Defines the hit box for a given action. Tracks the potency and effects of the
 action this hit box is for.
 """
 
 
-export(NodePath) var effects_ref = null
+@export var effects_ref: NodePath = NodePath("")
 
 var caster_id: int = -1
 
-var _effects: Array = [] setget , get_effects
+var _effects: Array = []: get = get_effects
 
-onready var _c_shape: CollisionShape = $CollisionShape
+@onready var _c_shape: CollisionShape3D = $CollisionShape3D
 
 
 # Gets the effects this hit box is transferring.
@@ -36,7 +36,7 @@ func deactivate() -> void:
 func _ready():
 	_check_for_required_parameters()
 	var effects_node: Node = get_node(effects_ref)
-	yield(effects_node, "ready")
+	await effects_node.ready
 	_effects = effects_node.get_children()
 
 

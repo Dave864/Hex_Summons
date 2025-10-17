@@ -5,12 +5,12 @@ Handles mouse input and keeps track of the last relevant position.
 
 
 # Keeps track of the mouse position.
-var _3d_position: Vector3 = Vector3.ZERO setget , get_3d_position
+var _3d_position: Vector3 = Vector3.ZERO: get = get_3d_position
 var _drop_plane: Plane = Plane.PLANE_XZ
 # Keeps track of the mouse position.
 var _last_position: Vector2 = Vector2.ZERO
 
-onready var _camera: Camera = get_tree().root.get_camera()
+@onready var _camera: Camera3D = get_tree().root.get_camera_3d()
 
 
 func get_3d_position() -> Vector3:
@@ -28,7 +28,7 @@ func update_mouse_tracker_2d(pos: Vector2) -> void:
 
 # Updates the recorded mouse position for a 3d coordinate.
 func update_mouse_tracker_3d(pos: Vector3) -> void:
-	_last_position = get_viewport().get_camera().unproject_position(pos)
+	_last_position = get_viewport().get_camera_3d().unproject_position(pos)
 
 
 # Reveals the mouse cursor and positions it to the last recorded position.
@@ -71,4 +71,4 @@ func _screen_point_to_ray() -> Vector3:
 
 # Scales the viewport size to match the window.
 func _scale_to_window() -> void:
-	rect_size = OS.window_size
+	size = get_window().size

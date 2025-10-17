@@ -20,10 +20,10 @@ func enter(_msg := {}) -> void:
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	selector.disconnect("area_entered", self, "_on_Selector_area_entered")
+	selector.disconnect("area_entered", Callable(self, "_on_Selector_area_entered"))
 
 
 # Hit when the selector node enters a map tile.
-func _on_Selector_area_entered(map_tile: Area) -> void:
-	selector.snap_position = map_tile.translation
+func _on_Selector_area_entered(map_tile: Area3D) -> void:
+	selector.snap_position = map_tile.position
 	selector.tile = map_tile

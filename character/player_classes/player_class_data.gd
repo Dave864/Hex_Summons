@@ -5,10 +5,10 @@ Describes the data for a player class.
 """
 
 
-export(String) var name = ""
-export(Resource) var stats = null
-export(Array) var techniques = []
-export(Array) var spells = []
+@export var name: String = ""
+@export var stats: Resource = null
+@export var techniques: Array = []
+@export var spells: Array = []
 
 
 # Called when the node enters the scene tree for the first time.

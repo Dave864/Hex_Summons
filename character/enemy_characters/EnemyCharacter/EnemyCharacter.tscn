@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://character/enemy_characters/EnemyCharacter/EnemyBattleSprite.atlastex" type="Texture" id=1]
+[ext_resource path="res://character/enemy_characters/EnemyCharacter/EnemyBattleSprite.atlastex" type="Texture2D" id=1]
 [ext_resource path="res://character/enemy_characters/enemy_character.gd" type="Script" id=2]
 [ext_resource path="res://fsm/state_machine.gd" type="Script" id=3]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterMove.gd" type="Script" id=4]
@@ -15,13 +15,13 @@
 [ext_resource path="res://character/scripts/encounter_sprite.gd" type="Script" id=13]
 [ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=15]
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="CapsuleShape3D" id=1]
 radius = 0.1
 
-[sub_resource type="SphereShape" id=2]
+[sub_resource type="SphereShape3D" id=2]
 radius = 0.5
 
-[node name="EnemyCharacter" type="Area"]
+[node name="EnemyCharacter" type="Area3D"]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 2 )
@@ -30,15 +30,15 @@ script = ExtResource( 2 )
 character_type = 0
 character_pos_ref = NodePath("../MapCoordinate")
 
-[node name="MapCoordinate" type="Position3D" parent="."]
+[node name="MapCoordinate" type="Marker3D" parent="."]
 script = ExtResource( 10 )
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.9, 0 )
+transform = Transform3D( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.9, 0 )
 pixel_size = 0.05
 billboard = 1
 texture = ExtResource( 1 )
@@ -51,13 +51,13 @@ base_stat_values = ExtResource( 9 )
 
 [node name="EffectsTracker" parent="." instance=ExtResource( 6 )]
 
-[node name="HitBox" type="Area" parent="."]
+[node name="HitBox" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 16
 monitoring = false
 monitorable = false
 
-[node name="CollisionShape" type="CollisionShape" parent="HitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
 shape = SubResource( 2 )
 
 [node name="CharacterAI" type="Node" parent="."]

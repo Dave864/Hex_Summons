@@ -13,6 +13,6 @@ enum Element {
 	WIND,
 }
 
-export(Element) var element = Element.EARTH
-export var portrait: Texture = load(Constants.DEFAULT_ICON_PATH)
-export(Resource) var effect_bonus =  null
+@export var element: Element = Element.EARTH
+@export var portrait: Texture2D = load(Constants.DEFAULT_ICON_PATH)
+@export var effect_bonus: Resource =  null

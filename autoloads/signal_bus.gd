@@ -65,7 +65,7 @@ func emit_move_path_requested() -> void:
 	emit_signal("move_path_requested")
 
 
-func emit_move_path_created(move_path: PoolVector3Array) -> void:
+func emit_move_path_created(move_path: PackedVector3Array) -> void:
 	emit_signal("move_path_created", move_path)
 
 

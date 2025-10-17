@@ -5,21 +5,21 @@ Displays the portrait, current health, and initiative slot of a given character.
 """
 
 
-onready var initiative: Label = $InitPanel/Initiative
-onready var portrait: TextureRect = $Portrait
+@onready var initiative: Label = $InitPanel/Initiative
+@onready var portrait: TextureRect = $Portrait
 
 
 # Updates the details of the slot to represent the new character
 func change_character(c: Character) -> void:
 	update_portrait(c.battle_portrait)
 	if c is PlayerCharacter:
-		material.set_shader_param("new_color", Color.aqua)
+		material.set_shader_parameter("new_color", Color.AQUA)
 	else:
-		material.set_shader_param("new_color", Color.red)
+		material.set_shader_parameter("new_color", Color.RED)
 
 
 # Updates the portrait.
-func update_portrait(new_p: Texture) -> void:
+func update_portrait(new_p: Texture2D) -> void:
 	portrait.texture = new_p
 	# Need to use color as GDScript does not have a native Vector4.
 	var region: Color = Color(0.0, 0.0, 0.0, 0.0)
@@ -32,7 +32,7 @@ func update_portrait(new_p: Texture) -> void:
 		)
 	else:
 		region = Color(0.0, 0.0, new_p.get_width(), new_p.get_height())
-	portrait.material.set_shader_param("region", region)
+	portrait.material.set_shader_parameter("region", region)
 
 
 # Updates the number of the initiative label.

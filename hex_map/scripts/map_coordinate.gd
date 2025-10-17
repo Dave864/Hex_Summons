@@ -1,6 +1,6 @@
-tool
+@tool
 class_name MapCoordinate
-extends Position3D
+extends Marker3D
 """
 Keeps track of the current location in a hex map. Tracks the tile index and
 cube coordinate.
@@ -8,7 +8,7 @@ cube coordinate.
 
 
 # The index position of the map tile when it is part of a collection of tiles.
-var _index: int = -1 setget set_index, get_index
+var _tile_index: int = -1: get = get_tile_index, set = set_tile_index
 # The cube coordinates of the map tile.
 #     -z
 # +y   |  +x
@@ -17,17 +17,17 @@ var _index: int = -1 setget set_index, get_index
 #   / \ / \
 # -x   |  -y
 #     +z
-var _cube_coord: Vector3 = Vector3.ZERO setget set_cube_coord, get_cube_coord
+var _cube_coord: Vector3 = Vector3.ZERO: get = get_cube_coord, set = set_cube_coord
 
 
 # Get the index value of the MapTile.
-func get_index() -> int:
-	return _index
+func get_tile_index() -> int:
+	return _tile_index
 
 
 # Set the index value of the MapTile.
-func set_index(value: int):
-	_index = value
+func set_tile_index(value: int):
+	_tile_index = value
 
 
 # Get the cube coordinates of the MapTile.

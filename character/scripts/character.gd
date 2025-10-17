@@ -1,5 +1,5 @@
 class_name Character
-extends Spatial
+extends Node3D
 """
 Base class for players, mobs, and bosses. Contains a character's stats and map
 position details.
@@ -17,17 +17,17 @@ enum Type {
 	NONE
 }
 
-export(Texture) var battle_portrait = null
+@export var battle_portrait: Texture2D = null
 
 var stats: CharacterStats
 # Flag that indicates whether the creature has been set to its starting location.
-var _start_set: bool = false setget , get_is_start_set
+var _start_set: bool = false: get = get_is_start_set
 
-onready var character_sprite: Sprite3D = $Sprite3D
-onready var character_label: CharacterLabel = $CharacterLabel
-onready var map_coordinate: MapCoordinate = $MapCoordinate
-onready var hit_box: Area = $HitBox
-onready var hm_move_path: HexMapMovementCurve = HexMapMovementCurve.new()
+@onready var character_sprite: Sprite3D = $Sprite3D
+@onready var character_label: CharacterLabel = $CharacterLabel
+@onready var map_coordinate: MapCoordinate = $MapCoordinate
+@onready var hit_box: Area3D = $HitBox
+@onready var hm_move_path: HexMapMovementCurve = HexMapMovementCurve.new()
 
 
 # Emits the is_waiting signal.
@@ -89,7 +89,7 @@ func _update_emission_index(_index: int) -> void:
 
 
 # Update the character's position index when passing over a MapTile.
-func _on_Character_area_entered(map_tile: Area) -> void:
+func _on_Character_area_entered(map_tile: Area3D) -> void:
 	_update_emission_index(map_tile.map_coordinate.get_index())
 	map_coordinate.set_index(map_tile.map_coordinate.get_index())
 	map_coordinate.set_cube_coord(map_tile.map_coordinate.get_cube_coord())

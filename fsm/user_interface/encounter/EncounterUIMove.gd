@@ -14,7 +14,7 @@ to the `Wait` state when the user chooses to end their turn. Moves to the
 func enter(_msg := {}) -> void:
 	encounter_ui.sub_options.activate()
 	encounter_ui.options.show()
-	encounter_ui.movement_button.pressed = true
+	encounter_ui.movement_button.button_pressed = true
 	encounter_ui.movement_button.call_deferred("grab_focus")
 	_connect_signals()
 
@@ -25,7 +25,7 @@ func handle_input(event: InputEvent) -> void:
 		event.is_action_pressed("ui_select")
 		and (
 			InputController.source_is_keymouse()
-			or encounter_ui.get_focus_owner() == encounter_ui.movement_button
+			or encounter_ui.get_viewport().gui_get_focus_owner() == encounter_ui.movement_button
 		)
 	):
 		SignalBus.emit_move_path_requested()
@@ -137,8 +137,8 @@ func _disconnect_signals() -> void:
 # state, specifying TECHNIQUE as the option.
 func _technique_selected() -> void:
 	encounter_ui.technique_button.grab_focus()
-	encounter_ui.technique_button.pressed = true
-	encounter_ui.movement_button.pressed = false
+	encounter_ui.technique_button.button_pressed = true
+	encounter_ui.movement_button.button_pressed = false
 	state_machine.transition_to(
 			ACTION, 
 			{"option_flag": encounter_ui.Options.TECHNIQUE}
@@ -166,15 +166,15 @@ func _item_selected() -> void:
 # Handles behavior for when the "END" option is chosen.
 func _end_selected() -> void:
 	encounter_ui.end_button.call_deferred("grab_focus")
-	encounter_ui.end_button.pressed = true
-	encounter_ui.movement_button.pressed = false
+	encounter_ui.end_button.button_pressed = true
+	encounter_ui.movement_button.button_pressed = false
 	encounter_ui.get_focused_player().emit_turn_ended()
 	encounter_ui.reset_all_options()
 	state_machine.transition_to(WAIT)
 
 
 # Triggered when a move tile has been selected and a path created to said tile.
-func _on_SignalBus_move_path_created(_path: PoolVector3Array) -> void:
+func _on_SignalBus_move_path_created(_path: PackedVector3Array) -> void:
 	if not _state_is_active():
 		return
 	state_machine.transition_to(PAUSE)

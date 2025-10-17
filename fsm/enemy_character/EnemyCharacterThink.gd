@@ -7,7 +7,7 @@ take and then starts the logic chain.
 
 
 # Reference to the CharacterAI node of this character.
-export(NodePath) var ai_reference = null
+@export var ai_reference: NodePath = null
 
 # The action the character will execute.
 var _action: Action = null
@@ -21,7 +21,7 @@ var _source_d_map: Dictionary = {}
 var _ai_thread: Thread
 
 # The CharacterAI node.
-onready var _ai_node: CharacterAI = get_node(ai_reference)
+@onready var _ai_node: CharacterAI = get_node(ai_reference)
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
@@ -69,8 +69,8 @@ func _orient_to_target(possible_targets: Array) -> Array:
 	_action.set_emission_pos(char_pos)
 	var char_pt: Vector2 = Vector2(char_pos.x, char_pos.z)
 	var tile_pt: Vector2 = Vector2(
-			target_tile.translation.x,
-			target_tile.translation.z
+			target_tile.position.x,
+			target_tile.position.z
 	)
 	var vector_dir: Vector2 = (tile_pt - char_pt).normalized()
 	# Relative top not needed as we are using direct map coordinates.

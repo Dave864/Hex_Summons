@@ -18,7 +18,7 @@ var _action_button: PackedScene = preload(
 		+ "SubOptionButton/ActionButton/ActionButton.tscn"
 )
 
-onready var _sub_options_container: HBoxContainer = $HBoxContainer
+@onready var _sub_options_container: HBoxContainer = $HBoxContainer
 
 
 # Reveal this UI element and enable it to be found by the mouse.
@@ -68,7 +68,7 @@ func grab_focus_at_index(index: int) -> void:
 # Create new buttons for the given player actions.
 func _populate_sub_options(player: PlayerCharacter, player_actions: Array) -> void:
 	for pa in player_actions:
-		var new_button: SubOptionButton = _action_button.instance()
+		var new_button: SubOptionButton = _action_button.instantiate()
 		new_button.set_option_details(pa)
 		new_button.set_player(player)
 		new_button.connect(

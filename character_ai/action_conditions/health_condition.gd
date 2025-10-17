@@ -7,8 +7,8 @@ above or below the threshold.
 """
 
 
-export(float, 0.0, 1.0) var threshold = 1.0
-export(bool) var below = false
+@export var threshold = 1.0 # (float, 0.0, 1.0)
+@export var below: bool = false
 
 
 # Virtual function. Checks if the condition has been met given the current

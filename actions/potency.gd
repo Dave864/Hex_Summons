@@ -11,14 +11,14 @@ determining the strength of an action's effect.
 const ELEMENTAL_POTENCY: Array = [0.0, 1.0, 1.5, 2.0, 2.33, 2.66, 3.0]
 
 # The percentage of a character's attack to use for potency calculations.
-export(float, 0.0, 3.0) var attack_potency = 1.0
+@export var attack_potency = 1.0 # (float, 0.0, 3.0)
 # The elemental alignment of the action, used for potency calculations.
-export(int, 0, 6) var earth_alignment = 0
-export(int, 0, 6) var fire_alignment = 0
-export(int, 0, 6) var water_alignment = 0
-export(int, 0, 6) var wind_alignment = 0
-export(int, 0, 6) var light_alignment = 0
-export(int, 0, 6) var dark_alignment = 0
+@export var earth_alignment = 0 # (int, 0, 6)
+@export var fire_alignment = 0 # (int, 0, 6)
+@export var water_alignment = 0 # (int, 0, 6)
+@export var wind_alignment = 0 # (int, 0, 6)
+@export var light_alignment = 0 # (int, 0, 6)
+@export var dark_alignment = 0 # (int, 0, 6)
 
 
 # Gets the potency value of an element.

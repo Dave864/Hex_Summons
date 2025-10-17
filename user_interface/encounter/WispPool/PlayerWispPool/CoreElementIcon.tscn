@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://art/ui/PlayerWispPool/Core Gem L.png" type="Texture" id=1]
+[ext_resource path="res://art/ui/PlayerWispPool/Core Gem L.png" type="Texture2D" id=1]
 [ext_resource path="res://user_interface/encounter/WispPool/core_element_icon.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -17,8 +17,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ Rect2( 1, 1, 22, 22 ) ]
 }
@@ -34,8 +34,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Rect2( 1, 73, 22, 22 ), Rect2( 25, 73, 22, 22 ), Rect2( 49, 73, 22, 22 ), Rect2( 73, 73, 22, 22 ), Rect2( 97, 73, 22, 22 ) ]
 }
@@ -46,8 +46,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.333333 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.333333 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [  ],
 "method": "_emit_ping"
@@ -65,8 +65,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Rect2( 1, 49, 22, 22 ), Rect2( 25, 49, 22, 22 ), Rect2( 49, 49, 22, 22 ), Rect2( 73, 49, 22, 22 ), Rect2( 97, 49, 22, 22 ) ]
 }
@@ -82,8 +82,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Rect2( 1, 25, 22, 22 ), Rect2( 25, 25, 22, 22 ), Rect2( 49, 25, 22, 22 ), Rect2( 73, 25, 22, 22 ), Rect2( 97, 25, 22, 22 ) ]
 }
@@ -94,8 +94,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.333333 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.333333 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [  ],
 "method": "_emit_ping"
@@ -113,8 +113,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Rect2( 1, 1, 22, 22 ), Rect2( 25, 1, 22, 22 ), Rect2( 49, 1, 22, 22 ), Rect2( 73, 1, 22, 22 ), Rect2( 97, 1, 22, 22 ) ]
 }
@@ -130,8 +130,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Rect2( 1, 121, 22, 22 ), Rect2( 25, 121, 22, 22 ), Rect2( 49, 121, 22, 22 ), Rect2( 73, 121, 22, 22 ), Rect2( 97, 121, 22, 22 ) ]
 }
@@ -142,8 +142,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.333333 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.333333 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [  ],
 "method": "_emit_ping"
@@ -161,8 +161,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Rect2( 1, 97, 22, 22 ), Rect2( 25, 97, 22, 22 ), Rect2( 49, 97, 22, 22 ), Rect2( 73, 97, 22, 22 ), Rect2( 97, 97, 22, 22 ) ]
 }
@@ -178,8 +178,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Rect2( 1, 169, 22, 22 ), Rect2( 25, 169, 22, 22 ), Rect2( 49, 169, 22, 22 ), Rect2( 73, 169, 22, 22 ), Rect2( 97, 169, 22, 22 ) ]
 }
@@ -190,8 +190,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.333333 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.333333 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [  ],
 "method": "_emit_ping"
@@ -209,8 +209,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Rect2( 1, 145, 22, 22 ), Rect2( 25, 145, 22, 22 ), Rect2( 49, 145, 22, 22 ), Rect2( 73, 145, 22, 22 ), Rect2( 97, 145, 22, 22 ) ]
 }
@@ -218,8 +218,8 @@ tracks/0/keys = {
 [node name="CoreElementIcon" type="TextureRect"]
 anchor_right = 0.034
 anchor_bottom = 0.061
-margin_right = 0.239998
-margin_bottom = 0.039999
+offset_right = 0.239998
+offset_bottom = 0.039999
 mouse_filter = 2
 texture = SubResource( 1 )
 stretch_mode = 4

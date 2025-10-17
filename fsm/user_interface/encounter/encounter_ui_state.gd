@@ -20,7 +20,7 @@ func _ready():
 	# The states are children of the `EncounterUI` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 
 	# to be ready first.
-	yield(owner, "ready")
+	await owner.ready
 	# The `as` keyword casts the `owner` variable to the `EncounterUI` type.
 	# If the `owner` is not a `EncounterUI`, we'll get `null`.
 	encounter_ui = owner as EncounterUI

@@ -12,8 +12,8 @@ var _techniques: Array
 var _spells: Array
 
 
-onready var wisp_pool: PlayerWispPool = $PlayerWispPool
-onready var _default_portait: Texture = preload(
+@onready var wisp_pool: PlayerWispPool = $PlayerWispPool
+@onready var _default_portait: Texture2D = preload(
 		"res://character/player_characters/PlayerCharacter/" + \
 		"PlayerBattlePortrait.atlastex"
 )

@@ -21,15 +21,15 @@ enum Movement {
 	AWAY
 }
 
-export(Target) var target = Target.OPPONENTS
-export(TargetFocus) var target_focus = TargetFocus.THREAT
-export(Movement) var movement_behavior = Movement.STAND
-export(bool) var randomize_move_dist = false
+@export var target: Target = Target.OPPONENTS
+@export var target_focus: TargetFocus = TargetFocus.THREAT
+@export var movement_behavior: Movement = Movement.STAND
+@export var randomize_move_dist: bool = false
 
 var _cooldown: Cooldown = null
 var _conditions: Array = []
-var _target_group: bool = false setget , target_group
-var _group_condition: GroupCondition = null setget , get_group_condition
+var _target_group: bool = false: get = target_group
+var _group_condition: GroupCondition = null: get = get_group_condition
 
 
 # Evaluates if all conditions have been met.

@@ -1,33 +1,33 @@
-[gd_resource type="Theme" load_steps=5 format=2]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dhnuwcf6tcapi"]
 
-[ext_resource path="res://fonts/label_numbers.fnt" type="BitmapFont" id=1]
+[ext_resource type="FontFile" uid="uid://c3q27450ajuhm" path="res://fonts/label_numbers.fnt" id="1"]
 
-[sub_resource type="StyleBoxFlat" id=10]
-bg_color = Color( 0, 0, 0, 1 )
+[sub_resource type="StyleBoxFlat" id="10"]
+bg_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 expand_margin_left = 1.0
-expand_margin_right = 1.0
 expand_margin_top = 1.0
+expand_margin_right = 1.0
 expand_margin_bottom = 1.0
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.19, 0.19, 0.19, 1 )
+[sub_resource type="StyleBoxFlat" id="3"]
+bg_color = Color(0.19, 0.19, 0.19, 1)
 border_width_top = 1
 border_width_bottom = 1
-border_color = Color( 0.5, 0.5, 0.5, 1 )
+border_color = Color(0.5, 0.5, 0.5, 1)
 corner_radius_top_left = 1
 corner_radius_top_right = 1
 corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 1, 1, 1, 1 )
-border_color = Color( 0.58, 0.58, 0.58, 1 )
+[sub_resource type="StyleBoxFlat" id="4"]
+bg_color = Color(1, 1, 1, 1)
+border_color = Color(0.58, 0.58, 0.58, 1)
 corner_radius_top_left = 1
 corner_radius_top_right = 1
 corner_radius_bottom_right = 1
@@ -36,7 +36,7 @@ corner_detail = 3
 anti_aliasing = false
 
 [resource]
-Label/fonts/font = ExtResource( 1 )
-PanelContainer/styles/panel = SubResource( 10 )
-ProgressBar/styles/bg = SubResource( 3 )
-ProgressBar/styles/fg = SubResource( 4 )
+Label/fonts/font = ExtResource("1")
+PanelContainer/styles/panel = SubResource("10")
+ProgressBar/styles/bg = SubResource("3")
+ProgressBar/styles/fg = SubResource("4")

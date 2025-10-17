@@ -6,7 +6,7 @@ Describes a range whose area encompasses all hexes within a defined distance.
 
 
 # How many tiles out from the cast point the area will reach.
-export(int, 0, 1000) var radius = 0
+@export var radius = 0 # (int, 0, 1000)
 
 
 # Returns the reach of the RingArea. Used when determining which tiles are
@@ -20,10 +20,7 @@ func get_reach() -> int:
 # Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
 func get_area_indexes(start: int, hm: HexMap) -> Array:
 	var tile_ids: Array = []
-	var start_coord: Vector3 = (
-			hm.get_tile_at(start) \
-			.map_coordinate.get_cube_coord()
-	)
+	var start_coord: Vector3 = hm.get_tile_at(start).map_coordinate.get_cube_coord()
 	for x in range(-radius, radius + 1):
 		var x_lower: int = max(-radius, -x - radius) as int
 		var x_upper: int = min(radius, radius - x) as int

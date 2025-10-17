@@ -27,8 +27,8 @@ theme = ExtResource( 8 )
 script = ExtResource( 2 )
 
 [node name="InitiativeTracker" parent="." instance=ExtResource( 10 )]
-margin_top = 2.0
-margin_bottom = 36.0
+offset_top = 2.0
+offset_bottom = 36.0
 
 [node name="SummonPool" parent="." instance=ExtResource( 18 )]
 
@@ -37,16 +37,16 @@ anchor_left = 0.189
 anchor_top = 0.891
 anchor_right = 1.0
 anchor_bottom = 0.891
-margin_left = 0.0399933
-margin_top = -65.12
-margin_bottom = -12.12
+offset_left = 0.0399933
+offset_top = -65.12
+offset_bottom = -12.12
 mouse_filter = 2
 size_flags_vertical = 3
 follow_focus = true
 script = ExtResource( 3 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SubOptions"]
-margin_bottom = 53.0
+offset_bottom = 53.0
 size_flags_horizontal = 5
 size_flags_vertical = 3
 
@@ -55,18 +55,18 @@ anchor_left = 1.0
 anchor_top = 0.003
 anchor_right = 1.0
 anchor_bottom = 0.725
-margin_left = -60.0
-margin_top = 0.04
+offset_left = -60.0
+offset_top = 0.04
 grow_horizontal = 0
 mouse_filter = 2
 alignment = 1
 
 [node name="PartyStats" type="VBoxContainer" parent="."]
 anchor_bottom = 1.0
-margin_left = 3.0
-margin_top = 64.0
-margin_right = 131.0
-margin_bottom = -128.0
+offset_left = 3.0
+offset_top = 64.0
+offset_right = 131.0
+offset_bottom = -128.0
 mouse_filter = 2
 alignment = 2
 
@@ -74,41 +74,41 @@ alignment = 2
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 128.0
-margin_bottom = 168.0
+offset_right = 128.0
+offset_bottom = 168.0
 
 [node name="PartyPlayerStats2" parent="PartyStats" instance=ExtResource( 12 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 86.0
-margin_right = 128.0
-margin_bottom = 168.0
+offset_top = 86.0
+offset_right = 128.0
+offset_bottom = 168.0
 
 [node name="PartyPlayerStats3" parent="PartyStats" instance=ExtResource( 12 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 114.0
-margin_right = 128.0
-margin_bottom = 168.0
+offset_top = 114.0
+offset_right = 128.0
+offset_bottom = 168.0
 
 [node name="PartyPlayerStats4" parent="PartyStats" instance=ExtResource( 12 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 129.0
-margin_right = 128.0
-margin_bottom = 168.0
+offset_top = 129.0
+offset_right = 128.0
+offset_bottom = 168.0
 
 [node name="ActivePlayerStats" parent="." instance=ExtResource( 11 )]
 anchor_top = 1.0
 anchor_right = 0.0
 anchor_bottom = 1.0
-margin_left = 16.0
-margin_top = -122.0
-margin_right = 116.0
-margin_bottom = -2.0
+offset_left = 16.0
+offset_top = -122.0
+offset_right = 116.0
+offset_bottom = -2.0
 
 [node name="Options" type="HBoxContainer" parent="."]
 anchor_left = 0.20625
@@ -122,43 +122,43 @@ __meta__ = {
 [node name="MovementButton" parent="Options" instance=ExtResource( 17 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 80.0
-margin_bottom = 51.0
+offset_right = 80.0
+offset_bottom = 51.0
 
 [node name="TechniqueButton" parent="Options" instance=ExtResource( 16 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 84.0
-margin_right = 164.0
-margin_bottom = 51.0
+offset_left = 84.0
+offset_right = 164.0
+offset_bottom = 51.0
 
 [node name="SpellButton" parent="Options" instance=ExtResource( 13 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 168.0
-margin_right = 248.0
-margin_bottom = 51.0
+offset_left = 168.0
+offset_right = 248.0
+offset_bottom = 51.0
 
 [node name="SummonButton" parent="Options" instance=ExtResource( 15 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 252.0
-margin_right = 332.0
-margin_bottom = 51.0
+offset_left = 252.0
+offset_right = 332.0
+offset_bottom = 51.0
 
 [node name="ItemButton" parent="Options" instance=ExtResource( 14 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 336.0
-margin_right = 416.0
-margin_bottom = 51.0
+offset_left = 336.0
+offset_right = 416.0
+offset_bottom = 51.0
 
 [node name="EndButton" parent="Options" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 420.0
-margin_right = 500.0
-margin_bottom = 51.0
+offset_left = 420.0
+offset_right = 500.0
+offset_bottom = 51.0
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 4 )

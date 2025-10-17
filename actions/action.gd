@@ -7,25 +7,25 @@ Describes the details of an action.
 
 const EFFECTS: String = "Effects"
 
-export(NodePath) var hit_box_ref = null
-export(Resource) var stats = null
+@export var hit_box_ref: NodePath = NodePath("")
+@export var stats: ActionStats = null
 
 # The path to the stats of the character that owns this action.
 var source_stats: CharacterStats = null
 # The effects of this action
-var _effects: Array setget , get_effects
+var _effects: Array: get = get_effects
 # Whether the area range is cardinal or ring.
-var _is_cardinal: bool = false setget , get_is_cardinal
+var _is_cardinal: bool = false: get = get_is_cardinal
 # The index of the tile the effect is emitted from.
-var _emission_map_index: int = -1 setget set_emission_map_index, get_emission_map_index
+var _emission_map_index: int = -1: get = get_emission_map_index, set = set_emission_map_index
 # The transform the effect is emitted from.
-var _emission_transform: Transform = Transform.IDENTITY
+var _emission_transform: Transform3D = Transform3D.IDENTITY
 # The direction the effect is emitted. Only updated if the action is cardinal.
-var _emission_direction: int setget set_emission_direction, get_emission_direction
+var _emission_direction: int: get = get_emission_direction, set = set_emission_direction
 
-onready var ani_player: AnimationPlayer = $AnimationPlayer
+@onready var ani_player: AnimationPlayer = $AnimationPlayer
 # The hit box object.
-onready var _hit_box: ActionHitBox = get_node(hit_box_ref)
+@onready var _hit_box: ActionHitBox = get_node(hit_box_ref)
 
 
 # Returns the effects of this action.
@@ -92,14 +92,15 @@ func reset_emittor_position() -> void:
 	_emission_map_index = -1
 
 
-# Executes the action.
-func execute_action() -> void:
+# Executes the action. Returns true when finished
+func execute_action() -> bool:
 	_hit_box.transform = _emission_transform
 	_hit_box.activate()
 	ani_player.play("execute")
-	yield(ani_player, "animation_finished")
+	await ani_player.animation_finished
 	_hit_box.deactivate()
 	ani_player.play("RESET")
+	return true
 
 
 # Sets the caster id reference in the action hit box.
@@ -139,10 +140,6 @@ func _check_for_required_parameters() -> void:
 	assert(
 			stats != null,
 			"Action {0} missing stats.".format([name])
-	)
-	assert(
-			stats is ActionStats,
-			"Action {0} stats is not of type ActionStats.".format([name])
 	)
 	assert(
 			has_node(EFFECTS),

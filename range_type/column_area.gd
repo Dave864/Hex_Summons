@@ -7,9 +7,9 @@ shape.
 
 
 # Describes how wide the diamond area is.
-export (int, 0, 100) var spread = 0
+@export var spread = 0 # (int, 0, 100)
 # Describes how far out the range extends away from the start point.
-export (int, 1, 100) var distance = 1
+@export var distance = 1 # (int, 1, 100)
 
 
 # Returns the reach of the ColumnArea. Used when determining which tiles are
@@ -27,7 +27,7 @@ func get_dir_area_indexes(start: int, dir: int, hm: HexMap) -> Array:
 	var tile_ids: Array = []
 	var start_coord: Vector3 = (
 			hm.get_tile_at(start) \
-			.map_coordinate.get_cube_coord()
+			super.map_coordinate.get_cube_coord()
 	)
 	tile_ids.append(start)
 	for s in range(spread + 1):

@@ -196,13 +196,13 @@ func _option_selected(option: int) -> void:
 func _toggle_off_current_option() -> void:
 	match _option_flag:
 		EncounterUI.Options.TECHNIQUE:
-			encounter_ui.technique_button.pressed = false
+			encounter_ui.technique_button.button_pressed = false
 		EncounterUI.Options.SPELL:
-			encounter_ui.spell_button.pressed = false
+			encounter_ui.spell_button.button_pressed = false
 		EncounterUI.Options.SUMMON:
-			encounter_ui.summon_button.pressed = false
+			encounter_ui.summon_button.button_pressed = false
 		EncounterUI.Options.ITEM:
-			encounter_ui.item_button.pressed = false
+			encounter_ui.item_button.button_pressed = false
 		_:
 			pass
 

@@ -3,8 +3,8 @@
 [ext_resource path="res://user_interface/encounter/SubOptionButton/RangeDisplay/range_display.gd" type="Script" id=5]
 
 [node name="RangeDisplay" type="Panel"]
-margin_right = 10.0
-margin_bottom = 10.0
+offset_right = 10.0
+offset_bottom = 10.0
 mouse_filter = 2
 size_flags_horizontal = 9
 size_flags_vertical = 5

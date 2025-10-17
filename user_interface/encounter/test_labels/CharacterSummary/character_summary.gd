@@ -53,7 +53,7 @@ func set_enemy_wisp_count() -> void:
 func set_text_alignment(alignment: int) -> void:
 	if (
 		alignment == Label.ALIGN_LEFT
-		or alignment == Label.ALIGN_CENTER
+		or alignment == Label.ALIGNMENT_CENTER
 		or alignment == Label.ALIGN_RIGHT
 	):
 		$Name.set_align(alignment)

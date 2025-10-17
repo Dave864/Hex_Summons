@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattleSprite.atlastex" type="Texture" id=1]
+[ext_resource path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattleSprite.atlastex" type="Texture2D" id=1]
 [ext_resource path="res://character/enemy_characters/enemy_character.gd" type="Script" id=2]
 [ext_resource path="res://fsm/state_machine.gd" type="Script" id=3]
 [ext_resource path="res://fsm/enemy_character/EnemyCharacterMove.gd" type="Script" id=4]
@@ -12,7 +12,7 @@
 [ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=10]
 [ext_resource path="res://effects_tracker/EffectsTracker.tscn" type="PackedScene" id=11]
 [ext_resource path="res://user_interface/character_label/CharacterLabel.tscn" type="PackedScene" id=12]
-[ext_resource path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattlePortrait.atlastex" type="Texture" id=13]
+[ext_resource path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattlePortrait.atlastex" type="Texture2D" id=13]
 [ext_resource path="res://character_ai/character_ai.gd" type="Script" id=14]
 [ext_resource path="res://actions/Shot/Shot.tscn" type="PackedScene" id=15]
 [ext_resource path="res://actions/Blast/Blast.tscn" type="PackedScene" id=16]
@@ -23,13 +23,13 @@
 [ext_resource path="res://character/scripts/encounter_sprite.gd" type="Script" id=21]
 
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="CapsuleShape3D" id=1]
 radius = 0.1
 
-[sub_resource type="SphereShape" id=2]
+[sub_resource type="SphereShape3D" id=2]
 radius = 0.5
 
-[node name="TestEnemy2" type="Area"]
+[node name="TestEnemy2" type="Area3D"]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 2 )
@@ -39,15 +39,15 @@ battle_portrait = ExtResource( 13 )
 character_type = 0
 character_pos_ref = NodePath("../MapCoordinate")
 
-[node name="MapCoordinate" type="Position3D" parent="."]
+[node name="MapCoordinate" type="Marker3D" parent="."]
 script = ExtResource( 9 )
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.55, 0 )
+transform = Transform3D( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.55, 0 )
 pixel_size = 0.0054
 billboard = 1
 fixed_size = true
@@ -61,13 +61,13 @@ base_stat_values = ExtResource( 6 )
 
 [node name="EffectsTracker" parent="." instance=ExtResource( 11 )]
 
-[node name="HitBox" type="Area" parent="."]
+[node name="HitBox" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 16
 monitoring = false
 monitorable = false
 
-[node name="CollisionShape" type="CollisionShape" parent="HitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
 shape = SubResource( 2 )
 
 [node name="CharacterAI" type="Node" parent="."]

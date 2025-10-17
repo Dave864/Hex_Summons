@@ -8,8 +8,8 @@ Button that describes a possible sub-option for a given option.
 # Indicates when the option described by the button has been selected.
 signal option_selected(option_info)
 
-var _option_details: Node = null setget set_option_details, get_option_details
-var _player: PlayerCharacter = null setget set_player
+var _option_details: Node = null: get = get_option_details, set = set_option_details
+var _player: PlayerCharacter = null: set = set_player
 
 
 # Set the action details for the button.
@@ -31,10 +31,10 @@ func set_player(p: PlayerCharacter) -> void:
 
 # Sets the right focus neighbor for controller support.
 func set_focus_neighbor_right(neighbor: SubOptionButton) -> void:
-	$Button.set_focus_neighbour(MARGIN_RIGHT, neighbor.get_button().get_path())
+	$Button.set_focus_neighbor(MARGIN_RIGHT, neighbor.get_button().get_path())
 	# Prevents the action buttons from being reached whil sub options are open.
-	$Button.set_focus_neighbour(MARGIN_BOTTOM, "")
-	neighbor.set_focus_neighbour(MARGIN_LEFT, $Button.get_path())
+	$Button.set_focus_neighbor(MARGIN_BOTTOM, "")
+	neighbor.set_focus_neighbor(MARGIN_LEFT, $Button.get_path())
 
 
 # Returns the "Button" node.

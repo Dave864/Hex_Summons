@@ -1,4 +1,4 @@
-tool
+@tool
 class_name CharacterStats
 extends Node
 """
@@ -10,7 +10,7 @@ signal health_changed(new_value, old_value)
 signal agility_changed(new_value)
 
 # Stat values
-export var base_stat_values: Resource = null
+@export var base_stat_values: Resource = null
 
 # Reference to the character that the stats describe
 var character_id: int = -1
@@ -29,7 +29,7 @@ var _res_earth_mod: int = 0
 var _res_fire_mod: int = 0
 var _res_water_mod: int = 0
 var _res_wind_mod: int = 0
-var _level: int = 1 setget set_level, get_level
+var _level: int = 1: get = get_level, set = set_level
 var _current_health: int = 0
 
 

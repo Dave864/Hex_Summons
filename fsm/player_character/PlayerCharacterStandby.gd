@@ -31,25 +31,19 @@ func enter(_msg: Dictionary = {}) -> void:
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	pc.disconnect(
-			"turn_ended",
-			self,
-			"_on_PlayerCharacter_turn_ended"
-	)
+	pc.disconnect("turn_ended", Callable(self, "_on_PlayerCharacter_turn_ended"))
 	SignalBus.disconnect(
 			"move_path_created",
-			self,
-			"_on_SignalBus_move_path_created"
+			Callable(self, "_on_SignalBus_move_path_created")
 	)
 	SignalBus.disconnect(
 			"player_action_executed",
-			self,
-			"_on_SignalBus_player_action_executed"
+			Callable(self, "_on_SignalBus_player_action_executed")
 	)
 
 
 # Hit when the Selector sets the movement path.
-func _on_SignalBus_move_path_created(move_path: PoolVector3Array) -> void:
+func _on_SignalBus_move_path_created(move_path: PackedVector3Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": move_path})
 
 

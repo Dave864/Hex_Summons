@@ -7,8 +7,8 @@
 [node name="CharacterLabel" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -640.0
-margin_bottom = -360.0
+offset_right = -640.0
+offset_bottom = -360.0
 mouse_filter = 2
 script = ExtResource( 2 )
 y_offset = -8.0
@@ -17,31 +17,31 @@ y_offset = -8.0
 layer = -1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
-margin_right = 32.0
-margin_bottom = 15.0
+offset_right = 32.0
+offset_bottom = 15.0
 mouse_filter = 2
 theme = ExtResource( 1 )
 alignment = 1
 
 [node name="InitiativeLabel" type="Label" parent="CanvasLayer/HBoxContainer"]
-margin_top = 1.0
-margin_right = 6.0
-margin_bottom = 13.0
+offset_top = 1.0
+offset_right = 6.0
+offset_bottom = 13.0
 text = "0"
 valign = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/HBoxContainer"]
-margin_left = 10.0
-margin_top = 4.0
-margin_right = 32.0
-margin_bottom = 10.0
+offset_left = 10.0
+offset_top = 4.0
+offset_right = 32.0
+offset_bottom = 10.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
 [node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HBoxContainer/PanelContainer"]
-margin_right = 22.0
-margin_bottom = 6.0
-rect_min_size = Vector2( 0, 6 )
+offset_right = 22.0
+offset_bottom = 6.0
+custom_minimum_size = Vector2( 0, 6 )
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4

@@ -24,7 +24,7 @@ var _ranges_cache: Dictionary = {}
 var _targets_cache: Dictionary = {}
 
 # Reference to the function that will update the tile highlights.
-onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
+@onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 
 
 func enter(msg: Dictionary = {}) -> void:
@@ -74,7 +74,7 @@ func _determine_changes(action: Action) -> void:
 	var player_map_index: int = selector.active_player.map_coordinate.get_index()
 	if _player_map_index != player_map_index:
 		_player_map_index = player_map_index
-		_player_pos = selector.active_player.translation
+		_player_pos = selector.active_player.position
 		need_new_ranges = true
 	if need_new_ranges:
 		if _source_d_map != null:
@@ -135,7 +135,7 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	_action.set_emission_map_index(_player_map_index)
 	_action.set_emission_pos(_player_pos)
 	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
-	var tile_pt: Vector2 = Vector2(map_tile.translation.x, map_tile.translation.z)
+	var tile_pt: Vector2 = Vector2(map_tile.position.x, map_tile.position.z)
 	var vector_dir: Vector2 = (tile_pt - player_pt).normalized()
 	# Relative top not needed as we are using direct map coordinates.
 	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
@@ -241,7 +241,7 @@ func _get_target_distances() -> Array:
 				option.map_coordinate.get_index()
 		)
 		target_distances.append([option, dist])
-	target_distances.sort_custom(ArraySorters, "sort_distance_to_character_asc")
+	target_distances.sort_custom(Callable(ArraySorters, "sort_distance_to_character_asc"))
 	return target_distances
 
 
@@ -294,7 +294,7 @@ func _highlight_effect_range() -> void:
 func _get_source_range() -> Array:
 	var d_map: DistanceMap = (
 			selector.hex_map.range_finder \
-			.dist_maps.at(_player_map_index)
+			super.dist_maps.at(_player_map_index)
 	)
 	var src_area: Dictionary = (
 			d_map.map_from_tile_dist(_action.stats.source_range.get_reach())
@@ -510,7 +510,7 @@ func _on_SignalBus_player_action_selected(
 ) -> void:
 	if not _state_is_active():
 		return
-	elif new_action == _action and not _get_targets().empty():
+	elif new_action == _action and not _get_targets().is_empty():
 		_execute_action()
 	else:
 		state_machine.transition_to(SELECT_ACTION, {"action": new_action})

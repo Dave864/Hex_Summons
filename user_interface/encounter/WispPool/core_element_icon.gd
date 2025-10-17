@@ -1,4 +1,4 @@
-tool
+@tool
 class_name CoreElementIcon
 extends TextureRect
 """
@@ -9,15 +9,15 @@ the changes from one element to another.
 
 signal element_ping(e)
 
-export(Constants.CoreElement) var element = Constants.CoreElement.EARTH setget set_element
-export var earth_region: Vector2 = Vector2(0,0)
-export var fire_region: Vector2 = Vector2(0,0)
-export var water_region: Vector2 = Vector2(0,0)
-export var wind_region: Vector2 = Vector2(0,0)
+@export var element = Constants.CoreElement.EARTH: set = set_element
+@export var earth_region: Vector2 = Vector2(0,0)
+@export var fire_region: Vector2 = Vector2(0,0)
+@export var water_region: Vector2 = Vector2(0,0)
+@export var wind_region: Vector2 = Vector2(0,0)
 
 var _ping: bool = false
 
-onready var ap: AnimationPlayer = $AnimationPlayer
+@onready var ap: AnimationPlayer = $AnimationPlayer
 
 
 # Sets the icon texture region to display the new element.

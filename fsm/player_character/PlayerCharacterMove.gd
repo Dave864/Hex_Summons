@@ -10,7 +10,6 @@ var _movement_active: bool = false
 # The current interpolation weight.
 var _weight: float = 0.0
 
-var _completed_path: bool = false
 var _selector_paused: bool = false
 
 
@@ -35,7 +34,7 @@ func update(delta: float) -> void:
 	# This is to prevent the character from being moved to an undesired location
 	# after the movement_ended signal has been caught.
 	if _movement_active:
-		pc.translation = pc.hm_move_path.get_current_pos()
+		pc.position = pc.hm_move_path.get_current_pos()
 	elif _selector_paused:
 		state_machine.transition_to(STANDBY)
 
@@ -46,7 +45,7 @@ func exit() -> void:
 	_weight = 0.0
 	_selector_paused = false
 	pc.hm_move_path.reset_path()
-	SignalBus.disconnect("selector_paused", self, "_on_SignalBus_selector_paused")
+	SignalBus.disconnect("selector_paused", Callable(self, "_on_SignalBus_selector_paused"))
 	SignalBus.emit_selector_required(pc.map_coordinate.get_index())
 
 
@@ -68,5 +67,5 @@ func _on_SignalBus_selector_paused() -> void:
 func _on_HexMapMovementCurve_movement_finished(final_position: Vector3) -> void:
 	_movement_active = false
 	pc.hm_move_path.reset_path()
-	pc.translation = final_position
+	pc.position = final_position
 	state_machine.transition_to(STANDBY)

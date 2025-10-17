@@ -1,4 +1,4 @@
-tool
+@tool
 class_name LabeledIconButton
 extends MarginContainer
 """
@@ -6,19 +6,19 @@ Manages the label and icon settings of an OptionButton for encounters.
 """
 
 
-export(String) var label setget set_label, get_label
-export(Texture) var icon_normal = null setget set_icon_normal, get_icon_normal
-export(Texture) var icon_pressed = null setget set_icon_pressed, get_icon_pressed
-export(Texture) var icon_hover = null setget set_icon_hover, get_icon_hover
-export(Texture) var icon_disabled = null setget set_icon_disabled, get_icon_disabled
-export(Texture) var icon_focused = null setget set_icon_focused, get_icon_focused
-export(bool) var disabled = false setget set_area_disabled, get_disabled
+@export var label: String: get = get_label, set = set_label
+@export var icon_normal: Texture2D = null: get = get_icon_normal, set = set_icon_normal
+@export var icon_pressed: Texture2D = null: get = get_icon_pressed, set = set_icon_pressed
+@export var icon_hover: Texture2D = null: get = get_icon_hover, set = set_icon_hover
+@export var icon_disabled: Texture2D = null: get = get_icon_disabled, set = set_icon_disabled
+@export var icon_focused: Texture2D = null: get = get_icon_focused, set = set_icon_focused
+@export var disabled: bool = false: get = get_disabled, set = set_area_disabled
 
 var _is_highlighted: bool
 
-onready var _button: Button = $Button
-onready var _label_node: Label = $MarginContainer/VBoxContainer/Label
-onready var _icon_node: TextureRect = $MarginContainer/VBoxContainer/Icon
+@onready var _button: Button = $Button
+@onready var _label_node: Label = $MarginContainer/VBoxContainer/Label
+@onready var _icon_node: TextureRect = $MarginContainer/VBoxContainer/Icon
 
 
 # Called when the node enters the scene tree for the first time.
@@ -42,7 +42,7 @@ func get_label() -> String:
 
 
 # Sets the "normal" texture for the `Icon` node.
-func set_icon_normal(new_icon_normal: Texture) -> void:
+func set_icon_normal(new_icon_normal: Texture2D) -> void:
 	# Set the default to the Godot icon
 	icon_normal = (
 			new_icon_normal
@@ -54,7 +54,7 @@ func set_icon_normal(new_icon_normal: Texture) -> void:
 
 
 # Gets the current "normal" texture for the `Icon` node.
-func get_icon_normal() -> Texture:
+func get_icon_normal() -> Texture2D:
 	return (
 			icon_normal if icon_normal != null 
 			else load(Constants.DEFAULT_ICON_PATH)
@@ -62,42 +62,42 @@ func get_icon_normal() -> Texture:
 
 
 # Sets the "pressed" texture for the `Icon` node.
-func set_icon_pressed(new_icon_pressed: Texture) -> void:
+func set_icon_pressed(new_icon_pressed: Texture2D) -> void:
 	icon_pressed = new_icon_pressed
 
 
 # Gets the current "pressed" texture for the `Icon` node.
-func get_icon_pressed() -> Texture:
+func get_icon_pressed() -> Texture2D:
 	return icon_pressed
 
 
 # Sets the "hover" texture for the `Icon` node.
-func set_icon_hover(new_icon_hover: Texture) -> void:
+func set_icon_hover(new_icon_hover: Texture2D) -> void:
 	icon_hover = new_icon_hover
 
 
 # Gets the current "hover" texture for the `Icon` node.
-func get_icon_hover() -> Texture:
+func get_icon_hover() -> Texture2D:
 	return icon_hover
 
 
 # Sets the "disabled" texture for the `Icon` node.
-func set_icon_disabled(new_icon_disabled: Texture) -> void:
+func set_icon_disabled(new_icon_disabled: Texture2D) -> void:
 	icon_disabled = new_icon_disabled
 
 
 # Gets the current "disabled" texture for the `Icon` node.
-func get_icon_disabled() -> Texture:
+func get_icon_disabled() -> Texture2D:
 	return icon_disabled
 
 
 # Sets the "focused" texture for the `Icon` node.
-func set_icon_focused(new_icon_focused: Texture) -> void:
+func set_icon_focused(new_icon_focused: Texture2D) -> void:
 	icon_focused = new_icon_focused
 
 
 # Gets the current "focused" texture for the `Icon` node.
-func get_icon_focused() -> Texture:
+func get_icon_focused() -> Texture2D:
 	return icon_focused
 
 
@@ -134,7 +134,7 @@ func disconnect_button_signal(
 	signal_to_disconnect: String,
 	function_name: String
 ) -> void:
-	_button.disconnect(signal_to_disconnect, connecting_node, function_name)
+	_button.disconnect(signal_to_disconnect, Callable(connecting_node, function_name))
 
 
 # Update the button based on the disabled flag

@@ -1,5 +1,5 @@
 class_name HexMap
-extends Spatial
+extends Node3D
 """
 A representation of the overall battlemap. Exposes the necessary parameters
 from the child nodes that are needed for other nodes to interact with the map.
@@ -11,18 +11,18 @@ const FLOOR_MESH: String = "FloorMesh"
 const SELECTION_TRACKER: String = "SelectionTracker"
 const RANGE_FINDER: String = "RangeFinder"
 
-export var player_start_tiles: PoolIntArray = [0, 1, 2, 3]
-export var enemy_start_tiles: PoolIntArray = []
+@export var player_start_tiles: PackedInt32Array = [0, 1, 2, 3]
+@export var enemy_start_tiles: PackedInt32Array = []
 
 var selection_tracker: SelectionTracker = null
 var range_finder: RangeFinder = null
 var _floor_mesh: PlaneMesh = preload("res://hex_map/resources/hex_map_floor.tres")
-var _floor_mesh_node: MeshInstance = null
+var _floor_mesh_node: MeshInstance3D = null
 var _tiles_node: Tiles = null
 
-onready var _map_tiles: Array = [] setget , get_map_tiles
+@onready var _map_tiles: Array = []: get = get_map_tiles
 # Reference to the scene tree root.
-onready var _root_node: Node = get_tree().edited_scene_root
+@onready var _root_node: Node = get_tree().edited_scene_root
 
 
 # Get the number of tiles along the X axis.
@@ -37,8 +37,8 @@ func get_z_count() -> int:
 
 # Places the character at the tile at the given index.
 func place_character_at_tile(character: Character, tile_index: int) -> void:
-	var position: Vector3 = get_tile_at(tile_index).get_character_position()
-	character.translation = position
+	var pos: Vector3 = get_tile_at(tile_index).get_character_position()
+	character.position = pos
 
 
 # Retrieve the map tiles of this hex map.
@@ -79,13 +79,13 @@ func _create_tiles_node() -> void:
 # Create a floor mesh node and position it if not already present.
 func _create_floor_mesh() -> void:
 	if get_node_or_null(FLOOR_MESH) == null:
-		_floor_mesh_node = MeshInstance.new()
+		_floor_mesh_node = MeshInstance3D.new()
 		_floor_mesh_node.name = FLOOR_MESH
 		_floor_mesh_node.set_mesh(_floor_mesh)
 		_floor_mesh_node.mesh.resource_local_to_scene = true
 		add_child(_floor_mesh_node)
 		_floor_mesh_node.set_owner(_root_node)
-		_floor_mesh_node.translation.y = -Constants.HEX_TILE_UNIT_HEIGHT
+		_floor_mesh_node.position.y = -Constants.HEX_TILE_UNIT_HEIGHT
 	else:
 		_floor_mesh_node = get_node(FLOOR_MESH)
 

@@ -16,7 +16,7 @@ const MOVE: String = "Move"
 # Name of the Action node that represents only movement
 const MOVE_ACTION_NAME: String = "Empty"
 
-export(NodePath) var actions_ref = null
+@export var actions_ref: NodePath = null
 
 var h_map: HexMap = null
 var d_map: DistanceMap = null
@@ -30,10 +30,10 @@ var _possible_targets: Array = []
 var _a_ttr: ThreatTracker = null
 var _o_ttr: ThreatTracker = null
 # Tracks the index of the final movement tile.
-var _move_dest_id: int = -1 setget , get_move_dest_id
+var _move_dest_id: int = -1: get = get_move_dest_id
 
-onready var _actions: Array = get_node(actions_ref).get_children()
-onready var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
+@onready var _actions: Array = get_node(actions_ref).get_children()
+@onready var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 
 # Returns the index of the movement destination.
@@ -60,7 +60,7 @@ func determine_action_chain() -> Array:
 		assert(
 				ab != null,
 				"Action {0} is missing an ActionBehavior node." \
-				.format([action.name])
+				super.format([action.name])
 		)
 		_possible_targets = (
 			_allies.values() 
@@ -146,12 +146,12 @@ func _get_sorted_target_indexes(ab: ActionBehavior) -> Array:
 		return _get_group_target_indexes(ab.get_group_condition(), ab.target_focus)
 	var target_indexes: Array
 	if ab.target_focus == ActionBehavior.TargetFocus.CLOSEST:
-		_possible_targets.sort_custom(self, "_sort_character_dist")
+		_possible_targets.sort_custom(Callable(self, "_sort_character_dist"))
 		for t in _possible_targets:
 			target_indexes.append(t.map_coordinate.get_index())
 		return target_indexes
 	if ab.target_focus == ActionBehavior.TargetFocus.FARTHEST:
-		_possible_targets.sort_custom(self, "_sort_character_dist")
+		_possible_targets.sort_custom(Callable(self, "_sort_character_dist"))
 		for t in _possible_targets:
 			target_indexes.append(t.map_coordinate.get_index())
 		target_indexes.invert()
@@ -170,18 +170,18 @@ func _get_group_target_indexes(gc: GroupCondition, target_focus: int) -> Array:
 	match target_focus:
 		ActionBehavior.TargetFocus.CLOSEST:
 			var sorted_centers: Array = groups.keys()
-			sorted_centers.sort_custom(self, "_sort_group_center_dist")
+			sorted_centers.sort_custom(Callable(self, "_sort_group_center_dist"))
 			return sorted_centers
 		ActionBehavior.TargetFocus.FARTHEST:
 			var sorted_centers: Array = groups.keys()
-			sorted_centers.sort_custom(self, "_sort_group_center_dist")
+			sorted_centers.sort_custom(Callable(self, "_sort_group_center_dist"))
 			sorted_centers.invert()
 			return sorted_centers
 		_:
 			var sorted_group_data: Array = []
 			for center in groups.keys():
 				sorted_group_data.append([center, groups[center]])
-			sorted_group_data.sort_custom(self, "_sort_group_center_threat")
+			sorted_group_data.sort_custom(Callable(self, "_sort_group_center_threat"))
 			var sorted_centers: Array = []
 			for gd in sorted_group_data:
 				sorted_centers.append(gd[0])
@@ -191,7 +191,7 @@ func _get_group_target_indexes(gc: GroupCondition, target_focus: int) -> Array:
 # Gets the threat order of opponent characters.
 func _determine_opponent_index_threat_order() -> Array:
 	var danger_opponents: Array = _opponents.keys()
-	danger_opponents.sort_custom(self, "_sort_opponent_danger")
+	danger_opponents.sort_custom(Callable(self, "_sort_opponent_danger"))
 	var indexes: Array = []
 	for o in danger_opponents:
 		indexes.append(_opponents[o].map_coordinate.get_index())
@@ -201,7 +201,7 @@ func _determine_opponent_index_threat_order() -> Array:
 # Gets the threat order of ally characters.
 func _determine_ally_index_threat_order() -> Array:
 	var danger_allies: Array = _allies.keys()
-	danger_allies.sort_custom(self, "_sort_ally_danger")
+	danger_allies.sort_custom(Callable(self, "_sort_ally_danger"))
 	var indexes: Array = []
 	for a in danger_allies:
 		indexes.append(_allies[a].map_coordinate.get_index())
@@ -267,7 +267,7 @@ func _dead_range_details(
 		TODO: Add logic to randomize move distance.
 		"""
 		pass
-	var move_path: PoolVector3Array = _calc_move_path(
+	var move_path: PackedVector3Array = _calc_move_path(
 			t_index,
 			ActionBehavior.Movement.AWAY,
 			dist_from_effect
@@ -329,7 +329,7 @@ func _normal_range_details(
 	movement: int
 ) -> Array:
 	var details: Array = []
-	var m_path: PoolVector3Array = _get_move_path(
+	var m_path: PackedVector3Array = _get_move_path(
 				action,
 				ab,
 				target_index,
@@ -359,7 +359,7 @@ func _get_move_path(
 	ab: ActionBehavior,
 	target_index: int,
 	movement: int
-) -> PoolVector3Array:
+) -> PackedVector3Array:
 	"""
 	TODO: Add logic to account for cardinal shaped ranges.
 	"""
@@ -397,7 +397,7 @@ func _get_move_path(
 		return _calc_move_path(target_index, move_dir, move_dist)
 	var m_step: Array = _move_step(s_step[1], movement)
 	if m_step.size() == 0:
-		return PoolVector3Array([])
+		return PackedVector3Array([])
 	# Character should always move forward when they are required to move to be
 	# in range of target.
 	move_dir = (
@@ -424,7 +424,7 @@ func _effect_step(
 	move_dir: int,
 	movement: int
 ) -> Array:
-	var path: PoolIntArray = []
+	var path: PackedInt32Array = []
 	var results: Array = [0, 0]
 	path = h_map.range_finder.get_closest_id_path(
 			target_index,
@@ -461,7 +461,7 @@ func _source_step(
 	if action.stats.emit_from_center:
 		source_stop = effect_stop
 	else:
-		var path: PoolIntArray = []
+		var path: PackedInt32Array = []
 		path = h_map.range_finder.get_closest_id_path(
 				effect_stop,
 				_character.map_coordinate.get_index(),
@@ -516,8 +516,8 @@ func _calc_move_path(
 	target_index: int,
 	movement_behavior: int,
 	move_override: int = -1
-) -> PoolVector3Array:
-	var move_path: PoolVector3Array = []
+) -> PackedVector3Array:
+	var move_path: PackedVector3Array = []
 	match movement_behavior:
 		ActionBehavior.Movement.TOWARD:
 			move_path = _calculate_toward_path(target_index, move_override)
@@ -541,7 +541,7 @@ func _default_chain() -> Array:
 
 # Calculates the movement path to the destination. The move_override parameter
 # is defaulted to -1 which indicates that the character's movement should be used.
-func _calculate_toward_path(dest: int, move_override: int = -1) -> PoolVector3Array:
+func _calculate_toward_path(dest: int, move_override: int = -1) -> PackedVector3Array:
 	var movement_range: Array = (
 		h_map.range_finder.get_character_travesible_tiles(
 				_character,
@@ -555,7 +555,7 @@ func _calculate_toward_path(dest: int, move_override: int = -1) -> PoolVector3Ar
 			_opponents.values(),
 			move_override
 	)
-	var id_path: PoolIntArray = h_map.range_finder.get_character_id_path(
+	var id_path: PackedInt32Array = h_map.range_finder.get_character_id_path(
 			_character,
 			_move_dest_id,
 			_opponents.values(),
@@ -569,7 +569,7 @@ func _calculate_toward_path(dest: int, move_override: int = -1) -> PoolVector3Ar
 func _calculate_away_path(
 		target: int,
 		move_override: int = -1
-) -> PoolVector3Array:
+) -> PackedVector3Array:
 	var movement_range: Array = (
 		h_map.range_finder.get_character_travesible_tiles(
 				_character,
@@ -583,7 +583,7 @@ func _calculate_away_path(
 			_opponents.values(),
 			movement_range
 	)
-	var id_path: PoolIntArray = h_map.range_finder.get_character_id_path(
+	var id_path: PackedInt32Array = h_map.range_finder.get_character_id_path(
 			_character,
 			_move_dest_id,
 			_opponents.values(),
@@ -593,8 +593,8 @@ func _calculate_away_path(
 
 
 # Gets the vector point path from a path of map tile ids.
-func _get_pt_path_from_ids(id_path: PoolIntArray) -> PoolVector3Array:
-	var pt_path: PoolVector3Array = []
+func _get_pt_path_from_ids(id_path: PackedInt32Array) -> PackedVector3Array:
+	var pt_path: PackedVector3Array = []
 	pt_path.resize(id_path.size())
 	for i in range(id_path.size()):
 		pt_path[i] = h_map.get_tile_at(id_path[i]).get_character_position()

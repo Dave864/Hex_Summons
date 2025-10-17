@@ -7,7 +7,7 @@ character.
 
 
 var _observer_id: int = -1
-var _threat_values: Dictionary = {} setget , get_threat_values
+var _threat_values: Dictionary = {}: get = get_threat_values
 var _decay_rate: float = 2.0
 
 

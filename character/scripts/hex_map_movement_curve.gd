@@ -31,16 +31,16 @@ func get_current_pos() -> Vector3:
 	# defined and should be given instead.
 	if get_point_count() == 1:
 		return get_point_position(0)
-	return interpolate_baked(_offset)
+	return sample_baked(_offset)
 
 
 # Creates a path curve using the provided array of map tile coordinates.
-func create_path(_step_coordinates: PoolVector3Array) -> void:
+func create_path(_step_coordinates: PackedVector3Array) -> void:
 	pass
 
 
 # Creates a straight-line path from the starting coordinate to the ending coordinate.
-func create_line_path(step_coordinates: PoolVector3Array) -> void:
+func create_line_path(step_coordinates: PackedVector3Array) -> void:
 	_assert_path_present(step_coordinates)
 	_offset = 0.0
 	add_point(step_coordinates[0])
@@ -52,7 +52,7 @@ func create_line_path(step_coordinates: PoolVector3Array) -> void:
 
 # Creates a single bezier-line path from the starting coordinate to the ending
 # coordinate.
-func create_bezier_path(step_coordinates: PoolVector3Array) -> void:
+func create_bezier_path(step_coordinates: PackedVector3Array) -> void:
 	_assert_path_present(step_coordinates)
 	_offset = 0.0
 	if step_coordinates.size() == 1:
@@ -68,7 +68,7 @@ func create_bezier_path(step_coordinates: PoolVector3Array) -> void:
 
 
 # Create a series of straight-line paths from one coordinate to the next.
-func create_segmented_line_path(step_coordinates: PoolVector3Array) -> void:
+func create_segmented_line_path(step_coordinates: PackedVector3Array) -> void:
 	_assert_path_present(step_coordinates)
 	_offset = 0.0
 	if step_coordinates.size() == 1:
@@ -81,7 +81,7 @@ func create_segmented_line_path(step_coordinates: PoolVector3Array) -> void:
 
 # Create a series of straight-line and bezier-line paths from one coordinate to the
 # next, depending on the Y difference of the next coordinate.
-func create_segmented_bezier_path(step_coordinates: PoolVector3Array) -> void:
+func create_segmented_bezier_path(step_coordinates: PackedVector3Array) -> void:
 	_assert_path_present(step_coordinates)
 	_offset = 0.0
 	if step_coordinates.size() == 1:
@@ -116,9 +116,8 @@ func _init() -> void:
 
 
 # Validates that a provided path has at least one point.
-func _assert_path_present(path: PoolVector3Array) -> void:
+func _assert_path_present(path: PackedVector3Array) -> void:
 	assert(
 			path.size() > 0,
 			"Error: Attempted to define a movement path with no points."
 	)
-

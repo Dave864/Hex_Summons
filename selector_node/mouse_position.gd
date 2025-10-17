@@ -1,13 +1,13 @@
 class_name MousePosition
-extends Position3D
+extends Marker3D
 """
 Determines the position of the mouse on the screen relative to the game world
 """
 
-onready var _camera: Camera = get_tree().root.get_camera()
+@onready var _camera: Camera3D = get_tree().root.get_camera_3d()
 
 # The calculated world position of the mouse
-var _position: Vector3 = Vector3.ZERO setget , get_mouse_position
+var _position: Vector3 = Vector3.ZERO: get = get_mouse_position
 var _drop_plane: Plane = Plane.PLANE_XZ
 
 

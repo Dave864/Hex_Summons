@@ -6,20 +6,20 @@ ends.
 """
 
 
-export(float, 0.001, 4096.0) var lower_time = 1.0
-export(float, 0.001, 4096.0) var upper_time = 1.0
+@export var lower_time = 1.0 # (float, 0.001, 4096.0)
+@export var upper_time = 1.0 # (float, 0.001, 4096.0)
 
 
 # Resets the timer to a new random time.
 func reset() -> void:
-	start(rand_range(lower_time, upper_time))
+	start(randf_range(lower_time, upper_time))
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	assert(lower_time <= upper_time, "lower_time is higher than upper_time.")
-	self.connect("timeout", self, "_on_Timer_timeout")
-	start(rand_range(lower_time, upper_time))
+	self.connect("timeout", Callable(self, "_on_Timer_timeout"))
+	start(randf_range(lower_time, upper_time))
 
 
 # Restarts the timer with a new random time.

@@ -6,9 +6,9 @@ Describes a range whose area can be described as a cone.
 
 
 # Describes how wide the cone area is.
-export (int, 0, 5) var spread = 0
+@export var spread = 0 # (int, 0, 5)
 # Describes how far out the cone extends away from the start point.
-export (int, 1, 100) var distance = 1
+@export var distance = 1 # (int, 1, 100)
 
 
 # Returns the reach of the ConeArea. Used when determining which tiles are
@@ -27,7 +27,8 @@ func get_dir_area_indexes(
 ) -> Array:
 	# Adjust the direction based on the spread so that the resulting indexes
 	# are aligned to the original direction.
-	dir = posmod(dir - int(spread / 2), 6)
+	@warning_ignore("integer_division")
+	dir = posmod(dir - round(spread / 2), 6)
 	var tile_ids: Array = []
 	var start_coord: Vector3 = (
 			hm.get_tile_at(start) \
@@ -144,4 +145,5 @@ func _determine_ray_displays(
 # given the current ConeArea dimensions for the purposes of orienting the display.
 # The direction will orient the cone area to the right of the emission point.
 func _get_initial_direction() -> int:
+	@warning_ignore("integer_division")
 	return posmod(HexUtil.HexDirection.RIGHT - floor(spread / 2), 5)

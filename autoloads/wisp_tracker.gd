@@ -68,7 +68,7 @@ func get_bonded_wisps(player: String) -> Dictionary:
 	var bonded_wisps: Dictionary = {EARTH: [], FIRE: [], WATER: [], WIND: []}
 	for wisp in _tracked_wisps.keys():
 		if _tracked_wisps[wisp][BONDED_PLAYER] == player:
-			bonded_wisps[_tracked_wisps[wisp[ELEMENT]]].append(wisp)
+			bonded_wisps[_tracked_wisps[wisp][ELEMENT]].append(wisp)
 	return bonded_wisps
 
 
@@ -159,12 +159,12 @@ func _ready():
 
 # Initializes the data for a wisp.
 func _initialize_data(
-	name: String,
+	wisp_name: String,
 	element: int,
 	bonded_player: String = NO_PLAYER
 ) -> Dictionary:
 	return {
-		DATA: _get_wisp_data(name, element),
+		DATA: _get_wisp_data(wisp_name, element),
 		ELEMENT: element,
 		BONDED_PLAYER: bonded_player,
 		ENCOUNTER_STATE: WispState.INACTIVE
@@ -181,7 +181,7 @@ func _is_tracked(wisp: String) -> bool:
 
 # Gets the wisp data for a given name and element, returning null if there is
 # no wisp with the given name and element combo.
-func _get_wisp_data(name: String, element: int) -> Wisp:
+func _get_wisp_data(wisp_name: String, element: int) -> Wisp:
 	var path_format: String
 	match element:
 		EARTH:
@@ -196,10 +196,10 @@ func _get_wisp_data(name: String, element: int) -> Wisp:
 			printerr("An invalid element was provided.")
 			return null
 	# Checks if the Resource at path is indeed a wisp resource.
-	var wisp_data: Wisp = load(path_format.format([name]))
+	var wisp_data: Wisp = load(path_format.format([wisp_name]))
 	if wisp_data == null:
 		var elem_name: String = Constants.CoreElement.find_key(element)
-		printerr("No data could be found for {0} wisp, {1}.".format([elem_name, name]))
+		printerr("No data could be found for {0} wisp, {1}.".format([elem_name, wisp_name]))
 	return wisp_data
 
 

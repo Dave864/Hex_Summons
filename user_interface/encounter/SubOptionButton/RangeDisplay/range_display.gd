@@ -1,4 +1,4 @@
-tool
+@tool
 class_name RangeDisplay
 extends Panel
 """
@@ -7,11 +7,11 @@ of actions on a specific UI element.
 """
 
 
-export(int, 5, 15) var row_count = 9 setget set_row_count
-export(int, 5, 15) var col_count = 8 setget set_col_count
-export(float, 1.0, 10.0) var hex_radius = 4.0 setget set_hex_radius
-export(float, 0.5, 5.0) var outline_width = 1.0 setget set_outline_width
-export(float, 0.0, 3.0) var hex_spacing = 0.0 setget set_hex_spacing
+@export var row_count = 9: set = set_row_count
+@export var col_count = 8: set = set_col_count
+@export var hex_radius = 4.0: set = set_hex_radius
+@export var outline_width = 1.0: set = set_outline_width
+@export var hex_spacing = 0.0: set = set_hex_spacing
 
 var _mid_row: int = int(round(row_count / 2.0)) - 1
 var _emission_index: Vector2 = Vector2(1, _mid_row)
@@ -27,8 +27,8 @@ var _draw_order: Dictionary = {
 	"etc": [],
 }
 # The vertex positions for a hex at origin.
-var _origin_pts: PoolVector2Array = []
-var _origin_fill_pts: PoolVector2Array = []
+var _origin_pts: PackedVector2Array = []
+var _origin_fill_pts: PackedVector2Array = []
 
 
 func set_row_count(rc: int) -> void:
@@ -116,8 +116,8 @@ func _update_display_details() -> void:
 
 # Determine the hex vertices that will be used as reference for creating hexes
 # to draw.
-func _init_origin_vertices(outline_offset: float = 0.0) -> PoolVector2Array:
-	var hex_vertices: PoolVector2Array = []
+func _init_origin_vertices(outline_offset: float = 0.0) -> PackedVector2Array:
+	var hex_vertices: PackedVector2Array = []
 	var top_vertex: Vector2 = Vector2(0.0, hex_radius - outline_offset)
 	for i in 6:
 		hex_vertices.append(top_vertex.rotated(i * PI / 3))
@@ -226,15 +226,15 @@ func _get_color(detail_marker: int) -> Color:
 	var c: Color
 	match detail_marker:
 		DisplayMatrix.Detail.CASTER:
-			c = Color.aqua
+			c = Color.AQUA
 		DisplayMatrix.Detail.SOURCE_RANGE:
-			c = Color.blue
+			c = Color.BLUE
 		DisplayMatrix.Detail.EFFECT_RANGE:
-			c = Color.orange
+			c = Color.ORANGE
 		DisplayMatrix.Detail.EFFECT_SOURCE:
-			c = Color.yellow
+			c = Color.YELLOW
 		_:
-			c = Color.slategray
+			c = Color.SLATE_GRAY
 	return c
 
 
@@ -242,7 +242,7 @@ func _get_color(detail_marker: int) -> Color:
 func _draw_hex_outline(color: Color, center: Vector2) -> void:
 	if _origin_pts.size() == 0:
 		return
-	var hex_vertices: PoolVector2Array = _get_points_for_hex(center, _origin_pts)
+	var hex_vertices: PackedVector2Array = _get_points_for_hex(center, _origin_pts)
 	draw_colored_polygon(hex_vertices, color)
 
 
@@ -250,16 +250,16 @@ func _draw_hex_outline(color: Color, center: Vector2) -> void:
 func _draw_hex_fill(color: Color, center: Vector2) -> void:
 	if _origin_fill_pts.size() == 0:
 		return
-	var hex_vertices: PoolVector2Array = _get_points_for_hex(center, _origin_fill_pts)
+	var hex_vertices: PackedVector2Array = _get_points_for_hex(center, _origin_fill_pts)
 	draw_colored_polygon(hex_vertices, color)
 
 
 # Gets the points for a hexagon centered at a given point.
 func _get_points_for_hex(
 	center: Vector2,
-	origin_pts: PoolVector2Array
-) -> PoolVector2Array:
-	var hex_vertices: PoolVector2Array = []
+	origin_pts: PackedVector2Array
+) -> PackedVector2Array:
+	var hex_vertices: PackedVector2Array = []
 	for v in origin_pts:
 		hex_vertices.append(v + center)
 	return hex_vertices

@@ -17,8 +17,8 @@ enum Detail {
 const OUTLINE: String = "Outline"
 const FILL: String = "Fill"
 
-var _row_count: int = 0 setget , get_row_count
-var _col_count: int = 0 setget , get_col_count
+var _row_count: int = 0: get = get_row_count
+var _col_count: int = 0: get = get_col_count
 var _mid_row: int = 0
 var _matrix: Array = []
 

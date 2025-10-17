@@ -5,8 +5,8 @@ Panel for displaying a picture with text below it.
 """
 
 
-export(String) var text = "" setget set_text, get_text
-export(Texture) var image = null setget set_image, get_image
+@export var text: String = "": get = get_text, set = set_text
+@export var image: Texture2D = null: get = get_image, set = set_image
 
 
 
@@ -27,13 +27,13 @@ func get_text() -> String:
 
 
 # Sets the image of the DisplayPanel.
-func set_image(new_image: Texture) -> void:
+func set_image(new_image: Texture2D) -> void:
 	image = new_image if new_image != null else load(Constants.DEFAULT_ICON_PATH)
 	$VBoxContainer/Image.texture = image
 
 
 # Get the image of the DisplayPanel.
-func get_image() -> Texture:
+func get_image() -> Texture2D:
 	return image
 
 

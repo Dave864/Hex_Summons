@@ -106,11 +106,11 @@ func _on_PlayerCharacter_turn_ended() -> void:
 	enc.hex_map.selection_tracker.clear_highlights()
 	enc.hex_map.selection_tracker.clear_selector_highlights()
 	if not _ui_waiting:
-		yield(enc.ui, "is_waiting")
+		await enc.ui.is_waiting
 	if not _player_waiting:
-		yield(_active_char, "is_waiting")
+		await _active_char.is_waiting
 	var next_character: Character = enc.get_next_character()
-	yield(enc.progress_initiative(), "completed")
+	await enc.progress_initiative().completed
 	if next_character is PlayerCharacter:
 		state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:

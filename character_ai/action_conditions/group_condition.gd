@@ -13,8 +13,8 @@ enum groupStatus {
 	GROUPED
 }
 
-export(int, 2, 10) var min_group_size = 2
-export(int, 1, 10) var max_distance = 1
+@export var min_group_size = 2 # (int, 2, 10)
+@export var max_distance = 1 # (int, 1, 10)
 
 # Stores an array of Characters that are part of a group as the values,
 # referenced by a group number.

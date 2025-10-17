@@ -6,7 +6,7 @@ collision data and passes it along to the relevant handlers.
 """
 
 
-var _c_stats: CharacterStats = null setget set_character_stats
+var _c_stats: CharacterStats = null: set = set_character_stats
 
 
 # Sets the reference to the provided CharacterStats.

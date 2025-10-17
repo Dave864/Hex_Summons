@@ -15,7 +15,7 @@ var _move_origin_index: int = -1
 var _movement_ids: Array = []
 
 # Reference to the function that will update the tile highlights.
-onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
+@onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
 
 
 # Reveal the selector shape and enable the ability to update tile highlights.
@@ -179,7 +179,7 @@ func _on_PlayerCharacter_turn_ended() -> void:
 # Creates the movement path to the selected tile if said tile is valid.
 func _on_SignalBus_move_path_requested() -> void:
 	if selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY:
-		var path_data: PoolVector3Array = (
+		var path_data: PackedVector3Array = (
 			selector.hex_map.range_finder.get_character_point_path(
 					selector.active_player,
 					selector.tile_hovered.map_coordinate.get_index(),

@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 class_name Occupant
 """
@@ -7,7 +7,7 @@ Keeps track of the current occupant at a given map tile.
 
 
 # The current occupant of the tile.
-var _occupant: Character = null setget , get_current_occupant
+var _occupant: Character = null: get = get_current_occupant
 
 
 # Gets the current character occupying this tile.

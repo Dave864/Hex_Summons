@@ -8,9 +8,9 @@ shader_type canvas_item;
 render_mode unshaded;
 
 uniform vec2 u_pix_size = vec2(1.0, 1.0);
-uniform vec4 override_color : hint_color = vec4(1.0);
-uniform vec4 color_1 : hint_color = vec4(1.0);
-uniform vec4 color_2 : hint_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform vec4 override_color : source_color = vec4(1.0);
+uniform vec4 color_1 : source_color = vec4(1.0);
+uniform vec4 color_2 : source_color = vec4(0.0, 0.0, 0.0, 1.0);
 // position of the colors
 uniform float position : hint_range(-0.5, 0.5) = 0.0;
 // size of the gradient effect

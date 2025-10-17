@@ -27,4 +27,4 @@ enum Type {
 	RES_DARK,
 }
 
-export(Type) var type = Type.CUR_HEALTH
+@export var type: Type = Type.CUR_HEALTH

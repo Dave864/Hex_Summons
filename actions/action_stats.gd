@@ -6,19 +6,19 @@ ranges.
 """
 
 
-export(String) var name = ""
-export(Resource) var potency = null
-export(Resource) var source_range = null
-export(Resource) var dead_range = null
-export(Resource) var effect_range = null
+@export var name: String = ""
+@export var potency: Potency = null
+@export var source_range: AreaRange = null
+@export var dead_range: AreaRange = null
+@export var effect_range: AreaRange = null
 # Flag that denotes if the emission is fixed to the center of the area.
-export(bool) var emit_from_center = true
+@export var emit_from_center: bool = true
 # Flag that denotes if the effect should include the casting character tile.
-export(bool) var effect_ignores_caster = true
+@export var effect_ignores_caster: bool = true
 # Flag that denotes if the possible source of the emmision is affected by tile heights.
-export(bool) var source_ignore_heights = false
+@export var source_ignore_heights: bool = false
 # Flag that denotes if the emission area is affected by tile heights.
-export(bool) var effect_ignore_heights = false
+@export var effect_ignore_heights: bool = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -31,10 +31,6 @@ func _check_for_required_parameters() -> void:
 	assert(
 			potency != null,
 			"ActionStats missing defined potency."
-	)
-	assert(
-			potency is Potency,
-			"ActionStats potency is not a Potency resource."
 	)
 	assert(
 			source_range != null,
@@ -55,8 +51,4 @@ func _check_for_required_parameters() -> void:
 	assert(
 			effect_range != null,
 			"ActionStats effect range not set."
-	)
-	assert(
-			effect_range is AreaRange,
-			"ActionStats effect range is not an AreaRange."
 	)

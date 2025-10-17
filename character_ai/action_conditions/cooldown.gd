@@ -5,9 +5,9 @@ A timer that updates whenever a character's turn ends.
 """
 
 
-export(int, 0, 10) var turn_count = 0
+@export var turn_count = 0 # (int, 0, 10)
 
-var _countdown: int = 0 setget , get_countdown
+var _countdown: int = 0: get = get_countdown
 
 
 # Gets the current value of the countdown.

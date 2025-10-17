@@ -6,10 +6,10 @@ Base class for effects that modify the stats of characters.
 
 
 # Reference to the potency details of an action.
-var _action_potency: Potency = null setget set_action_potency
+var _action_potency: Potency = null: set = set_action_potency
 # The stats of the character that will apply this effect.
-var _source_stats: CharacterStats = null setget set_source_stats
-var _aspects: Array setget , get_aspects
+var _source_stats: CharacterStats = null: set = set_source_stats
+var _aspects: Array: get = get_aspects
 
 
 # Called when the node enters the scene tree for the first time.

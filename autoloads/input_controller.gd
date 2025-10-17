@@ -10,7 +10,7 @@ enum Source {
 	NONE
 }
 
-var _source: int = Source.NONE setget, get_source
+var _source: int = Source.NONE: get = get_source
 
 
 # Gets the current input source.

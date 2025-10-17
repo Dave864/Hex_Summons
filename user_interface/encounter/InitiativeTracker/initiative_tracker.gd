@@ -10,7 +10,7 @@ initiative slots in the UI.
 """
 
 
-export(int, 2, 10) var pity_round_count = 2
+@export var pity_round_count = 2 # (int, 2, 10)
 
 # Tracks the character and number of rounds said character has gone without
 # taking a turn using the instance id as the key. Each entry has the
@@ -30,8 +30,8 @@ var _cur_init: int = 0
 var _round_pace: int = 0
 var _round_turns: int = 0
 
-onready var init_slots: Array = $InitiativeSlots.get_children()
-onready var ap: AnimationPlayer = $AnimationPlayer
+@onready var init_slots: Array = $InitiativeSlots.get_children()
+@onready var ap: AnimationPlayer = $AnimationPlayer
 
 
 # Populates the initiative tracker with character details.
@@ -67,7 +67,7 @@ func progress_initiative() -> void:
 		_calculate_round_initiative(_init_order.size() - 1)
 	ap.play("shift")
 	_update_display()
-	yield(ap, "animation_finished")
+	await ap.animation_finished
 
 
 # Called during the "shift" animation. Sets the initiative labels to the previous
@@ -180,7 +180,7 @@ func _calculate_round_zero_initiative() -> void:
 	var initiative_data: Array = []
 	for details in _c_pity_tracker.values():
 		characters.append(details["character"])
-	characters.sort_custom(ArraySorters, "sort_character_initiative")
+	characters.sort_custom(Callable(ArraySorters, "sort_character_initiative"))
 	for i in characters.size():
 		var c: Character = characters[i]
 		initiative_data.append(

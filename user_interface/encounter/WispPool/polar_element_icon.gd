@@ -1,4 +1,4 @@
-tool
+@tool
 class_name PolarElementIcon
 extends TextureRect
 """
@@ -9,11 +9,11 @@ the icon.
 
 signal shine_ping(e)
 
-export(Constants.PolarElement) var element = Constants.PolarElement.LIGHT setget set_element
-export var light_region: Vector2 = Vector2(0,0)
-export var dark_region: Vector2 = Vector2(0,0)
+@export var element = Constants.PolarElement.LIGHT: set = set_element
+@export var light_region: Vector2 = Vector2(0,0)
+@export var dark_region: Vector2 = Vector2(0,0)
 
-onready var ap: AnimationPlayer = $AnimationPlayer
+@onready var ap: AnimationPlayer = $AnimationPlayer
 
 
 # Sets the icon texture region to display the new element.

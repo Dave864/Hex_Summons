@@ -9,41 +9,41 @@ const LIGHT: int = Constants.PolarElement.LIGHT
 const DARK: int = Constants.PolarElement.DARK
 
 
-export(NodePath) var light_label_ref = NodePath("")
-export(NodePath) var light_icon_ref = NodePath("")
-export(NodePath) var light_elem_1_label_ref = NodePath("")
-export(NodePath) var light_elem_1_icon_ref = NodePath("")
-export(NodePath) var light_elem_2_label_ref = NodePath("")
-export(NodePath) var light_elem_2_icon_ref = NodePath("")
+@export var light_label_ref: NodePath = NodePath("")
+@export var light_icon_ref: NodePath = NodePath("")
+@export var light_elem_1_label_ref: NodePath = NodePath("")
+@export var light_elem_1_icon_ref: NodePath = NodePath("")
+@export var light_elem_2_label_ref: NodePath = NodePath("")
+@export var light_elem_2_icon_ref: NodePath = NodePath("")
 
-export(NodePath) var dark_label_ref = NodePath("")
-export(NodePath) var dark_icon_ref = NodePath("")
-export(NodePath) var dark_elem_1_label_ref = NodePath("")
-export(NodePath) var dark_elem_1_icon_ref = NodePath("")
-export(NodePath) var dark_elem_2_label_ref = NodePath("")
-export(NodePath) var dark_elem_2_icon_ref = NodePath("")
+@export var dark_label_ref: NodePath = NodePath("")
+@export var dark_icon_ref: NodePath = NodePath("")
+@export var dark_elem_1_label_ref: NodePath = NodePath("")
+@export var dark_elem_1_icon_ref: NodePath = NodePath("")
+@export var dark_elem_2_label_ref: NodePath = NodePath("")
+@export var dark_elem_2_icon_ref: NodePath = NodePath("")
 
-export(NodePath) var timer_ref = NodePath("")
+@export var timer_ref: NodePath = NodePath("")
 
 var pool: WispPool = null
 
-onready var light_label: AnimatedLabel = get_node(light_label_ref)
-onready var light_icon: PolarElementIcon = get_node(light_icon_ref)
-onready var light_elem_1_label: AnimatedLabel = get_node(light_elem_1_label_ref)
-onready var light_elem_1_icon: CoreElementIcon = get_node(light_elem_1_icon_ref)
-onready var light_elem_2_label: AnimatedLabel = get_node(light_elem_2_label_ref)
-onready var light_elem_2_icon: CoreElementIcon = get_node(light_elem_2_icon_ref)
+@onready var light_label: AnimatedLabel = get_node(light_label_ref)
+@onready var light_icon: PolarElementIcon = get_node(light_icon_ref)
+@onready var light_elem_1_label: AnimatedLabel = get_node(light_elem_1_label_ref)
+@onready var light_elem_1_icon: CoreElementIcon = get_node(light_elem_1_icon_ref)
+@onready var light_elem_2_label: AnimatedLabel = get_node(light_elem_2_label_ref)
+@onready var light_elem_2_icon: CoreElementIcon = get_node(light_elem_2_icon_ref)
 
-onready var dark_label: AnimatedLabel = get_node(dark_label_ref)
-onready var dark_icon: PolarElementIcon = get_node(dark_icon_ref)
-onready var dark_elem_1_label: AnimatedLabel = get_node(dark_elem_1_label_ref)
-onready var dark_elem_1_icon: CoreElementIcon = get_node(dark_elem_1_icon_ref)
-onready var dark_elem_2_label: AnimatedLabel = get_node(dark_elem_2_label_ref)
-onready var dark_elem_2_icon: CoreElementIcon = get_node(dark_elem_2_icon_ref)
+@onready var dark_label: AnimatedLabel = get_node(dark_label_ref)
+@onready var dark_icon: PolarElementIcon = get_node(dark_icon_ref)
+@onready var dark_elem_1_label: AnimatedLabel = get_node(dark_elem_1_label_ref)
+@onready var dark_elem_1_icon: CoreElementIcon = get_node(dark_elem_1_icon_ref)
+@onready var dark_elem_2_label: AnimatedLabel = get_node(dark_elem_2_label_ref)
+@onready var dark_elem_2_icon: CoreElementIcon = get_node(dark_elem_2_icon_ref)
 
-onready var timer: VariableTimer = get_node(timer_ref)
+@onready var timer: VariableTimer = get_node(timer_ref)
 
-onready var _polarities: Dictionary = {
+@onready var _polarities: Dictionary = {
 	LIGHT: ElementalPolarity.get_light_elements().duplicate(),
 	DARK: ElementalPolarity.get_dark_elements().duplicate()
 }

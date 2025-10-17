@@ -1,5 +1,5 @@
-tool
-extends Spatial
+@tool
+extends Node3D
 class_name EncounterCamera
 """
 Handles the camera for the Encounter scene. Handles positioning, rotating, and 
@@ -23,24 +23,24 @@ const HEX_VERTEX_RADIANS: Array = [
 ]
 
 # The default distance the camera is to be set from the focus point.
-export (float, 0.0, 50.0) var default_distance = 15.0 setget set_default_distance
+@export var default_distance = 15.0: set = set_default_distance
 # The boundaries for vertical rotation.
-export (float, 0.0, 90.0) var vert_panning_u_bound = 75.0 setget set_vert_panning_u_bound
-export (float, 0.0, 90.0) var vert_panning_l_bound = 30.0 setget set_vert_panning_l_bound
+@export var vert_panning_u_bound = 75.0: set = set_vert_panning_u_bound
+@export var vert_panning_l_bound = 30.0: set = set_vert_panning_l_bound
 # The threshold of mouse movement required to trigger a rotation change.
-export (float, 1.0, 5.0) var mouse_drag_threshold = 1.0
+@export var mouse_drag_threshold = 1.0 # (float, 1.0, 5.0)
 # The percentage of lateral mouse movement to use when updating the camera.
-export (float, 0.1, 2.0) var mouse_lateral_multiplier = 0.3
+@export var mouse_lateral_multiplier = 0.3 # (float, 0.1, 2.0)
 # The speed the camera vertically pans when using joystick input.
-export (float, 50.0, 500.0) var joystick_vert_pan_speed = 100.0
+@export var joystick_vert_pan_speed = 100.0 # (float, 50.0, 500.0)
 # The speed the camera horizontally pans when using joystick input.
-export (float, 50.0, 500.0) var joystick_lateral_pan_speed = 100.0
+@export var joystick_lateral_pan_speed = 100.0 # (float, 50.0, 500.0)
 # The speed the camera moves to the default position.
-export (float, 1.0, 30.0) var reset_speed = 10.0
+@export var reset_speed = 10.0 # (float, 1.0, 30.0)
 
 # The midpoint between the vertical rotation bounds. Considered the default rotation
 # for the camera.
-var _vert_pan_midpoint: float = _panning_vertical_midpoint() setget , get_vert_pan_midpoint
+var _vert_pan_midpoint: float = _panning_vertical_midpoint(): get = get_vert_pan_midpoint
 # The index position of a hex tile that is considered to be the top, relative
 # to the camera position.
 #    0
@@ -48,12 +48,12 @@ var _vert_pan_midpoint: float = _panning_vertical_midpoint() setget , get_vert_p
 #  |   |
 # 4 \ / 2
 #    3
-var _relative_top_vertex: int = 0 setget set_relative_top_vertex, get_relative_top_vertex
+var _relative_top_vertex: int = 0: get = get_relative_top_vertex, set = set_relative_top_vertex
 # The default orientation of the camera
 var _default_orientation: Vector3
 
-onready var _focus_pt: Position3D = $FocusPoint
-onready var _camera: Camera = $FocusPoint/Camera
+@onready var _focus_pt: Marker3D = $FocusPoint
+@onready var _camera: Camera3D = $FocusPoint/Camera3D
 
 
 # Sets the value of the default distance.
@@ -68,7 +68,7 @@ func set_vert_panning_u_bound(bound: float) -> void:
 	vert_panning_u_bound = bound
 	_vert_pan_midpoint = _panning_vertical_midpoint()
 	if Engine.is_editor_hint():
-		_focus_pt.rotation.x = deg2rad(_vert_pan_midpoint)
+		_focus_pt.rotation.x = deg_to_rad(_vert_pan_midpoint)
 
 
 # Sets the value of the lower vertical panning bound.
@@ -76,7 +76,7 @@ func set_vert_panning_l_bound(bound: float) -> void:
 	vert_panning_l_bound = bound
 	_vert_pan_midpoint = _panning_vertical_midpoint()
 	if Engine.is_editor_hint():
-		_focus_pt.rotation.x = deg2rad(_vert_pan_midpoint)
+		_focus_pt.rotation.x = deg_to_rad(_vert_pan_midpoint)
 
 
 # Get the vertical pan midpoint.
@@ -110,16 +110,16 @@ func get_relative_top_vertex() -> int:
 func vertical_pan_mouse(v_motion: float) -> void:
 	if abs(v_motion) < mouse_drag_threshold:
 		return
-	var rotation: float = rad2deg(_focus_pt.rotation.x)
+	var rotation: float = rad_to_deg(_focus_pt.rotation.x)
 	# Vertical rotation is negative to position the camera above
 	# the encounter map.
 	rotation += -v_motion
-	_focus_pt.rotation.x = deg2rad(_bind_vertical_rotation(rotation))
+	_focus_pt.rotation.x = deg_to_rad(_bind_vertical_rotation(rotation))
 
 
 # Handles lateral camera panning from mouse drag.
 func lateral_pan_mouse(l_motion: float) -> void:
-	_focus_pt.rotation.y -= deg2rad(l_motion * mouse_lateral_multiplier)
+	_focus_pt.rotation.y -= deg_to_rad(l_motion * mouse_lateral_multiplier)
 	_focus_pt.rotation.y = _normalize_lateral_rotation(_focus_pt.rotation.y)
 
 
@@ -128,11 +128,11 @@ func vertical_pan_joystick(delta: float) -> void:
 	var v_move: float = Input.get_axis("right_joystick_d", "right_joystick_u")
 	if abs(v_move) == 0.0:
 		return
-	var rotation: float = rad2deg(_focus_pt.rotation.x)
+	var rotation: float = rad_to_deg(_focus_pt.rotation.x)
 	# Vertical rotation is negative to position the camera above
 	# the encounter map.
 	rotation += -v_move * joystick_vert_pan_speed * delta
-	_focus_pt.rotation.x = deg2rad(_bind_vertical_rotation(rotation))
+	_focus_pt.rotation.x = deg_to_rad(_bind_vertical_rotation(rotation))
 
 
 # Handles lateral camera panning from joystick input.
@@ -140,13 +140,13 @@ func lateral_pan_joystick(delta: float) -> void:
 	var h_move: float = Input.get_axis("right_joystick_l", "right_joystick_r")
 	if abs(h_move) == 0.0:
 		return
-	_focus_pt.rotation.y -= deg2rad(h_move * joystick_lateral_pan_speed * delta)
+	_focus_pt.rotation.y -= deg_to_rad(h_move * joystick_lateral_pan_speed * delta)
 	_focus_pt.rotation.y = _normalize_lateral_rotation(_focus_pt.rotation.y)
 
 
 # Positions the camera at a given distance away from the focus point.
 func set_camera_distance(distance: float) -> void:
-	_camera.translation.z = distance
+	_camera.position.z = distance
 
 
 # Reorients the camera to the target orientation by a certain amount. If no
@@ -156,7 +156,7 @@ func interpolate_camera_rotation(
 	weight: float,
 	target_o: Vector3 = _default_orientation
 ):
-	_focus_pt.rotation = original_o.linear_interpolate(
+	_focus_pt.rotation = original_o.lerp(
 			target_o,
 			weight
 	)
@@ -187,7 +187,7 @@ func get_closest_vertex_radian() -> float:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
-	_focus_pt.rotation = Vector3(deg2rad(_vert_pan_midpoint), 0.0, 0.0)
+	_focus_pt.rotation = Vector3(deg_to_rad(_vert_pan_midpoint), 0.0, 0.0)
 	_default_orientation = _focus_pt.rotation
 	set_camera_distance(default_distance)
 
@@ -225,7 +225,7 @@ func _check_for_required_parameters() -> void:
 			_focus_pt != null,
 			ErrorUtil.missing_required_parameter(name, "FocusPoint")
 	)
-	assert(_camera != null, ErrorUtil.missing_required_parameter(name, "Camera"))
+	assert(_camera != null, ErrorUtil.missing_required_parameter(name, "Camera3D"))
 	# Check vertical panning bounds.
 	assert(
 			vert_panning_l_bound < vert_panning_u_bound,
@@ -233,12 +233,12 @@ func _check_for_required_parameters() -> void:
 	)
 	# Check the camera status.
 	assert(
-			_camera.projection == Camera.PROJECTION_ORTHOGONAL,
+			_camera.projection == Camera3D.PROJECTION_ORTHOGONAL,
 			"EncounterCamera projection is not Orthogonal."
 	)
 	assert(
-			is_zero_approx(_camera.translation.x) and is_zero_approx(_camera.translation.y),
-			"EncounterCamera camera distance translation not bound along z-axis."
+			is_zero_approx(_camera.position.x) and is_zero_approx(_camera.position.y),
+			"EncounterCamera camera distance position not bound along z-axis."
 	)
 	assert(
 			_camera.rotation.is_zero_approx(),

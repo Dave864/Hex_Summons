@@ -1,11 +1,11 @@
-tool
+@tool
 extends Label3D
 """
 Label for map tiles used for debugging. TODO: Will remove once no longer needed.
 """
 
 
-export(NodePath) var coordinate_ref = null
+@export var coordinate_ref: NodePath = NodePath("")
 
 
 func update_label_display(height: int) -> void:
@@ -14,7 +14,7 @@ func update_label_display(height: int) -> void:
 	var cube_coord: Vector3 = coord.get_cube_coord()
 	text = str(
 			format % [
-				coord.get_index(), 
+				coord.get_tile_index(), 
 				height, 
 				cube_coord.x,
 				cube_coord.y,

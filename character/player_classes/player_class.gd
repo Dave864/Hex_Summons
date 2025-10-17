@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 class_name PlayerClass
 """
@@ -17,7 +17,7 @@ var techniques: Array
 var spells: Array
 
 # Reference to the scene tree root.
-onready var _root_node: Node = get_tree().edited_scene_root
+@onready var _root_node: Node = get_tree().edited_scene_root
 
 
 # Called when the node enters the scene tree for the first time.
@@ -61,7 +61,7 @@ func _create_child_nodes() -> void:
 # Creates a node for the given technique details.
 func _create_technique_node(tech_stats: TechniqueStats) -> void:
 	var action_path: String = ACTION_PATH_FORMAT.format([tech_stats.name])
-	var technique_node: Action = load(action_path).instance()
+	var technique_node: Action = load(action_path).instantiate()
 	var cooldown_node: Cooldown = Cooldown.new(tech_stats.cooldown)
 	technique_node.add_child(cooldown_node)
 	$Techniques.add_child(technique_node)
@@ -70,7 +70,7 @@ func _create_technique_node(tech_stats: TechniqueStats) -> void:
 # Creates a node for the given spell details.
 func _create_spell_node(spell_stats: SpellStats) -> void:
 	var action_path: String = ACTION_PATH_FORMAT.format([spell_stats.name])
-	var spell_node: Action = load(action_path).instance()
+	var spell_node: Action = load(action_path).instantiate()
 	var wisp_cost_node: WispCost = WispCost.new(spell_stats)
 	spell_node.add_child(wisp_cost_node)
 	$Spells.add_child(spell_node)

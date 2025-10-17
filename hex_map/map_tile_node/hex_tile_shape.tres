@@ -1,6 +1,8 @@
-[gd_resource type="CylinderMesh" format=2]
+[gd_resource type="CylinderMesh" format=3 uid="uid://bfmxst1fcnorm"]
 
 [resource]
+top_radius = 1.0
+bottom_radius = 1.0
 height = 0.5
 radial_segments = 6
 rings = 0

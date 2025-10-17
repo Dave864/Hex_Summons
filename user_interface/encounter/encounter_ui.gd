@@ -29,24 +29,24 @@ TODO: Currently loading CharacterSummary scene to visualize the hp values of cha
 var _character_summary: PackedScene = preload(
 	"res://user_interface/encounter/test_labels/CharacterSummary/CharacterSummary.tscn"
 )
-var _current_selection: int = Options.NONE setget set_current_selection, get_current_selection
-var _focused_player: PlayerCharacter = null setget set_focused_player, get_focused_player
+var _current_selection: int = Options.NONE: get = get_current_selection, set = set_current_selection
+var _focused_player: PlayerCharacter = null: get = get_focused_player, set = set_focused_player
 var _party_stat_map: Dictionary = {}
-var _techniques: Array = [] setget , get_techniques
-var _spells: Array = [] setget , get_spells
+var _techniques: Array = []: get = get_techniques
+var _spells: Array = []: get = get_spells
 
-onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
-onready var active_player_stats: PlayerStatsUI = $ActivePlayerStats
-onready var enemy_stats: VBoxContainer = $EnemyStats
-onready var party_stats: VBoxContainer = $PartyStats
-onready var options: HBoxContainer = $Options
-onready var sub_options: SubOptions = $SubOptions
-onready var movement_button: PlayerOptionButton = $Options/MovementButton
-onready var technique_button: PlayerOptionButton = $Options/TechniqueButton
-onready var spell_button: PlayerOptionButton = $Options/SpellButton
-onready var summon_button: PlayerOptionButton = $Options/SummonButton
-onready var item_button: PlayerOptionButton = $Options/ItemButton
-onready var end_button: PlayerOptionButton = $Options/EndButton
+@onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
+@onready var active_player_stats: PlayerStatsUI = $ActivePlayerStats
+@onready var enemy_stats: VBoxContainer = $EnemyStats
+@onready var party_stats: VBoxContainer = $PartyStats
+@onready var options: HBoxContainer = $Options
+@onready var sub_options: SubOptions = $SubOptions
+@onready var movement_button: PlayerOptionButton = $Options/MovementButton
+@onready var technique_button: PlayerOptionButton = $Options/TechniqueButton
+@onready var spell_button: PlayerOptionButton = $Options/SpellButton
+@onready var summon_button: PlayerOptionButton = $Options/SummonButton
+@onready var item_button: PlayerOptionButton = $Options/ItemButton
+@onready var end_button: PlayerOptionButton = $Options/EndButton
 
 
 # Emits the is_waiting signal.
@@ -88,7 +88,7 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	_techniques = _focused_player.get_techniques()
 	_spells = _focused_player.get_spells()
 	
-	party_stats.rect_size.y = PART_PARTY_HEIGHT
+	party_stats.size.y = PART_PARTY_HEIGHT
 	active_player_stats.set_stats(_focused_player)
 	active_player_stats.show()
 	
@@ -154,7 +154,7 @@ func set_active_options() -> void:
 func hide_active_stats() -> void:
 	active_player_stats.hide()
 	if _focused_player != null:
-		party_stats.rect_size.y = (
+		party_stats.size.y = (
 				FULL_PARTY_HEIGHT if _party_stat_map.size() == MAX_PARTY_SIZE
 				else PART_PARTY_HEIGHT
 		)
@@ -184,7 +184,7 @@ func reset_all_options() -> void:
 # Initializes the party character details in the UI.
 func track_party_members(players: Array) -> void:
 	var p_count: int = int(min(players.size(), MAX_PARTY_SIZE))
-	party_stats.rect_size.y = (
+	party_stats.size.y = (
 			FULL_PARTY_HEIGHT if p_count == MAX_PARTY_SIZE
 			else PART_PARTY_HEIGHT
 	)
@@ -198,7 +198,7 @@ func track_party_members(players: Array) -> void:
 
 # Adds the enemy character details to the UI.
 func track_enemy(e: EnemyCharacter) -> void:
-	var e_label: CharacterSummary = _character_summary.instance()
+	var e_label: CharacterSummary = _character_summary.instantiate()
 	e_label.set_name(e.name)
 	e_label.set_hp(
 			e.stats.get_stat(Stat.Type.CUR_HEALTH),
@@ -206,7 +206,7 @@ func track_enemy(e: EnemyCharacter) -> void:
 	)
 	e_label.set_enemy_wisp_count()
 	e_label.set_text_alignment(Label.ALIGN_RIGHT)
-	e.stats.connect("health_changed", e_label, "_on_Character_hp_changed")
+	e.stats.connect("health_changed", Callable(e_label, "_on_Character_hp_changed"))
 	enemy_stats.add_child(e_label)
 
 
@@ -217,21 +217,21 @@ func _set_player_option_focus_neighbors() -> void:
 		if not p_op.disabled:
 			a_ops.append(p_op)
 		else:
-			p_op.focus_neighbour_top = p_op.get_path()
-			p_op.focus_neighbour_bottom = p_op.get_path()
-			p_op.focus_neighbour_left = p_op.get_path()
+			p_op.focus_neighbor_top = p_op.get_path()
+			p_op.focus_neighbor_bottom = p_op.get_path()
+			p_op.focus_neighbor_left = p_op.get_path()
 			p_op.focus_previous = p_op.get_path()
-			p_op.focus_neighbour_right = p_op.get_path()
+			p_op.focus_neighbor_right = p_op.get_path()
 			p_op.focus_next = p_op.get_path()
 	
 	for i in range(a_ops.size()):
-		a_ops[i].focus_neighbour_top = a_ops[i].get_path()
-		a_ops[i].focus_neighbour_bottom = a_ops[i].get_path()
+		a_ops[i].focus_neighbor_top = a_ops[i].get_path()
+		a_ops[i].focus_neighbor_bottom = a_ops[i].get_path()
 		# Arrays indexed at -1 refers to the last element.
-		a_ops[i].focus_neighbour_left = a_ops[i - 1].get_path()
+		a_ops[i].focus_neighbor_left = a_ops[i - 1].get_path()
 		a_ops[i].focus_previous = a_ops[i - 1].get_path()
 		var n: int = i + 1 if i < a_ops.size() - 1 else 0
-		a_ops[i].focus_neighbour_right = a_ops[n].get_path()
+		a_ops[i].focus_neighbor_right = a_ops[n].get_path()
 		a_ops[i].focus_next = a_ops[n].get_path()
 
 

@@ -5,7 +5,7 @@ Stores details for a player character.
 """
 
 
-export(String) var player_name = ""
-export(Texture) var encounter_initiative_portrait = null
-export(Texture) var encounter_active_portrait = null
-export(Texture) var encounter_battle_sprite = null
+@export var player_name: String = ""
+@export var encounter_initiative_portrait: Texture2D = null
+@export var encounter_active_portrait: Texture2D = null
+@export var encounter_battle_sprite: Texture2D = null

@@ -12,8 +12,8 @@ enum Condition {
 	UP_TO
 }
 
-export(int, 0, 10) var adjacent_check = 1
-export(Condition) var check_type = Condition.EQUALS
+@export var adjacent_check = 1 # (int, 0, 10)
+@export var check_type: Condition = Condition.EQUALS
 
 
 # Virtual function. Checks if the condition has been met given the current

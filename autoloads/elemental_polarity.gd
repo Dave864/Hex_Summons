@@ -1,7 +1,7 @@
 extends Node
 """
 Defines the polarity of the four core elements. 
-The core elements are Earth, Fire, Water, Wind. The polarities are Light, Dark.
+The core elements are Earth, Fire, Water, Wind. The polarities are Light3D, Dark.
 Each polarity always has two core elements.
 """
 

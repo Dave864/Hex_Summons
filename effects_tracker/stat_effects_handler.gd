@@ -48,7 +48,7 @@ var _global_reference: Dictionary = {
 }
 
 # The stat that is represented.
-export(stat) var target_stat = stat.ATTACK
+@export var target_stat: stat = stat.ATTACK
 
 # Buses that keep track of the effects that affect the managed stat.
 var _flat_change_bus: EffectBus

@@ -21,7 +21,7 @@ func _ready() -> void:
 	# The states are children of a `PlayerCharacter` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 
 	# to be ready first.
-	yield(owner, "ready")
+	await owner.ready
 	# The `as` keyword casts the `owner` variable to the `EnemyCharacter` type.
 	# If the `owner` is not a `EnemyCharacter`, we'll get `null`.
 	ec = owner as EnemyCharacter

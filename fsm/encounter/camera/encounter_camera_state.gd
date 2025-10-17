@@ -20,7 +20,7 @@ func _ready() -> void:
 	# The states are children of an `EncounterCamera` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 
 	# to be ready first.
-	yield(owner, "ready")
+	await owner.ready
 	# The `as` keyword casts the `owner` variable to the `EncounterCamera` type.
 	# If the `owner` is not an `EncounterCamera`, we'll get `null`.
 	enc_camera = owner as EncounterCamera

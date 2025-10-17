@@ -13,7 +13,7 @@ func enter(msg := {}) -> void:
 	var action: Action = msg["action"]
 	var targets: Array = msg["targets"]
 	_change_target_state(targets, true)
-	yield(action.execute_action(), "completed")
+	await action.execute_action()
 	_change_target_state(targets, false)
 	pc.emit_turn_ended()
 	_activate_cooldown(action)

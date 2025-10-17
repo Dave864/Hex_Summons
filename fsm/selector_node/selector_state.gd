@@ -22,7 +22,7 @@ func _ready() -> void:
 	# The states are children of the `Selector` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 
 	# to be ready first.
-	yield(owner, "ready")
+	await owner.ready
 	# The `as` keyword casts the `owner` variable to the `Selector` type.
 	# If the `owner` is not a `Selector`, we'll get `null`.
 	selector = owner as Selector

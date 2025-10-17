@@ -20,7 +20,7 @@ var hex_map: HexMap = null
 
 # Reference to a function that will update the map tile highlights. Different
 # states will use different logic for updating the highlights.
-var _update_selection_func: FuncRef = null setget set_update_selection_func
+var _update_selection_func: FuncRef = null: set = set_update_selection_func
 
 
 # Sets the _update_selection_func.

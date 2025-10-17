@@ -54,7 +54,7 @@ static func connect_signal(
 	target: Object,
 	function_name: String
 ) -> void:
-	var e = signal_source_node.connect(signal_name, target, function_name)
+	var e = signal_source_node.connect(signal_name, Callable(target, function_name))
 	
 	if e != OK:
 		if signal_source_node.name != target.name:

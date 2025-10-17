@@ -1,15 +1,15 @@
 class_name HexMapAStar
-extends AStar
+extends AStar3D
 """
-Custom AStar implementation designed to handle the calculations for hex grid
+Custom AStar3D implementation designed to handle the calculations for hex grid
 pathfinding and area-finding.
 """
 
 
 # The cost function that should be used when calculating distance.
-var _cost_func: FuncRef = null
+var _cost_func: Callable = Callable(self, "")
 # The function that should be used when adding another item to the closest path.
-var _add_path_item_func: FuncRef = null
+var _add_path_item_func: Callable = Callable(self, "")
 # Tracks how many tiles are along the x-axis of the hex map this object represents.
 var _x_count: int = 0
 
@@ -25,7 +25,7 @@ func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Diction
 
 	frontier.push(0.0, start_id)
 	id_distances[start_id] = {"travel": 0.0, "tile": 0}
-	while not frontier.empty():
+	while not frontier.is_empty():
 		var current: Array = frontier.min()
 		frontier.pop_min()
 		for next_id in get_point_connections(current[1]):
@@ -56,7 +56,7 @@ func get_full_distance_map(start_id: int) -> Dictionary:
 
 	frontier.push(0.0, start_id)
 	id_distances[start_id] = {"travel": 0.0, "tile": 0}
-	while not frontier.empty():
+	while not frontier.is_empty():
 		var current: Array = frontier.min()
 		frontier.pop_min()
 		for next_id in get_point_connections(current[1]):
@@ -100,9 +100,9 @@ func get_closest_id_path(
 	source_id: int,
 	target_id: int,
 	max_dist: int
-) -> PoolIntArray:
-	_add_path_item_func =  funcref(self, "_add_id")
-	return PoolIntArray(_get_closest_path(source_id, target_id, max_dist))
+) -> PackedInt32Array:
+	_add_path_item_func =  Callable(self, "_add_id")
+	return PackedInt32Array(_get_closest_path(source_id, target_id, max_dist))
 
 
 # Gets the shortest point path from start to target that is within the maximum
@@ -111,14 +111,14 @@ func get_closest_point_path(
 	source_id: int,
 	target_id: int,
 	max_dist: int
-) -> PoolVector3Array:
-	_add_path_item_func =  funcref(self, "_add_point")
-	return PoolVector3Array(_get_closest_path(source_id, target_id, max_dist))
+) -> PackedVector3Array:
+	_add_path_item_func =  Callable(self, "_add_point")
+	return PackedVector3Array(_get_closest_path(source_id, target_id, max_dist))
 
 
 # Determines the travel distance from the start to the end.
 func travel_distance(start_index: int, end_index: int) -> float:
-	var path: PoolIntArray = get_id_path(start_index, end_index)
+	var path: PackedInt64Array = get_id_path(start_index, end_index)
 	var dist: float = 0.0
 	for i in range(1, path.size()):
 		dist += _compute_cost(path[i - 1], path[i])
@@ -154,13 +154,13 @@ func set_all_disabled(disabled: bool = true) -> void:
 # Sets the cost function for AStar to use the travel distance between tiles.
 # This accounts for tile heights. This is the default.
 func set_cost_to_travel() -> void:
-	_cost_func = funcref(self, "_travel_dist")
+	_cost_func = Callable(self, "_travel_dist")
 
 
 # Sets the cost function for AStar to use the tile distances. This ignores tile
 # heights.
 func set_cost_to_tile() -> void:
-	_cost_func = funcref(self, "_cube_dist")
+	_cost_func = Callable(self, "_cube_dist")
 
 
 func _init(hex_map_tiles: Array, x_count: int) -> void:
@@ -218,7 +218,7 @@ func _get_closest_path(
 		"to_target": _compute_cost(source_id, target_id)
 	}
 	came_from[source_id] = -1
-	while not frontier.empty():
+	while not frontier.is_empty():
 		var cur: Array = frontier.min()
 		var cur_dist: float = distances[cur[1]]["travel"]
 		frontier.pop_min()
@@ -253,22 +253,22 @@ func _get_closest_path(
 			closest_pt = pt
 	var path: Array = []
 	while closest_pt > 0:
-		path.append(_add_path_item_func.call_func(closest_pt))
+		path.append(_add_path_item_func.call(closest_pt))
 		closest_pt = came_from[closest_pt]
-	path.invert()
+	path.reverse()
 	return path
 
 
 # Virtual Astar function. Called when computing the cost between two
 # connected points.
 func _compute_cost(u: int, v: int) -> float:
-	return _cost_func.call_func(u, v)
+	return _cost_func.call(u, v)
 
 
 # Virtual Astar function. Called when estimating the cost between a point 
 # and the path's ending point.
 func _estimate_cost(u: int, v: int) -> float:
-	return min(0, _cost_func.call_func(u, v) - 1)
+	return min(0, _cost_func.call(u, v) - 1)
 
 
 # Calculates the travel distance between two tiles. Uses the cube distance and 

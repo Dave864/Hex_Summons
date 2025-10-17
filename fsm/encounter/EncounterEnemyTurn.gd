@@ -58,9 +58,9 @@ func _disconnect_signals() -> void:
 # Update the initiative tracker and transition to either the PlayerTurn state
 # or the EnemyTurn state depending on the next character.
 func _on_EnemyCharacter_turn_ended() -> void:
-	yield(_active_char, "is_waiting")
+	await _active_char.is_waiting
 	var next_character: Character = enc.get_next_character()
-	yield(enc.progress_initiative(), "completed")
+	await enc.progress_initiative().completed
 	if next_character is PlayerCharacter:
 		state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:

@@ -7,19 +7,19 @@ option.
 """
 
 
-const COLOR_WHITE: Color = Color.white
+const COLOR_WHITE: Color = Color.WHITE
 const COLOR_GREY: Color = Color("7f7f7f")
 
-export(NodePath) var sigil_ref = NodePath("")
-export(NodePath) var icon_ref = NodePath("")
+@export var sigil_ref: NodePath = NodePath("")
+@export var icon_ref: NodePath = NodePath("")
 
 var _mouse_came_back: bool = false
 
-onready var sigil: TextureRect = get_node_or_null(sigil_ref)
-onready var icon: TextureRect = get_node_or_null(icon_ref)
-onready var label: Label = $Label
-onready var ap_focus: AnimationPlayer = $APFocus
-onready var ap_icon: AnimationPlayer = $APIcon
+@onready var sigil: TextureRect = get_node_or_null(sigil_ref)
+@onready var icon: TextureRect = get_node_or_null(icon_ref)
+@onready var label: Label = $Label
+@onready var ap_focus: AnimationPlayer = $APFocus
+@onready var ap_icon: AnimationPlayer = $APIcon
 
 
 # Resets the button.
@@ -78,7 +78,7 @@ func _on_PlayerOptionButton_focus_entered() -> void:
 	if pressed:
 		ap_focus.play("focus_selected")
 		ap_icon.play("selected_start")
-		yield(ap_icon, "animation_finished")
+		await ap_icon.animation_finished
 		ap_icon.play("selected_loop")
 	else:
 		ap_icon.play("selected_start")

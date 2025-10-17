@@ -20,31 +20,31 @@ enum ResEffect {
 }
 
 # The target of this effect.
-export(Target) var target = Target.NONE
+@export var target: Target = Target.NONE
 # The stat of the target that is affected by this effect.
-export(Resource) var stat_affected = null
+@export var stat_affected: Resource = null
 # How the targeted stat is modified.
-export(Constants.Operation) var operation = Constants.Operation.SET
+@export var operation = Constants.Operation.SET # (Constants.Operation)
 # The method that determines the strength of this effect.
-export(Resource) var calculation_method = null
+@export var calculation_method: Resource = null
 # Flag that indicates if this effect is resisted by the target
-export(bool) var resisted = true
+@export var resisted: bool = true
 # Indicates if resistance affects aspect strength or duration.
-export(ResEffect) var resistance_effect = ResEffect.STRENGTH
+@export var resistance_effect: ResEffect = ResEffect.STRENGTH
 # The maximum number of turns this effect can last afier application. A value
 # of zero means the effect is applied immediately.
-export(int, 0, 100) var max_turn_duration = 0
+@export var max_turn_duration = 0 # (int, 0, 100)
 
 # How many turns does this effect last after application when adjusted for
 # resistances.
 var turn_duration: int = max_turn_duration
 
 # The stats of the character that will apply this effect.
-var _source_stats: CharacterStats = null setget set_source_stats
+var _source_stats: CharacterStats = null: set = set_source_stats
 # The current values of the character stats.
 var _current_stats: Dictionary = {}
 # The potency of the action the parent effect is assigned to.
-var _action_potency: Potency = null setget set_action_potency
+var _action_potency: Potency = null: set = set_action_potency
 
 
 # Updates the source character stats of this effect aspect.

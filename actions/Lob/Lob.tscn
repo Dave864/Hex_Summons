@@ -6,7 +6,7 @@
 [ext_resource path="res://actions/action.gd" type="Script" id=4]
 [ext_resource path="res://actions/test_shader_material.tres" type="Material" id=5]
 
-[sub_resource type="CylinderShape" id=4]
+[sub_resource type="CylinderShape3D" id=4]
 radius = 0.5
 
 [sub_resource type="SphereMesh" id=3]
@@ -17,50 +17,50 @@ height = 1.0
 [sub_resource type="Animation" id=5]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("ActionHitBox/CollisionShape:shape:radius")
+tracks/0/path = NodePath("ActionHitBox/CollisionShape3D:shape:radius")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 0.5 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ActionHitBox/MeshInstance:mesh:radius")
+tracks/1/path = NodePath("ActionHitBox/MeshInstance3D:mesh:radius")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 0.5 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ActionHitBox/MeshInstance:visible")
+tracks/2/path = NodePath("ActionHitBox/MeshInstance3D:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 1,
 "values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ActionHitBox/MeshInstance:mesh:height")
+tracks/3/path = NodePath("ActionHitBox/MeshInstance3D:mesh:height")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 0,
 "values": [ 1.0 ]
 }
@@ -69,50 +69,50 @@ tracks/3/keys = {
 resource_name = "execute"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("ActionHitBox/CollisionShape:shape:radius")
+tracks/0/path = NodePath("ActionHitBox/CollisionShape3D:shape:radius")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 0.482, 2.46229 ),
+"times": PackedFloat32Array( 0, 0.5 ),
+"transitions": PackedFloat32Array( 0.482, 2.46229 ),
 "update": 0,
 "values": [ 0.5, 2.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ActionHitBox/MeshInstance:mesh:radius")
+tracks/1/path = NodePath("ActionHitBox/MeshInstance3D:mesh:radius")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 0.482, 2.46229 ),
+"times": PackedFloat32Array( 0, 0.5 ),
+"transitions": PackedFloat32Array( 0.482, 2.46229 ),
 "update": 0,
 "values": [ 0.5, 2.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ActionHitBox/MeshInstance:visible")
+tracks/2/path = NodePath("ActionHitBox/MeshInstance3D:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 1,
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ActionHitBox/MeshInstance:mesh:height")
+tracks/3/path = NodePath("ActionHitBox/MeshInstance3D:mesh:height")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 0.482, 2.46229 ),
+"times": PackedFloat32Array( 0, 0.5 ),
+"transitions": PackedFloat32Array( 0.482, 2.46229 ),
 "update": 0,
 "values": [ 1.0, 4.0 ]
 }
@@ -122,7 +122,7 @@ script = ExtResource( 4 )
 hit_box_ref = NodePath("ActionHitBox")
 stats = ExtResource( 2 )
 
-[node name="ActionHitBox" type="Area" parent="."]
+[node name="ActionHitBox" type="Area3D" parent="."]
 collision_layer = 16
 collision_mask = 0
 monitoring = false
@@ -130,11 +130,11 @@ monitorable = false
 script = ExtResource( 3 )
 effects_ref = NodePath("../Effects")
 
-[node name="CollisionShape" type="CollisionShape" parent="ActionHitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ActionHitBox"]
 shape = SubResource( 4 )
 disabled = true
 
-[node name="MeshInstance" type="MeshInstance" parent="ActionHitBox"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ActionHitBox"]
 visible = false
 mesh = SubResource( 3 )
 

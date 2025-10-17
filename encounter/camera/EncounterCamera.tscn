@@ -6,16 +6,16 @@
 [ext_resource path="res://fsm/encounter/camera/EncounterCameraReset.gd" type="Script" id=5]
 [ext_resource path="res://fsm/encounter/camera/EncounterCameraPan.gd" type="Script" id=6]
 
-[node name="EncounterCamera" type="Spatial"]
+[node name="EncounterCamera" type="Node3D"]
 script = ExtResource( 1 )
 joystick_vert_pan_speed = 120.0
 joystick_lateral_pan_speed = 200.0
 
-[node name="FocusPoint" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.60876, 0.793352, 0, -0.793352, 0.60876, 0, 0, 0 )
+[node name="FocusPoint" type="Marker3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 0.60876, 0.793352, 0, -0.793352, 0.60876, 0, 0, 0 )
 
-[node name="Camera" type="Camera" parent="FocusPoint"]
-transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, -4.76837e-07, 15 )
+[node name="Camera3D" type="Camera3D" parent="FocusPoint"]
+transform = Transform3D( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, -4.76837e-07, 15 )
 projection = 1
 size = 10.0
 affect_lod = false

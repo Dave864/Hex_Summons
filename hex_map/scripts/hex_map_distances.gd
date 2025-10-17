@@ -5,8 +5,8 @@ Stores the distance maps for all tiles for a given hex map.
 """
 
 
-export(Dictionary) var d_maps = {}
-export(int) var map_hash = -1
+@export var d_maps: Dictionary = {}
+@export var map_hash: int = -1
 
 
 # Gets the distance map at the given map index. Returns null if the index is not
@@ -26,4 +26,4 @@ func clear() -> void:
 
 # Checks if distances have been created.
 func distances_present() -> bool:
-	return not d_maps.empty()
+	return not d_maps.is_empty()
