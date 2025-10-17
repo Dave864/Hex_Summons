@@ -9,7 +9,7 @@ the icon.
 
 signal shine_ping(e)
 
-@export var element = Constants.PolarElement.LIGHT: set = set_element
+@export var element: int = Constants.PolarElement.LIGHT: set = set_element
 @export var light_region: Vector2 = Vector2(0,0)
 @export var dark_region: Vector2 = Vector2(0,0)
 

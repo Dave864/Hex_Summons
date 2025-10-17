@@ -7,7 +7,7 @@ take and then starts the logic chain.
 
 
 # Reference to the CharacterAI node of this character.
-@export var ai_reference: NodePath = null
+@export var ai_node: CharacterAI = null
 
 # The action the character will execute.
 var _action: Action = null
@@ -19,9 +19,6 @@ var _move_end_index: int = -1
 var _source_d_map: Dictionary = {}
 # Runs the AI logic in a separate thread.
 var _ai_thread: Thread
-
-# The CharacterAI node.
-@onready var _ai_node: CharacterAI = get_node(ai_reference)
 
 
 # Called by the state machine upon changing the active state. The `msg` parameter
@@ -35,8 +32,8 @@ func enter(_msg := {}) -> void:
 #	_ai_thread = Thread.new()
 #	_ai_thread.start(_ai_node, "determine_action_chain")
 #	var action_chain: Array = _ai_thread.wait_to_finish()
-	_ai_node.update_distance_map()
-	var action_chain: Array = _ai_node.determine_action_chain()
+	ai_node.update_distance_map()
+	var action_chain: Array = ai_node.determine_action_chain()
 	
 	if action_chain.size() <= 1:
 		_process_action_chain(action_chain)
@@ -44,7 +41,7 @@ func enter(_msg := {}) -> void:
 	_action = action_chain[0][1]
 	_target_index = action_chain[0][2]
 	var possible_targets: Array = action_chain[0][3]
-	_move_end_index = _ai_node.get_move_dest_id()
+	_move_end_index = ai_node.get_move_dest_id()
 	if _action != null and _action.stats.emit_from_center:
 		action_chain[0][3] = _orient_to_target(possible_targets)
 	elif _action != null:
@@ -61,10 +58,10 @@ func exit() -> void:
 
 # Orients the action emission to target. Returns the targets the action will hit.
 func _orient_to_target(possible_targets: Array) -> Array:
-	var target_tile: MapTile = _ai_node.h_map.get_tile_at(_target_index)
+	var target_tile: MapTile = ai_node.h_map.get_tile_at(_target_index)
 	_action.set_emission_map_index(_move_end_index)
 	var char_pos: Vector3 = (
-		_ai_node.h_map.get_tile_at(_move_end_index).get_character_position()
+		ai_node.h_map.get_tile_at(_move_end_index).get_character_position()
 	)
 	_action.set_emission_pos(char_pos)
 	var char_pt: Vector2 = Vector2(char_pos.x, char_pos.z)
@@ -84,7 +81,7 @@ func _orient_to_target(possible_targets: Array) -> Array:
 func _place_on_target(possible_targets: Array) -> Array:
 	_action.set_emission_map_index(_target_index)
 	var em_pos: Vector3 = (
-		_ai_node.h_map.get_tile_at(_target_index).get_character_position()
+		ai_node.h_map.get_tile_at(_target_index).get_character_position()
 	)
 	_action.set_emission_pos(em_pos)
 	return _get_targets(possible_targets)
@@ -101,17 +98,17 @@ func _get_targets(possible_targets: Array) -> Array:
 		effect_area = _action.stats.effect_range.get_dir_area_indexes(
 				_target_index,
 				_action.get_emission_direction(),
-				_ai_node.h_map
+				ai_node.h_map
 		)
 	else:
 		effect_area = _action.stats.effect_range.get_area_indexes(
 				_target_index,
-				_ai_node.h_map
+				ai_node.h_map
 		)
 	var map_tile: MapTile = null
 	var c: Character = null
 	for tile_id in effect_area:
-		map_tile = _ai_node.h_map.get_tile_at(tile_id)
+		map_tile = ai_node.h_map.get_tile_at(tile_id)
 		c = map_tile.occupant.get_current_occupant()
 		if c != null and p_t_set.has(c.get_instance_id()):
 			targets.append(c)

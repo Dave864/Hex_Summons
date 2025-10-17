@@ -25,7 +25,7 @@ var _mouse_came_back: bool = false
 # Resets the button.
 func reset() -> void:
 	if not disabled:
-		pressed = false
+		set_pressed_no_signal(false)
 
 
 # Sets the disabled value, updating label and all images to match.

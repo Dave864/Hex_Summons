@@ -37,7 +37,7 @@ func update_portrait(new_p: Texture2D) -> void:
 
 # Updates the number of the initiative label.
 func update_initiative_label(init_value: int) -> void:
-	initiative.text = String(init_value)
+	initiative.text = String.num_uint64(init_value)
 
 
 func _ready() -> void:

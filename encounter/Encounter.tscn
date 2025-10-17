@@ -15,9 +15,9 @@
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="13"]
 [ext_resource type="PackedScene" path="res://encounter/camera/EncounterCamera.tscn" id="14"]
 
-[node name="Encounter" type="Node"]
+[node name="Encounter" type="Node" node_paths=PackedStringArray("hex_map")]
 script = ExtResource("10")
-hex_map_path = NodePath("TestMap")
+hex_map = NodePath("TestMap")
 
 [node name="EncounterUI" parent="." instance=ExtResource("2")]
 layout_mode = 3

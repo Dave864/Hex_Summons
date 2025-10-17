@@ -29,8 +29,7 @@ func enter(_msg := {}) -> void:
 func exit() -> void:
 	SignalBus.disconnect(
 		"player_turn_started",
-		self,
-		"_on_SignalBus_player_turn_started"
+		Callable(self, "_on_SignalBus_player_turn_started")
 	)
 
 

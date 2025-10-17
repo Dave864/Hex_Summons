@@ -10,8 +10,7 @@ func set_wisp_pool(new_pool: PlayerWispPool) -> void:
 	if pool != null:
 		pool.disconnect(
 				"active_count_changed",
-				self,
-				"_on_WispPool_active_count_changed"
+				Callable(self, "_on_WispPool_active_count_changed")
 		)
 	pool = new_pool
 	pool.connect("active_count_changed", Callable(self, "_on_WispPool_active_count_changed"))

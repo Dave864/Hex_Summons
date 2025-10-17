@@ -27,7 +27,7 @@ func get_dir_area_indexes(start: int, dir: int, hm: HexMap) -> Array:
 	var tile_ids: Array = []
 	var start_coord: Vector3 = (
 			hm.get_tile_at(start) \
-			super.map_coordinate.get_cube_coord()
+			.map_coordinate.get_cube_coord()
 	)
 	tile_ids.append(start)
 	for s in range(spread + 1):

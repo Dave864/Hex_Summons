@@ -31,10 +31,10 @@ func set_player(p: PlayerCharacter) -> void:
 
 # Sets the right focus neighbor for controller support.
 func set_focus_neighbor_right(neighbor: SubOptionButton) -> void:
-	$Button.set_focus_neighbor(MARGIN_RIGHT, neighbor.get_button().get_path())
+	$Button.set_focus_neighbor(SIDE_RIGHT, neighbor.get_button().get_path())
 	# Prevents the action buttons from being reached whil sub options are open.
-	$Button.set_focus_neighbor(MARGIN_BOTTOM, "")
-	neighbor.set_focus_neighbor(MARGIN_LEFT, $Button.get_path())
+	$Button.set_focus_neighbor(SIDE_BOTTOM, "")
+	neighbor.set_focus_neighbor(SIDE_LEFT, $Button.get_path())
 
 
 # Returns the "Button" node.

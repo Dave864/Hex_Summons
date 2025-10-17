@@ -9,7 +9,7 @@ the changes from one element to another.
 
 signal element_ping(e)
 
-@export var element = Constants.CoreElement.EARTH: set = set_element
+@export var element: int = Constants.CoreElement.EARTH: set = set_element
 @export var earth_region: Vector2 = Vector2(0,0)
 @export var fire_region: Vector2 = Vector2(0,0)
 @export var water_region: Vector2 = Vector2(0,0)

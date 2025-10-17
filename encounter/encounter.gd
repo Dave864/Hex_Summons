@@ -7,20 +7,19 @@ Manages the events of an encounter.
 
 # Reference to the encounter hex_map. This is to allow for differently named
 # hex map scene to be used.
-@export var hex_map_path: NodePath = null
+@export var hex_map: HexMap = null
 
 var cur_init: int = 0
 
 @onready var players: Array = $Players.get_children()#PartyController.get_party_members()
 @onready var enemies: Array = $Enemies.get_children()
 @onready var selector: Selector = $Selector
-@onready var hex_map: HexMap = get_node(hex_map_path)
 @onready var ui: EncounterUI = $EncounterUI
 
 
 # Move the initiative counter to the next index or reset it back to the start.
 func progress_initiative() -> void:
-	await ui.initiative_tracker.progress_initiative().completed
+	await ui.initiative_tracker.progress_initiative()
 
 
 # Gets the next character in the intiative track.
@@ -79,8 +78,8 @@ func _connect_map_to_selector() -> void:
 # Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
-		hex_map_path != null,
-		"Encounter has not set the path for the hex_map."
+		hex_map != null,
+		"Encounter has not set a hex map."
 	)
 	assert(players.size() > 0, "No players are present.")
 	assert(enemies.size() > 0, "No enemies are present.")

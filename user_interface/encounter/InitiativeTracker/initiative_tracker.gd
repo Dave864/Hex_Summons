@@ -53,8 +53,8 @@ func populate_initiative(characters: Array) -> void:
 	_update_display()
 
 
-# Updates the initiative track by one.
-func progress_initiative() -> void:
+# Updates the initiative track by one. Returns true when completed.
+func progress_initiative() -> bool:
 	_cur_init = _get_next_init_step()
 	# Initiative goes to the next round.
 	if _cur_init < 0:
@@ -68,6 +68,7 @@ func progress_initiative() -> void:
 	ap.play("shift")
 	_update_display()
 	await ap.animation_finished
+	return true
 
 
 # Called during the "shift" animation. Sets the initiative labels to the previous
@@ -219,8 +220,7 @@ func _calculate_round_initiative(i_round: int) -> void:
 func _remove_character(c: Character) -> void:
 	c.stats.disconnect(
 			"agility_changed",
-			self,
-			"_on_CharacterStats_agility_changed"
+			Callable(self, "_on_CharacterStats_agility_changed")
 	)
 	var c_id: int = c.get_instance_id()
 	var c_round_init: int = _get_character_round_init(c_id)

@@ -52,8 +52,7 @@ var pool: WispPool = null
 func _ready():
 	ElementalPolarity.connect(
 			"polarity_changed",
-			self,
-			"_on_ElementalPolarity_polarity_changed"
+			Callable(self, "_on_ElementalPolarity_polarity_changed")
 	)
 	_set_wisp_pool()
 	_set_icons()
@@ -86,12 +85,12 @@ func _set_labels_on_ready() -> void:
 func _set_labels() -> void:
 	var light_elems: Array = ElementalPolarity.get_light_elements()
 	var dark_elems: Array = ElementalPolarity.get_dark_elements()
-	light_label.text = String(pool.active_light_count())
-	light_elem_1_label.text = String(pool.active_element_count(light_elems[0]))
-	light_elem_2_label.text = String(pool.active_element_count(light_elems[1]))
-	dark_label.text = String(pool.active_dark_count())
-	dark_elem_1_label.text = String(pool.active_element_count(dark_elems[0]))
-	dark_elem_2_label.text = String(pool.active_element_count(dark_elems[1]))
+	light_label.text = String.num_uint64(pool.active_light_count())
+	light_elem_1_label.text = String.num_uint64(pool.active_element_count(light_elems[0]))
+	light_elem_2_label.text = String.num_uint64(pool.active_element_count(light_elems[1]))
+	dark_label.text = String.num_uint64(pool.active_dark_count())
+	dark_elem_1_label.text = String.num_uint64(pool.active_element_count(dark_elems[0]))
+	dark_elem_2_label.text = String.num_uint64(pool.active_element_count(dark_elems[1]))
 
 
 # Shines all the element icons at set intervals.
@@ -140,7 +139,7 @@ func _on_CoreElementIcon_element_ping(core_elem: int) -> void:
 	# Not able to update labels if no wisp pool is connected.
 	if pool == null:
 		return
-	var count: String = String(pool.active_element_count(core_elem))
+	var count: String = String.num_uint64(pool.active_element_count(core_elem))
 	if _polarities[LIGHT][0] == core_elem:
 		light_elem_1_label.update_text(count)
 	elif _polarities[LIGHT][1] == core_elem:
@@ -157,10 +156,16 @@ func _on_PolarElementIcon_shine_ping(polar_elem: int) -> void:
 	# Not able to update labels if no wisp pool is connected.
 	if pool == null:
 		return
-	if polar_elem == LIGHT and String(pool.active_light_count()) != light_label.text:
-		light_label.update_text(String(pool.active_light_count()))
-	elif polar_elem == DARK and String(pool.active_dark_count()) != dark_label.text:
-		dark_label.update_text(String(pool.active_dark_count()))
+	if (
+		polar_elem == LIGHT
+		and String.num_uint64(pool.active_light_count()) != light_label.text
+	):
+		light_label.update_text(String.num_uint64(pool.active_light_count()))
+	elif (
+		polar_elem == DARK
+		and String.num_uint64(pool.active_dark_count()) != dark_label.text
+	):
+		dark_label.update_text(String.num_uint64(pool.active_dark_count()))
 
 
 # Update the label for the corresponding element.

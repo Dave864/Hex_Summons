@@ -103,33 +103,27 @@ func _connect_signals() -> void:
 func _disconnect_signals() -> void:
 	SignalBus.disconnect(
 		"move_path_created",
-		self,
-		"_on_SignalBus_move_path_created"
+		Callable(self, "_on_SignalBus_move_path_created")
 	)
 	encounter_ui.technique_button.disconnect(
 			"pressed",
-			self,
-			"_on_TechniqueButton_pressed"
+			Callable(self, "_on_TechniqueButton_pressed")
 	)
 	encounter_ui.spell_button.disconnect(
 			"pressed",
-			self,
-			"_on_SpellButton_pressed"
+			Callable(self, "_on_SpellButton_pressed")
 	)
 	encounter_ui.summon_button.disconnect(
 			"pressed",
-			self,
-			"_on_SummonButton_pressed"
+			Callable(self, "_on_SummonButton_pressed")
 	)
 	encounter_ui.item_button.disconnect(
 			"pressed",
-			self,
-			"_on_ItemButton_pressed"
+			Callable(self, "_on_ItemButton_pressed")
 	)
 	encounter_ui.end_button.disconnect(
 			"pressed",
-			self,
-			"_on_EndButton_pressed"
+			Callable(self, "_on_EndButton_pressed")
 	)
 
 

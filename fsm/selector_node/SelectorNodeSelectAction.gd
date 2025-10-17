@@ -24,7 +24,7 @@ var _ranges_cache: Dictionary = {}
 var _targets_cache: Dictionary = {}
 
 # Reference to the function that will update the tile highlights.
-@onready var _update_selection_ref: FuncRef = funcref(self, "_update_selection")
+@onready var _update_selection_ref: Callable = Callable(self, "_update_selection")
 
 
 func enter(msg: Dictionary = {}) -> void:
@@ -46,7 +46,7 @@ func enter(msg: Dictionary = {}) -> void:
 # Called by the state machine before changing the active state. Use this 
 # function to clean up the state.
 func exit() -> void:
-	selector.set_update_selection_func(null)
+	selector.set_update_selection_func(Callable())
 	_disconnect_signals()
 
 
@@ -294,7 +294,7 @@ func _highlight_effect_range() -> void:
 func _get_source_range() -> Array:
 	var d_map: DistanceMap = (
 			selector.hex_map.range_finder \
-			super.dist_maps.at(_player_map_index)
+			.dist_maps.at(_player_map_index)
 	)
 	var src_area: Dictionary = (
 			d_map.map_from_tile_dist(_action.stats.source_range.get_reach())
@@ -478,28 +478,23 @@ func _connect_signals() -> void:
 func _disconnect_signals() -> void:
 	selector.active_player.disconnect(
 			"turn_ended",
-			self,
-			"_on_PlayerCharacter_turn_ended"
+			Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
 	SignalBus.disconnect(
 			"player_action_selected",
-			self,
-			"_on_SignalBus_player_action_selected"
+			Callable(self, "_on_SignalBus_player_action_selected")
 	)
 	SignalBus.disconnect(
 			"player_action_type_canceled",
-			self,
-			"_on_SignalBus_player_action_type_canceled"
+			Callable(self, "_on_SignalBus_player_action_type_canceled")
 	)
 	SignalBus.disconnect(
 			"top_vertex_changed",
-			self,
-			"_on_SignalBus_top_vertex_changed"
+			Callable(self, "_on_SignalBus_top_vertex_changed")
 	)
 	GamepadHandler.disconnect(
 			"left_joystick_pulsed",
-			self,
-			"_on_GamepadHandler_left_joystick_pulsed"
+			Callable(self, "_on_GamepadHandler_left_joystick_pulsed")
 	)
 
 

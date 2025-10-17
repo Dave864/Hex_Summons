@@ -30,8 +30,8 @@ func _on_MovementButton_focus_exited() -> void:
 
 
 # Keeps the Movement button toggled on when it is in focus.
-func _on_MovementButton_toggled(button_pressed: bool) -> void:
-	if button_pressed:
+func _on_MovementButton_toggled(is_toggled: bool) -> void:
+	if is_toggled:
 		ap_focus.play("focus_selected")
 		ap_icon.play("selected_start")
 		await ap_icon.animation_finished

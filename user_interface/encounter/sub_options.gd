@@ -9,10 +9,6 @@ Manages the SubOptions UI element in the EncounterUI.
 signal option_selected(option_info)
 
 var _actions: Array = []
-var _sub_option_button: PackedScene = preload(
-		"res://user_interface/encounter/" \
-		+ "SubOptionButton/SubOptionButton.tscn"
-)
 var _action_button: PackedScene = preload(
 		"res://user_interface/encounter/" \
 		+ "SubOptionButton/ActionButton/ActionButton.tscn"
@@ -47,8 +43,7 @@ func clear_sub_options() -> void:
 	for option_button in _sub_options_container.get_children():
 		option_button.disconnect(
 				"option_selected",
-				self,
-				"_on_SubOptionButton_option_selected"
+				Callable(self, "_on_SubOptionButton_option_selected")
 		)
 		_sub_options_container.remove_child(option_button)
 		option_button.queue_free()
@@ -73,8 +68,7 @@ func _populate_sub_options(player: PlayerCharacter, player_actions: Array) -> vo
 		new_button.set_player(player)
 		new_button.connect(
 			"option_selected",
-			self,
-			"_on_SubOptionButton_option_selected"
+			Callable(self, "_on_SubOptionButton_option_selected")
 		)
 		_actions.append(pa)
 		_sub_options_container.add_child(new_button)

@@ -41,32 +41,32 @@ func set_row_count(rc: int) -> void:
 	_emission_index = Vector2(1, _mid_row)
 	_d_matrix = DisplayMatrix.new(row_count, col_count)
 	if Engine.is_editor_hint():
-		update()
+		queue_redraw()
 
 
 func set_col_count(cc: int) -> void:
 	col_count = cc
 	_d_matrix = DisplayMatrix.new(row_count, col_count)
 	if Engine.is_editor_hint():
-		update()
+		queue_redraw()
 
 
 func set_hex_radius(r: float) -> void:
 	hex_radius = r
 	if Engine.is_editor_hint():
-		update()
+		queue_redraw()
 
 
 func set_outline_width(ow: float) -> void:
 	outline_width = ow
 	if Engine.is_editor_hint():
-		update()
+		queue_redraw()
 
 
 func set_hex_spacing(hs: float) -> void:
 	hex_spacing = hs
 	if Engine.is_editor_hint():
-		update()
+		queue_redraw()
 
 
 # Redraws the range display for the given action.
@@ -74,7 +74,7 @@ func update_action(action: Action) -> void:
 	_action = action
 	_update_display_details()
 	_set_min_size()
-	update()
+	queue_redraw()
 
 
 func _ready() -> void:

@@ -27,8 +27,7 @@ func exit() -> void:
 	encounter_ui.set_active_options()
 	SignalBus.disconnect(
 			"selector_required",
-			self,
-			"_on_SignalBus_selector_required"
+			Callable(self, "_on_SignalBus_selector_required")
 	)
 
 

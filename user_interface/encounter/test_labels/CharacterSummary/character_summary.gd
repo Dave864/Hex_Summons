@@ -50,19 +50,19 @@ func set_enemy_wisp_count() -> void:
 
 
 # Aligns the label text.
-func set_text_alignment(alignment: int) -> void:
+func set_text_alignment(text_alignment: int) -> void:
 	if (
-		alignment == Label.ALIGN_LEFT
-		or alignment == Label.ALIGNMENT_CENTER
-		or alignment == Label.ALIGN_RIGHT
+		text_alignment == HORIZONTAL_ALIGNMENT_LEFT
+		or text_alignment == HORIZONTAL_ALIGNMENT_CENTER
+		or text_alignment == HORIZONTAL_ALIGNMENT_RIGHT
 	):
-		$Name.set_align(alignment)
-		$HP.set_align(alignment)
-		$WispCount.set_align(alignment)
+		$Name.set_align(text_alignment)
+		$HP.set_align(text_alignment)
+		$WispCount.set_align(text_alignment)
 	else:
-		$Name.set_align(Label.ALIGN_LEFT)
-		$HP.set_align(Label.ALIGN_LEFT)
-		$WispCount.set_align(Label.ALIGN_LEFT)
+		$Name.set_align(HORIZONTAL_ALIGNMENT_LEFT)
+		$HP.set_align(HORIZONTAL_ALIGNMENT_LEFT)
+		$WispCount.set_align(HORIZONTAL_ALIGNMENT_LEFT)
 
 
 # Called when the node enters the scene tree for the first time.

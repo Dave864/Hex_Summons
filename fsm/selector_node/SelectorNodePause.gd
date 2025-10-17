@@ -31,13 +31,11 @@ func enter(_msg: Dictionary = {}) -> void:
 func exit() -> void:
 	selector.active_player.disconnect(
 			"turn_ended",
-			self,
-			"_on_PlayerCharacter_turn_ended"
+			Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
 	SignalBus.disconnect(
 			"selector_required",
-			self,
-			"_on_SignalBus_selector_required"
+			Callable(self, "_on_SignalBus_selector_required")
 	)
 
 
