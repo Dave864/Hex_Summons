@@ -6,6 +6,7 @@ ranges.
 """
 
 
+export(String) var name = ""
 export(Resource) var potency = null
 export(Resource) var source_range = null
 export(Resource) var dead_range = null

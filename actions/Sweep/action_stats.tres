@@ -8,6 +8,7 @@
 
 [resource]
 script = ExtResource( 1 )
+name = "Sweep"
 potency = ExtResource( 2 )
 source_range = ExtResource( 3 )
 dead_range = ExtResource( 4 )

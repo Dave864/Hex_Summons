@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://actions/spell_stats.gd" type="Script" id=1]
+[ext_resource path="res://actions/Beam/action_stats.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+action_stats = ExtResource( 2 )
+earth_req = 0
+earth_cost = 0
+fire_req = 2
+fire_cost = 1
+water_req = 0
+water_cost = 0
+wind_req = 0
+wind_cost = 0
+light_req = 0
+light_cost = 0
+dark_req = 0
+dark_cost = 0

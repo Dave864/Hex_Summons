@@ -8,6 +8,7 @@
 
 [resource]
 script = ExtResource( 1 )
+name = "Blast"
 potency = ExtResource( 3 )
 source_range = ExtResource( 2 )
 dead_range = ExtResource( 4 )
