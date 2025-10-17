@@ -1,10 +1,11 @@
 class_name SpellStats
-extends ActionStats
+extends Resource
 """
 Describes a spell. Spells are actions with a wisp requirement and cost.
 """
 
 
+export(Resource) var action_stats = null
 export(int, 0, 4) var earth_req = 0
 export(int, 0, 4) var earth_cost = 0
 export(int, 0, 4) var fire_req = 0
@@ -58,6 +59,10 @@ func _get_costs() -> Dictionary:
 
 # Check that all required parameters are set and valid.
 func _check_for_required_parameters() -> void:
+	assert(
+			action_stats is ActionStats,
+			"Parameter action_stats is not of type ActionStats."
+	)
 	assert(earth_req >= earth_cost, "Earth requirement less than cost")
 	assert(fire_req >= fire_cost, "Fire requirement less than cost")
 	assert(water_req >= water_cost, "Water requirement less than cost")

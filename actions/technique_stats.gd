@@ -1,10 +1,11 @@
 class_name TechniqueStats
-extends ActionStats
+extends Resource
 """
 Describes a technique. Techniques are actions with a cooldown.
 """
 
 
+export(Resource) var action_stats = null
 export(int, 0, 10) var cooldown = 0
 
 var _countdown: int = 0 setget , get_countdown
@@ -18,6 +19,14 @@ func get_countdown() -> int:
 # Checks if the countdown is active.
 func is_active() -> bool:
 	return _countdown > 0
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	assert(
+			action_stats is ActionStats,
+			"Parameter action_stats is not of type ActionStats."
+	)
 
 
 # Starts the cooldown countdown.
