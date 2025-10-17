@@ -36,7 +36,7 @@ var _techniques: Array = [] setget , get_techniques
 var _spells: Array = [] setget , get_spells
 
 onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
-onready var active_player_stats: PlayerStats = $ActivePlayerStats
+onready var active_player_stats: PlayerStatsUI = $ActivePlayerStats
 onready var enemy_stats: VBoxContainer = $EnemyStats
 onready var party_stats: VBoxContainer = $PartyStats
 onready var options: HBoxContainer = $Options
@@ -189,7 +189,7 @@ func track_party_members(players: Array) -> void:
 			else PART_PARTY_HEIGHT
 	)
 	for i in p_count:
-		var player_stats: PlayerStats = party_stats.get_child(i)
+		var player_stats: PlayerStatsUI = party_stats.get_child(i)
 		var player: PlayerCharacter = players[i]
 		_party_stat_map[player.get_instance_id()] = player_stats
 		player_stats.set_stats(player)

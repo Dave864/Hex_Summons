@@ -5,7 +5,8 @@
 [ext_resource path="res://art/ui/ThemeBlueSigil/HealthBorder.png" type="Texture" id=3]
 [ext_resource path="res://art/icon.png" type="Texture" id=4]
 [ext_resource path="res://art/ui/ThemeBlueSigil/HealthBar.png" type="Texture" id=5]
-[ext_resource path="res://user_interface/encounter/PlayerStats/player_stats.gd" type="Script" id=6]
+[ext_resource path="res://user_interface/encounter/PlayerStats/player_stats_ui.gd" type="Script" id=6]
+
 
 [node name="PartyPlayerStats" type="Control"]
 anchor_right = 0.2

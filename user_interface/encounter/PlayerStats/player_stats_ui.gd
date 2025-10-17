@@ -1,4 +1,4 @@
-class_name PlayerStats
+class_name PlayerStatsUI
 extends Control
 """
 The encounter scene UI element that displays a summary of a player character.
