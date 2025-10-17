@@ -14,7 +14,7 @@ const ELEMENT_TAGS: Dictionary = {
 
 
 # Sets the name of the summary.
-func set_name(new_name: String) -> void:
+func set_character_name(new_name: String) -> void:
 	$Name.text = new_name
 
 

@@ -71,15 +71,13 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 			_focused_player != null 
 			and _focused_player.stats.is_connected(
 				"health_changed",
-				active_player_stats,
-				"_on_Character_hp_changed"
+				Callable(active_player_stats, "_on_Character_hp_changed")
 			)
 	)
 	if player_connected:
 		_focused_player.stats.disconnect(
 				"health_changed",
-				active_player_stats,
-				"_on_Character_hp_changed"
+				Callable(active_player_stats, "_on_Character_hp_changed")
 		)
 	if _focused_player != null:
 		_party_stat_map[_focused_player.get_instance_id()].show()
@@ -135,18 +133,18 @@ func grab_focus_for_sub_option_at_index(index: int) -> void:
 # Updates the disabled flag for all player options depending on respective
 # criteria.
 func set_active_options() -> void:
-	movement_button.set_disabled(false)
-	technique_button.set_disabled(_techniques.size() <= 0)
-	spell_button.set_disabled(_spells.size() <= 0)
+	movement_button.disable(false)
+	technique_button.disable(_techniques.size() <= 0)
+	spell_button.disable(_spells.size() <= 0)
 	"""
 	TODO: summon option will depend on different logic that has yet to be implemented.
 	"""
-	summon_button.set_disabled()
+	summon_button.disable()
 	"""
 	TODO: item option will depend on different logic that has yet to be implemented.
 	"""
-	item_button.set_disabled()
-	end_button.set_disabled(false)
+	item_button.disable()
+	end_button.disable(false)
 
 
 # Hides the active player stats and reveals the relevant party summary for the
@@ -163,12 +161,12 @@ func hide_active_stats() -> void:
 
 # Set all player options to disabled.
 func disable_all_options() -> void:
-	movement_button.set_disabled()
-	technique_button.set_disabled()
-	spell_button.set_disabled()
-	summon_button.set_disabled()
-	item_button.set_disabled()
-	end_button.set_disabled()
+	movement_button.disable()
+	technique_button.disable()
+	spell_button.disable()
+	summon_button.disable()
+	item_button.disable()
+	end_button.disable()
 
 
 # Reset all PlayerOptionButtons.
@@ -199,7 +197,7 @@ func track_party_members(players: Array) -> void:
 # Adds the enemy character details to the UI.
 func track_enemy(e: EnemyCharacter) -> void:
 	var e_label: CharacterSummary = _character_summary.instantiate()
-	e_label.set_name(e.name)
+	e_label.set_character_name(e.name)
 	e_label.set_hp(
 			e.stats.get_stat(Stat.Type.CUR_HEALTH),
 			e.stats.get_stat(Stat.Type.CUR_HEALTH)

@@ -29,7 +29,7 @@ func reset() -> void:
 
 
 # Sets the disabled value, updating label and all images to match.
-func set_disabled(d: bool = true) -> void:
+func disable(d: bool = true) -> void:
 	disabled = d
 	if disabled:
 		_update_modulation(COLOR_GREY)
@@ -40,7 +40,7 @@ func set_disabled(d: bool = true) -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_params()
-	set_disabled(disabled)
+	disable(disabled)
 
 
 # Updates the modulation for sigil, icon, and label UI elements.
@@ -94,8 +94,8 @@ func _on_PlayerOptionButton_focus_exited() -> void:
 
 
 # Plays the appropriate animations when the button is toggled.
-func _on_PlayerOptionButton_toggled(button_pressed: bool) -> void:
-	if button_pressed:
+func _on_PlayerOptionButton_toggled(is_toggled: bool) -> void:
+	if is_toggled:
 		ap_focus.play("focus_selected")
 		ap_icon.play("selected_loop")
 	elif has_focus():
