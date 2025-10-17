@@ -2,7 +2,6 @@
 
 [ext_resource path="res://character/scripts/base_stats.gd" type="Script" id=1]
 
-
 [resource]
 script = ExtResource( 1 )
 health_base = 1

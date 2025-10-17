@@ -7,9 +7,10 @@ statistics the player will have, along with some techniques and spells that the
 player will have access to.
 """
 
-const STATS = "Stats"
-const TECHNIQUES = "Techniques"
-const SPELLS = "Spells"
+const STATS: String = "Stats"
+const TECHNIQUES: String = "Techniques"
+const SPELLS: String = "Spells"
+const ACTION_PATH_FORMAT: String = "res://actions/{0}/{0}.tscn"
 
 var stats: CharacterStats
 var techniques: Array
@@ -23,19 +24,53 @@ onready var _root_node: Node = get_tree().edited_scene_root
 func _ready():
 	# Initialize the child nodes if not present in the scene
 	if Engine.is_editor_hint() and get_child_count() == 0:
-		stats = CharacterStats.new()
-		var t_node: Node = Node.new()
-		var s_node: Node = Node.new()
-		stats.name = STATS
-		t_node.name = TECHNIQUES
-		s_node.name = SPELLS
-		add_child(stats)
-		add_child(t_node)
-		add_child(s_node)
-		stats.set_owner(_root_node)
-		t_node.set_owner(_root_node)
-		s_node.set_owner(_root_node)
+		_create_child_nodes()
+		$Stats.set_owner(_root_node)
+		$Techniques.set_owner(_root_node)
+		$Spells.set_owner(_root_node)
 	else:
 		stats = get_node(STATS)
-		techniques = get_node(TECHNIQUES).get_children()
-		spells = get_node(SPELLS).get_children()
+	techniques = get_node(TECHNIQUES).get_children()
+	spells = get_node(SPELLS).get_children()
+
+
+# Called when creating a new instance of this object.
+func _init(class_data: PlayerClassData) -> void:
+	name = class_data.name
+	_create_child_nodes()
+	stats.base_stat_values = class_data.stats
+	for technique in class_data.techniques:
+		_create_technique_node(technique)
+	for spell in class_data.spells:
+		_create_spell_node(spell)
+
+
+# Creates the nodes for spells, techniques, and character stats.
+func _create_child_nodes() -> void:
+	stats = CharacterStats.new()
+	var t_node: Node = Node.new()
+	var s_node: Node = Node.new()
+	stats.name = STATS
+	t_node.name = TECHNIQUES
+	s_node.name = SPELLS
+	add_child(stats)
+	add_child(t_node)
+	add_child(s_node)
+
+
+# Creates a node for the given technique details.
+func _create_technique_node(tech_stats: TechniqueStats) -> void:
+	var action_path: String = ACTION_PATH_FORMAT.format([tech_stats.name])
+	var technique_node: Action = load(action_path).instance()
+	var cooldown_node: Cooldown = Cooldown.new(tech_stats.cooldown)
+	technique_node.add_child(cooldown_node)
+	$Techniques.add_child(technique_node)
+
+
+# Creates a node for the given spell details.
+func _create_spell_node(spell_stats: SpellStats) -> void:
+	var action_path: String = ACTION_PATH_FORMAT.format([spell_stats.name])
+	var spell_node: Action = load(action_path).instance()
+	var wisp_cost_node: WispCost = WispCost.new(spell_stats)
+	spell_node.add_child(wisp_cost_node)
+	$Spells.add_child(spell_node)

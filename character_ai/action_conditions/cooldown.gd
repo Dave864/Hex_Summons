@@ -32,6 +32,11 @@ func start_countdown_on_turn() -> void:
 	_countdown = turn_count + 1
 
 
+# Creates a new Cooldown node with a specific cooldown_value value.
+func _init(cooldown_value: int) -> void:
+	_countdown = cooldown_value
+
+
 # Decrement the countdown when a character turn ends.
 func _on_Character_turn_ended() -> void:
 	_countdown = 0 if _countdown == 0 else _countdown - 1

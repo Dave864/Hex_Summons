@@ -49,6 +49,7 @@ script = ExtResource( 12 )
 character_pos_ref = NodePath("../MapCoordinate")
 
 [node name="Class" parent="." instance=ExtResource( 6 )]
+script = null
 
 [node name="EffectsTracker" parent="." instance=ExtResource( 10 )]
 

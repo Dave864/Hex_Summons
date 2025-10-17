@@ -27,12 +27,9 @@ func can_character_pass(character_type: int) -> bool:
 
 
 # Updates the occupant when a new area enters the collision space.
-func _on_MapTile_area_entered(area) -> void:
+func _on_MapTile_area_entered(area: Character) -> void:
 	# Add entered character as this tile's occupant.
-	if (
-		_occupant == null 
-		and (area is PlayerCharacter or area is EnemyCharacter)
-	):
+	if _occupant == null:
 		_occupant = area
 
 

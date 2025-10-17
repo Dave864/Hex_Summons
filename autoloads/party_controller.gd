@@ -5,7 +5,7 @@ relevant details (inventory, etc.).
 """
 
 
-const CLASS_PATH_FORMAT: String = "res://character/player_classes/{0}/{0}.tscn"
+const CLASS_DATA_PATH: String = "res://character/player_classes/{0}/stat_data/class_data.tres"
 const NAME: String = "name"
 const CLASS: String = "class"
 const IN_PARTY: String = "in_party"
@@ -34,14 +34,9 @@ func get_party_members() -> Array:
 
 # Changes the class of the specified player.
 func change_class(player: String, new_class: String) -> void:
-	var details: Dictionary = party_details[player]
-	var old_class: PlayerClass = details[NODE].get_node(details[CLASS])
-	var class_path: String = CLASS_PATH_FORMAT.format([new_class])
-	var class_node: PackedScene = load(class_path)
-	details[CLASS] = new_class
-	details[NODE].add_child(class_node)
-	details[NODE].assign_class(class_node)
-	old_class.queue_free()
+	var class_path: String = CLASS_DATA_PATH.format([new_class])
+	var class_data: PlayerClassData = load(class_path)
+	party_details[player][CLASS] = class_data
 
 
 # Loads the save data for the party.
@@ -49,11 +44,9 @@ func load_save_data(save_data: Dictionary) -> void:
 	for player in save_data.keys():
 		party_details[player][NAME] = save_data[NAME]
 		party_details[player][IN_PARTY] = save_data[IN_PARTY]
-		party_details[player][CLASS] = save_data[CLASS]
-		var class_path: String = CLASS_PATH_FORMAT.format([save_data[player][CLASS]])
-		var class_node: PackedScene = load(class_path)
-		party_details[player][NODE].add_child(class_node)
-		party_details[player][NODE].assign_class(class_node)
+		var class_path: String = CLASS_DATA_PATH.format([save_data[CLASS]])
+		var class_data: PlayerClassData = load(class_path)
+		party_details[player][CLASS] = class_data
 
 
 # Gets the current state of the party for the purposes of saving the data.
@@ -62,7 +55,7 @@ func get_save_data() -> Dictionary:
 	for player in party_details.keys():
 		save_data[player] = {
 			NAME: party_details[player][NAME],
-			CLASS: party_details[player][CLASS],
+			CLASS: party_details[player][CLASS].name,
 			IN_PARTY: party_details[player][IN_PARTY],
 		}
 	return save_data
@@ -71,22 +64,21 @@ func get_save_data() -> Dictionary:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for player in party_details.keys():
-		var class_path: String = CLASS_PATH_FORMAT.format([party_details[player][CLASS]])
-		var class_scene: PackedScene = load(class_path)
-		var class_node: PlayerClass = class_scene.instance()
-		yield(class_node, "ready")
-		party_details[player][NODE].add_child(class_node)
-		party_details[player][NODE].assign_class(class_node)
+		var class_path: String = CLASS_DATA_PATH.format([party_details[player][CLASS]])
+		var class_data: PlayerClassData = load(class_path)
+		var class_node: PlayerClass = PlayerClass.new(class_data)
+		add_child(class_node)
 
 
 # Populates the party parameters with initial details.
 func _initialize_details(name: String, p_class: String, in_party: bool) -> Dictionary:
 	yield(WispTracker, "ready")
 	var wisp_pool: PlayerWispPool = PlayerWispPool.new(name)
-#	var class_details: PlayerClass = load()
+	var class_path: String = CLASS_DATA_PATH.format([p_class])
+	var class_data: PlayerClassData = load(class_path)
 	return {
 		NAME: name,
-		CLASS: p_class,
+		CLASS: class_data,
 		IN_PARTY: in_party,
 		WISP_POOL: wisp_pool
 	}
