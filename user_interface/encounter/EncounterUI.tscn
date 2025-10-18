@@ -1,38 +1,53 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=19 format=3 uid="uid://b8653jyeljph1"]
 
-[ext_resource path="res://user_interface/encounter/PlayerOptionButton/EndButton.tscn" type="PackedScene" id=1]
-[ext_resource path="res://user_interface/encounter/encounter_ui.gd" type="Script" id=2]
-[ext_resource path="res://user_interface/encounter/sub_options.gd" type="Script" id=3]
-[ext_resource path="res://fsm/state_machine.gd" type="Script" id=4]
-[ext_resource path="res://fsm/user_interface/encounter/EncounterUIWait.gd" type="Script" id=5]
-[ext_resource path="res://fsm/user_interface/encounter/EncounterUIMove.gd" type="Script" id=6]
-[ext_resource path="res://fsm/user_interface/encounter/EncounterUIPause.gd" type="Script" id=7]
-[ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=8]
-[ext_resource path="res://fsm/user_interface/encounter/EncounterUIAction.gd" type="Script" id=9]
-[ext_resource path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" type="PackedScene" id=10]
-[ext_resource path="res://user_interface/encounter/PlayerStats/ActivePlayerStats.tscn" type="PackedScene" id=11]
-[ext_resource path="res://user_interface/encounter/PlayerStats/PartyPlayerStats.tscn" type="PackedScene" id=12]
-[ext_resource path="res://user_interface/encounter/PlayerOptionButton/SpellButton.tscn" type="PackedScene" id=13]
-[ext_resource path="res://user_interface/encounter/PlayerOptionButton/ItemButton.tscn" type="PackedScene" id=14]
-[ext_resource path="res://user_interface/encounter/PlayerOptionButton/SummonButton.tscn" type="PackedScene" id=15]
-[ext_resource path="res://user_interface/encounter/PlayerOptionButton/TechniqueButton.tscn" type="PackedScene" id=16]
-[ext_resource path="res://user_interface/encounter/PlayerOptionButton/MovementButton.tscn" type="PackedScene" id=17]
-[ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/SummonWispPool.tscn" type="PackedScene" id=18]
+[ext_resource type="PackedScene" uid="uid://bsdqilfcr4xqv" path="res://user_interface/encounter/PlayerOptionButton/EndButton.tscn" id="1"]
+[ext_resource type="Script" uid="uid://dsv35awa3y33i" path="res://user_interface/encounter/encounter_ui.gd" id="2"]
+[ext_resource type="Script" uid="uid://d5hvsefs34ls" path="res://user_interface/encounter/sub_options.gd" id="3"]
+[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="4"]
+[ext_resource type="Script" uid="uid://ds7n6ekq64jsp" path="res://fsm/user_interface/encounter/EncounterUIWait.gd" id="5"]
+[ext_resource type="Script" uid="uid://cugbgxwfqqcsm" path="res://fsm/user_interface/encounter/EncounterUIMove.gd" id="6"]
+[ext_resource type="Script" uid="uid://bivg5gtassi7s" path="res://fsm/user_interface/encounter/EncounterUIPause.gd" id="7"]
+[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="8"]
+[ext_resource type="Script" uid="uid://bi03nel8te0u4" path="res://fsm/user_interface/encounter/EncounterUIAction.gd" id="9"]
+[ext_resource type="PackedScene" uid="uid://d3i1mqeluj5hv" path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" id="10"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/PlayerStats/ActivePlayerStats.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/PlayerStats/PartyPlayerStats.tscn" id="12"]
+[ext_resource type="PackedScene" uid="uid://5vv4y7a5a1ay" path="res://user_interface/encounter/PlayerOptionButton/SpellButton.tscn" id="13"]
+[ext_resource type="PackedScene" uid="uid://dtfgs8438te8w" path="res://user_interface/encounter/PlayerOptionButton/ItemButton.tscn" id="14"]
+[ext_resource type="PackedScene" uid="uid://cuwbd4bjywig0" path="res://user_interface/encounter/PlayerOptionButton/SummonButton.tscn" id="15"]
+[ext_resource type="PackedScene" uid="uid://bbic645b0237g" path="res://user_interface/encounter/PlayerOptionButton/TechniqueButton.tscn" id="16"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/PlayerOptionButton/MovementButton.tscn" id="17"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/WispPool/SummonWispPool/SummonWispPool.tscn" id="18"]
 
 [node name="EncounterUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource( 8 )
-script = ExtResource( 2 )
+theme = ExtResource("8")
+script = ExtResource("2")
 
-[node name="InitiativeTracker" parent="." instance=ExtResource( 10 )]
+[node name="InitiativeTracker" parent="." instance=ExtResource("10")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+offset_left = 64.0
 offset_top = 2.0
+offset_right = 576.0
 offset_bottom = 36.0
 
-[node name="SummonPool" parent="." instance=ExtResource( 18 )]
+[node name="SummonPool" parent="." instance=ExtResource("18")]
+layout_mode = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="SubOptions" type="ScrollContainer" parent="."]
+layout_mode = 0
 anchor_left = 0.189
 anchor_top = 0.891
 anchor_right = 1.0
@@ -40,17 +55,18 @@ anchor_bottom = 0.891
 offset_left = 0.0399933
 offset_top = -65.12
 offset_bottom = -12.12
-mouse_filter = 2
 size_flags_vertical = 3
+mouse_filter = 2
 follow_focus = true
-script = ExtResource( 3 )
+script = ExtResource("3")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SubOptions"]
-offset_bottom = 53.0
+layout_mode = 2
 size_flags_horizontal = 5
 size_flags_vertical = 3
 
 [node name="EnemyStats" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 0.003
 anchor_right = 1.0
@@ -62,6 +78,7 @@ mouse_filter = 2
 alignment = 1
 
 [node name="PartyStats" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_bottom = 1.0
 offset_left = 3.0
 offset_top = 64.0
@@ -70,38 +87,23 @@ offset_bottom = -128.0
 mouse_filter = 2
 alignment = 2
 
-[node name="PartyPlayerStats1" parent="PartyStats" instance=ExtResource( 12 )]
-visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 128.0
-offset_bottom = 168.0
+[node name="PartyPlayerStats1" parent="PartyStats" instance=ExtResource("12")]
+layout_mode = 2
 
-[node name="PartyPlayerStats2" parent="PartyStats" instance=ExtResource( 12 )]
+[node name="PartyPlayerStats2" parent="PartyStats" instance=ExtResource("12")]
 visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_top = 86.0
-offset_right = 128.0
-offset_bottom = 168.0
+layout_mode = 2
 
-[node name="PartyPlayerStats3" parent="PartyStats" instance=ExtResource( 12 )]
+[node name="PartyPlayerStats3" parent="PartyStats" instance=ExtResource("12")]
 visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_top = 114.0
-offset_right = 128.0
-offset_bottom = 168.0
+layout_mode = 2
 
-[node name="PartyPlayerStats4" parent="PartyStats" instance=ExtResource( 12 )]
+[node name="PartyPlayerStats4" parent="PartyStats" instance=ExtResource("12")]
 visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_top = 129.0
-offset_right = 128.0
-offset_bottom = 168.0
+layout_mode = 2
 
-[node name="ActivePlayerStats" parent="." instance=ExtResource( 11 )]
+[node name="ActivePlayerStats" parent="." instance=ExtResource("11")]
+anchors_preset = 0
 anchor_top = 1.0
 anchor_right = 0.0
 anchor_bottom = 1.0
@@ -111,69 +113,45 @@ offset_right = 116.0
 offset_bottom = -2.0
 
 [node name="Options" type="HBoxContainer" parent="."]
+layout_mode = 0
 anchor_left = 0.20625
 anchor_top = 0.861111
 anchor_right = 0.9875
 anchor_bottom = 1.00278
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
-[node name="MovementButton" parent="Options" instance=ExtResource( 17 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 80.0
-offset_bottom = 51.0
+[node name="MovementButton" parent="Options" instance=ExtResource("17")]
+layout_mode = 2
+theme_type_variation = &"OptionButton"
 
-[node name="TechniqueButton" parent="Options" instance=ExtResource( 16 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 84.0
-offset_right = 164.0
-offset_bottom = 51.0
+[node name="TechniqueButton" parent="Options" instance=ExtResource("16")]
+layout_mode = 2
 
-[node name="SpellButton" parent="Options" instance=ExtResource( 13 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 168.0
-offset_right = 248.0
-offset_bottom = 51.0
+[node name="SpellButton" parent="Options" instance=ExtResource("13")]
+layout_mode = 2
 
-[node name="SummonButton" parent="Options" instance=ExtResource( 15 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 252.0
-offset_right = 332.0
-offset_bottom = 51.0
+[node name="SummonButton" parent="Options" instance=ExtResource("15")]
+layout_mode = 2
 
-[node name="ItemButton" parent="Options" instance=ExtResource( 14 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 336.0
-offset_right = 416.0
-offset_bottom = 51.0
+[node name="ItemButton" parent="Options" instance=ExtResource("14")]
+layout_mode = 2
 
-[node name="EndButton" parent="Options" instance=ExtResource( 1 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 420.0
-offset_right = 500.0
-offset_bottom = 51.0
+[node name="EndButton" parent="Options" instance=ExtResource("1")]
+layout_mode = 2
 
 [node name="StateMachine" type="Node" parent="."]
-script = ExtResource( 4 )
+script = ExtResource("4")
 initial_state = NodePath("Wait")
 
 [node name="Wait" type="Node" parent="StateMachine"]
-script = ExtResource( 5 )
+script = ExtResource("5")
 
 [node name="Move" type="Node" parent="StateMachine"]
-script = ExtResource( 6 )
+script = ExtResource("6")
 
 [node name="Pause" type="Node" parent="StateMachine"]
-script = ExtResource( 7 )
+script = ExtResource("7")
 
 [node name="Action" type="Node" parent="StateMachine"]
-script = ExtResource( 9 )
+script = ExtResource("9")
 
 [connection signal="option_selected" from="SubOptions" to="StateMachine/Action" method="_on_SubOptions_option_selected"]

@@ -1,67 +1,72 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=26 format=3 uid="uid://cru13p0crj0kc"]
 
-[ext_resource path="res://character/enemy_characters/TestEnemy1/TestEnemy1BattleSprite.atlastex" type="Texture2D" id=1]
-[ext_resource path="res://character/enemy_characters/enemy_character.gd" type="Script" id=2]
-[ext_resource path="res://fsm/state_machine.gd" type="Script" id=3]
-[ext_resource path="res://fsm/enemy_character/EnemyCharacterMove.gd" type="Script" id=4]
-[ext_resource path="res://fsm/enemy_character/EnemyCharacterWait.gd" type="Script" id=5]
-[ext_resource path="res://character/enemy_characters/TestEnemy1/stat_data/stat_values.tres" type="Resource" id=6]
-[ext_resource path="res://fsm/enemy_character/EnemyCharacterThink.gd" type="Script" id=7]
-[ext_resource path="res://fsm/enemy_character/EnemyCharacterAction.gd" type="Script" id=8]
-[ext_resource path="res://hex_map/scripts/map_coordinate.gd" type="Script" id=9]
-[ext_resource path="res://effects_tracker/EffectsTracker.tscn" type="PackedScene" id=10]
-[ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=11]
-[ext_resource path="res://user_interface/character_label/CharacterLabel.tscn" type="PackedScene" id=12]
-[ext_resource path="res://character/enemy_characters/TestEnemy1/TestEnemy1BattlePortrait.atlastex" type="Texture2D" id=13]
-[ext_resource path="res://character_ai/character_ai.gd" type="Script" id=14]
-[ext_resource path="res://actions/Strike/Strike.tscn" type="PackedScene" id=15]
-[ext_resource path="res://actions/Nova/Nova.tscn" type="PackedScene" id=16]
-[ext_resource path="res://character_ai/action_conditions/cooldown.gd" type="Script" id=17]
-[ext_resource path="res://character_ai/action_behavior.gd" type="Script" id=18]
-[ext_resource path="res://character_ai/action_conditions/group_condition.gd" type="Script" id=19]
-[ext_resource path="res://character_ai/action_conditions/adjacent_condition.gd" type="Script" id=20]
-[ext_resource path="res://actions/Empty/Empty.tscn" type="PackedScene" id=21]
-[ext_resource path="res://actions/Lob/Lob.tscn" type="PackedScene" id=22]
-[ext_resource path="res://character/scripts/encounter_sprite.gd" type="Script" id=23]
+[ext_resource type="Texture2D" path="res://character/enemy_characters/TestEnemy1/TestEnemy1BattleSprite.atlastex" id="1"]
+[ext_resource type="Script" uid="uid://blllus8v7ujpt" path="res://character/enemy_characters/enemy_character.gd" id="2"]
+[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
+[ext_resource type="Script" uid="uid://cof1wrll2np4x" path="res://fsm/enemy_character/EnemyCharacterMove.gd" id="4"]
+[ext_resource type="Script" uid="uid://bjdo0sq45ance" path="res://fsm/enemy_character/EnemyCharacterWait.gd" id="5"]
+[ext_resource type="Resource" path="res://character/enemy_characters/TestEnemy1/stat_data/stat_values.tres" id="6"]
+[ext_resource type="Script" uid="uid://dp6jkaqsiu5vq" path="res://fsm/enemy_character/EnemyCharacterThink.gd" id="7"]
+[ext_resource type="Script" uid="uid://cdrf5m57oe7j7" path="res://fsm/enemy_character/EnemyCharacterAction.gd" id="8"]
+[ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="9"]
+[ext_resource type="PackedScene" path="res://effects_tracker/EffectsTracker.tscn" id="10"]
+[ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats.gd" id="11"]
+[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/character_label/CharacterLabel.tscn" id="12"]
+[ext_resource type="Texture2D" path="res://character/enemy_characters/TestEnemy1/TestEnemy1BattlePortrait.atlastex" id="13"]
+[ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="14"]
+[ext_resource type="PackedScene" path="res://actions/Strike/Strike.tscn" id="15"]
+[ext_resource type="PackedScene" path="res://actions/Nova/Nova.tscn" id="16"]
+[ext_resource type="Script" uid="uid://mxpbc437xmjm" path="res://character_ai/action_conditions/cooldown.gd" id="17"]
+[ext_resource type="Script" uid="uid://bdkgr4241wqcj" path="res://character_ai/action_behavior.gd" id="18"]
+[ext_resource type="Script" uid="uid://b020qxy754ll2" path="res://character_ai/action_conditions/group_condition.gd" id="19"]
+[ext_resource type="Script" uid="uid://b62fi77ubdoo6" path="res://character_ai/action_conditions/adjacent_condition.gd" id="20"]
+[ext_resource type="PackedScene" path="res://actions/Empty/Empty.tscn" id="21"]
+[ext_resource type="PackedScene" path="res://actions/Lob/Lob.tscn" id="22"]
+[ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="23"]
 
+[sub_resource type="CapsuleShape3D" id="1"]
+radius = 0.05
+height = 0.1
 
-[sub_resource type="CapsuleShape3D" id=1]
-radius = 0.1
-
-[sub_resource type="SphereShape3D" id=2]
-radius = 0.5
+[sub_resource type="SphereShape3D" id="2"]
+radius = 0.2
 
 [node name="TestEnemy1" type="Area3D"]
 collision_layer = 8
 collision_mask = 2
-script = ExtResource( 2 )
-battle_portrait = ExtResource( 13 )
+script = ExtResource("2")
+battle_portrait = ExtResource("13")
 
-[node name="CharacterLabel" parent="." instance=ExtResource( 12 )]
+[node name="CharacterLabel" parent="." instance=ExtResource("12")]
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 character_type = 0
 character_pos_ref = NodePath("../MapCoordinate")
 
 [node name="MapCoordinate" type="Marker3D" parent="."]
-script = ExtResource( 9 )
+script = ExtResource("9")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 1 )
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("1")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
 pixel_size = 0.0054
 billboard = 1
 fixed_size = true
-texture = ExtResource( 1 )
-script = ExtResource( 23 )
+texture_filter = 0
+texture = ExtResource("1")
+script = ExtResource("23")
 character_pos_ref = NodePath("../MapCoordinate")
 
 [node name="Stats" type="Node" parent="."]
-script = ExtResource( 11 )
-base_stat_values = ExtResource( 6 )
+script = ExtResource("11")
+base_stat_values = ExtResource("6")
 
-[node name="EffectsTracker" parent="." instance=ExtResource( 10 )]
+[node name="EffectsTracker" parent="." instance=ExtResource("10")]
 
 [node name="HitBox" type="Area3D" parent="."]
 collision_layer = 0
@@ -70,75 +75,75 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
-shape = SubResource( 2 )
+shape = SubResource("2")
 
 [node name="CharacterAI" type="Node" parent="."]
-script = ExtResource( 14 )
+script = ExtResource("14")
 actions_ref = NodePath("../Actions")
 
 [node name="Actions" type="Node" parent="."]
 
-[node name="Lob" parent="Actions" instance=ExtResource( 22 )]
+[node name="Lob" parent="Actions" instance=ExtResource("22")]
 
 [node name="ActionBehavior" type="Node" parent="Actions/Lob"]
-script = ExtResource( 18 )
+script = ExtResource("18")
 target_focus = 1
 movement_behavior = 1
 
 [node name="Cooldown" type="Node" parent="Actions/Lob/ActionBehavior"]
-script = ExtResource( 17 )
+script = ExtResource("17")
 turn_count = 1
 
 [node name="AdjacentCondition" type="Node" parent="Actions/Lob/ActionBehavior"]
-script = ExtResource( 20 )
+script = ExtResource("20")
 check_type = 2
 
-[node name="Nova" parent="Actions" instance=ExtResource( 16 )]
+[node name="Nova" parent="Actions" instance=ExtResource("16")]
 
 [node name="ActionBehavior" type="Node" parent="Actions/Nova"]
-script = ExtResource( 18 )
+script = ExtResource("18")
 
 [node name="Cooldown" type="Node" parent="Actions/Nova/ActionBehavior"]
-script = ExtResource( 17 )
+script = ExtResource("17")
 turn_count = 2
 
 [node name="GroupCondition" type="Node" parent="Actions/Nova/ActionBehavior"]
-script = ExtResource( 19 )
+script = ExtResource("19")
 max_distance = 2
 
 [node name="AdjacentCondition" type="Node" parent="Actions/Nova/ActionBehavior"]
-script = ExtResource( 20 )
+script = ExtResource("20")
 adjacent_check = 2
 check_type = 1
 
-[node name="Strike" parent="Actions" instance=ExtResource( 15 )]
+[node name="Strike" parent="Actions" instance=ExtResource("15")]
 
 [node name="ActionBehavior" type="Node" parent="Actions/Strike"]
-script = ExtResource( 18 )
+script = ExtResource("18")
 movement_behavior = 1
 
-[node name="Empty" parent="Actions" instance=ExtResource( 21 )]
+[node name="Empty" parent="Actions" instance=ExtResource("21")]
 
 [node name="ActionBehavior" type="Node" parent="Actions/Empty"]
-script = ExtResource( 18 )
+script = ExtResource("18")
 movement_behavior = 2
 
 [node name="StateMachine" type="Node" parent="."]
-script = ExtResource( 3 )
+script = ExtResource("3")
 initial_state = NodePath("Wait")
 
 [node name="Move" type="Node" parent="StateMachine"]
-script = ExtResource( 4 )
+script = ExtResource("4")
 
 [node name="Wait" type="Node" parent="StateMachine"]
-script = ExtResource( 5 )
+script = ExtResource("5")
 
-[node name="Think" type="Node" parent="StateMachine"]
-script = ExtResource( 7 )
-ai_reference = NodePath("../../CharacterAI")
+[node name="Think" type="Node" parent="StateMachine" node_paths=PackedStringArray("ai_node")]
+script = ExtResource("7")
+ai_node = NodePath("../../CharacterAI")
 
 [node name="Action" type="Node" parent="StateMachine"]
-script = ExtResource( 8 )
+script = ExtResource("8")
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
 [connection signal="turn_ended" from="." to="Actions/Lob/ActionBehavior/Cooldown" method="_on_Character_turn_ended"]

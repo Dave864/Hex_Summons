@@ -1,16 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://c7wswkqcskjh8"]
 
-[ext_resource path="res://user_interface/themes/ThemeNumberLabel.tres" type="Theme" id=1]
-[ext_resource path="res://user_interface/character_label/character_label.gd" type="Script" id=2]
-
+[ext_resource type="Theme" uid="uid://dhnuwcf6tcapi" path="res://user_interface/themes/ThemeNumberLabel.tres" id="1"]
+[ext_resource type="Script" uid="uid://dw5x2dj2p5xjb" path="res://user_interface/character_label/character_label.gd" id="2"]
 
 [node name="CharacterLabel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -640.0
 offset_bottom = -360.0
 mouse_filter = 2
-script = ExtResource( 2 )
+script = ExtResource("2")
 y_offset = -8.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -20,30 +21,24 @@ layer = -1
 offset_right = 32.0
 offset_bottom = 15.0
 mouse_filter = 2
-theme = ExtResource( 1 )
+theme = ExtResource("1")
 alignment = 1
 
 [node name="InitiativeLabel" type="Label" parent="CanvasLayer/HBoxContainer"]
-offset_top = 1.0
-offset_right = 6.0
-offset_bottom = 13.0
+layout_mode = 2
 text = "0"
-valign = 1
+vertical_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/HBoxContainer"]
-offset_left = 10.0
-offset_top = 4.0
-offset_right = 32.0
-offset_bottom = 10.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
 [node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HBoxContainer/PanelContainer"]
-offset_right = 22.0
-offset_bottom = 6.0
-custom_minimum_size = Vector2( 0, 6 )
-mouse_filter = 2
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+mouse_filter = 2
 value = 50.0
-percent_visible = false
+show_percentage = false

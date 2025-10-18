@@ -51,14 +51,14 @@ func set_option(hl_option: int) -> void:
 			show()
 		Option.EFFECT_ORIGIN:
 			_set_highlighter_color(COLOR_EFFECT_ORIGIN)
-			get_surface_override_material(0).render_priority = base_render_priority + 1
+			mesh.surface_get_material(0).render_priority = base_render_priority + 1
 			show()
 		Option.EFFECT_RANGE:
 			_set_highlighter_color(COLOR_EFFECT_RANGE)
 			show()
 		Option.TARGET:
 			_set_highlighter_color(COLOR_TARGET_SELECT)
-			get_surface_override_material(0).render_priority = base_render_priority + 1
+			mesh.surface_get_material(0).render_priority = base_render_priority + 1
 			show()
 		Option.MOVE:
 			_set_highlighter_color(COLOR_MOVE_SELECT)
@@ -79,11 +79,11 @@ func set_highlighter_transparency(f: float) -> void:
 	var m: StandardMaterial3D = mesh.surface_get_material(0)
 	f = 0.0 if f < 0.0 else 1.0 if f > 1.0 else f
 	m.albedo_color.a = f
-	set_surface_override_material(0, m)
+	mesh.surface_set_material(0, m)
 
 
 # Changes the color of the tile highlighter
 func _set_highlighter_color(color: Color) -> void:
 	var m: StandardMaterial3D = mesh.surface_get_material(0)
 	m.albedo_color = color
-	set_surface_override_material(0, m)
+	mesh.surface_set_material(0, m)

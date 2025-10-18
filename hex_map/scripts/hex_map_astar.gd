@@ -25,7 +25,7 @@ func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Diction
 
 	frontier.push(0.0, start_id)
 	id_distances[start_id] = {"travel": 0.0, "tile": 0}
-	while not frontier.is_empty():
+	while not frontier.empty():
 		var current: Array = frontier.min()
 		frontier.pop_min()
 		for next_id in get_point_connections(current[1]):
@@ -56,7 +56,7 @@ func get_full_distance_map(start_id: int) -> Dictionary:
 
 	frontier.push(0.0, start_id)
 	id_distances[start_id] = {"travel": 0.0, "tile": 0}
-	while not frontier.is_empty():
+	while not frontier.empty():
 		var current: Array = frontier.min()
 		frontier.pop_min()
 		for next_id in get_point_connections(current[1]):
@@ -218,7 +218,7 @@ func _get_closest_path(
 		"to_target": _compute_cost(source_id, target_id)
 	}
 	came_from[source_id] = -1
-	while not frontier.is_empty():
+	while not frontier.empty():
 		var cur: Array = frontier.min()
 		var cur_dist: float = distances[cur[1]]["travel"]
 		frontier.pop_min()

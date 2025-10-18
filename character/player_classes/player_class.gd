@@ -1,6 +1,6 @@
 @tool
-extends Node
 class_name PlayerClass
+extends Node
 """
 Describes a class a player character can be. A player class defines the current
 statistics the player will have, along with some techniques and spells that the
@@ -35,7 +35,9 @@ func _ready():
 
 
 # Called when creating a new instance of this object.
-func _init(class_data: PlayerClassData) -> void:
+func _init(class_data: PlayerClassData = null) -> void:
+	if class_data == null:
+		return
 	name = class_data.name
 	_create_child_nodes()
 	stats.base_stat_values = class_data.stats

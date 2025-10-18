@@ -35,7 +35,10 @@ var _selector_type: int = HexHighlighter.Option.NONE: \
 # Updates the height of the map tile.
 func set_height(value: int) -> void:
 	height = value
-	$CollisionShape3D.position.y = height * Constants.HEX_TILE_UNIT_HEIGHT
+	var collision_shape: CollisionShape3D = get_node_or_null("CollisionShape3D")
+	if collision_shape == null:
+		return
+	collision_shape.position.y = height * Constants.HEX_TILE_UNIT_HEIGHT
 	emit_signal("height_changed", value)
 	_update_highlighter_positions()
 
@@ -94,6 +97,7 @@ func get_character_position() -> Vector3:
 
 
 func _ready() -> void:
+	set_height(height)
 	$DebugLabel.update_label_display(height)
 
 

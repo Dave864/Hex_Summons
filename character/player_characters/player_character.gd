@@ -52,7 +52,8 @@ func _ready() -> void:
 		_default_portait if battle_portrait == null
 		else battle_portrait
 	)
-	assign_class($Class)
+	var class_node: PlayerClass = $Class as PlayerClass
+	assign_class(class_node)
 
 
 # Initializes the action effects.

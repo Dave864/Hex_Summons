@@ -12,12 +12,6 @@ float circle(vec2 pos, float r, float feather) {
 	return smoothstep(r, r + feather, dot(pos, pos) * 4.0);
 }
 
-// Convert UV of atlas region to UV of atlas map.
-// Reference: https://github.com/godotengine/godot/issues/57401#issuecomment-1411865325
-vec2 region_to_texture_uv(vec2 uv, vec2 tps) {
-	return (region.xy*tps)+uv*(region.zw*tps);
-}
-
 // Convert UV of atlas map to UV of atlas region.
 // Reference: https://github.com/godotengine/godot/issues/57401#issuecomment-1411865325
 vec2 texture_to_region_uv(vec2 uv, vec2 tps) {

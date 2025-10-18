@@ -1,12 +1,12 @@
 [gd_scene load_steps=15 format=3 uid="uid://x4o3gls28fh"]
 
 [ext_resource type="PackedScene" uid="uid://bh13wido3t2hc" path="res://hex_map/TestMap.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/EncounterUI.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://b8653jyeljph1" path="res://user_interface/encounter/EncounterUI.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://selector_node/Selector.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://character/player_characters/TestPlayer2/TestPlayer2.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://character/enemy_characters/TestEnemy2/TestEnemy2.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://character/player_characters/TestPlayer1/TestPlayer1.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://b2h616qmoi52n" path="res://character/player_characters/TestPlayer2/TestPlayer2.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://cnsy5crv75lm4" path="res://character/enemy_characters/TestEnemy2/TestEnemy2.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://86h1rxsij0j" path="res://character/player_characters/TestPlayer1/TestPlayer1.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://cru13p0crj0kc" path="res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn" id="7"]
 [ext_resource type="Script" uid="uid://k5pevugk72ex" path="res://fsm/encounter/EncounterStart.gd" id="8"]
 [ext_resource type="Script" uid="uid://2muhbs0a7qgu" path="res://fsm/encounter/EncounterPlayerTurn.gd" id="9"]
 [ext_resource type="Script" uid="uid://bet15deb5w7us" path="res://encounter/encounter.gd" id="10"]
@@ -20,31 +20,30 @@ script = ExtResource("10")
 hex_map = NodePath("TestMap")
 
 [node name="EncounterUI" parent="." instance=ExtResource("2")]
-layout_mode = 3
-anchors_preset = 15
 
 [node name="EncounterCamera" parent="." instance=ExtResource("14")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.48444, 0)
+light_energy = 1.5
 
 [node name="TestMap" parent="." instance=ExtResource("1")]
 
 [node name="Players" type="Node" parent="."]
 
 [node name="TestPlayer1" parent="Players" instance=ExtResource("6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.43226, -0.0384266, -4.55642)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2449884, -0.038425647, -8.76589)
 
 [node name="TestPlayer2" parent="Players" instance=ExtResource("4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.23794, -0.0409496, -5.99557)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5040524, -0.0409496, -9.416318)
 
 [node name="Enemies" type="Node" parent="."]
 
 [node name="TestEnemy1" parent="Enemies" instance=ExtResource("7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8842, 0.02359, 4.40496)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.419558, 0.02359, 7.8271008)
 
 [node name="TestEnemy2" parent="Enemies" instance=ExtResource("5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.15506, 4.76837e-07, 2.94962)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.892926, 4.76837e-07, 7.937133)
 
 [node name="Selector" parent="." instance=ExtResource("3")]
 

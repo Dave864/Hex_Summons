@@ -39,7 +39,7 @@ func _ready() -> void:
 
 # Gets the tile that the mouse last hovered over.
 func _on_MapTile_mouse_hovered(new_tile: MapTile) -> void:
-	if _update_selection_func != null:
+	if not _update_selection_func.is_null():
 		_update_selection_func.call(new_tile)
 
 

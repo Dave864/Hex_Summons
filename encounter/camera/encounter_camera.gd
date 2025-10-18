@@ -110,11 +110,11 @@ func get_relative_top_vertex() -> int:
 func vertical_pan_mouse(v_motion: float) -> void:
 	if abs(v_motion) < mouse_drag_threshold:
 		return
-	var rotation: float = rad_to_deg(_focus_pt.rotation.x)
+	var vert_rot: float = rad_to_deg(_focus_pt.rotation.x)
 	# Vertical rotation is negative to position the camera above
 	# the encounter map.
-	rotation += -v_motion
-	_focus_pt.rotation.x = deg_to_rad(_bind_vertical_rotation(rotation))
+	vert_rot += -v_motion
+	_focus_pt.rotation.x = deg_to_rad(_bind_vertical_rotation(vert_rot))
 
 
 # Handles lateral camera panning from mouse drag.
@@ -128,11 +128,11 @@ func vertical_pan_joystick(delta: float) -> void:
 	var v_move: float = Input.get_axis("right_joystick_d", "right_joystick_u")
 	if abs(v_move) == 0.0:
 		return
-	var rotation: float = rad_to_deg(_focus_pt.rotation.x)
+	var vert_rot: float = rad_to_deg(_focus_pt.rotation.x)
 	# Vertical rotation is negative to position the camera above
 	# the encounter map.
-	rotation += -v_move * joystick_vert_pan_speed * delta
-	_focus_pt.rotation.x = deg_to_rad(_bind_vertical_rotation(rotation))
+	vert_rot += -v_move * joystick_vert_pan_speed * delta
+	_focus_pt.rotation.x = deg_to_rad(_bind_vertical_rotation(vert_rot))
 
 
 # Handles lateral camera panning from joystick input.
@@ -199,22 +199,22 @@ func _panning_vertical_midpoint() -> float:
 
 # Binds the provided vertical rotation wihtin the upper and lower bounds.
 # Rotation is in degrees.
-func _bind_vertical_rotation(rotation: float) -> float:
+func _bind_vertical_rotation(vert_rot: float) -> float:
 	return (
-		-vert_panning_u_bound if rotation < -vert_panning_u_bound
-		else -vert_panning_l_bound if rotation > -vert_panning_l_bound
-		else rotation
+		-vert_panning_u_bound if vert_rot < -vert_panning_u_bound
+		else -vert_panning_l_bound if vert_rot > -vert_panning_l_bound
+		else vert_rot
 	)
 
 
 # Normalizes the provided lateral rotation to be within the allowed degrees
 # for a circle. Rotation is in radians.
-func _normalize_lateral_rotation(rotation: float) -> float:
+func _normalize_lateral_rotation(lat_rot: float) -> float:
 	return (
-		abs(rotation) if is_equal_approx(abs(rotation), PI)
-		else rotation - 2.0 * PI if rotation > PI
-		else rotation + 2.0 * PI if rotation < -PI
-		else rotation
+		abs(lat_rot) if is_equal_approx(abs(lat_rot), PI)
+		else lat_rot - 2.0 * PI if lat_rot > PI
+		else lat_rot + 2.0 * PI if lat_rot < -PI
+		else lat_rot
 	)
 
 

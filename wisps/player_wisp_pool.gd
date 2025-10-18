@@ -120,7 +120,7 @@ func _ready():
 
 
 # Called when creating a new node.
-func _init(new_player_name: String) -> void:
+func _init(new_player_name: String = "") -> void:
 	player_name = new_player_name
 	var bonded_wisps: Dictionary = WispTracker.get_bonded_wisps(player_name)
 	for element_wisps in bonded_wisps.values():

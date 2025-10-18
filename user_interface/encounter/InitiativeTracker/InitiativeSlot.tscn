@@ -1,49 +1,52 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=11 format=3 uid="uid://3fxn0walrbhe"]
 
-[ext_resource path="res://art/icon.png" type="Texture2D" id=1]
-[ext_resource path="res://user_interface/encounter/InitiativeTracker/initiative_slot.gd" type="Script" id=2]
-[ext_resource path="res://art/ui/Init.png" type="Texture2D" id=3]
-[ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=4]
-[ext_resource path="res://art/ui/Number Panel.png" type="Texture2D" id=5]
-[ext_resource path="res://user_interface/shaders/atlas_circle_mask.gdshader" type="Shader" id=6]
-[ext_resource path="res://user_interface/shaders/change_color.gdshader" type="Shader" id=7]
+[ext_resource type="Texture2D" uid="uid://osiqpd8jhoyd" path="res://art/icon.png" id="1"]
+[ext_resource type="Script" uid="uid://cx4xhnu7auu6q" path="res://user_interface/encounter/InitiativeTracker/initiative_slot.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://c7jbdsahx5x83" path="res://art/ui/Init.png" id="3"]
+[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="4"]
+[ext_resource type="Texture2D" uid="uid://deqeke6drdev4" path="res://art/ui/Number Panel.png" id="5"]
+[ext_resource type="Shader" uid="uid://clor7hjk57k50" path="res://user_interface/shaders/atlas_circle_mask.gdshader" id="6"]
+[ext_resource type="Shader" uid="uid://d1rqm2l1tcof8" path="res://user_interface/shaders/change_color.gdshader" id="7"]
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id="6"]
 resource_local_to_scene = true
-shader = ExtResource( 7 )
-shader_param/old_color = Color( 1, 1, 1, 1 )
-shader_param/new_color = Color( 1, 1, 1, 1 )
+shader = ExtResource("7")
+shader_parameter/old_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id="5"]
 resource_local_to_scene = true
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 34, 34 )
+atlas = ExtResource("3")
+region = Rect2(0, 0, 34, 34)
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="ShaderMaterial" id="3"]
 resource_local_to_scene = true
-shader = ExtResource( 6 )
-shader_param/region = Plane( 0, 0, 64, 64 )
-shader_param/radius = 1.0
-shader_param/center_x = 0.5
-shader_param/center_y = 0.5
+shader = ExtResource("6")
+shader_parameter/region = Vector4(0, 0, 0, 0)
+shader_parameter/radius = 1.0
+shader_parameter/center_x = 0.5
+shader_parameter/center_y = 0.5
 
 [node name="InitiativeSlot" type="TextureRect"]
-material = SubResource( 6 )
+material = SubResource("6")
+anchors_preset = -1
 anchor_right = 0.053
 anchor_bottom = 0.094
 offset_right = 0.079998
 offset_bottom = 0.16
-mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource( 4 )
-texture = SubResource( 5 )
+mouse_filter = 2
+theme = ExtResource("4")
+texture = SubResource("5")
 stretch_mode = 6
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="Portrait" type="TextureRect" parent="."]
 show_behind_parent = true
-material = SubResource( 3 )
+material = SubResource("3")
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
@@ -52,15 +55,15 @@ offset_right = -6.0
 offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_minimum_size = Vector2( 22, 22 )
-mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
-texture = ExtResource( 1 )
-expand = true
+mouse_filter = 2
+texture = ExtResource("1")
+expand_mode = 1
 stretch_mode = 6
 
 [node name="InitPanel" type="TextureRect" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 19.0
@@ -68,10 +71,11 @@ offset_top = 17.0
 offset_right = -3.0
 offset_bottom = -3.0
 mouse_filter = 2
-texture = ExtResource( 5 )
+texture = ExtResource("5")
 stretch_mode = 6
 
 [node name="Initiative" type="Label" parent="InitPanel"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 3.004
@@ -81,5 +85,5 @@ offset_bottom = -3.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 text = "0"
-align = 1
-valign = 1
+horizontal_alignment = 1
+vertical_alignment = 1

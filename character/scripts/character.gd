@@ -91,7 +91,7 @@ func _update_emission_index(_index: int) -> void:
 # Update the character's position index when passing over a MapTile.
 func _on_Character_area_entered(map_tile: Area3D) -> void:
 	_update_emission_index(map_tile.map_coordinate.get_tile_index())
-	map_coordinate.set_index(map_tile.map_coordinate.get_tile_index())
+	map_coordinate.set_tile_index(map_tile.map_coordinate.get_tile_index())
 	map_coordinate.set_cube_coord(map_tile.map_coordinate.get_cube_coord())
 	# If the creature's start position has not been set, move it to the position
 	# of the tile it in the area of.
