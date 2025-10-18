@@ -24,8 +24,9 @@ hex_map = NodePath("TestMap")
 [node name="EncounterCamera" parent="." instance=ExtResource("14")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6.48444, 0)
-light_energy = 1.5
+transform = Transform3D(0.84282833, -0.19124404, -0.50305676, 0.5381825, 0.29950044, 0.7878192, 0, -0.9347327, 0.35535166, 0, 6.48444, 0)
+directional_shadow_mode = 0
+sky_mode = 1
 
 [node name="TestMap" parent="." instance=ExtResource("1")]
 

@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://dtfgs8438te8w" path="res://user_interface/encounter/PlayerOptionButton/ItemButton.tscn" id="14"]
 [ext_resource type="PackedScene" uid="uid://cuwbd4bjywig0" path="res://user_interface/encounter/PlayerOptionButton/SummonButton.tscn" id="15"]
 [ext_resource type="PackedScene" uid="uid://bbic645b0237g" path="res://user_interface/encounter/PlayerOptionButton/TechniqueButton.tscn" id="16"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/PlayerOptionButton/MovementButton.tscn" id="17"]
+[ext_resource type="PackedScene" uid="uid://bbb4rvu44d041" path="res://user_interface/encounter/PlayerOptionButton/MovementButton.tscn" id="17"]
 [ext_resource type="PackedScene" path="res://user_interface/encounter/WispPool/SummonWispPool/SummonWispPool.tscn" id="18"]
 
 [node name="EncounterUI" type="Control"]
@@ -78,12 +78,14 @@ mouse_filter = 2
 alignment = 1
 
 [node name="PartyStats" type="VBoxContainer" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 3.0
 offset_top = 64.0
 offset_right = 131.0
 offset_bottom = -128.0
+grow_vertical = 2
 mouse_filter = 2
 alignment = 2
 
@@ -113,15 +115,18 @@ offset_right = 116.0
 offset_bottom = -2.0
 
 [node name="Options" type="HBoxContainer" parent="."]
-layout_mode = 0
-anchor_left = 0.20625
-anchor_top = 0.861111
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.20600002
+anchor_top = 0.85600007
 anchor_right = 0.9875
-anchor_bottom = 1.00278
+anchor_bottom = 0.99700004
+offset_left = 0.1599884
+offset_top = 0.8407593
+offset_bottom = 0.08078003
 
 [node name="MovementButton" parent="Options" instance=ExtResource("17")]
 layout_mode = 2
-theme_type_variation = &"OptionButton"
 
 [node name="TechniqueButton" parent="Options" instance=ExtResource("16")]
 layout_mode = 2

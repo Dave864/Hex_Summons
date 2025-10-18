@@ -10,7 +10,8 @@
 
 [node name="TestMap" type="Node3D"]
 script = ExtResource("3")
-enemy_start_tiles = [81, 82]
+player_start_tiles = [12, 16, 13, 26]
+enemy_start_tiles = [72, 76]
 
 [node name="FloorMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

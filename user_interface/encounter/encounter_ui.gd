@@ -9,6 +9,7 @@ Manages the various UI elements of an encounter.
 signal is_waiting()
 
 const MAX_PARTY_SIZE: int = 4
+const PARTY_WIDTH: int = 128
 const PART_PARTY_HEIGHT: int = 168
 const FULL_PARTY_HEIGHT: int = 224
 
@@ -182,10 +183,11 @@ func reset_all_options() -> void:
 # Initializes the party character details in the UI.
 func track_party_members(players: Array) -> void:
 	var p_count: int = int(min(players.size(), MAX_PARTY_SIZE))
-	party_stats.size.y = (
+	var height: int = (
 			FULL_PARTY_HEIGHT if p_count == MAX_PARTY_SIZE
 			else PART_PARTY_HEIGHT
 	)
+	party_stats.set_deferred("size", Vector2(PARTY_WIDTH, height))
 	for i in p_count:
 		var player_stats: PlayerStatsUI = party_stats.get_child(i)
 		var player: PlayerCharacter = players[i]
