@@ -3,16 +3,27 @@ class_name ScalingHexCollider
 extends CollisionShape3D
 """
 Enables a CollisionShape3D to be adjustable by outside factors. Only works for
-CollisionShapes described by a ConvexPolygonShape3D.
+CollisionShapes described by hex_tile_collision.
 """
+
+
+var _top_y_at_zero: Array = []
+
+
+func _ready() -> void:
+	var points: PackedVector3Array = shape.get_points()
+	for i in range(6):
+		_top_y_at_zero.append(points[i].y)
 
 
 # Updates the collision shape mesh so that it reflects the current height.
 func _update_collision_shape_height(height: int) -> void:
+	if not is_node_ready():
+		return
 	var points: PackedVector3Array = shape.get_points()
 	for i in range(6):
 		var h: float = Constants.HEX_TILE_UNIT_HEIGHT * height
-		points[i] = Vector3(points[i].x, h, points[i].z)
+		points[i] = Vector3(points[i].x, h + _top_y_at_zero[i], points[i].z)
 	shape.set_points(points)
 
 

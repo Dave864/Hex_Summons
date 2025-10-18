@@ -8,8 +8,8 @@
 [ext_resource type="Script" uid="uid://6ahwnnqrnsqp" path="res://hex_map/map_tile_node/scripts/MapTileDebugLabel.gd" id="6"]
 [ext_resource type="Script" uid="uid://fn76j8x64ebc" path="res://hex_map/map_tile_node/scripts/map_tile.gd" id="7"]
 [ext_resource type="CylinderMesh" uid="uid://bfmxst1fcnorm" path="res://hex_map/map_tile_node/hex_tile_shape.tres" id="7_yubl7"]
-[ext_resource type="Shape3D" path="res://hex_map/map_tile_node/hex_tile_collision.tres" id="8"]
-[ext_resource type="Shape3D" path="res://hex_map/map_tile_node/tile_top_collision.tres" id="9"]
+[ext_resource type="Shape3D" uid="uid://c366eqoe2avhk" path="res://hex_map/map_tile_node/hex_tile_collision.tres" id="8"]
+[ext_resource type="Shape3D" uid="uid://bn2i5bxre6gvq" path="res://hex_map/map_tile_node/tile_top_collision.tres" id="9"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yubl7"]
 resource_local_to_scene = true
@@ -29,6 +29,7 @@ rings = 0
 [sub_resource type="StandardMaterial3D" id="1"]
 resource_local_to_scene = true
 render_priority = -127
+transparency = 1
 shading_mode = 0
 
 [sub_resource type="CylinderMesh" id="10"]
