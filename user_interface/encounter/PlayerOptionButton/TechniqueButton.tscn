@@ -181,7 +181,7 @@ _data = {
 &"selected_start": SubResource("38")
 }
 
-[node name="TechniqueButton" type="TextureButton"]
+[node name="TechniqueButton" type="TextureButton" node_paths=PackedStringArray("sigil", "icon")]
 anchors_preset = -1
 anchor_right = 0.125
 anchor_bottom = 0.139
@@ -195,8 +195,8 @@ texture_pressed = SubResource("2")
 texture_disabled = SubResource("3")
 stretch_mode = 5
 script = ExtResource("4")
-sigil_ref = NodePath("Sigil")
-icon_ref = NodePath("Icon")
+sigil = NodePath("Sigil")
+icon = NodePath("Icon")
 
 [node name="Sigil" type="TextureRect" parent="."]
 layout_mode = 0

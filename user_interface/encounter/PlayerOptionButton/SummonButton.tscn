@@ -139,7 +139,7 @@ _data = {
 &"selected_start": SubResource("46")
 }
 
-[node name="SummonButton" type="TextureButton"]
+[node name="SummonButton" type="TextureButton" node_paths=PackedStringArray("icon")]
 anchors_preset = -1
 anchor_right = 0.125
 anchor_bottom = 0.139
@@ -154,7 +154,7 @@ texture_pressed = SubResource("34")
 texture_disabled = SubResource("36")
 stretch_mode = 5
 script = ExtResource("4")
-icon_ref = NodePath("Icon")
+icon = NodePath("Icon")
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 0

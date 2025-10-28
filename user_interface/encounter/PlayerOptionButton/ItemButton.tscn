@@ -10,17 +10,16 @@
 atlas = ExtResource("1")
 region = Rect2(0, 0, 80, 50)
 
-[sub_resource type="AtlasTexture" id="41"]
-atlas = ExtResource("1")
-region = Rect2(160, 200, 80, 50)
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4qgl7"]
+load_path = "res://.godot/imported/Option Button Circle.png-754cccf5a92cb2ff082f842c1be97cc8.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xatqp"]
+atlas = SubResource("CompressedTexture2D_4qgl7")
+region = Rect2(0, 100, 80, 50)
 
 [sub_resource type="AtlasTexture" id="43"]
 atlas = ExtResource("1")
 region = Rect2(0, 50, 80, 50)
-
-[sub_resource type="AtlasTexture" id="44"]
-atlas = ExtResource("1")
-region = Rect2(0, 150, 80, 50)
 
 [sub_resource type="AtlasTexture" id="23"]
 atlas = ExtResource("2")
@@ -185,7 +184,7 @@ _data = {
 &"selected_start": SubResource("51")
 }
 
-[node name="ItemButton" type="TextureButton"]
+[node name="ItemButton" type="TextureButton" node_paths=PackedStringArray("sigil", "icon")]
 anchors_preset = -1
 anchor_right = 0.125
 anchor_bottom = 0.139
@@ -196,13 +195,12 @@ theme_type_variation = &"OptionButton"
 toggle_mode = true
 action_mode = 0
 texture_normal = SubResource("40")
-texture_pressed = SubResource("41")
+texture_pressed = SubResource("AtlasTexture_xatqp")
 texture_disabled = SubResource("43")
-texture_focused = SubResource("44")
 stretch_mode = 5
 script = ExtResource("4")
-sigil_ref = NodePath("Sigil")
-icon_ref = NodePath("Icon")
+sigil = NodePath("Sigil")
+icon = NodePath("Icon")
 
 [node name="Sigil" type="TextureRect" parent="."]
 layout_mode = 0

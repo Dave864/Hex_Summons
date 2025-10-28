@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bsdqilfcr4xqv"]
+[gd_scene load_steps=19 format=3 uid="uid://bsdqilfcr4xqv"]
 
 [ext_resource type="Texture2D" uid="uid://b5m8cxed8tkkr" path="res://art/ui/PlayerOptionButton/Option Button Circle.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://cind8xqj6xvl6" path="res://art/ui/PlayerOptionButton/Sigil Spritesheet.png" id="2"]
@@ -17,10 +17,6 @@ region = Rect2(0, 100, 80, 50)
 [sub_resource type="AtlasTexture" id="42"]
 atlas = ExtResource("1")
 region = Rect2(0, 50, 80, 50)
-
-[sub_resource type="AtlasTexture" id="43"]
-atlas = ExtResource("1")
-region = Rect2(0, 150, 80, 50)
 
 [sub_resource type="AtlasTexture" id="23"]
 atlas = ExtResource("2")
@@ -145,7 +141,7 @@ _data = {
 &"selected_start": SubResource("50")
 }
 
-[node name="EndButton" type="TextureButton"]
+[node name="EndButton" type="TextureButton" node_paths=PackedStringArray("sigil", "icon")]
 anchors_preset = -1
 anchor_right = 0.125
 anchor_bottom = 0.139
@@ -157,11 +153,10 @@ toggle_mode = true
 texture_normal = SubResource("39")
 texture_pressed = SubResource("40")
 texture_disabled = SubResource("42")
-texture_focused = SubResource("43")
 stretch_mode = 5
 script = ExtResource("4")
-sigil_ref = NodePath("Sigil")
-icon_ref = NodePath("Icon")
+sigil = NodePath("Sigil")
+icon = NodePath("Icon")
 
 [node name="Sigil" type="TextureRect" parent="."]
 layout_mode = 0

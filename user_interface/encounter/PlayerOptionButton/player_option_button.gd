@@ -10,13 +10,11 @@ option.
 const COLOR_WHITE: Color = Color.WHITE
 const COLOR_GREY: Color = Color("7f7f7f")
 
-@export var sigil_ref: NodePath = NodePath("")
-@export var icon_ref: NodePath = NodePath("")
+@export var sigil: TextureRect = null
+@export var icon: TextureRect = null
 
 var _mouse_came_back: bool = false
 
-@onready var sigil: TextureRect = get_node_or_null(sigil_ref)
-@onready var icon: TextureRect = get_node_or_null(icon_ref)
 @onready var label: Label = $Label
 @onready var ap_focus: AnimationPlayer = $APFocus
 @onready var ap_icon: AnimationPlayer = $APIcon
@@ -25,7 +23,7 @@ var _mouse_came_back: bool = false
 # Resets the button.
 func reset() -> void:
 	if not disabled:
-		set_pressed_no_signal(false)
+		button_pressed = false
 
 
 # Sets the disabled value, updating label and all images to match.
@@ -75,7 +73,7 @@ func _on_PlayerOptionButton_focus_entered() -> void:
 		and not _mouse_came_back
 	):
 		return
-	if pressed:
+	if button_pressed:
 		ap_focus.play("focus_selected")
 		ap_icon.play("selected_start")
 		await ap_icon.animation_finished
@@ -88,7 +86,7 @@ func _on_PlayerOptionButton_focus_entered() -> void:
 # Resets all animations when focus is gone.
 func _on_PlayerOptionButton_focus_exited() -> void:
 	_mouse_came_back = false
-	if not pressed:
+	if not button_pressed:
 		ap_icon.play("RESET")
 	ap_focus.play("RESET")
 

@@ -10,12 +10,12 @@ associated with selecting this option.
 func _on_MovementButton_mouse_entered() -> void:
 	if disabled:
 		return
-	call_deferred("grab_focus")
+	grab_focus.call_deferred()
 
 
 # Plays focus animation.
 func _on_MovementButton_focus_entered() -> void:
-	if pressed:
+	if button_pressed:
 		ap_focus.play("focus_selected")
 	else:
 		ap_focus.play("focus")
@@ -23,9 +23,8 @@ func _on_MovementButton_focus_entered() -> void:
 
 # Toggles the Movement button off when focus has shifted to a new Control item.
 func _on_MovementButton_focus_exited() -> void:
-	pass
 	ap_focus.play("RESET")
-	if not pressed:
+	if not button_pressed:
 		ap_icon.play("RESET")
 
 

@@ -140,7 +140,7 @@ _data = {
 &"selected_start": SubResource("38")
 }
 
-[node name="MovementButton" type="TextureButton"]
+[node name="MovementButton" type="TextureButton" node_paths=PackedStringArray("icon")]
 anchors_preset = -1
 anchor_right = 0.125
 anchor_bottom = 0.139
@@ -154,7 +154,7 @@ texture_pressed = SubResource("2")
 texture_disabled = SubResource("3")
 stretch_mode = 3
 script = ExtResource("3")
-icon_ref = NodePath("Icon")
+icon = NodePath("Icon")
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 0
@@ -181,6 +181,8 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 34.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "MOVEMENT"
 horizontal_alignment = 1
 vertical_alignment = 2
