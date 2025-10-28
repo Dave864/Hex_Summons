@@ -1,7 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7wswkqcskjh8"]
+[gd_scene load_steps=4 format=3 uid="uid://c7wswkqcskjh8"]
 
 [ext_resource type="Theme" uid="uid://dhnuwcf6tcapi" path="res://user_interface/themes/ThemeNumberLabel.tres" id="1"]
 [ext_resource type="Script" uid="uid://dw5x2dj2p5xjb" path="res://user_interface/character_label/character_label.gd" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4trm1"]
+bg_color = Color(1, 1, 1, 1)
+border_width_bottom = 1
+border_color = Color(0.49803922, 0.49803922, 0.49803922, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
 
 [node name="CharacterLabel" type="Control"]
 layout_mode = 3
@@ -10,6 +20,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -640.0
 offset_bottom = -360.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2")
 y_offset = -8.0
@@ -40,5 +52,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 mouse_filter = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_4trm1")
 value = 50.0
 show_percentage = false
