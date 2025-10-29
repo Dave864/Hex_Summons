@@ -23,7 +23,7 @@ enum WispState {
 	INACTIVE
 }
 
-var _tracked_wisps: Dictionary = {
+@onready var _tracked_wisps: Dictionary = {
 	"test_earth_1": _initialize_data("test_earth_1", EARTH, "Melee"),
 	"test_earth_2": _initialize_data("test_earth_2", EARTH, "Melee"),
 	"test_fire_1": _initialize_data("test_fire_1", FIRE, "Range"),
@@ -174,7 +174,7 @@ func _initialize_data(
 # Checks if there is a wisp of the given name being tracked.
 func _is_tracked(wisp: String) -> bool:
 	if not _tracked_wisps.has(wisp):
-		"No wisp named {0} is tracked".format([wisp])
+		printerr("No wisp named {0} is tracked".format([wisp]))
 		return false
 	return true
 
