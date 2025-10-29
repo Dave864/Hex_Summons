@@ -23,7 +23,7 @@ const WISP_POOL: String = "wisp_pool"
 
 
 # Gets all characters that are currently in the party.
-func get_party_members() -> Array:
+func get_party_data() -> Array:
 	var party: Array = []
 	for player in party_details.keys():
 		if party_details[player][IN_PARTY]:

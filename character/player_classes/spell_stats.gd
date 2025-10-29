@@ -5,7 +5,7 @@ Describes a spell. Spells are actions with a wisp requirement and cost.
 """
 
 
-@export var action_stats: Resource = null
+@export var action_stats: ActionStats = null
 @export var earth_req = 0 # (int, 0, 4)
 @export var earth_cost = 0 # (int, 0, 4)
 @export var fire_req = 0 # (int, 0, 4)

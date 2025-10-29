@@ -10,8 +10,13 @@ Manages the events of an encounter.
 @export var hex_map: HexMap = null
 
 var cur_init: int = 0
+var players: Array = []
 
-@onready var players: Array = $Players.get_children()#PartyController.get_party_members()
+var _player_template: PackedScene = preload(
+		"res://character/player_characters/" + \
+		"PlayerCharacter/PlayerCharacter.tscn"
+)
+
 @onready var enemies: Array = $Enemies.get_children()
 @onready var selector: Selector = $Selector
 @onready var ui: EncounterUI = $EncounterUI
@@ -42,10 +47,14 @@ func _ready() -> void:
 	_connect_map_to_selector()
 	
 	var p_index: int = 0
-	for p in players:
-#		$Players.add_child(p)
-		p.stats.max_cur_health()
-		hex_map.place_character_at_tile(p, hex_map.player_start_tiles[p_index])
+	var party_data: Array = PartyController.get_party_data()
+	for data in party_data:
+		var player: PlayerCharacter = _player_template.instantiate()
+		$Players.add_child(player)
+		player.update_player_details(data)
+		players.append(player)
+		player.stats.max_cur_health()
+		hex_map.place_character_at_tile(player, hex_map.player_start_tiles[p_index])
 		p_index += 1
 	ui.track_party_members(players)
 	
@@ -81,7 +90,6 @@ func _check_for_required_parameters() -> void:
 		hex_map != null,
 		"Encounter has not set a hex map."
 	)
-	assert(players.size() > 0, "No players are present.")
 	assert(enemies.size() > 0, "No enemies are present.")
 	assert(
 		selector != null,

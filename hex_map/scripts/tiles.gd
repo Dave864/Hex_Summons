@@ -140,7 +140,7 @@ func _generate_grid() -> void:
 # Instantiates the hex grid map tile at the specified offset with the HexMap
 # node position being considered origin.
 func _instantiate_tile(offset: Vector3) -> void:
-	var tile = _map_tile.instantiate()
+	var tile: MapTile = _map_tile.instantiate()
 	add_child(tile)
 	tile.set_owner(_root_node)
 	tile.translate_object_local(offset + _grid_start)

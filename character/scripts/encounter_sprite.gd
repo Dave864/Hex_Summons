@@ -6,7 +6,7 @@ that the sprite image is aligned with the pixel grid.
 """
 
 
-@export var character_pos_ref: NodePath = NodePath("")
+@export var char_pos: Marker3D = null
 
 var _drop_plane: Plane = Plane.PLANE_XZ
 var _global_pos: Vector3 = Vector3.ZERO
@@ -14,7 +14,6 @@ var _ray_origin: Vector3 = Vector3.ZERO
 var _ray_normal: Vector3 = Vector3.ZERO
 
 @onready var _camera: Camera3D = get_viewport().get_camera_3d()
-@onready var _char_pos: Marker3D = get_node(character_pos_ref)
 @onready var _y_offset: float = position.y
 
 
@@ -32,8 +31,8 @@ func _process(_delta):
 	visible = not _camera.is_position_behind(global_transform.origin)
 	if not visible:
 		return
-	_drop_plane.d = _y_offset + _char_pos.global_position.y
-	_global_pos = _char_pos.global_position
+	_drop_plane.d = _y_offset + char_pos.global_position.y
+	_global_pos = char_pos.global_position
 	_global_pos.y += _y_offset
 	var r_pos: Vector2 = _camera.unproject_position(_global_pos).round()
 	_ray_origin = _camera.project_ray_origin(r_pos)
@@ -44,6 +43,6 @@ func _process(_delta):
 
 func _check_for_required_parameters() -> void:
 	assert(
-			character_pos_ref != null,
-			"EncounterSprite missing character position reference."
+			char_pos != null,
+			"EncounterSprite character position not set."
 	)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dtkpxtbsdtqpx"]
+[gd_scene load_steps=15 format=3 uid="uid://dtkpxtbsdtqpx"]
 
 [ext_resource type="Texture2D" path="res://character/player_characters/PlayerCharacter/PlayerBattleSprite.atlastex" id="1"]
 [ext_resource type="Script" uid="uid://rqmmsouogt6p" path="res://character/player_characters/player_character.gd" id="2"]
@@ -6,21 +6,14 @@
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
 [ext_resource type="Script" uid="uid://dnto6uqhp4lld" path="res://fsm/player_character/PlayerCharacterStandby.gd" id="4"]
 [ext_resource type="Script" uid="uid://bso16fqj8p6fk" path="res://fsm/player_character/PlayerCharacterMove.gd" id="5"]
-[ext_resource type="PackedScene" uid="uid://00lt34muxdee" path="res://character/player_classes/TestClass/TestClass.tscn" id="6"]
+[ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="6_htock"]
 [ext_resource type="Script" uid="uid://cwd6nlnrmkb70" path="res://fsm/player_character/PlayerCharacterWait.gd" id="7"]
 [ext_resource type="Script" uid="uid://bccbuxlvavdd6" path="res://fsm/player_character/PlayerCharacterAction.gd" id="8"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="9"]
 [ext_resource type="PackedScene" path="res://effects_tracker/EffectsTracker.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/character_label/CharacterLabel.tscn" id="11"]
+[ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="11_8fhg1"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="12"]
-[ext_resource type="Script" uid="uid://bv7t5hn7xo5ve" path="res://wisps/player_wisp_pool.gd" id="13"]
-
-[sub_resource type="CapsuleShape3D" id="1"]
-radius = 0.05
-height = 0.1
-
-[sub_resource type="SphereShape3D" id="2"]
-radius = 0.2
 
 [node name="PlayerCharacter" type="Area3D"]
 collision_layer = 4
@@ -34,17 +27,13 @@ offset_bottom = 0.0
 character_type = 1
 character_pos_ref = NodePath("../MapCoordinate")
 
-[node name="PlayerWispPool" type="Node" parent="."]
-script = ExtResource("13")
-
 [node name="MapCoordinate" type="Marker3D" parent="."]
 script = ExtResource("9")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-shape = SubResource("1")
+shape = ExtResource("6_htock")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="Sprite3D" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.8, 0)
 pixel_size = 0.0054
 billboard = 1
@@ -52,9 +41,7 @@ fixed_size = true
 texture_filter = 0
 texture = ExtResource("1")
 script = ExtResource("12")
-character_pos_ref = NodePath("../MapCoordinate")
-
-[node name="Class" parent="." instance=ExtResource("6")]
+char_pos = NodePath("../MapCoordinate")
 
 [node name="EffectsTracker" parent="." instance=ExtResource("10")]
 
@@ -65,7 +52,7 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
-shape = SubResource("2")
+shape = ExtResource("11_8fhg1")
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3")

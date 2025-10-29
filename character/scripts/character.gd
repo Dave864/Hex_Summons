@@ -23,7 +23,7 @@ var stats: CharacterStats
 # Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false: get = get_is_start_set
 
-@onready var character_sprite: Sprite3D = $Sprite3D
+@onready var character_sprite: EncounterSprite = $Sprite3D
 @onready var character_label: CharacterLabel = $CharacterLabel
 @onready var map_coordinate: MapCoordinate = $MapCoordinate
 @onready var hit_box: Area3D = $HitBox
@@ -93,7 +93,5 @@ func _on_Character_area_entered(map_tile: Area3D) -> void:
 	_update_emission_index(map_tile.map_coordinate.get_tile_index())
 	map_coordinate.set_tile_index(map_tile.map_coordinate.get_tile_index())
 	map_coordinate.set_cube_coord(map_tile.map_coordinate.get_cube_coord())
-	# If the creature's start position has not been set, move it to the position
-	# of the tile it in the area of.
 	if !_start_set:
 		_start_set = true

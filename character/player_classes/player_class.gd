@@ -62,7 +62,8 @@ func _create_child_nodes() -> void:
 
 # Creates a node for the given technique details.
 func _create_technique_node(tech_stats: TechniqueStats) -> void:
-	var action_path: String = ACTION_PATH_FORMAT.format([tech_stats.name])
+	var tech_name: String = tech_stats.action_stats.name
+	var action_path: String = ACTION_PATH_FORMAT.format([tech_name])
 	var technique_node: Action = load(action_path).instantiate()
 	var cooldown_node: Cooldown = Cooldown.new(tech_stats.cooldown)
 	technique_node.add_child(cooldown_node)
@@ -71,7 +72,8 @@ func _create_technique_node(tech_stats: TechniqueStats) -> void:
 
 # Creates a node for the given spell details.
 func _create_spell_node(spell_stats: SpellStats) -> void:
-	var action_path: String = ACTION_PATH_FORMAT.format([spell_stats.name])
+	var spell_name: String = spell_stats.action_stats.name
+	var action_path: String = ACTION_PATH_FORMAT.format([spell_name])
 	var spell_node: Action = load(action_path).instantiate()
 	var wisp_cost_node: WispCost = WispCost.new(spell_stats)
 	spell_node.add_child(wisp_cost_node)

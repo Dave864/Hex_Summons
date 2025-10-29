@@ -47,6 +47,7 @@ func _ready():
 
 # Creates a new instance of this node with the given cost details.
 func _init(spell_stats: SpellStats = null) -> void:
+	name = "WispCost"
 	earth_req = 0 if spell_stats == null else spell_stats.earth_req
 	earth_cost = 0 if spell_stats == null else spell_stats.earth_cost
 	fire_req = 0 if spell_stats == null else spell_stats.fire_req

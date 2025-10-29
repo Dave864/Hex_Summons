@@ -5,7 +5,7 @@ Describes a technique. Techniques are actions with a cooldown.
 """
 
 
-@export var action_stats: Resource = null
+@export var action_stats: ActionStats = null
 @export var cooldown = 0 # (int, 0, 10)
 
 var _countdown: int = 0: get = get_countdown

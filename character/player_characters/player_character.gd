@@ -1,9 +1,22 @@
 class_name PlayerCharacter
 extends Character
 """
-Handles actions specific to player characters.
+Handles the setting of player data passed from PartyController. The intended use
+case is for this scene to be instanciated from a PackedScene, with specific
+player character data being supplied afterwards.
 """
 
+
+const PORTRAIT_PATH_FORMAT: String = (
+		"res://character/player_characters/{0}/" + \
+		"BattlePortrait.atlastex"
+)
+const BATTLE_PATH_FORMAT: String = (
+		"res://character/player_characters/{0}/" + \
+		"BattleSprite.atlastex"
+)
+
+var wisp_pool: PlayerWispPool = null
 
 # The current player class; determines stat adjusters and abilities.
 var _player_class: PlayerClass
@@ -11,23 +24,23 @@ var _player_class: PlayerClass
 var _techniques: Array
 var _spells: Array
 
-@onready var wisp_pool: PlayerWispPool = $PlayerWispPool
 @onready var _default_portait: Texture2D = preload(
 		"res://character/player_characters/PlayerCharacter/" + \
 		"PlayerBattlePortrait.atlastex"
 )
+@onready var _default_battle: Texture2D = preload(
+		"res://character/player_characters/PlayerCharacter/" +\
+		"PlayerBattleSprite.atlastex"
+)
+@onready var _battle_sprite: EncounterSprite = $Sprite3D
 
 
-# Assigns the player a class, updating the relevant details.
-func assign_class(new_class: PlayerClass) -> void:
-	_player_class = new_class
-	_techniques = _player_class.techniques
-	_spells = _player_class.spells
-	stats = _player_class.stats
-	stats.character_id = get_instance_id()
-	_connect_to_character_label()
-	_connect_stats_to_effects_tracker()
-	_initialize_actions()
+# Updates the character this node represents using data from the PartyController.
+func update_player_details(player_details: Dictionary) -> void:
+	name = player_details[PartyController.NAME]
+	wisp_pool = player_details[PartyController.WISP_POOL]
+	_update_sprites(name)
+	_assign_class(player_details[PartyController.CLASS])
 
 
 # Get the techniques associated with the character
@@ -47,13 +60,22 @@ func get_type() -> int:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	wisp_pool.player_name = name
-	battle_portrait = (
-		_default_portait if battle_portrait == null
-		else battle_portrait
-	)
-	var class_node: PlayerClass = $Class as PlayerClass
-	assign_class(class_node)
+	battle_portrait = _default_portait
+	_battle_sprite.texture = _default_battle
+
+
+# Assigns the player a class, creating a new class node.
+func _assign_class(class_details: PlayerClassData) -> void:
+	_player_class = PlayerClass.new(class_details)
+	_player_class.name = "Class"
+	add_child(_player_class)
+	_techniques = _player_class.techniques
+	_spells = _player_class.spells
+	stats = _player_class.stats
+	stats.character_id = get_instance_id()
+	_connect_to_character_label()
+	_connect_stats_to_effects_tracker()
+	_initialize_actions()
 
 
 # Initializes the action effects.
@@ -83,6 +105,14 @@ func _initialize_actions() -> void:
 		s.source_stats = stats
 		s.initialize_effects()
 		s.initialize_caster_id(get_instance_id())
+
+
+# Updates the sprites to the ones for the given player.
+func _update_sprites(player_name: String) -> void:
+	var new_portrait: Texture2D = load(PORTRAIT_PATH_FORMAT.format([player_name]))
+	var new_battle: Texture2D = load(BATTLE_PATH_FORMAT.format([player_name]))
+	battle_portrait = new_portrait if new_portrait != null else _default_portait
+	_battle_sprite.texture = new_battle if new_battle != null else _default_battle
 
 
 # Virtual function. Updates emission points for all actions of the chracter.
