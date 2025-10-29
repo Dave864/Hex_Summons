@@ -132,6 +132,11 @@ func _init(new_player_name: String = "") -> void:
 
 # Gets the active count for each element pool.
 func _set_active_count() -> void:
+	# Reset count to prevent overcounting during initialization.
+	_active_count[Constants.CoreElement.EARTH] = 0
+	_active_count[Constants.CoreElement.FIRE] = 0
+	_active_count[Constants.CoreElement.WATER] = 0
+	_active_count[Constants.CoreElement.WIND] = 0
 	for is_active in earth.values():
 		_active_count[Constants.CoreElement.EARTH] += 1 if is_active else 0
 	for is_active in fire.values():

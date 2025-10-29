@@ -24,10 +24,10 @@ enum WispState {
 }
 
 @onready var _tracked_wisps: Dictionary = {
-	"test_earth_1": _initialize_data("test_earth_1", EARTH, "Melee"),
-	"test_earth_2": _initialize_data("test_earth_2", EARTH, "Melee"),
-	"test_fire_1": _initialize_data("test_fire_1", FIRE, "Range"),
-	"test_fire_2": _initialize_data("test_fire_2", FIRE, "Range"),
+	"test_earth_1": _initialize_data("test_earth_1", EARTH, "Player1"),
+	"test_earth_2": _initialize_data("test_earth_2", EARTH, "Player1"),
+	"test_fire_1": _initialize_data("test_fire_1", FIRE, "Player2"),
+	"test_fire_2": _initialize_data("test_fire_2", FIRE, "Player2"),
 	"test_water_1": _initialize_data("test_water_1", WATER),
 	"test_water_2": _initialize_data("test_water_2", WATER),
 	"test_wind_1": _initialize_data("test_wind_1", WIND),
@@ -167,7 +167,10 @@ func _initialize_data(
 		DATA: _get_wisp_data(wisp_name, element),
 		ELEMENT: element,
 		BONDED_PLAYER: bonded_player,
-		ENCOUNTER_STATE: WispState.INACTIVE
+		ENCOUNTER_STATE: (
+				WispState.INACTIVE if bonded_player == NO_PLAYER
+				else WispState.PLAYER_SET
+		)
 	}
 
 

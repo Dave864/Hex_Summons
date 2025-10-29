@@ -1,35 +1,37 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://cy3ef1wdf5tu"]
 
-[ext_resource path="res://user_interface/encounter/WispPool/PlayerWispPool/PlayerWispPool.tscn" type="PackedScene" id=1]
-[ext_resource path="res://user_interface/encounter/PlayerStats/player_stats_ui.gd" type="Script" id=2]
-[ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=3]
-[ext_resource path="res://art/ui/ThemeBlueSigil/HealthBorder.png" type="Texture2D" id=4]
-[ext_resource path="res://art/icon.png" type="Texture2D" id=5]
-[ext_resource path="res://art/ui/ThemeBlueSigil/HealthBar.png" type="Texture2D" id=6]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/WispPool/PlayerWispPool/PlayerWispPool.tscn" id="1"]
+[ext_resource type="Script" uid="uid://blseqgdfu5205" path="res://user_interface/encounter/PlayerStats/player_stats_ui.gd" id="2"]
+[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="3"]
+[ext_resource type="Texture2D" uid="uid://30s2sfbgvhje" path="res://art/ui/ThemeBlueSigil/HealthBorder.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://osiqpd8jhoyd" path="res://art/icon.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://c5b60fk50dtu8" path="res://art/ui/ThemeBlueSigil/HealthBar.png" id="6"]
 
-
-[node name="ActivePlayerStats" type="Control"]
+[node name="ActivePlayerStats" type="Control" node_paths=PackedStringArray("player_portrait", "wisp_pool_ui")]
+layout_mode = 3
 anchor_right = 0.156
 anchor_bottom = 0.333
 offset_right = 0.159996
 offset_bottom = 0.119995
 mouse_filter = 2
-theme = ExtResource( 3 )
-script = ExtResource( 2 )
-portrait_size = Vector2( 46, 46 )
-portrait_ref = NodePath("PlayerWispPool/PlayerPortrait")
-wisp_pool_ref = NodePath("PlayerWispPool")
+theme = ExtResource("3")
+script = ExtResource("2")
+portrait_size = Vector2(46, 46)
+player_portrait = NodePath("PlayerWispPool/PlayerPortrait")
+wisp_pool_ui = NodePath("PlayerWispPool")
 
 [node name="NameLabel" type="Label" parent="."]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -50.0
 offset_right = 50.0
 offset_bottom = 8.0
 text = "NAME"
-align = 1
+horizontal_alignment = 1
 
 [node name="HealthNumberLabel" type="Label" parent="."]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -38,9 +40,10 @@ offset_left = -50.0
 offset_top = -8.0
 offset_right = 50.0
 text = "00/00"
-align = 1
+horizontal_alignment = 1
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -52,11 +55,12 @@ offset_bottom = 50.0
 mouse_filter = 2
 value = 60.0
 rounded = true
-texture_under = ExtResource( 4 )
-texture_progress = ExtResource( 6 )
-texture_progress_offset = Vector2( 11, 3 )
+texture_under = ExtResource("4")
+texture_progress = ExtResource("6")
+texture_progress_offset = Vector2(11, 3)
 
-[node name="PlayerWispPool" parent="." instance=ExtResource( 1 )]
+[node name="PlayerWispPool" parent="." instance=ExtResource("1")]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -68,6 +72,7 @@ offset_bottom = 46.0
 
 [node name="PlayerPortrait" type="TextureRect" parent="PlayerWispPool"]
 show_behind_parent = true
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -77,5 +82,5 @@ offset_top = -23.0
 offset_right = 23.0
 offset_bottom = 23.0
 mouse_filter = 2
-texture = ExtResource( 5 )
-expand = true
+texture = ExtResource("5")
+expand_mode = 1
