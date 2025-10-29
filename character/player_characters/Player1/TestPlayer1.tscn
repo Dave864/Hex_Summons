@@ -10,10 +10,11 @@
 [ext_resource type="Script" uid="uid://bccbuxlvavdd6" path="res://fsm/player_character/PlayerCharacterAction.gd" id="8"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="9"]
 [ext_resource type="PackedScene" path="res://effects_tracker/EffectsTracker.tscn" id="10"]
-[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/character_label/CharacterLabel.tscn" id="11"]
+[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="11"]
 [ext_resource type="Texture2D" path="res://character/player_characters/Player1/BattlePortrait.atlastex" id="12"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="13"]
 [ext_resource type="Script" uid="uid://bv7t5hn7xo5ve" path="res://wisps/player_wisp_pool.gd" id="14"]
+
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.05
