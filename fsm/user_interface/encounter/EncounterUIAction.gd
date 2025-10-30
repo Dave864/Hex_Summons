@@ -1,19 +1,18 @@
 extends EncounterUIState
-"""
-The logic for what happens when an EncounterUI scene is in the `Action` state.
-Populates the SubOptions node with buttons descrbing available choices. Selecting
-the button for the currently active action will clear the SubOptions node and
-allow for movement. Selecting a different button will transition to the `Action`
-state using the features of the new option.
-"""
+## The logic for what happens when an EncounterUI scene is in the `Action` state.
+##
+## Populates the SubOptions node with buttons descrbing available choices. Selecting
+## the button for the currently active action will clear the SubOptions node and
+## allow for movement. Selecting a different button will transition refresh the
+## `Action` state using the features of the new option.
 
 
 var _option_flag: int
 var _current_action: Action
 
 
-# Called by the state machine upon changing the active state. The `msg` parameter
-# is a dictionary with arbitrary data the state can use to initialize itself.
+## Called by the state machine upon changing the active state. The `msg` parameter
+## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(msg := {}) -> void:
 	_option_flag = msg["option_flag"]
 	encounter_ui.set_current_selection(_option_flag)
@@ -26,7 +25,7 @@ func enter(msg := {}) -> void:
 	_connect_signals()
 
 
-# Virtual function. Receives events from the `_unhandled_input()` callback.
+## Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(event: InputEvent) -> void:
 	if (
 		InputController.source_is_keymouse()
@@ -64,16 +63,16 @@ func handle_input(event: InputEvent) -> void:
 #		_option_selected(EncounterUI.Options.SUMMON)
 
 
-# Called by the state machine before changing the active state.
-# Use this function to clean up the state.
+## Called by the state machine before changing the active state.
+## Use this function to clean up the state.
 func exit() -> void:
 	encounter_ui.sub_options.clear_sub_options()
 	_disconnect_signals()
 
 
-# Connect the relevant signals to this state.
-# These signals are used by other states and will be disconnected to avoid
-# unintended behavior.
+## Connect the relevant signals to this state.
+## These signals are used by other states and will be disconnected to avoid
+## unintended behavior.
 func _connect_signals() -> void:
 	ErrorUtil.connect_signal(
 			encounter_ui.get_focused_player(),
@@ -125,7 +124,7 @@ func _connect_signals() -> void:
 	)
 
 
-# Disconnect the signals connected to this state.
+## Disconnect the signals connected to this state.
 func _disconnect_signals() -> void:
 	encounter_ui.get_focused_player().disconnect(
 			"turn_ended",
@@ -161,20 +160,23 @@ func _disconnect_signals() -> void:
 	)
 
 
-# Logic for what happens when the turn has ended.
+## Runs logic for the end of player turn. Resets all option buttons and indicates
+## that the current player turn has ended.
 func _end_selected() -> void:
 	encounter_ui.end_button.call_deferred("grab_focus")
 	encounter_ui.reset_all_options()
 	encounter_ui.get_focused_player().emit_turn_ended()
 
 
-# Logic for when movement has been selected.
+## Handles the behavior for when the movement button has been selected. The current
+## option menu closes and the state machine goes to the MOVE state.
 func _movement_selected() -> void:
 	_toggle_off_current_option()
 	_action_type_canceled()
 
 
-# Logic for when a specified option is selected.
+## Handles the behavior for when an option has been selected. Closes the current
+## option menu and triggers the loading of a new options menu if applicable.
 func _option_selected(option: int) -> void:
 	_toggle_off_current_option()
 	if _option_flag == option:
@@ -183,7 +185,7 @@ func _option_selected(option: int) -> void:
 		state_machine.transition_to(ACTION, {"option_flag": option})
 
 
-# Toggles off the currently active option.
+## Toggles off the currently active option.
 func _toggle_off_current_option() -> void:
 	match _option_flag:
 		EncounterUI.Options.TECHNIQUE:
@@ -198,52 +200,52 @@ func _toggle_off_current_option() -> void:
 			pass
 
 
-# Signal that an action type is no longer being looked at before transitioning
-# to the 'Move' state.
+## Signal that an action type is no longer being looked at before transitioning
+## to the 'Move' state.
 func _action_type_canceled() -> void:
 	SignalBus.emit_player_action_type_canceled()
 	state_machine.transition_to(MOVE)
 
 
-# Logic for what happens when the Movement button is pressed.
+## Catches the signal for when the button for movement is pressed.
 func _on_MovementButton_pressed() -> void:
 	_movement_selected()
 
 
-# Logic for what happens when the Technique button is pressed.
+## Catches the signal for when the Technique button is pressed.
 func _on_TechniqueButton_pressed() -> void:
 	_option_selected(EncounterUI.Options.TECHNIQUE)
 
 
-# Logic for what happens when the Spell button is pressed.
+## Catches the signal for when the Spell button is pressed.
 func _on_SpellButton_pressed() -> void:
 	_option_selected(EncounterUI.Options.SPELL)
 
 
-# Logic for what happens when the Summon button is pressed.
+## Catches the signal for when the Summon button is pressed.
 func _on_SummonButton_pressed() -> void:
 	print("Summon option selected")
 #	_option_selected(EncounterUI.Options.SUMMON)
 
 
-# Logic for what happens when the Item button is pressed.
+## Catches the signal for when the Item button is pressed.
 func _on_ItemButton_pressed() -> void:
 	print("Item option selected")
 #	_option_selected(EncounterUI.Options.ITEM)
 
 
-# Logic for what happens when the End button is pressed.
+## Catches the signal for when the End button is pressed.
 func _on_EndButton_pressed() -> void:
 	_end_selected()
 
 
-# Go to the WAIT state when the player turn has ended.
+## Go to the WAIT state when the player turn has ended.
 func _on_PlayerCharacter_turn_ended() -> void:
 	state_machine.transition_to(WAIT)
 
 
-# Signal that an action option has been selected from the currently
-# displayed options.
+## Signal that an action option has been selected from the currently
+## displayed options.
 func _on_SubOptions_action_selected(action_info: Action) -> void:
 	_current_action = action_info
 	SignalBus.emit_player_action_selected(
@@ -252,7 +254,7 @@ func _on_SubOptions_action_selected(action_info: Action) -> void:
 	)
 
 
-# Signal that a selected action has been executed. Hide the UI elements.
+## Signal that a selected action has been executed. Hide the UI elements.
 func _on_SignalBus_player_action_executed(
 	_player: PlayerCharacter,
 	_action: Action,
