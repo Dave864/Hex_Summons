@@ -1,16 +1,15 @@
 extends EncounterUIState
-"""
-The logic for what happens when an EncounterUI scene is in the `Move` state.
-UI elements relevant to user options become active and are made visible. Moves
-to the `Wait` state when the user chooses to end their turn. Moves to the
-`Pause` state when a PlayerCharacter moves to a new tile. Moves to the
-`Action` state when an action with multiple options is selected.
-"""
+## The logic for what happens when an EncounterUI scene is in the `Move` state.
+##
+## UI elements relevant to user options become active and are made visible. Moves
+## to the `Wait` state when the user chooses to end their turn. Moves to the
+## `Pause` state when a PlayerCharacter moves to a new tile. Moves to the
+##`Action` state when an action with multiple options is selected.
 
 
-# Virtual function. Called by the state machine upon changing the active state. 
-# The `msg` parameter is a dictionary with arbitrary data the state can use to 
-# initialize itself.
+## Virtual function. Called by the state machine upon changing the active state. 
+## The `msg` parameter is a dictionary with arbitrary data the state can use to 
+## initialize itself.
 func enter(_msg := {}) -> void:
 	encounter_ui.sub_options.activate()
 	encounter_ui.options.show()
@@ -19,7 +18,7 @@ func enter(_msg := {}) -> void:
 	_connect_signals()
 
 
-# Virtual function. Receives events from the `_unhandled_input()` callback.
+## Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(event: InputEvent) -> void:
 	if (
 		event.is_action_pressed("ui_select")
@@ -53,13 +52,14 @@ func handle_input(event: InputEvent) -> void:
 		_summon_selected()
 
 
-# Virtual function. Called by the state machine before changing the active 
-# state. Use this function to clean up the state.
+## Virtual function. Called by the state machine before changing the active 
+## state. Use this function to clean up the state.
 func exit() -> void:
 	_disconnect_signals()
 
-# These signals are used by other states and will be later disconnected to avoid
-# unintended behavior.
+
+## These signals are used by other states and will be later disconnected to avoid
+## unintended behavior.
 func _connect_signals() -> void:
 	ErrorUtil.connect_signal(
 			SignalBus,
@@ -99,7 +99,7 @@ func _connect_signals() -> void:
 	)
 
 
-# Disconnect signals that will be used by other states in this FSM.
+## Disconnect signals that will be used by other states in this FSM.
 func _disconnect_signals() -> void:
 	SignalBus.disconnect(
 		"move_path_created",
@@ -127,8 +127,8 @@ func _disconnect_signals() -> void:
 	)
 
 
-# Handles behavior for when the "TECHNIQUE" option is chosen. Goes to the ACTION
-# state, specifying TECHNIQUE as the option.
+## Handles behavior for when the "TECHNIQUE" option is chosen. Goes to the ACTION
+## state, specifying TECHNIQUE as the option.
 func _technique_selected() -> void:
 	encounter_ui.technique_button.grab_focus()
 	_depress_other_options(encounter_ui.Options.TECHNIQUE)
@@ -138,8 +138,8 @@ func _technique_selected() -> void:
 	)
 
 
-# Handles behavior for when the "SPELL" option is chosen. Goes to the ACTION
-# state, specifying SPELL as the option.
+## Handles behavior for when the "SPELL" option is chosen. Goes to the ACTION
+## state, specifying SPELL as the option.
 func _spell_selected() -> void:
 	encounter_ui.spell_button.grab_focus()
 	_depress_other_options(encounter_ui.Options.SPELL)
@@ -149,8 +149,8 @@ func _spell_selected() -> void:
 	)
 
 
-# Handles behavior for when the "SUMMON" option is chosen. Goes to the ACTION
-# state, specifying SUMMON as the option.
+## Handles behavior for when the "SUMMON" option is chosen. Goes to the ACTION
+## state, specifying SUMMON as the option.
 func _summon_selected() -> void:
 	encounter_ui.summon_button.call_deferred("grab_focus")
 	_depress_other_options(encounter_ui.Options.SUMMON)
@@ -160,8 +160,8 @@ func _summon_selected() -> void:
 	)
 
 
-# Handles behavior for when the "ITEM" option is chosen. Goes to the ACTION
-# state, specifying ITEM as the option.
+## Handles behavior for when the "ITEM" option is chosen. Goes to the ACTION
+## state, specifying ITEM as the option.
 func _item_selected() -> void:
 	encounter_ui.item_button.call_deferred("grab_focus")
 	_depress_other_options(encounter_ui.Options.ITEM)
@@ -171,17 +171,16 @@ func _item_selected() -> void:
 	)
 
 
-# Handles behavior for when the "END" option is chosen.
+## Handles behavior for when the "END" option is chosen. The current player turn
+## is signaled to have ended, all options are reset, and the state machine goes
+## to the WAIT state.
 func _end_selected() -> void:
-	encounter_ui.end_button.call_deferred("grab_focus")
-	encounter_ui.end_button.button_pressed = true
-	encounter_ui.movement_button.button_pressed = false
 	encounter_ui.get_focused_player().emit_turn_ended()
 	encounter_ui.reset_all_options()
 	state_machine.transition_to(WAIT)
 
 
-# Sets the button_pressed state of other option buttons to false.
+## Sets the button_pressed state of other option buttons to false.
 func _depress_other_options(pressed_option: int) -> void:
 	var is_pressed: bool = pressed_option == encounter_ui.Options.TECHNIQUE
 	encounter_ui.technique_button.button_pressed = is_pressed
@@ -195,28 +194,33 @@ func _depress_other_options(pressed_option: int) -> void:
 	encounter_ui.movement_button.button_pressed = is_pressed
 
 
-# Triggered when a move tile has been selected and a path created to said tile.
+## Triggered when a move tile has been selected and a path created to said tile.
 func _on_SignalBus_move_path_created(_path: PackedVector3Array) -> void:
 	if not _state_is_active():
 		return
 	state_machine.transition_to(PAUSE)
 
 
+## Catches the signal for when the TechniqueButton is pressed.
 func _on_TechniqueButton_pressed() -> void:
 	_technique_selected()
 
 
+## Catches the signal for when the SpellButton is pressed.
 func _on_SpellButton_pressed() -> void:
 	_spell_selected()
 
 
+## Catches the signal for when the SummonButton is pressed.
 func _on_SummonButton_pressed() -> void:
 	_summon_selected()
 
 
+## Catches the signal for when the ItemButton is pressed.
 func _on_ItemButton_pressed() -> void:
 	_item_selected()
 
 
+## Catches the signal for when the EndButton is pressed.
 func _on_EndButton_pressed() -> void:
 	_end_selected()
