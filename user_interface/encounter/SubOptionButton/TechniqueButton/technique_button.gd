@@ -1,7 +1,7 @@
-class_name ActionButton
+class_name TechniqueButton
 extends SubOptionButton
 """
-Button that describes a possible action for a given option.
+Button that describes a possible technique.
 """
 
 

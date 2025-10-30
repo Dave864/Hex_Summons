@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://t7dfdsdvqeqx"]
+
+[ext_resource type="Script" uid="uid://bhmjbe6apcnjx" path="res://user_interface/encounter/SubOptionButton/TechniqueButton/technique_button.gd" id="1_8t5ev"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/SubOptionButton/RangeDisplay/RangeDisplay.tscn" id="2_hkjod"]
+
+[node name="TechniqueButton" type="MarginContainer"]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.095
+size_flags_horizontal = 4
+script = ExtResource("1_8t5ev")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Test"
+
+[node name="RangeDisplay" parent="HBoxContainer" instance=ExtResource("2_hkjod")]
+layout_mode = 2
+
+[node name="InactiveFilter" type="Panel" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="InactiveFilter"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "cooldown"
+vertical_alignment = 2
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

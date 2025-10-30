@@ -9,12 +9,14 @@ Manages the SubOptions UI element in the EncounterUI.
 signal option_selected(option_info)
 
 var _actions: Array = []
-var _action_button: PackedScene = preload(
+var _technique_button: PackedScene = preload(
 		"res://user_interface/encounter/" \
-		+ "SubOptionButton/ActionButton/ActionButton.tscn"
+		+ "SubOptionButton/TechniqueButton/TechniqueButton.tscn"
 )
-# var _technique_button: PackedScene = preload("")
-# var _spell_button: PackedScene = preload("")
+var _spell_button: PackedScene = preload(
+		"res://user_interface/encounter/" \
+		+ "SubOptionButton/SpellButton/SpellButton.tscn"
+)
 
 @onready var _sub_options_container: HBoxContainer = $HBoxContainer
 
@@ -33,31 +35,12 @@ func deactivate() -> void:
 
 # Populate the sub-options container with techniques.
 func populate_techinques(player: PlayerCharacter, techniques: Array) -> void:
-	for technique in techniques:
-		var new_button: SubOptionButton = _action_button.instantiate()
-		new_button.set_option_details(technique)
-		new_button.set_player(player)
-		new_button.connect(
-			"option_selected",
-			Callable(self, "_on_SubOptionButton_option_selected")
-		)
-		_actions.append(technique)
-		_sub_options_container.add_child(new_button)
+	_populate_sub_options(techniques, player, _technique_button)
 
 
 # Populate the sub-options container with spells.
 func populate_spells(player: PlayerCharacter, spells: Array) -> void:
-	for spell in spells:
-		var new_button: SubOptionButton = _action_button.instantiate()
-		new_button.set_option_details(spell)
-		new_button.set_player(player)
-		new_button.connect(
-			"option_selected",
-			Callable(self, "_on_SubOptionButton_option_selected")
-		)
-		_actions.append(spell)
-		_sub_options_container.add_child(new_button)
-	_set_neighbors()
+	_populate_sub_options(spells, player, _spell_button)
 
 
 # Clear out the sub-options container.
@@ -89,6 +72,25 @@ func _set_neighbors() -> void:
 		var current_option: SubOptionButton = _sub_options_container.get_child(i)
 		var right_neighor: SubOptionButton = _sub_options_container.get_child(i + 1)
 		current_option.set_focus_neighbor_right(right_neighor)
+
+
+# Create the buttons for the given sub-options.
+func _populate_sub_options(
+	options: Array,
+	player: PlayerCharacter,
+	button: PackedScene
+) -> void:
+	for option in options:
+		var new_button: SubOptionButton = button.instantiate()
+		new_button.set_option_details(option)
+		new_button.set_player(player)
+		new_button.connect(
+			"option_selected",
+			Callable(self, "_on_SubOptionButton_option_selected")
+		)
+		_actions.append(option)
+		_sub_options_container.add_child(new_button)
+	_set_neighbors()
 
 
 # Emits the "action_selected" signal when one of the button options has been pressed.

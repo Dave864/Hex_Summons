@@ -1,14 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dlygm4py28886"]
+[gd_scene load_steps=3 format=3 uid="uid://b024wqodavo7i"]
 
-[ext_resource type="Script" uid="uid://cqouj8drmitbk" path="res://user_interface/encounter/SubOptionButton/ActionButton/action_button.gd" id="1"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/SubOptionButton/RangeDisplay/RangeDisplay.tscn" id="2"]
+[ext_resource type="Script" uid="uid://jqlg6d484xvk" path="res://user_interface/encounter/SubOptionButton/SpellButton/spell_button.gd" id="1_opu2t"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/SubOptionButton/RangeDisplay/RangeDisplay.tscn" id="2_d175n"]
 
-[node name="ActionButton" type="MarginContainer"]
+[node name="SpellButton" type="MarginContainer"]
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.095
 size_flags_horizontal = 4
-script = ExtResource("1")
+script = ExtResource("1_opu2t")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 2
@@ -23,7 +23,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 text = "Test"
 
-[node name="RangeDisplay" parent="HBoxContainer" instance=ExtResource("2")]
+[node name="RangeDisplay" parent="HBoxContainer" instance=ExtResource("2_d175n")]
 layout_mode = 2
 
 [node name="InactiveFilter" type="Panel" parent="."]
