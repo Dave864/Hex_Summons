@@ -1,51 +1,37 @@
 class_name WispCost
 extends ActionCondition
-"""
-Defines the wisps that need to be set to the character in order for an action
-to be usable.
-"""
+## Defines the wisps that need to be set to the character in order for an action
+## to be usable.
 
 
+@export_category("Required Wisps to Cast")
 @export var earth_req = 0 # (int, 0, 4)
-@export var earth_cost = 0 # (int, 0, 4)
 @export var fire_req = 0 # (int, 0, 4)
-@export var fire_cost = 0 # (int, 0, 4)
 @export var water_req = 0 # (int, 0, 4)
-@export var water_cost = 0 # (int, 0, 4)
 @export var wind_req = 0 # (int, 0, 4)
-@export var wind_cost = 0 # (int, 0, 4)
 @export var light_req = 0 # (int, 0, 4)
-@export var light_cost = 0 # (int, 0, 4)
 @export var dark_req = 0 # (int, 0, 4)
+
+@export_category("Wisps Spent on Cast")
+@export var earth_cost = 0 # (int, 0, 4)
+@export var fire_cost = 0 # (int, 0, 4)
+@export var water_cost = 0 # (int, 0, 4)
+@export var wind_cost = 0 # (int, 0, 4)
+@export var light_cost = 0 # (int, 0, 4)
 @export var dark_cost = 0 # (int, 0, 4)
 
+## A collated summary of the requirements and cost.
 var summary: Dictionary = _get_costs()
+## The pool that the cost refers to when checking if requirements are met.
 var wisp_pool: WispPool = null
 
 
-# Virtual function. Checks if the condition has been met given the current
-# state of the characters and map.
-func is_met(
-	_character: Character = null,
-	_targets: Array = [],
-	_distance_map: DistanceMap = null
-) -> bool:
-	return (
-		wisp_pool.active_earth_count() >= earth_req
-		and wisp_pool.active_fire_count() >= fire_req
-		and wisp_pool.active_water_count() >= water_req
-		and wisp_pool.active_wind_count() >= wind_req
-		and wisp_pool.active_light_count() >= light_req
-		and wisp_pool.active_dark_count() >= dark_req
-	)
-
-
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
 
 
-# Creates a new instance of this node with the given cost details.
+## Creates a new instance of this node with the given cost details.
 func _init(spell_stats: SpellStats = null) -> void:
 	name = "WispCost"
 	earth_req = 0 if spell_stats == null else spell_stats.earth_req
@@ -62,7 +48,24 @@ func _init(spell_stats: SpellStats = null) -> void:
 	dark_cost = 0 if spell_stats == null else spell_stats.dark_cost
 
 
-# Gets the elements with cost values.
+## Virtual function. Checks if the condition has been met given the current
+## state of the characters and map.
+func is_met(
+	_character: Character = null,
+	_targets: Array = [],
+	_distance_map: DistanceMap = null
+) -> bool:
+	return (
+		wisp_pool.active_earth_count() >= earth_req
+		and wisp_pool.active_fire_count() >= fire_req
+		and wisp_pool.active_water_count() >= water_req
+		and wisp_pool.active_wind_count() >= wind_req
+		and wisp_pool.active_light_count() >= light_req
+		and wisp_pool.active_dark_count() >= dark_req
+	)
+
+
+## Gets the elements with cost values.
 func _get_costs() -> Dictionary:
 	var element_costs: Dictionary = {}
 	if earth_cost > 0:
@@ -80,7 +83,7 @@ func _get_costs() -> Dictionary:
 	return element_costs
 
 
-# Check that all required parameters are set and valid.
+## Check that all required parameters are set and valid.
 func _check_for_required_parameters() -> void:
 	assert(earth_req >= earth_cost, "Earth requirement less than cost")
 	assert(fire_req >= fire_cost, "Fire requirement less than cost")

@@ -1,8 +1,6 @@
 class_name SpellStats
 extends Resource
-"""
-Describes a spell. Spells are actions with a wisp requirement and cost.
-"""
+## Describes a spell. Spells are actions with a wisp requirement and cost.
 
 
 @export var action_stats: ActionStats = null
@@ -26,7 +24,7 @@ Describes a spell. Spells are actions with a wisp requirement and cost.
 var summary: Dictionary = _get_costs()
 
 
-# Checks if the wisp pool meets the requirements described by these stats.
+## Checks if the wisp pool meets the requirements described by these stats.
 func is_met(wisp_pool: WispPool) -> bool:
 	return (
 		wisp_pool.active_earth_count() >= earth_req
@@ -38,12 +36,12 @@ func is_met(wisp_pool: WispPool) -> bool:
 	)
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
 
 
-# Gets the elements with cost values.
+## Gets the elements with cost values.
 func _get_costs() -> Dictionary:
 	var element_costs: Dictionary = {}
 	if earth_cost > 0:
@@ -61,7 +59,7 @@ func _get_costs() -> Dictionary:
 	return element_costs
 
 
-# Check that all required parameters are set and valid.
+## Check that all required parameters are set and valid.
 func _check_for_required_parameters() -> void:
 	assert(
 			action_stats is ActionStats,

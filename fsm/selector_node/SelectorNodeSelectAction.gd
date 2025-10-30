@@ -1,29 +1,28 @@
 extends SelectorState
-"""
-The logic for what happens when the Selector is in the 'SelectAction' state.
-Goes to the 'SelectAction' state when a new action is chosen.
-Goes to the 'SelectMove' state when the UI signals that the action type has
-been canceled. Goes to the 'Wait' state when the UI signals that the player
-turn has been terminated.
-"""
+## The logic for what happens when the Selector is in the 'SelectAction' state.
+##
+## Goes to the 'SelectAction' state when a new action is chosen.
+## Goes to the 'SelectMove' state when the UI signals that the action type has
+## been canceled. Goes to the 'Wait' state when the UI signals that the player
+## turn has been terminated.
 
 
-# The action to display the effect area for.
+## The action to display the effect area for.
 var _action: Action = null
-# The translation of the player that is using the action.
+## The translation of the player that is using the action.
 var _player_pos: Vector3 = Vector3.ZERO
-# The tile index of the player that is using the action.
+## The tile index of the player that is using the action.
 var _player_map_index: int = -1
-# Stores the distance map of the source range.
+## Stores the distance map of the source range.
 var _source_d_map: DistanceMap = null
-# The type of targets the action will hit.
+## The type of targets the action will hit.
 var _action_targets: Dictionary = {}
-# Caches the tile ids of the effect area at different emission points.
+## Caches the tile ids of the effect area at different emission points.
 var _ranges_cache: Dictionary = {}
-# Caches the characters that the action will hit at different emission points.
+## Caches the characters that the action will hit at different emission points.
 var _targets_cache: Dictionary = {}
 
-# Reference to the function that will update the tile highlights.
+## Reference to the function that will update the tile highlights.
 @onready var _update_selection_ref: Callable = Callable(self, "_update_selection")
 
 
@@ -43,14 +42,14 @@ func enter(msg: Dictionary = {}) -> void:
 		_place_closest_to_target()
 
 
-# Called by the state machine before changing the active state. Use this 
-# function to clean up the state.
+## Called by the state machine before changing the active state. Use this 
+## function to clean up the state.
 func exit() -> void:
 	selector.set_update_selection_func(Callable())
 	_disconnect_signals()
 
 
-# Handles input events.
+## Handles input events.
 func handle_input(_event: InputEvent) -> void:
 	# Handles the instances where the mouse goes over an area without a map tile.
 	if InputController.source_is_keymouse():
@@ -63,8 +62,8 @@ func handle_input(_event: InputEvent) -> void:
 			_resolve_joystick_for_cardinal(dir)
 
 
-# Checks if the action being processed is the same as last time and if the
-# cached effect ranges can be reused
+## Checks if the action being processed is the same as last time and if the
+## cached effect ranges can be reused
 func _determine_changes(action: Action) -> void:
 	var need_new_ranges: bool = false
 	if action != _action:
@@ -83,8 +82,8 @@ func _determine_changes(action: Action) -> void:
 		_targets_cache.clear()
 
 
-# Update the selection for a given tile.
-# Passed to the Selector node to be called when the mouse hovers over the tile.
+## Update the selection for a given tile.
+## Passed to the Selector node to be called when the mouse hovers over the tile.
 func _update_selection(map_tile: MapTile) -> void:
 	assert(map_tile != null, "SelectAction given a null MapTile.")
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
@@ -112,7 +111,7 @@ func _update_selection(map_tile: MapTile) -> void:
 		_place_closest_to_tile(map_tile.map_coordinate.get_tile_index())
 
 
-# Orients the direction of an action cast from the player based on mouse position.
+## Orients the direction of an action cast from the player based on mouse position.
 func _orient_emission_to_mouse() -> void:
 	_action.set_emission_map_index(_player_map_index)
 	_action.set_emission_pos(_player_pos)
@@ -130,7 +129,7 @@ func _orient_emission_to_mouse() -> void:
 		_highlight_effect_range()
 
 
-# Orients the direction of an action cast from the player based on tile position.
+## Orients the direction of an action cast from the player based on tile position.
 func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	_action.set_emission_map_index(_player_map_index)
 	_action.set_emission_pos(_player_pos)
@@ -147,7 +146,7 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 		selector.hex_map.selection_tracker.clear_selector_highlights()
 
 
-# Orients the action emission to the closest valid target.
+## Orients the action emission to the closest valid target.
 func _orient_to_closest_target() -> void:
 	var target_distances: Array = _get_target_distances()
 	var target_index: int = target_distances[0][0].map_coordinate.get_tile_index()
@@ -155,8 +154,8 @@ func _orient_to_closest_target() -> void:
 	_orient_emission_to_tile(target_tile)
 
 
-# Adjusts the orientation of an effect emitted from caster to make sure it is
-# in a direction the player can reach. Returns if the direction was set.
+## Adjusts the orientation of an effect emitted from caster to make sure it is
+## in a direction the player can reach. Returns if the direction was set.
 func _fix_orientation() -> bool:
 	var p_cube: Vector3 = HexUtil.index_to_cube(
 			_player_map_index,
@@ -175,8 +174,8 @@ func _fix_orientation() -> bool:
 	return false
 
 
-# Places the effect emission so that the effect area highlights the closest
-# target. Emission is not placed if no valid tile could be found.
+## Places the effect emission so that the effect area highlights the closest
+## target. Emission is not placed if no valid tile could be found.
 func _place_closest_to_target() -> void:
 	var target_details: Array = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_tile_index()
@@ -200,8 +199,8 @@ func _place_closest_to_target() -> void:
 	_highlight_effect_range()
 
 
-# Places the effect emission so that it is on the source tile closest to the
-# specified tile. Emission is not placed if no valid source tile could be found.
+## Places the effect emission so that it is on the source tile closest to the
+## specified tile. Emission is not placed if no valid source tile could be found.
 func _place_closest_to_tile(tile_index: int) -> void:
 	var player_index_details: Dictionary = _source_d_map.all_dist_at(_player_map_index)
 	var ignore_player_index: bool = _action.stats.dead_range.get_reach() > 0
@@ -225,8 +224,8 @@ func _place_closest_to_tile(tile_index: int) -> void:
 	_highlight_effect_range()
 
 
-# Gets an array of the targets sorted by distance from player. The closest
-# target is at the first index. Each index contains the target character and distance.
+## Gets an array of the targets sorted by distance from player. The closest
+## target is at the first index. Each index contains the target character and distance.
 func _get_target_distances() -> Array:
 	var potential_targets: Array = []
 	if _action_targets.has(EffectAspect.Target.OPPONENTS):
@@ -245,7 +244,7 @@ func _get_target_distances() -> Array:
 	return target_distances
 
 
-# Checks if a given map tile is a valid target for an action.
+## Checks if a given map tile is a valid target for an action.
 func _is_target_tile(map_tile: MapTile) -> bool:
 	if map_tile == null:
 		return false
@@ -267,7 +266,7 @@ func _is_target_tile(map_tile: MapTile) -> bool:
 			return false
 
 
-# Updates the selection display to show the source area.
+## Updates the selection display to show the source area.
 func _highlight_source_range() -> void:
 	selector.hex_map.selection_tracker.clear_highlights()
 	selector.hex_map.selection_tracker.highlight_action_source_area(
@@ -276,7 +275,7 @@ func _highlight_source_range() -> void:
 	)
 
 
-# Updates the selection display to show the effect area.
+## Updates the selection display to show the effect area.
 func _highlight_effect_range() -> void:
 	selector.hex_map.selection_tracker.clear_selector_highlights()
 	var effect_range: Array = _get_effect_range()
@@ -290,7 +289,7 @@ func _highlight_effect_range() -> void:
 	)
 
 
-# Gets the tile ids of all tiles within the source range. Accounts for dead range.
+## Gets the tile ids of all tiles within the source range. Accounts for dead range.
 func _get_source_range() -> Array:
 	var d_map: DistanceMap = (
 			selector.hex_map.range_finder \
@@ -320,7 +319,7 @@ func _get_source_range() -> Array:
 	return _source_d_map.tile_ids()
 
 
-# Gets the tile ids of all tiles within the effect range.
+## Gets the tile ids of all tiles within the effect range.
 func _get_effect_range() -> Array:
 	var e_index: int = _action.get_emission_map_index()
 	var e_dir: int = _action.get_emission_direction()
@@ -349,7 +348,7 @@ func _get_effect_range() -> Array:
 	return valid_effect_indexes
 
 
-# Gets the targets for the current emission area.
+## Gets the targets for the current emission area.
 func _get_targets() -> Array:
 	if _action.stats.emit_from_center:
 		return _targets_cache[_action.get_emission_direction()]
@@ -357,8 +356,8 @@ func _get_targets() -> Array:
 		return _targets_cache[_action.get_emission_map_index()]
 
 
-# Updates the _effect_ranges dictionary to store the listed effect indexes
-# under either the emission point or direction.
+## Updates the _effect_ranges dictionary to store the listed effect indexes
+## under either the emission point or direction.
 func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array) -> void:
 	if _action.stats.emit_from_center:
 		_ranges_cache[e_dir] = indexes
@@ -366,7 +365,7 @@ func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array) -> void:
 		_ranges_cache[e_pt] = indexes
 
 
-# Gets the characters that will be hit by the action.
+## Gets the characters that will be hit by the action.
 func _update_targets(effect_range: Array) -> void:
 	var e_index: int = _action.get_emission_map_index()
 	var e_dir: int = _action.get_emission_direction()
@@ -398,8 +397,8 @@ func _update_targets(effect_range: Array) -> void:
 		_targets_cache[e_index] = targets
 
 
-# Determines if the selector is able to move to the adjacent tile in the
-# given direction (0 - 5) and does so if able.
+## Determines if the selector is able to move to the adjacent tile in the
+## given direction (0 - 5) and does so if able.
 func _resolve_joystick_for_area(dir: int) -> void:
 	if dir >= 0 and dir <= 5:
 		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(dir)
@@ -407,8 +406,8 @@ func _resolve_joystick_for_area(dir: int) -> void:
 			_update_selection(adjacent_tile)
 
 
-# Determines if the selector is able to move to the given direction (0 - 5)
-# and does so if able.
+## Determines if the selector is able to move to the given direction (0 - 5)
+## and does so if able.
 func _resolve_joystick_for_cardinal(dir: int) -> void:
 	if dir >= 0 and dir <= 5:
 		var player_tile: MapTile = selector.hex_map.get_tile_at(_player_map_index)
@@ -417,7 +416,7 @@ func _resolve_joystick_for_cardinal(dir: int) -> void:
 			_update_selection(direction_tile)
 
 
-# Activates the targets and prompts the action to be executed.
+## Activates the targets and prompts the action to be executed.
 func _execute_action() -> void:
 	selector.hex_map.selection_tracker.clear_highlights()
 	selector.hex_map.selection_tracker.clear_selector_highlights()
@@ -430,7 +429,7 @@ func _execute_action() -> void:
 	state_machine.transition_to(PAUSE)
 
 
-# Clears out the caches and resets recorded details.
+## Clears out the caches and resets recorded details.
 func _reset() -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	_player_map_index = -1
@@ -440,7 +439,7 @@ func _reset() -> void:
 	_action = null
 
 
-# Connect signals to this state.
+## Connect signals to this state.
 func _connect_signals() -> void:
 	ErrorUtil.connect_signal(
 			selector.active_player,
@@ -474,7 +473,7 @@ func _connect_signals() -> void:
 	)
 
 
-# Disconnect signals from this state.
+## Disconnect signals from this state.
 func _disconnect_signals() -> void:
 	selector.active_player.disconnect(
 			"turn_ended",
@@ -498,7 +497,7 @@ func _disconnect_signals() -> void:
 	)
 
 
-# Go to the "SelectAction" state with the new action.
+## Go to the "SelectAction" state with the new action.
 func _on_SignalBus_player_action_selected(
 	_player: PlayerCharacter,
 	new_action: Action
@@ -511,7 +510,7 @@ func _on_SignalBus_player_action_selected(
 		state_machine.transition_to(SELECT_ACTION, {"action": new_action})
 
 
-# Go to the "SelectMove" state when the player action selection is canceled.
+## Go to the "SelectMove" state when the player action selection is canceled.
 func _on_SignalBus_player_action_type_canceled() -> void:
 	if not _state_is_active():
 		return
@@ -520,19 +519,19 @@ func _on_SignalBus_player_action_type_canceled() -> void:
 	state_machine.transition_to(SELECT_MOVE)
 
 
-# Go to the "WAIT" state when a player has signaled that their turn is ended.
+## Go to the "WAIT" state when a player has signaled that their turn is ended.
 func _on_PlayerCharacter_turn_ended() -> void:
 	_reset()
 	state_machine.transition_to(WAIT)
 
 
-# Update the mouse tracker when the camera changes orientation.
+## Update the mouse tracker when the camera changes orientation.
 func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
 	MouseHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
 
 
-# Resolves the left joystick pulse input. Pulses should only be used when the
-# effect is not bound to the caster's position.
+## Resolves the left joystick pulse input. Pulses should only be used when the
+## effect is not bound to the caster's position.
 func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
 	if _action.stats.emit_from_center:
 		return
