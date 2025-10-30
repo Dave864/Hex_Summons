@@ -6,17 +6,21 @@ Describes a spell. Spells are actions with a wisp requirement and cost.
 
 
 @export var action_stats: ActionStats = null
+
+@export_category("Wisps Required to Cast")
 @export var earth_req = 0 # (int, 0, 4)
-@export var earth_cost = 0 # (int, 0, 4)
 @export var fire_req = 0 # (int, 0, 4)
-@export var fire_cost = 0 # (int, 0, 4)
 @export var water_req = 0 # (int, 0, 4)
-@export var water_cost = 0 # (int, 0, 4)
 @export var wind_req = 0 # (int, 0, 4)
-@export var wind_cost = 0 # (int, 0, 4)
 @export var light_req = 0 # (int, 0, 4)
-@export var light_cost = 0 # (int, 0, 4)
 @export var dark_req = 0 # (int, 0, 4)
+
+@export_category("Wisps Spent on Cast")
+@export var earth_cost = 0 # (int, 0, 4)
+@export var fire_cost = 0 # (int, 0, 4)
+@export var water_cost = 0 # (int, 0, 4)
+@export var wind_cost = 0 # (int, 0, 4)
+@export var light_cost = 0 # (int, 0, 4)
 @export var dark_cost = 0 # (int, 0, 4)
 
 var summary: Dictionary = _get_costs()

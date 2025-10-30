@@ -5,31 +5,39 @@ Defines the stat values for a character. Includes base value and growth rate.
 """
 
 
-# Base stat values
+@export_category("Core Base Values")
 @export var health_base = 1 # (int, 0, 1000)
-@export var health_growth = 1 # (int, 0, 1000)
 @export var attack_base = 1 # (int, 0, 1000)
-@export var attack_growth = 1 # (int, 0, 1000)
 @export var defense_base = 1 # (int, 0, 1000)
-@export var defense_growth = 1 # (int, 0, 1000)
 @export var agility_base = 1 # (int, 0, 1000)
-@export var agility_growth = 1 # (int, 0, 1000)
 @export var movement = 1 # (int, 1, 20)
-# Magic stat values
+
+@export_category("Core Growth Values")
+@export var health_growth = 1 # (int, 0, 1000)
+@export var attack_growth = 1 # (int, 0, 1000)
+@export var defense_growth = 1 # (int, 0, 1000)
+@export var agility_growth = 1 # (int, 0, 1000)
+
+@export_category("Magic Base Values")
 @export var magic_earth_base = 0 # (int, 0, 1000)
-@export var magic_earth_growth = 0 # (int, 0, 1000)
 @export var magic_fire_base = 0 # (int, 0, 1000)
-@export var magic_fire_growth = 0 # (int, 0, 1000)
 @export var magic_water_base = 0 # (int, 0, 1000)
-@export var magic_water_growth = 0 # (int, 0, 1000)
 @export var magic_wind_base = 0 # (int, 0, 1000)
+
+@export_category("Magic Growth Values")
+@export var magic_earth_growth = 0 # (int, 0, 1000)
+@export var magic_fire_growth = 0 # (int, 0, 1000)
+@export var magic_water_growth = 0 # (int, 0, 1000)
 @export var magic_wind_growth = 0 # (int, 0, 1000)
-# Resistance stat values
+
+@export_category("Resistance Base Values")
 @export var res_earth_base = 0 # (int, 0, 1000)
-@export var res_earth_growth = 0 # (int, 0, 1000)
 @export var res_fire_base = 0 # (int, 0, 1000)
-@export var res_fire_growth = 0 # (int, 0, 1000)
 @export var res_water_base = 0 # (int, 0, 1000)
-@export var res_water_growth = 0 # (int, 0, 1000)
 @export var res_wind_base = 0 # (int, 0, 1000)
+
+@export_category("Resistance Growth Values")
+@export var res_earth_growth = 0 # (int, 0, 1000)
+@export var res_fire_growth = 0 # (int, 0, 1000)
+@export var res_water_growth = 0 # (int, 0, 1000)
 @export var res_wind_growth = 0 # (int, 0, 1000)
