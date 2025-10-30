@@ -131,30 +131,44 @@ func _disconnect_signals() -> void:
 # state, specifying TECHNIQUE as the option.
 func _technique_selected() -> void:
 	encounter_ui.technique_button.grab_focus()
-	encounter_ui.technique_button.button_pressed = true
-	encounter_ui.movement_button.button_pressed = false
+	_depress_other_options(encounter_ui.Options.TECHNIQUE)
 	state_machine.transition_to(
 			ACTION, 
 			{"option_flag": encounter_ui.Options.TECHNIQUE}
 	)
 
 
-# Handles behavior for when the "SPELL" option is chosen.
+# Handles behavior for when the "SPELL" option is chosen. Goes to the ACTION
+# state, specifying SPELL as the option.
 func _spell_selected() -> void:
-	encounter_ui.spell_button.call_deferred("grab_focus")
-	print("Selecting a spell")
+	encounter_ui.spell_button.grab_focus()
+	_depress_other_options(encounter_ui.Options.SPELL)
+	state_machine.transition_to(
+			ACTION, 
+			{"option_flag": encounter_ui.Options.SPELL}
+	)
 
 
-# Handles behavior for when the "SUMMON" option is chosen.
+# Handles behavior for when the "SUMMON" option is chosen. Goes to the ACTION
+# state, specifying SUMMON as the option.
 func _summon_selected() -> void:
 	encounter_ui.summon_button.call_deferred("grab_focus")
-	print("Selecting a summon")
+	_depress_other_options(encounter_ui.Options.SUMMON)
+	state_machine.transition_to(
+			ACTION, 
+			{"option_flag": encounter_ui.Options.SUMMON}
+	)
 
 
-# Handles behavior for when the "ITEM" option is chosen.
+# Handles behavior for when the "ITEM" option is chosen. Goes to the ACTION
+# state, specifying ITEM as the option.
 func _item_selected() -> void:
 	encounter_ui.item_button.call_deferred("grab_focus")
-	print("Selecting an item")
+	_depress_other_options(encounter_ui.Options.ITEM)
+	state_machine.transition_to(
+			ACTION, 
+			{"option_flag": encounter_ui.Options.ITEM}
+	)
 
 
 # Handles behavior for when the "END" option is chosen.
@@ -165,6 +179,20 @@ func _end_selected() -> void:
 	encounter_ui.get_focused_player().emit_turn_ended()
 	encounter_ui.reset_all_options()
 	state_machine.transition_to(WAIT)
+
+
+# Sets the button_pressed state of other option buttons to false.
+func _depress_other_options(pressed_option: int) -> void:
+	var is_pressed: bool = pressed_option == encounter_ui.Options.TECHNIQUE
+	encounter_ui.technique_button.button_pressed = is_pressed
+	is_pressed = pressed_option == encounter_ui.Options.SPELL
+	encounter_ui.spell_button.button_pressed = is_pressed
+	is_pressed = pressed_option == encounter_ui.Options.SUMMON
+	encounter_ui.summon_button.button_pressed = is_pressed
+	is_pressed = pressed_option == encounter_ui.Options.ITEM
+	encounter_ui.item_button.button_pressed = is_pressed
+	is_pressed = pressed_option == encounter_ui.Options.MOVE
+	encounter_ui.movement_button.button_pressed = is_pressed
 
 
 # Triggered when a move tile has been selected and a path created to said tile.

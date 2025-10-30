@@ -14,8 +14,8 @@ var _current_action: Action
 
 # Called by the state machine upon changing the active state. The `msg` parameter
 # is a dictionary with arbitrary data the state can use to initialize itself.
-func enter(_msg := {}) -> void:
-	_option_flag = _msg["option_flag"]
+func enter(msg := {}) -> void:
+	_option_flag = msg["option_flag"]
 	encounter_ui.set_current_selection(_option_flag)
 	encounter_ui.grab_focus_for_sub_option_at_index(0)
 	_current_action = encounter_ui.get_sub_option_at_index(0)
@@ -49,8 +49,7 @@ func handle_input(event: InputEvent) -> void:
 		not encounter_ui.spell_button.disabled
 		and event.is_action_pressed("ui_encounter_option_2")
 	):
-		print("Spell option selected")
-#		_option_selected(EncounterUI.Options.SPELL)
+		_option_selected(EncounterUI.Options.SPELL)
 	if (
 		not encounter_ui.item_button.disabled
 		and event.is_action_pressed("ui_encounter_option_3")
@@ -218,8 +217,7 @@ func _on_TechniqueButton_pressed() -> void:
 
 # Logic for what happens when the Spell button is pressed.
 func _on_SpellButton_pressed() -> void:
-	print("Spell option selected")
-#	_option_selected(EncounterUI.Options.SPELL)
+	_option_selected(EncounterUI.Options.SPELL)
 
 
 # Logic for what happens when the Summon button is pressed.
