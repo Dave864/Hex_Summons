@@ -239,9 +239,9 @@ func _set_player_option_focus_neighbors() -> void:
 func _update_sub_options() -> void:
 	match _current_selection:
 		Options.TECHNIQUE:
-			sub_options.populate(_focused_player, _techniques)
+			sub_options.populate_techinques(_focused_player, _techniques)
 		Options.SPELL:
-			sub_options.populate(_focused_player, _spells)
+			sub_options.populate_spells(_focused_player, _spells)
 		Options.SUMMON:
 			pass
 		Options.ITEM:
