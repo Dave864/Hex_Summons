@@ -26,9 +26,9 @@ var wisp_pool: WispPool = null
 # Virtual function. Checks if the condition has been met given the current
 # state of the characters and map.
 func is_met(
-	_character: Character,
-	_targets: Array,
-	_distance_map: DistanceMap
+	_character: Character = null,
+	_targets: Array = [],
+	_distance_map: DistanceMap = null
 ) -> bool:
 	return (
 		wisp_pool.active_earth_count() >= earth_req

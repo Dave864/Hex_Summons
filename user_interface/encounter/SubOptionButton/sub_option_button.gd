@@ -12,7 +12,8 @@ var _option_details: Node = null: get = get_option_details, set = set_option_det
 var _player: PlayerCharacter = null: set = set_player
 
 
-# Set the action details for the button.
+# Virtual function. Set the action details for the button. Can be either an
+# action, a summon, or an item depending on the derived class.
 func set_option_details(a: Node) -> void:
 	_option_details = a
 	$Button.set_text(_option_details.name)

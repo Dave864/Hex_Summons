@@ -1,12 +1,18 @@
 class_name TechniqueButton
 extends SubOptionButton
-"""
-Button that describes a possible technique.
-"""
+## SubOptionButton that describes a technique.
+##
+## Derived class of SubOptionButton. Works with Action nodes that describe
+## "techniques". A technique is an Action with a Cooldown node.
 
 
-# Set the action details for the button.
+## Indicates a technique was selected.
+signal technique_selected(technique_details)
+
+
+## Virtual function. Set the technique action details for the button.
 func set_option_details(a: Node) -> void:
+	# Technique buttons display details for actions, so we cast to check.
 	_option_details = a as Action
 	$HBoxContainer/Label.set_text(_option_details.name)
 	$HBoxContainer/RangeDisplay.update_action(_option_details)
@@ -22,9 +28,9 @@ func set_option_details(a: Node) -> void:
 		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
-# Virtual function. Evaluates the current state of the action to see if the
-# option is confirmed.
+## Virtual function. Evaluates the current state of the action to see if the
+## option is confirmed.
 func _process_button_press() -> void:
 	var cooldown: Cooldown = _option_details.get_node_or_null("Cooldown")
 	if cooldown == null or not cooldown.is_active():
-		emit_signal("option_selected", _option_details)
+		emit_signal("technique_selected", _option_details)

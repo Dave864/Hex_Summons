@@ -244,7 +244,7 @@ func _on_PlayerCharacter_turn_ended() -> void:
 
 # Signal that an action option has been selected from the currently
 # displayed options.
-func _on_SubOptions_option_selected(action_info: Action) -> void:
+func _on_SubOptions_action_selected(action_info: Action) -> void:
 	_current_action = action_info
 	SignalBus.emit_player_action_selected(
 			encounter_ui.get_focused_player(),

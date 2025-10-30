@@ -114,6 +114,7 @@ offset_left = 16.0
 offset_top = -122.0
 offset_right = 116.0
 offset_bottom = -2.0
+grow_vertical = 0
 
 [node name="Options" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -160,4 +161,4 @@ script = ExtResource("7")
 [node name="Action" type="Node" parent="StateMachine"]
 script = ExtResource("9")
 
-[connection signal="option_selected" from="SubOptions" to="StateMachine/Action" method="_on_SubOptions_option_selected"]
+[connection signal="action_selected" from="SubOptions" to="StateMachine/Action" method="_on_SubOptions_action_selected"]

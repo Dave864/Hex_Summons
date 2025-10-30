@@ -1,11 +1,14 @@
 class_name EncounterUI
 extends Control
-"""
-Manages the various UI elements of an encounter.
-"""
+## Manages the various UI elements of an Encounter scene.
+##
+## EncounterUI handles the overall management of the various UI nodes used
+## during an encounter. This scene also provides a convenient access point for
+## said UI nodes. The nodes are the InitiativeTracker, the SummonPool, PlayerStats,
+## an PlayerOptionButtons for movement, techniques, summons, items, and end.
 
 
-# Inidicates that the UI is waiting to be activated.
+## Indicates that the UI is waiting to be activated.
 signal is_waiting()
 
 const MAX_PARTY_SIZE: int = 4
@@ -22,11 +25,8 @@ enum Options {
 	NONE,
 }
 
-var hm_astar: HexMapAStar = null
 
-"""
-TODO: Currently loading CharacterSummary scene to visualize the hp values of characters
-"""
+# TODO: Currently loading CharacterSummary scene to visualize the hp values of characters
 var _character_summary: PackedScene = preload(
 	"res://user_interface/encounter/test_labels/CharacterSummary/CharacterSummary.tscn"
 )
@@ -50,23 +50,23 @@ var _spells: Array = []: get = get_spells
 @onready var end_button: PlayerOptionButton = $Options/EndButton
 
 
-# Emits the is_waiting signal.
+## Emits the is_waiting signal.
 func emit_is_waiting() -> void:
 	emit_signal("is_waiting")
 
 
-# Sets the selection flag.
+## Sets the selection flag.
 func set_current_selection(new_flag: int) -> void:
 	_current_selection = new_flag
 	_update_sub_options()
 
 
-# Gets the value of the selection flag.
+## Gets the value of the selection flag.
 func get_current_selection() -> int:
 	return _current_selection
 
 
-# Updates the player character being focused on.
+## Updates the player character being focused on.
 func set_focused_player(new_player: PlayerCharacter) -> void:
 	var player_connected: bool = (
 			_focused_player != null 
@@ -96,29 +96,29 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	_set_player_option_focus_neighbors()
 
 
-# Get the current player the UI is focused on.
+## Get the current player the UI is focused on.
 func get_focused_player() -> PlayerCharacter:
 	return _focused_player
 
 
-# Get the techniques of the focused player.
+## Get the techniques of the focused player.
 func get_techniques() -> Array:
 	return _techniques
 
 
-# Get the spalls of the focused player.
+## Get the spells of the focused player.
 func get_spells() -> Array:
 	return _spells
 
 
-# Get an action from the currently active sub-options selection.
+## Get an action from the currently active sub-options selection.
 func get_sub_option_at_index(index: int) -> Action:
 	var a: Action
 	match _current_selection:
 		Options.TECHNIQUE:
-			a = sub_options.get_action_at_index(index)
+			a = sub_options.get_option_at_index(index)
 		Options.SPELL:
-			a = sub_options.get_action_at_index(index)
+			a = sub_options.get_option_at_index(index)
 		Options.SUMMON:
 			a = null
 		_:
@@ -126,30 +126,26 @@ func get_sub_option_at_index(index: int) -> Action:
 	return a
 
 
-# Sets the focus to the specified index for sub options.
+## Sets the focus to the specified index for sub options.
 func grab_focus_for_sub_option_at_index(index: int) -> void:
 	sub_options.grab_focus_at_index(index)
 
 
-# Updates the disabled flag for all player options depending on respective
-# criteria.
+## Updates the disabled flag for all player options depending on respective
+## criteria.
 func set_active_options() -> void:
 	movement_button.disable(false)
 	technique_button.disable(_techniques.size() <= 0)
 	spell_button.disable(_spells.size() <= 0)
-	"""
-	TODO: summon option will depend on different logic that has yet to be implemented.
-	"""
+	# TODO: summon option will depend on different logic that has yet to be implemented.
 	summon_button.disable()
-	"""
-	TODO: item option will depend on different logic that has yet to be implemented.
-	"""
+	# TODO: item option will depend on different logic that has yet to be implemented.
 	item_button.disable()
 	end_button.disable(false)
 
 
-# Hides the active player stats and reveals the relevant party summary for the
-# "active" character.
+## Hides the active player stats and reveals the relevant party summary for the
+## "active" character.
 func hide_active_stats() -> void:
 	active_player_stats.hide()
 	if _focused_player != null:
@@ -160,7 +156,7 @@ func hide_active_stats() -> void:
 		_party_stat_map[_focused_player.get_instance_id()].show()
 
 
-# Set all player options to disabled.
+## Set all player options to disabled.
 func disable_all_options() -> void:
 	movement_button.disable()
 	technique_button.disable()
@@ -170,9 +166,8 @@ func disable_all_options() -> void:
 	end_button.disable()
 
 
-# Reset all PlayerOptionButtons.
+## Reset all PlayerOptionButtons.
 func reset_all_options() -> void:
-#	movement_button.reset()
 	technique_button.reset()
 	spell_button.reset()
 	summon_button.reset()
@@ -180,7 +175,7 @@ func reset_all_options() -> void:
 	end_button.reset()
 
 
-# Initializes the party character details in the UI.
+## Initializes the party character details in the UI.
 func track_party_members(players: Array) -> void:
 	var p_count: int = int(min(players.size(), MAX_PARTY_SIZE))
 	var height: int = (
@@ -196,7 +191,7 @@ func track_party_members(players: Array) -> void:
 		player_stats.show()
 
 
-# Adds the enemy character details to the UI.
+## Adds the enemy character details to the UI.
 func track_enemy(e: EnemyCharacter) -> void:
 	var e_label: CharacterSummary = _character_summary.instantiate()
 	e_label.set_character_name(e.name)
@@ -210,7 +205,7 @@ func track_enemy(e: EnemyCharacter) -> void:
 	enemy_stats.add_child(e_label)
 
 
-# Sets the focus neighbors for the player options.
+## Sets the focus neighbors for the player options.
 func _set_player_option_focus_neighbors() -> void:
 	var a_ops: Array = []
 	for p_op in options.get_children():
@@ -235,7 +230,7 @@ func _set_player_option_focus_neighbors() -> void:
 		a_ops[i].focus_next = a_ops[n].get_path()
 
 
-# Update the SubOptions element with the currently selected option
+## Update the SubOptions element with the currently selected option
 func _update_sub_options() -> void:
 	match _current_selection:
 		Options.TECHNIQUE:
