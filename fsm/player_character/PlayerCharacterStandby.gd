@@ -1,12 +1,10 @@
 extends PlayerCharacterState
-"""
-The logic for what happens when a Player Character is in the 'Standby' state.
-The Player Character waits for player input and then goes to the appropriate
-state.
-"""
+## The logic for what happens when a Player Character is in the 'Standby' state.
+## The Player Character waits for user input and then goes to the appropriate
+## state.
 
 
-# Connect this state to the signals it needs to observe.
+## Connect this state to the signals it needs to observe.
 func enter(_msg: Dictionary = {}) -> void:
 	ErrorUtil.connect_signal(
 		pc,
@@ -28,8 +26,8 @@ func enter(_msg: Dictionary = {}) -> void:
 	)
 
 
-# Called by the state machine before changing the active state. Use this 
-# function to clean up the state.
+## Called by the state machine before changing the active state. Use this 
+## function to clean up the state.
 func exit() -> void:
 	pc.disconnect("turn_ended", Callable(self, "_on_PlayerCharacter_turn_ended"))
 	SignalBus.disconnect(
@@ -42,12 +40,12 @@ func exit() -> void:
 	)
 
 
-# Hit when the Selector sets the movement path.
+## Hit when the Selector sets the movement path.
 func _on_SignalBus_move_path_created(move_path: PackedVector3Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": move_path})
 
 
-# Hit when the Selector confirms an action. 
+## Hit when the Selector confirms an action. 
 func _on_SignalBus_player_action_executed(
 	player: PlayerCharacter,
 	action: Action,
@@ -60,6 +58,6 @@ func _on_SignalBus_player_action_executed(
 		)
 
 
-# Hit when the player has finished their turn.
+## Hit when the player has finished their turn.
 func _on_PlayerCharacter_turn_ended() -> void:
 	state_machine.transition_to(WAIT)
