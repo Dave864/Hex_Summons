@@ -1,9 +1,13 @@
 extends Node
-"""
-Tracks the condition of all wisps, whether they are bonded to a player, and what
-state they are in. If a wisp is not listed within this class, it will not be
-interacted with in game.
-"""
+## Tracks the condition of all wisps, whether they are bonded to a player, and what
+## state they are in.
+##
+## This global class keeps track of the current state of all wisps. A wisp can
+## be set to bonded player, in the summon pool, set to active summon, or
+## completely inactve. An inactive wisp is not bonded to a player, and is
+## unable to be set to the summon pool or active summon. This class works in
+## tandem with WispController to manage the reorganization of wisps. If a wisp
+## is not listed within this class, it will not be interacted with in game.
 
 
 const NO_PLAYER: String = "NONE"
@@ -35,25 +39,25 @@ enum WispState {
 }
 
 
-# Gets the data for the specified wisp.
+## Gets the data for the specified wisp.
 func get_data(wisp: String) -> Wisp:
 	if not _is_tracked(wisp):
 		return null
 	return _tracked_wisps[wisp][DATA]
 
 
-# Gets the element the wisp is part of. Returns -1 if the given name is not in
-# any wisp pool.
+## Gets the element the wisp is part of. Returns -1 if the given name is not in
+## any wisp pool.
 func wisp_element(wisp: String) -> int:
 	if not _is_tracked(wisp):
 		return -1
 	return _tracked_wisps[wisp][ELEMENT]
 
 
-# Updates the player the wisp is bonded to. Player defaults to NO_PLAYER, which
-# indicates the wisp is to be unbonded. The wisp is also set to inactive when
-# NO_PLAYER is specified. Returns if the operation was successful or not, such
-# as if the provided wisp is valid.
+## Updates the player the wisp is bonded to. Player defaults to NO_PLAYER, which
+## indicates the wisp is to be unbonded. The wisp is also set to inactive when
+## NO_PLAYER is specified. Returns if the operation was successful or not, such
+## as if the provided wisp is valid.
 func set_bonded_player(wisp: String, player: String = NO_PLAYER) -> bool:
 	if not _is_tracked(wisp):
 		return false
@@ -63,7 +67,7 @@ func set_bonded_player(wisp: String, player: String = NO_PLAYER) -> bool:
 	return true
 
 
-# Gets all the wisps that are bonded to a specified player.
+## Gets all the wisps that are bonded to a specified player.
 func get_bonded_wisps(player: String) -> Dictionary:
 	var bonded_wisps: Dictionary = {EARTH: [], FIRE: [], WATER: [], WIND: []}
 	for wisp in _tracked_wisps.keys():
@@ -72,29 +76,29 @@ func get_bonded_wisps(player: String) -> Dictionary:
 	return bonded_wisps
 
 
-# Checks if the wisp is intended to be set to a player.
+## Checks if the wisp is intended to be set to a player.
 func is_player_set(wisp: String) -> bool:
 	return _is_in_state(wisp, WispState.PLAYER_SET)
 
 
-# Checks if the wisp is in the summmon pool.
+## Checks if the wisp is in the summmon pool.
 func is_summon_pool(wisp: String) -> bool:
 	return _is_in_state(wisp, WispState.SUMMON_POOL)
 
 
-# Checks if the wisp is in the pool for an active summon.
+## Checks if the wisp is in the pool for an active summon.
 func is_summon_set(wisp: String) -> bool:
 	return _is_in_state(wisp, WispState.SUMMON_SET)
 
 
-# Checks if the wisp is inactive.
+## Checks if the wisp is inactive.
 func is_inactive(wisp: String) -> bool:
 	return _is_in_state(wisp, WispState.INACTIVE)
 
 
-# Updates the state of wisps to indicate it is in the bonded player's pool.
-# Returns if the operation was successful or not, such as if the provided wisp
-# is valid.
+## Updates the state of wisps to indicate it is in the bonded player's pool.
+## Returns if the operation was successful or not, such as if the provided wisp
+## is valid.
 func set_state_to_player(wisps: Array) -> bool:
 	var success: bool = true
 	for wisp in wisps:
@@ -103,8 +107,8 @@ func set_state_to_player(wisps: Array) -> bool:
 	return success
 
 
-# Updates the state of wisps to indicate it is in the summon pool. Returns
-# if the operation was successful or not, such as if the provided wisp is valid.
+## Updates the state of wisps to indicate it is in the summon pool. Returns
+## if the operation was successful or not, such as if the provided wisp is valid.
 func set_state_to_summon_pool(wisps: Array) -> bool:
 	var success: bool = true
 	for wisp in wisps:
@@ -113,9 +117,9 @@ func set_state_to_summon_pool(wisps: Array) -> bool:
 	return success
 
 
-# Updates the state of wisps to indicate it is part of the active summon's
-# pool. Returns if the operation was successful or not, such as if the
-# provided wisp is valid.
+## Updates the state of wisps to indicate it is part of the active summon's
+## pool. Returns if the operation was successful or not, such as if the
+## provided wisp is valid.
 func set_state_to_summon_set(wisps: Array) -> bool:
 	var success: bool = true
 	for wisp in wisps:
@@ -124,15 +128,15 @@ func set_state_to_summon_set(wisps: Array) -> bool:
 	return success
 
 
-# Updates the state of the wisp to mark it as inactive, indicating that it is
-# currently unavailable for use by the party. Also clears the bonded player.
-# Returns if the operation was successful or not, such as if the provided wisp
-# is valid. 
+## Updates the state of the wisp to mark it as inactive, indicating that it is
+## currently unavailable for use by the party. Also clears the bonded player.
+## Returns if the operation was successful or not, such as if the provided wisp
+## is valid. 
 func set_state_to_inactive(wisp: String) -> bool:
 	return set_bonded_player(wisp)
 
 
-# Loads the save data for the wisps.
+## Loads the save data for the wisps.
 func load_save_data(save_data: Dictionary) -> void:
 	for wisp in save_data.keys():
 		_tracked_wisps[wisp][ELEMENT] = save_data[wisp][ELEMENT]
@@ -140,7 +144,7 @@ func load_save_data(save_data: Dictionary) -> void:
 		_tracked_wisps[wisp][ENCOUNTER_STATE] = save_data[wisp][ENCOUNTER_STATE]
 
 
-# Gets the current state of the wisp manager for the purposes of saving the data.
+## Gets the current state of the wisp manager for the purposes of saving the data.
 func get_save_data() -> Dictionary:
 	var save_data: Dictionary = {}
 	for wisp in _tracked_wisps.keys():
@@ -152,12 +156,7 @@ func get_save_data() -> Dictionary:
 	return save_data
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Initializes the data for a wisp.
+## Initializes the data for a wisp.
 func _initialize_data(
 	wisp_name: String,
 	element: int,
@@ -174,7 +173,7 @@ func _initialize_data(
 	}
 
 
-# Checks if there is a wisp of the given name being tracked.
+## Checks if there is a wisp of the given name being tracked.
 func _is_tracked(wisp: String) -> bool:
 	if not _tracked_wisps.has(wisp):
 		printerr("No wisp named {0} is tracked".format([wisp]))
@@ -182,8 +181,8 @@ func _is_tracked(wisp: String) -> bool:
 	return true
 
 
-# Gets the wisp data for a given name and element, returning null if there is
-# no wisp with the given name and element combo.
+## Gets the wisp data for a given name and element, returning null if there is
+## no wisp with the given name and element combo.
 func _get_wisp_data(wisp_name: String, element: int) -> Wisp:
 	var path_format: String
 	match element:
@@ -206,8 +205,8 @@ func _get_wisp_data(wisp_name: String, element: int) -> Wisp:
 	return wisp_data
 
 
-# Updates the encounter state, returning if the operation was successful,
-# such as if the provided wisp is valid.
+## Updates the encounter state, returning if the operation was successful,
+## such as if the provided wisp is valid.
 func _update_encounter_state(wisp: String, new_state: int) -> bool:
 	if not _is_tracked(wisp):
 		return false
