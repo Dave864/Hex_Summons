@@ -1,8 +1,8 @@
 extends Node
-"""
-Manages the party status of player characters, as well as their classes and other
-relevant details (inventory, etc.).
-"""
+## Global node that manages the details of player characters.
+##
+## handles the party status of all possible player characters. Also tracks
+## their classes and other relevant details (inventory, etc.).
 
 
 const CLASS_DATA_PATH: String = "res://character/player_classes/{0}/stat_data/class_data.tres"
@@ -22,7 +22,17 @@ const WISP_POOL: String = "wisp_pool"
 }
 
 
-# Gets all characters that are currently in the party.
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	await WispTracker.ready
+	for player in party_details.keys():
+		var player_name: String = party_details[player][NAME]
+		var wisp_pool: PlayerWispPool = PlayerWispPool.new(player_name)
+		party_details[player][WISP_POOL] = wisp_pool
+		add_child(wisp_pool)
+
+
+## Gets all characters that are currently in the party.
 func get_party_data() -> Array:
 	var party: Array = []
 	for player in party_details.keys():
@@ -31,14 +41,14 @@ func get_party_data() -> Array:
 	return party
 
 
-# Changes the class of the specified player.
+## Changes the class of the specified player.
 func change_class(player: String, new_class: String) -> void:
 	var class_path: String = CLASS_DATA_PATH.format([new_class])
 	var class_data: PlayerClassData = load(class_path)
 	party_details[player][CLASS] = class_data
 
 
-# Loads the save data for the party.
+## Loads the save data for the party.
 func load_save_data(save_data: Dictionary) -> void:
 	for player in save_data.keys():
 		party_details[player][NAME] = save_data[NAME]
@@ -48,7 +58,7 @@ func load_save_data(save_data: Dictionary) -> void:
 		party_details[player][CLASS] = class_data
 
 
-# Gets the current state of the party for the purposes of saving the data.
+## Gets the current state of the party for the purposes of saving the data.
 func get_save_data() -> Dictionary:
 	var save_data: Dictionary = {}
 	for player in party_details.keys():
@@ -60,17 +70,7 @@ func get_save_data() -> Dictionary:
 	return save_data
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	await WispTracker.ready
-	for player in party_details.keys():
-		var player_name: String = party_details[player][NAME]
-		var wisp_pool: PlayerWispPool = PlayerWispPool.new(player_name)
-		party_details[player][WISP_POOL] = wisp_pool
-		add_child(wisp_pool)
-
-
-# Populates the party parameters with initial details.
+## Populates the party parameters with initial details.
 func _initialize_details(
 	player_name: String,
 	p_class: String,

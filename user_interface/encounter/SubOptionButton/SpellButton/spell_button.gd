@@ -9,7 +9,7 @@ extends SubOptionButton
 signal spell_selected(spell_details)
 
 
-# Virtual function. Set the spell action details for the button.
+## Virtual function. Set the spell action details for the button.
 func set_option_details(a: Node) -> void:
 	# Spell buttons display details for actions, so we cast to check.
 	_option_details = a as Action
@@ -26,8 +26,8 @@ func set_option_details(a: Node) -> void:
 		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
-# Virtual function. Evaluates the current state of the action to see if the
-# option is confirmed.
+## Virtual function. Evaluates the current state of the action to see if the
+## option is confirmed.
 func _process_button_press() -> void:
 	var wisp_cost: WispCost = _option_details.get_node_or_null("WispCost")
 	if wisp_cost == null or wisp_cost.is_met():

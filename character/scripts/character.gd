@@ -1,26 +1,27 @@
 class_name Character
 extends Node3D
-"""
-Base class for players, mobs, and bosses. Contains a character's stats and map
-position details.
-"""
+## Describes a character in an Encounter scene.
+##
+## Base class for players, mobs, and bosses. Contains a character's stats and map
+## position details.
 
 
-# Indicates that the character is waiting.
+## Indicates that the character is waiting.
 signal is_waiting()
-# Indicates that this character's turn has ended.
+## Indicates that this character's turn has ended.
 signal turn_ended()
 
+## Describes character type.
 enum Type {
-	ENEMY,
-	PLAYER,
-	NONE
+	ENEMY, ## NPC opposed to the user
+	PLAYER, ## Character controlled by the user
+	NONE ## No type assigned
 }
 
 @export var battle_portrait: Texture2D = null
 
 var stats: CharacterStats
-# Flag that indicates whether the creature has been set to its starting location.
+## Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false: get = get_is_start_set
 
 @onready var character_sprite: EncounterSprite = $Sprite3D
@@ -30,48 +31,48 @@ var _start_set: bool = false: get = get_is_start_set
 @onready var hm_move_path: HexMapMovementCurve = HexMapMovementCurve.new()
 
 
-# Emits the is_waiting signal.
-func emit_is_waiting() -> void:
-	emit_signal("is_waiting")
-
-
-# Emit the signal 'turn_ended'
-func emit_turn_ended() -> void:
-	emit_signal("turn_ended")
-
-
-# Get whether or not the starting location of the character has been set.
-func get_is_start_set() -> bool:
-	return _start_set
-
-
-# Virtual function. Returns the type of the character.
-func get_type() -> int:
-	return Type.NONE
-
-
-# Exposes the hitbox to action collisions.
-func activate_hit_box() -> void:
-	hit_box.monitoring = true
-
-
-# Hides the hitbox from all collisions.
-func deactivate_hit_box() -> void:
-	hit_box.monitoring = false
-
-
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_connect_stats_to_effects_tracker()
 
 
-# Sets the CharacterStats reference of the EffectsTracker.
+## Emits the is_waiting signal.
+func emit_is_waiting() -> void:
+	emit_signal("is_waiting")
+
+
+## Emit the signal 'turn_ended'
+func emit_turn_ended() -> void:
+	emit_signal("turn_ended")
+
+
+## Get whether or not the starting location of the character has been set.
+func get_is_start_set() -> bool:
+	return _start_set
+
+
+## Virtual function. Returns the character type.
+func get_type() -> int:
+	return Type.NONE
+
+
+## Exposes the hitbox to action collisions.
+func activate_hit_box() -> void:
+	hit_box.monitoring = true
+
+
+## Hides the hitbox from all collisions.
+func deactivate_hit_box() -> void:
+	hit_box.monitoring = false
+
+
+## Sets the CharacterStats reference of the EffectsTracker.
 func _connect_stats_to_effects_tracker() -> void:
 	var effects_tracker: EffectsTracker = $EffectsTracker
 	effects_tracker.set_character_stats(stats)
 
 
-# Connects the relevant stat signals to the character label.
+## Connects the relevant stat signals to the character label.
 func _connect_to_character_label() -> void:
 	ErrorUtil.connect_signal(
 			stats,
@@ -83,12 +84,12 @@ func _connect_to_character_label() -> void:
 	character_label.set_cur_health(stats.get_stat(Stat.Type.CUR_HEALTH))
 
 
-# Virtual function. Updates emission points for all actions of the chracter.
+## Virtual function. Updates emission points for all actions of the chracter.
 func _update_emission_index(_index: int) -> void:
 	pass
 
 
-# Update the character's position index when passing over a MapTile.
+## Update the character's position index when passing over a MapTile.
 func _on_Character_area_entered(map_tile: Area3D) -> void:
 	_update_emission_index(map_tile.map_coordinate.get_tile_index())
 	map_coordinate.set_tile_index(map_tile.map_coordinate.get_tile_index())

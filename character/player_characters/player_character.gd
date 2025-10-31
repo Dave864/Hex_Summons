@@ -1,10 +1,10 @@
 class_name PlayerCharacter
 extends Character
-"""
-Handles the setting of player data passed from PartyController. The intended use
-case is for this scene to be instanciated from a PackedScene, with specific
-player character data being supplied afterwards.
-"""
+## Handles behavior of a player character during an Encounter scene.
+##
+## Handles the setting of player data passed from PartyController. The intended use
+## case is for this scene to be instanciated from a PackedScene, with specific
+## player character data being supplied afterwards.
 
 
 const PORTRAIT_PATH_FORMAT: String = (
@@ -16,12 +16,14 @@ const BATTLE_PATH_FORMAT: String = (
 		"BattleSprite.atlastex"
 )
 
+## The player's wisp pool.
 var wisp_pool: PlayerWispPool = null
 
-# The current player class; determines stat adjusters and abilities.
+## The current player class; determines stat adjusters and abilities.
 var _player_class: PlayerClass
-# References to the various attacks and spells the character has access to.
+## The techniques the character has access to.
 var _techniques: Array
+## The spells the character has access to.
 var _spells: Array
 
 @onready var _default_portait: Texture2D = preload(
@@ -35,7 +37,13 @@ var _spells: Array
 @onready var _battle_sprite: EncounterSprite = $Sprite3D
 
 
-# Updates the character this node represents using data from the PartyController.
+## Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	battle_portrait = _default_portait
+	_battle_sprite.texture = _default_battle
+
+
+## Updates the character this node represents using data from the PartyController.
 func update_player_details(player_details: Dictionary) -> void:
 	name = player_details[PartyController.NAME]
 	wisp_pool = player_details[PartyController.WISP_POOL]
@@ -43,28 +51,22 @@ func update_player_details(player_details: Dictionary) -> void:
 	_assign_class(player_details[PartyController.CLASS])
 
 
-# Get the techniques associated with the character
+## Get the techniques associated with the character
 func get_techniques() -> Array:
 	return _techniques
 
 
-# Get the spells associated with the character
+## Get the spells associated with the character
 func get_spells() -> Array:
 	return _spells
 
 
-# Returns the type of the character, PLAYER.
+## Returns the type of the character, PLAYER.
 func get_type() -> int:
 	return Type.PLAYER
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	battle_portrait = _default_portait
-	_battle_sprite.texture = _default_battle
-
-
-# Assigns the player a class, creating a new class node.
+## Assigns the player a class, creating a new class node.
 func _assign_class(class_details: PlayerClassData) -> void:
 	_player_class = PlayerClass.new(class_details)
 	_player_class.name = "Class"
@@ -78,7 +80,7 @@ func _assign_class(class_details: PlayerClassData) -> void:
 	_initialize_actions()
 
 
-# Initializes the action effects.
+## Initializes the action effects.
 func _initialize_actions() -> void:
 	for t in _techniques:
 		assert(
@@ -107,7 +109,7 @@ func _initialize_actions() -> void:
 		s.initialize_caster_id(get_instance_id())
 
 
-# Updates the sprites to the ones for the given player.
+## Updates the sprites to the ones for the given player.
 func _update_sprites(player_name: String) -> void:
 	var new_portrait: Texture2D = load(PORTRAIT_PATH_FORMAT.format([player_name]))
 	var new_battle: Texture2D = load(BATTLE_PATH_FORMAT.format([player_name]))
@@ -115,7 +117,7 @@ func _update_sprites(player_name: String) -> void:
 	_battle_sprite.texture = new_battle if new_battle != null else _default_battle
 
 
-# Virtual function. Updates emission points for all actions of the chracter.
+## Virtual function. Updates emission points for all actions of the chracter.
 func _update_emission_index(_index: int) -> void:
 	for technique in _techniques:
 		technique.set_emission_map_index(_index)

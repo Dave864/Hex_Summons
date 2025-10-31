@@ -43,24 +43,24 @@ func handle_input(event: InputEvent) -> void:
 		not encounter_ui.technique_button.disabled
 		and event.is_action_pressed("ui_encounter_option_1")
 	):
-		_option_selected(EncounterUI.Options.TECHNIQUE)
+		_category_selected(EncounterUI.Options.TECHNIQUE)
 	if (
 		not encounter_ui.spell_button.disabled
 		and event.is_action_pressed("ui_encounter_option_2")
 	):
-		_option_selected(EncounterUI.Options.SPELL)
+		_category_selected(EncounterUI.Options.SPELL)
 	if (
 		not encounter_ui.item_button.disabled
 		and event.is_action_pressed("ui_encounter_option_3")
 	):
 		print("Item option selected")
-#		_option_selected(EncounterUI.Options.ITEM)
+#		_category_selected(EncounterUI.Options.ITEM)
 	if (
 		not encounter_ui.summon_button.disabled
 		and event.is_action_pressed("ui_encounter_option_4")
 	):
 		print("Summon option selected")
-#		_option_selected(EncounterUI.Options.SUMMON)
+#		_category_selected(EncounterUI.Options.SUMMON)
 
 
 ## Called by the state machine before changing the active state.
@@ -175,9 +175,9 @@ func _movement_selected() -> void:
 	_action_type_canceled()
 
 
-## Handles the behavior for when an option has been selected. Closes the current
-## option menu and triggers the loading of a new options menu if applicable.
-func _option_selected(option: int) -> void:
+## Handles the behavior for when a option category has been selected. Closes
+## the current menu and triggers the loading of a new menu if applicable.
+func _category_selected(option: int) -> void:
 	_toggle_off_current_option()
 	if _option_flag == option:
 		_action_type_canceled()
@@ -214,24 +214,24 @@ func _on_MovementButton_pressed() -> void:
 
 ## Catches the signal for when the Technique button is pressed.
 func _on_TechniqueButton_pressed() -> void:
-	_option_selected(EncounterUI.Options.TECHNIQUE)
+	_category_selected(EncounterUI.Options.TECHNIQUE)
 
 
 ## Catches the signal for when the Spell button is pressed.
 func _on_SpellButton_pressed() -> void:
-	_option_selected(EncounterUI.Options.SPELL)
+	_category_selected(EncounterUI.Options.SPELL)
 
 
 ## Catches the signal for when the Summon button is pressed.
 func _on_SummonButton_pressed() -> void:
 	print("Summon option selected")
-#	_option_selected(EncounterUI.Options.SUMMON)
+#	_category_selected(EncounterUI.Options.SUMMON)
 
 
 ## Catches the signal for when the Item button is pressed.
 func _on_ItemButton_pressed() -> void:
 	print("Item option selected")
-#	_option_selected(EncounterUI.Options.ITEM)
+#	_category_selected(EncounterUI.Options.ITEM)
 
 
 ## Catches the signal for when the End button is pressed.

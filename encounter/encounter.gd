@@ -1,15 +1,13 @@
 class_name Encounter
 extends Node
-"""
-Manages the events of an encounter.
-"""
+## Manages the events of an encounter.
 
 
-# Reference to the encounter hex_map. This is to allow for differently named
-# hex map scene to be used.
+## Reference to the encounter hex_map. This is to allow for differently named
+## hex map scene to be used.
 @export var hex_map: HexMap = null
 
-var cur_init: int = 0
+## The player characters active in the encounter.
 var players: Array = []
 
 var _player_template: PackedScene = preload(
@@ -22,28 +20,12 @@ var _player_template: PackedScene = preload(
 @onready var ui: EncounterUI = $EncounterUI
 
 
-# Move the initiative counter to the next index or reset it back to the start.
-func progress_initiative() -> void:
-	await ui.initiative_tracker.progress_initiative()
-
-
-# Gets the next character in the intiative track.
-func get_next_character() -> Character:
-	return ui.initiative_tracker.get_next_character()
-
-
-# Gets the character currently in initiative.
-func get_current_character() -> Character:
-	return ui.initiative_tracker.get_current_character()
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_parameters()
-	"""
-	TODO: implement logic to load the HexMap, based on some details determined
-	out of scene.
-	"""
+	## TODO: implement logic to load the HexMap, based on some details determined
+	## out of scene.
 	_connect_map_to_selector()
 	
 	var p_index: int = 0
@@ -58,9 +40,7 @@ func _ready() -> void:
 		p_index += 1
 	ui.track_party_members(players)
 	
-	"""
-	TODO: implement logic to load enemies from out of scene.
-	"""
+	## TODO: implement logic to load enemies from out of scene.
 	var e_index: int = 0
 	for e in enemies:
 		var ai_node: CharacterAI = e.get_node("CharacterAI")
@@ -70,7 +50,22 @@ func _ready() -> void:
 		e_index += 1
 
 
-# Connects all map tile "mouse_hovered" signals to the selector.
+## Calls the InitiativeTracker to progress the initiative tracker.
+func progress_initiative() -> void:
+	await ui.initiative_tracker.progress_initiative()
+
+
+## Gets the next character in the intiative track.
+func get_next_character() -> Character:
+	return ui.initiative_tracker.get_next_character()
+
+
+## Gets the character currently active in initiative.
+func get_current_character() -> Character:
+	return ui.initiative_tracker.get_current_character()
+
+
+## Connects all map tile "mouse_hovered" signals to the selector.
 func _connect_map_to_selector() -> void:
 	selector.players_ref = players
 	selector.enemies_ref = enemies
@@ -84,7 +79,7 @@ func _connect_map_to_selector() -> void:
 		)
 
 
-# Check that all required parameters are set.
+## Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
 		hex_map != null,
