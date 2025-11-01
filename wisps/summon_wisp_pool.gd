@@ -21,7 +21,7 @@ func _ready() -> void:
 ## Adds wisps to the specified element pool. The expectation is that wisp_ids
 ## will be an array with a size divisible by 2 when adding wisps for LIGHT and DARK.
 func add_wisps(wisp_ids: Array, element: int) -> void:
-	if element in Constants.PolarElement.keys():
+	if element in Constants.PolarElement.values():
 		var elems: Array = (
 			ElementalPolarity.get_light_elements()
 			if element == Constants.PolarElement.LIGHT
@@ -36,7 +36,7 @@ func add_wisps(wisp_ids: Array, element: int) -> void:
 		emit_signal("active_count_changed", elems[0])
 		emit_signal("active_count_changed", elems[1])
 		emit_signal("active_count_changed", element)
-	elif element in Constants.CoreElement.keys():
+	elif element in Constants.CoreElement.values():
 		pool[element].append_array(wisp_ids)
 		_active_count[element] += wisp_ids.size()
 		emit_signal("active_count_changed", element)

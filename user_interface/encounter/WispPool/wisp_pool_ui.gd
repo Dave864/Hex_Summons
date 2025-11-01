@@ -162,12 +162,11 @@ func _on_PolarElementIcon_shine_ping(polar_elem: int) -> void:
 
 ## Update the label for the corresponding element.
 func _on_WispPool_active_count_changed(element: int) -> void:
+	var icon_shined: bool = true
 	if element == Constants.Element.LIGHT:
 		light_icon.shine()
 	elif element == Constants.Element.DARK:
 		dark_icon.shine()
-	elif not element in Constants.CoreElement.keys():
-		return
 	elif _polarities[LIGHT][0] == element:
 		light_elem_1_icon.change_element(element)
 	elif _polarities[LIGHT][1] == element:
@@ -176,3 +175,11 @@ func _on_WispPool_active_count_changed(element: int) -> void:
 		dark_elem_1_icon.change_element(element)
 	elif _polarities[DARK][1] == element:
 		dark_elem_2_icon.change_element(element)
+	else:
+		icon_shined = false
+	# Update the icon labels in the event where the UI element is not visible
+	# for the animations to play.
+	if not visible and icon_shined and element in Constants.PolarElement.values():
+		_on_PolarElementIcon_shine_ping(element)
+	elif not visible and icon_shined:
+		_on_CoreElementIcon_element_ping(element)

@@ -1,12 +1,11 @@
 @tool
 class_name PolarElementIcon
 extends TextureRect
-"""
-Represents a polar element in the UI: light or dark. Manages the shine of
-the icon.
-"""
+## Represents a polar element in the UI: light or dark. Manages the shine of
+## the icon.
 
 
+## Indicates that the polar element has shined.
 signal shine_ping(e)
 
 @export var element: int = Constants.PolarElement.LIGHT: set = set_element
@@ -16,7 +15,7 @@ signal shine_ping(e)
 @onready var ap: AnimationPlayer = $AnimationPlayer
 
 
-# Sets the icon texture region to display the new element.
+## Sets the icon texture region to display the new element.
 func set_element(new_element: int) -> void:
 	match new_element:
 		Constants.PolarElement.LIGHT:
@@ -28,7 +27,7 @@ func set_element(new_element: int) -> void:
 	element = new_element
 
 
-# Plays the shine animation of the given polar element.
+## Plays the shine animation of the given polar element.
 func shine() -> void:
 	if element == Constants.PolarElement.LIGHT:
 		ap.play("light_shine")
@@ -36,16 +35,16 @@ func shine() -> void:
 		ap.play("dark_shine")
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
 
 
-# Checks that all required parameters are given.
+## Checks that all required parameters are given.
 func _check_for_required_parameters() -> void:
 	assert(texture is AtlasTexture, "Icon texture is not an AtlasTexture.")
 
 
-# Called during the shine animation of the corresponding element. Emits a ping.
+## Called during the shine animation of the corresponding element. Emits a ping.
 func _emit_ping() -> void:
 	emit_signal("shine_ping", element)

@@ -254,7 +254,7 @@ func _on_SubOptions_option_selected(action_info: Action) -> void:
 	)
 
 
-## Signal that a selected action has been executed. Hide the UI elements.
+## Signal that a selected action has been executed. Hide the options UI elements.
 func _on_SignalBus_player_action_executed(
 	_player: PlayerCharacter,
 	_action: Action,
@@ -262,4 +262,4 @@ func _on_SignalBus_player_action_executed(
 ) -> void:
 	encounter_ui.sub_options.deactivate()
 	encounter_ui.options.hide()
-	encounter_ui.active_player_stats.hide()
+	#encounter_ui.active_player_stats.hide()

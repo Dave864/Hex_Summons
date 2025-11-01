@@ -1,12 +1,11 @@
 @tool
 class_name CoreElementIcon
 extends TextureRect
-"""
-Represents a core element in the UI: earth, fire, water, or wind. Manages
-the changes from one element to another.
-"""
+## Represents a core element in the UI: earth, fire, water, or wind. Manages
+## the changes from one element to another.
 
 
+## Indicates that the element value should change.
 signal element_ping(e)
 
 @export var element: int = Constants.CoreElement.EARTH: set = set_element
@@ -15,12 +14,22 @@ signal element_ping(e)
 @export var water_region: Vector2 = Vector2(0,0)
 @export var wind_region: Vector2 = Vector2(0,0)
 
+## Internal flag that indicates if the element ping should be emitted during
+## the animation.
 var _ping: bool = false
 
 @onready var ap: AnimationPlayer = $AnimationPlayer
 
 
-# Sets the icon texture region to display the new element.
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	# Keep the icon from using the RESET position when set to default element.
+	if element == Constants.CoreElement.EARTH:
+		texture.region.position = earth_region
+	_check_for_required_parameters()
+
+
+## Sets the icon texture region to display the new element.
 func set_element(new_element: int) -> void:
 	match new_element:
 		Constants.CoreElement.EARTH:
@@ -36,8 +45,8 @@ func set_element(new_element: int) -> void:
 	element = new_element
 
 
-# Changes the icon to match the new element, playing the corresponding animations
-# and signaling when the elements change.
+## Changes the icon to match the new element, playing the corresponding animations
+## and signaling when the elements change.
 func change_element(new_element: int, ping: bool = true) -> void:
 	_ping = ping
 	match element:
@@ -61,20 +70,12 @@ func change_element(new_element: int, ping: bool = true) -> void:
 	set_element(new_element)
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	# Keep the icon from using the RESET position when set to default element.
-	if element == Constants.CoreElement.EARTH:
-		texture.region.position = earth_region
-	_check_for_required_parameters()
-
-
-# Checks that all required parameters are given.
+## Checks that all required parameters are given.
 func _check_for_required_parameters() -> void:
 	assert(texture is AtlasTexture, "Icon texture is not an AtlasTexture.")
 
 
-# Called during the a "from" animation. Emits a ping.
+## Called during the a "from" animation. Emits a ping.
 func _emit_ping() -> void:
 	if _ping:
 		emit_signal("element_ping", element)

@@ -33,11 +33,11 @@ func start_countdown_on_turn() -> void:
 	_countdown = turn_count + 1
 
 
-## Creates a new Cooldown node with a specific cooldown_value value. The Cooldown
+## Creates a new Cooldown node with a specific turn count value. The Cooldown
 ## is inactive upon creation.
-func _init(cooldown_value: int = 0) -> void:
+func _init(turn_count_value: int = 0) -> void:
 	name = "Cooldown"
-	turn_count = cooldown_value
+	turn_count = turn_count_value
 	_countdown = 0
 
 
