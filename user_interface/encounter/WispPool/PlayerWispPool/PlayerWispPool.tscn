@@ -39,7 +39,7 @@ resource_local_to_scene = true
 atlas = ExtResource("5")
 region = Rect2(1, 1, 22, 22)
 
-[node name="PlayerWispPool" type="TextureRect"]
+[node name="PlayerWispPool" type="TextureRect" node_paths=PackedStringArray("timer", "light_label", "light_icon", "light_elem_1_label", "light_elem_1_icon", "light_elem_2_label", "light_elem_2_icon", "dark_label", "dark_icon", "dark_elem_1_label", "dark_elem_1_icon", "dark_elem_2_label", "dark_elem_2_icon")]
 anchors_preset = -1
 anchor_right = 0.116
 anchor_bottom = 0.267
@@ -49,19 +49,19 @@ mouse_filter = 2
 texture = ExtResource("1")
 stretch_mode = 4
 script = ExtResource("7")
-light_label_ref = NodePath("LightCount")
-light_icon_ref = NodePath("LightIcon")
-light_elem_1_label_ref = NodePath("LightElem1Count")
-light_elem_1_icon_ref = NodePath("LightCore1Icon")
-light_elem_2_label_ref = NodePath("LightElem2Count")
-light_elem_2_icon_ref = NodePath("LightCore2Icon")
-dark_label_ref = NodePath("DarkCount")
-dark_icon_ref = NodePath("DarkIcon")
-dark_elem_1_label_ref = NodePath("DarkElem1Count")
-dark_elem_1_icon_ref = NodePath("DarkCore1Icon")
-dark_elem_2_label_ref = NodePath("DarkElem2Count")
-dark_elem_2_icon_ref = NodePath("DarkCore2Icon")
-timer_ref = NodePath("VariableTimer")
+timer = NodePath("VariableTimer")
+light_label = NodePath("LightCount")
+light_icon = NodePath("LightIcon")
+light_elem_1_label = NodePath("LightElem1Count")
+light_elem_1_icon = NodePath("LightCore1Icon")
+light_elem_2_label = NodePath("LightElem2Count")
+light_elem_2_icon = NodePath("LightCore2Icon")
+dark_label = NodePath("DarkCount")
+dark_icon = NodePath("DarkIcon")
+dark_elem_1_label = NodePath("DarkElem1Count")
+dark_elem_1_icon = NodePath("DarkCore1Icon")
+dark_elem_2_label = NodePath("DarkElem2Count")
+dark_elem_2_icon = NodePath("DarkCore2Icon")
 
 [node name="VariableTimer" type="Timer" parent="."]
 script = ExtResource("9")

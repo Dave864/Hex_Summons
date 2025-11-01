@@ -40,4 +40,4 @@ func _activate_cooldown(action: Action) -> void:
 func _pay_wisp_cost(action: Action) -> void:
 	var wisp_cost: WispCost = action.get_node_or_null("WispCost")
 	if wisp_cost != null:
-		pass
+		WispController.pay_cost_from_player(pc.wisp_pool, wisp_cost)

@@ -1,109 +1,116 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=16 format=3 uid="uid://5td8sfwtxdp6"]
 
-[ext_resource path="res://user_interface/themes/ThemeBlueSigil.tres" type="Theme" id=1]
-[ext_resource path="res://art/ui/SummonWispPool/Summon Pool Base.png" type="Texture2D" id=2]
-[ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/PolarElementIcon.tscn" type="PackedScene" id=3]
-[ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/CoreElementIcon.tscn" type="PackedScene" id=4]
-[ext_resource path="res://art/ui/SummonWispPool/Summon Core Gem.png" type="Texture2D" id=5]
-[ext_resource path="res://art/ui/SummonWispPool/Summon Polar Gem.png" type="Texture2D" id=6]
-[ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/summon_wisp_pool_ui.gd" type="Script" id=7]
-[ext_resource path="res://utils/variable_timer.gd" type="Script" id=9]
-[ext_resource path="res://user_interface/encounter/WispPool/SummonWispPool/AnimatedLabel.tscn" type="PackedScene" id=12]
+[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1"]
+[ext_resource type="Texture2D" uid="uid://dxp0u41501dbm" path="res://art/ui/SummonWispPool/Summon Pool Base.png" id="2"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/WispPool/SummonWispPool/PolarElementIcon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/WispPool/SummonWispPool/CoreElementIcon.tscn" id="4"]
+[ext_resource type="Texture2D" uid="uid://4ifp0h7gjo1o" path="res://art/ui/SummonWispPool/Summon Core Gem.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://bdexmdc4xsna3" path="res://art/ui/SummonWispPool/Summon Polar Gem.png" id="6"]
+[ext_resource type="Script" uid="uid://dnp7ekd73y7xa" path="res://user_interface/encounter/WispPool/SummonWispPool/summon_wisp_pool_ui.gd" id="7"]
+[ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="9"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/WispPool/SummonWispPool/AnimatedLabel.tscn" id="12"]
 
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id="1"]
 resource_local_to_scene = true
-atlas = ExtResource( 6 )
-region = Rect2( 1, 1, 8, 6 )
+atlas = ExtResource("6")
+region = Rect2(1, 1, 8, 6)
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id="2"]
 resource_local_to_scene = true
-atlas = ExtResource( 5 )
-region = Rect2( 1, 1, 8, 8 )
+atlas = ExtResource("5")
+region = Rect2(1, 1, 8, 8)
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id="4"]
 resource_local_to_scene = true
-atlas = ExtResource( 5 )
-region = Rect2( 1, 1, 8, 8 )
+atlas = ExtResource("5")
+region = Rect2(1, 1, 8, 8)
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id="3"]
 resource_local_to_scene = true
-atlas = ExtResource( 6 )
-region = Rect2( 1, 1, 8, 6 )
+atlas = ExtResource("6")
+region = Rect2(1, 1, 8, 6)
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id="5"]
 resource_local_to_scene = true
-atlas = ExtResource( 5 )
-region = Rect2( 1, 1, 8, 8 )
+atlas = ExtResource("5")
+region = Rect2(1, 1, 8, 8)
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id="6"]
 resource_local_to_scene = true
-atlas = ExtResource( 5 )
-region = Rect2( 1, 1, 8, 8 )
+atlas = ExtResource("5")
+region = Rect2(1, 1, 8, 8)
 
-[node name="SummonPool" type="Panel"]
+[node name="SummonPool" type="Panel" node_paths=PackedStringArray("timer", "light_label", "light_icon", "light_elem_1_label", "light_elem_1_icon", "light_elem_2_label", "light_elem_2_icon", "dark_label", "dark_icon", "dark_elem_1_label", "dark_elem_1_icon", "dark_elem_2_label", "dark_elem_2_icon")]
+custom_minimum_size = Vector2(60, 60)
+anchors_preset = -1
 anchor_right = 0.094
 anchor_bottom = 0.167
 offset_right = -0.159996
 offset_bottom = -0.119999
-custom_minimum_size = Vector2( 60, 60 )
 mouse_filter = 2
-theme = ExtResource( 1 )
-script = ExtResource( 7 )
-light_label_ref = NodePath("LightCount")
-light_icon_ref = NodePath("SigilBase/LightIcon")
-light_elem_1_label_ref = NodePath("LightElemCount1")
-light_elem_1_icon_ref = NodePath("SigilBase/LightCore1Icon")
-light_elem_2_label_ref = NodePath("LightElemCount2")
-light_elem_2_icon_ref = NodePath("SigilBase/LightCore2Icon")
-dark_label_ref = NodePath("DarkCount")
-dark_icon_ref = NodePath("SigilBase/DarkIcon")
-dark_elem_1_label_ref = NodePath("DarkElemCount1")
-dark_elem_1_icon_ref = NodePath("SigilBase/DarkCore1Icon")
-dark_elem_2_label_ref = NodePath("DarkElemCount2")
-dark_elem_2_icon_ref = NodePath("SigilBase/DarkCore2Icon")
-timer_ref = NodePath("VariableTimer")
+theme = ExtResource("1")
+script = ExtResource("7")
+timer = NodePath("VariableTimer")
+light_label = NodePath("LightCount")
+light_icon = NodePath("SigilBase/LightIcon")
+light_elem_1_label = NodePath("LightElemCount1")
+light_elem_1_icon = NodePath("SigilBase/LightCore1Icon")
+light_elem_2_label = NodePath("LightElemCount2")
+light_elem_2_icon = NodePath("SigilBase/LightCore2Icon")
+dark_label = NodePath("DarkCount")
+dark_icon = NodePath("SigilBase/DarkIcon")
+dark_elem_1_label = NodePath("DarkElemCount1")
+dark_elem_1_icon = NodePath("SigilBase/DarkCore1Icon")
+dark_elem_2_label = NodePath("DarkElemCount2")
+dark_elem_2_icon = NodePath("SigilBase/DarkCore2Icon")
 
 [node name="VariableTimer" type="Timer" parent="."]
-script = ExtResource( 9 )
+script = ExtResource("9")
 lower_time = 15.0
 upper_time = 20.0
 
-[node name="LightCount" parent="." instance=ExtResource( 12 )]
+[node name="LightCount" parent="." instance=ExtResource("12")]
+layout_mode = 0
 anchor_left = 0.45
 anchor_top = 0.067
 anchor_right = 0.55
 anchor_bottom = 0.2
 offset_right = 0.0
 
-[node name="LightElemCount1" parent="." instance=ExtResource( 12 )]
+[node name="LightElemCount1" parent="." instance=ExtResource("12")]
+layout_mode = 0
 anchor_left = 0.2
 anchor_top = 0.167
 anchor_right = 0.3
 anchor_bottom = 0.3
 offset_right = 0.0
 
-[node name="LightElemCount2" parent="." instance=ExtResource( 12 )]
+[node name="LightElemCount2" parent="." instance=ExtResource("12")]
+layout_mode = 0
 anchor_left = 0.7
 anchor_top = 0.167
 anchor_right = 0.8
 anchor_bottom = 0.3
 offset_right = 0.0
 
-[node name="DarkCount" parent="." instance=ExtResource( 12 )]
+[node name="DarkCount" parent="." instance=ExtResource("12")]
+layout_mode = 0
 anchor_left = 0.45
 anchor_top = 0.8
 anchor_right = 0.55
 anchor_bottom = 0.933
 offset_right = 0.0
 
-[node name="DarkElemCount1" parent="." instance=ExtResource( 12 )]
+[node name="DarkElemCount1" parent="." instance=ExtResource("12")]
+layout_mode = 0
 anchor_left = 0.2
 anchor_top = 0.7
 anchor_right = 0.3
 anchor_bottom = 0.833
 offset_right = 0.0
 
-[node name="DarkElemCount2" parent="." instance=ExtResource( 12 )]
+[node name="DarkElemCount2" parent="." instance=ExtResource("12")]
+layout_mode = 0
 anchor_left = 0.7
 anchor_top = 0.7
 anchor_right = 0.8
@@ -111,6 +118,7 @@ anchor_bottom = 0.833
 offset_right = 0.0
 
 [node name="SigilBase" type="TextureRect" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 14.0
@@ -118,10 +126,11 @@ offset_top = 14.0
 offset_right = -14.0
 offset_bottom = -14.0
 mouse_filter = 2
-texture = ExtResource( 2 )
+texture = ExtResource("2")
 stretch_mode = 4
 
-[node name="LightIcon" parent="SigilBase" instance=ExtResource( 3 )]
+[node name="LightIcon" parent="SigilBase" instance=ExtResource("3")]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -130,9 +139,10 @@ offset_left = -4.0
 offset_top = -14.0
 offset_right = 4.0
 offset_bottom = -8.0
-texture = SubResource( 1 )
+texture = SubResource("1")
 
-[node name="LightCore1Icon" parent="SigilBase" instance=ExtResource( 4 )]
+[node name="LightCore1Icon" parent="SigilBase" instance=ExtResource("4")]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -141,10 +151,11 @@ offset_left = -11.0
 offset_top = -11.0
 offset_right = -3.0
 offset_bottom = -3.0
-texture = SubResource( 2 )
+texture = SubResource("2")
 element = 1
 
-[node name="LightCore2Icon" parent="SigilBase" instance=ExtResource( 4 )]
+[node name="LightCore2Icon" parent="SigilBase" instance=ExtResource("4")]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -153,10 +164,11 @@ offset_left = 3.0
 offset_top = -11.0
 offset_right = 11.0
 offset_bottom = -3.0
-texture = SubResource( 4 )
+texture = SubResource("4")
 element = 3
 
-[node name="DarkIcon" parent="SigilBase" instance=ExtResource( 3 )]
+[node name="DarkIcon" parent="SigilBase" instance=ExtResource("3")]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -165,10 +177,11 @@ offset_left = -4.0
 offset_top = 8.0
 offset_right = 4.0
 offset_bottom = 14.0
-texture = SubResource( 3 )
+texture = SubResource("3")
 element = 5
 
-[node name="DarkCore1Icon" parent="SigilBase" instance=ExtResource( 4 )]
+[node name="DarkCore1Icon" parent="SigilBase" instance=ExtResource("4")]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -177,9 +190,10 @@ offset_left = -11.0
 offset_top = 3.0
 offset_right = -3.0
 offset_bottom = 11.0
-texture = SubResource( 5 )
+texture = SubResource("5")
 
-[node name="DarkCore2Icon" parent="SigilBase" instance=ExtResource( 4 )]
+[node name="DarkCore2Icon" parent="SigilBase" instance=ExtResource("4")]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -188,7 +202,7 @@ offset_left = 3.0
 offset_top = 3.0
 offset_right = 11.0
 offset_bottom = 11.0
-texture = SubResource( 6 )
+texture = SubResource("6")
 element = 2
 
 [connection signal="timeout" from="VariableTimer" to="." method="_on_Timer_timeout"]

@@ -20,10 +20,11 @@ extends ActionCondition
 @export var light_cost = 0 # (int, 0, 4)
 @export var dark_cost = 0 # (int, 0, 4)
 
-## A collated summary of the requirements and cost.
-var summary: Dictionary = _get_costs()
 ## The pool that the cost refers to when checking if requirements are met.
 var wisp_pool: WispPool = null
+
+## A collated summary of the costs.
+@onready var cost_summary: Dictionary = _get_costs()
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -46,6 +47,7 @@ func _init(spell_stats: SpellStats = null) -> void:
 	light_cost = 0 if spell_stats == null else spell_stats.light_cost
 	dark_req = 0 if spell_stats == null else spell_stats.dark_req
 	dark_cost = 0 if spell_stats == null else spell_stats.dark_cost
+	cost_summary = _get_costs()
 
 
 ## Virtual function. Checks if the condition has been met given the current

@@ -1,12 +1,10 @@
 class_name SummonWispPool
 extends WispPool
-"""
-Tracks the wisp states for a summon character.
-"""
+## Tracks the wisp states for a summon character.
 
 
-# Tracks which wisps are set to the summon, i.e. which wisps are available
-# to be used for actions.
+## Tracks which wisps are set to the summon, i.e. which wisps are available
+## to be used for actions.
 var pool: Dictionary = {
 	Constants.CoreElement.EARTH: [],
 	Constants.CoreElement.FIRE: [],
@@ -15,8 +13,13 @@ var pool: Dictionary = {
 }
 
 
-# Adds wisps to the specified element pool. The expectation is that wisp_ids
-# will be an array with a size divisible by 2 when adding wisps for LIGHT and DARK.
+func _ready() -> void:
+	for element in Constants.CoreElement.values():
+		_active_count[element] = pool[element].size()
+
+
+## Adds wisps to the specified element pool. The expectation is that wisp_ids
+## will be an array with a size divisible by 2 when adding wisps for LIGHT and DARK.
 func add_wisps(wisp_ids: Array, element: int) -> void:
 	if element in Constants.PolarElement.keys():
 		var elems: Array = (
@@ -39,9 +42,9 @@ func add_wisps(wisp_ids: Array, element: int) -> void:
 		emit_signal("active_count_changed", element)
 
 
-# Gets the keys for the wisps that are used to pay for the specified element.
-# These wisps are also removed from this pool. Returns an empty array if no
-# wisps are available for the given element.
+## Gets the keys for the wisps that are used to pay for the specified element.
+## These wisps are also removed from this pool. Returns an empty array if no
+## wisps are available for the given element.
 func pay_for_element(element: int, amount: int = 1) -> Array:
 	var wisps_paid: Array = []
 	if element in Constants.PolarElement.keys():
@@ -64,8 +67,3 @@ func pay_for_element(element: int, amount: int = 1) -> Array:
 		for i in amount:
 			wisps_paid.append(pool[element].pop_front())
 	return wisps_paid
-
-
-func _ready() -> void:
-	for element in Constants.CoreElement.values():
-		_active_count[element] = pool[element].size()
