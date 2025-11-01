@@ -1,11 +1,9 @@
 class_name PlayerWispPoolUI
 extends WispPoolUI
-"""
-Represents the wisp pool for the active player.
-"""
+## Represents the wisp pool for the active player.
 
 
-# Assigns the pool this UI node will display.
+## Assigns the pool this UI node will display.
 func set_wisp_pool(new_pool: WispPool = null) -> void:
 	if pool != null:
 		pool.disconnect(

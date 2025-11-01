@@ -1,8 +1,6 @@
 class_name PlayerWispPool
 extends WispPool
-"""
-Tracks the wisp states for a Player character.
-"""
+## Tracks the wisp states for a Player character.
 
 
 const NONE: String = ""
@@ -16,7 +14,7 @@ var water: Dictionary = {}
 var wind: Dictionary = {}
 
 
-# Adds wisp to the appropriate pool. Updates WispTracker.
+## Adds wisp to the appropriate pool. Updates WispTracker.
 func add_new_wisp(wisp: String) -> void:
 	var element: int = WispTracker.wisp_element(wisp)
 	match element:
@@ -36,7 +34,7 @@ func add_new_wisp(wisp: String) -> void:
 		set_active(wisp)
 
 
-# Removes the wisp from the pool. Updates WispTracker.
+## Removes the wisp from the pool. Updates WispTracker.
 func remove_wisp(wisp: String) -> void:
 	if earth.has(wisp):
 		if earth[wisp]:
@@ -59,7 +57,7 @@ func remove_wisp(wisp: String) -> void:
 	WispTracker.set_bonded_player(wisp)
 
 
-# Updates the state of the specified wisp to "active"
+## Updates the state of the specified wisp to "active"
 func set_active(wisp: String) -> void:
 	var element: int
 	if earth.has(wisp):
@@ -80,9 +78,9 @@ func set_active(wisp: String) -> void:
 	emit_signal("active_count_changed", element)
 
 
-# Gets the keys for the wisps that are used to pay for the specified element.
-# Deactivates the wisps that are spent. Returns an empty array if no wisps
-# are available for the given element.
+## Gets the keys for the wisps that are used to pay for the specified element.
+## Deactivates the wisps that are spent. Returns an empty array if no wisps
+## are available for the given element.
 func pay_for_element(element: int, count: int) -> Array:
 	match element:
 		Constants.Element.EARTH:
@@ -114,12 +112,12 @@ func pay_for_element(element: int, count: int) -> Array:
 	return []
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	_set_active_count()
 
 
-# Called when creating a new node.
+## Called when creating a new node.
 func _init(new_player_name: String = "") -> void:
 	player_name = new_player_name
 	name = "{0}WispPool".format([player_name])
@@ -130,7 +128,7 @@ func _init(new_player_name: String = "") -> void:
 	_set_active_count()
 
 
-# Gets the active count for each element pool.
+## Gets the active count for each element pool.
 func _set_active_count() -> void:
 	# Reset count to prevent overcounting during initialization.
 	_active_count[Constants.CoreElement.EARTH] = 0
@@ -147,9 +145,9 @@ func _set_active_count() -> void:
 		_active_count[Constants.CoreElement.WIND] += 1 if is_active else 0
 
 
-# Helper function for pay_for_element. Deactivates a number of active wisps in the
-# given category. Returns the keys of said wisp, if any. Returns an empty array
-# if none are found.
+## Helper function for pay_for_element. Deactivates a number of active wisps in the
+## given category. Returns the keys of said wisp, if any. Returns an empty array
+## if none are found.
 func _deactivate_active_count(wisps: Dictionary, element: int, count: int) -> Array:
 	var count_tracker: int = 0
 	var deactivated_wisps: Array = []
@@ -164,9 +162,9 @@ func _deactivate_active_count(wisps: Dictionary, element: int, count: int) -> Ar
 	return deactivated_wisps
 
 
-# Helper function for pay_for_element. Deactivates the first active wisps for the
-# relevant polar elements. Return an empty array if not enough elements are
-# active.
+## Helper function for pay_for_element. Deactivates the first active wisps for the
+## relevant polar elements. Return an empty array if not enough elements are
+## active.
 func _deactivate_polar_active(elem_1: int, elem_2: int, count: int) -> Array:
 	var wisps: Array = []
 	if _active_count[elem_1] == 0 or _active_count[elem_2] == 0:
@@ -186,8 +184,8 @@ func _deactivate_polar_active(elem_1: int, elem_2: int, count: int) -> Array:
 	return wisps
 
 
-# Gets the tracker Dictionary for the given element. Returns an empty Dictionary
-# if no corresponding tracker is found.
+## Gets the tracker Dictionary for the given element. Returns an empty Dictionary
+## if no corresponding tracker is found.
 func _get_element_tracker(element: int) -> Dictionary:
 	match element:
 		Constants.CoreElement.EARTH:
