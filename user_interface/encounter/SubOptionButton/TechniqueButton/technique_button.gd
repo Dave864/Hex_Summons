@@ -6,10 +6,6 @@ extends SubOptionButton
 ## "techniques". A technique is an Action with a Cooldown node.
 
 
-## Indicates a technique was selected.
-signal technique_selected(technique_details)
-
-
 ## Virtual function. Set the technique action details for the button.
 func set_option_details(a: Node) -> void:
 	# Technique buttons display details for actions, so we cast to check.
@@ -33,4 +29,4 @@ func set_option_details(a: Node) -> void:
 func _process_button_press() -> void:
 	var cooldown: Cooldown = _option_details.get_node_or_null("Cooldown")
 	if cooldown == null or not cooldown.is_active():
-		emit_signal("technique_selected", _option_details)
+		emit_signal("option_selected", _option_details)

@@ -6,9 +6,6 @@ extends SubOptionButton
 ## "spells". A spell is an Action with a WispCost node.
 
 
-signal spell_selected(spell_details)
-
-
 ## Virtual function. Set the spell action details for the button.
 func set_option_details(a: Node) -> void:
 	# Spell buttons display details for actions, so we cast to check.
@@ -31,4 +28,4 @@ func set_option_details(a: Node) -> void:
 func _process_button_press() -> void:
 	var wisp_cost: WispCost = _option_details.get_node_or_null("WispCost")
 	if wisp_cost == null or wisp_cost.is_met():
-		emit_signal("spell_selected", _option_details)
+		emit_signal("option_selected", _option_details)

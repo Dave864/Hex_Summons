@@ -9,8 +9,6 @@ extends ScrollContainer
 
 ## Indicates that one of the sub-options was selected
 signal option_selected(option_info)
-## Indicates that a sub-option of type Action was selected. 
-signal action_selected(action_info)
 
 var _options: Array = []
 var _technique_button: PackedScene = preload(
@@ -100,9 +98,3 @@ func _populate_sub_options(
 ## Emits the "action_selected" signal when one of the button options has been pressed.
 func _on_SubOptionButton_option_selected(option_info: Node) -> void:
 	emit_signal("option_selected", option_info)
-
-
-## Emits the "action_selected" signal when either a technique or spell option has
-## been chosen.
-func _on_SubOptionButton_action_selected(action_info: Action) -> void:
-	emit_signal("action_selected", action_info)
