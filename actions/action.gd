@@ -56,6 +56,7 @@ func get_targets() -> Dictionary:
 func set_emission_map_index(index: int) -> void:
 	_emission_map_index = index
 
+
 ## Return the index of the map tile the emission point is at.
 func get_emission_map_index() -> int:
 	return _emission_map_index

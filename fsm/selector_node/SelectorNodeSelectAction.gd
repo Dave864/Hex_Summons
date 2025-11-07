@@ -504,10 +504,26 @@ func _on_SignalBus_player_action_selected(
 ) -> void:
 	if not _state_is_active():
 		return
-	elif new_action == _action and not _get_targets().is_empty():
+	elif (
+		new_action == _action
+		and not _get_targets().is_empty()
+		and _can_execute()
+	):
 		_execute_action()
 	else:
 		state_machine.transition_to(SELECT_ACTION, {"action": new_action})
+
+
+## Checks that the current action is in a state to be used, i.e. whether the
+## action is off cooldown or there are enough wisps to use the action.
+func _can_execute() -> bool:
+	var cooldown: Cooldown = _action.get_node_or_null("Cooldown")
+	var wisp_cost: WispCost = _action.get_node_or_null("WispCost")
+	if cooldown != null:
+		return not cooldown.is_active()
+	if wisp_cost != null:
+		return wisp_cost.is_met()
+	return true
 
 
 ## Go to the "SelectMove" state when the player action selection is canceled.
