@@ -4,7 +4,7 @@ extends ActionCondition
 ## to be usable.
 
 
-@export_category("Required Wisps to Cast")
+@export_group("Required Wisps to Cast")
 @export var earth_req = 0 # (int, 0, 4)
 @export var fire_req = 0 # (int, 0, 4)
 @export var water_req = 0 # (int, 0, 4)
@@ -12,7 +12,7 @@ extends ActionCondition
 @export var light_req = 0 # (int, 0, 4)
 @export var dark_req = 0 # (int, 0, 4)
 
-@export_category("Wisps Spent on Cast")
+@export_group("Wisps Spent on Cast")
 @export var earth_cost = 0 # (int, 0, 4)
 @export var fire_cost = 0 # (int, 0, 4)
 @export var water_cost = 0 # (int, 0, 4)

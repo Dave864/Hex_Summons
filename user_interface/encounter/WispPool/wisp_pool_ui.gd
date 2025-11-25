@@ -8,18 +8,23 @@ const DARK: int = Constants.PolarElement.DARK
 
 
 @export var timer: VariableTimer = null
-@export_category("Light Polarity UI Elements")
+@export_group("Light Polarity UI Nodes", "light_")
 @export var light_label: AnimatedLabel = null
 @export var light_icon: PolarElementIcon = null
+@export_subgroup("Left Element Nodes", "light_elem_1")
 @export var light_elem_1_label: AnimatedLabel = null
 @export var light_elem_1_icon: CoreElementIcon = null
+@export_subgroup("Right Element Nodes", "light_elem_2")
 @export var light_elem_2_label: AnimatedLabel = null
 @export var light_elem_2_icon: CoreElementIcon = null
-@export_category("Dark Polarity UI Elements")
+
+@export_group("Dark Polarity UI Elements", "dark_")
 @export var dark_label: AnimatedLabel = null
 @export var dark_icon: PolarElementIcon = null
+@export_subgroup("Left Element Nodes", "dark_elem_1")
 @export var dark_elem_1_label: AnimatedLabel = null
 @export var dark_elem_1_icon: CoreElementIcon = null
+@export_subgroup("Right Element Nodes", "dark_elem_2")
 @export var dark_elem_2_label: AnimatedLabel = null
 @export var dark_elem_2_icon: CoreElementIcon = null
 

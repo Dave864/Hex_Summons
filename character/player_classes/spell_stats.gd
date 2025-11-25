@@ -5,7 +5,7 @@ extends Resource
 
 @export var action_stats: ActionStats = null
 
-@export_category("Wisps Required to Cast")
+@export_group("Wisps Required to Cast")
 @export var earth_req = 0 # (int, 0, 4)
 @export var fire_req = 0 # (int, 0, 4)
 @export var water_req = 0 # (int, 0, 4)
@@ -13,7 +13,7 @@ extends Resource
 @export var light_req = 0 # (int, 0, 4)
 @export var dark_req = 0 # (int, 0, 4)
 
-@export_category("Wisps Spent on Cast")
+@export_group("Wisps Spent on Cast")
 @export var earth_cost = 0 # (int, 0, 4)
 @export var fire_cost = 0 # (int, 0, 4)
 @export var water_cost = 0 # (int, 0, 4)
