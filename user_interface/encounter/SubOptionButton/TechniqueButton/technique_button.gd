@@ -6,6 +6,10 @@ extends SubOptionButton
 ## "techniques". A technique is an Action with a Cooldown node.
 
 
+@onready var _inactive_filter: Panel = $InactiveFilter
+@onready var _inactive_label: Label = $InactiveFilter/Label
+
+
 ## Virtual function. Set the technique action details for the button.
 func set_option_details(a: Node) -> void:
 	# Technique buttons display details for actions, so we cast to check.
@@ -15,13 +19,13 @@ func set_option_details(a: Node) -> void:
 	
 	var cooldown: Cooldown = _option_details.get_node_or_null("Cooldown")
 	if cooldown != null and cooldown.is_active():
-		$InactiveFilter.visible = true
-		$InactiveFilter.mouse_filter = Control.MOUSE_FILTER_STOP
-		$InactiveFilter/Label.text = str(cooldown.get_countdown())
-		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_STOP
+		_inactive_filter.visible = true
+		_inactive_filter.mouse_filter = Control.MOUSE_FILTER_STOP
+		_inactive_label.text = str(cooldown.get_countdown())
+		_inactive_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	else:
-		$InactiveFilter.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_inactive_filter.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_inactive_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 ## Virtual function. Evaluates the current state of the action to see if the
