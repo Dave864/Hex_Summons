@@ -23,6 +23,8 @@ extends ActionCondition
 ## The pool that the cost refers to when checking if requirements are met.
 var wisp_pool: WispPool = null
 
+## A collated summary of the required number of wisps.
+@onready var req_summary: Dictionary = _get_requirements()
 ## A collated summary of the costs.
 @onready var cost_summary: Dictionary = _get_costs()
 
@@ -65,6 +67,24 @@ func is_met(
 		and wisp_pool.active_light_count() >= light_req
 		and wisp_pool.active_dark_count() >= dark_req
 	)
+
+
+## Gets the required element quantities.
+func _get_requirements() -> Dictionary:
+	var element_reqs: Dictionary = {}
+	if earth_req > 0:
+		element_reqs[Constants.Element.EARTH] = earth_req
+	if fire_req > 0:
+		element_reqs[Constants.Element.FIRE] = fire_req
+	if water_req > 0:
+		element_reqs[Constants.Element.WATER] = water_req
+	if wind_req > 0:
+		element_reqs[Constants.Element.WIND] = wind_req
+	if light_req > 0:
+		element_reqs[Constants.Element.LIGHT] = light_req
+	if dark_req > 0:
+		element_reqs[Constants.Element.DARK] = dark_req
+	return element_reqs
 
 
 ## Gets the elements with cost values.

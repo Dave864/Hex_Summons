@@ -6,10 +6,6 @@ extends SubOptionButton
 ## "spells". A spell is an Action with a WispCost node.
 
 
-@onready var _inactive_filter: Panel = $InactiveFilter
-@onready var _inactive_label: Label = $InactiveFilter/Label
-
-
 ## Virtual function. Set the spell action details for the button.
 func set_option_details(a: Node) -> void:
 	# Spell buttons display details for actions, so we cast to check.
@@ -19,18 +15,35 @@ func set_option_details(a: Node) -> void:
 	
 	var wisp_cost: WispCost = _option_details.get_node_or_null("WispCost")
 	if wisp_cost != null and not wisp_cost.is_met():
-		_inactive_filter.visible = true
-		_inactive_filter.mouse_filter = Control.MOUSE_FILTER_STOP
-		_inactive_label.text = _wisp_cost_text(wisp_cost)
-		_inactive_label.mouse_filter = Control.MOUSE_FILTER_STOP
+		$InactiveFilter.visible = true
+		$InactiveFilter.mouse_filter = Control.MOUSE_FILTER_STOP
+		$InactiveFilter/Label.text = _wisp_cost_text(wisp_cost)
+		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_STOP
 	else:
-		_inactive_filter.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_inactive_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		$InactiveFilter.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 ## Creates a string that describes the components of the WispCost.
 func _wisp_cost_text(wc: WispCost) -> String:
-	return "wisp cost"
+	var text: String = "wisp cost\n"
+	for element in wc.cost_summary:
+		text += "{0} {1} -{2}-\n".format(
+				[
+					Constants.Element.find_key(element),
+					wc.req_summary[element],
+					wc.cost_summary[element]
+				]
+		)
+	for element in wc.req_summary:
+		if not wc.cost_summary.has(element):
+			text += "{0} {1}\n".format(
+					[
+						Constants.Element.find_key(element),
+						wc.req_summary[element]
+					]
+			)
+	return text
 
 
 ## Virtual function. Evaluates the current state of the action to see if the
