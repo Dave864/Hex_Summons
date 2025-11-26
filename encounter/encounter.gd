@@ -21,7 +21,7 @@ var _player_template: PackedScene = preload(
 
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_parameters()
 	## TODO: implement logic to load the HexMap, based on some details determined

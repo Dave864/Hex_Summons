@@ -1,23 +1,22 @@
 extends EncounterState
-"""
-The logic for what happens when an Encounter scene is in the `Start` state.
-Sets up the initiative tracker and current characater before moving to the 
-corresponding `Turn` state. Goes immediately to the `End` state if the
-starting character is not a valid type.
-"""
+## The logic for what happens when an Encounter scene is in the `Start` state.
+##
+## Sets up the initiative tracker and current characater before moving to the 
+## corresponding `Turn` state. Goes immediately to the `End` state if the
+## starting character is not a valid type.
 
 
 var starting_character: Character
 
 
-# Called by the state machine upon changing the active state. The `msg` parameter
-# is a dictionary with arbitrary data the state can use to initialize itself.
+## Called by the state machine upon changing the active state. The `msg` parameter
+## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	_set_up_initative()
 	starting_character = enc.ui.initiative_tracker.get_current_character()
 
 
-# Corresponds to the `_process()` callback.
+## Corresponds to the `_process()` callback.
 func update(_delta: float) -> void:
 	# Wait until the starting position of the character is set before going
 	# to the state that handles the specified character type.
@@ -34,7 +33,7 @@ func update(_delta: float) -> void:
 			state_machine.transition_to(END)
 
 
-# Initializes the initiative tracker.
+## Initializes the initiative tracker.
 func _set_up_initative() -> void:
 	var characters: Array = []
 	characters.append_array(enc.players)

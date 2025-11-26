@@ -1,22 +1,20 @@
 class_name EncounterState
 extends State
-"""
-Boilerplate class to get full autocompletion and type checks for an 
-`encounter` when coding an encounter's states.
-"""
+## Boilerplate class to get full autocompletion and type checks for an 
+## `encounter` when coding an encounter's states.
 
 
-# The name of the states for this FSM.
+## The name of the states for this FSM.
 const START: String = "Start"
 const PLAYER_TURN: String = "PlayerTurn"
 const ENEMY_TURN: String = "EnemyTurn"
 const END: String = "End"
 
-# Typed reference to the Encounter node.
+## Typed reference to the Encounter node.
 var enc: Encounter
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# The states are children of an `Encounter` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 
