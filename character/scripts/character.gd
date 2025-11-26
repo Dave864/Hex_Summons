@@ -6,6 +6,8 @@ extends Node3D
 ## position details.
 
 
+## Indicates that the character has been placed at start.
+signal start_set()
 ## Indicates that the character is waiting.
 signal is_waiting()
 ## Indicates that this character's turn has ended.
@@ -20,9 +22,9 @@ enum Type {
 
 @export var battle_portrait: Texture2D = null
 
-var stats: CharacterStats
 ## Flag that indicates whether the creature has been set to its starting location.
-var _start_set: bool = false: get = get_is_start_set
+var _start_set: bool = false
+var stats: CharacterStats
 
 @onready var character_sprite: EncounterSprite = $Sprite3D
 @onready var character_label: CharacterLabel = $CharacterLabel
@@ -44,11 +46,6 @@ func emit_is_waiting() -> void:
 ## Emit the signal 'turn_ended'
 func emit_turn_ended() -> void:
 	emit_signal("turn_ended")
-
-
-## Get whether or not the starting location of the character has been set.
-func get_is_start_set() -> bool:
-	return _start_set
 
 
 ## Virtual function. Returns the character type.
@@ -96,3 +93,4 @@ func _on_Character_area_entered(map_tile: Area3D) -> void:
 	map_coordinate.set_cube_coord(map_tile.map_coordinate.get_cube_coord())
 	if !_start_set:
 		_start_set = true
+		emit_signal("start_set")

@@ -14,23 +14,17 @@ var starting_character: Character
 func enter(_msg := {}) -> void:
 	_set_up_initative()
 	starting_character = enc.ui.initiative_tracker.get_current_character()
-
-
-## Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	# Wait until the starting position of the character is set before going
-	# to the state that handles the specified character type.
-	if starting_character.get_is_start_set():
-		if starting_character is PlayerCharacter:
-			state_machine.transition_to(PLAYER_TURN)
-		elif starting_character is EnemyCharacter:
-			state_machine.transition_to(ENEMY_TURN)
-		else:
-			printerr(
-				"Starting character is not of the PlayerCharacter " + \
-				"or EnemyCharacter class."
-			)
-			state_machine.transition_to(END)
+	await starting_character.start_set
+	if starting_character is PlayerCharacter:
+		state_machine.transition_to(PLAYER_TURN)
+	elif starting_character is EnemyCharacter:
+		state_machine.transition_to(ENEMY_TURN)
+	else:
+		printerr(
+			"Starting character is not of the PlayerCharacter " + \
+			"or EnemyCharacter class."
+		)
+		state_machine.transition_to(END)
 
 
 ## Initializes the initiative tracker.
