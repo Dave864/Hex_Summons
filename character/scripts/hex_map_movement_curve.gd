@@ -1,20 +1,19 @@
 class_name HexMapMovementCurve
 extends Curve3D
-"""
-Curve that defines the movement path for a character on a HexMap.
-"""
+## Curve that defines the movement path for a character on a HexMap.
 
 
+## Indicates that the path has been fully traversed.
 signal movement_finished(final_position)
 
-# The current offset of the movement path
+## The current offset of the movement path
 var _offset: float = 0.0
-# The length of the path. Used for converting _unit_offset into the correct
-# offset value for getting the current position.
+## The length of the path. Used for converting _unit_offset into the correct
+## offset value for getting the current position.
 var _path_length: float = 0.0
 
 
-# Updates the offset amount by the given value.
+## Updates the offset amount by the given value.
 func move_offset(offset_update: float) -> void:
 	if get_point_count() <= 1:
 		emit_signal("movement_finished", get_current_pos())

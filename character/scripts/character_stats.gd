@@ -1,21 +1,21 @@
 @tool
 class_name CharacterStats
 extends Node
-"""
-Node that keeps track of all of a character's statistics.
-"""
+## Node that keeps track of all of a character's statistics.
 
 
+## Indicates that the health has changed from one value to another.
 signal health_changed(new_value, old_value)
+## Indicates that the agility has been modified.
 signal agility_changed(new_value)
 
-# Stat values
+## Stat values
 @export var base_stat_values: Resource = null
 
-# Reference to the character that the stats describe
+## Reference to the character that the stats describe
 var character_id: int = -1
 
-# Modifier values for all stats
+## Modifier values for all stats
 var _max_health_mod: int = 0
 var _attack_mod: int = 0
 var _defense_mod: int = 0
@@ -33,6 +33,14 @@ var _level: int = 1: get = get_level, set = set_level
 var _current_health: int = 0
 
 
+func _ready() -> void:
+	_check_for_required_parameters()
+	## TODO: Eventually set up way to preserve current player health across
+	## encounters and set enemy health to max (or relevant value) at encounter
+	## start.
+	max_cur_health()
+
+
 func set_level(val: int) -> void:
 	_level = val if val > 0 else 0
 
@@ -45,7 +53,7 @@ func get_movement_range(with_modifier: bool = true) -> int:
 	return get_stat(Stat.Type.MOVEMENT, with_modifier)
 
 
-# Updates the current health by the given delta.
+## Updates the current health by the given delta.
 func set_cur_health(delta: int) -> void:
 	var val: int = get_stat(Stat.Type.CUR_HEALTH) + delta
 	var mh: int = get_stat(Stat.Type.MAX_HEALTH)
@@ -54,12 +62,12 @@ func set_cur_health(delta: int) -> void:
 	_current_health = val
 
 
-# Set current health to the maximum value.
+## Set current health to the maximum value.
 func max_cur_health() -> void:
 	_current_health = get_stat(Stat.Type.MAX_HEALTH)
 
 
-# Get all the stats.
+## Get all the stats.
 func get_all(with_modifier: bool = true) -> Dictionary:
 	var all_stats: Dictionary = {
 		Constants.LEVEL: _level,
@@ -73,7 +81,7 @@ func get_all(with_modifier: bool = true) -> Dictionary:
 	return all_stats
 
 
-# Get the offensive stats.
+## Get the offensive stats.
 func get_offensive(with_modifier: bool = true) -> Dictionary:
 	return {
 		Constants.ATTACK: get_stat(Stat.Type.ATTACK, with_modifier),
@@ -106,7 +114,7 @@ func get_offensive(with_modifier: bool = true) -> Dictionary:
 	}
 
 
-# Get the defensive stats.
+## Get the defensive stats.
 func get_defensive(with_modifier: bool = true) -> Dictionary:
 	return {
 		Constants.DEFENSE: get_stat(Stat.Type.DEFENSE, with_modifier),
@@ -139,7 +147,7 @@ func get_defensive(with_modifier: bool = true) -> Dictionary:
 	}
 
 
-# Obtains the value for a given stat.
+## Obtains the value for a given stat.
 func get_stat(stat: int, with_modifier: bool = true) -> int:
 	var result: int
 	var modifier: int
@@ -204,8 +212,8 @@ func get_stat(stat: int, with_modifier: bool = true) -> int:
 	return result + modifier if with_modifier else result
 
 
-# Updates the modifier for the specified stat so that it results in the new value
-# when added to the base value of the stat.
+## Updates the modifier for the specified stat so that it results in the new value
+## when added to the base value of the stat.
 func update_modifier(type: int, value: int) -> void:
 	match type:
 		Stat.Type.MAX_HEALTH:
@@ -259,17 +267,7 @@ func clear_modifiers() -> void:
 		_update_res_modifier(element, 0)
 
 
-func _ready() -> void:
-	_check_for_required_parameters()
-	"""
-	TODO: Eventually set up way to preserve current player health across
-	encounters and set enemy health to max (or relevant value) at encounter
-	start.
-	"""
-	max_cur_health()
-
-
-# Determines the value of a specified magic element for a given level.
+## Determines the value of a specified magic element for a given level.
 func _magic_for_level(element: int, with_modifier: bool) -> int:
 	var result: int
 	var modifier: int
@@ -299,13 +297,13 @@ func _magic_for_level(element: int, with_modifier: bool) -> int:
 			)
 			modifier = _magic_wind_mod
 		Constants.Element.LIGHT:
-			var light_elements: Array = ElementalPolarity.get_light_elements()
+			var light_elements: Array = ElementalAlignment.get_light_elements()
 			return (
 				_magic_for_level(light_elements[0], with_modifier)
 				+ _magic_for_level(light_elements[1], with_modifier)
 			)
 		Constants.Element.DARK:
-			var dark_elements: Array = ElementalPolarity.get_dark_elements()
+			var dark_elements: Array = ElementalAlignment.get_dark_elements()
 			return (
 				_magic_for_level(dark_elements[0], with_modifier)
 				+ _magic_for_level(dark_elements[1], with_modifier)
@@ -316,7 +314,7 @@ func _magic_for_level(element: int, with_modifier: bool) -> int:
 	return result + modifier if with_modifier else result
 
 
-# Determines the value of a specified resistance element for a given level.
+## Determines the value of a specified resistance element for a given level.
 func _resistance_for_level(element: int, with_modifier: bool) -> int:
 	var result: int
 	var modifier: int
@@ -346,13 +344,13 @@ func _resistance_for_level(element: int, with_modifier: bool) -> int:
 			)
 			modifier = _res_wind_mod
 		Constants.Element.LIGHT:
-			var light_elements: Array = ElementalPolarity.get_light_elements()
+			var light_elements: Array = ElementalAlignment.get_light_elements()
 			return (
 				_resistance_for_level(light_elements[0], with_modifier)
 				+ _resistance_for_level(light_elements[1], with_modifier)
 			)
 		Constants.Element.DARK:
-			var dark_elements: Array = ElementalPolarity.get_dark_elements()
+			var dark_elements: Array = ElementalAlignment.get_dark_elements()
 			return (
 				_resistance_for_level(dark_elements[0], with_modifier)
 				+ _resistance_for_level(dark_elements[1], with_modifier)
@@ -363,8 +361,8 @@ func _resistance_for_level(element: int, with_modifier: bool) -> int:
 	return result + modifier if with_modifier else result
 
 
-# Updates the modifier for the specified elemental magic stat so that it
-# results in the new value when added to the base value of the stat.
+## Updates the modifier for the specified elemental magic stat so that it
+## results in the new value when added to the base value of the stat.
 func _update_magic_modifier(element: int, value: int) -> void:
 	match element:
 		Constants.Element.EARTH:
@@ -376,17 +374,17 @@ func _update_magic_modifier(element: int, value: int) -> void:
 		Constants.Element.WIND:
 			_magic_wind_mod = value
 		Constants.Element.LIGHT:
-			var light_elements: Array = ElementalPolarity.get_light_elements()
+			var light_elements: Array = ElementalAlignment.get_light_elements()
 			_update_magic_modifier(light_elements[0], value)
 			_update_magic_modifier(light_elements[1], value)
 		Constants.Element.DARK:
-			var dark_elements: Array = ElementalPolarity.get_dark_elements()
+			var dark_elements: Array = ElementalAlignment.get_dark_elements()
 			_update_magic_modifier(dark_elements[0], value)
 			_update_magic_modifier(dark_elements[1], value)
 
 
-# Updates the modifier for the specified elemental resistance stat so that it
-# results in the new value when added to the base value of the stat.
+## Updates the modifier for the specified elemental resistance stat so that it
+## results in the new value when added to the base value of the stat.
 func _update_res_modifier(element: int, value: int) -> void:
 	match element:
 		Constants.Element.EARTH:
@@ -398,16 +396,16 @@ func _update_res_modifier(element: int, value: int) -> void:
 		Constants.Element.WIND:
 			_res_wind_mod = value
 		Constants.Element.LIGHT:
-			var light_elements: Array = ElementalPolarity.get_light_elements()
+			var light_elements: Array = ElementalAlignment.get_light_elements()
 			_update_res_modifier(light_elements[0], value)
 			_update_res_modifier(light_elements[1], value)
 		Constants.Element.DARK:
-			var dark_elements: Array = ElementalPolarity.get_dark_elements()
+			var dark_elements: Array = ElementalAlignment.get_dark_elements()
 			_update_res_modifier(dark_elements[0], value)
 			_update_res_modifier(dark_elements[1], value)
 
 
-# Check that all required parameters are set.
+## Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
 			base_stat_values != null,

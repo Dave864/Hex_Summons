@@ -100,12 +100,12 @@ func pay_for_element(element: int, count: int) -> Array:
 			if wisps.size() > 0:
 				return wisps
 		Constants.Element.LIGHT:
-			var elems: Array = ElementalPolarity.get_light_elements()
+			var elems: Array = ElementalAlignment.get_light_elements()
 			var wisps: Array = _deactivate_polar_active(elems[0], elems[1], count)
 			emit_signal("active_count_changed", element)
 			return wisps
 		Constants.Element.DARK:
-			var elems: Array = ElementalPolarity.get_dark_elements()
+			var elems: Array = ElementalAlignment.get_dark_elements()
 			var wisps: Array = _deactivate_polar_active(elems[0], elems[1], count)
 			emit_signal("active_count_changed", element)
 			return wisps

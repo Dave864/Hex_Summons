@@ -5,9 +5,9 @@ extends WispPoolUI
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	ElementalPolarity.connect(
+	ElementalAlignment.connect(
 			"alignment_changed",
-			Callable(self, "_on_ElementalPolarity_alignment_changed")
+			Callable(self, "_on_ElementalAlignment_alignment_changed")
 	)
 	set_wisp_pool(WispController.summon_pool)
 	_set_icons()

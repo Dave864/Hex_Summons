@@ -52,11 +52,11 @@ func active_wind_count() -> int:
 
 # Gets the total "strength" of light polarity wisps.
 func active_light_count() -> int:
-	var l_elems: Array = ElementalPolarity.get_light_elements()
+	var l_elems: Array = ElementalAlignment.get_light_elements()
 	return int(min(_active_count[l_elems[0]], _active_count[l_elems[1]]))
 
 
 # Gets the total "strength" of dark polarity wisps.
 func active_dark_count() -> int:
-	var d_elems: Array = ElementalPolarity.get_dark_elements()
+	var d_elems: Array = ElementalAlignment.get_dark_elements()
 	return int(min(_active_count[d_elems[0]], _active_count[d_elems[1]]))

@@ -1,11 +1,10 @@
 class_name EncounterSprite
 extends Sprite3D
-"""
-Sprite3D node that constantly adjusts its position based on camera position so
-that the sprite image is aligned with the pixel grid.
-"""
+## Sprite3D node that constantly adjusts its position based on camera position so
+## that the sprite image is aligned with the pixel grid.
 
 
+## The reference point for where the character the sprite represents actually is.
 @export var char_pos: Marker3D = null
 
 var _drop_plane: Plane = Plane.PLANE_XZ
@@ -17,7 +16,7 @@ var _ray_normal: Vector3 = Vector3.ZERO
 @onready var _y_offset: float = position.y
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
 	pixel_size = Constants.WORLD_PIXEL_SIZE
@@ -25,8 +24,8 @@ func _ready():
 	billboard = BaseMaterial3D.BILLBOARD_ENABLED
 
 
-# Called every frame. Adjusts the sprite position so that it is aligned with
-# the pixel coordinates.
+## Called every frame. Adjusts the sprite position so that it is aligned with
+## the pixel coordinates.
 func _process(_delta):
 	visible = not _camera.is_position_behind(global_transform.origin)
 	if not visible:

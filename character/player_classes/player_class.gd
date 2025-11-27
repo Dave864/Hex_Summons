@@ -1,11 +1,9 @@
 @tool
 class_name PlayerClass
 extends Node
-"""
-Describes a class a player character can be. A player class defines the current
-statistics the player will have, along with some techniques and spells that the
-player will have access to.
-"""
+## Describes a class a player character can be. A player class defines the current
+## statistics the player will have, along with some techniques and spells that the
+## player will have access to.
 
 const STATS: String = "Stats"
 const TECHNIQUES: String = "Techniques"
@@ -16,11 +14,11 @@ var stats: CharacterStats
 var techniques: Array
 var spells: Array
 
-# Reference to the scene tree root.
+## Reference to the scene tree root.
 @onready var _root_node: Node = get_tree().edited_scene_root
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	# Initialize the child nodes if not present in the scene
 	if Engine.is_editor_hint() and get_child_count() == 0:
@@ -34,7 +32,7 @@ func _ready():
 	spells = get_node(SPELLS).get_children()
 
 
-# Called when creating a new instance of this object.
+## Called when creating a new instance of this object.
 func _init(class_data: PlayerClassData = null) -> void:
 	if class_data == null:
 		return
@@ -47,7 +45,7 @@ func _init(class_data: PlayerClassData = null) -> void:
 		_create_spell_node(spell)
 
 
-# Creates the nodes for spells, techniques, and character stats.
+## Creates the nodes for spells, techniques, and character stats.
 func _create_child_nodes() -> void:
 	stats = CharacterStats.new()
 	var t_node: Node = Node.new()
@@ -60,7 +58,7 @@ func _create_child_nodes() -> void:
 	add_child(s_node)
 
 
-# Creates a node for the given technique details.
+## Creates a node for the given technique details.
 func _create_technique_node(tech_stats: TechniqueStats) -> void:
 	var tech_name: String = tech_stats.action_stats.name
 	var action_path: String = ACTION_PATH_FORMAT.format([tech_name])
@@ -70,7 +68,7 @@ func _create_technique_node(tech_stats: TechniqueStats) -> void:
 	$Techniques.add_child(technique_node)
 
 
-# Creates a node for the given spell details.
+## Creates a node for the given spell details.
 func _create_spell_node(spell_stats: SpellStats) -> void:
 	var spell_name: String = spell_stats.action_stats.name
 	var action_path: String = ACTION_PATH_FORMAT.format([spell_name])

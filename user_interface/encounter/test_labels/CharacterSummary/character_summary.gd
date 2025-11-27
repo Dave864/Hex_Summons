@@ -26,8 +26,8 @@ func set_hp(cur_hp: int, max_hp: int) -> void:
 # Sets the wisp counts of the summary for a player character.
 func set_player_wisp_count(wisp_pool: PlayerWispPool) -> void:
 	var text_format: String = "L: {0}\n{1}: {2}, {3}: {4}\n{5}: {6}, {7}: {8}\nD: {9}"
-	var l_elems: Array = ElementalPolarity.get_light_elements()
-	var d_elems: Array = ElementalPolarity.get_dark_elements()
+	var l_elems: Array = ElementalAlignment.get_light_elements()
+	var d_elems: Array = ElementalAlignment.get_dark_elements()
 	$WispCount.text = text_format.format(
 			[
 				wisp_pool.active_light_count(),

@@ -31,15 +31,15 @@ const DARK: int = Constants.AlignmentElement.DARK
 var pool: WispPool = null
 
 @onready var _alignments: Dictionary = {
-	LIGHT: ElementalPolarity.get_light_elements().duplicate(),
-	DARK: ElementalPolarity.get_dark_elements().duplicate()
+	LIGHT: ElementalAlignment.get_light_elements().duplicate(),
+	DARK: ElementalAlignment.get_dark_elements().duplicate()
 }
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	ElementalPolarity.connect(
+	ElementalAlignment.connect(
 			"alignment_changed",
-			Callable(self, "_on_ElementalPolarity_alignment_changed")
+			Callable(self, "_on_ElementalAlignment_alignment_changed")
 	)
 	set_wisp_pool()
 	_set_icons()
@@ -80,8 +80,8 @@ func _set_labels_on_ready() -> void:
 
 ## Sets the labels for the elements.
 func _set_labels() -> void:
-	var light_elems: Array = ElementalPolarity.get_light_elements()
-	var dark_elems: Array = ElementalPolarity.get_dark_elements()
+	var light_elems: Array = ElementalAlignment.get_light_elements()
+	var dark_elems: Array = ElementalAlignment.get_dark_elements()
 	light_label.text = String.num_uint64(pool.active_light_count())
 	light_elem_1_label.text = String.num_uint64(pool.active_element_count(light_elems[0]))
 	light_elem_2_label.text = String.num_uint64(pool.active_element_count(light_elems[1]))
@@ -101,10 +101,10 @@ func _on_Timer_timeout() -> void:
 
 
 ## Changes the core element icons and all labels to reflect the change in polarity.
-func _on_ElementalPolarity_alignment_changed() -> void:
+func _on_ElementalAlignment_alignment_changed() -> void:
 	timer.paused = true
-	var light_elems: Array = ElementalPolarity.get_light_elements()
-	var dark_elems: Array = ElementalPolarity.get_dark_elements()
+	var light_elems: Array = ElementalAlignment.get_light_elements()
+	var dark_elems: Array = ElementalAlignment.get_dark_elements()
 	var light_changed: bool = false
 	var dark_changed: bool = false
 	if light_elems[0] != _alignments[LIGHT][0]:

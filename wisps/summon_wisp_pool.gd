@@ -23,9 +23,9 @@ func _ready() -> void:
 func add_wisps(wisp_ids: Array, element: int) -> void:
 	if element in Constants.AlignmentElement.values():
 		var elems: Array = (
-			ElementalPolarity.get_light_elements()
+			ElementalAlignment.get_light_elements()
 			if element == Constants.AlignmentElement.LIGHT
-			else ElementalPolarity.get_dark_elements()
+			else ElementalAlignment.get_dark_elements()
 		)
 		var half_size: int = int(round(wisp_ids.size() / 2.0))
 		for i in half_size:
@@ -49,9 +49,9 @@ func pay_for_element(element: int, amount: int = 1) -> Array:
 	var wisps_paid: Array = []
 	if element in Constants.AlignmentElement.keys():
 		var elems: Array = (
-			ElementalPolarity.get_light_elements() 
+			ElementalAlignment.get_light_elements() 
 			if element == Constants.AlignmentElement.LIGHT
-			else ElementalPolarity.get_dark_elements()
+			else ElementalAlignment.get_dark_elements()
 		)
 		_active_count[elems[0]] -= amount
 		_active_count[elems[1]] -= amount
