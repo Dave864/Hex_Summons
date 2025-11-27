@@ -1,14 +1,12 @@
 class_name EnemyCharacter
 extends Character
-"""
-Handles actions specific to enemy characters.
-"""
+## Handles actions specific to enemy characters.
 
 
-# Indicates that the action chain for an enemy character needs to be determined.
+## Indicates that the action chain for an enemy character needs to be determined.
 signal enemy_actions_required()
 
-# Contains the actions associated with the enemy character.
+## Contains the actions associated with the enemy character.
 var _actions: Array
 
 @onready var _default_portait: Texture2D = preload(
@@ -17,17 +15,7 @@ var _actions: Array
 )
 
 
-# Returns the type of the character, ENEMY.
-func get_type() -> int:
-	return Type.ENEMY
-
-
-# Emit the signal 'enemy_actions_required'
-func emit_enemy_actions_required() -> void:
-	emit_signal("enemy_actions_required")
-
-
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_parameters()
 	battle_portrait = (
@@ -43,13 +31,23 @@ func _ready() -> void:
 	_initialize_actions()
 
 
-# Virtual function. Updates emission points for all actions of the chracter.
+## Returns the type of the character, ENEMY.
+func get_type() -> int:
+	return Type.ENEMY
+
+
+## Emit the signal 'enemy_actions_required'
+func emit_enemy_actions_required() -> void:
+	emit_signal("enemy_actions_required")
+
+
+## Virtual function. Updates emission points for all actions of the chracter.
 func _update_emission_index(_index: int) -> void:
 	for action in _actions:
 		action.set_emission_map_index(_index)
 
 
-# Initializes the action effects.
+## Initializes the action effects.
 func _initialize_actions() -> void:
 	for a in _actions:
 		a.source_stats = stats
@@ -57,7 +55,7 @@ func _initialize_actions() -> void:
 		a.initialize_effects()
 
 
-# Checks that all required parameters are set.
+## Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	var stats_path: String = "Stats"
 	var actions_path: String = "Actions"

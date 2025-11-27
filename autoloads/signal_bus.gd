@@ -1,27 +1,36 @@
 extends Node
-"""
-Stores all of the signals that are used to communicate between components of
-different scenes, usually between their state machines.
-"""
+## Stores all of the signals that are used to communicate between components of
+## different scenes, usually between their state machines.
 
 
 # Player character related signals.
+## Indicates a player character has started their turn.
 signal player_turn_started(character)
+## Indicates that an action for a player character has been selected.
 signal player_action_selected(character, action)
+## Indicates that an action has been confirmed.
 signal player_action_executed(character, action, targets)
+## Indicates that a selected option has been canceled.
 signal player_action_type_canceled()
 # Enemy character related signals.
+## Indicates an enemy character has started their turn.
 signal enemy_turn_started(character)
 # Encounter selection signals
+## Indicates that the selector node needs to be active.
 signal selector_required(start_index)
+## Indicates that the selector is disabled, or paused.
 signal selector_paused()
+## Indicates that the selector node needs to display details for an action.
 signal action_selector_required(action)
+## Indicates that a move path needs to be created.
 signal move_path_requested()
+## Indicates that a move path has been created,
 signal move_path_created(move_path)
 # Encounter threat update signals
+## Indicates that health has changed for a given target as a result of some caster.
 signal health_changed(caster_id, target_id, change_value)
-# Indicates that the top vertex relative to camera view has been changed.
-# Used for moving the selector around the encounter map using joystick input.
+## Indicates that the top vertex relative to camera view has been changed.
+## Used for moving the selector around the encounter map using joystick input.
 signal top_vertex_changed(vertex)
 
 

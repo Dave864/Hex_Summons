@@ -1,14 +1,12 @@
 class_name Constants
 extends Object
-"""
-Collection of constant values and enums that are used in various scripts 
-throughout the game.
-"""
+## Collection of constant values and enums that are used in various scripts 
+## throughout the game.
 
 
-# The elements that define magic and resistance. LIGHT and DARK are considered
-# polar elements. FIRE, EARTH, WATER, and WIND are core elements and can each
-# be aligned to either of the polar elements.
+## The elements that define magic and resistance. LIGHT and DARK are considered
+## alignment elements. FIRE, EARTH, WATER, and WIND are core elements and can each
+## be aligned to either of the alignment elements.
 enum Element {
 	EARTH,
 	FIRE,
@@ -18,8 +16,8 @@ enum Element {
 	DARK,
 }
 
-# The core elements that define magic and resistance. FIRE, EARTH, WATER, and WIND
-# are core elements and can each be aligned to either of the polar elements.
+## The core elements that define magic and resistance. FIRE, EARTH, WATER, and WIND
+## are core elements and can each be aligned to either of the alignment elements.
 enum CoreElement {
 	EARTH,
 	FIRE,
@@ -27,29 +25,29 @@ enum CoreElement {
 	WIND,
 }
 
-# The polar elements that define magic and resistance. LIGHT and DARK
-# are polar elements and two core elements are assigned to each. Values are
-# consistent with the Element enum.
-enum PolarElement {
+## The alignment elements that define magic and resistance. LIGHT and DARK
+## are alignment elements and two core elements are assigned to each. Values are
+## consistent with the Element enum.
+enum AlignmentElement {
 	LIGHT = 4,
 	DARK = 5,
 }
 
-# What the range finder is being used for.
+## What the range finder is being used for.
 enum RangeTypes {
 	MOVE,
 	TECHNIQUE,
 	SPELL,
 }
 
-# The different operations that can be performed on character stats.
+## The different operations that can be performed on character stats.
 enum Operation {
 	INCREASE,
 	DECREASE,
 	SET
 }
 
-# Words referring to different character stats.
+## Words referring to different character stats.
 const LEVEL: String = "Level"
 const MOVEMENT: String = "Movement"
 const MAX_HEALTH: String = "Max Health"
@@ -60,33 +58,33 @@ const AGILITY: String = "Agility"
 const MAGIC: String = "Magic"
 const RESISTANCE: String = "Resistance"
 
-# The path to a default icon.
+## The path to a default icon.
 const DEFAULT_ICON_PATH: String = "res://art/icon.png"
 
-# This is the number that was found to best conform a fixed size sprite image
-# to the pixel size of the viewport dimensions 640 x 360.
+## This is the number that was found to best conform a fixed size sprite image
+## to the pixel size of the viewport dimensions 640 x 360.
 const WORLD_PIXEL_SIZE: float = 0.0054
 
-# The length value of a unit of height for an encounter map hex tile.
+## The length value of a unit of height for an encounter map hex tile.
 const HEX_TILE_UNIT_HEIGHT: float = 0.5
 
-# The "radius" of a hexagon drawn for the purposes of illustrating an action's
-# area range and effect range. The radius is the distance from the center to
-# a vertex of a hexagon.
+## The "radius" of a hexagon drawn for the purposes of illustrating an action's
+## area range and effect range. The radius is the distance from the center to
+## a vertex of a hexagon.
 const DISPLAY_HEX_RADIUS: float = 3.0
 
-# The maximimum values for various character and attack stats.
+## The maximimum values for various character and attack stats.
 const MAX_STAT: int = 1000
 const MAX_MAP_DIST: int = 100
 
-# The speed at which characters move from tile to tile.
+## The speed at which characters move from tile to tile.
 const MOVE_SPEED: float = 8.0
 
-# The value to use when adjusting the weight of a hex map astar connection point
-# to account for characters of the opposite faction of the current active character.
+## The value to use when adjusting the weight of a hex map astar connection point
+## to account for characters of the opposite faction of the current active character.
 const ASTAR_ADJUSTMENT_WEIGHT = 1000.0
 
-# Common transparency values for materials, defined by opacity.
+## Common transparency values for materials, defined by opacity.
 const OPACITY_FULL: float = 1.0
 const OPACITY_THREE_QUARTER: float = 0.75
 const OPACITY_HALF: float = 0.5

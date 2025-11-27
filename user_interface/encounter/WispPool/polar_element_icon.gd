@@ -1,5 +1,5 @@
 @tool
-class_name PolarElementIcon
+class_name AlignmentElementIcon
 extends TextureRect
 ## Represents a polar element in the UI: light or dark. Manages the shine of
 ## the icon.
@@ -8,7 +8,7 @@ extends TextureRect
 ## Indicates that the polar element has shined.
 signal shine_ping(e)
 
-@export var element: int = Constants.PolarElement.LIGHT: set = set_element
+@export var element: int = Constants.AlignmentElement.LIGHT: set = set_element
 @export var light_region: Vector2 = Vector2(0,0)
 @export var dark_region: Vector2 = Vector2(0,0)
 
@@ -18,9 +18,9 @@ signal shine_ping(e)
 ## Sets the icon texture region to display the new element.
 func set_element(new_element: int) -> void:
 	match new_element:
-		Constants.PolarElement.LIGHT:
+		Constants.AlignmentElement.LIGHT:
 			texture.region.position = light_region
-		Constants.PolarElement.DARK:
+		Constants.AlignmentElement.DARK:
 			texture.region.position = dark_region
 		_:
 			return
@@ -29,9 +29,9 @@ func set_element(new_element: int) -> void:
 
 ## Plays the shine animation of the given polar element.
 func shine() -> void:
-	if element == Constants.PolarElement.LIGHT:
+	if element == Constants.AlignmentElement.LIGHT:
 		ap.play("light_shine")
-	elif element == Constants.PolarElement.DARK:
+	elif element == Constants.AlignmentElement.DARK:
 		ap.play("dark_shine")
 
 

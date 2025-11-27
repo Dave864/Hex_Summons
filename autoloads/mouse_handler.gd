@@ -1,48 +1,48 @@
 extends Control
-"""
-Handles mouse input and keeps track of the last relevant position.
-"""
+## Handles mouse input and keeps track of the last relevant position.
 
 
-# Keeps track of the mouse position.
+## Keeps track of the mouse position.
 var _3d_position: Vector3 = Vector3.ZERO: get = get_3d_position
 var _drop_plane: Plane = Plane.PLANE_XZ
-# Keeps track of the mouse position.
+## Keeps track of the mouse position.
 var _last_position: Vector2 = Vector2.ZERO
 
 @onready var _camera: Camera3D = get_tree().root.get_camera_3d()
 
 
+## Gets the mouse position in a 3D world.
 func get_3d_position() -> Vector3:
 	return _3d_position
 
 
+## Gets the mouse position on the screen.
 func get_2d_position() -> Vector2:
 	return get_viewport().get_mouse_position()
 
 
-# Updates the recorded mouse position.
+## Updates the recorded mouse position.
 func update_mouse_tracker_2d(pos: Vector2) -> void:
 	_last_position = pos
 
 
-# Updates the recorded mouse position for a 3d coordinate.
+## Updates the recorded mouse position for a 3d coordinate.
 func update_mouse_tracker_3d(pos: Vector3) -> void:
 	_last_position = get_viewport().get_camera_3d().unproject_position(pos)
 
 
-# Reveals the mouse cursor and positions it to the last recorded position.
+## Reveals the mouse cursor and positions it to the last recorded position.
 func activate() -> void:
 	warp_mouse(_last_position)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
-# Hides the mouse cursor and renders it unable to move.
+## Hides the mouse cursor and renders it unable to move.
 func deactivate() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -50,12 +50,12 @@ func _ready():
 	_scale_to_window()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta) -> void:
 	_3d_position = _screen_point_to_ray()
 
 
-# Determine the world position of the mouse.
+## Determine the world position of the mouse.
 func _screen_point_to_ray() -> Vector3:
 	if _camera == null:
 		return Vector3.ZERO
@@ -69,6 +69,6 @@ func _screen_point_to_ray() -> Vector3:
 		return world_pos
 
 
-# Scales the viewport size to match the window.
+## Scales the viewport size to match the window.
 func _scale_to_window() -> void:
 	size = get_window().size

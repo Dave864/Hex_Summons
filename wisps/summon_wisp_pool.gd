@@ -21,10 +21,10 @@ func _ready() -> void:
 ## Adds wisps to the specified element pool. The expectation is that wisp_ids
 ## will be an array with a size divisible by 2 when adding wisps for LIGHT and DARK.
 func add_wisps(wisp_ids: Array, element: int) -> void:
-	if element in Constants.PolarElement.values():
+	if element in Constants.AlignmentElement.values():
 		var elems: Array = (
 			ElementalPolarity.get_light_elements()
-			if element == Constants.PolarElement.LIGHT
+			if element == Constants.AlignmentElement.LIGHT
 			else ElementalPolarity.get_dark_elements()
 		)
 		var half_size: int = int(round(wisp_ids.size() / 2.0))
@@ -47,10 +47,10 @@ func add_wisps(wisp_ids: Array, element: int) -> void:
 ## wisps are available for the given element.
 func pay_for_element(element: int, amount: int = 1) -> Array:
 	var wisps_paid: Array = []
-	if element in Constants.PolarElement.keys():
+	if element in Constants.AlignmentElement.keys():
 		var elems: Array = (
 			ElementalPolarity.get_light_elements() 
-			if element == Constants.PolarElement.LIGHT
+			if element == Constants.AlignmentElement.LIGHT
 			else ElementalPolarity.get_dark_elements()
 		)
 		_active_count[elems[0]] -= amount

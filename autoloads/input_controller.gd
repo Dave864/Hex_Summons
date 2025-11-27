@@ -1,7 +1,5 @@
 extends Node
-"""
-Manages swapping between input sources.
-"""
+## Manages swapping between input sources.
 
 
 enum Source {
@@ -13,27 +11,27 @@ enum Source {
 var _source: int = Source.NONE: get = get_source
 
 
-# Gets the current input source.
+## Gets the current input source.
 func get_source() -> int:
 	return _source
 
 
-# Determines if the input source is from gamepad.
+## Determines if the input source is from gamepad.
 func source_is_gamepad() -> bool:
 	return _source == Source.GAMEPAD
 
 
-# Determines if the input source is from keyboard and mouse
+## Determines if the input source is from keyboard and mouse
 func source_is_keymouse() -> bool:
 	return _source == Source.KEYBOARD_AND_MOUSE
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
 
-# Swaps between gamepad and mouse & keyboard input.
+## Swaps between gamepad and mouse & keyboard input.
 func _input(event: InputEvent) -> void:
 	var left_dir_vec: Vector2 = GamepadHandler.left_joystick_dir()
 	var right_dir_vec: Vector2 = GamepadHandler.right_joystick_dir()
@@ -52,13 +50,13 @@ func _input(event: InputEvent) -> void:
 		_swap_to_gamepad()
 
 
-# Reveals the mouse cursor at the last recorded position.
+## Reveals the mouse cursor at the last recorded position.
 func _swap_to_mouse_keyboard() -> void:
 	MouseHandler.activate()
 	_source = Source.KEYBOARD_AND_MOUSE
 
 
-# Hides the mouse cursor.
+## Hides the mouse cursor.
 func _swap_to_gamepad() -> void:
 	MouseHandler.deactivate()
 	_source = Source.GAMEPAD

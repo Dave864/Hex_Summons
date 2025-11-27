@@ -3,14 +3,14 @@ extends Control
 ## Manages the labels and element icons of the wisp pool.
 
 
-const LIGHT: int = Constants.PolarElement.LIGHT
-const DARK: int = Constants.PolarElement.DARK
+const LIGHT: int = Constants.AlignmentElement.LIGHT
+const DARK: int = Constants.AlignmentElement.DARK
 
 
 @export var timer: VariableTimer = null
 @export_group("Light Polarity UI Nodes", "light_")
 @export var light_label: AnimatedLabel = null
-@export var light_icon: PolarElementIcon = null
+@export var light_icon: AlignmentElementIcon = null
 @export_subgroup("Left Element Nodes", "light_elem_1")
 @export var light_elem_1_label: AnimatedLabel = null
 @export var light_elem_1_icon: CoreElementIcon = null
@@ -20,7 +20,7 @@ const DARK: int = Constants.PolarElement.DARK
 
 @export_group("Dark Polarity UI Elements", "dark_")
 @export var dark_label: AnimatedLabel = null
-@export var dark_icon: PolarElementIcon = null
+@export var dark_icon: AlignmentElementIcon = null
 @export_subgroup("Left Element Nodes", "dark_elem_1")
 @export var dark_elem_1_label: AnimatedLabel = null
 @export var dark_elem_1_icon: CoreElementIcon = null
@@ -30,7 +30,7 @@ const DARK: int = Constants.PolarElement.DARK
 
 var pool: WispPool = null
 
-@onready var _polarities: Dictionary = {
+@onready var _alignments: Dictionary = {
 	LIGHT: ElementalPolarity.get_light_elements().duplicate(),
 	DARK: ElementalPolarity.get_dark_elements().duplicate()
 }
@@ -38,8 +38,8 @@ var pool: WispPool = null
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	ElementalPolarity.connect(
-			"polarity_changed",
-			Callable(self, "_on_ElementalPolarity_polarity_changed")
+			"alignment_changed",
+			Callable(self, "_on_ElementalPolarity_alignment_changed")
 	)
 	set_wisp_pool()
 	_set_icons()
@@ -63,10 +63,10 @@ func set_wisp_pool(new_pool: WispPool = null) -> void:
 
 ## Sets the icons for the core elements.
 func _set_icons() -> void:
-	light_elem_1_icon.set_element(_polarities[LIGHT][0])
-	light_elem_2_icon.set_element(_polarities[LIGHT][1])
-	dark_elem_1_icon.set_element(_polarities[DARK][0])
-	dark_elem_2_icon.set_element(_polarities[DARK][1])
+	light_elem_1_icon.set_element(_alignments[LIGHT][0])
+	light_elem_2_icon.set_element(_alignments[LIGHT][1])
+	dark_elem_1_icon.set_element(_alignments[DARK][0])
+	dark_elem_2_icon.set_element(_alignments[DARK][1])
 
 
 ## Sets the labels for the elements.
@@ -93,38 +93,38 @@ func _set_labels() -> void:
 ## Shines all the element icons at set intervals.
 func _on_Timer_timeout() -> void:
 	light_icon.shine()
-	light_elem_1_icon.change_element(_polarities[LIGHT][0], false)
-	light_elem_2_icon.change_element(_polarities[LIGHT][1], false)
+	light_elem_1_icon.change_element(_alignments[LIGHT][0], false)
+	light_elem_2_icon.change_element(_alignments[LIGHT][1], false)
 	dark_icon.shine()
-	dark_elem_1_icon.change_element(_polarities[DARK][0], false)
-	dark_elem_2_icon.change_element(_polarities[DARK][1], false)
+	dark_elem_1_icon.change_element(_alignments[DARK][0], false)
+	dark_elem_2_icon.change_element(_alignments[DARK][1], false)
 
 
 ## Changes the core element icons and all labels to reflect the change in polarity.
-func _on_ElementalPolarity_polarity_changed() -> void:
+func _on_ElementalPolarity_alignment_changed() -> void:
 	timer.paused = true
 	var light_elems: Array = ElementalPolarity.get_light_elements()
 	var dark_elems: Array = ElementalPolarity.get_dark_elements()
 	var light_changed: bool = false
 	var dark_changed: bool = false
-	if light_elems[0] != _polarities[LIGHT][0]:
+	if light_elems[0] != _alignments[LIGHT][0]:
 		light_changed = true
 		light_elem_1_icon.change_element(light_elems[0])
-	if light_elems[1] != _polarities[LIGHT][1]:
+	if light_elems[1] != _alignments[LIGHT][1]:
 		light_changed = true
 		light_elem_2_icon.change_element(light_elems[1])
-	if dark_elems[0] != _polarities[DARK][0]:
+	if dark_elems[0] != _alignments[DARK][0]:
 		dark_changed = true
 		dark_elem_1_icon.change_element(dark_elems[0])
-	if dark_elems[1] != _polarities[DARK][1]:
+	if dark_elems[1] != _alignments[DARK][1]:
 		dark_changed = true
 		dark_elem_2_icon.change_element(dark_elems[1])
 	if light_changed:
 		light_icon.shine()
 	if dark_changed:
 		dark_icon.shine()
-	_polarities[LIGHT] = light_elems.duplicate()
-	_polarities[DARK] = dark_elems.duplicate()
+	_alignments[LIGHT] = light_elems.duplicate()
+	_alignments[DARK] = dark_elems.duplicate()
 	timer.reset()
 	timer.paused = false
 
@@ -137,19 +137,19 @@ func _on_CoreElementIcon_element_ping(core_elem: int) -> void:
 	if pool == null:
 		return
 	var count: String = String.num_uint64(pool.active_element_count(core_elem))
-	if _polarities[LIGHT][0] == core_elem:
+	if _alignments[LIGHT][0] == core_elem:
 		light_elem_1_label.update_text(count)
-	elif _polarities[LIGHT][1] == core_elem:
+	elif _alignments[LIGHT][1] == core_elem:
 		light_elem_2_label.update_text(count)
-	elif _polarities[DARK][0] == core_elem:
+	elif _alignments[DARK][0] == core_elem:
 		dark_elem_1_label.update_text(count)
-	elif _polarities[DARK][1] == core_elem:
+	elif _alignments[DARK][1] == core_elem:
 		dark_elem_2_label.update_text(count)
 
 
 ## Update the count label for the pinged polar element. Will play the update text
 ## animation if the text updates.
-func _on_PolarElementIcon_shine_ping(polar_elem: int) -> void:
+func _on_AlignmentElementIcon_shine_ping(polar_elem: int) -> void:
 	# Not able to update labels if no wisp pool is connected.
 	if pool == null:
 		return
@@ -172,19 +172,19 @@ func _on_WispPool_active_count_changed(element: int) -> void:
 		light_icon.shine()
 	elif element == Constants.Element.DARK:
 		dark_icon.shine()
-	elif _polarities[LIGHT][0] == element:
+	elif _alignments[LIGHT][0] == element:
 		light_elem_1_icon.change_element(element)
-	elif _polarities[LIGHT][1] == element:
+	elif _alignments[LIGHT][1] == element:
 		light_elem_2_icon.change_element(element)
-	elif _polarities[DARK][0] == element:
+	elif _alignments[DARK][0] == element:
 		dark_elem_1_icon.change_element(element)
-	elif _polarities[DARK][1] == element:
+	elif _alignments[DARK][1] == element:
 		dark_elem_2_icon.change_element(element)
 	else:
 		icon_shined = false
 	# Update the icon labels in the event where the UI element is not visible
 	# for the animations to play.
-	if not visible and icon_shined and element in Constants.PolarElement.values():
-		_on_PolarElementIcon_shine_ping(element)
+	if not visible and icon_shined and element in Constants.AlignmentElement.values():
+		_on_AlignmentElementIcon_shine_ping(element)
 	elif not visible and icon_shined:
 		_on_CoreElementIcon_element_ping(element)
