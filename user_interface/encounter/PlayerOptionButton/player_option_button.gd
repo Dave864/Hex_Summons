@@ -1,10 +1,9 @@
 class_name PlayerOptionButton
 extends TextureButton
-"""
-A button that denotes a player option, specifically either technique, spell,
-summon, item, or end. Manages the animations associated with selecting this
-option.
-"""
+## A button that denotes a player option, specifically either technique, spell,
+## summon, item, or end.
+##
+## Manages the animations associated with selecting this option.
 
 
 const COLOR_WHITE: Color = Color.WHITE
@@ -20,13 +19,19 @@ var _mouse_came_back: bool = false
 @onready var ap_icon: AnimationPlayer = $APIcon
 
 
-# Resets the button.
+## Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_check_for_required_params()
+	disable(disabled)
+
+
+## Resets the button.
 func reset() -> void:
 	if not disabled:
 		button_pressed = false
 
 
-# Sets the disabled value, updating label and all images to match.
+## Sets the disabled value, updating label and all images to match.
 func disable(d: bool = true) -> void:
 	disabled = d
 	if disabled:
@@ -35,13 +40,7 @@ func disable(d: bool = true) -> void:
 		_update_modulation(COLOR_WHITE)
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_check_for_required_params()
-	disable(disabled)
-
-
-# Updates the modulation for sigil, icon, and label UI elements.
+## Updates the modulation for sigil, icon, and label UI elements.
 func _update_modulation(m_color: Color) -> void:
 	if sigil != null:
 		sigil.modulate = m_color
@@ -50,12 +49,12 @@ func _update_modulation(m_color: Color) -> void:
 	label.modulate = m_color
 
 
-# Checks that all required parameters have been set.
+## Checks that all required parameters have been set.
 func _check_for_required_params() -> void:
 	pass
 
 
-# Grabs the focus for the UI.
+## Grabs the focus for the UI.
 func _on_PlayerOptionButton_mouse_entered() -> void:
 	if disabled:
 		return
@@ -63,7 +62,7 @@ func _on_PlayerOptionButton_mouse_entered() -> void:
 	call_deferred("grab_focus")
 
 
-# Plays focused animation.
+## Plays focused animation.
 func _on_PlayerOptionButton_focus_entered() -> void:
 	# Don't do anything if the mouse was still hovering over button when focus
 	# came back. Weird animation errors happen.
@@ -83,7 +82,7 @@ func _on_PlayerOptionButton_focus_entered() -> void:
 		ap_focus.play("focus")
 
 
-# Resets all animations when focus is gone.
+## Resets all animations when focus is gone.
 func _on_PlayerOptionButton_focus_exited() -> void:
 	_mouse_came_back = false
 	if not button_pressed:
@@ -91,7 +90,7 @@ func _on_PlayerOptionButton_focus_exited() -> void:
 	ap_focus.play("RESET")
 
 
-# Plays the appropriate animations when the button is toggled.
+## Plays the appropriate animations when the button is toggled.
 func _on_PlayerOptionButton_toggled(is_toggled: bool) -> void:
 	if is_toggled:
 		ap_focus.play("focus_selected")

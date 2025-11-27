@@ -1,24 +1,22 @@
 class_name AreaRange
 extends Resource
-"""
-Describes the function signatures for area ranges.
-"""
+## Describes the function signatures for area ranges.
 
 
-# Returns the reach of the AreaRange. Used when determining which tiles are
-# affected by tile heights.
+## Returns the reach of the AreaRange. Used when determining which tiles are
+## affected by tile heights.
 func get_reach() -> int:
 	return 0
 
 
-# Base function for area ranges that define a general area around a starting
-# point.
+## Base function for area ranges that define a general area around a starting
+## point.
 func get_area_indexes(_start: int, _hm: HexMap) -> Array:
 	return []
 
 
-# Base function for area ranges that define an area emitted in a direction from
-# starting point.
+## Base function for area ranges that define an area emitted in a direction from
+## starting point.
 func get_dir_area_indexes(
 	_start: int,
 	_dir: int,
@@ -27,8 +25,8 @@ func get_dir_area_indexes(
 	return []
 
 
-# Base function for area ranges that take modifies a RangeDisplay hex matrix
-# so that it reflects the details of this AreaRange.
+## Base function for area ranges that take modifies a RangeDisplay hex matrix
+## so that it reflects the details of this AreaRange.
 func update_range_display(
 	_center_point: Vector2,
 	_outline_type: int,
@@ -38,8 +36,8 @@ func update_range_display(
 	pass
 
 
-# Checks if a matrix index is within the bounds of the specified RangeDisplay
-# hex matrix.
+## Checks if a matrix index is within the bounds of the specified RangeDisplay
+## hex matrix.
 func _is_index_in_matrix(matrix_index: Vector2, d_matrix: DisplayMatrix) -> bool:
 	return (
 		matrix_index.y >=0 
@@ -49,7 +47,7 @@ func _is_index_in_matrix(matrix_index: Vector2, d_matrix: DisplayMatrix) -> bool
 	)
 
 
-# Updates the details of the RangeDisplay matrix array at the given index.
+## Updates the details of the RangeDisplay matrix array at the given index.
 func _update_hex_matrix(
 	d_matrix: DisplayMatrix,
 	matrix_index: Vector2,

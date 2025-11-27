@@ -1,10 +1,8 @@
 @tool
 class_name RangeDisplay
 extends Panel
-"""
-Test UI node that is meant to check the feasability of drawing the range data
-of actions on a specific UI element.
-"""
+## Test UI node that is meant to check the feasability of drawing the range data
+## of actions on a specific UI element.
 
 
 @export var row_count = 9: set = set_row_count
@@ -16,9 +14,9 @@ of actions on a specific UI element.
 var _mid_row: int = int(round(row_count / 2.0)) - 1
 var _emission_index: Vector2 = Vector2(1, _mid_row)
 var _action: Action = null
-# Matrix that represents the hexes in the display.
+## Matrix that represents the hexes in the display.
 var _d_matrix: DisplayMatrix = null
-# Tracks the order in which tiles should be drawn.
+## Tracks the order in which tiles should be drawn.
 var _draw_order: Dictionary = {
 	"empty": [],
 	"source_tile": [],
@@ -26,9 +24,34 @@ var _draw_order: Dictionary = {
 	"effect_tile": [],
 	"etc": [],
 }
-# The vertex positions for a hex at origin.
+## The vertex positions for a hex at origin.
 var _origin_pts: PackedVector2Array = []
 var _origin_fill_pts: PackedVector2Array = []
+
+
+func _ready() -> void:
+	_d_matrix = DisplayMatrix.new(row_count, col_count)
+	_origin_pts = _init_origin_vertices()
+	_origin_fill_pts = _init_origin_vertices(outline_width)
+
+
+func _init() -> void:
+	_d_matrix = DisplayMatrix.new(row_count, col_count)
+	_origin_pts = _init_origin_vertices()
+	_origin_fill_pts = _init_origin_vertices(outline_width)
+
+
+func _draw() -> void:
+	for details in _draw_order["empty"]:
+		_draw_hex_fill(_get_color(details[1][DisplayMatrix.FILL]), details[0])
+	for details in _draw_order["source_tile"]:
+		_draw_hex_fill(_get_color(details[1][DisplayMatrix.FILL]), details[0])
+	for details in _draw_order["effect_overlap"]:
+		_draw_hex(details[1], details[0])
+	for details in _draw_order["effect_tile"]:
+		_draw_hex_fill(_get_color(details[1][DisplayMatrix.FILL]), details[0])
+	for details in _draw_order["etc"]:
+		_draw_hex(details[1], details[0])
 
 
 func set_row_count(rc: int) -> void:
@@ -69,7 +92,7 @@ func set_hex_spacing(hs: float) -> void:
 		queue_redraw()
 
 
-# Redraws the range display for the given action.
+## Redraws the range display for the given action.
 func update_action(action: Action) -> void:
 	_action = action
 	_update_display_details()
@@ -77,32 +100,7 @@ func update_action(action: Action) -> void:
 	queue_redraw()
 
 
-func _ready() -> void:
-	_d_matrix = DisplayMatrix.new(row_count, col_count)
-	_origin_pts = _init_origin_vertices()
-	_origin_fill_pts = _init_origin_vertices(outline_width)
-
-
-func _init() -> void:
-	_d_matrix = DisplayMatrix.new(row_count, col_count)
-	_origin_pts = _init_origin_vertices()
-	_origin_fill_pts = _init_origin_vertices(outline_width)
-
-
-func _draw() -> void:
-	for details in _draw_order["empty"]:
-		_draw_hex_fill(_get_color(details[1][DisplayMatrix.FILL]), details[0])
-	for details in _draw_order["source_tile"]:
-		_draw_hex_fill(_get_color(details[1][DisplayMatrix.FILL]), details[0])
-	for details in _draw_order["effect_overlap"]:
-		_draw_hex(details[1], details[0])
-	for details in _draw_order["effect_tile"]:
-		_draw_hex_fill(_get_color(details[1][DisplayMatrix.FILL]), details[0])
-	for details in _draw_order["etc"]:
-		_draw_hex(details[1], details[0])
-
-
-# Resets the drawing details for the display.
+## Resets the drawing details for the display.
 func _update_display_details() -> void:
 	if not Engine.is_editor_hint():
 		_d_matrix.reset_display()
@@ -114,8 +112,8 @@ func _update_display_details() -> void:
 		_update_draw_order()
 
 
-# Determine the hex vertices that will be used as reference for creating hexes
-# to draw.
+## Determine the hex vertices that will be used as reference for creating hexes
+## to draw.
 func _init_origin_vertices(outline_offset: float = 0.0) -> PackedVector2Array:
 	var hex_vertices: PackedVector2Array = []
 	var top_vertex: Vector2 = Vector2(0.0, hex_radius - outline_offset)
@@ -124,7 +122,7 @@ func _init_origin_vertices(outline_offset: float = 0.0) -> PackedVector2Array:
 	return hex_vertices
 
 
-# Determine the hex colors that will represent the source range.
+## Determine the hex colors that will represent the source range.
 func _determine_source_hexes() -> void:
 	_action.stats.source_range.update_range_display(
 			Vector2(1, _mid_row),
@@ -140,7 +138,7 @@ func _determine_source_hexes() -> void:
 	)
 
 
-# Determine the hex colors that will represent the effect range.
+## Determine the hex colors that will represent the effect range.
 func _determine_effect_hexes() -> void:
 	if not _action.stats.emit_from_center:
 		# Determine the emission point.
@@ -156,17 +154,17 @@ func _determine_effect_hexes() -> void:
 	)
 
 
-# Sets the details for the hex that represents the caster.
+## Sets the details for the hex that represents the caster.
 func _set_caster_hex() -> void:
 	_d_matrix.set_caster_details()
 
 
-# Sets the details for the hex that represents the emission point.
+## Sets the details for the hex that represents the emission point.
 func _set_emission_hex() -> void:
 	_d_matrix.set_emission_details(_emission_index)
 
 
-# Determines the order to draw the hexex in order to trigger batching.
+## Determines the order to draw the hexex in order to trigger batching.
 func _update_draw_order() -> void:
 	var center: Vector2 = Vector2.ZERO
 	for row in row_count:
@@ -183,7 +181,7 @@ func _update_draw_order() -> void:
 			_determine_draw_step(draw_data, center)
 
 
-# Clears out the current draw order.
+## Clears out the current draw order.
 func _clear_draw_order() -> void:
 	_draw_order["empty"].clear()
 	_draw_order["source_tile"].clear()
@@ -192,7 +190,7 @@ func _clear_draw_order() -> void:
 	_draw_order["etc"].clear()
 
 
-# Determines which part of the draw step the data should be part of.
+## Determines which part of the draw step the data should be part of.
 func _determine_draw_step(draw_data: Dictionary, center: Vector2) -> void:
 	if draw_data[DisplayMatrix.FILL] == DisplayMatrix.Detail.EMPTY:
 		_draw_order["empty"].append([center, draw_data])
@@ -212,7 +210,7 @@ func _determine_draw_step(draw_data: Dictionary, center: Vector2) -> void:
 		_draw_order["etc"].append([center, draw_data])
 
 
-# Draw the hex centered at the coordinate using the details of the hex_matrix.
+## Draw the hex centered at the coordinate using the details of the hex_matrix.
 func _draw_hex(data: Dictionary, center: Vector2) -> void:
 	var outline_color: Color = _get_color(data[DisplayMatrix.OUTLINE])
 	var fill_color: Color = _get_color(data[DisplayMatrix.FILL])
@@ -221,7 +219,7 @@ func _draw_hex(data: Dictionary, center: Vector2) -> void:
 		_draw_hex_fill(fill_color, center)
 
 
-# Determines the color to use based on the detail marker.
+## Determines the color to use based on the detail marker.
 func _get_color(detail_marker: int) -> Color:
 	var c: Color
 	match detail_marker:
@@ -238,7 +236,7 @@ func _get_color(detail_marker: int) -> Color:
 	return c
 
 
-# Draw a colored outline of a hexagon.
+## Draw a colored outline of a hexagon.
 func _draw_hex_outline(color: Color, center: Vector2) -> void:
 	if _origin_pts.size() == 0:
 		return
@@ -246,7 +244,7 @@ func _draw_hex_outline(color: Color, center: Vector2) -> void:
 	draw_colored_polygon(hex_vertices, color)
 
 
-# Draws a filled colored hexagon.
+## Draws a filled colored hexagon.
 func _draw_hex_fill(color: Color, center: Vector2) -> void:
 	if _origin_fill_pts.size() == 0:
 		return
@@ -254,7 +252,7 @@ func _draw_hex_fill(color: Color, center: Vector2) -> void:
 	draw_colored_polygon(hex_vertices, color)
 
 
-# Gets the points for a hexagon centered at a given point.
+## Gets the points for a hexagon centered at a given point.
 func _get_points_for_hex(
 	center: Vector2,
 	origin_pts: PackedVector2Array
@@ -265,8 +263,8 @@ func _get_points_for_hex(
 	return hex_vertices
 
 
-# Sets the minimum size for the display panel so that the drawn elements are
-# always within its bounds. 
+## Sets the minimum size for the display panel so that the drawn elements are
+## always within its bounds. 
 func _set_min_size() -> void:
 	var x_size: float = (
 			hex_radius * 2 * col_count \

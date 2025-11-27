@@ -1,22 +1,25 @@
 class_name MousePosition
 extends Marker3D
-"""
-Determines the position of the mouse on the screen relative to the game world
-"""
+## Determines the position of the mouse on the screen relative to the game world
 
 @onready var _camera: Camera3D = get_tree().root.get_camera_3d()
 
-# The calculated world position of the mouse
+## The calculated world position of the mouse
 var _position: Vector3 = Vector3.ZERO: get = get_mouse_position
 var _drop_plane: Plane = Plane.PLANE_XZ
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta) -> void:
 	_position = _screen_point_to_ray()
 
 
-# Determine the world position of the mouse.
+## Returns the mouse position.
+func get_mouse_position() -> Vector3:
+	return _position
+
+
+## Determine the world position of the mouse.
 func _screen_point_to_ray() -> Vector3:
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var ray_origin: Vector3 = _camera.project_ray_origin(mouse_pos)
@@ -26,7 +29,3 @@ func _screen_point_to_ray() -> Vector3:
 		return Vector3.ZERO
 	else:
 		return world_pos
-
-
-func get_mouse_position() -> Vector3:
-	return _position

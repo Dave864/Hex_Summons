@@ -1,9 +1,7 @@
 @tool
 class_name LabeledIconButton
 extends MarginContainer
-"""
-Manages the label and icon settings of an OptionButton for encounters.
-"""
+## Manages the label and icon settings of an OptionButton for encounters.
 
 
 @export var label: String: get = get_label, set = set_label
@@ -21,7 +19,7 @@ var _is_highlighted: bool
 @onready var _icon_node: TextureRect = $MarginContainer/VBoxContainer/Icon
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_is_highlighted = true
 	if label != null:
@@ -29,19 +27,19 @@ func _ready() -> void:
 	_disabled_update()
 
 
-# Sets the text value of the `Label` node of the `OptionButton` scene.
+## Sets the text value of the `Label` node of the `OptionButton` scene.
 func set_label(new_label: String) -> void:
 	label = new_label
 	if is_node_ready():
 		_label_node.text = new_label
 
 
-# Get the current text value for `Label`.
+## Get the current text value for `Label`.
 func get_label() -> String:
 	return _label_node.text if _label_node != null else ""
 
 
-# Sets the "normal" texture for the `Icon` node.
+## Sets the "normal" texture for the `Icon` node.
 func set_icon_normal(new_icon_normal: Texture2D) -> void:
 	# Set the default to the Godot icon
 	icon_normal = (
@@ -53,7 +51,7 @@ func set_icon_normal(new_icon_normal: Texture2D) -> void:
 		_icon_node.texture = icon_normal
 
 
-# Gets the current "normal" texture for the `Icon` node.
+## Gets the current "normal" texture for the `Icon` node.
 func get_icon_normal() -> Texture2D:
 	return (
 			icon_normal if icon_normal != null 
@@ -61,59 +59,59 @@ func get_icon_normal() -> Texture2D:
 	)
 
 
-# Sets the "pressed" texture for the `Icon` node.
+## Sets the "pressed" texture for the `Icon` node.
 func set_icon_pressed(new_icon_pressed: Texture2D) -> void:
 	icon_pressed = new_icon_pressed
 
 
-# Gets the current "pressed" texture for the `Icon` node.
+## Gets the current "pressed" texture for the `Icon` node.
 func get_icon_pressed() -> Texture2D:
 	return icon_pressed
 
 
-# Sets the "hover" texture for the `Icon` node.
+## Sets the "hover" texture for the `Icon` node.
 func set_icon_hover(new_icon_hover: Texture2D) -> void:
 	icon_hover = new_icon_hover
 
 
-# Gets the current "hover" texture for the `Icon` node.
+## Gets the current "hover" texture for the `Icon` node.
 func get_icon_hover() -> Texture2D:
 	return icon_hover
 
 
-# Sets the "disabled" texture for the `Icon` node.
+## Sets the "disabled" texture for the `Icon` node.
 func set_icon_disabled(new_icon_disabled: Texture2D) -> void:
 	icon_disabled = new_icon_disabled
 
 
-# Gets the current "disabled" texture for the `Icon` node.
+## Gets the current "disabled" texture for the `Icon` node.
 func get_icon_disabled() -> Texture2D:
 	return icon_disabled
 
 
-# Sets the "focused" texture for the `Icon` node.
+## Sets the "focused" texture for the `Icon` node.
 func set_icon_focused(new_icon_focused: Texture2D) -> void:
 	icon_focused = new_icon_focused
 
 
-# Gets the current "focused" texture for the `Icon` node.
+## Gets the current "focused" texture for the `Icon` node.
 func get_icon_focused() -> Texture2D:
 	return icon_focused
 
 
-# Set the disabled flag.
+## Set the disabled flag.
 func set_area_disabled(flag_value: bool) -> void:
 	disabled = flag_value
 	_disabled_update()
 
 
-# Get the disabled flag.
+## Get the disabled flag.
 func get_disabled() -> bool:
 	return disabled
 
 
-# Connects the specified signal of this node's button to the function of the
-# connecting node.
+## Connects the specified signal of this node's button to the function of the
+## connecting node.
 func connect_button_signal(
 	connecting_node: Node, 
 	signal_to_connect: String,
@@ -127,8 +125,8 @@ func connect_button_signal(
 	)
 
 
-# Disconnects the specified signal of this node's button from the function of the
-# connecting node.
+## Disconnects the specified signal of this node's button from the function of the
+## connecting node.
 func disconnect_button_signal(
 	connecting_node: Node, 
 	signal_to_disconnect: String,
@@ -137,7 +135,7 @@ func disconnect_button_signal(
 	_button.disconnect(signal_to_disconnect, Callable(connecting_node, function_name))
 
 
-# Update the button based on the disabled flag
+## Update the button based on the disabled flag
 func _disabled_update() -> void:
 	if disabled:
 		_icon_node.texture = (
@@ -159,13 +157,13 @@ func _disabled_update() -> void:
 		_button.disabled = false
 
 
-# Update the `Icon` to "pressed" when the button is depressed.
+## Update the `Icon` to "pressed" when the button is depressed.
 func _on_Button_button_down() -> void:
 	if not disabled:
 		_icon_node.texture = icon_pressed if icon_pressed != null else icon_normal
 
 
-# Update the `Icon` to "normal" when the button is released.
+## Update the `Icon` to "normal" when the button is released.
 func _on_Button_button_up() -> void:
 	if not disabled:
 		_icon_node.texture = (
@@ -174,13 +172,13 @@ func _on_Button_button_up() -> void:
 		)
 
 
-# Update the `Icon` to "focused" when the button gains focus.
+## Update the `Icon` to "focused" when the button gains focus.
 func _on_Button_focus_entered() -> void:
 	if not disabled:
 		_icon_node.texture = icon_focused if icon_focused != null else icon_normal
 
 
-# Update the `Icon` to "normal" when the button loses focus.
+## Update the `Icon` to "normal" when the button loses focus.
 func _on_Button_focus_exited() -> void:
 	if not disabled:
 		_icon_node.texture = (
@@ -189,14 +187,14 @@ func _on_Button_focus_exited() -> void:
 		)
 
 
-# Update the `Icon` to "hover" when the button is hovered over by the mouse.
+## Update the `Icon` to "hover" when the button is hovered over by the mouse.
 func _on_Button_mouse_entered() -> void:
 	if not disabled:
 		_is_highlighted = true
 		_icon_node.texture = icon_hover if icon_hover != null else icon_normal
 
 
-# Update the `Icon` to "normal" when the button is no longer hovered over by the mouse.
+## Update the `Icon` to "normal" when the button is no longer hovered over by the mouse.
 func _on_Button_mouse_exited() -> void:
 	if not disabled:
 		_is_highlighted = false

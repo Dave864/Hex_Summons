@@ -1,26 +1,24 @@
 class_name ColumnArea
 extends AreaRange
-"""
-Describes a range whose area starts from a point and reaches out in a diamond
-shape.
-"""
+## Describes a range whose area starts from a point and reaches out in a diamond
+## shape.
 
 
-# Describes how wide the diamond area is.
+## Describes how wide the diamond area is.
 @export var spread = 0 # (int, 0, 100)
-# Describes how far out the range extends away from the start point.
+## Describes how far out the range extends away from the start point.
 @export var distance = 1 # (int, 1, 100)
 
 
-# Returns the reach of the ColumnArea. Used when determining which tiles are
-# affected by tile heights.
+## Returns the reach of the ColumnArea. Used when determining which tiles are
+## affected by tile heights.
 func get_reach() -> int:
 	return distance + spread
 
 
-# Determines which map tiles are in the column area positioned at the start index,
-# oriented to face the specified direction (0 - 5). Does not account for tile
-# heights.
+## Determines which map tiles are in the column area positioned at the start index,
+## oriented to face the specified direction (0 - 5). Does not account for tile
+## heights.
 func get_dir_area_indexes(start: int, dir: int, hm: HexMap) -> Array:
 	var left_dir: int = dir - 1 if dir > 0 else 5
 	var right_dir: int = dir + 1 if dir < 5 else 0
@@ -77,7 +75,8 @@ func get_dir_area_indexes(start: int, dir: int, hm: HexMap) -> Array:
 	return tile_ids
 
 
-# Modifies a RangeDisplay hex matrix so that it reflects the details of this ColumnArea.
+## Modifies a RangeDisplay hex matrix so that it reflects the details of this
+## ColumnArea.
 func update_range_display(
 	center_point: Vector2,
 	outline_type: int,

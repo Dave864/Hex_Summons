@@ -1,25 +1,23 @@
 class_name ConeArea
 extends AreaRange
-"""
-Describes a range whose area can be described as a cone.
-"""
+## Describes a range whose area can be described as a cone.
 
 
-# Describes how wide the cone area is.
+## Describes how wide the cone area is.
 @export var spread = 0 # (int, 0, 5)
-# Describes how far out the cone extends away from the start point.
+## Describes how far out the cone extends away from the start point.
 @export var distance = 1 # (int, 1, 100)
 
 
-# Returns the reach of the ConeArea. Used when determining which tiles are
-# affected by tile heights.
+## Returns the reach of the ConeArea. Used when determining which tiles are
+## affected by tile heights.
 func get_reach() -> int:
 	return distance
 
 
-# Determines which map tiles are in the cone area position at the start index,
-# oriented to face the specified direction (0 - 5). Does not account for tile
-# heights.
+## Determines which map tiles are in the cone area position at the start index,
+## oriented to face the specified direction (0 - 5). Does not account for tile
+## heights.
 func get_dir_area_indexes(
 	start: int,
 	dir: int,
@@ -57,7 +55,8 @@ func get_dir_area_indexes(
 	return tile_ids
 
 
-# Modifies a RangeDisplay hex matrix so that it reflects the details of this ConeArea.
+## Modifies a RangeDisplay hex matrix so that it reflects the details of this
+## ConeArea.
 func update_range_display(
 	center_point: Vector2,
 	outline_type: int,
@@ -94,7 +93,7 @@ func update_range_display(
 				)
 
 
-# Helper function that gets the tile indexes of the "ray" from a specific tile.
+## Helper function that gets the tile indexes of the "ray" from a specific tile.
 func _determine_ray_indexes(
 		distance_step: int,
 		cur_dir: int,
@@ -118,8 +117,8 @@ func _determine_ray_indexes(
 			tile_ids.append(tile_id)
 
 
-# Helper function that updates the hex matrix details for a "ray" cast from 
-# a specific tile.
+## Helper function that updates the hex matrix details for a "ray" cast from 
+## a specific tile.
 func _determine_ray_displays(
 		distance_step: int,
 		cur_dir: int,
@@ -141,9 +140,9 @@ func _determine_ray_displays(
 			_update_hex_matrix(d_matrix, ray_index, outline_type, fill_type)
 
 
-# Helper for populate_range_display. Determines which direction to start from
-# given the current ConeArea dimensions for the purposes of orienting the display.
-# The direction will orient the cone area to the right of the emission point.
+## Helper for populate_range_display. Determines which direction to start from
+## given the current ConeArea dimensions for the purposes of orienting the display.
+## The direction will orient the cone area to the right of the emission point.
 func _get_initial_direction() -> int:
 	@warning_ignore("integer_division")
 	return posmod(HexUtil.HexDirection.RIGHT - floor(spread / 2), 5)

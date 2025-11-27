@@ -1,29 +1,35 @@
 @tool
 class_name Tiles
 extends Node3D
-"""
-A container for map tiles. Generates an array of map tiles with z rows and 
-x columns. Positions each tile and sets up the connections between them.
-"""
+## A container for map tiles.
+##
+## Generates an array of map tiles with z rows and x columns. Positions each
+## tile and sets up the connections between them.
+
 
 const MAP_TILE = "MapTile"
 
-# The number of tiles along the X axis.
+## The number of tiles along the X axis.
 @export var x_count = 2: get = get_x_count, set = set_x_count # (int, 1, 50)
-# The number of tiles along the Z axis.
+## The number of tiles along the Z axis.
 @export var z_count = 3: get = get_z_count, set = set_z_count # (int, 1, 50)
-# Indicates that the map tiles are to be regenerated. Workaround for creating
-# an Inspector plugin. Should NEVER be set outside of Inspector.
+## Indicates that the map tiles are to be regenerated. Workaround for creating
+## an Inspector plugin. Should NEVER be set outside of Inspector.
 @export var regenerate: bool = false: set = _regenerate_grid
 
 var _grid_start: Vector3 = _calculate_grid_start()
 var _map_tile: PackedScene = preload("res://hex_map/map_tile_node/MapTile.tscn")
 
-# Referene to the scene tree root.
+## Referene to the scene tree root.
 @onready var _root_node: Node = get_tree().edited_scene_root
 
 
-# Update the z_count parameter and regenerate the grid.
+## Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_initial_grid_generation()
+
+
+## Update the z_count parameter and regenerate the grid.
 func set_z_count(new_count: int) -> void:
 	var old_z: int = z_count
 	z_count = new_count
@@ -35,12 +41,12 @@ func set_z_count(new_count: int) -> void:
 			_update_grid_z(old_z)
 
 
-# Return the value of the z_count parameter.
+## Return the value of the z_count parameter.
 func get_z_count() -> int:
 	return z_count
 
 
-# Update the x_count parameter and regenerate the grid.
+## Update the x_count parameter and regenerate the grid.
 func set_x_count(new_count: int) -> void:
 	var old_x: int = x_count
 	x_count = new_count
@@ -52,17 +58,17 @@ func set_x_count(new_count: int) -> void:
 			_update_grid_x(old_x)
 
 
-# Return the value of the x_count parameter.
+## Return the value of the x_count parameter.
 func get_x_count() -> int:
 	return x_count
 
 
-# Get the tile at the specified index.
+## Get the tile at the specified index.
 func get_at(index: int) -> Node:
 	return get_child(index)
 
 
-# Gets the MapTiles of the specified ids.
+## Gets the MapTiles of the specified ids.
 func get_from_ids(ids: Array) -> Array:
 	var tiles: Array = []
 	for i in ids:
@@ -70,12 +76,12 @@ func get_from_ids(ids: Array) -> Array:
 	return tiles
 
 
-# Gets all the MapTiles.
+## Gets all the MapTiles.
 func get_all() -> Array:
 	return get_children()
 
 
-# Checks if the given cube coordinates are within the bounds of the map.
+## Checks if the given cube coordinates are within the bounds of the map.
 func is_valid_cube(cube: Vector3) -> bool:
 	var offset: Vector2 = HexUtil.cube_to_offset(cube)
 	return (
@@ -86,13 +92,8 @@ func is_valid_cube(cube: Vector3) -> bool:
 	)
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_initial_grid_generation()
-
-
-# Removes all tiles from the tiles node and regenerates the map.
-# NEVER call this in other scripts. 
+## Removes all tiles from the tiles node and regenerates the map.
+## NEVER call this in other scripts. 
 func _regenerate_grid(r: bool) -> void:
 	if Engine.is_editor_hint() and r:
 		# Delete the tiles of the current map
@@ -104,7 +105,7 @@ func _regenerate_grid(r: bool) -> void:
 		_determine_adjacencies()
 
 
-# Creates the intial instance of the grid map.
+## Creates the intial instance of the grid map.
 func _initial_grid_generation() -> void:
 	# Create the TileMap nodes if they haven't already been instanced.
 	if get_child_count() == 0:
@@ -113,16 +114,16 @@ func _initial_grid_generation() -> void:
 	_determine_adjacencies()
 
 
-# Generates the hex grid map basd off of x_count and z_count.
-# The orientation of the grid has the points of the tiles oriented vertically.
-# The odd index rows are offset to the right.
-#    / \ / \ / \
-# 0 |   |   |   |
-#    \ / \ / \ / \
-# 1   |   |   |   |
-#    / \ / \ / \ /
-# 2 |   |   |   |
-#    \ / \ / \ /
+## Generates the hex grid map basd off of x_count and z_count.
+## The orientation of the grid has the points of the tiles oriented vertically.
+## The odd index rows are offset to the right.
+##    / \ / \ / \
+## 0 |   |   |   |
+##    \ / \ / \ / \
+## 1   |   |   |   |
+##    / \ / \ / \ /
+## 2 |   |   |   |
+##    \ / \ / \ /
 func _generate_grid() -> void:
 	var map_tile_offset: Vector3
 	# Calculates the position for each tile relative to origin
@@ -137,8 +138,8 @@ func _generate_grid() -> void:
 			_instantiate_tile(map_tile_offset)
 
 
-# Instantiates the hex grid map tile at the specified offset with the HexMap
-# node position being considered origin.
+## Instantiates the hex grid map tile at the specified offset with the HexMap
+## node position being considered origin.
 func _instantiate_tile(offset: Vector3) -> void:
 	var tile: MapTile = _map_tile.instantiate()
 	add_child(tile)
@@ -146,7 +147,7 @@ func _instantiate_tile(offset: Vector3) -> void:
 	tile.translate_object_local(offset + _grid_start)
 
 
-# Assign the index values of each map tile and their corresponding cube coordinates.
+## Assign the index values of each map tile and their corresponding cube coordinates.
 func _set_coordinates() -> void:
 	var index: int = 0
 	for tile in get_children():
@@ -156,10 +157,10 @@ func _set_coordinates() -> void:
 		index += 1
 
 
-# Goes through the Map Tiles and establishes what each one's adjacent tiles are.
-#  0  / \  1
-#  5 |   | 2
-#  4  \ /  3
+## Goes through the Map Tiles and establishes what each one's adjacent tiles are.
+##  0  / \  1
+##  5 |   | 2
+##  4  \ /  3
 func _determine_adjacencies() -> void:
 	for tile in get_children():
 		var index: int = tile.map_coordinate.get_tile_index()
@@ -217,7 +218,7 @@ func _determine_adjacencies() -> void:
 		tile.set_adjacent_tile(HexUtil.HexDirection.LEFT, index_5_tile)
 
 
-# Updates the set of map tiles when the x count of the map is updated
+## Updates the set of map tiles when the x count of the map is updated
 func _update_grid_x(old_x: int) -> void:
 	if old_x > x_count:
 		_shrink_x(old_x)
@@ -227,7 +228,7 @@ func _update_grid_x(old_x: int) -> void:
 	_determine_adjacencies()
 
 
-# Add new tiles to account for an increase in the value of x_count.
+## Add new tiles to account for an increase in the value of x_count.
 func _grow_x(old_x: int) -> void:
 	var old_tiles: Array = get_children()
 	var x_offset: float = (old_x - x_count) * HexUtil.HEX_EDGE_RATIO
@@ -253,7 +254,7 @@ func _grow_x(old_x: int) -> void:
 				move_child(old_tiles[i], (z * x_count) + x)
 
 
-# Remove tiles to account for a decrease in the value of x_count.
+## Remove tiles to account for a decrease in the value of x_count.
 func _shrink_x(old_x: int) -> void:
 	var tiles: Array = get_children()
 	for i in old_x - x_count:
@@ -267,7 +268,7 @@ func _shrink_x(old_x: int) -> void:
 		t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
 
 
-# Updates the set of map tiles when the z count of the map is updated
+## Updates the set of map tiles when the z count of the map is updated
 func _update_grid_z(old_z: int) -> void:
 	if old_z > z_count:
 		_shrink_z(old_z)
@@ -277,7 +278,7 @@ func _update_grid_z(old_z: int) -> void:
 	_determine_adjacencies()
 
 
-# Add new tiles to account for an increase in the value of z_count.
+## Add new tiles to account for an increase in the value of z_count.
 func _grow_z(old_z: int) -> void:
 	# Shift all tiles up to account for size change
 	for t in get_children():
@@ -295,7 +296,7 @@ func _grow_z(old_z: int) -> void:
 			_instantiate_tile(map_tile_offset)
 
 
-# Remove tiles to account for a decrease in the value of z_count.
+## Remove tiles to account for a decrease in the value of z_count.
 func _shrink_z(old_z: int) -> void:
 	var tiles: Array = get_children()
 	for i in range(old_z - z_count):
@@ -308,8 +309,8 @@ func _shrink_z(old_z: int) -> void:
 		t.translate_object_local(Vector3(0.0, 0.0, (old_z - z_count) * 0.75))
 
 
-# Determine the starting point so that the middle of the generated map is center
-# to the HexMap node.
+## Determine the starting point so that the middle of the generated map is center
+## to the HexMap node.
 func _calculate_grid_start() -> Vector3:
 	var origin_offset = Vector3(2 * HexUtil.HEX_EDGE_RATIO, 0.0, 1.0)
 	origin_offset.z -= ((3.0 * z_count) + 1.0) / 4.0
@@ -317,23 +318,23 @@ func _calculate_grid_start() -> Vector3:
 	return origin_offset
 
 
-# Recalculate the grid start.
+## Recalculate the grid start.
 func _update_grid_start() -> void:
 	_grid_start = _calculate_grid_start()
 
 
-# Deletes the tile from the scene.
+## Deletes the tile from the scene.
 func _delete_tile(tile: MapTile) -> void:
 	remove_child(tile)
 	tile.set_owner(null)
 	tile.queue_free()
 
 
-# Check if the grid has an even number of rows.
+## Check if the grid has an even number of rows.
 func _is_even_grid() -> bool:
 	return _is_even(z_count)
 
 
-# Check if number is even.
+## Check if number is even.
 func _is_even(number) -> bool:
 	return number % 2 == 0

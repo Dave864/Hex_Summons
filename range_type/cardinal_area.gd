@@ -1,22 +1,20 @@
 class_name CardinalArea
 extends AreaRange
-"""
-Describes an area whose area is constrained by the six directions of a hexagon.
-"""
+## Describes an area whose area is constrained by the six directions of a hexagon.
 
 
-# How many tiles out the range will reach.
+## How many tiles out the range will reach.
 @export var distance = 1 # (int, 1, 1000)
 
 
-# Returns the reach of the CardinalArea. Used when determining which tiles are
-# affected by tile heights.
+## Returns the reach of the CardinalArea. Used when determining which tiles are
+## affected by tile heights.
 func get_reach() -> int:
 	return distance
 
 
-# Determines which map tiles are in the cardinal area positioned at the start index.
-# Does not account for tile heights.
+## Determines which map tiles are in the cardinal area positioned at the start index.
+## Does not account for tile heights.
 func get_area_indexes(start: int, hm: HexMap) -> Array:
 	var tile_ids: Array = []
 	var start_coord: Vector3 = hm.get_tile_at(start).map_coordinate.get_cube_coord()
@@ -30,7 +28,7 @@ func get_area_indexes(start: int, hm: HexMap) -> Array:
 	return tile_ids
 
 
-# Calls get_area_indexes as CardinalAreas do not require a direction.
+## Calls get_area_indexes as CardinalAreas do not require a direction.
 func get_dir_area_indexes(
 	start: int,
 	_dir: int,
@@ -39,7 +37,8 @@ func get_dir_area_indexes(
 	return get_area_indexes(start, hm)
 
 
-# Modifies a RangeDisplay hex matrix so that it reflects the details of this CardinalArea.
+## Modifies a RangeDisplay hex matrix so that it reflects the details of this
+## CardinalArea.
 func update_range_display(
 	center_point: Vector2,
 	outline_type: int,

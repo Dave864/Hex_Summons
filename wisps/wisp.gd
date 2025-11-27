@@ -1,9 +1,7 @@
 class_name Wisp
 extends Resource
-"""
-Defines the details of a wisp, such as its element, associated art, and bonuses
-to set character.
-"""
+## Defines the details of a wisp, such as its element, associated art, and bonuses
+## to set character.
 
 
 enum Element {

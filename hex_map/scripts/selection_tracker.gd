@@ -1,9 +1,7 @@
 class_name SelectionTracker
 extends Node
-"""
-Keeps track of the tiles that are currently highlighted. Requires a reference
-to the map tiles.
-"""
+## Keeps track of the tiles that are currently highlighted. Requires a reference
+## to the map tiles.
 
 
 @export var map_tiles_reference: NodePath = NodePath("")
@@ -14,9 +12,9 @@ var _selectable_map_indexes: Array = []
 @onready var _map_tiles: Tiles = get_node(map_tiles_reference)
 
 
-# Highlight the specified tiles as movement for the given player character.
-# Setting player_index to -1 indicates that we want to use the current player position
-# to determine where to set the Player highlight.
+## Highlight the specified tiles as movement for the given player character.
+## Setting player_index to -1 indicates that we want to use the current player position
+## to determine where to set the Player highlight.
 func highlight_player_movement(
 	tile_ids: Array,
 	pc: PlayerCharacter,
@@ -49,7 +47,7 @@ func highlight_player_movement(
 		_highlighted_map_indexes.append(tile.map_coordinate.get_tile_index())
 
 
-# Highlight the specified tiles as being within the source range of an action.
+## Highlight the specified tiles as being within the source range of an action.
 func highlight_action_source_area(tile_ids: Array, pc: PlayerCharacter) -> void:
 	for index in tile_ids:
 		var tile: MapTile = _map_tiles.get_at(index)
@@ -64,8 +62,8 @@ func highlight_action_source_area(tile_ids: Array, pc: PlayerCharacter) -> void:
 		_highlighted_map_indexes.append(index)
 
 
-# Highlight the selector for the specified tiles to represent the effect area
-# of an action.
+## Highlight the selector for the specified tiles to represent the effect area
+## of an action.
 func select_effect_range(
 		tile_ids: Array,
 		caster_index: int,
@@ -93,20 +91,20 @@ func select_effect_range(
 		_selectable_map_indexes.append(tile_index)
 
 
-# Clear the higlights from all tiles.
+## Clear the higlights from all tiles.
 func clear_highlights() -> void:
 	for i in _highlighted_map_indexes:
 		_map_tiles.get_at(i).set_highlight_type(HexHighlighter.Option.NONE)
 	_highlighted_map_indexes.clear()
 
 
-# Clear selector highlights from all tiles.
+## Clear selector highlights from all tiles.
 func clear_selector_highlights() -> void:
 	for i in _selectable_map_indexes:
 		_map_tiles.get_at(i).set_selector_type(HexHighlighter.Option.NONE)
 	_selectable_map_indexes.clear()
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	pass

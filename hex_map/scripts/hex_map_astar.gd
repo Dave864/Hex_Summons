@@ -1,24 +1,45 @@
 class_name HexMapAStar
 extends AStar3D
-"""
-Custom AStar3D implementation designed to handle the calculations for hex grid
-pathfinding and area-finding.
-"""
+## Custom AStar3D implementation designed to handle the calculations for hex grid
+## pathfinding and area-finding.
 
 
-# The cost function that should be used when calculating distance.
+## The cost function that should be used when calculating distance.
 var _cost_func: Callable = Callable(self, "_travel_dist")
-# The function that should be used when adding another item to the closest path.
+## The function that should be used when adding another item to the closest path.
 var _add_path_item_func: Callable = Callable(self, "_add_id")
-# Tracks how many tiles are along the x-axis of the hex map this object represents.
+## Tracks how many tiles are along the x-axis of the hex map this object represents.
 var _x_count: int = 0
 
 
-# Gets the distances from the starting point to all tiles within a given reach.
-# A negative reach indicates that all map tiles should be looked at. The use_tile
-# flag indicates that the tile distance should be used instead of travel distance.
-# Each entry has the travel distance and tile distance stored in a dictionary.
-# Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
+func _init(hex_map_tiles: Array, x_count: int) -> void:
+	_x_count = x_count
+	set_cost_to_travel()
+	# Empty out the current astar map and resize if necessary.
+	clear()
+	if get_point_capacity() < hex_map_tiles.size():
+		reserve_space(hex_map_tiles.size())
+	
+	# Add the tiles to the astar map.
+	for tile in hex_map_tiles:
+		if !tile.is_active():
+			continue
+		## TODO: weight will need to be updated when different tile types
+		## are eventually created
+		add_point(
+				tile.map_coordinate.get_tile_index(),
+				tile.get_character_position(),
+				1.0
+		)
+		set_point_disabled(tile.map_coordinate.get_tile_index())
+	_connect_tiles(hex_map_tiles)
+
+
+## Gets the distances from the starting point to all tiles within a given reach.
+## A negative reach indicates that all map tiles should be looked at. The use_tile
+## flag indicates that the tile distance should be used instead of travel distance.
+## Each entry has the travel distance and tile distance stored in a dictionary.
+## Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
 func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Dictionary:
 	var frontier: PQueue = PQueue.new()
 	var id_distances: Dictionary = {}
@@ -48,8 +69,8 @@ func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Diction
 	return id_distances
 
 
-# Gets the distances from the starting point to all tiles within the map.
-# Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
+## Gets the distances from the starting point to all tiles within the map.
+## Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
 func get_full_distance_map(start_id: int) -> Dictionary:
 	var frontier: PQueue = PQueue.new()
 	var id_distances: Dictionary = {}
@@ -75,8 +96,8 @@ func get_full_distance_map(start_id: int) -> Dictionary:
 	return id_distances
 
 
-# Finds the point in the area that is farthest from target. The area is an
-# array of map tile ids. Returns -1 if no farthest index could be found.
+## Finds the point in the area that is farthest from target. The area is an
+## array of map tile ids. Returns -1 if no farthest index could be found.
 func get_farthest_in_area(target_id: int, area_indexes: Array) -> int:
 	if area_indexes.size() == 0:
 		return -1
@@ -94,8 +115,8 @@ func get_farthest_in_area(target_id: int, area_indexes: Array) -> int:
 	return farthest_pt
 
 
-# Gets the shortest id path from start to target that is within the maximum
-# distance.
+## Gets the shortest id path from start to target that is within the maximum
+## distance.
 func get_closest_id_path(
 	source_id: int,
 	target_id: int,
@@ -105,8 +126,8 @@ func get_closest_id_path(
 	return PackedInt32Array(_get_closest_path(source_id, target_id, max_dist))
 
 
-# Gets the shortest point path from start to target that is within the maximum
-# distance.
+## Gets the shortest point path from start to target that is within the maximum
+## distance.
 func get_closest_point_path(
 	source_id: int,
 	target_id: int,
@@ -116,7 +137,7 @@ func get_closest_point_path(
 	return PackedVector3Array(_get_closest_path(source_id, target_id, max_dist))
 
 
-# Determines the travel distance from the start to the end.
+## Determines the travel distance from the start to the end.
 func travel_distance(start_index: int, end_index: int) -> float:
 	var path: PackedInt64Array = get_id_path(start_index, end_index)
 	var dist: float = 0.0
@@ -125,7 +146,7 @@ func travel_distance(start_index: int, end_index: int) -> float:
 	return dist
 
 
-# Determines the tile distance from the start to the end.
+## Determines the tile distance from the start to the end.
 func tile_distance(start_index: int, end_index: int) -> float:
 	set_cost_to_tile()
 	var dist: float = travel_distance(start_index, end_index)
@@ -133,62 +154,37 @@ func tile_distance(start_index: int, end_index: int) -> float:
 	return dist
 
 
-# Updates the astar disabled flag for the tiles occupied by the specified characters.
+## Updates the astar disabled flag for the tiles occupied by the specified characters.
 func update_astar_disabled_for_characters(characters: Array, disabled: bool) -> void:
 	for c in characters:
 		set_point_disabled(c.get_index_at(), disabled)
 
 
-# Set the disabled flag for the specified area in the astar map.
+## Set the disabled flag for the specified area in the astar map.
 func set_area_disabled(tile_ids: Array, disabled: bool = true) -> void:
 	for id in tile_ids:
 		set_point_disabled(id, disabled)
 
 
-# Sets the disabled flag for all connections in the astar map.
+## Sets the disabled flag for all connections in the astar map.
 func set_all_disabled(disabled: bool = true) -> void:
 	for id in get_point_count():
 		set_point_disabled(id, disabled)
 
 
-# Sets the cost function for AStar to use the travel distance between tiles.
-# This accounts for tile heights. This is the default.
+## Sets the cost function for AStar to use the travel distance between tiles.
+## This accounts for tile heights. This is the default.
 func set_cost_to_travel() -> void:
 	_cost_func = Callable(self, "_travel_dist")
 
 
-# Sets the cost function for AStar to use the tile distances. This ignores tile
-# heights.
+## Sets the cost function for AStar to use the tile distances. This ignores tile
+## heights.
 func set_cost_to_tile() -> void:
 	_cost_func = Callable(self, "_cube_dist")
 
 
-func _init(hex_map_tiles: Array, x_count: int) -> void:
-	_x_count = x_count
-	set_cost_to_travel()
-	# Empty out the current astar map and resize if necessary.
-	clear()
-	if get_point_capacity() < hex_map_tiles.size():
-		reserve_space(hex_map_tiles.size())
-	
-	# Add the tiles to the astar map.
-	for tile in hex_map_tiles:
-		if !tile.is_active():
-			continue
-		"""
-		TODO: weight will need to be updated when different tile types
-		are eventually created
-		"""
-		add_point(
-				tile.map_coordinate.get_tile_index(),
-				tile.get_character_position(),
-				1.0
-		)
-		set_point_disabled(tile.map_coordinate.get_tile_index())
-	_connect_tiles(hex_map_tiles)
-
-
-# Establish the connections in the astar map for the specified area.
+## Establish the connections in the astar map for the specified area.
 func _connect_tiles(map_tiles: Array) -> void:
 	for tile in map_tiles:
 		if !tile.is_active():
@@ -202,8 +198,8 @@ func _connect_tiles(map_tiles: Array) -> void:
 			)
 
 
-# Gets the closest path to the target given a range limit.
-# Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#astar
+## Gets the closest path to the target given a range limit.
+## Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#astar
 func _get_closest_path(
 	source_id: int,
 	target_id: int,
@@ -259,20 +255,20 @@ func _get_closest_path(
 	return path
 
 
-# Virtual Astar function. Called when computing the cost between two
-# connected points.
+## Virtual Astar function. Called when computing the cost between two
+## connected points.
 func _compute_cost(u: int, v: int) -> float:
 	return _cost_func.call(u, v)
 
 
-# Virtual Astar function. Called when estimating the cost between a point 
-# and the path's ending point.
+## Virtual Astar function. Called when estimating the cost between a point 
+## and the path's ending point.
 func _estimate_cost(u: int, v: int) -> float:
 	return min(0, _cost_func.call(u, v) - 1)
 
 
-# Calculates the travel distance between two tiles. Uses the cube distance and 
-# height difference.
+## Calculates the travel distance between two tiles. Uses the cube distance and 
+## height difference.
 func _travel_dist(start_index: int, end_index: int) -> float:
 	var start_pos: Vector3 = get_point_position(start_index)
 	var end_pos: Vector3 = get_point_position(end_index)
@@ -288,18 +284,18 @@ func _travel_dist(start_index: int, end_index: int) -> float:
 	return cube_dist + height_diff
 
 
-# Calculates the cube distance between two tiles.
+## Calculates the cube distance between two tiles.
 func _cube_dist(start_index: int, end_index: int) -> float:
 	var start_cube: Vector3 = HexUtil.index_to_cube(start_index, _x_count)
 	var end_cube: Vector3 = HexUtil.index_to_cube(end_index, _x_count)
 	return HexUtil.cube_dist(start_cube, end_cube) * get_point_weight_scale(end_index)
 
 
-# One of the options for _add_path_item_func. Simplye returns the id passed.
+## One of the options for _add_path_item_func. Simplye returns the id passed.
 func _add_id(id: int) -> int:
 	return id
 
 
-# One of the options for _add_path_item_func. Gets the position of the id.
+## One of the options for _add_path_item_func. Gets the position of the id.
 func _add_point(id: int) -> Vector3:
 	return get_point_position(id)

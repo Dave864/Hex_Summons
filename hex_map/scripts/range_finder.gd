@@ -1,10 +1,8 @@
 @tool
 class_name RangeFinder
 extends Node
-"""
-Contains the logic for determining area ranges and paths for a HexMap. Requires
-a reference to the map tiles.
-"""
+## Contains the logic for determining area ranges and paths for a HexMap. Requires
+## a reference to the map tiles.
 
 
 @export var map_tiles_reference: NodePath = NodePath(""): set = set_map_tiles
@@ -15,9 +13,9 @@ var _hm_astar: HexMapAStar = null
 @onready var _map_tiles: Tiles = get_node(map_tiles_reference)
 
 
-# Updates the reference path for map tiles node. Is intended only for use when
-# running the RangeFinder script in the inspector for the purposes of saving
-# the distance map resource data.
+## Updates the reference path for map tiles node. Is intended only for use when
+## running the RangeFinder script in the inspector for the purposes of saving
+## the distance map resource data.
 func set_map_tiles(ref_path: NodePath) -> void:
 	map_tiles_reference = ref_path
 	notify_property_list_changed()
@@ -27,9 +25,9 @@ func set_map_tiles(ref_path: NodePath) -> void:
 		_update_distance_map()
 
 
-# Updates the distance map when the reference is changed. Is intended only for
-# use when running the RangeFinder script in the inspector for the purposes of
-# saving the distance map resource data.
+## Updates the distance map when the reference is changed. Is intended only for
+## use when running the RangeFinder script in the inspector for the purposes of
+## saving the distance map resource data.
 func set_distance_map(new_dist_map: Resource) -> void:
 	if new_dist_map == null:
 		dist_maps = null
@@ -46,7 +44,7 @@ func set_distance_map(new_dist_map: Resource) -> void:
 		_update_distance_map()
 
 
-# Calculates the travel distance from a given start to a specified destination.
+## Calculates the travel distance from a given start to a specified destination.
 func travel_distance(start_id: int, dest_id: int) -> float:
 	var d_map: DistanceMap = dist_maps.at(start_id)
 	var dist: float = d_map.travel_dist_at(dest_id)
@@ -54,7 +52,7 @@ func travel_distance(start_id: int, dest_id: int) -> float:
 	return dist
 
 
-# Calculates the travel distance from a given start to a specified destination.
+## Calculates the travel distance from a given start to a specified destination.
 func tile_distance(start_id: int, dest_id: int) -> float:
 	var d_map: DistanceMap = dist_maps.at(start_id)
 	var dist: float = d_map.tile_dist_at(dest_id)
@@ -62,9 +60,9 @@ func tile_distance(start_id: int, dest_id: int) -> float:
 	return dist
 
 
-# Gets the distances from the starting point to all tiles within a given reach.
-# A negative reach indicates that all map tiles should be looked at. The use_tile
-# flag indicates that the tile distance should be used instead of travel distance.
+## Gets the distances from the starting point to all tiles within a given reach.
+## A negative reach indicates that all map tiles should be looked at. The use_tile
+## flag indicates that the tile distance should be used instead of travel distance.
 func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> DistanceMap:
 	var d_map: DistanceMap = dist_maps.at(start_id)
 	if reach < 0:
@@ -85,9 +83,9 @@ func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Distanc
 		return travel_map
 
 
-# Determines the point path to the point within a defined area for a character.
-# This is likely not thread safe as it calls AStar's get_point_path, which is
-# noted to not be thread safe.
+## Determines the point path to the point within a defined area for a character.
+## This is likely not thread safe as it calls AStar's get_point_path, which is
+## noted to not be thread safe.
 func get_character_point_path(
 	c: Character,
 	dest_id: int,
@@ -108,7 +106,7 @@ func get_character_point_path(
 	return point_path
 
 
-# Determines the id path to the point within a defined area for a character.
+## Determines the id path to the point within a defined area for a character.
 func get_character_id_path(
 	c: Character,
 	dest_id: int,
@@ -129,8 +127,8 @@ func get_character_id_path(
 	return id_path
 
 
-# Finds the point in the area that is closest to target_id. The area is an array
-# of tile ids. Returns -1 if no closest index could be found.
+## Finds the point in the area that is closest to target_id. The area is an array
+## of tile ids. Returns -1 if no closest index could be found.
 func get_closest_in_area(target_id: int, area_indices: Array) -> int:
 	if area_indices.size() == 0:
 		return -1
@@ -147,8 +145,8 @@ func get_closest_in_area(target_id: int, area_indices: Array) -> int:
 	return closest[0]
 
 
-# Determines the path id that gets closest to a destination within a distance
-# limit.
+## Determines the path id that gets closest to a destination within a distance
+## limit.
 func get_closest_id_path(
 	start_id: int,
 	dest_id: int,
@@ -170,8 +168,8 @@ func get_closest_id_path(
 	return path_to_dest
 
 
-# Get the area that can be reached by a character. Takes in an array of the
-# opposing characters for determining the tiles to disable.
+## Get the area that can be reached by a character. Takes in an array of the
+## opposing characters for determining the tiles to disable.
 func get_character_travesible_tiles(
 	c: Character,
 	opponents: Array,
@@ -193,8 +191,8 @@ func get_character_travesible_tiles(
 	return move_distances.keys()
 
 
-# Finds the closest path to a destination within a character's movement range
-# where the final point is not occupied by an ally.
+## Finds the closest path to a destination within a character's movement range
+## where the final point is not occupied by an ally.
 func get_character_closest_point_toward(
 	c: Character,
 	dest_id: int,
@@ -253,8 +251,8 @@ func get_character_closest_point_toward(
 	return true_dest_id
 
 
-# Determines the point within a character's movement area that is the farthest
-# away from a target where the final point is not occupied by an ally.
+## Determines the point within a character's movement area that is the farthest
+## away from a target where the final point is not occupied by an ally.
 func get_character_farthest_point_away(
 	c: Character,
 	target_id: int,
@@ -310,7 +308,7 @@ func get_character_farthest_point_away(
 	
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
 	# Waiting for _map_tiles to be ready allows for RangeFinder node being
@@ -323,8 +321,8 @@ func _ready():
 		_update_distance_map()
 
 
-# Updates the distance map if necessary. Should only ever be called when running
-# the RangeFinder script in inspector.
+## Updates the distance map if necessary. Should only ever be called when running
+## the RangeFinder script in inspector.
 func _update_distance_map() -> void:
 	var d_hash: int = hash(get_parent().name)
 	if (
@@ -356,7 +354,7 @@ func _update_distance_map() -> void:
 		printerr("Failed to save distance maps")
 
 
-# Updates the astar disabled flag for the tiles occupied by the specified characters.
+## Updates the astar disabled flag for the tiles occupied by the specified characters.
 func _disable_character_tiles(
 	characters: Array,
 	disabled: bool
@@ -365,7 +363,7 @@ func _disable_character_tiles(
 		_hm_astar.set_point_disabled(c.map_coordinate.get_tile_index(), disabled)
 
 
-# Determines which tiles are reachable in a specified map section.
+## Determines which tiles are reachable in a specified map section.
 func _get_traversible_ids(
 	start_index: int,
 	reach: int
@@ -374,7 +372,7 @@ func _get_traversible_ids(
 	return d_map.tile_ids()
 
 
-# Check that all required parameters are set.
+## Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
 			dist_maps != null,

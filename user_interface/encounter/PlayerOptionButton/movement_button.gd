@@ -1,19 +1,18 @@
 class_name MovementButton
 extends PlayerOptionButton
-"""
-A button that denotes the movement player option. Manages the button animations
-associated with selecting this option.
-"""
+## A button that denotes the movement player option.
+##
+## Manages the button animations associated with selecting this option.
 
 
-# Grabs the focus for the UI.
+## Grabs the focus for the UI.
 func _on_MovementButton_mouse_entered() -> void:
 	if disabled:
 		return
 	grab_focus.call_deferred()
 
 
-# Plays focus animation.
+## Plays focus animation.
 func _on_MovementButton_focus_entered() -> void:
 	if button_pressed:
 		ap_focus.play("focus_selected")
@@ -21,14 +20,14 @@ func _on_MovementButton_focus_entered() -> void:
 		ap_focus.play("focus")
 
 
-# Toggles the Movement button off when focus has shifted to a new Control item.
+## Toggles the Movement button off when focus has shifted to a new Control item.
 func _on_MovementButton_focus_exited() -> void:
 	ap_focus.play("RESET")
 	if not button_pressed:
 		ap_icon.play("RESET")
 
 
-# Keeps the Movement button toggled on when it is in focus.
+## Keeps the Movement button toggled on when it is in focus.
 func _on_MovementButton_toggled(is_toggled: bool) -> void:
 	if is_toggled:
 		ap_focus.play("focus_selected")

@@ -1,11 +1,9 @@
 class_name HexUtil
 extends Object
-"""
-Collection of functions useful for calculations on a hexagonal grid.
-"""
+## Collection of functions useful for calculations on a hexagonal grid.
 
 
-# Represents the possible directions for a hex tile.
+## Represents the possible directions for a hex tile.
 enum HexDirection {
 	UPPER_LEFT,
 	UPPER_RIGHT,
@@ -15,9 +13,9 @@ enum HexDirection {
 	LEFT,
 }
 
-# Collection of vectors that represent the direction for a hex tile described
-# in cube coordinates.
-# Reference: https://www.redblobgames.com/grids/hexagons/#neighbors-cube
+## Collection of vectors that represent the direction for a hex tile described
+## in cube coordinates.
+## Reference: https://www.redblobgames.com/grids/hexagons/#neighbors-cube
 const CUBE_DIRECTION_VECTORS: Dictionary = {
 	HexDirection.UPPER_LEFT: Vector3(0.0, -1.0, 1.0),
 	HexDirection.UPPER_RIGHT: Vector3(1.0, -1.0, 0.0),
@@ -27,9 +25,9 @@ const CUBE_DIRECTION_VECTORS: Dictionary = {
 	HexDirection.LEFT: Vector3(-1.0, 0.0, 1.0),
 }
 
-# The ratio between 
-# the distance from the center of a hexagon to one of its vertices and 
-# the distance from the center of a hexagon to the midpoint of one of its edges.
+## The ratio between 
+## the distance from the center of a hexagon to one of its vertices and 
+## the distance from the center of a hexagon to the midpoint of one of its edges.
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
 # Defines the positions of a unit circle that correspond to the vertices of
@@ -47,9 +45,9 @@ const HV_COORD_4: Vector2 = Vector2(-HEX_EDGE_RATIO, 0.5)
 const HV_COORD_5: Vector2 = Vector2(-HEX_EDGE_RATIO, -0.5)
 
 
-# Converts the index to the corresponding cube coordinate.
-# Requires the number of tiles in a map along the x-axis.
-# Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
+## Converts the index to the corresponding cube coordinate.
+## Requires the number of tiles in a map along the x-axis.
+## Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
 static func index_to_cube(index: int, x_count: int) -> Vector3:
 	var z_pos: int = int(floor(float(index) / float(x_count)))
 	var x_pos: int = index % x_count
@@ -57,9 +55,9 @@ static func index_to_cube(index: int, x_count: int) -> Vector3:
 	return Vector3(x_cube, z_pos, -x_cube - z_pos)
 
 
-# Converts the cube coordinates to offset coordinates. The offset coordinates
-# have the origin centered at the upper leftmost tile of the hex map.
-# Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
+## Converts the cube coordinates to offset coordinates. The offset coordinates
+## have the origin centered at the upper leftmost tile of the hex map.
+## Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
 static func cube_to_offset(coord: Vector3) -> Vector2:
 	# Use bitwise and to detect whether something is even (0) or odd (1), 
 	# in order to catch negative numbers too.
@@ -68,20 +66,20 @@ static func cube_to_offset(coord: Vector3) -> Vector2:
 	return Vector2(x_pos, z_pos)
 
 
-# Converts the cube coordinates to the corresponding index.
-# Requires the number of tiles in a map along the x-axis.
-# Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
+## Converts the cube coordinates to the corresponding index.
+## Requires the number of tiles in a map along the x-axis.
+## Reference: https://www.redblobgames.com/grids/hexagons/#conversions-offset
 static func cube_to_index(coord: Vector3, x_count: int) -> int:
 	var offset_coord: Vector2 = cube_to_offset(coord)
 	return int((offset_coord.y * x_count) + offset_coord.x)
 
 
-# Get the cube coordinates of the tile a specified distance away from an origin
-# point in a specific hexagonal cardinal direction.
-# 0  /\  1
-# 5 |  | 2
-# 4  \/  3
-# Reference: https://www.redblobgames.com/grids/hexagons/#neighbors
+## Get the cube coordinates of the tile a specified distance away from an origin
+## point in a specific hexagonal cardinal direction.
+## 0  /\  1
+## 5 |  | 2
+## 4  \/  3
+## Reference: https://www.redblobgames.com/grids/hexagons/#neighbors
 static func cube_at_distance(
 	origin: Vector3,
 	distance: float,
@@ -93,15 +91,15 @@ static func cube_at_distance(
 	return dest
 
 
-# Calculates the cube distance.
-# Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
+## Calculates the cube distance.
+## Reference: https://www.redblobgames.com/grids/hexagons/#distances-cube
 static func cube_dist(start: Vector3, end: Vector3) -> float:
 	var diff: Vector3 = start - end
 	return (abs(diff.x) + abs(diff.y) + abs(diff.z)) / 2.0
 
 
-# Gets the cube coordinates of the hexes that are in a line from start to end.
-# Reference: https://www.redblobgames.com/grids/hexagons/#line-drawing
+## Gets the cube coordinates of the hexes that are in a line from start to end.
+## Reference: https://www.redblobgames.com/grids/hexagons/#line-drawing
 static func cube_line(start: Vector3, end: Vector3) -> Array:
 	var line_cubes: Array = []
 	var dist: float = cube_dist(start, end)
@@ -116,10 +114,10 @@ static func cube_line(start: Vector3, end: Vector3) -> Array:
 	return line_cubes
 
 
-# Determines the hexagonal direction of a given unit vector.
-# 0  /\  1
-# 5 |  | 2
-# 4  \/  3
+## Determines the hexagonal direction of a given unit vector.
+## 0  /\  1
+## 5 |  | 2
+## 4  \/  3
 static func get_hex_direction(
 	dir_vec: Vector2,
 	top_vertex: int = 0
@@ -160,11 +158,11 @@ static func get_hex_direction(
 	return _relative_hex_direction(dir, top_vertex)
 
 
-# Returns the rotation in radians of the given hex direction. Binds the direction
-# to valid hex directions.
-# 0: -11 * PI / 6.0  /\  1: -1 * PI / 6.0
-# 5: -9 * PI / 6.0  |  | 2: -3 * PI / 6.0
-# 4: -7 * PI / 6.0   \/  3: -5 * PI / 6.0
+## Returns the rotation in radians of the given hex direction. Binds the direction
+## to valid hex directions.
+## 0: -11 * PI / 6.0  /\  1: -1 * PI / 6.0
+## 5: -9 * PI / 6.0  |  | 2: -3 * PI / 6.0
+## 4: -7 * PI / 6.0   \/  3: -5 * PI / 6.0
 static func dir_rotation(dir: int) -> float:
 	var true_dir: int = 6 if dir <= 0 else 5 if dir > 5 else dir
 	# Want to position rotation at midpoint of line. Testing revealed that the
@@ -172,11 +170,11 @@ static func dir_rotation(dir: int) -> float:
 	return -(2 * true_dir - 1) * PI / 6.0
 
 
-# Get the hexagonal direction relative to the defined top vertex. Used to
-# match the camera orientation.
-# 0  /\  1
-# 5 |  | 2
-# 4  \/  3
+## Get the hexagonal direction relative to the defined top vertex. Used to
+## match the camera orientation.
+## 0  /\  1
+## 5 |  | 2
+## 4  \/  3
 static func _relative_hex_direction(
 	desired_direction: int,
 	relative_top: int = 0
@@ -187,11 +185,11 @@ static func _relative_hex_direction(
 		return desired_direction
 
 
-# Get the axial direction relative to the defined top vertex. Used to
-# match the camera orientation.
-# 0  /\            /\  0
-# 3 |  | 1  or  3 |  | 1
-#    \/  2      2  \/
+## Get the axial direction relative to the defined top vertex. Used to
+## match the camera orientation.
+## 0  /\            /\  0
+## 3 |  | 1  or  3 |  | 1
+##    \/  2      2  \/
 static func _relative_axial_direction(
 	desired_direction: int,
 	relative_top: int = 0
@@ -202,16 +200,16 @@ static func _relative_axial_direction(
 		return desired_direction
 
 
-# Linearly interpolates between two points of a cube coordinate axis.
-# Helper for cube_line.
-# Reference: https://www.redblobgames.com/grids/hexagons/#line-drawing
+## Linearly interpolates between two points of a cube coordinate axis.
+## Helper for cube_line.
+## Reference: https://www.redblobgames.com/grids/hexagons/#line-drawing
 static func _cube_axis_lerp(start: float, end: float, weight: float) -> float:
 	return start + (end - start) * weight
 
 
-# Rounds the given cube fraction to the nearest cube coordinate. Helper for
-# cube_line.
-# Reference: https://www.redblobgames.com/grids/hexagons/#rounding
+## Rounds the given cube fraction to the nearest cube coordinate. Helper for
+## cube_line.
+## Reference: https://www.redblobgames.com/grids/hexagons/#rounding
 static func _cube_round(cube_frac: Vector3) -> Vector3:
 	var x: float = round(cube_frac.x)
 	var y: float = round(cube_frac.y)

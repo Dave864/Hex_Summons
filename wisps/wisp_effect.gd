@@ -1,21 +1,20 @@
 class_name WispEffect
 extends Resource
-"""
-Defines a bonus effect a wisp has. This applies some kind of modifier to
-a specified character stat.
-"""
+## Defines a bonus effect a wisp has.
+##
+## This applies some of modifier to a specified character stat.
 
 
-# The stat of the target that is affected by this effect.
+## The stat of the target that is affected by this effect.
 @export var stat_affected: Resource = null
-# How the targeted stat is modified.
+## How the targeted stat is modified.
 @export var operation = Constants.Operation.SET # (Constants.Operation)
-# The method that determines the strength of this effect. Should either be
-# a flat_value_calculation or percentage_calculation.
+## The method that determines the strength of this effect. Should either be
+## a flat_value_calculation or percentage_calculation.
 @export var calculation_method: Resource = null
 
 
-# Determines the numerical result of this effect on a target set of character stats.
+## Determines the numerical result of this effect on a target set of character stats.
 func effect_on_character(target_stats: CharacterStats) -> int:
 	assert(
 			(

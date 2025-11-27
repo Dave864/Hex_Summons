@@ -1,9 +1,7 @@
 class_name DisplayMatrix
 extends Object
-"""
-Matrix array that keeps track of the visual details for an action's various
-ranges.
-"""
+## Matrix array that keeps track of the visual details for an action's various
+## ranges.
 
 
 enum Detail {
@@ -23,32 +21,32 @@ var _mid_row: int = 0
 var _matrix: Array = []
 
 
-# Gets the row count of the matrix.
+## Gets the row count of the matrix.
 func get_row_count() -> int:
 	return _row_count
 
 
-# Gets the column count of the matrix.
+## Gets the column count of the matrix.
 func get_col_count() -> int:
 	return _col_count
 
 
-# Gets the details at the given index.
+## Gets the details at the given index.
 func at(index: Vector2) -> Dictionary:
 	return _matrix[index.y][index.x]
 
 
-# Gets the outline details at the given index.
+## Gets the outline details at the given index.
 func outline_at(index: Vector2) -> int:
 	return _matrix[index.y][index.x][OUTLINE]
 
 
-# Gets the fill details at the given index.
+## Gets the fill details at the given index.
 func fill_at(index: Vector2) -> int:
 	return _matrix[index.y][index.x][FILL]
 
 
-# Set the outline detail for the given index.
+## Set the outline detail for the given index.
 func set_outline(index: Vector2, outline_detail: int) -> void:
 	assert(
 			outline_detail in Detail.values(),
@@ -57,7 +55,7 @@ func set_outline(index: Vector2, outline_detail: int) -> void:
 	_matrix[index.y][index.x][OUTLINE] = outline_detail
 
 
-# Sets the fill detail for the given index.
+## Sets the fill detail for the given index.
 func set_fill(index: Vector2, fill_detail: int) -> void:
 	assert(
 			fill_detail in Detail.values(),
@@ -66,7 +64,7 @@ func set_fill(index: Vector2, fill_detail: int) -> void:
 	_matrix[index.y][index.x][FILL] = fill_detail
 
 
-# Sets the details for the given index.
+## Sets the details for the given index.
 func set_details(index: Vector2, outline_detail: int, fill_detail: int) -> void:
 	# Don't update effect outline if new outline is a source.
 	if (
@@ -82,13 +80,13 @@ func set_details(index: Vector2, outline_detail: int, fill_detail: int) -> void:
 		set_fill(index, fill_detail)
 
 
-# Sets the details for the caster point.
+## Sets the details for the caster point.
 func set_caster_details() -> void:
 	_matrix[_mid_row][1][OUTLINE] = Detail.CASTER
 	_matrix[_mid_row][1][FILL] = Detail.CASTER
 
 
-# Sets the details for the emission point.
+## Sets the details for the emission point.
 func set_emission_details(emission_index: Vector2) -> void:
 	set_outline(emission_index, Detail.EFFECT_SOURCE)
 	# Don't update fill if caster point.
@@ -96,7 +94,7 @@ func set_emission_details(emission_index: Vector2) -> void:
 		set_fill(emission_index, Detail.EFFECT_SOURCE)
 
 
-# Resets the matrix so that the display is empty.
+## Resets the matrix so that the display is empty.
 func reset_display() -> void:
 	for row in _row_count:
 		for col in _col_count:
@@ -104,7 +102,7 @@ func reset_display() -> void:
 			_matrix[row][col][FILL] = Detail.EMPTY
 
 
-# Initializes this DisplayMatrix.
+## Initializes this DisplayMatrix.
 func _init(row_count: int, col_count: int):
 	_row_count = row_count
 	_col_count = col_count

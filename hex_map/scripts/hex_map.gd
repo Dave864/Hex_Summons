@@ -1,9 +1,9 @@
 class_name HexMap
 extends Node3D
-"""
-A representation of the overall battlemap. Exposes the necessary parameters
-from the child nodes that are needed for other nodes to interact with the map.
-"""
+## A representation of the overall battlemap.
+##
+## Exposes the necessary parameters from the child nodes that are needed for
+## other nodes to interact with the map.
 
 
 const TILES: String = "Tiles"
@@ -20,40 +20,10 @@ var _floor_mesh: PlaneMesh = preload("res://hex_map/resources/hex_map_floor.tres
 var _floor_mesh_node: MeshInstance3D = null
 var _tiles_node: Tiles = null
 
+## The collection of all map tiles stored in the Tiles node.
 @onready var _map_tiles: Array = []: get = get_map_tiles
-# Reference to the scene tree root.
+## Reference to the scene tree root.
 @onready var _root_node: Node = get_tree().edited_scene_root
-
-
-# Get the number of tiles along the X axis.
-func get_x_count() -> int:
-	return _tiles_node.get_x_count()
-
-
-# Get the number of tiles along the Z axis.
-func get_z_count() -> int:
-	return _tiles_node.get_z_count()
-
-
-# Places the character at the tile at the given index.
-func place_character_at_tile(character: Character, tile_index: int) -> void:
-	var pos: Vector3 = get_tile_at(tile_index).get_character_position()
-	character.position = pos
-
-
-# Retrieve the map tiles of this hex map.
-func get_map_tiles() -> Array:
-	return _map_tiles
-
-
-# Get the map tile at the specific index.
-func get_tile_at(index: int) -> MapTile:
-	return _map_tiles[index]
-
-
-# Checks if the given cube coordinates are within the bounds of the map.
-func is_valid_cube(cube: Vector3) -> bool:
-	return _tiles_node.is_valid_cube(cube)
 
 
 func _ready() -> void:
@@ -65,7 +35,38 @@ func _ready() -> void:
 	_check_for_required_parameters()
 
 
-# Creates a Tiles node if not already present.
+## Get the number of tiles along the X axis.
+func get_x_count() -> int:
+	return _tiles_node.get_x_count()
+
+
+## Get the number of tiles along the Z axis.
+func get_z_count() -> int:
+	return _tiles_node.get_z_count()
+
+
+## Places the character at the tile at the given index.
+func place_character_at_tile(character: Character, tile_index: int) -> void:
+	var pos: Vector3 = get_tile_at(tile_index).get_character_position()
+	character.position = pos
+
+
+## Retrieve the map tiles of this hex map.
+func get_map_tiles() -> Array:
+	return _map_tiles
+
+
+## Get the map tile at the specific index.
+func get_tile_at(index: int) -> MapTile:
+	return _map_tiles[index]
+
+
+## Checks if the given cube coordinates are within the bounds of the map.
+func is_valid_cube(cube: Vector3) -> bool:
+	return _tiles_node.is_valid_cube(cube)
+
+
+## Creates a Tiles node if not already present.
 func _create_tiles_node() -> void:
 	if get_node_or_null(TILES) == null:
 		_tiles_node = Tiles.new()
@@ -76,7 +77,7 @@ func _create_tiles_node() -> void:
 		_tiles_node = get_node(TILES)
 
 
-# Create a floor mesh node and position it if not already present.
+## Create a floor mesh node and position it if not already present.
 func _create_floor_mesh() -> void:
 	if get_node_or_null(FLOOR_MESH) == null:
 		_floor_mesh_node = MeshInstance3D.new()
@@ -90,7 +91,7 @@ func _create_floor_mesh() -> void:
 		_floor_mesh_node = get_node(FLOOR_MESH)
 
 
-# Create a selection tracker node if not already present.
+## Create a selection tracker node if not already present.
 func _create_selection_tracker() -> void:
 	if get_node_or_null(SELECTION_TRACKER) == null:
 		selection_tracker = SelectionTracker.new()
@@ -101,7 +102,7 @@ func _create_selection_tracker() -> void:
 		selection_tracker = get_node(SELECTION_TRACKER)
 
 
-# Create a pathfinder node if not already present.
+## Create a pathfinder node if not already present.
 func _create_pathfinder() -> void:
 	if get_node_or_null(RANGE_FINDER) == null:
 		range_finder = RangeFinder.new()
@@ -112,7 +113,7 @@ func _create_pathfinder() -> void:
 		range_finder = get_node(RANGE_FINDER)
 
 
-# Check that all required parameters are set and/or valid.
+## Check that all required parameters are set and/or valid.
 func _check_for_required_parameters() -> void:
 	var tile_count: int = get_z_count() * get_x_count()
 	assert(

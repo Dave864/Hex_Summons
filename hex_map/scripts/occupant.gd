@@ -1,21 +1,19 @@
 @tool
 extends Node
 class_name Occupant
-"""
-Keeps track of the current occupant at a given map tile.
-"""
+## The current occupant at a given map tile.
 
 
-# The current occupant of the tile.
+## The current occupant of the tile.
 var _occupant: Character = null: get = get_current_occupant
 
 
-# Gets the current character occupying this tile.
+## Gets the current character occupying this tile.
 func get_current_occupant() -> Character:
 	return _occupant
 
 
-# Check if the tile is able to be moved through by the specifed character type.
+## Check if the tile is able to be moved through by the specifed character type.
 func can_character_pass(character_type: int) -> bool:
 	match character_type:
 		Character.Type.PLAYER:
