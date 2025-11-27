@@ -1,9 +1,7 @@
 extends State
 class_name EncounterCameraState
-"""
-Boilerplate class to get full autocompletion and type checks for an 
-`encounter_camera` when coding an encounter camera's states.
-"""
+## Boilerplate class to get full autocompletion and type checks for an 
+## `encounter_camera` when coding an encounter camera's states.
 
 
 # The name of the states for this FSM.
@@ -11,11 +9,11 @@ var PAN: String = "Pan"
 var NORMALIZE: String = "Normalize"
 var RESET: String = "Reset"
 
-# Typed reference to the EncounterCamera node.
+## Typed reference to the EncounterCamera node.
 var enc_camera: EncounterCamera
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# The states are children of an `EncounterCamera` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 

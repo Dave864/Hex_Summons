@@ -1,9 +1,7 @@
 class_name AdjacentCondition
 extends ActionCondition
-"""
-ActionCondition that checks if there are a certain number of opposing characters
-adjacent.
-"""
+## ActionCondition that checks if there are a certain number of opposing characters
+## adjacent.
 
 
 enum Condition {
@@ -12,12 +10,14 @@ enum Condition {
 	UP_TO
 }
 
+## The number to use for adjacency checks.
 @export var adjacent_check = 1 # (int, 0, 10)
+## How to evaluate the adjacent check.
 @export var check_type: Condition = Condition.EQUALS
 
 
-# Virtual function. Checks if the condition has been met given the current
-# state of the characters and map.
+## Virtual function. Checks if the condition has been met given the current
+## state of the characters and map.
 func is_met(
 	_character: Character,
 	targets: Array,
@@ -31,7 +31,7 @@ func is_met(
 	)
 
 
-# Calculate the number of adjacent characters from a given set.
+## Calculate the number of adjacent characters from a given set.
 func _determine_adjacent_count(
 	characters_to_check: Array,
 	distance_map: DistanceMap

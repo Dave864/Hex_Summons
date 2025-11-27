@@ -1,69 +1,67 @@
 class_name EffectAspect
 extends Node
-"""
-Defines an aspect of an effect. This applies some kind of modifier to a
-specified character stat.
-"""
+## Defines an aspect of an effect. This applies some kind of modifier to a
+## specified character stat.
 
 
-# Describes what the aspect targets.
+## Describes what the aspect targets.
 enum Target {
 	SELF,
 	ALLIES,
 	OPPONENTS,
 	NONE
 }
-# Describes what changes when resistance is applied.
+## Describes what changes when resistance is applied.
 enum ResEffect {
 	STRENGTH,
 	DURATION,
 }
 
-# The target of this effect.
+## The target of this effect.
 @export var target: Target = Target.NONE
-# The stat of the target that is affected by this effect.
+## The stat of the target that is affected by this effect.
 @export var stat_affected: Resource = null
-# How the targeted stat is modified.
+## How the targeted stat is modified.
 @export var operation = Constants.Operation.SET # (Constants.Operation)
-# The method that determines the strength of this effect.
+## The method that determines the strength of this effect.
 @export var calculation_method: Resource = null
-# Flag that indicates if this effect is resisted by the target
+## Flag that indicates if this effect is resisted by the target
 @export var resisted: bool = true
-# Indicates if resistance affects aspect strength or duration.
+## Indicates if resistance affects aspect strength or duration.
 @export var resistance_effect: ResEffect = ResEffect.STRENGTH
-# The maximum number of turns this effect can last afier application. A value
-# of zero means the effect is applied immediately.
+## The maximum number of turns this effect can last afier application. A value
+## of zero means the effect is applied immediately.
 @export var max_turn_duration = 0 # (int, 0, 100)
 
-# How many turns does this effect last after application when adjusted for
-# resistances.
+## How many turns does this effect last after application when adjusted for
+## resistances.
 var turn_duration: int = max_turn_duration
 
-# The stats of the character that will apply this effect.
+## The stats of the character that will apply this effect.
 var _source_stats: CharacterStats = null: set = set_source_stats
-# The current values of the character stats.
+## The current values of the character stats.
 var _current_stats: Dictionary = {}
-# The potency of the action the parent effect is assigned to.
+## The potency of the action the parent effect is assigned to.
 var _action_potency: Potency = null: set = set_action_potency
 
 
-# Updates the source character stats of this effect aspect.
+## Updates the source character stats of this effect aspect.
 func set_source_stats(new_source: CharacterStats) -> void:
 	_source_stats = new_source
 	update_current_stats()
 
 
-# Updates the action potency data.
+## Updates the action potency data.
 func set_action_potency(new_potency: Potency) -> void:
 	_action_potency = new_potency
 
 
-# Gets the current values of the source stats.
+## Gets the current values of the source stats.
 func update_current_stats() -> void:
 	_current_stats = _source_stats.get_all()
 
 
-# Determines the numerical result of the effect on a target set of character stats.
+## Determines the numerical result of the effect on a target set of character stats.
 func effect_on_target(target_stats: CharacterStats) -> int:
 	var b_str: float = calculation_method.base_strength(
 			_current_stats,
@@ -93,12 +91,12 @@ func effect_on_target(target_stats: CharacterStats) -> int:
 			return 0
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
 
 
-# Check that all required parameters are set.
+## Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
 			stat_affected != null,
@@ -106,7 +104,7 @@ func _check_for_required_parameters() -> void:
 	)
 	assert(
 			stat_affected is Stat,
-			"Error: Effect %s stat_affected is not a Stat." % [name]
+			"Effect %s stat_affected is not a Stat." % [name]
 	)
 	assert(
 			calculation_method != null,
@@ -114,5 +112,5 @@ func _check_for_required_parameters() -> void:
 	)
 	assert(
 			calculation_method is StrengthCalculation,
-			"Error: Effect %s strength_calculation is not a StrengthCalculation resource." % [name]
+			"Effect %s strength_calculation is not a StrengthCalculation resource." % [name]
 	)

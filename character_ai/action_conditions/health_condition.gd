@@ -1,18 +1,18 @@
 class_name HealthCondition
 extends ActionCondition
-"""
-ActionCondition that checks if a given character meets a given health threshold.
-The threshold is represented as a percentage and the condition can be either 
-above or below the threshold.
-"""
+## ActionCondition that checks if a given character meets a given health threshold.
 
 
+## The percentage of health that is compared to when checking if this
+## condition is met.
 @export var threshold = 1.0 # (float, 0.0, 1.0)
+## Indicates if this condition checks if the health is above or below the
+## specified threshold.
 @export var below: bool = false
 
 
-# Virtual function. Checks if the condition has been met given the current
-# state of the characters and map.
+## Virtual function. Checks if the condition has been met given the current
+## state of the characters and map.
 func is_met(
 	character: Character,
 	_targets: Array,

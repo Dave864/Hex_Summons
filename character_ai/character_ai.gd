@@ -1,11 +1,11 @@
 class_name CharacterAI
 extends Node
-"""
-Node that determines the actions a character should take given the current
-state of the encounter. Requires references to all characters, the HexMap, and
-the actions available. The function 'determine_action_chain' is usually called
-as part of a separate thread.
-"""
+## Node that determines the actions a character should take given the current
+## state of the encounter.
+##
+## Requires references to all characters, the HexMap, and the actions available.
+## The function 'determine_action_chain' is usually called as part of a separate
+## thread.
 
 
 # Names of the different actions an enemy can take. Matches the corresponding
@@ -13,7 +13,7 @@ as part of a separate thread.
 # constants directly from EnemyCharacterState results in a cyclic reference.
 const ACTION: String = "Action"
 const MOVE: String = "Move"
-# Name of the Action node that represents only movement
+## Name of the Action node that represents only movement
 const MOVE_ACTION_NAME: String = "Empty"
 
 @export var actions_ref: NodePath = NodePath("")
@@ -22,26 +22,32 @@ var h_map: HexMap = null
 var d_map: DistanceMap = null
 
 var _character: Character = null
-# Tracks allies and opponents by their instance ids
+## Tracks allies and opponents by their instance ids.
 var _allies: Dictionary = {}
 var _opponents: Dictionary = {}
 var _possible_targets: Array = []
-# Threat trackers for allies and opponents
+## Threat trackers for allies.
 var _a_ttr: ThreatTracker = null
+## Threat trackers for opponents.
 var _o_ttr: ThreatTracker = null
-# Tracks the index of the final movement tile.
+## Tracks the index of the final movement tile.
 var _move_dest_id: int = -1: get = get_move_dest_id
 
 @onready var _actions: Array = get_node(actions_ref).get_children()
 @onready var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 
-# Returns the index of the movement destination.
+func _ready() -> void:
+	_check_for_required_parameters()
+	_rng.randomize()
+
+
+## Returns the index of the movement destination.
 func get_move_dest_id() -> int:
 	return _move_dest_id
 
 
-# Regenerates the distance map for the character's current position.
+## Regenerates the distance map for the character's current position.
 func update_distance_map() -> void:
 	var char_index: int = _character.map_coordinate.get_tile_index()
 	if d_map == null:
@@ -51,8 +57,8 @@ func update_distance_map() -> void:
 		d_map = h_map.range_finder.get_distance_map(char_index, true)
 
 
-# Determines the actions that need to be taken for the character based on the
-# current state of the map.
+## Determines the actions that need to be taken for the character based on the
+## current state of the map.
 func determine_action_chain() -> Array:
 	var ab: ActionBehavior = null
 	for action in _actions:
@@ -88,7 +94,7 @@ func determine_action_chain() -> Array:
 	return _default_chain()
 
 
-# Obtains the necessary references to run the AI logic.
+## Obtains the necessary references to run the AI logic.
 func connect_encounter_details(
 	h_map_ref: HexMap,
 	character: Character,
@@ -105,16 +111,11 @@ func connect_encounter_details(
 	_a_ttr = ThreatTracker.new(_character.get_instance_id(), allies)
 
 
-func _ready() -> void:
-	_check_for_required_parameters()
-	_rng.randomize()
-
-
-# Goes through all relevant target indexes and determines the movement
-# path for the character and emission index of the action for the
-# first target that is within range. Returns these details as an array:
-# [movement_path, target_index]
-# Returns an empty array if no targets are within range.
+## Goes through all relevant target indexes and determines the movement
+## path for the character and emission index of the action for the
+## first target that is within range. Returns these details as an array:
+## [movement_path, target_index]
+## Returns an empty array if no targets are within range.
 func _determine_action_details(
 	action: Action,
 	ab: ActionBehavior
@@ -140,7 +141,7 @@ func _determine_action_details(
 	return details
 
 
-# Determines the indexes of the tiles the character can target.
+## Determines the indexes of the tiles the character can target.
 func _get_sorted_target_indexes(ab: ActionBehavior) -> Array:
 	if ab.target_group():
 		return _get_group_target_indexes(ab.get_group_condition(), ab.target_focus)
@@ -164,7 +165,7 @@ func _get_sorted_target_indexes(ab: ActionBehavior) -> Array:
 		return target_indexes
 
 
-# Gets the target index based on a group condition.
+## Gets the target index based on a group condition.
 func _get_group_target_indexes(gc: GroupCondition, target_focus: int) -> Array:
 	var groups: Dictionary = gc.find_group_index_centers(h_map.get_x_count())
 	match target_focus:
@@ -188,7 +189,7 @@ func _get_group_target_indexes(gc: GroupCondition, target_focus: int) -> Array:
 			return sorted_centers
 
 
-# Gets the threat order of opponent characters.
+## Gets the threat order of opponent characters.
 func _determine_opponent_index_threat_order() -> Array:
 	var danger_opponents: Array = _opponents.keys()
 	danger_opponents.sort_custom(Callable(self, "_sort_opponent_danger"))
@@ -198,7 +199,7 @@ func _determine_opponent_index_threat_order() -> Array:
 	return indexes
 
 
-# Gets the threat order of ally characters.
+## Gets the threat order of ally characters.
 func _determine_ally_index_threat_order() -> Array:
 	var danger_allies: Array = _allies.keys()
 	danger_allies.sort_custom(Callable(self, "_sort_ally_danger"))
@@ -208,7 +209,7 @@ func _determine_ally_index_threat_order() -> Array:
 	return indexes
 
 
-# Checks if the target id is within the dead range of an action.
+## Checks if the target id is within the dead range of an action.
 func _target_in_dead_range(action: Action, target_id: int) -> bool:
 	return (
 			(
@@ -219,21 +220,19 @@ func _target_in_dead_range(action: Action, target_id: int) -> bool:
 	)
 
 
-# Determines the movement path and true target when a target is within an action's
-# dead range. Movement will always be away from the target. Returns the details
-# as an array:
-# [movement_path, target_index]
-# Returns an empty array if the character is unable to move in a way that lets
-# it hit the original target.
+## Determines the movement path and true target when a target is within an action's
+## dead range. Movement will always be away from the target. Returns the details
+## as an array:
+## [movement_path, target_index]
+## Returns an empty array if the character is unable to move in a way that lets
+## it hit the original target.
 func _dead_range_details(
 	action: Action,
 	ab: ActionBehavior,
 	t_index: int,
 	movement: int
 ) -> Array:
-	"""
-	TODO: Add logic to account for cardinal shaped ranges.
-	"""
+	## TODO: Add logic to account for cardinal shaped ranges.
 	var details: Array = []
 	var src_map: DistanceMap = _get_source_d_map(action)
 	var c_src: int = h_map.range_finder.get_closest_in_area(
@@ -263,9 +262,7 @@ func _dead_range_details(
 		src_map.free()
 		return []
 	if ab.randomize_move_dist:
-		"""
-		TODO: Add logic to randomize move distance.
-		"""
+		## TODO: Add logic to randomize move distance.
 		pass
 	var move_path: PackedVector3Array = _calc_move_path(
 			t_index,
@@ -291,8 +288,8 @@ func _dead_range_details(
 	return details
 
 
-# Gets the distance map for the source range of the action, accounting for
-# dead range.
+## Gets the distance map for the source range of the action, accounting for
+## dead range.
 func _get_source_d_map(action: Action) -> DistanceMap:
 	var src_area: Dictionary = (
 			d_map.map_from_tile_dist(action.stats.source_range.get_reach())
@@ -317,11 +314,11 @@ func _get_source_d_map(action: Action) -> DistanceMap:
 	return src_map
 
 
-# Determines the move path and true target that is required to hit the given
-# target. Returns the details as an array:
-# [movement_path, target_index]
-# Returns an empty array if the character is unable to move in a way
-# that lets it hit the original target.
+## Determines the move path and true target that is required to hit the given
+## target. Returns the details as an array:
+## [movement_path, target_index]
+## Returns an empty array if the character is unable to move in a way
+## that lets it hit the original target.
 func _normal_range_details(
 	action: Action,
 	ab: ActionBehavior,
@@ -349,20 +346,18 @@ func _normal_range_details(
 	return details
 
 
-# Helper function for _normal_range_details. Determines the movement path
-# required for the character to be within range of an action given a specific
-# movement direction. By default, determines the path to be at maximum range
-# distace, while randomizing the steps when required by the ActionBehavior.
-# Returns an empty array if target is out of range.
+## Helper function for _normal_range_details. Determines the movement path
+## required for the character to be within range of an action given a specific
+## movement direction. By default, determines the path to be at maximum range
+## distace, while randomizing the steps when required by the ActionBehavior.
+## Returns an empty array if target is out of range.
 func _get_move_path(
 	action: Action,
 	ab: ActionBehavior,
 	target_index: int,
 	movement: int
 ) -> PackedVector3Array:
-	"""
-	TODO: Add logic to account for cardinal shaped ranges.
-	"""
+	## TODO: Add logic to account for cardinal shaped ranges.
 	var move_dir: int = ab.movement_behavior
 	var move_dist: int = 0
 	# Check if target is within the effect distance from the character.
@@ -413,11 +408,11 @@ func _get_move_path(
 	return _calc_move_path(m_step[1], move_dir, move_dist)
 
 
-# Helper function for _get_move_path. Determines if the character is within
-# effect range of the target and gets the movement tolerance if so. Returns an
-# array where the first element is the movement tolerance and the second element
-# is the farthest point from the target to the character that can be reached using
-# effect range. Tolerance is -1 if the character is outside effect range. 
+## Helper function for _get_move_path. Determines if the character is within
+## effect range of the target and gets the movement tolerance if so. Returns an
+## array where the first element is the movement tolerance and the second element
+## is the farthest point from the target to the character that can be reached using
+## effect range. Tolerance is -1 if the character is outside effect range. 
 func _effect_step(
 	target_index: int,
 	action: Action,
@@ -444,11 +439,11 @@ func _effect_step(
 	return results
 
 
-# Helper function for _get_move_path. Determines if the character is within
-# source range of the target and gets the movement tolerance if so. Returns an
-# array where the first element is the movement tolerance and the second element
-# is the farthest point from the target to the character that can be reached using
-# source and effect range. Tolerance is -1 if the character is outside this range. 
+## Helper function for _get_move_path. Determines if the character is within
+## source range of the target and gets the movement tolerance if so. Returns an
+## array where the first element is the movement tolerance and the second element
+## is the farthest point from the target to the character that can be reached using
+## source and effect range. Tolerance is -1 if the character is outside this range. 
 func _source_step(
 	effect_stop: int,
 	action: Action,
@@ -493,11 +488,11 @@ func _source_step(
 	return results
 
 
-# Helper function for _get_move_path. Determines if the character is within
-# movement range of the target after source + effect steps and gets the movement
-# tolerance if so. Returns an array where the first element is the movement
-# tolerance and the second element is the tile reached via movement. Returns
-# an empty array if the character is outside this range.
+## Helper function for _get_move_path. Determines if the character is within
+## movement range of the target after source + effect steps and gets the movement
+## tolerance if so. Returns an array where the first element is the movement
+## tolerance and the second element is the tile reached via movement. Returns
+## an empty array if the character is outside this range.
 func _move_step(source_stop: int, movement: int) -> Array:
 	var move_stop: int = h_map.range_finder.get_character_closest_point_toward(
 			_character,
@@ -510,8 +505,8 @@ func _move_step(source_stop: int, movement: int) -> Array:
 	return []
 
 
-# Calculates the movement path for the action chain. The move_override parameter
-# is defaulted to -1 which indicates that the character's movement should be used.
+## Calculates the movement path for the action chain. The move_override parameter
+## is defaulted to -1 which indicates that the character's movement should be used.
 func _calc_move_path(
 	target_index: int,
 	movement_behavior: int,
@@ -530,8 +525,8 @@ func _calc_move_path(
 	return move_path
 
 
-# Default behaviour. The character moves as close as it can to the closest
-# target character with the highest threat.
+## Default behaviour. The character moves as close as it can to the closest
+## target character with the highest threat.
 func _default_chain() -> Array:
 	var action_chain: Array = []
 	var target_indexes: Array = _determine_opponent_index_threat_order()
@@ -539,8 +534,8 @@ func _default_chain() -> Array:
 	return action_chain
 
 
-# Calculates the movement path to the destination. The move_override parameter
-# is defaulted to -1 which indicates that the character's movement should be used.
+## Calculates the movement path to the destination. The move_override parameter
+## is defaulted to -1 which indicates that the character's movement should be used.
 func _calculate_toward_path(dest: int, move_override: int = -1) -> PackedVector3Array:
 	var movement_range: Array = (
 		h_map.range_finder.get_character_travesible_tiles(
@@ -564,8 +559,8 @@ func _calculate_toward_path(dest: int, move_override: int = -1) -> PackedVector3
 	return _get_pt_path_from_ids(id_path)
 
 
-# Calculates the movement path away from the target. The move_override parameter
-# is defaulted to -1 which indicates that the character's movement should be used.
+## Calculates the movement path away from the target. The move_override parameter
+## is defaulted to -1 which indicates that the character's movement should be used.
 func _calculate_away_path(
 		target: int,
 		move_override: int = -1
@@ -592,7 +587,7 @@ func _calculate_away_path(
 	return _get_pt_path_from_ids(id_path)
 
 
-# Gets the vector point path from a path of map tile ids.
+## Gets the vector point path from a path of map tile ids.
 func _get_pt_path_from_ids(id_path: PackedInt64Array) -> PackedVector3Array:
 	var pt_path: PackedVector3Array = []
 	pt_path.resize(id_path.size())
@@ -601,7 +596,7 @@ func _get_pt_path_from_ids(id_path: PackedInt64Array) -> PackedVector3Array:
 	return pt_path
 
 
-# Sorts characters by their distances, with the lower distances being first.
+## Sorts characters by their distances, with the lower distances being first.
 func _sort_character_dist(c_a: Character, c_b: Character) -> bool:
 	var index_a: int = c_a.map_coordinate.get_tile_index()
 	var index_b: int = c_b.map_coordinate.get_tile_index()
@@ -610,9 +605,9 @@ func _sort_character_dist(c_a: Character, c_b: Character) -> bool:
 	return dis_a < dis_b
 
 
-# Sorts players by their distances and threat values. Threat value is used as
-# the determining factor, but threat value is affected by the target's distance
-# from the observer.
+## Sorts players by their distances and threat values. Threat value is used as
+## the determining factor, but threat value is affected by the target's distance
+## from the observer.
 func _sort_opponent_danger(o_a: int, o_b: int) -> bool:
 	var index_a: int = _opponents[o_a].map_coordinate.get_tile_index()
 	var index_b: int = _opponents[o_b].map_coordinate.get_tile_index()
@@ -625,9 +620,9 @@ func _sort_opponent_danger(o_a: int, o_b: int) -> bool:
 	return threat_a > threat_b
 
 
-# Sorts enemies by their distances and threat values. Threat value is used as
-# the determining factor, but threat value is affected by the target's distance
-# from the observer.
+## Sorts enemies by their distances and threat values. Threat value is used as
+## the determining factor, but threat value is affected by the target's distance
+## from the observer.
 func _sort_ally_danger(a_a: int, a_b: int) -> bool:
 	var dis_a: float = d_map[_allies[a_a].map_coordinate.get_tile_index()]["travel"]
 	var dis_b: float = d_map[_allies[a_b].map_coordinate.get_tile_index()]["travel"]
@@ -638,15 +633,15 @@ func _sort_ally_danger(a_a: int, a_b: int) -> bool:
 	return threat_a > threat_b
 
 
-# Sorts group centers by their distances from the character, closest ones being
-# first.
+## Sorts group centers by their distances from the character, closest ones being
+## first.
 func _sort_group_center_dist(center_a: int, center_b: int) -> bool:
 	return d_map.travel_dist_at(center_a) < d_map.travel_dist_at(center_b)
 
 
-# Sorts group centers by their distances and threat values. Threat value is used
-# as the determining factor, but threat value is affected by the center's distance
-# from the observer.
+## Sorts group centers by their distances and threat values. Threat value is used
+## as the determining factor, but threat value is affected by the center's distance
+## from the observer.
 func _sort_group_center_threat(group_a: Array, group_b: Array) -> bool:
 	var threat_a: float = 0.0
 	for c in group_a[1]:
@@ -669,7 +664,7 @@ func _sort_group_center_threat(group_a: Array, group_b: Array) -> bool:
 	return threat_a > threat_b
 
 
-# Check that all required parameters are set.
+## Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	assert(
 			actions_ref != null,

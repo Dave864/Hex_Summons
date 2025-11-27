@@ -1,14 +1,12 @@
 class_name PercentageCalculation
 extends StrengthCalculation
-"""
-A strength calculation that uses the percentage of a given number.
-"""
+## A strength calculation that uses the percentage of a given number.
 
 
 @export var percentage = 1.0 # (float, 0.0, 5.0)
 
 
-# Determines the value that will be used to change the stat to be the desired value.
+## Determines the value that will be used to change the stat to be the desired value.
 func _set_operation(
 	_target_strength: float,
 	efficacy_percent: float,
@@ -21,7 +19,7 @@ func _set_operation(
 		return -convert(diff * efficacy_percent, TYPE_INT)
 
 
-# Determines the value to increase the target stat by.
+## Determines the value to increase the target stat by.
 func _increase_operation(
 	_base_strength: float,
 	efficacy_percent: float,
@@ -30,7 +28,7 @@ func _increase_operation(
 	return convert(stat_value * percentage * efficacy_percent, TYPE_INT)
 
 
-# Determines the value to increase the target stat by.
+## Determines the value to increase the target stat by.
 func _decrease_operation(
 	_base_strength: float,
 	efficacy_percent: float,

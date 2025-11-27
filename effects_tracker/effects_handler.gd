@@ -1,34 +1,32 @@
 class_name EffectsHandler
 extends Node
-"""
-Base class for handler that tracks the effects that are currently active on
-a character.
-"""
+## Base class for handler that tracks the effects that are currently active on
+## a character.
 
 
 var _c_stats: CharacterStats = null: set = set_character_stats
 
 
-# Sets the reference to the character stats.
+## Sets the reference to the character stats.
 func set_character_stats(c_stats: CharacterStats) -> void:
 	_c_stats = c_stats
 
 
-# Virtual function. Updates the duration for all effects.
+## Virtual function. Updates the duration for all effects.
 func progress_duration(_turn_step: int = 1) -> void:
 	pass
 
 
-# Virtual function. Processes the effects currently active on the character.
+## Virtual function. Processes the effects currently active on the character.
 func process_effects() -> void:
 	pass
 
 
-# Virtual function. Adds relevant effects to this handler.
+## Virtual function. Adds relevant effects to this handler.
 func apply_effects(_effects: Array, _caster_id: int, _target_id: int) -> void:
 	pass
 
 
-# Virtual function. Check that all required parameters are set.
+## Virtual function. Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	pass

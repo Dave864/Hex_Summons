@@ -1,10 +1,10 @@
 class_name GroupCondition
 extends ActionCondition
-"""
-ActionCondition that checks if at least a certain number of opposing characters
-are grouped together. Characters need to be within a certain distance of each
-other to be considered grouped.
-"""
+## ActionCondition that checks if at least a certain number of opposing characters
+## are grouped together.
+##
+## Characters need to be within a certain distance of each other to be considered
+## grouped.
 
 
 enum groupStatus {
@@ -13,16 +13,19 @@ enum groupStatus {
 	GROUPED
 }
 
+## The minimum number of characters that are considered a group.
 @export var min_group_size = 2 # (int, 2, 10)
+## The maximum number of tiles characters can be away from each other to be
+## considered in a group.
 @export var max_distance = 1 # (int, 1, 10)
 
-# Stores an array of Characters that are part of a group as the values,
-# referenced by a group number.
+## Stores an array of Characters that are part of a group as the values,
+## referenced by a group number.
 var _groups: Dictionary = {}
 
 
-# Virtual function. Checks if the condition has been met given the current
-# state of the characters and map.
+## Virtual function. Checks if the condition has been met given the current
+## state of the characters and map.
 func is_met(
 	_character: Character,
 	targets: Array,
@@ -32,10 +35,10 @@ func is_met(
 	return _determine_groups(targets)
 
 
-# Determines the map index coordinates that best represents the center point of
-# groups. Calculates the centroid to use as the center. Accepts the number of
-# tiles in a row of a hex map as a parameter. Returns a dictionary with the
-# center points as the key and an array of the Character members as the value.
+## Determines the map index coordinates that best represents the center point of
+## groups. Calculates the centroid to use as the center. Accepts the number of
+## tiles in a row of a hex map as a parameter. Returns a dictionary with the
+## center points as the key and an array of the Character members as the value.
 func find_group_index_centers(x_count: int) -> Dictionary:
 	var _group_centers: Dictionary = {}
 	for g in _groups.values():
@@ -47,9 +50,9 @@ func find_group_index_centers(x_count: int) -> Dictionary:
 	return _group_centers
 
 
-# Determines the characters that are grouped together. Returns if any groups
-# are present amongst the characters.
-# Reference: https://en.wikipedia.org/wiki/DBSCAN
+## Determines the characters that are grouped together. Returns if any groups
+## are present amongst the characters.
+## Reference: https://en.wikipedia.org/wiki/DBSCAN
 func _determine_groups(characters: Array) -> bool:
 	# Tracks the evaluation status of each character
 	var c_status: Dictionary = {}
@@ -91,9 +94,9 @@ func _determine_groups(characters: Array) -> bool:
 	return group_count > 0
 
 
-# Helper function for _determine_groups. Determines the neighbors of a character
-# based on their cube distance.
-# Reference: https://en.wikipedia.org/wiki/DBSCAN
+## Helper function for _determine_groups. Determines the neighbors of a character
+## based on their cube distance.
+## Reference: https://en.wikipedia.org/wiki/DBSCAN
 func _neighbors(reference_char: Character, characters: Array) -> Array:
 	var n: Array = []
 	var ref_coord: Vector3 = reference_char.map_coordinate.get_cube_coord()

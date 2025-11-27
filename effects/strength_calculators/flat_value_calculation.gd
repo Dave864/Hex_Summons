@@ -1,15 +1,13 @@
 class_name FlatValueCalcultion
 extends StrengthCalculation
-"""
-A strength calculation that simply sets the strength to a given value.
-"""
+## A strength calculation that simply sets the strength to a given value.
 
 
 @export var flat_value = 0 # (int, 0, 1000)
 
 
-# Determines the value that the target stat will be set to. If this effect is
-# resisted, the value will be closer to that of the original stat.
+## Determines the value that the target stat will be set to. If this effect is
+## resisted, the value will be closer to that of the original stat.
 func _set_operation(
 	_target_strength: float,
 	efficacy_percent: float,
@@ -22,8 +20,8 @@ func _set_operation(
 		return -convert(diff * efficacy_percent, TYPE_INT)
 
 
-# Increases the value specified stat of the target character by the value of
-# the potency.
+## Increases the value specified stat of the target character by the value of
+## the potency.
 func _increase_operation(
 	_base_strength: float,
 	efficacy_percent: float,
@@ -32,8 +30,8 @@ func _increase_operation(
 	return convert(flat_value * efficacy_percent, TYPE_INT)
 
 
-# Descreases the value specified stat of the target character by the value of
-# the potency.
+## Descreases the value specified stat of the target character by the value of
+## the potency.
 func _decrease_operation(
 	_base_strength: float,
 	efficacy_percent: float,

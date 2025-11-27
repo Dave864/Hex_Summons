@@ -1,9 +1,7 @@
 class_name EnemyCharacterState
 extends State
-"""
-Boilerplate class to get full autocompletion and type checks for the 
-`enemy_character` when coding the enemy character's states.
-"""
+## Boilerplate class to get full autocompletion and type checks for the 
+## `enemy_character` when coding the enemy character's states.
 
 
 # The name of the states for this FSM.
@@ -12,11 +10,11 @@ const ACTION: String = "Action"
 const MOVE: String = "Move"
 const WAIT: String = "Wait"
 
-# Typed reference to the EnemyCharacter node.
+## Typed reference to the EnemyCharacter node.
 var ec: EnemyCharacter
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# The states are children of a `PlayerCharacter` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 

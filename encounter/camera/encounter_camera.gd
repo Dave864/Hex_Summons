@@ -1,18 +1,17 @@
 @tool
 extends Node3D
 class_name EncounterCamera
-"""
-Handles the camera for the Encounter scene. Handles positioning, rotating, and 
-resizing camera dimensions.
-"""
+## Handles the camera for the Encounter scene.
+##
+## Handles positioning, rotating, and resizing camera dimensions.
 
 
-# Defines the radians values that correspond to the vertices of a hexagon.
-#    0
-# 5 / \ 1
-#  |   |
-# 4 \ / 2
-#    3
+## Defines the radians values that correspond to the vertices of a hexagon.
+##    0
+## 5 / \ 1
+##  |   |
+## 4 \ / 2
+##    3
 const HEX_VERTEX_RADIANS: Array = [
 	0.0,
 	-PI / 3.0,
@@ -22,48 +21,49 @@ const HEX_VERTEX_RADIANS: Array = [
 	PI / 3.0
 ]
 
-# The default distance the camera is to be set from the focus point.
+## The default distance the camera is to be set from the focus point.
 @export var default_distance = 15.0: set = set_default_distance
-# The boundaries for vertical rotation.
+## The upper boundary for vertical rotation.
 @export var vert_panning_u_bound = 75.0: set = set_vert_panning_u_bound
+## The lower boundary for vertical rotation.
 @export var vert_panning_l_bound = 30.0: set = set_vert_panning_l_bound
-# The threshold of mouse movement required to trigger a rotation change.
+## The threshold of mouse movement required to trigger a rotation change.
 @export var mouse_drag_threshold = 1.0 # (float, 1.0, 5.0)
-# The percentage of lateral mouse movement to use when updating the camera.
+## The percentage of lateral mouse movement to use when updating the camera.
 @export var mouse_lateral_multiplier = 0.3 # (float, 0.1, 2.0)
-# The speed the camera vertically pans when using joystick input.
+## The speed the camera vertically pans when using joystick input.
 @export var joystick_vert_pan_speed = 100.0 # (float, 50.0, 500.0)
-# The speed the camera horizontally pans when using joystick input.
+## The speed the camera horizontally pans when using joystick input.
 @export var joystick_lateral_pan_speed = 100.0 # (float, 50.0, 500.0)
-# The speed the camera moves to the default position.
+## The speed the camera moves to the default position.
 @export var reset_speed = 10.0 # (float, 1.0, 30.0)
 
-# The midpoint between the vertical rotation bounds. Considered the default rotation
-# for the camera.
+## The midpoint between the vertical rotation bounds. Considered the default
+## rotation for the camera.
 var _vert_pan_midpoint: float = _panning_vertical_midpoint(): get = get_vert_pan_midpoint
-# The index position of a hex tile that is considered to be the top, relative
-# to the camera position.
-#    0
-# 5 / \ 1
-#  |   |
-# 4 \ / 2
-#    3
+## The index position of a hex tile that is considered to be the top, relative
+## to the camera position.
+##    0
+## 5 / \ 1
+##  |   |
+## 4 \ / 2
+##    3
 var _relative_top_vertex: int = 0: get = get_relative_top_vertex, set = set_relative_top_vertex
-# The default orientation of the camera
+## The default orientation of the camera
 var _default_orientation: Vector3
 
 @onready var _focus_pt: Marker3D = $FocusPoint
 @onready var _camera: Camera3D = $FocusPoint/Camera3D
 
 
-# Sets the value of the default distance.
+## Sets the value of the default distance.
 func set_default_distance(distance: float) -> void:
 	default_distance = distance
 	if Engine.is_editor_hint():
 		set_camera_distance(distance)
 
 
-# Sets the value of the upper vertical panning bound.
+## Sets the value of the upper vertical panning bound.
 func set_vert_panning_u_bound(bound: float) -> void:
 	vert_panning_u_bound = bound
 	_vert_pan_midpoint = _panning_vertical_midpoint()
@@ -71,7 +71,7 @@ func set_vert_panning_u_bound(bound: float) -> void:
 		_focus_pt.rotation.x = deg_to_rad(_vert_pan_midpoint)
 
 
-# Sets the value of the lower vertical panning bound.
+## Sets the value of the lower vertical panning bound.
 func set_vert_panning_l_bound(bound: float) -> void:
 	vert_panning_l_bound = bound
 	_vert_pan_midpoint = _panning_vertical_midpoint()
@@ -79,12 +79,12 @@ func set_vert_panning_l_bound(bound: float) -> void:
 		_focus_pt.rotation.x = deg_to_rad(_vert_pan_midpoint)
 
 
-# Get the vertical pan midpoint.
+## Get the vertical pan midpoint.
 func get_vert_pan_midpoint() -> float:
 	return _vert_pan_midpoint
 
 
-# Set the relative top vertex.
+## Set the relative top vertex.
 func set_relative_top_vertex(new_top: int) -> void:
 	assert(
 			new_top >= 0 and new_top < 6,
@@ -94,19 +94,19 @@ func set_relative_top_vertex(new_top: int) -> void:
 	SignalBus.emit_top_vertex_changed(new_top)
 
 
-# Gets the orientation of the focus point. Normalizes the y rotation beforehand.
+## Gets the orientation of the focus point. Normalizes the y rotation beforehand.
 func get_focus_point_orientation() -> Vector3:
 	var original_rotation: Vector3 = _focus_pt.rotation
 	original_rotation.y = _normalize_lateral_rotation(original_rotation.y)
 	return original_rotation
 
 
-# Get the relative top vertex.
+## Get the relative top vertex.
 func get_relative_top_vertex() -> int:
 	return _relative_top_vertex
 
 
-# Handles vertical camera panning from mouse drag.
+## Handles vertical camera panning from mouse drag.
 func vertical_pan_mouse(v_motion: float) -> void:
 	if abs(v_motion) < mouse_drag_threshold:
 		return
@@ -117,13 +117,13 @@ func vertical_pan_mouse(v_motion: float) -> void:
 	_focus_pt.rotation.x = deg_to_rad(_bind_vertical_rotation(vert_rot))
 
 
-# Handles lateral camera panning from mouse drag.
+## Handles lateral camera panning from mouse drag.
 func lateral_pan_mouse(l_motion: float) -> void:
 	_focus_pt.rotation.y -= deg_to_rad(l_motion * mouse_lateral_multiplier)
 	_focus_pt.rotation.y = _normalize_lateral_rotation(_focus_pt.rotation.y)
 
 
-# Handles vertical camera panning from joystick input.
+## Handles vertical camera panning from joystick input.
 func vertical_pan_joystick(delta: float) -> void:
 	var v_move: float = Input.get_axis("right_joystick_d", "right_joystick_u")
 	if abs(v_move) == 0.0:
@@ -135,7 +135,7 @@ func vertical_pan_joystick(delta: float) -> void:
 	_focus_pt.rotation.x = deg_to_rad(_bind_vertical_rotation(vert_rot))
 
 
-# Handles lateral camera panning from joystick input.
+## Handles lateral camera panning from joystick input.
 func lateral_pan_joystick(delta: float) -> void:
 	var h_move: float = Input.get_axis("right_joystick_l", "right_joystick_r")
 	if abs(h_move) == 0.0:
@@ -144,13 +144,13 @@ func lateral_pan_joystick(delta: float) -> void:
 	_focus_pt.rotation.y = _normalize_lateral_rotation(_focus_pt.rotation.y)
 
 
-# Positions the camera at a given distance away from the focus point.
+## Positions the camera at a given distance away from the focus point.
 func set_camera_distance(distance: float) -> void:
 	_camera.position.z = distance
 
 
-# Reorients the camera to the target orientation by a certain amount. If no
-# target orientation is specified, defaults to the default orientation.
+## Reorients the camera to the target orientation by a certain amount. If no
+## target orientation is specified, defaults to the default orientation.
 func interpolate_camera_rotation(
 	original_o: Vector3,
 	weight: float,
@@ -162,7 +162,7 @@ func interpolate_camera_rotation(
 	)
 
 
-# Determines which radian rotation is closest to the camera's current rotation.
+## Determines which radian rotation is closest to the camera's current rotation.
 func get_closest_vertex_radian() -> float:
 	var focus_radian: float = _normalize_lateral_rotation(_focus_pt.rotation.y)
 	var closest_radian: float = focus_radian
@@ -184,7 +184,7 @@ func get_closest_vertex_radian() -> float:
 	return closest_radian
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
 	_focus_pt.rotation = Vector3(deg_to_rad(_vert_pan_midpoint), 0.0, 0.0)
@@ -192,13 +192,13 @@ func _ready():
 	set_camera_distance(default_distance)
 
 
-# Calculates the midpoint between the vertical bounds.
+## Calculates the midpoint between the vertical bounds.
 func _panning_vertical_midpoint() -> float:
 	return (vert_panning_u_bound + vert_panning_l_bound) / -2.0
 
 
-# Binds the provided vertical rotation wihtin the upper and lower bounds.
-# Rotation is in degrees.
+## Binds the provided vertical rotation wihtin the upper and lower bounds.
+## Rotation is in degrees.
 func _bind_vertical_rotation(vert_rot: float) -> float:
 	return (
 		-vert_panning_u_bound if vert_rot < -vert_panning_u_bound
@@ -207,8 +207,8 @@ func _bind_vertical_rotation(vert_rot: float) -> float:
 	)
 
 
-# Normalizes the provided lateral rotation to be within the allowed degrees
-# for a circle. Rotation is in radians.
+## Normalizes the provided lateral rotation to be within the allowed degrees
+## for a circle. Rotation is in radians.
 func _normalize_lateral_rotation(lat_rot: float) -> float:
 	return (
 		abs(lat_rot) if is_equal_approx(abs(lat_rot), PI)
@@ -218,7 +218,7 @@ func _normalize_lateral_rotation(lat_rot: float) -> float:
 	)
 
 
-# Checks that all required parameters are set.
+## Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
 	# Check that all elements are present.
 	assert(

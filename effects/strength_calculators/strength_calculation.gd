@@ -1,11 +1,9 @@
 class_name StrengthCalculation
 extends Resource
-"""
-Base class that is used to define the strength of an effect.
-"""
+## Base class that is used to define the strength of an effect.
 
 
-# Determines the strength of the effect for a given character.
+## Determines the strength of the effect for a given character.
 func base_strength(
 		source_stats: Dictionary,
 		action_potency: Potency
@@ -13,7 +11,7 @@ func base_strength(
 	return _strength_scalar(_get_strength_potency(source_stats, action_potency))
 
 
-# Determines the effectiveness of an action on a given target.
+## Determines the effectiveness of an action on a given target.
 func efficacy(
 	source_stats: Dictionary,
 	target_stats: CharacterStats,
@@ -29,8 +27,8 @@ func efficacy(
 	return clamp(resisted_strength / b_str, 0.0, 1.0)
 
 
-# Runs the specified operation on a given stat using the provided strength
-# and efficacy.
+## Runs the specified operation on a given stat using the provided strength
+## and efficacy.
 func process_operation(
 	strength: float,
 	efficacy_percent: float,
@@ -48,7 +46,7 @@ func process_operation(
 			return 0
 
 
-# Determines the value that will be used to change the stat to be the desired value.
+## Determines the value that will be used to change the stat to be the desired value.
 func _set_operation(
 	target_strength: float,
 	efficacy_percent: float,
@@ -61,7 +59,7 @@ func _set_operation(
 		return -convert(diff * efficacy_percent, TYPE_INT)
 
 
-# Determines the value to increase the target stat by.
+## Determines the value to increase the target stat by.
 func _increase_operation(
 	base_strength_value: float,
 	efficacy_percent: float,
@@ -70,7 +68,7 @@ func _increase_operation(
 	return convert(base_strength_value * efficacy_percent, TYPE_INT)
 
 
-# Determines the value to decrease the target stat by.
+## Determines the value to decrease the target stat by.
 func _decrease_operation(
 	base_strength_value: float,
 	efficacy_percent: float,
@@ -79,8 +77,8 @@ func _decrease_operation(
 	return -convert(base_strength_value * efficacy_percent, TYPE_INT) 
 
 
-# Determines the strength of the effect for a given character when resisted
-# by the target.
+## Determines the strength of the effect for a given character when resisted
+## by the target.
 func _calculate_resisted_strength(
 	source_stats: Dictionary,
 	target_stats: CharacterStats,
@@ -95,7 +93,7 @@ func _calculate_resisted_strength(
 	return _strength_scalar(strength_values)
 
 
-# Combines the potency strength data into a single value.
+## Combines the potency strength data into a single value.
 func _strength_scalar(strength_data: Dictionary) -> float:
 	var total_strength: float = strength_data[Constants.ATTACK]
 	for v in strength_data[Constants.MAGIC].values():
@@ -103,7 +101,7 @@ func _strength_scalar(strength_data: Dictionary) -> float:
 	return total_strength
 
 
-# Determines the raw potency values for a given character.
+## Determines the raw potency values for a given character.
 func _get_strength_potency(
 		character_stats: Dictionary,
 		action_potency: Potency
@@ -121,7 +119,7 @@ func _get_strength_potency(
 	return p_vals
 
 
-# Applies resistance values to the strength.
+## Applies resistance values to the strength.
 func _apply_resistance(strength: Dictionary, resistance: Dictionary) -> void:
 	strength[Constants.ATTACK] = _bind_resistance(
 			strength[Constants.ATTACK],
@@ -134,6 +132,6 @@ func _apply_resistance(strength: Dictionary, resistance: Dictionary) -> void:
 		)
 
 
-# Calculates the result of resistance, binding the result to be no lower than zero.
+## Calculates the result of resistance, binding the result to be no lower than zero.
 func _bind_resistance(strength: float, resistance: float) -> float:
 	return clamp(strength - resistance, 0.0, strength)
