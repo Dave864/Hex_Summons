@@ -1,9 +1,7 @@
 class_name SelectorState
 extends State
-"""
-Boilerplate class to get full autocompletion and type checks for the `selector` 
-when coding the selector's states.
-"""
+## Boilerplate class to get full autocompletion and type checks for the `selector` 
+## when coding the selector's states.
 
 
 # The states the Selector can be in.
@@ -13,11 +11,11 @@ const SELECT_ACTION: String = "SelectAction"
 const PAUSE: String = "Pause"
 const WAIT: String = "Wait"
 
-# Typed reference to the Selector node.
+## Typed reference to the Selector node.
 var selector: Selector
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# The states are children of the `Selector` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 

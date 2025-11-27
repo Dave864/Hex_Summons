@@ -1,28 +1,27 @@
 extends EnemyCharacterState
-"""
-The logic for what happens when an Enemy Character is in the `Think` state.
-The Enemy Character waits foe the Ecnounter scene to determine the actions to 
-take and then starts the logic chain.
-"""
+## The logic for what happens when an Enemy Character is in the `Think` state.
+##
+## The Enemy Character waits foe the Ecnounter scene to determine the actions to 
+## take and then starts the logic chain.
 
 
-# Reference to the CharacterAI node of this character.
+## Reference to the CharacterAI node of this character.
 @export var ai_node: CharacterAI = null
 
-# The action the character will execute.
+## The action the character will execute.
 var _action: Action = null
-# The index the action will target.
+## The index the action will target.
 var _target_index: int = -1
-# The index the enemy will end their movement on.
+## The index the enemy will end their movement on.
 var _move_end_index: int = -1
-# Stores the distance map of the source range at the end of character movement.
+## Stores the distance map of the source range at the end of character movement.
 var _source_d_map: Dictionary = {}
-# Runs the AI logic in a separate thread.
+## Runs the AI logic in a separate thread.
 var _ai_thread: Thread
 
 
-# Called by the state machine upon changing the active state. The `msg` parameter
-# is a dictionary with arbitrary data the state can use to initialize itself.
+## Called by the state machine upon changing the active state. The `msg` parameter
+## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 #	# Run AI logic in separate thread to hopefully allow logic to run across
 #	# multiple frames if needed.
@@ -49,14 +48,14 @@ func enter(_msg := {}) -> void:
 	_process_action_chain(action_chain)
 
 
-# Called by the state machine before changing the active state. Use this
-# function to clean up the state.
+## Called by the state machine before changing the active state. Use this
+## function to clean up the state.
 func exit() -> void:
 	_action = null
 	_source_d_map.clear()
 
 
-# Orients the action emission to target. Returns the targets the action will hit.
+## Orients the action emission to target. Returns the targets the action will hit.
 func _orient_to_target(possible_targets: Array) -> Array:
 	var target_tile: MapTile = ai_node.h_map.get_tile_at(_target_index)
 	_action.set_emission_map_index(_move_end_index)
@@ -76,8 +75,8 @@ func _orient_to_target(possible_targets: Array) -> Array:
 	return _get_targets(possible_targets)
 
 
-# Places the effect emission on target. Returns the targets that the action will
-# hit.
+## Places the effect emission on target. Returns the targets that the action will
+## hit.
 func _place_on_target(possible_targets: Array) -> Array:
 	_action.set_emission_map_index(_target_index)
 	var em_pos: Vector3 = (
@@ -87,7 +86,7 @@ func _place_on_target(possible_targets: Array) -> Array:
 	return _get_targets(possible_targets)
 
 
-# Gets the targets that will be hit by the action.
+## Gets the targets that will be hit by the action.
 func _get_targets(possible_targets: Array) -> Array:
 	var targets: Array = []
 	var effect_area: Array 
@@ -115,7 +114,7 @@ func _get_targets(possible_targets: Array) -> Array:
 	return targets
 
 
-# Processes the action change determined by the character AI.
+## Processes the action change determined by the character AI.
 func _process_action_chain(action_chain: Array) -> void:
 	if action_chain.size() > 0:
 		if action_chain.back()[0] == MOVE:

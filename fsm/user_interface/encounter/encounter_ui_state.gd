@@ -1,9 +1,7 @@
 class_name EncounterUIState
 extends State
-"""
-Boilerplate class to get full autocompletion and type checks for the `EncounterUI` 
-when coding the EncounterUI's states.
-"""
+## Boilerplate class to get full autocompletion and type checks for the `EncounterUI` 
+## when coding the EncounterUI's states.
 
 
 # The states the Encounter UI can be in.
@@ -12,10 +10,10 @@ const MOVE: String = "Move"
 const PAUSE: String = "Pause"
 const ACTION: String = "Action"
 
-# Typed reference to the EncounterUI node.
+## Typed reference to the EncounterUI node.
 var encounter_ui: EncounterUI
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	# The states are children of the `EncounterUI` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 

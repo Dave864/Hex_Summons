@@ -1,9 +1,7 @@
 class_name PlayerCharacterState
 extends State
-"""
-Boilerplate class to get full autocompletion and type checks for the 
-`player_character` when coding the player character's states.
-"""
+## Boilerplate class to get full autocompletion and type checks for the 
+## `player_character` when coding the player character's states.
 
 
 # The name of the states for this FSM.
@@ -12,11 +10,11 @@ const STANDBY: String = "Standby"
 const MOVE: String = "Move"
 const ACTION: String = "Action"
 
-# Typed reference to the PlayerCharacter node.
+## Typed reference to the PlayerCharacter node.
 var pc: PlayerCharacter
 
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# The states are children of a `PlayerCharacter` node so their `_ready()` 
 	# callback will execute first. That's why we wait for the `owner` 

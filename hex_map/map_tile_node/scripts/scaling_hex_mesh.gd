@@ -1,12 +1,10 @@
 @tool
 class_name ScalingHexMesh
 extends MeshInstance3D
-"""
-Enables a MeshInstance3D to be adjustable by outside factors.
-"""
+## Enables a MeshInstance3D to be adjustable by outside factors.
 
 
-# Updates the shape mesh so that it reflects the current height.
+## Updates the shape mesh so that it reflects the current height.
 func _update_tile_shape_height(height: int) -> void:
 	mesh.set_height(Constants.HEX_TILE_UNIT_HEIGHT * (1 + height))
 	# Move the shape so that the bottom is always at -0.25
@@ -14,5 +12,6 @@ func _update_tile_shape_height(height: int) -> void:
 	set_position(Vector3(0.0, y_translate, 0.0))
 
 
+## Triggers an update to the shape height.
 func _on_HeightSource_height_changed(height: int) -> void:
 	_update_tile_shape_height(height)
