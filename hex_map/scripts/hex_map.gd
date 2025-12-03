@@ -6,12 +6,20 @@ extends Node3D
 ## other nodes to interact with the map.
 
 
+## Name of the node that stores the map tiles.
 const TILES: String = "Tiles"
+## Name of the node that is the mesh for the floor of the map.
 const FLOOR_MESH: String = "FloorMesh"
+## Name of the node that tracks the highlighted and selected tiles.
 const SELECTION_TRACKER: String = "SelectionTracker"
+## Name of the node that holds logic for pathfinding and distance calculation.
 const RANGE_FINDER: String = "RangeFinder"
+## The maximum number of player characters that can be present on the map.
+const MAX_PLAYER_COUNT: int = 4
 
+## The tile indexes that player characters can start at.
 @export var player_start_tiles: PackedInt32Array = [0, 1, 2, 3]
+## The tile indexes that enemy characters can start at.
 @export var enemy_start_tiles: PackedInt32Array = []
 
 var selection_tracker: SelectionTracker = null
@@ -117,7 +125,7 @@ func _create_pathfinder() -> void:
 func _check_for_required_parameters() -> void:
 	var tile_count: int = get_z_count() * get_x_count()
 	assert(
-			player_start_tiles.size() >= 4,
+			player_start_tiles.size() >= MAX_PLAYER_COUNT,
 			"Not enough tiles specified for player starting options."
 	)
 	assert(

@@ -1,5 +1,6 @@
 extends PlayerCharacterState
 ## The logic for what happens when a Player Character is in the 'Action' state.
+##
 ## The Player Character executes the provided action and then goes to the 'Wait'
 ## state.
 
