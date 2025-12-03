@@ -24,14 +24,14 @@ func can_character_pass(character_type: int) -> bool:
 			return true
 
 
-# Updates the occupant when a new area enters the collision space.
+## Updates the occupant when a new area enters the collision space.
 func _on_MapTile_area_entered(area: Character) -> void:
 	# Add entered character as this tile's occupant.
 	if _occupant == null:
 		_occupant = area
 
 
-# Removes the occupant if it leaves the collision space.
-func _on_MapTile_area_exited(area) -> void:
+## Removes the occupant if it leaves the collision space.
+func _on_MapTile_area_exited(area: Character) -> void:
 	if _occupant != null and area.name == _occupant.name:
 		_occupant = null
