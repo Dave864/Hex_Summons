@@ -1,7 +1,7 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" script_class="StrengthCalculation" load_steps=2 format=3 uid="uid://cbtequ00h5qu7"]
 
-[ext_resource path="res://effects/strength_calculators/strength_calculation.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://d0gsc0tucp46t" path="res://effects/strength_calculators/strength_calculation.gd" id="1"]
 
 [resource]
 resource_local_to_scene = true
-script = ExtResource( 1 )
+script = ExtResource("1")

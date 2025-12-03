@@ -1,9 +1,9 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" script_class="HexMapDistances" load_steps=2 format=3 uid="uid://chrvjngv04dn2"]
 
-[ext_resource path="res://hex_map/scripts/hex_map_distances.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://c2rf67fau6nay" path="res://hex_map/scripts/hex_map_distances.gd" id="1"]
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource("1")
 d_maps = {
 0: {
 0: {
@@ -44,7 +44,7 @@ d_maps = {
 },
 9: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 10: {
 "tile": 1,
@@ -104,7 +104,7 @@ d_maps = {
 },
 24: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 25: {
 "tile": 6,
@@ -140,11 +140,11 @@ d_maps = {
 },
 33: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 34: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 35: {
 "tile": 7,
@@ -228,7 +228,7 @@ d_maps = {
 },
 55: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 56: {
 "tile": 9,
@@ -272,7 +272,7 @@ d_maps = {
 },
 66: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 67: {
 "tile": 10,
@@ -280,11 +280,11 @@ d_maps = {
 },
 68: {
 "tile": 11,
-"travel": 12.0
+"travel": 11.0
 },
 69: {
 "tile": 12,
-"travel": 13.0
+"travel": 12.0
 },
 70: {
 "tile": 7,
@@ -308,7 +308,7 @@ d_maps = {
 },
 75: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 76: {
 "tile": 10,
@@ -406,7 +406,7 @@ d_maps = {
 },
 9: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 10: {
 "tile": 1,
@@ -466,7 +466,7 @@ d_maps = {
 },
 24: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 25: {
 "tile": 5,
@@ -502,11 +502,11 @@ d_maps = {
 },
 33: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 34: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 35: {
 "tile": 6,
@@ -590,7 +590,7 @@ d_maps = {
 },
 55: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 56: {
 "tile": 8,
@@ -634,7 +634,7 @@ d_maps = {
 },
 66: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 67: {
 "tile": 9,
@@ -642,11 +642,11 @@ d_maps = {
 },
 68: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 69: {
 "tile": 11,
-"travel": 12.0
+"travel": 11.0
 },
 70: {
 "tile": 7,
@@ -670,7 +670,7 @@ d_maps = {
 },
 75: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 76: {
 "tile": 9,
@@ -714,7 +714,7 @@ d_maps = {
 },
 86: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 87: {
 "tile": 10,
@@ -768,7 +768,7 @@ d_maps = {
 },
 9: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 10: {
 "tile": 2,
@@ -828,7 +828,7 @@ d_maps = {
 },
 24: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 25: {
 "tile": 4,
@@ -864,11 +864,11 @@ d_maps = {
 },
 33: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 34: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 35: {
 "tile": 5,
@@ -908,11 +908,11 @@ d_maps = {
 },
 44: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 45: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 46: {
 "tile": 6,
@@ -944,11 +944,11 @@ d_maps = {
 },
 53: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 54: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 55: {
 "tile": 6,
@@ -988,11 +988,11 @@ d_maps = {
 },
 64: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 65: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 66: {
 "tile": 7,
@@ -1004,11 +1004,11 @@ d_maps = {
 },
 68: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 69: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 70: {
 "tile": 7,
@@ -1028,15 +1028,15 @@ d_maps = {
 },
 74: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 75: {
 "tile": 7,
-"travel": 7.0
+"travel": 9.0
 },
 76: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 77: {
 "tile": 9,
@@ -1072,15 +1072,15 @@ d_maps = {
 },
 85: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 86: {
 "tile": 8,
-"travel": 8.0
+"travel": 10.0
 },
 87: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 88: {
 "tile": 10,
@@ -1129,45 +1129,45 @@ d_maps = {
 "travel": 5.0
 },
 9: {
+"tile": 6,
+"travel": 7.0
+},
+10: {
+"tile": 3,
+"travel": 3.0
+},
+11: {
+"tile": 2,
+"travel": 2.0
+},
+12: {
+"tile": 1,
+"travel": 1.0
+},
+13: {
+"tile": 1,
+"travel": 1.0
+},
+14: {
+"tile": 2,
+"travel": 2.0
+},
+15: {
+"tile": 3,
+"travel": 3.0
+},
+16: {
+"tile": 4,
+"travel": 4.0
+},
+17: {
+"tile": 5,
+"travel": 5.0
+},
+18: {
 "tile": 6,
 "travel": 7.5
 },
-10: {
-"tile": 3,
-"travel": 3.0
-},
-11: {
-"tile": 2,
-"travel": 2.0
-},
-12: {
-"tile": 1,
-"travel": 1.0
-},
-13: {
-"tile": 1,
-"travel": 1.0
-},
-14: {
-"tile": 2,
-"travel": 2.0
-},
-15: {
-"tile": 3,
-"travel": 3.0
-},
-16: {
-"tile": 4,
-"travel": 4.0
-},
-17: {
-"tile": 5,
-"travel": 5.0
-},
-18: {
-"tile": 6,
-"travel": 7.5
-},
 19: {
 "tile": 7,
 "travel": 8.0
@@ -1226,7 +1226,7 @@ d_maps = {
 },
 33: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 34: {
 "tile": 3,
@@ -1270,7 +1270,7 @@ d_maps = {
 },
 44: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 45: {
 "tile": 4,
@@ -1306,11 +1306,11 @@ d_maps = {
 },
 53: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 54: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 55: {
 "tile": 5,
@@ -1350,11 +1350,11 @@ d_maps = {
 },
 64: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 65: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 66: {
 "tile": 6,
@@ -1366,11 +1366,11 @@ d_maps = {
 },
 68: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 69: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 70: {
 "tile": 7,
@@ -1390,11 +1390,11 @@ d_maps = {
 },
 74: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 75: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 76: {
 "tile": 7,
@@ -1434,11 +1434,11 @@ d_maps = {
 },
 85: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 86: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 87: {
 "tile": 8,
@@ -1492,7 +1492,7 @@ d_maps = {
 },
 9: {
 "tile": 5,
-"travel": 6.5
+"travel": 6.0
 },
 10: {
 "tile": 4,
@@ -1728,11 +1728,11 @@ d_maps = {
 },
 68: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 69: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 70: {
 "tile": 7,
@@ -1854,7 +1854,7 @@ d_maps = {
 },
 9: {
 "tile": 4,
-"travel": 5.5
+"travel": 5.0
 },
 10: {
 "tile": 5,
@@ -2216,7 +2216,7 @@ d_maps = {
 },
 9: {
 "tile": 3,
-"travel": 4.5
+"travel": 4.0
 },
 10: {
 "tile": 6,
@@ -2320,7 +2320,7 @@ d_maps = {
 },
 35: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 36: {
 "tile": 3,
@@ -2360,7 +2360,7 @@ d_maps = {
 },
 45: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 46: {
 "tile": 4,
@@ -2396,7 +2396,7 @@ d_maps = {
 },
 54: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 55: {
 "tile": 5,
@@ -2436,7 +2436,7 @@ d_maps = {
 },
 64: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 65: {
 "tile": 6,
@@ -2578,7 +2578,7 @@ d_maps = {
 },
 9: {
 "tile": 2,
-"travel": 3.5
+"travel": 3.0
 },
 10: {
 "tile": 7,
@@ -2642,7 +2642,7 @@ d_maps = {
 },
 25: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 26: {
 "tile": 2,
@@ -2678,11 +2678,11 @@ d_maps = {
 },
 34: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 35: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 36: {
 "tile": 3,
@@ -2718,11 +2718,11 @@ d_maps = {
 },
 44: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 45: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 46: {
 "tile": 4,
@@ -2754,11 +2754,11 @@ d_maps = {
 },
 53: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 54: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 55: {
 "tile": 5,
@@ -2798,7 +2798,7 @@ d_maps = {
 },
 64: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 65: {
 "tile": 6,
@@ -2834,7 +2834,7 @@ d_maps = {
 },
 73: {
 "tile": 7,
-"travel": 8.5
+"travel": 9.0
 },
 74: {
 "tile": 7,
@@ -2874,7 +2874,7 @@ d_maps = {
 },
 83: {
 "tile": 8,
-"travel": 9.5
+"travel": 10.0
 },
 84: {
 "tile": 8,
@@ -2939,48 +2939,48 @@ d_maps = {
 "travel": 0.0
 },
 9: {
+"tile": 1,
+"travel": 2.0
+},
+10: {
+"tile": 8,
+"travel": 8.0
+},
+11: {
+"tile": 7,
+"travel": 7.0
+},
+12: {
+"tile": 6,
+"travel": 6.0
+},
+13: {
+"tile": 5,
+"travel": 5.0
+},
+14: {
+"tile": 4,
+"travel": 4.0
+},
+15: {
+"tile": 3,
+"travel": 3.0
+},
+16: {
+"tile": 2,
+"travel": 2.0
+},
+17: {
+"tile": 1,
+"travel": 1.0
+},
+18: {
 "tile": 1,
 "travel": 2.5
 },
-10: {
-"tile": 8,
-"travel": 8.0
-},
-11: {
-"tile": 7,
-"travel": 7.0
-},
-12: {
-"tile": 6,
-"travel": 6.0
-},
-13: {
-"tile": 5,
-"travel": 5.0
-},
-14: {
-"tile": 4,
-"travel": 4.0
-},
-15: {
-"tile": 3,
-"travel": 3.0
-},
-16: {
-"tile": 2,
-"travel": 2.0
-},
-17: {
-"tile": 1,
-"travel": 1.0
-},
-18: {
-"tile": 1,
-"travel": 3.0
-},
 19: {
 "tile": 2,
-"travel": 3.5
+"travel": 3.0
 },
 20: {
 "tile": 9,
@@ -3004,7 +3004,7 @@ d_maps = {
 },
 25: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 26: {
 "tile": 3,
@@ -3040,11 +3040,11 @@ d_maps = {
 },
 34: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 35: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 36: {
 "tile": 3,
@@ -3164,7 +3164,7 @@ d_maps = {
 },
 65: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 66: {
 "tile": 6,
@@ -3196,11 +3196,11 @@ d_maps = {
 },
 73: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 74: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 75: {
 "tile": 7,
@@ -3266,39 +3266,39 @@ d_maps = {
 9: {
 0: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 1: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 2: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 3: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 4: {
 "tile": 5,
-"travel": 6.5
+"travel": 6.0
 },
 5: {
 "tile": 4,
-"travel": 5.5
+"travel": 5.0
 },
 6: {
 "tile": 3,
-"travel": 4.5
+"travel": 4.0
 },
 7: {
 "tile": 2,
-"travel": 3.5
+"travel": 3.0
 },
 8: {
 "tile": 1,
-"travel": 2.5
+"travel": 2.0
 },
 9: {
 "tile": 0,
@@ -3306,35 +3306,35 @@ d_maps = {
 },
 10: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 11: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 12: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 13: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 14: {
 "tile": 5,
-"travel": 6.5
+"travel": 6.0
 },
 15: {
 "tile": 4,
-"travel": 5.5
+"travel": 5.0
 },
 16: {
 "tile": 3,
-"travel": 4.5
+"travel": 4.0
 },
 17: {
 "tile": 2,
-"travel": 3.5
+"travel": 3.0
 },
 18: {
 "tile": 1,
@@ -3346,35 +3346,35 @@ d_maps = {
 },
 20: {
 "tile": 10,
-"travel": 11.5
+"travel": 11.0
 },
 21: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 22: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 23: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 24: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 25: {
 "tile": 5,
-"travel": 6.5
+"travel": 7.0
 },
 26: {
 "tile": 4,
-"travel": 5.5
+"travel": 5.0
 },
 27: {
 "tile": 3,
-"travel": 4.5
+"travel": 4.0
 },
 28: {
 "tile": 2,
@@ -3386,31 +3386,31 @@ d_maps = {
 },
 30: {
 "tile": 10,
-"travel": 11.5
+"travel": 11.0
 },
 31: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 32: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 33: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 34: {
 "tile": 6,
-"travel": 7.5
+"travel": 8.0
 },
 35: {
 "tile": 5,
-"travel": 6.5
+"travel": 7.0
 },
 36: {
 "tile": 4,
-"travel": 5.5
+"travel": 5.0
 },
 37: {
 "tile": 3,
@@ -3426,31 +3426,31 @@ d_maps = {
 },
 40: {
 "tile": 11,
-"travel": 12.5
+"travel": 12.0
 },
 41: {
 "tile": 10,
-"travel": 11.5
+"travel": 11.0
 },
 42: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 43: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 44: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 45: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 46: {
 "tile": 5,
-"travel": 6.5
+"travel": 6.0
 },
 47: {
 "tile": 4,
@@ -3466,27 +3466,27 @@ d_maps = {
 },
 50: {
 "tile": 11,
-"travel": 12.5
+"travel": 12.0
 },
 51: {
 "tile": 10,
-"travel": 11.5
+"travel": 11.0
 },
 52: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 53: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 54: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 55: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 56: {
 "tile": 5,
@@ -3506,27 +3506,27 @@ d_maps = {
 },
 60: {
 "tile": 12,
-"travel": 13.5
+"travel": 13.0
 },
 61: {
 "tile": 11,
-"travel": 12.5
+"travel": 12.0
 },
 62: {
 "tile": 10,
-"travel": 11.5
+"travel": 11.0
 },
 63: {
 "tile": 9,
-"travel": 11.5
+"travel": 11.0
 },
 64: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 65: {
 "tile": 7,
-"travel": 9.5
+"travel": 8.0
 },
 66: {
 "tile": 6,
@@ -3542,27 +3542,27 @@ d_maps = {
 },
 69: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 70: {
 "tile": 12,
-"travel": 13.5
+"travel": 13.0
 },
 71: {
 "tile": 11,
-"travel": 12.5
+"travel": 12.0
 },
 72: {
 "tile": 10,
-"travel": 12.5
+"travel": 12.0
 },
 73: {
 "tile": 9,
-"travel": 12.0
+"travel": 11.0
 },
 74: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 75: {
 "tile": 7,
@@ -3578,19 +3578,19 @@ d_maps = {
 },
 78: {
 "tile": 7,
-"travel": 10.0
+"travel": 8.0
 },
 79: {
 "tile": 7,
-"travel": 10.0
+"travel": 9.0
 },
 80: {
 "tile": 13,
-"travel": 14.5
+"travel": 14.0
 },
 81: {
 "tile": 12,
-"travel": 13.5
+"travel": 13.0
 },
 82: {
 "tile": 11,
@@ -3618,11 +3618,11 @@ d_maps = {
 },
 88: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 89: {
 "tile": 8,
-"travel": 11.0
+"travel": 9.0
 }
 },
 10: {
@@ -3664,7 +3664,7 @@ d_maps = {
 },
 9: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 10: {
 "tile": 0,
@@ -3724,7 +3724,7 @@ d_maps = {
 },
 24: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 25: {
 "tile": 5,
@@ -3760,11 +3760,11 @@ d_maps = {
 },
 33: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 34: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 35: {
 "tile": 6,
@@ -3848,7 +3848,7 @@ d_maps = {
 },
 55: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 56: {
 "tile": 8,
@@ -3892,7 +3892,7 @@ d_maps = {
 },
 66: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 67: {
 "tile": 9,
@@ -3900,11 +3900,11 @@ d_maps = {
 },
 68: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 69: {
 "tile": 11,
-"travel": 12.0
+"travel": 11.0
 },
 70: {
 "tile": 6,
@@ -3928,7 +3928,7 @@ d_maps = {
 },
 75: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 76: {
 "tile": 9,
@@ -4026,7 +4026,7 @@ d_maps = {
 },
 9: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 10: {
 "tile": 1,
@@ -4086,7 +4086,7 @@ d_maps = {
 },
 24: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 25: {
 "tile": 4,
@@ -4122,11 +4122,11 @@ d_maps = {
 },
 33: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 34: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 35: {
 "tile": 5,
@@ -4210,7 +4210,7 @@ d_maps = {
 },
 55: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 56: {
 "tile": 7,
@@ -4254,7 +4254,7 @@ d_maps = {
 },
 66: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 67: {
 "tile": 8,
@@ -4262,11 +4262,11 @@ d_maps = {
 },
 68: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 69: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 70: {
 "tile": 6,
@@ -4290,7 +4290,7 @@ d_maps = {
 },
 75: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 76: {
 "tile": 8,
@@ -4334,7 +4334,7 @@ d_maps = {
 },
 86: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 87: {
 "tile": 9,
@@ -4388,7 +4388,7 @@ d_maps = {
 },
 9: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 10: {
 "tile": 2,
@@ -4448,7 +4448,7 @@ d_maps = {
 },
 24: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 25: {
 "tile": 3,
@@ -4484,11 +4484,11 @@ d_maps = {
 },
 33: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 34: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 35: {
 "tile": 4,
@@ -4528,11 +4528,11 @@ d_maps = {
 },
 44: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 45: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 46: {
 "tile": 5,
@@ -4564,11 +4564,11 @@ d_maps = {
 },
 53: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 54: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 55: {
 "tile": 5,
@@ -4608,11 +4608,11 @@ d_maps = {
 },
 64: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 65: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 66: {
 "tile": 6,
@@ -4624,11 +4624,11 @@ d_maps = {
 },
 68: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 69: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 70: {
 "tile": 6,
@@ -4648,15 +4648,15 @@ d_maps = {
 },
 74: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 75: {
 "tile": 6,
-"travel": 6.0
+"travel": 8.0
 },
 76: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 77: {
 "tile": 8,
@@ -4692,15 +4692,15 @@ d_maps = {
 },
 85: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 86: {
 "tile": 7,
-"travel": 7.0
+"travel": 9.0
 },
 87: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 88: {
 "tile": 9,
@@ -4750,7 +4750,7 @@ d_maps = {
 },
 9: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 10: {
 "tile": 3,
@@ -4846,7 +4846,7 @@ d_maps = {
 },
 33: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 34: {
 "tile": 2,
@@ -4890,7 +4890,7 @@ d_maps = {
 },
 44: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 45: {
 "tile": 3,
@@ -4926,11 +4926,11 @@ d_maps = {
 },
 53: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 54: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 55: {
 "tile": 4,
@@ -4970,11 +4970,11 @@ d_maps = {
 },
 64: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 65: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 66: {
 "tile": 5,
@@ -4986,11 +4986,11 @@ d_maps = {
 },
 68: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 69: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 70: {
 "tile": 6,
@@ -5010,11 +5010,11 @@ d_maps = {
 },
 74: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 75: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 76: {
 "tile": 6,
@@ -5054,11 +5054,11 @@ d_maps = {
 },
 85: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 86: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 87: {
 "tile": 7,
@@ -5112,7 +5112,7 @@ d_maps = {
 },
 9: {
 "tile": 5,
-"travel": 6.5
+"travel": 6.0
 },
 10: {
 "tile": 4,
@@ -5348,11 +5348,11 @@ d_maps = {
 },
 68: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 69: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 70: {
 "tile": 7,
@@ -5474,7 +5474,7 @@ d_maps = {
 },
 9: {
 "tile": 4,
-"travel": 5.5
+"travel": 5.0
 },
 10: {
 "tile": 5,
@@ -5578,7 +5578,7 @@ d_maps = {
 },
 35: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 36: {
 "tile": 2,
@@ -5618,7 +5618,7 @@ d_maps = {
 },
 45: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 46: {
 "tile": 3,
@@ -5654,7 +5654,7 @@ d_maps = {
 },
 54: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 55: {
 "tile": 4,
@@ -5694,7 +5694,7 @@ d_maps = {
 },
 64: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 65: {
 "tile": 5,
@@ -5836,7 +5836,7 @@ d_maps = {
 },
 9: {
 "tile": 3,
-"travel": 4.5
+"travel": 4.0
 },
 10: {
 "tile": 6,
@@ -5900,7 +5900,7 @@ d_maps = {
 },
 25: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 26: {
 "tile": 1,
@@ -5936,11 +5936,11 @@ d_maps = {
 },
 34: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 35: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 36: {
 "tile": 2,
@@ -5976,11 +5976,11 @@ d_maps = {
 },
 44: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 45: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 46: {
 "tile": 3,
@@ -6012,11 +6012,11 @@ d_maps = {
 },
 53: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 54: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 55: {
 "tile": 4,
@@ -6056,7 +6056,7 @@ d_maps = {
 },
 64: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 65: {
 "tile": 5,
@@ -6092,7 +6092,7 @@ d_maps = {
 },
 73: {
 "tile": 6,
-"travel": 7.5
+"travel": 8.0
 },
 74: {
 "tile": 6,
@@ -6132,7 +6132,7 @@ d_maps = {
 },
 83: {
 "tile": 7,
-"travel": 8.5
+"travel": 9.0
 },
 84: {
 "tile": 7,
@@ -6198,7 +6198,7 @@ d_maps = {
 },
 9: {
 "tile": 2,
-"travel": 3.5
+"travel": 3.0
 },
 10: {
 "tile": 7,
@@ -6262,7 +6262,7 @@ d_maps = {
 },
 25: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 26: {
 "tile": 2,
@@ -6298,11 +6298,11 @@ d_maps = {
 },
 34: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 35: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 36: {
 "tile": 2,
@@ -6422,7 +6422,7 @@ d_maps = {
 },
 65: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 66: {
 "tile": 5,
@@ -6454,11 +6454,11 @@ d_maps = {
 },
 73: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 74: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 75: {
 "tile": 6,
@@ -6556,7 +6556,7 @@ d_maps = {
 },
 8: {
 "tile": 1,
-"travel": 3.0
+"travel": 2.5
 },
 9: {
 "tile": 1,
@@ -6624,7 +6624,7 @@ d_maps = {
 },
 25: {
 "tile": 4,
-"travel": 5.5
+"travel": 6.5
 },
 26: {
 "tile": 3,
@@ -6660,11 +6660,11 @@ d_maps = {
 },
 34: {
 "tile": 5,
-"travel": 6.5
+"travel": 7.5
 },
 35: {
 "tile": 4,
-"travel": 5.5
+"travel": 6.5
 },
 36: {
 "tile": 3,
@@ -6784,7 +6784,7 @@ d_maps = {
 },
 65: {
 "tile": 6,
-"travel": 8.5
+"travel": 7.5
 },
 66: {
 "tile": 5,
@@ -6800,7 +6800,7 @@ d_maps = {
 },
 69: {
 "tile": 5,
-"travel": 8.0
+"travel": 7.0
 },
 70: {
 "tile": 11,
@@ -6816,11 +6816,11 @@ d_maps = {
 },
 73: {
 "tile": 8,
-"travel": 11.0
+"travel": 10.5
 },
 74: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.5
 },
 75: {
 "tile": 6,
@@ -6836,11 +6836,11 @@ d_maps = {
 },
 78: {
 "tile": 6,
-"travel": 9.0
+"travel": 8.0
 },
 79: {
 "tile": 6,
-"travel": 10.0
+"travel": 9.0
 },
 80: {
 "tile": 12,
@@ -6880,7 +6880,7 @@ d_maps = {
 },
 89: {
 "tile": 7,
-"travel": 10.0
+"travel": 9.0
 }
 },
 19: {
@@ -6918,7 +6918,7 @@ d_maps = {
 },
 8: {
 "tile": 2,
-"travel": 3.5
+"travel": 3.0
 },
 9: {
 "tile": 1,
@@ -6986,7 +6986,7 @@ d_maps = {
 },
 25: {
 "tile": 5,
-"travel": 6.0
+"travel": 7.0
 },
 26: {
 "tile": 4,
@@ -7022,11 +7022,11 @@ d_maps = {
 },
 34: {
 "tile": 6,
-"travel": 7.0
+"travel": 8.0
 },
 35: {
 "tile": 5,
-"travel": 6.0
+"travel": 7.0
 },
 36: {
 "tile": 4,
@@ -7146,7 +7146,7 @@ d_maps = {
 },
 65: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 66: {
 "tile": 6,
@@ -7162,7 +7162,7 @@ d_maps = {
 },
 69: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 70: {
 "tile": 12,
@@ -7198,11 +7198,11 @@ d_maps = {
 },
 78: {
 "tile": 6,
-"travel": 9.0
+"travel": 7.0
 },
 79: {
 "tile": 6,
-"travel": 9.0
+"travel": 8.0
 },
 80: {
 "tile": 13,
@@ -7238,11 +7238,11 @@ d_maps = {
 },
 88: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 89: {
 "tile": 7,
-"travel": 10.0
+"travel": 8.0
 }
 },
 20: {
@@ -7284,7 +7284,7 @@ d_maps = {
 },
 9: {
 "tile": 10,
-"travel": 11.5
+"travel": 11.0
 },
 10: {
 "tile": 1,
@@ -7344,19 +7344,19 @@ d_maps = {
 },
 24: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 25: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 26: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 27: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 28: {
 "tile": 8,
@@ -7380,31 +7380,31 @@ d_maps = {
 },
 33: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 34: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 35: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 36: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 37: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 38: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 39: {
 "tile": 10,
-"travel": 10.0
+"travel": 11.0
 },
 40: {
 "tile": 2,
@@ -7468,7 +7468,7 @@ d_maps = {
 },
 55: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 56: {
 "tile": 8,
@@ -7512,7 +7512,7 @@ d_maps = {
 },
 66: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 67: {
 "tile": 9,
@@ -7520,11 +7520,11 @@ d_maps = {
 },
 68: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 69: {
 "tile": 11,
-"travel": 12.0
+"travel": 11.0
 },
 70: {
 "tile": 5,
@@ -7548,7 +7548,7 @@ d_maps = {
 },
 75: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 76: {
 "tile": 9,
@@ -7646,7 +7646,7 @@ d_maps = {
 },
 9: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 10: {
 "tile": 1,
@@ -7706,19 +7706,19 @@ d_maps = {
 },
 24: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 25: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 26: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 27: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 28: {
 "tile": 7,
@@ -7742,31 +7742,31 @@ d_maps = {
 },
 33: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 34: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 35: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 36: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 37: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 38: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 39: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 40: {
 "tile": 2,
@@ -7830,7 +7830,7 @@ d_maps = {
 },
 55: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 56: {
 "tile": 7,
@@ -7874,7 +7874,7 @@ d_maps = {
 },
 66: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 67: {
 "tile": 8,
@@ -7882,11 +7882,11 @@ d_maps = {
 },
 68: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 69: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 70: {
 "tile": 5,
@@ -7910,7 +7910,7 @@ d_maps = {
 },
 75: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 76: {
 "tile": 8,
@@ -8008,7 +8008,7 @@ d_maps = {
 },
 9: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 10: {
 "tile": 2,
@@ -8068,19 +8068,19 @@ d_maps = {
 },
 24: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 25: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 26: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 27: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 28: {
 "tile": 6,
@@ -8104,31 +8104,31 @@ d_maps = {
 },
 33: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 34: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 35: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 36: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 37: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 38: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 39: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 40: {
 "tile": 3,
@@ -8192,7 +8192,7 @@ d_maps = {
 },
 55: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 56: {
 "tile": 6,
@@ -8236,7 +8236,7 @@ d_maps = {
 },
 66: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 67: {
 "tile": 7,
@@ -8244,11 +8244,11 @@ d_maps = {
 },
 68: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 69: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 70: {
 "tile": 5,
@@ -8272,7 +8272,7 @@ d_maps = {
 },
 75: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 76: {
 "tile": 7,
@@ -8316,7 +8316,7 @@ d_maps = {
 },
 86: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 87: {
 "tile": 8,
@@ -8370,7 +8370,7 @@ d_maps = {
 },
 9: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 10: {
 "tile": 3,
@@ -8430,19 +8430,19 @@ d_maps = {
 },
 24: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 25: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 26: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 27: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 28: {
 "tile": 5,
@@ -8466,31 +8466,31 @@ d_maps = {
 },
 33: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 34: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 35: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 36: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 37: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 38: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 39: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 40: {
 "tile": 4,
@@ -8510,27 +8510,27 @@ d_maps = {
 },
 44: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 45: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 46: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 47: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 48: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 49: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 50: {
 "tile": 4,
@@ -8546,11 +8546,11 @@ d_maps = {
 },
 53: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 54: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 55: {
 "tile": 4,
@@ -8558,19 +8558,19 @@ d_maps = {
 },
 56: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 57: {
 "tile": 6,
-"travel": 7.0
+"travel": 8.0
 },
 58: {
 "tile": 7,
-"travel": 8.0
+"travel": 9.0
 },
 59: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 60: {
 "tile": 5,
@@ -8590,11 +8590,11 @@ d_maps = {
 },
 64: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 65: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 66: {
 "tile": 5,
@@ -8602,7 +8602,7 @@ d_maps = {
 },
 67: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 68: {
 "tile": 7,
@@ -8630,27 +8630,27 @@ d_maps = {
 },
 74: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 75: {
 "tile": 5,
-"travel": 5.0
+"travel": 7.0
 },
 76: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 77: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 78: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 79: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 80: {
 "tile": 6,
@@ -8674,37 +8674,37 @@ d_maps = {
 },
 85: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 86: {
 "tile": 6,
-"travel": 6.0
+"travel": 8.0
 },
 87: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 88: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 89: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 }
 },
 24: {
 0: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 1: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 2: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 3: {
 "tile": 2,
@@ -8732,19 +8732,19 @@ d_maps = {
 },
 9: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 10: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 11: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 12: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 13: {
 "tile": 1,
@@ -8776,19 +8776,19 @@ d_maps = {
 },
 20: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 21: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 22: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 23: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 24: {
 "tile": 0,
@@ -8800,11 +8800,11 @@ d_maps = {
 },
 26: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 27: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 28: {
 "tile": 4,
@@ -8816,15 +8816,15 @@ d_maps = {
 },
 30: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 31: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 32: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 33: {
 "tile": 1,
@@ -8840,19 +8840,19 @@ d_maps = {
 },
 36: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 37: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 38: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 39: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 40: {
 "tile": 5,
@@ -8916,7 +8916,7 @@ d_maps = {
 },
 55: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 56: {
 "tile": 4,
@@ -8960,7 +8960,7 @@ d_maps = {
 },
 66: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 67: {
 "tile": 5,
@@ -8968,11 +8968,11 @@ d_maps = {
 },
 68: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 69: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 70: {
 "tile": 6,
@@ -9000,7 +9000,7 @@ d_maps = {
 },
 76: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 77: {
 "tile": 6,
@@ -9044,7 +9044,7 @@ d_maps = {
 },
 87: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 88: {
 "tile": 7,
@@ -9086,15 +9086,15 @@ d_maps = {
 },
 7: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 8: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 9: {
 "tile": 5,
-"travel": 6.5
+"travel": 7.0
 },
 10: {
 "tile": 5,
@@ -9122,35 +9122,35 @@ d_maps = {
 },
 16: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 17: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 18: {
 "tile": 4,
-"travel": 5.5
+"travel": 6.5
 },
 19: {
 "tile": 5,
-"travel": 6.0
+"travel": 7.0
 },
 20: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 21: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 22: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 23: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 24: {
 "tile": 1,
@@ -9162,31 +9162,31 @@ d_maps = {
 },
 26: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 27: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 28: {
 "tile": 3,
-"travel": 4.0
+"travel": 5.0
 },
 29: {
 "tile": 4,
-"travel": 5.0
+"travel": 6.0
 },
 30: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 31: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 32: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 33: {
 "tile": 2,
@@ -9202,19 +9202,19 @@ d_maps = {
 },
 36: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 37: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 38: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 39: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 40: {
 "tile": 6,
@@ -9330,11 +9330,11 @@ d_maps = {
 },
 68: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 69: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 70: {
 "tile": 7,
@@ -9456,7 +9456,7 @@ d_maps = {
 },
 9: {
 "tile": 4,
-"travel": 5.5
+"travel": 5.0
 },
 10: {
 "tile": 6,
@@ -9500,27 +9500,27 @@ d_maps = {
 },
 20: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 21: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 22: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 23: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 24: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 25: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 26: {
 "tile": 0,
@@ -9540,27 +9540,27 @@ d_maps = {
 },
 30: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 31: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 32: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 33: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 34: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 35: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 36: {
 "tile": 1,
@@ -9580,27 +9580,27 @@ d_maps = {
 },
 40: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 41: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 42: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 43: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 44: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 45: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 46: {
 "tile": 2,
@@ -9620,23 +9620,23 @@ d_maps = {
 },
 50: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 51: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 52: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 53: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 54: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 55: {
 "tile": 3,
@@ -9660,23 +9660,23 @@ d_maps = {
 },
 60: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 61: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 62: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 63: {
 "tile": 5,
-"travel": 6.0
+"travel": 7.0
 },
 64: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 65: {
 "tile": 4,
@@ -9700,19 +9700,19 @@ d_maps = {
 },
 70: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 71: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 72: {
 "tile": 6,
-"travel": 7.0
+"travel": 8.0
 },
 73: {
 "tile": 5,
-"travel": 6.5
+"travel": 7.0
 },
 74: {
 "tile": 5,
@@ -9740,19 +9740,19 @@ d_maps = {
 },
 80: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 81: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 82: {
 "tile": 7,
-"travel": 8.0
+"travel": 9.0
 },
 83: {
 "tile": 6,
-"travel": 7.5
+"travel": 8.0
 },
 84: {
 "tile": 6,
@@ -9818,7 +9818,7 @@ d_maps = {
 },
 9: {
 "tile": 3,
-"travel": 4.5
+"travel": 4.0
 },
 10: {
 "tile": 7,
@@ -9862,27 +9862,27 @@ d_maps = {
 },
 20: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 21: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 22: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 23: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 24: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 25: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 26: {
 "tile": 1,
@@ -9902,27 +9902,27 @@ d_maps = {
 },
 30: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 31: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 32: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 33: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 34: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 35: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 36: {
 "tile": 1,
@@ -10042,7 +10042,7 @@ d_maps = {
 },
 65: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 66: {
 "tile": 4,
@@ -10074,11 +10074,11 @@ d_maps = {
 },
 73: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 74: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 75: {
 "tile": 5,
@@ -10244,7 +10244,7 @@ d_maps = {
 },
 25: {
 "tile": 3,
-"travel": 4.0
+"travel": 5.0
 },
 26: {
 "tile": 2,
@@ -10280,11 +10280,11 @@ d_maps = {
 },
 34: {
 "tile": 4,
-"travel": 5.0
+"travel": 6.0
 },
 35: {
 "tile": 3,
-"travel": 4.0
+"travel": 5.0
 },
 36: {
 "tile": 2,
@@ -10404,7 +10404,7 @@ d_maps = {
 },
 65: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 66: {
 "tile": 4,
@@ -10420,7 +10420,7 @@ d_maps = {
 },
 69: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 70: {
 "tile": 10,
@@ -10456,11 +10456,11 @@ d_maps = {
 },
 78: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 79: {
 "tile": 5,
-"travel": 8.0
+"travel": 7.0
 },
 80: {
 "tile": 11,
@@ -10500,7 +10500,7 @@ d_maps = {
 },
 89: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 }
 },
 29: {
@@ -10606,7 +10606,7 @@ d_maps = {
 },
 25: {
 "tile": 4,
-"travel": 5.0
+"travel": 6.0
 },
 26: {
 "tile": 3,
@@ -10642,11 +10642,11 @@ d_maps = {
 },
 34: {
 "tile": 5,
-"travel": 6.0
+"travel": 7.0
 },
 35: {
 "tile": 4,
-"travel": 5.0
+"travel": 6.0
 },
 36: {
 "tile": 3,
@@ -10766,7 +10766,7 @@ d_maps = {
 },
 65: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 66: {
 "tile": 5,
@@ -10782,7 +10782,7 @@ d_maps = {
 },
 69: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 70: {
 "tile": 11,
@@ -10818,11 +10818,11 @@ d_maps = {
 },
 78: {
 "tile": 5,
-"travel": 8.0
+"travel": 6.0
 },
 79: {
 "tile": 5,
-"travel": 8.0
+"travel": 7.0
 },
 80: {
 "tile": 12,
@@ -10858,11 +10858,11 @@ d_maps = {
 },
 88: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 89: {
 "tile": 6,
-"travel": 9.0
+"travel": 7.0
 }
 },
 30: {
@@ -10904,7 +10904,7 @@ d_maps = {
 },
 9: {
 "tile": 10,
-"travel": 11.5
+"travel": 11.0
 },
 10: {
 "tile": 2,
@@ -10964,19 +10964,19 @@ d_maps = {
 },
 24: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 25: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 26: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 27: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 28: {
 "tile": 8,
@@ -11088,7 +11088,7 @@ d_maps = {
 },
 55: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 56: {
 "tile": 7,
@@ -11132,7 +11132,7 @@ d_maps = {
 },
 66: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 67: {
 "tile": 8,
@@ -11140,11 +11140,11 @@ d_maps = {
 },
 68: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 69: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 70: {
 "tile": 4,
@@ -11168,7 +11168,7 @@ d_maps = {
 },
 75: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 76: {
 "tile": 8,
@@ -11266,7 +11266,7 @@ d_maps = {
 },
 9: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 10: {
 "tile": 2,
@@ -11326,19 +11326,19 @@ d_maps = {
 },
 24: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 25: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 26: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 27: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 28: {
 "tile": 7,
@@ -11450,7 +11450,7 @@ d_maps = {
 },
 55: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 56: {
 "tile": 6,
@@ -11494,7 +11494,7 @@ d_maps = {
 },
 66: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 67: {
 "tile": 7,
@@ -11502,11 +11502,11 @@ d_maps = {
 },
 68: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 69: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 70: {
 "tile": 4,
@@ -11530,7 +11530,7 @@ d_maps = {
 },
 75: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 76: {
 "tile": 7,
@@ -11628,7 +11628,7 @@ d_maps = {
 },
 9: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 10: {
 "tile": 3,
@@ -11688,19 +11688,19 @@ d_maps = {
 },
 24: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 25: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 26: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 27: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 28: {
 "tile": 6,
@@ -11812,7 +11812,7 @@ d_maps = {
 },
 55: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 56: {
 "tile": 5,
@@ -11856,7 +11856,7 @@ d_maps = {
 },
 66: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 67: {
 "tile": 6,
@@ -11864,11 +11864,11 @@ d_maps = {
 },
 68: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 69: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 70: {
 "tile": 4,
@@ -11892,7 +11892,7 @@ d_maps = {
 },
 75: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 76: {
 "tile": 6,
@@ -11936,7 +11936,7 @@ d_maps = {
 },
 86: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 87: {
 "tile": 7,
@@ -11954,19 +11954,19 @@ d_maps = {
 33: {
 0: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 1: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 2: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 3: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 4: {
 "tile": 3,
@@ -11990,23 +11990,23 @@ d_maps = {
 },
 9: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 10: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 11: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 12: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 13: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 14: {
 "tile": 2,
@@ -12034,19 +12034,19 @@ d_maps = {
 },
 20: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 21: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 22: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 23: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 24: {
 "tile": 1,
@@ -12058,11 +12058,11 @@ d_maps = {
 },
 26: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 27: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 28: {
 "tile": 5,
@@ -12174,7 +12174,7 @@ d_maps = {
 },
 55: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 56: {
 "tile": 4,
@@ -12218,7 +12218,7 @@ d_maps = {
 },
 66: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 67: {
 "tile": 5,
@@ -12226,11 +12226,11 @@ d_maps = {
 },
 68: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 69: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 70: {
 "tile": 5,
@@ -12254,7 +12254,7 @@ d_maps = {
 },
 75: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 76: {
 "tile": 5,
@@ -12294,11 +12294,11 @@ d_maps = {
 },
 85: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 86: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 87: {
 "tile": 6,
@@ -12316,15 +12316,15 @@ d_maps = {
 34: {
 0: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 1: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 2: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 3: {
 "tile": 3,
@@ -12344,71 +12344,71 @@ d_maps = {
 },
 7: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 8: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 9: {
 "tile": 6,
+"travel": 8.0
+},
+10: {
+"tile": 5,
+"travel": 6.0
+},
+11: {
+"tile": 4,
+"travel": 5.0
+},
+12: {
+"tile": 3,
+"travel": 4.0
+},
+13: {
+"tile": 2,
+"travel": 3.0
+},
+14: {
+"tile": 2,
+"travel": 2.0
+},
+15: {
+"tile": 2,
+"travel": 3.0
+},
+16: {
+"tile": 3,
+"travel": 4.0
+},
+17: {
+"tile": 4,
+"travel": 5.0
+},
+18: {
+"tile": 5,
 "travel": 7.5
 },
-10: {
-"tile": 5,
-"travel": 5.0
-},
-11: {
-"tile": 4,
-"travel": 4.0
-},
-12: {
-"tile": 3,
-"travel": 3.0
-},
-13: {
-"tile": 2,
-"travel": 3.0
-},
-14: {
-"tile": 2,
-"travel": 2.0
-},
-15: {
-"tile": 2,
-"travel": 3.0
-},
-16: {
-"tile": 3,
-"travel": 3.0
-},
-17: {
-"tile": 4,
-"travel": 4.0
-},
-18: {
-"tile": 5,
-"travel": 6.5
-},
 19: {
 "tile": 6,
-"travel": 7.0
+"travel": 8.0
 },
 20: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 21: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 22: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 23: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 24: {
 "tile": 1,
@@ -12420,19 +12420,19 @@ d_maps = {
 },
 26: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 27: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 28: {
 "tile": 4,
-"travel": 5.0
+"travel": 6.0
 },
 29: {
 "tile": 5,
-"travel": 6.0
+"travel": 7.0
 },
 30: {
 "tile": 4,
@@ -12536,7 +12536,7 @@ d_maps = {
 },
 55: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 56: {
 "tile": 3,
@@ -12580,7 +12580,7 @@ d_maps = {
 },
 66: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 67: {
 "tile": 4,
@@ -12588,11 +12588,11 @@ d_maps = {
 },
 68: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 69: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 70: {
 "tile": 6,
@@ -12620,7 +12620,7 @@ d_maps = {
 },
 76: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 77: {
 "tile": 5,
@@ -12664,7 +12664,7 @@ d_maps = {
 },
 87: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 88: {
 "tile": 6,
@@ -12702,19 +12702,19 @@ d_maps = {
 },
 6: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 7: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 8: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 9: {
 "tile": 5,
-"travel": 6.5
+"travel": 7.0
 },
 10: {
 "tile": 6,
@@ -12738,39 +12738,39 @@ d_maps = {
 },
 15: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 16: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 17: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 18: {
 "tile": 4,
-"travel": 5.5
+"travel": 6.5
 },
 19: {
 "tile": 5,
-"travel": 6.0
+"travel": 7.0
 },
 20: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 21: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 22: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 23: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 24: {
 "tile": 2,
@@ -12782,19 +12782,19 @@ d_maps = {
 },
 26: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 27: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 28: {
 "tile": 3,
-"travel": 4.0
+"travel": 5.0
 },
 29: {
 "tile": 4,
-"travel": 5.0
+"travel": 6.0
 },
 30: {
 "tile": 5,
@@ -12950,11 +12950,11 @@ d_maps = {
 },
 68: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 69: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 70: {
 "tile": 7,
@@ -13076,7 +13076,7 @@ d_maps = {
 },
 9: {
 "tile": 4,
-"travel": 5.5
+"travel": 5.0
 },
 10: {
 "tile": 7,
@@ -13120,27 +13120,27 @@ d_maps = {
 },
 20: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 21: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 22: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 23: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 24: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 25: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 26: {
 "tile": 1,
@@ -13300,7 +13300,7 @@ d_maps = {
 },
 65: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 66: {
 "tile": 3,
@@ -13332,11 +13332,11 @@ d_maps = {
 },
 73: {
 "tile": 5,
-"travel": 6.5
+"travel": 6.0
 },
 74: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 75: {
 "tile": 4,
@@ -13482,27 +13482,27 @@ d_maps = {
 },
 20: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 21: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 22: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 23: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 24: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 25: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 26: {
 "tile": 2,
@@ -13662,7 +13662,7 @@ d_maps = {
 },
 65: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 66: {
 "tile": 3,
@@ -13844,27 +13844,27 @@ d_maps = {
 },
 20: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 21: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 22: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 23: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 24: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 25: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 26: {
 "tile": 3,
@@ -14024,7 +14024,7 @@ d_maps = {
 },
 65: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 66: {
 "tile": 4,
@@ -14040,7 +14040,7 @@ d_maps = {
 },
 69: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 70: {
 "tile": 10,
@@ -14076,11 +14076,11 @@ d_maps = {
 },
 78: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 79: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 80: {
 "tile": 11,
@@ -14116,11 +14116,11 @@ d_maps = {
 },
 88: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 89: {
 "tile": 5,
-"travel": 7.0
+"travel": 5.0
 }
 },
 39: {
@@ -14206,27 +14206,27 @@ d_maps = {
 },
 20: {
 "tile": 10,
-"travel": 10.0
+"travel": 11.0
 },
 21: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 22: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 23: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 24: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 25: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 26: {
 "tile": 4,
@@ -14386,7 +14386,7 @@ d_maps = {
 },
 65: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 66: {
 "tile": 5,
@@ -14402,7 +14402,7 @@ d_maps = {
 },
 69: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 70: {
 "tile": 11,
@@ -14434,15 +14434,15 @@ d_maps = {
 },
 77: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 78: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 79: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 80: {
 "tile": 12,
@@ -14474,15 +14474,15 @@ d_maps = {
 },
 87: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 88: {
 "tile": 5,
-"travel": 7.0
+"travel": 5.0
 },
 89: {
 "tile": 5,
-"travel": 7.0
+"travel": 5.0
 }
 },
 40: {
@@ -14524,7 +14524,7 @@ d_maps = {
 },
 9: {
 "tile": 11,
-"travel": 12.5
+"travel": 12.0
 },
 10: {
 "tile": 3,
@@ -14592,7 +14592,7 @@ d_maps = {
 },
 26: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 27: {
 "tile": 8,
@@ -14708,7 +14708,7 @@ d_maps = {
 },
 55: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 56: {
 "tile": 7,
@@ -14752,7 +14752,7 @@ d_maps = {
 },
 66: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 67: {
 "tile": 8,
@@ -14760,11 +14760,11 @@ d_maps = {
 },
 68: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 69: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 70: {
 "tile": 3,
@@ -14788,7 +14788,7 @@ d_maps = {
 },
 75: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 76: {
 "tile": 8,
@@ -14886,7 +14886,7 @@ d_maps = {
 },
 9: {
 "tile": 10,
-"travel": 11.5
+"travel": 11.0
 },
 10: {
 "tile": 3,
@@ -14954,7 +14954,7 @@ d_maps = {
 },
 26: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 27: {
 "tile": 7,
@@ -15070,7 +15070,7 @@ d_maps = {
 },
 55: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 56: {
 "tile": 6,
@@ -15114,7 +15114,7 @@ d_maps = {
 },
 66: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 67: {
 "tile": 7,
@@ -15122,11 +15122,11 @@ d_maps = {
 },
 68: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 69: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 70: {
 "tile": 3,
@@ -15150,7 +15150,7 @@ d_maps = {
 },
 75: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 76: {
 "tile": 7,
@@ -15248,7 +15248,7 @@ d_maps = {
 },
 9: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 10: {
 "tile": 3,
@@ -15316,7 +15316,7 @@ d_maps = {
 },
 26: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 27: {
 "tile": 6,
@@ -15432,7 +15432,7 @@ d_maps = {
 },
 55: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 56: {
 "tile": 5,
@@ -15476,7 +15476,7 @@ d_maps = {
 },
 66: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 67: {
 "tile": 6,
@@ -15484,11 +15484,11 @@ d_maps = {
 },
 68: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 69: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 70: {
 "tile": 3,
@@ -15512,7 +15512,7 @@ d_maps = {
 },
 75: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 76: {
 "tile": 6,
@@ -15610,7 +15610,7 @@ d_maps = {
 },
 9: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 10: {
 "tile": 4,
@@ -15678,7 +15678,7 @@ d_maps = {
 },
 26: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 27: {
 "tile": 5,
@@ -15794,7 +15794,7 @@ d_maps = {
 },
 55: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 56: {
 "tile": 4,
@@ -15838,7 +15838,7 @@ d_maps = {
 },
 66: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 67: {
 "tile": 5,
@@ -15846,11 +15846,11 @@ d_maps = {
 },
 68: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 69: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 70: {
 "tile": 4,
@@ -15874,7 +15874,7 @@ d_maps = {
 },
 75: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 76: {
 "tile": 5,
@@ -15918,7 +15918,7 @@ d_maps = {
 },
 86: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 87: {
 "tile": 6,
@@ -15944,11 +15944,11 @@ d_maps = {
 },
 2: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 3: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 4: {
 "tile": 4,
@@ -15964,7 +15964,7 @@ d_maps = {
 },
 7: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 8: {
 "tile": 6,
@@ -15972,7 +15972,7 @@ d_maps = {
 },
 9: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 10: {
 "tile": 5,
@@ -15984,11 +15984,11 @@ d_maps = {
 },
 12: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 13: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 14: {
 "tile": 3,
@@ -16000,7 +16000,7 @@ d_maps = {
 },
 16: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 17: {
 "tile": 5,
@@ -16028,7 +16028,7 @@ d_maps = {
 },
 23: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 24: {
 "tile": 2,
@@ -16040,7 +16040,7 @@ d_maps = {
 },
 26: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 27: {
 "tile": 4,
@@ -16156,7 +16156,7 @@ d_maps = {
 },
 55: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 56: {
 "tile": 3,
@@ -16200,7 +16200,7 @@ d_maps = {
 },
 66: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 67: {
 "tile": 4,
@@ -16208,11 +16208,11 @@ d_maps = {
 },
 68: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 69: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 70: {
 "tile": 5,
@@ -16236,7 +16236,7 @@ d_maps = {
 },
 75: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 76: {
 "tile": 4,
@@ -16276,11 +16276,11 @@ d_maps = {
 },
 85: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 86: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 87: {
 "tile": 5,
@@ -16306,7 +16306,7 @@ d_maps = {
 },
 2: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 3: {
 "tile": 4,
@@ -16322,11 +16322,11 @@ d_maps = {
 },
 6: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 7: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 8: {
 "tile": 5,
@@ -16334,7 +16334,7 @@ d_maps = {
 },
 9: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 10: {
 "tile": 6,
@@ -16346,7 +16346,7 @@ d_maps = {
 },
 12: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 13: {
 "tile": 3,
@@ -16358,11 +16358,11 @@ d_maps = {
 },
 15: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 16: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 17: {
 "tile": 4,
@@ -16390,7 +16390,7 @@ d_maps = {
 },
 23: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 24: {
 "tile": 2,
@@ -16402,7 +16402,7 @@ d_maps = {
 },
 26: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 27: {
 "tile": 3,
@@ -16518,7 +16518,7 @@ d_maps = {
 },
 55: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 56: {
 "tile": 2,
@@ -16562,7 +16562,7 @@ d_maps = {
 },
 66: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 67: {
 "tile": 3,
@@ -16570,11 +16570,11 @@ d_maps = {
 },
 68: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 69: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 70: {
 "tile": 6,
@@ -16602,7 +16602,7 @@ d_maps = {
 },
 76: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 77: {
 "tile": 4,
@@ -16646,7 +16646,7 @@ d_maps = {
 },
 87: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 88: {
 "tile": 5,
@@ -16696,7 +16696,7 @@ d_maps = {
 },
 9: {
 "tile": 5,
-"travel": 6.5
+"travel": 6.0
 },
 10: {
 "tile": 7,
@@ -16752,7 +16752,7 @@ d_maps = {
 },
 23: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 24: {
 "tile": 3,
@@ -16920,7 +16920,7 @@ d_maps = {
 },
 65: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 66: {
 "tile": 2,
@@ -16932,11 +16932,11 @@ d_maps = {
 },
 68: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 69: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 70: {
 "tile": 7,
@@ -16952,11 +16952,11 @@ d_maps = {
 },
 73: {
 "tile": 4,
-"travel": 5.5
+"travel": 5.0
 },
 74: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 75: {
 "tile": 3,
@@ -17114,7 +17114,7 @@ d_maps = {
 },
 23: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 24: {
 "tile": 4,
@@ -17282,7 +17282,7 @@ d_maps = {
 },
 65: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 66: {
 "tile": 2,
@@ -17476,7 +17476,7 @@ d_maps = {
 },
 23: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 24: {
 "tile": 5,
@@ -17644,7 +17644,7 @@ d_maps = {
 },
 65: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 66: {
 "tile": 3,
@@ -17696,7 +17696,7 @@ d_maps = {
 },
 78: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 79: {
 "tile": 3,
@@ -17740,7 +17740,7 @@ d_maps = {
 },
 89: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 }
 },
 49: {
@@ -17838,7 +17838,7 @@ d_maps = {
 },
 23: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 24: {
 "tile": 6,
@@ -18006,7 +18006,7 @@ d_maps = {
 },
 65: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 66: {
 "tile": 4,
@@ -18022,7 +18022,7 @@ d_maps = {
 },
 69: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 70: {
 "tile": 10,
@@ -18054,15 +18054,15 @@ d_maps = {
 },
 77: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 78: {
 "tile": 3,
-"travel": 5.0
+"travel": 3.0
 },
 79: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 80: {
 "tile": 11,
@@ -18094,15 +18094,15 @@ d_maps = {
 },
 87: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 88: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 89: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 }
 },
 50: {
@@ -18144,7 +18144,7 @@ d_maps = {
 },
 9: {
 "tile": 11,
-"travel": 12.5
+"travel": 12.0
 },
 10: {
 "tile": 4,
@@ -18212,7 +18212,7 @@ d_maps = {
 },
 26: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 27: {
 "tile": 8,
@@ -18312,15 +18312,15 @@ d_maps = {
 },
 51: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 52: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 53: {
 "tile": 3,
-"travel": 4.5
+"travel": 5.0
 },
 54: {
 "tile": 4,
@@ -18328,7 +18328,7 @@ d_maps = {
 },
 55: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 56: {
 "tile": 6,
@@ -18372,7 +18372,7 @@ d_maps = {
 },
 66: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 67: {
 "tile": 7,
@@ -18380,11 +18380,11 @@ d_maps = {
 },
 68: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 69: {
 "tile": 9,
-"travel": 11.0
+"travel": 10.0
 },
 70: {
 "tile": 2,
@@ -18506,7 +18506,7 @@ d_maps = {
 },
 9: {
 "tile": 10,
-"travel": 11.5
+"travel": 11.0
 },
 10: {
 "tile": 4,
@@ -18574,7 +18574,7 @@ d_maps = {
 },
 26: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 27: {
 "tile": 7,
@@ -18670,7 +18670,7 @@ d_maps = {
 },
 50: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 51: {
 "tile": 0,
@@ -18690,7 +18690,7 @@ d_maps = {
 },
 55: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 56: {
 "tile": 5,
@@ -18734,7 +18734,7 @@ d_maps = {
 },
 66: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 67: {
 "tile": 6,
@@ -18742,11 +18742,11 @@ d_maps = {
 },
 68: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 69: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 70: {
 "tile": 2,
@@ -18868,7 +18868,7 @@ d_maps = {
 },
 9: {
 "tile": 9,
-"travel": 10.5
+"travel": 10.0
 },
 10: {
 "tile": 4,
@@ -18936,7 +18936,7 @@ d_maps = {
 },
 26: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 27: {
 "tile": 6,
@@ -19032,7 +19032,7 @@ d_maps = {
 },
 50: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 51: {
 "tile": 1,
@@ -19052,7 +19052,7 @@ d_maps = {
 },
 55: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 56: {
 "tile": 4,
@@ -19096,7 +19096,7 @@ d_maps = {
 },
 66: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 67: {
 "tile": 5,
@@ -19104,11 +19104,11 @@ d_maps = {
 },
 68: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 69: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 70: {
 "tile": 3,
@@ -19202,11 +19202,11 @@ d_maps = {
 },
 2: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 3: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 4: {
 "tile": 5,
@@ -19222,7 +19222,7 @@ d_maps = {
 },
 7: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 8: {
 "tile": 7,
@@ -19230,7 +19230,7 @@ d_maps = {
 },
 9: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 10: {
 "tile": 5,
@@ -19242,11 +19242,11 @@ d_maps = {
 },
 12: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 13: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 14: {
 "tile": 4,
@@ -19258,7 +19258,7 @@ d_maps = {
 },
 16: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 17: {
 "tile": 6,
@@ -19286,7 +19286,7 @@ d_maps = {
 },
 23: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 24: {
 "tile": 3,
@@ -19298,7 +19298,7 @@ d_maps = {
 },
 26: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 27: {
 "tile": 5,
@@ -19394,7 +19394,7 @@ d_maps = {
 },
 50: {
 "tile": 3,
-"travel": 4.5
+"travel": 5.0
 },
 51: {
 "tile": 2,
@@ -19414,7 +19414,7 @@ d_maps = {
 },
 55: {
 "tile": 2,
-"travel": 3.5
+"travel": 3.0
 },
 56: {
 "tile": 3,
@@ -19466,11 +19466,11 @@ d_maps = {
 },
 68: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 69: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 70: {
 "tile": 4,
@@ -19494,23 +19494,23 @@ d_maps = {
 },
 75: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 76: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 77: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 78: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 79: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 80: {
 "tile": 5,
@@ -19538,19 +19538,19 @@ d_maps = {
 },
 86: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 87: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 88: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 89: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 }
 },
 54: {
@@ -19564,11 +19564,11 @@ d_maps = {
 },
 2: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 3: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 4: {
 "tile": 5,
@@ -19580,11 +19580,11 @@ d_maps = {
 },
 6: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 7: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 8: {
 "tile": 6,
@@ -19592,7 +19592,7 @@ d_maps = {
 },
 9: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 10: {
 "tile": 6,
@@ -19604,11 +19604,11 @@ d_maps = {
 },
 12: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 13: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 14: {
 "tile": 4,
@@ -19616,11 +19616,11 @@ d_maps = {
 },
 15: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 16: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 17: {
 "tile": 5,
@@ -19648,7 +19648,7 @@ d_maps = {
 },
 23: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 24: {
 "tile": 3,
@@ -19660,7 +19660,7 @@ d_maps = {
 },
 26: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 27: {
 "tile": 4,
@@ -19776,7 +19776,7 @@ d_maps = {
 },
 55: {
 "tile": 1,
-"travel": 2.5
+"travel": 2.0
 },
 56: {
 "tile": 2,
@@ -19828,11 +19828,11 @@ d_maps = {
 },
 68: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 69: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 70: {
 "tile": 5,
@@ -19856,23 +19856,23 @@ d_maps = {
 },
 75: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 76: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 77: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 78: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 79: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 80: {
 "tile": 6,
@@ -19896,33 +19896,33 @@ d_maps = {
 },
 85: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 86: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 87: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 88: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 89: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 }
 },
 55: {
 0: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 1: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 2: {
 "tile": 6,
@@ -19954,15 +19954,15 @@ d_maps = {
 },
 9: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 10: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 11: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 12: {
 "tile": 5,
@@ -19998,15 +19998,15 @@ d_maps = {
 },
 20: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 21: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 22: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 23: {
 "tile": 4,
@@ -20014,7 +20014,7 @@ d_maps = {
 },
 24: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 25: {
 "tile": 3,
@@ -20038,23 +20038,23 @@ d_maps = {
 },
 30: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 31: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 32: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 33: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 34: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 35: {
 "tile": 2,
@@ -20078,27 +20078,27 @@ d_maps = {
 },
 40: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 41: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 42: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 43: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 44: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 45: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 46: {
 "tile": 1,
@@ -20118,23 +20118,23 @@ d_maps = {
 },
 50: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 51: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 52: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 53: {
 "tile": 2,
-"travel": 3.5
+"travel": 3.0
 },
 54: {
 "tile": 1,
-"travel": 2.5
+"travel": 2.0
 },
 55: {
 "tile": 0,
@@ -20158,27 +20158,27 @@ d_maps = {
 },
 60: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 61: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 62: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 63: {
 "tile": 3,
-"travel": 5.5
+"travel": 4.5
 },
 64: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 65: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 66: {
 "tile": 1,
@@ -20190,31 +20190,31 @@ d_maps = {
 },
 68: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 69: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 70: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 71: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 72: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 73: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 74: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 75: {
 "tile": 2,
@@ -20372,7 +20372,7 @@ d_maps = {
 },
 23: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 24: {
 "tile": 4,
@@ -20532,15 +20532,15 @@ d_maps = {
 },
 63: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.5
 },
 64: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 65: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 66: {
 "tile": 1,
@@ -20552,11 +20552,11 @@ d_maps = {
 },
 68: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 69: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 70: {
 "tile": 7,
@@ -20734,7 +20734,7 @@ d_maps = {
 },
 23: {
 "tile": 6,
-"travel": 7.0
+"travel": 8.0
 },
 24: {
 "tile": 5,
@@ -20878,7 +20878,7 @@ d_maps = {
 },
 59: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 60: {
 "tile": 8,
@@ -20894,23 +20894,23 @@ d_maps = {
 },
 63: {
 "tile": 5,
-"travel": 8.0
+"travel": 7.0
 },
 64: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 65: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 66: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 67: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 68: {
 "tile": 1,
@@ -20922,19 +20922,19 @@ d_maps = {
 },
 70: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 71: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 72: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 73: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 74: {
 "tile": 4,
@@ -20942,63 +20942,63 @@ d_maps = {
 },
 75: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 76: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 77: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 78: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 79: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 80: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 81: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 82: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 83: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 84: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 85: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 86: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 87: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 88: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 89: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 }
 },
 58: {
@@ -21096,7 +21096,7 @@ d_maps = {
 },
 23: {
 "tile": 7,
-"travel": 8.0
+"travel": 9.0
 },
 24: {
 "tile": 6,
@@ -21240,7 +21240,7 @@ d_maps = {
 },
 59: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 60: {
 "tile": 9,
@@ -21256,23 +21256,23 @@ d_maps = {
 },
 63: {
 "tile": 6,
-"travel": 9.0
+"travel": 8.0
 },
 64: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 65: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 66: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 67: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 68: {
 "tile": 1,
@@ -21284,19 +21284,19 @@ d_maps = {
 },
 70: {
 "tile": 9,
-"travel": 11.0
+"travel": 10.0
 },
 71: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 72: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 73: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 74: {
 "tile": 5,
@@ -21304,11 +21304,11 @@ d_maps = {
 },
 75: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 76: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 77: {
 "tile": 2,
@@ -21316,7 +21316,7 @@ d_maps = {
 },
 78: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 79: {
 "tile": 2,
@@ -21324,31 +21324,31 @@ d_maps = {
 },
 80: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 81: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 82: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 83: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 84: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 85: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 86: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 87: {
 "tile": 3,
@@ -21356,11 +21356,11 @@ d_maps = {
 },
 88: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 89: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 }
 },
 59: {
@@ -21458,7 +21458,7 @@ d_maps = {
 },
 23: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 24: {
 "tile": 7,
@@ -21594,11 +21594,11 @@ d_maps = {
 },
 57: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 58: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 59: {
 "tile": 0,
@@ -21626,23 +21626,23 @@ d_maps = {
 },
 65: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 66: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 67: {
 "tile": 3,
-"travel": 5.0
+"travel": 3.0
 },
 68: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 69: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 70: {
 "tile": 10,
@@ -21654,11 +21654,11 @@ d_maps = {
 },
 72: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 73: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 74: {
 "tile": 6,
@@ -21666,63 +21666,63 @@ d_maps = {
 },
 75: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 76: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 77: {
 "tile": 3,
-"travel": 5.0
+"travel": 3.0
 },
 78: {
 "tile": 2,
-"travel": 4.0
+"travel": 2.0
 },
 79: {
 "tile": 2,
-"travel": 4.0
+"travel": 3.0
 },
 80: {
 "tile": 11,
-"travel": 12.0
+"travel": 11.0
 },
 81: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 82: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 83: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 84: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 85: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 86: {
 "tile": 5,
-"travel": 7.0
+"travel": 5.0
 },
 87: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 88: {
 "tile": 3,
-"travel": 5.0
+"travel": 3.0
 },
 89: {
 "tile": 3,
-"travel": 5.0
+"travel": 3.0
 }
 },
 60: {
@@ -21764,7 +21764,7 @@ d_maps = {
 },
 9: {
 "tile": 12,
-"travel": 13.5
+"travel": 13.0
 },
 10: {
 "tile": 5,
@@ -21832,7 +21832,7 @@ d_maps = {
 },
 26: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 27: {
 "tile": 9,
@@ -21948,7 +21948,7 @@ d_maps = {
 },
 55: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 56: {
 "tile": 7,
@@ -22000,11 +22000,11 @@ d_maps = {
 },
 68: {
 "tile": 8,
-"travel": 11.0
+"travel": 10.0
 },
 69: {
 "tile": 9,
-"travel": 12.0
+"travel": 11.0
 },
 70: {
 "tile": 1,
@@ -22126,7 +22126,7 @@ d_maps = {
 },
 9: {
 "tile": 11,
-"travel": 12.5
+"travel": 12.0
 },
 10: {
 "tile": 5,
@@ -22194,7 +22194,7 @@ d_maps = {
 },
 26: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 27: {
 "tile": 8,
@@ -22310,7 +22310,7 @@ d_maps = {
 },
 55: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 56: {
 "tile": 6,
@@ -22362,11 +22362,11 @@ d_maps = {
 },
 68: {
 "tile": 7,
-"travel": 10.0
+"travel": 9.0
 },
 69: {
 "tile": 8,
-"travel": 11.0
+"travel": 10.0
 },
 70: {
 "tile": 1,
@@ -22488,7 +22488,7 @@ d_maps = {
 },
 9: {
 "tile": 10,
-"travel": 11.5
+"travel": 11.0
 },
 10: {
 "tile": 5,
@@ -22556,7 +22556,7 @@ d_maps = {
 },
 26: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 27: {
 "tile": 7,
@@ -22672,7 +22672,7 @@ d_maps = {
 },
 55: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 56: {
 "tile": 5,
@@ -22724,11 +22724,11 @@ d_maps = {
 },
 68: {
 "tile": 6,
-"travel": 9.0
+"travel": 8.0
 },
 69: {
 "tile": 7,
-"travel": 10.0
+"travel": 9.0
 },
 70: {
 "tile": 2,
@@ -22850,7 +22850,7 @@ d_maps = {
 },
 9: {
 "tile": 9,
-"travel": 11.5
+"travel": 11.0
 },
 10: {
 "tile": 5,
@@ -22918,7 +22918,7 @@ d_maps = {
 },
 26: {
 "tile": 5,
-"travel": 6.0
+"travel": 7.0
 },
 27: {
 "tile": 6,
@@ -23034,19 +23034,19 @@ d_maps = {
 },
 55: {
 "tile": 3,
-"travel": 5.5
+"travel": 4.5
 },
 56: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.5
 },
 57: {
 "tile": 5,
-"travel": 8.0
+"travel": 7.0
 },
 58: {
 "tile": 6,
-"travel": 9.0
+"travel": 8.0
 },
 59: {
 "tile": 7,
@@ -23086,11 +23086,11 @@ d_maps = {
 },
 68: {
 "tile": 5,
-"travel": 8.0
+"travel": 7.0
 },
 69: {
 "tile": 6,
-"travel": 9.0
+"travel": 8.0
 },
 70: {
 "tile": 3,
@@ -23184,11 +23184,11 @@ d_maps = {
 },
 2: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 3: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 4: {
 "tile": 6,
@@ -23200,11 +23200,11 @@ d_maps = {
 },
 6: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 7: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 8: {
 "tile": 7,
@@ -23212,7 +23212,7 @@ d_maps = {
 },
 9: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 10: {
 "tile": 6,
@@ -23224,11 +23224,11 @@ d_maps = {
 },
 12: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 13: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 14: {
 "tile": 5,
@@ -23236,11 +23236,11 @@ d_maps = {
 },
 15: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 16: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 17: {
 "tile": 6,
@@ -23268,7 +23268,7 @@ d_maps = {
 },
 23: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 24: {
 "tile": 4,
@@ -23280,7 +23280,7 @@ d_maps = {
 },
 26: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 27: {
 "tile": 5,
@@ -23396,19 +23396,19 @@ d_maps = {
 },
 55: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 56: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 57: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 58: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 59: {
 "tile": 6,
@@ -23448,11 +23448,11 @@ d_maps = {
 },
 68: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 69: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 70: {
 "tile": 4,
@@ -23476,23 +23476,23 @@ d_maps = {
 },
 75: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 76: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 77: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 78: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 79: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 80: {
 "tile": 5,
@@ -23520,19 +23520,19 @@ d_maps = {
 },
 86: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 87: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 88: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 89: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 }
 },
 65: {
@@ -23546,11 +23546,11 @@ d_maps = {
 },
 2: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 3: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 4: {
 "tile": 6,
@@ -23570,11 +23570,11 @@ d_maps = {
 },
 8: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 9: {
 "tile": 7,
-"travel": 9.5
+"travel": 8.0
 },
 10: {
 "tile": 7,
@@ -23586,11 +23586,11 @@ d_maps = {
 },
 12: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 13: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 14: {
 "tile": 5,
@@ -23606,15 +23606,15 @@ d_maps = {
 },
 17: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 18: {
 "tile": 6,
-"travel": 8.5
+"travel": 7.5
 },
 19: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 20: {
 "tile": 7,
@@ -23630,7 +23630,7 @@ d_maps = {
 },
 23: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 24: {
 "tile": 4,
@@ -23646,15 +23646,15 @@ d_maps = {
 },
 27: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 28: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 29: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 30: {
 "tile": 6,
@@ -23682,19 +23682,19 @@ d_maps = {
 },
 36: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 37: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 38: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 39: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 40: {
 "tile": 6,
@@ -23722,19 +23722,19 @@ d_maps = {
 },
 46: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 47: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 48: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 49: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 50: {
 "tile": 5,
@@ -23758,23 +23758,23 @@ d_maps = {
 },
 55: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 56: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 57: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 58: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 59: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 60: {
 "tile": 5,
@@ -23810,11 +23810,11 @@ d_maps = {
 },
 68: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 69: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 70: {
 "tile": 5,
@@ -23838,23 +23838,23 @@ d_maps = {
 },
 75: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 76: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 77: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 78: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 79: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 80: {
 "tile": 6,
@@ -23878,33 +23878,33 @@ d_maps = {
 },
 85: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 86: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 87: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 88: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 89: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 }
 },
 66: {
 0: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 1: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 2: {
 "tile": 7,
@@ -23940,11 +23940,11 @@ d_maps = {
 },
 10: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 11: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 12: {
 "tile": 6,
@@ -23980,15 +23980,15 @@ d_maps = {
 },
 20: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 21: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 22: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 23: {
 "tile": 5,
@@ -23996,7 +23996,7 @@ d_maps = {
 },
 24: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 25: {
 "tile": 4,
@@ -24020,23 +24020,23 @@ d_maps = {
 },
 30: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 31: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 32: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 33: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 34: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 35: {
 "tile": 3,
@@ -24060,27 +24060,27 @@ d_maps = {
 },
 40: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 41: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 42: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 43: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 44: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 45: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 46: {
 "tile": 2,
@@ -24100,15 +24100,15 @@ d_maps = {
 },
 50: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 51: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 52: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 53: {
 "tile": 3,
@@ -24128,15 +24128,15 @@ d_maps = {
 },
 57: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 58: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 59: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 60: {
 "tile": 6,
@@ -24172,11 +24172,11 @@ d_maps = {
 },
 68: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 69: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 70: {
 "tile": 6,
@@ -24196,7 +24196,7 @@ d_maps = {
 },
 74: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 75: {
 "tile": 1,
@@ -24354,7 +24354,7 @@ d_maps = {
 },
 23: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 24: {
 "tile": 5,
@@ -24490,15 +24490,15 @@ d_maps = {
 },
 57: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 58: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 59: {
 "tile": 3,
-"travel": 5.0
+"travel": 3.0
 },
 60: {
 "tile": 7,
@@ -24534,11 +24534,11 @@ d_maps = {
 },
 68: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 69: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 70: {
 "tile": 7,
@@ -24558,7 +24558,7 @@ d_maps = {
 },
 74: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 75: {
 "tile": 2,
@@ -24624,23 +24624,23 @@ d_maps = {
 68: {
 0: {
 "tile": 11,
-"travel": 12.0
+"travel": 11.0
 },
 1: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 2: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 3: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 4: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 5: {
 "tile": 6,
@@ -24664,23 +24664,23 @@ d_maps = {
 },
 10: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 11: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 12: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 13: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 14: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 15: {
 "tile": 5,
@@ -24704,15 +24704,15 @@ d_maps = {
 },
 20: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 21: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 22: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 23: {
 "tile": 7,
@@ -24720,11 +24720,11 @@ d_maps = {
 },
 24: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 25: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 26: {
 "tile": 4,
@@ -24744,27 +24744,27 @@ d_maps = {
 },
 30: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 31: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 32: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 33: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 34: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 35: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 36: {
 "tile": 3,
@@ -24784,31 +24784,31 @@ d_maps = {
 },
 40: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 41: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 42: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 43: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 44: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 45: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 46: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 47: {
 "tile": 2,
@@ -24824,31 +24824,31 @@ d_maps = {
 },
 50: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 51: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 52: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 53: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 54: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 55: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 56: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 57: {
 "tile": 1,
@@ -24860,39 +24860,39 @@ d_maps = {
 },
 59: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 60: {
 "tile": 8,
-"travel": 11.0
+"travel": 10.0
 },
 61: {
 "tile": 7,
-"travel": 10.0
+"travel": 9.0
 },
 62: {
 "tile": 6,
-"travel": 9.0
+"travel": 8.0
 },
 63: {
 "tile": 5,
-"travel": 8.0
+"travel": 7.0
 },
 64: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 65: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 66: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 67: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 68: {
 "tile": 0,
@@ -24904,19 +24904,19 @@ d_maps = {
 },
 70: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 71: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 72: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 73: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 74: {
 "tile": 4,
@@ -24924,11 +24924,11 @@ d_maps = {
 },
 75: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 76: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 77: {
 "tile": 1,
@@ -24936,39 +24936,39 @@ d_maps = {
 },
 78: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 79: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 80: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 81: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 82: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 83: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 84: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 85: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 86: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 87: {
 "tile": 2,
@@ -24976,415 +24976,415 @@ d_maps = {
 },
 88: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 89: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 }
 },
 69: {
 0: {
+"tile": 12,
+"travel": 12.0
+},
+1: {
+"tile": 11,
+"travel": 11.0
+},
+2: {
+"tile": 10,
+"travel": 10.0
+},
+3: {
+"tile": 9,
+"travel": 9.0
+},
+4: {
+"tile": 8,
+"travel": 8.0
+},
+5: {
+"tile": 7,
+"travel": 8.0
+},
+6: {
+"tile": 6,
+"travel": 7.0
+},
+7: {
+"tile": 6,
+"travel": 7.0
+},
+8: {
+"tile": 6,
+"travel": 7.0
+},
+9: {
+"tile": 6,
+"travel": 7.0
+},
+10: {
+"tile": 11,
+"travel": 11.0
+},
+11: {
+"tile": 10,
+"travel": 10.0
+},
+12: {
+"tile": 9,
+"travel": 9.0
+},
+13: {
+"tile": 8,
+"travel": 8.0
+},
+14: {
+"tile": 7,
+"travel": 7.0
+},
+15: {
+"tile": 6,
+"travel": 7.0
+},
+16: {
+"tile": 5,
+"travel": 6.0
+},
+17: {
+"tile": 5,
+"travel": 6.0
+},
+18: {
+"tile": 5,
+"travel": 7.0
+},
+19: {
+"tile": 5,
+"travel": 6.0
+},
+20: {
+"tile": 11,
+"travel": 11.0
+},
+21: {
+"tile": 10,
+"travel": 10.0
+},
+22: {
+"tile": 9,
+"travel": 9.0
+},
+23: {
+"tile": 8,
+"travel": 9.0
+},
+24: {
+"tile": 7,
+"travel": 7.0
+},
+25: {
+"tile": 6,
+"travel": 6.0
+},
+26: {
+"tile": 5,
+"travel": 6.0
+},
+27: {
+"tile": 4,
+"travel": 5.0
+},
+28: {
+"tile": 4,
+"travel": 5.0
+},
+29: {
+"tile": 4,
+"travel": 5.0
+},
+30: {
+"tile": 10,
+"travel": 10.0
+},
+31: {
+"tile": 9,
+"travel": 9.0
+},
+32: {
+"tile": 8,
+"travel": 8.0
+},
+33: {
+"tile": 7,
+"travel": 7.0
+},
+34: {
+"tile": 6,
+"travel": 6.0
+},
+35: {
+"tile": 5,
+"travel": 5.0
+},
+36: {
+"tile": 4,
+"travel": 5.0
+},
+37: {
+"tile": 3,
+"travel": 4.0
+},
+38: {
+"tile": 3,
+"travel": 3.0
+},
+39: {
+"tile": 3,
+"travel": 3.0
+},
+40: {
+"tile": 10,
+"travel": 10.0
+},
+41: {
+"tile": 9,
+"travel": 9.0
+},
+42: {
+"tile": 8,
+"travel": 8.0
+},
+43: {
+"tile": 7,
+"travel": 7.0
+},
+44: {
+"tile": 6,
+"travel": 6.0
+},
+45: {
+"tile": 5,
+"travel": 5.0
+},
+46: {
+"tile": 4,
+"travel": 4.0
+},
+47: {
+"tile": 3,
+"travel": 4.0
+},
+48: {
+"tile": 2,
+"travel": 3.0
+},
+49: {
+"tile": 2,
+"travel": 2.0
+},
+50: {
+"tile": 9,
+"travel": 10.0
+},
+51: {
+"tile": 8,
+"travel": 9.0
+},
+52: {
+"tile": 7,
+"travel": 8.0
+},
+53: {
+"tile": 6,
+"travel": 7.0
+},
+54: {
+"tile": 5,
+"travel": 6.0
+},
+55: {
+"tile": 4,
+"travel": 4.0
+},
+56: {
+"tile": 3,
+"travel": 3.0
+},
+57: {
+"tile": 2,
+"travel": 2.0
+},
+58: {
+"tile": 1,
+"travel": 1.0
+},
+59: {
+"tile": 1,
+"travel": 1.0
+},
+60: {
+"tile": 9,
+"travel": 11.0
+},
+61: {
+"tile": 8,
+"travel": 10.0
+},
+62: {
+"tile": 7,
+"travel": 9.0
+},
+63: {
+"tile": 6,
+"travel": 8.0
+},
+64: {
+"tile": 5,
+"travel": 6.0
+},
+65: {
+"tile": 4,
+"travel": 5.0
+},
+66: {
+"tile": 3,
+"travel": 3.0
+},
+67: {
+"tile": 2,
+"travel": 2.0
+},
+68: {
+"tile": 1,
+"travel": 1.0
+},
+69: {
+"tile": 0,
+"travel": 0.0
+},
+70: {
+"tile": 9,
+"travel": 10.0
+},
+71: {
+"tile": 8,
+"travel": 9.0
+},
+72: {
+"tile": 7,
+"travel": 8.0
+},
+73: {
+"tile": 6,
+"travel": 7.0
+},
+74: {
+"tile": 5,
+"travel": 6.0
+},
+75: {
+"tile": 4,
+"travel": 4.0
+},
+76: {
+"tile": 3,
+"travel": 3.0
+},
+77: {
+"tile": 2,
+"travel": 2.0
+},
+78: {
+"tile": 1,
+"travel": 1.0
+},
+79: {
+"tile": 1,
+"travel": 2.0
+},
+80: {
+"tile": 10,
+"travel": 10.0
+},
+81: {
+"tile": 9,
+"travel": 9.0
+},
+82: {
+"tile": 8,
+"travel": 8.0
+},
+83: {
+"tile": 7,
+"travel": 7.0
+},
+84: {
+"tile": 6,
+"travel": 6.0
+},
+85: {
+"tile": 5,
+"travel": 5.0
+},
+86: {
+"tile": 4,
+"travel": 4.0
+},
+87: {
+"tile": 3,
+"travel": 3.0
+},
+88: {
+"tile": 2,
+"travel": 2.0
+},
+89: {
+"tile": 2,
+"travel": 2.0
+}
+},
+70: {
+0: {
+"tile": 7,
+"travel": 7.0
+},
+1: {
+"tile": 7,
+"travel": 7.0
+},
+2: {
+"tile": 7,
+"travel": 7.0
+},
+3: {
+"tile": 7,
+"travel": 7.0
+},
+4: {
+"tile": 7,
+"travel": 7.0
+},
+5: {
+"tile": 8,
+"travel": 8.0
+},
+6: {
+"tile": 9,
+"travel": 9.0
+},
+7: {
+"tile": 10,
+"travel": 10.0
+},
+8: {
+"tile": 11,
+"travel": 11.0
+},
+9: {
 "tile": 12,
 "travel": 13.0
-},
-1: {
-"tile": 11,
-"travel": 12.0
-},
-2: {
-"tile": 10,
-"travel": 11.0
-},
-3: {
-"tile": 9,
-"travel": 10.0
-},
-4: {
-"tile": 8,
-"travel": 9.0
-},
-5: {
-"tile": 7,
-"travel": 8.0
-},
-6: {
-"tile": 6,
-"travel": 7.0
-},
-7: {
-"tile": 6,
-"travel": 7.0
-},
-8: {
-"tile": 6,
-"travel": 7.0
-},
-9: {
-"tile": 6,
-"travel": 8.0
-},
-10: {
-"tile": 11,
-"travel": 12.0
-},
-11: {
-"tile": 10,
-"travel": 11.0
-},
-12: {
-"tile": 9,
-"travel": 10.0
-},
-13: {
-"tile": 8,
-"travel": 9.0
-},
-14: {
-"tile": 7,
-"travel": 8.0
-},
-15: {
-"tile": 6,
-"travel": 7.0
-},
-16: {
-"tile": 5,
-"travel": 6.0
-},
-17: {
-"tile": 5,
-"travel": 6.0
-},
-18: {
-"tile": 5,
-"travel": 8.0
-},
-19: {
-"tile": 5,
-"travel": 7.0
-},
-20: {
-"tile": 11,
-"travel": 12.0
-},
-21: {
-"tile": 10,
-"travel": 11.0
-},
-22: {
-"tile": 9,
-"travel": 10.0
-},
-23: {
-"tile": 8,
-"travel": 9.0
-},
-24: {
-"tile": 7,
-"travel": 8.0
-},
-25: {
-"tile": 6,
-"travel": 7.0
-},
-26: {
-"tile": 5,
-"travel": 6.0
-},
-27: {
-"tile": 4,
-"travel": 5.0
-},
-28: {
-"tile": 4,
-"travel": 6.0
-},
-29: {
-"tile": 4,
-"travel": 6.0
-},
-30: {
-"tile": 10,
-"travel": 11.0
-},
-31: {
-"tile": 9,
-"travel": 10.0
-},
-32: {
-"tile": 8,
-"travel": 9.0
-},
-33: {
-"tile": 7,
-"travel": 8.0
-},
-34: {
-"tile": 6,
-"travel": 7.0
-},
-35: {
-"tile": 5,
-"travel": 6.0
-},
-36: {
-"tile": 4,
-"travel": 5.0
-},
-37: {
-"tile": 3,
-"travel": 4.0
-},
-38: {
-"tile": 3,
-"travel": 4.0
-},
-39: {
-"tile": 3,
-"travel": 4.0
-},
-40: {
-"tile": 10,
-"travel": 11.0
-},
-41: {
-"tile": 9,
-"travel": 10.0
-},
-42: {
-"tile": 8,
-"travel": 9.0
-},
-43: {
-"tile": 7,
-"travel": 8.0
-},
-44: {
-"tile": 6,
-"travel": 7.0
-},
-45: {
-"tile": 5,
-"travel": 6.0
-},
-46: {
-"tile": 4,
-"travel": 5.0
-},
-47: {
-"tile": 3,
-"travel": 4.0
-},
-48: {
-"tile": 2,
-"travel": 3.0
-},
-49: {
-"tile": 2,
-"travel": 3.0
-},
-50: {
-"tile": 9,
-"travel": 11.0
-},
-51: {
-"tile": 8,
-"travel": 10.0
-},
-52: {
-"tile": 7,
-"travel": 9.0
-},
-53: {
-"tile": 6,
-"travel": 8.0
-},
-54: {
-"tile": 5,
-"travel": 7.0
-},
-55: {
-"tile": 4,
-"travel": 5.0
-},
-56: {
-"tile": 3,
-"travel": 4.0
-},
-57: {
-"tile": 2,
-"travel": 2.0
-},
-58: {
-"tile": 1,
-"travel": 1.0
-},
-59: {
-"tile": 1,
-"travel": 2.0
-},
-60: {
-"tile": 9,
-"travel": 12.0
-},
-61: {
-"tile": 8,
-"travel": 11.0
-},
-62: {
-"tile": 7,
-"travel": 10.0
-},
-63: {
-"tile": 6,
-"travel": 9.0
-},
-64: {
-"tile": 5,
-"travel": 7.0
-},
-65: {
-"tile": 4,
-"travel": 6.0
-},
-66: {
-"tile": 3,
-"travel": 4.0
-},
-67: {
-"tile": 2,
-"travel": 3.0
-},
-68: {
-"tile": 1,
-"travel": 1.0
-},
-69: {
-"tile": 0,
-"travel": 0.0
-},
-70: {
-"tile": 9,
-"travel": 11.0
-},
-71: {
-"tile": 8,
-"travel": 10.0
-},
-72: {
-"tile": 7,
-"travel": 9.0
-},
-73: {
-"tile": 6,
-"travel": 8.0
-},
-74: {
-"tile": 5,
-"travel": 6.0
-},
-75: {
-"tile": 4,
-"travel": 5.0
-},
-76: {
-"tile": 3,
-"travel": 4.0
-},
-77: {
-"tile": 2,
-"travel": 3.0
-},
-78: {
-"tile": 1,
-"travel": 2.0
-},
-79: {
-"tile": 1,
-"travel": 2.0
-},
-80: {
-"tile": 10,
-"travel": 11.0
-},
-81: {
-"tile": 9,
-"travel": 10.0
-},
-82: {
-"tile": 8,
-"travel": 9.0
-},
-83: {
-"tile": 7,
-"travel": 8.0
-},
-84: {
-"tile": 6,
-"travel": 7.0
-},
-85: {
-"tile": 5,
-"travel": 6.0
-},
-86: {
-"tile": 4,
-"travel": 5.0
-},
-87: {
-"tile": 3,
-"travel": 4.0
-},
-88: {
-"tile": 2,
-"travel": 3.0
-},
-89: {
-"tile": 2,
-"travel": 3.0
-}
-},
-70: {
-0: {
-"tile": 7,
-"travel": 7.0
-},
-1: {
-"tile": 7,
-"travel": 7.0
-},
-2: {
-"tile": 7,
-"travel": 7.0
-},
-3: {
-"tile": 7,
-"travel": 7.0
-},
-4: {
-"tile": 7,
-"travel": 7.0
-},
-5: {
-"tile": 8,
-"travel": 8.0
-},
-6: {
-"tile": 9,
-"travel": 9.0
-},
-7: {
-"tile": 10,
-"travel": 10.0
-},
-8: {
-"tile": 11,
-"travel": 11.0
-},
-9: {
-"tile": 12,
-"travel": 13.5
 },
 10: {
 "tile": 6,
@@ -25452,7 +25452,7 @@ d_maps = {
 },
 26: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 27: {
 "tile": 9,
@@ -25568,7 +25568,7 @@ d_maps = {
 },
 55: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 56: {
 "tile": 7,
@@ -25576,11 +25576,11 @@ d_maps = {
 },
 57: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 58: {
 "tile": 9,
-"travel": 11.0
+"travel": 10.0
 },
 59: {
 "tile": 10,
@@ -25620,11 +25620,11 @@ d_maps = {
 },
 68: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 69: {
 "tile": 9,
-"travel": 11.0
+"travel": 10.0
 },
 70: {
 "tile": 0,
@@ -25746,7 +25746,7 @@ d_maps = {
 },
 9: {
 "tile": 11,
-"travel": 12.5
+"travel": 12.0
 },
 10: {
 "tile": 6,
@@ -25814,7 +25814,7 @@ d_maps = {
 },
 26: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 27: {
 "tile": 8,
@@ -25930,7 +25930,7 @@ d_maps = {
 },
 55: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 56: {
 "tile": 6,
@@ -25938,11 +25938,11 @@ d_maps = {
 },
 57: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 58: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 59: {
 "tile": 9,
@@ -25982,11 +25982,11 @@ d_maps = {
 },
 68: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 69: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 70: {
 "tile": 1,
@@ -26108,7 +26108,7 @@ d_maps = {
 },
 9: {
 "tile": 10,
-"travel": 12.5
+"travel": 12.0
 },
 10: {
 "tile": 6,
@@ -26176,7 +26176,7 @@ d_maps = {
 },
 26: {
 "tile": 6,
-"travel": 7.0
+"travel": 8.0
 },
 27: {
 "tile": 7,
@@ -26292,7 +26292,7 @@ d_maps = {
 },
 55: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 56: {
 "tile": 5,
@@ -26300,15 +26300,15 @@ d_maps = {
 },
 57: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 58: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 59: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 60: {
 "tile": 3,
@@ -26344,11 +26344,11 @@ d_maps = {
 },
 68: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 69: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 70: {
 "tile": 2,
@@ -26462,15 +26462,15 @@ d_maps = {
 },
 7: {
 "tile": 7,
-"travel": 8.5
+"travel": 9.0
 },
 8: {
 "tile": 8,
-"travel": 9.5
+"travel": 9.0
 },
 9: {
 "tile": 9,
-"travel": 12.0
+"travel": 11.0
 },
 10: {
 "tile": 6,
@@ -26498,15 +26498,15 @@ d_maps = {
 },
 16: {
 "tile": 6,
-"travel": 7.5
+"travel": 8.0
 },
 17: {
 "tile": 7,
-"travel": 8.5
+"travel": 8.0
 },
 18: {
 "tile": 8,
-"travel": 11.0
+"travel": 10.5
 },
 19: {
 "tile": 9,
@@ -26538,11 +26538,11 @@ d_maps = {
 },
 26: {
 "tile": 5,
-"travel": 6.5
+"travel": 7.0
 },
 27: {
 "tile": 6,
-"travel": 7.5
+"travel": 7.0
 },
 28: {
 "tile": 7,
@@ -26578,7 +26578,7 @@ d_maps = {
 },
 36: {
 "tile": 5,
-"travel": 6.5
+"travel": 6.0
 },
 37: {
 "tile": 6,
@@ -26618,7 +26618,7 @@ d_maps = {
 },
 46: {
 "tile": 4,
-"travel": 5.5
+"travel": 5.0
 },
 47: {
 "tile": 5,
@@ -26654,7 +26654,7 @@ d_maps = {
 },
 55: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 56: {
 "tile": 4,
@@ -26662,15 +26662,15 @@ d_maps = {
 },
 57: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 58: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 59: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 60: {
 "tile": 4,
@@ -26706,11 +26706,11 @@ d_maps = {
 },
 68: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 69: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 70: {
 "tile": 3,
@@ -26804,11 +26804,11 @@ d_maps = {
 },
 2: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 3: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 4: {
 "tile": 7,
@@ -26828,11 +26828,11 @@ d_maps = {
 },
 8: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 9: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 10: {
 "tile": 7,
@@ -26844,11 +26844,11 @@ d_maps = {
 },
 12: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 13: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 14: {
 "tile": 6,
@@ -26864,11 +26864,11 @@ d_maps = {
 },
 17: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 18: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.5
 },
 19: {
 "tile": 8,
@@ -26888,7 +26888,7 @@ d_maps = {
 },
 23: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 24: {
 "tile": 5,
@@ -26904,7 +26904,7 @@ d_maps = {
 },
 27: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 28: {
 "tile": 6,
@@ -26940,7 +26940,7 @@ d_maps = {
 },
 36: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 37: {
 "tile": 5,
@@ -26980,7 +26980,7 @@ d_maps = {
 },
 46: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 47: {
 "tile": 4,
@@ -27016,7 +27016,7 @@ d_maps = {
 },
 55: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 56: {
 "tile": 3,
@@ -27060,11 +27060,11 @@ d_maps = {
 },
 66: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 67: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 68: {
 "tile": 4,
@@ -27096,23 +27096,23 @@ d_maps = {
 },
 75: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 76: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 77: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 78: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 79: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 80: {
 "tile": 5,
@@ -27140,37 +27140,37 @@ d_maps = {
 },
 86: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 87: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 88: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 89: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 }
 },
 75: {
 0: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 1: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 2: {
 "tile": 7,
-"travel": 7.0
+"travel": 9.0
 },
 3: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 4: {
 "tile": 7,
@@ -27198,19 +27198,19 @@ d_maps = {
 },
 10: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 11: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 12: {
 "tile": 6,
-"travel": 6.0
+"travel": 8.0
 },
 13: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 14: {
 "tile": 6,
@@ -27238,19 +27238,19 @@ d_maps = {
 },
 20: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 21: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 22: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 23: {
 "tile": 5,
-"travel": 5.0
+"travel": 7.0
 },
 24: {
 "tile": 5,
@@ -27278,19 +27278,19 @@ d_maps = {
 },
 30: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 31: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 32: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 33: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 34: {
 "tile": 4,
@@ -27318,23 +27318,23 @@ d_maps = {
 },
 40: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 41: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 42: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 43: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 44: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 45: {
 "tile": 3,
@@ -27370,11 +27370,11 @@ d_maps = {
 },
 53: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 54: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 55: {
 "tile": 2,
@@ -27386,15 +27386,15 @@ d_maps = {
 },
 57: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 58: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 59: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 60: {
 "tile": 6,
@@ -27414,11 +27414,11 @@ d_maps = {
 },
 64: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 65: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 66: {
 "tile": 1,
@@ -27430,11 +27430,11 @@ d_maps = {
 },
 68: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 69: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 70: {
 "tile": 5,
@@ -27454,7 +27454,7 @@ d_maps = {
 },
 74: {
 "tile": 1,
-"travel": 1.0
+"travel": 2.0
 },
 75: {
 "tile": 0,
@@ -27528,7 +27528,7 @@ d_maps = {
 },
 2: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 3: {
 "tile": 7,
@@ -27568,7 +27568,7 @@ d_maps = {
 },
 12: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 13: {
 "tile": 6,
@@ -27612,11 +27612,11 @@ d_maps = {
 },
 23: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 24: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 25: {
 "tile": 5,
@@ -27656,7 +27656,7 @@ d_maps = {
 },
 34: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 35: {
 "tile": 4,
@@ -27700,7 +27700,7 @@ d_maps = {
 },
 45: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 46: {
 "tile": 3,
@@ -27732,11 +27732,11 @@ d_maps = {
 },
 53: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 54: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 55: {
 "tile": 2,
@@ -27748,15 +27748,15 @@ d_maps = {
 },
 57: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 58: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 59: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 60: {
 "tile": 7,
@@ -27776,11 +27776,11 @@ d_maps = {
 },
 64: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 65: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 66: {
 "tile": 1,
@@ -27792,11 +27792,11 @@ d_maps = {
 },
 68: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 69: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 70: {
 "tile": 6,
@@ -27816,7 +27816,7 @@ d_maps = {
 },
 74: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 75: {
 "tile": 1,
@@ -27974,7 +27974,7 @@ d_maps = {
 },
 23: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 24: {
 "tile": 6,
@@ -28038,7 +28038,7 @@ d_maps = {
 },
 39: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 40: {
 "tile": 9,
@@ -28078,7 +28078,7 @@ d_maps = {
 },
 49: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 50: {
 "tile": 8,
@@ -28094,11 +28094,11 @@ d_maps = {
 },
 53: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 54: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 55: {
 "tile": 3,
@@ -28110,7 +28110,7 @@ d_maps = {
 },
 57: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 58: {
 "tile": 2,
@@ -28118,7 +28118,7 @@ d_maps = {
 },
 59: {
 "tile": 3,
-"travel": 5.0
+"travel": 3.0
 },
 60: {
 "tile": 8,
@@ -28138,11 +28138,11 @@ d_maps = {
 },
 64: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 65: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 66: {
 "tile": 2,
@@ -28158,7 +28158,7 @@ d_maps = {
 },
 69: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 70: {
 "tile": 7,
@@ -28178,7 +28178,7 @@ d_maps = {
 },
 74: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 75: {
 "tile": 2,
@@ -28280,7 +28280,7 @@ d_maps = {
 },
 9: {
 "tile": 7,
-"travel": 10.0
+"travel": 8.0
 },
 10: {
 "tile": 11,
@@ -28316,11 +28316,11 @@ d_maps = {
 },
 18: {
 "tile": 6,
-"travel": 9.0
+"travel": 8.0
 },
 19: {
 "tile": 6,
-"travel": 9.0
+"travel": 7.0
 },
 20: {
 "tile": 11,
@@ -28336,7 +28336,7 @@ d_maps = {
 },
 23: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 24: {
 "tile": 7,
@@ -28356,11 +28356,11 @@ d_maps = {
 },
 28: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 29: {
 "tile": 5,
-"travel": 8.0
+"travel": 6.0
 },
 30: {
 "tile": 10,
@@ -28396,11 +28396,11 @@ d_maps = {
 },
 38: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 39: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 40: {
 "tile": 10,
@@ -28436,11 +28436,11 @@ d_maps = {
 },
 48: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 49: {
 "tile": 3,
-"travel": 5.0
+"travel": 3.0
 },
 50: {
 "tile": 9,
@@ -28456,11 +28456,11 @@ d_maps = {
 },
 53: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 54: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 55: {
 "tile": 4,
@@ -28472,15 +28472,15 @@ d_maps = {
 },
 57: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 58: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 59: {
 "tile": 2,
-"travel": 4.0
+"travel": 2.0
 },
 60: {
 "tile": 9,
@@ -28500,11 +28500,11 @@ d_maps = {
 },
 64: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 65: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 66: {
 "tile": 3,
@@ -28516,11 +28516,11 @@ d_maps = {
 },
 68: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 69: {
 "tile": 1,
-"travel": 2.0
+"travel": 1.0
 },
 70: {
 "tile": 8,
@@ -28540,7 +28540,7 @@ d_maps = {
 },
 74: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 75: {
 "tile": 3,
@@ -28642,7 +28642,7 @@ d_maps = {
 },
 9: {
 "tile": 7,
-"travel": 10.0
+"travel": 9.0
 },
 10: {
 "tile": 12,
@@ -28678,11 +28678,11 @@ d_maps = {
 },
 18: {
 "tile": 6,
-"travel": 10.0
+"travel": 9.0
 },
 19: {
 "tile": 6,
-"travel": 9.0
+"travel": 8.0
 },
 20: {
 "tile": 12,
@@ -28698,7 +28698,7 @@ d_maps = {
 },
 23: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 24: {
 "tile": 8,
@@ -28718,11 +28718,11 @@ d_maps = {
 },
 28: {
 "tile": 5,
-"travel": 8.0
+"travel": 7.0
 },
 29: {
 "tile": 5,
-"travel": 8.0
+"travel": 7.0
 },
 30: {
 "tile": 11,
@@ -28758,11 +28758,11 @@ d_maps = {
 },
 38: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 39: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 40: {
 "tile": 11,
@@ -28802,7 +28802,7 @@ d_maps = {
 },
 49: {
 "tile": 3,
-"travel": 5.0
+"travel": 4.0
 },
 50: {
 "tile": 10,
@@ -28818,11 +28818,11 @@ d_maps = {
 },
 53: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 54: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 55: {
 "tile": 5,
@@ -28834,7 +28834,7 @@ d_maps = {
 },
 57: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 58: {
 "tile": 2,
@@ -28842,7 +28842,7 @@ d_maps = {
 },
 59: {
 "tile": 2,
-"travel": 4.0
+"travel": 3.0
 },
 60: {
 "tile": 10,
@@ -28862,11 +28862,11 @@ d_maps = {
 },
 64: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 65: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 66: {
 "tile": 4,
@@ -28878,7 +28878,7 @@ d_maps = {
 },
 68: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 69: {
 "tile": 1,
@@ -28902,7 +28902,7 @@ d_maps = {
 },
 74: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 75: {
 "tile": 4,
@@ -29004,7 +29004,7 @@ d_maps = {
 },
 9: {
 "tile": 13,
-"travel": 14.5
+"travel": 14.0
 },
 10: {
 "tile": 7,
@@ -29072,7 +29072,7 @@ d_maps = {
 },
 26: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 27: {
 "tile": 10,
@@ -29196,15 +29196,15 @@ d_maps = {
 },
 57: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 58: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 59: {
 "tile": 11,
-"travel": 12.0
+"travel": 11.0
 },
 60: {
 "tile": 2,
@@ -29240,11 +29240,11 @@ d_maps = {
 },
 68: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 69: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 70: {
 "tile": 1,
@@ -29366,7 +29366,7 @@ d_maps = {
 },
 9: {
 "tile": 12,
-"travel": 13.5
+"travel": 13.0
 },
 10: {
 "tile": 7,
@@ -29434,7 +29434,7 @@ d_maps = {
 },
 26: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 27: {
 "tile": 9,
@@ -29558,15 +29558,15 @@ d_maps = {
 },
 57: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 58: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 59: {
 "tile": 10,
-"travel": 11.0
+"travel": 10.0
 },
 60: {
 "tile": 2,
@@ -29602,11 +29602,11 @@ d_maps = {
 },
 68: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 69: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 70: {
 "tile": 1,
@@ -29796,7 +29796,7 @@ d_maps = {
 },
 26: {
 "tile": 7,
-"travel": 8.0
+"travel": 9.0
 },
 27: {
 "tile": 8,
@@ -29920,15 +29920,15 @@ d_maps = {
 },
 57: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 58: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 59: {
 "tile": 9,
-"travel": 10.0
+"travel": 9.0
 },
 60: {
 "tile": 3,
@@ -29964,11 +29964,11 @@ d_maps = {
 },
 68: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 69: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 70: {
 "tile": 2,
@@ -30082,7 +30082,7 @@ d_maps = {
 },
 7: {
 "tile": 8,
-"travel": 9.5
+"travel": 10.0
 },
 8: {
 "tile": 9,
@@ -30118,7 +30118,7 @@ d_maps = {
 },
 16: {
 "tile": 7,
-"travel": 8.5
+"travel": 9.0
 },
 17: {
 "tile": 8,
@@ -30158,7 +30158,7 @@ d_maps = {
 },
 26: {
 "tile": 6,
-"travel": 7.5
+"travel": 8.0
 },
 27: {
 "tile": 7,
@@ -30282,15 +30282,15 @@ d_maps = {
 },
 57: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 58: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 59: {
 "tile": 8,
-"travel": 9.0
+"travel": 8.0
 },
 60: {
 "tile": 4,
@@ -30326,11 +30326,11 @@ d_maps = {
 },
 68: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 69: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 70: {
 "tile": 3,
@@ -30644,15 +30644,15 @@ d_maps = {
 },
 57: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 58: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 59: {
 "tile": 7,
-"travel": 8.0
+"travel": 7.0
 },
 60: {
 "tile": 5,
@@ -30688,11 +30688,11 @@ d_maps = {
 },
 68: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 69: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 70: {
 "tile": 4,
@@ -30786,11 +30786,11 @@ d_maps = {
 },
 2: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 3: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 4: {
 "tile": 8,
@@ -30826,11 +30826,11 @@ d_maps = {
 },
 12: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 13: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 14: {
 "tile": 7,
@@ -30870,7 +30870,7 @@ d_maps = {
 },
 23: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 24: {
 "tile": 6,
@@ -30910,7 +30910,7 @@ d_maps = {
 },
 33: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 34: {
 "tile": 5,
@@ -30954,7 +30954,7 @@ d_maps = {
 },
 44: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 45: {
 "tile": 4,
@@ -30994,7 +30994,7 @@ d_maps = {
 },
 54: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 55: {
 "tile": 3,
@@ -31006,15 +31006,15 @@ d_maps = {
 },
 57: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 58: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 59: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 60: {
 "tile": 6,
@@ -31038,7 +31038,7 @@ d_maps = {
 },
 65: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 66: {
 "tile": 2,
@@ -31050,11 +31050,11 @@ d_maps = {
 },
 68: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 69: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 70: {
 "tile": 5,
@@ -31144,15 +31144,15 @@ d_maps = {
 },
 1: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 2: {
 "tile": 8,
-"travel": 8.0
+"travel": 10.0
 },
 3: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 4: {
 "tile": 8,
@@ -31184,15 +31184,15 @@ d_maps = {
 },
 11: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 12: {
 "tile": 7,
-"travel": 7.0
+"travel": 9.0
 },
 13: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 14: {
 "tile": 7,
@@ -31228,11 +31228,11 @@ d_maps = {
 },
 22: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 23: {
 "tile": 6,
-"travel": 6.0
+"travel": 8.0
 },
 24: {
 "tile": 6,
@@ -31268,11 +31268,11 @@ d_maps = {
 },
 32: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 33: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 34: {
 "tile": 5,
@@ -31312,11 +31312,11 @@ d_maps = {
 },
 43: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 44: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 45: {
 "tile": 4,
@@ -31352,11 +31352,11 @@ d_maps = {
 },
 53: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 54: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 55: {
 "tile": 3,
@@ -31368,15 +31368,15 @@ d_maps = {
 },
 57: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 58: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 59: {
 "tile": 5,
-"travel": 7.0
+"travel": 5.0
 },
 60: {
 "tile": 7,
@@ -31396,11 +31396,11 @@ d_maps = {
 },
 64: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 65: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 66: {
 "tile": 2,
@@ -31412,11 +31412,11 @@ d_maps = {
 },
 68: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 69: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 70: {
 "tile": 6,
@@ -31436,7 +31436,7 @@ d_maps = {
 },
 74: {
 "tile": 2,
-"travel": 2.0
+"travel": 3.0
 },
 75: {
 "tile": 1,
@@ -31510,7 +31510,7 @@ d_maps = {
 },
 2: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 3: {
 "tile": 8,
@@ -31550,7 +31550,7 @@ d_maps = {
 },
 12: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 13: {
 "tile": 7,
@@ -31594,11 +31594,11 @@ d_maps = {
 },
 23: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 24: {
 "tile": 6,
-"travel": 7.0
+"travel": 6.0
 },
 25: {
 "tile": 6,
@@ -31638,7 +31638,7 @@ d_maps = {
 },
 34: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 35: {
 "tile": 5,
@@ -31658,7 +31658,7 @@ d_maps = {
 },
 39: {
 "tile": 5,
-"travel": 7.0
+"travel": 6.0
 },
 40: {
 "tile": 9,
@@ -31682,7 +31682,7 @@ d_maps = {
 },
 45: {
 "tile": 4,
-"travel": 5.0
+"travel": 4.0
 },
 46: {
 "tile": 4,
@@ -31698,7 +31698,7 @@ d_maps = {
 },
 49: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 50: {
 "tile": 8,
@@ -31714,11 +31714,11 @@ d_maps = {
 },
 53: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 54: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 55: {
 "tile": 3,
@@ -31730,7 +31730,7 @@ d_maps = {
 },
 57: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 58: {
 "tile": 3,
@@ -31738,7 +31738,7 @@ d_maps = {
 },
 59: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 60: {
 "tile": 8,
@@ -31758,11 +31758,11 @@ d_maps = {
 },
 64: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 65: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 66: {
 "tile": 2,
@@ -31778,7 +31778,7 @@ d_maps = {
 },
 69: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 70: {
 "tile": 7,
@@ -31798,7 +31798,7 @@ d_maps = {
 },
 74: {
 "tile": 3,
-"travel": 3.0
+"travel": 4.0
 },
 75: {
 "tile": 2,
@@ -31900,7 +31900,7 @@ d_maps = {
 },
 9: {
 "tile": 8,
-"travel": 10.0
+"travel": 9.0
 },
 10: {
 "tile": 11,
@@ -31940,7 +31940,7 @@ d_maps = {
 },
 19: {
 "tile": 7,
-"travel": 9.0
+"travel": 8.0
 },
 20: {
 "tile": 11,
@@ -31956,7 +31956,7 @@ d_maps = {
 },
 23: {
 "tile": 8,
-"travel": 8.0
+"travel": 9.0
 },
 24: {
 "tile": 7,
@@ -31980,7 +31980,7 @@ d_maps = {
 },
 29: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 30: {
 "tile": 10,
@@ -32016,11 +32016,11 @@ d_maps = {
 },
 38: {
 "tile": 5,
-"travel": 6.0
+"travel": 5.0
 },
 39: {
 "tile": 5,
-"travel": 7.0
+"travel": 5.0
 },
 40: {
 "tile": 10,
@@ -32060,7 +32060,7 @@ d_maps = {
 },
 49: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 50: {
 "tile": 9,
@@ -32076,11 +32076,11 @@ d_maps = {
 },
 53: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 54: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 55: {
 "tile": 4,
@@ -32092,15 +32092,15 @@ d_maps = {
 },
 57: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 58: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 59: {
 "tile": 3,
-"travel": 5.0
+"travel": 3.0
 },
 60: {
 "tile": 9,
@@ -32120,11 +32120,11 @@ d_maps = {
 },
 64: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 65: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 66: {
 "tile": 3,
@@ -32136,11 +32136,11 @@ d_maps = {
 },
 68: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 69: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 70: {
 "tile": 8,
@@ -32160,7 +32160,7 @@ d_maps = {
 },
 74: {
 "tile": 4,
-"travel": 4.0
+"travel": 5.0
 },
 75: {
 "tile": 3,
@@ -32262,7 +32262,7 @@ d_maps = {
 },
 9: {
 "tile": 8,
-"travel": 11.0
+"travel": 9.0
 },
 10: {
 "tile": 12,
@@ -32298,11 +32298,11 @@ d_maps = {
 },
 18: {
 "tile": 7,
-"travel": 10.0
+"travel": 9.0
 },
 19: {
 "tile": 7,
-"travel": 10.0
+"travel": 8.0
 },
 20: {
 "tile": 12,
@@ -32318,7 +32318,7 @@ d_maps = {
 },
 23: {
 "tile": 9,
-"travel": 9.0
+"travel": 10.0
 },
 24: {
 "tile": 8,
@@ -32338,11 +32338,11 @@ d_maps = {
 },
 28: {
 "tile": 6,
-"travel": 8.0
+"travel": 7.0
 },
 29: {
 "tile": 6,
-"travel": 9.0
+"travel": 7.0
 },
 30: {
 "tile": 11,
@@ -32378,11 +32378,11 @@ d_maps = {
 },
 38: {
 "tile": 5,
-"travel": 7.0
+"travel": 5.0
 },
 39: {
 "tile": 5,
-"travel": 7.0
+"travel": 5.0
 },
 40: {
 "tile": 11,
@@ -32418,11 +32418,11 @@ d_maps = {
 },
 48: {
 "tile": 4,
-"travel": 6.0
+"travel": 5.0
 },
 49: {
 "tile": 4,
-"travel": 6.0
+"travel": 4.0
 },
 50: {
 "tile": 10,
@@ -32438,11 +32438,11 @@ d_maps = {
 },
 53: {
 "tile": 7,
-"travel": 7.0
+"travel": 8.0
 },
 54: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 55: {
 "tile": 5,
@@ -32454,15 +32454,15 @@ d_maps = {
 },
 57: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 58: {
 "tile": 3,
-"travel": 4.0
+"travel": 3.0
 },
 59: {
 "tile": 3,
-"travel": 5.0
+"travel": 3.0
 },
 60: {
 "tile": 10,
@@ -32482,11 +32482,11 @@ d_maps = {
 },
 64: {
 "tile": 6,
-"travel": 6.0
+"travel": 7.0
 },
 65: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 66: {
 "tile": 4,
@@ -32498,11 +32498,11 @@ d_maps = {
 },
 68: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 69: {
 "tile": 2,
-"travel": 3.0
+"travel": 2.0
 },
 70: {
 "tile": 9,
@@ -32522,7 +32522,7 @@ d_maps = {
 },
 74: {
 "tile": 5,
-"travel": 5.0
+"travel": 6.0
 },
 75: {
 "tile": 4,

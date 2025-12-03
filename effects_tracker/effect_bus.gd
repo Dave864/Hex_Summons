@@ -11,6 +11,13 @@ var _is_set_op: bool
 var _effect_bus: Dictionary = {}
 
 
+## Called when an instance of this object is created.
+func _init(affected_stat: int, is_percentage_calc: bool, is_set_op: bool):
+	_affected_stat = affected_stat
+	_is_percentage_calc = is_percentage_calc
+	_is_set_op = is_set_op
+
+
 ## Looks at all aspects of an effect and adds aspects to the end of the bus if 
 ## they target the affected stat. Updates prior instances of the same effect aspect.
 func add_effect(effect: Effect) -> void:
@@ -86,10 +93,3 @@ func process_all_effects(char_stats: CharacterStats) -> int:
 ## Returns the current number of effects in the bus.
 func size() -> int:
 	return _effect_bus.size()
-
-
-## Called when an instance of this object is created.
-func _init(affected_stat: int, is_percentage_calc: bool, is_set_op: bool):
-	_affected_stat = affected_stat
-	_is_percentage_calc = is_percentage_calc
-	_is_set_op = is_set_op

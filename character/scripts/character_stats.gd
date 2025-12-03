@@ -9,8 +9,8 @@ signal health_changed(new_value, old_value)
 ## Indicates that the agility has been modified.
 signal agility_changed(new_value)
 
-## Stat values
-@export var base_stat_values: Resource = null
+## Original stat values
+@export var base_stat_values: BaseStats = null
 
 ## Reference to the character that the stats describe
 var character_id: int = -1

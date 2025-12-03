@@ -13,6 +13,19 @@ var _hm_astar: HexMapAStar = null
 @onready var _map_tiles: Tiles = get_node(map_tiles_reference)
 
 
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	_check_for_required_parameters()
+	# Waiting for _map_tiles to be ready allows for RangeFinder node being
+	# able to be placed in any position relative to node with map tiles data.
+	# Without this, RangeFinder node would always need to be after map tiles
+	# node.
+	await _map_tiles.ready
+	_hm_astar = HexMapAStar.new(_map_tiles.get_all(), _map_tiles.get_x_count())
+	if Engine.is_editor_hint():
+		_update_distance_map()
+
+
 ## Updates the reference path for map tiles node. Is intended only for use when
 ## running the RangeFinder script in the inspector for the purposes of saving
 ## the distance map resource data.
@@ -306,19 +319,6 @@ func get_character_farthest_point_away(
 	_hm_astar.set_all_disabled()
 	return true_farthest_pt
 	
-
-
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	_check_for_required_parameters()
-	# Waiting for _map_tiles to be ready allows for RangeFinder node being
-	# able to be placed in any position relative to node with map tiles data.
-	# Without this, RangeFinder node would always need to be after map tiles
-	# node.
-	await _map_tiles.ready
-	_hm_astar = HexMapAStar.new(_map_tiles.get_all(), _map_tiles.get_x_count())
-	if Engine.is_editor_hint():
-		_update_distance_map()
 
 
 ## Updates the distance map if necessary. Should only ever be called when running
