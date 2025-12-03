@@ -7,18 +7,31 @@ extends Character
 ## player character data being supplied afterwards.
 
 
+## The path to the default portrait for player characters.
+const DEFAULT_PORTRAIT_PATH: String = (
+		"res://character/player_characters/PlayerCharacter/" + \
+		"PlayerBattlePortrait.atlastex"
+)
+## The path to the battle sprite for player characters.
+const DEFAULT_BATTLE_PATH: String = (
+		"res://character/player_characters/PlayerCharacter/" +\
+		"PlayerBattleSprite.atlastex"
+)
+## Formatted string used to create the file path for the portrait of a player
+## character.
 const PORTRAIT_PATH_FORMAT: String = (
 		"res://character/player_characters/{0}/" + \
 		"BattlePortrait.atlastex"
 )
+## Formatted string used to create the file path for the battle sprite of a
+## player character.
 const BATTLE_PATH_FORMAT: String = (
 		"res://character/player_characters/{0}/" + \
 		"BattleSprite.atlastex"
 )
 
-## The player's wisp pool.
+## The player character's wisp pool.
 var wisp_pool: PlayerWispPool = null
-
 ## The current player class; determines stat adjusters and abilities.
 var _player_class: PlayerClass
 ## The techniques the character has access to.
@@ -26,14 +39,11 @@ var _techniques: Array
 ## The spells the character has access to.
 var _spells: Array
 
-@onready var _default_portait: Texture2D = preload(
-		"res://character/player_characters/PlayerCharacter/" + \
-		"PlayerBattlePortrait.atlastex"
-)
-@onready var _default_battle: Texture2D = preload(
-		"res://character/player_characters/PlayerCharacter/" +\
-		"PlayerBattleSprite.atlastex"
-)
+## The default portrait for a player character.
+@onready var _default_portait: Texture2D = preload(DEFAULT_PORTRAIT_PATH)
+## The default battle sprite for a player character.
+@onready var _default_battle: Texture2D = preload(DEFAULT_BATTLE_PATH)
+## The node reference for the battle sprite.
 @onready var _battle_sprite: EncounterSprite = $Sprite3D
 
 

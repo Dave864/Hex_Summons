@@ -15,7 +15,6 @@
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="11_8fhg1"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="12"]
 
-
 [node name="PlayerCharacter" type="Area3D"]
 collision_layer = 4
 collision_mask = 2

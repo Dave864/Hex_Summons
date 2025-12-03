@@ -10,13 +10,17 @@ extends Node
 ## The player characters active in the encounter.
 var players: Array = []
 
+## The scene used to create player characters from out of encounter data.
 var _player_template: PackedScene = preload(
 		"res://character/player_characters/" + \
 		"PlayerCharacter/PlayerCharacter.tscn"
 )
 
+## List of enemy characters active in the encounter.
 @onready var enemies: Array = $Enemies.get_children()
+## Reference to the Selector node; used to highlight and select map tiles.
 @onready var selector: Selector = $Selector
+## Reference to the UI elements for the encounter.
 @onready var ui: EncounterUI = $EncounterUI
 
 
