@@ -57,6 +57,12 @@ var _flat_change_bus: EffectBus
 var _percent_change_bus: EffectBus
 
 
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	_flat_change_bus = EffectBus.new(_global_reference[target_stat], false, false)
+	_percent_change_bus = EffectBus.new(_global_reference[target_stat], true, false)
+
+
 ## Updates the duration for all effects.
 func progress_duration(turn_step: int = 1) -> void:
 	_flat_change_bus.progress_duration(turn_step)
@@ -80,9 +86,3 @@ func apply_effects(effects: Array, _caster_id: int, _target_id: int) -> void:
 		_flat_change_bus.add_effect(effect)
 		_percent_change_bus.add_effect(effect)
 	process_effects()
-
-
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	_flat_change_bus = EffectBus.new(_global_reference[target_stat], false, false)
-	_percent_change_bus = EffectBus.new(_global_reference[target_stat], true, false)

@@ -7,10 +7,20 @@ extends EffectsHandler
 ## to a specific value.
 
 
-## Buses that keep track of the effects that affect the managed stat.
+## Bus that keeps track of the flat change effects that affect the movement stat.
 var _flat_change_bus: EffectBus
+## Bus that keeps track of the percentage change effects that affect the
+## movement stat.
 var _percent_change_bus: EffectBus
+## Bus that keeps track of change effects that set movement to a specific value.
 var _set_change_bus: EffectBus
+
+
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	_flat_change_bus = EffectBus.new(Stat.Type.MOVEMENT, false, false)
+	_percent_change_bus = EffectBus.new(Stat.Type.MOVEMENT, true, false)
+	_set_change_bus = EffectBus.new(Stat.Type.MOVEMENT, false, true)
 
 
 ## Updates the duration for all effects.
@@ -42,10 +52,3 @@ func apply_effects(effects: Array, _caster_id: int, _target_id: int) -> void:
 		_percent_change_bus.add_effect(effect)
 		_set_change_bus.add_effect(effect)
 	process_effects()
-
-
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	_flat_change_bus = EffectBus.new(Stat.Type.MOVEMENT, false, false)
-	_percent_change_bus = EffectBus.new(Stat.Type.MOVEMENT, true, false)
-	_set_change_bus = EffectBus.new(Stat.Type.MOVEMENT, false, true)
