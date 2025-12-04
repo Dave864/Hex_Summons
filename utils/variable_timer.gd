@@ -4,8 +4,8 @@ extends Timer
 ## ends.
 
 
-@export var lower_time = 1.0 # (float, 0.001, 4096.0)
-@export var upper_time = 1.0 # (float, 0.001, 4096.0)
+@export_range(0.001, 4096.0, 0.1) var lower_time: float = 1.0
+@export_range(0.001, 4096.0, 0.1) var upper_time: float = 1.0
 
 
 ## Called when the node enters the scene tree for the first time.

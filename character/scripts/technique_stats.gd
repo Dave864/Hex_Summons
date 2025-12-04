@@ -6,7 +6,7 @@ extends Resource
 ## The stats for this technique.
 @export var action_stats: ActionStats = null
 ## The cooldown turn count.
-@export var cooldown = 0 # (int, 0, 10)
+@export_range(0, 10) var cooldown: int = 0
 
 ## The current countdown value.
 var _countdown: int = 0: get = get_countdown

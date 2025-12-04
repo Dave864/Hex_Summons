@@ -5,20 +5,20 @@ extends ActionCondition
 
 
 @export_group("Required Wisps to Cast")
-@export var earth_req = 0 # (int, 0, 4)
-@export var fire_req = 0 # (int, 0, 4)
-@export var water_req = 0 # (int, 0, 4)
-@export var wind_req = 0 # (int, 0, 4)
-@export var light_req = 0 # (int, 0, 4)
-@export var dark_req = 0 # (int, 0, 4)
+@export_range(0, 4) var earth_req: int = 0
+@export_range(0, 4) var fire_req: int = 0
+@export_range(0, 4) var water_req: int = 0
+@export_range(0, 4) var wind_req: int = 0
+@export_range(0, 4) var light_req: int = 0
+@export_range(0, 4) var dark_req: int = 0
 
 @export_group("Wisps Spent on Cast")
-@export var earth_cost = 0 # (int, 0, 4)
-@export var fire_cost = 0 # (int, 0, 4)
-@export var water_cost = 0 # (int, 0, 4)
-@export var wind_cost = 0 # (int, 0, 4)
-@export var light_cost = 0 # (int, 0, 4)
-@export var dark_cost = 0 # (int, 0, 4)
+@export_range(0, 4) var earth_cost: int = 0
+@export_range(0, 4) var fire_cost: int = 0
+@export_range(0, 4) var water_cost: int = 0
+@export_range(0, 4) var wind_cost: int = 0
+@export_range(0, 4) var light_cost: int = 0
+@export_range(0, 4) var dark_cost: int = 0
 
 ## The pool that the cost refers to when checking if requirements are met.
 var wisp_pool: WispPool = null

@@ -31,7 +31,7 @@ enum ResEffect {
 @export var resistance_effect: ResEffect = ResEffect.STRENGTH
 ## The maximum number of turns this effect can last afier application. A value
 ## of zero means the effect is applied immediately.
-@export var max_turn_duration = 0 # (int, 0, 100)
+@export_range(0, 100) var max_turn_duration: int = 0
 
 ## How many turns does this effect last after application when adjusted for
 ## resistances.

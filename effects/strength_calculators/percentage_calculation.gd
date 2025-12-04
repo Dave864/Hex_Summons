@@ -3,7 +3,7 @@ extends StrengthCalculation
 ## A strength calculation that uses the percentage of a given number.
 
 
-@export var percentage = 1.0 # (float, 0.0, 5.0)
+@export_range(0.0, 5.0, 0.01) var percentage: float = 1.0
 
 
 ## Determines the value that will be used to change the stat to be the desired value.

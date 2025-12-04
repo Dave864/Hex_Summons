@@ -5,7 +5,7 @@ extends ActionCondition
 
 ## The percentage of health that is compared to when checking if this
 ## condition is met.
-@export var threshold = 1.0 # (float, 0.0, 1.0)
+@export_range(0.0, 1.0, 0.01) var threshold: float = 1.0
 ## Indicates if this condition checks if the health is above or below the
 ## specified threshold.
 @export var below: bool = false
@@ -20,6 +20,6 @@ func is_met(
 ) -> bool:
 	var cur_health: int = character.stats.get_stat(Stat.Type.CUR_HEALTH)
 	var max_health: int = character.stats.get_stat(Stat.Type.MAX_HEALTH)
-	var t_health: int = max_health * threshold
+	var t_health: int = int(max_health * threshold)
 	
 	return cur_health <= t_health if below else cur_health >= t_health

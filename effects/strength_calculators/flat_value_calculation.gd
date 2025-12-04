@@ -3,7 +3,7 @@ extends StrengthCalculation
 ## A strength calculation that simply sets the strength to a given value.
 
 
-@export var flat_value = 0 # (int, 0, 1000)
+@export_range(0, 1000) var flat_value: int = 0
 
 
 ## Determines the value that the target stat will be set to. If this effect is

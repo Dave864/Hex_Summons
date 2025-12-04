@@ -10,9 +10,9 @@ extends Node3D
 const MAP_TILE = "MapTile"
 
 ## The number of tiles along the X axis.
-@export var x_count = 2: get = get_x_count, set = set_x_count # (int, 1, 50)
+@export_range(1, 50) var x_count: int = 2: get = get_x_count, set = set_x_count
 ## The number of tiles along the Z axis.
-@export var z_count = 3: get = get_z_count, set = set_z_count # (int, 1, 50)
+@export_range(1, 50) var z_count: int = 3: get = get_z_count, set = set_z_count
 ## Indicates that the map tiles are to be regenerated. Workaround for creating
 ## an Inspector plugin. Should NEVER be set outside of Inspector.
 @export var regenerate: bool = false: set = _regenerate_grid

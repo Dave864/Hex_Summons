@@ -4,7 +4,7 @@ extends AreaRange
 
 
 ## How many tiles out from the cast point the area will reach.
-@export var radius = 0 # (int, 0, 1000)
+@export_range(0, 1000) var radius: int = 0
 
 
 ## Returns the reach of the RingArea. Used when determining which tiles are

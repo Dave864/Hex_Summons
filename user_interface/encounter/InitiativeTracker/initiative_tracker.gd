@@ -10,7 +10,7 @@ extends Control
 ## initiative slots in the UI.
 
 
-@export var pity_round_count = 2 # (int, 2, 10)
+@export_range(2, 10) var pity_round_count: int = 2
 
 ## Tracks the character and number of rounds said character has gone without
 ## taking a turn using the instance id as the key. Each entry has the

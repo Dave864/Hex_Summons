@@ -5,9 +5,9 @@ extends AreaRange
 
 
 ## Describes how wide the diamond area is.
-@export var spread = 0 # (int, 0, 100)
+@export_range(0, 100) var spread: int = 0
 ## Describes how far out the range extends away from the start point.
-@export var distance = 1 # (int, 1, 100)
+@export_range(1, 100) var distance: int = 1
 
 
 ## Returns the reach of the ColumnArea. Used when determining which tiles are

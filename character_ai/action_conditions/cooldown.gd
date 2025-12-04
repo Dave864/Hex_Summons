@@ -4,7 +4,7 @@ extends Node
 
 
 ## The number of turns the cooldown is active for.
-@export var turn_count = 0 # (int, 0, 10)
+@export_range(0, 10) var turn_count: int = 0
 
 ## Tracks the countdown value when the cooldown is active. A value of 0 indicates
 ## the countdown has completed.

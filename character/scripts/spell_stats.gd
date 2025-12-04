@@ -6,20 +6,20 @@ extends Resource
 @export var action_stats: ActionStats = null
 
 @export_group("Wisps Required to Cast")
-@export var earth_req = 0 # (int, 0, 4)
-@export var fire_req = 0 # (int, 0, 4)
-@export var water_req = 0 # (int, 0, 4)
-@export var wind_req = 0 # (int, 0, 4)
-@export var light_req = 0 # (int, 0, 4)
-@export var dark_req = 0 # (int, 0, 4)
+@export_range(0, 4) var earth_req: int = 0
+@export_range(0, 4) var fire_req: int = 0
+@export_range(0, 4) var water_req: int = 0
+@export_range(0, 4) var wind_req: int = 0
+@export_range(0, 4) var light_req: int = 0
+@export_range(0, 4) var dark_req: int = 0
 
 @export_group("Wisps Spent on Cast")
-@export var earth_cost = 0 # (int, 0, 4)
-@export var fire_cost = 0 # (int, 0, 4)
-@export var water_cost = 0 # (int, 0, 4)
-@export var wind_cost = 0 # (int, 0, 4)
-@export var light_cost = 0 # (int, 0, 4)
-@export var dark_cost = 0 # (int, 0, 4)
+@export_range(0, 4) var earth_cost: int = 0
+@export_range(0, 4) var fire_cost: int = 0
+@export_range(0, 4) var water_cost: int = 0
+@export_range(0, 4) var wind_cost: int = 0
+@export_range(0, 4) var light_cost: int = 0
+@export_range(0, 4) var dark_cost: int = 0
 
 var summary: Dictionary = _get_costs()
 

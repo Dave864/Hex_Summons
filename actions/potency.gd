@@ -11,14 +11,14 @@ extends Resource
 const ELEMENTAL_POTENCY: Array = [0.0, 1.0, 1.5, 2.0, 2.33, 2.66, 3.0]
 
 ## The percentage of a character's attack to use for potency calculations.
-@export var attack_potency = 1.0 # (float, 0.0, 3.0)
+@export_range(0.0, 3.0, 0.01) var attack_potency: float = 1.0
 ## The elemental alignment of the action, used for potency calculations.
-@export var earth_alignment = 0 # (int, 0, 6)
-@export var fire_alignment = 0 # (int, 0, 6)
-@export var water_alignment = 0 # (int, 0, 6)
-@export var wind_alignment = 0 # (int, 0, 6)
-@export var light_alignment = 0 # (int, 0, 6)
-@export var dark_alignment = 0 # (int, 0, 6)
+@export_range(0, 6) var earth_alignment: int = 0
+@export_range(0, 6) var fire_alignment: int = 0
+@export_range(0, 6) var water_alignment: int = 0
+@export_range(0, 6) var wind_alignment: int = 0
+@export_range(0, 6) var light_alignment: int = 0
+@export_range(0, 6) var dark_alignment: int = 0
 
 
 ## Gets the potency value of an element.

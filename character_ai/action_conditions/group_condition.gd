@@ -14,10 +14,10 @@ enum groupStatus {
 }
 
 ## The minimum number of characters that are considered a group.
-@export var min_group_size = 2 # (int, 2, 10)
+@export_range(2, 10) var min_group_size: int = 2
 ## The maximum number of tiles characters can be away from each other to be
 ## considered in a group.
-@export var max_distance = 1 # (int, 1, 10)
+@export_range(1, 10) var max_distance: int = 1
 
 ## Stores an array of Characters that are part of a group as the values,
 ## referenced by a group number.

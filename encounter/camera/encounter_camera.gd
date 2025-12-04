@@ -22,21 +22,21 @@ const HEX_VERTEX_RADIANS: Array = [
 ]
 
 ## The default distance the camera is to be set from the focus point.
-@export var default_distance = 15.0: set = set_default_distance
+@export var default_distance: float = 15.0: set = set_default_distance
 ## The upper boundary for vertical rotation.
-@export var vert_panning_u_bound = 75.0: set = set_vert_panning_u_bound
+@export var vert_panning_u_bound: float = 75.0: set = set_vert_panning_u_bound
 ## The lower boundary for vertical rotation.
-@export var vert_panning_l_bound = 30.0: set = set_vert_panning_l_bound
+@export var vert_panning_l_bound: float = 30.0: set = set_vert_panning_l_bound
 ## The threshold of mouse movement required to trigger a rotation change.
-@export var mouse_drag_threshold = 1.0 # (float, 1.0, 5.0)
+@export_range(1.0, 5.0, 0.01) var mouse_drag_threshold: float = 1.0
 ## The percentage of lateral mouse movement to use when updating the camera.
-@export var mouse_lateral_multiplier = 0.3 # (float, 0.1, 2.0)
+@export_range(0.1, 2.0, 0.1) var mouse_lateral_multiplier: float = 0.3
 ## The speed the camera vertically pans when using joystick input.
-@export var joystick_vert_pan_speed = 100.0 # (float, 50.0, 500.0)
+@export_range(50.0, 500.0) var joystick_vert_pan_speed: float = 100.0
 ## The speed the camera horizontally pans when using joystick input.
-@export var joystick_lateral_pan_speed = 100.0 # (float, 50.0, 500.0)
+@export_range(50.0, 500.0) var joystick_lateral_pan_speed: float = 100.0
 ## The speed the camera moves to the default position.
-@export var reset_speed = 10.0 # (float, 1.0, 30.0)
+@export_range(1.0, 30.0) var reset_speed = 10.0
 
 ## The midpoint between the vertical rotation bounds. Considered the default
 ## rotation for the camera.

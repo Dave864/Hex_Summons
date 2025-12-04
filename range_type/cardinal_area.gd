@@ -4,7 +4,7 @@ extends AreaRange
 
 
 ## How many tiles out the range will reach.
-@export var distance = 1 # (int, 1, 1000)
+@export_range(1, 1000) var distance: int = 1
 
 
 ## Returns the reach of the CardinalArea. Used when determining which tiles are

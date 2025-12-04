@@ -11,7 +11,7 @@ enum Condition {
 }
 
 ## The number to use for adjacency checks.
-@export var adjacent_check = 1 # (int, 0, 10)
+@export_range(0, 10) var adjacent_check: int = 1
 ## How to evaluate the adjacent check.
 @export var check_type: Condition = Condition.EQUALS
 

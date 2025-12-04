@@ -10,7 +10,7 @@ enum CharType {
 	NONE
 }
 
-@export var y_offset = 0.0 # (float, -20.0, 20.0)
+@export_range(-20.0, 20.0, 0.01) var y_offset: float = 0.0
 @export var character_type: CharType = CharType.NONE
 @export var character_pos_ref: NodePath = NodePath("")
 
