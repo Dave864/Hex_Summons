@@ -1,14 +1,14 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" script_class="PlayerClassData" load_steps=6 format=3 uid="uid://beogs7sf02d0p"]
 
-[ext_resource path="res://character/player_classes/player_class_data.gd" type="Script" id=1]
-[ext_resource path="res://character/player_classes/TestRangeClass/stat_data/stat_values.tres" type="Resource" id=2]
-[ext_resource path="res://character/player_classes/TestRangeClass/stat_data/shot_data.tres" type="Resource" id=3]
-[ext_resource path="res://character/player_classes/TestRangeClass/stat_data/beam_data.tres" type="Resource" id=4]
-[ext_resource path="res://character/player_classes/TestRangeClass/stat_data/blast_data.tres" type="Resource" id=5]
+[ext_resource type="Script" uid="uid://cfj3adhe5oqk4" path="res://character/player_classes/player_class_data.gd" id="1"]
+[ext_resource type="Resource" path="res://character/player_classes/TestRangeClass/stat_data/stat_values.tres" id="2"]
+[ext_resource type="Resource" path="res://character/player_classes/TestRangeClass/stat_data/shot_data.tres" id="3"]
+[ext_resource type="Resource" path="res://character/player_classes/TestRangeClass/stat_data/beam_data.tres" id="4"]
+[ext_resource type="Resource" path="res://character/player_classes/TestRangeClass/stat_data/blast_data.tres" id="5"]
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource("1")
 name = "TestRange"
-stats = ExtResource( 2 )
-techniques = [ ExtResource( 3 ) ]
-spells = [ ExtResource( 4 ), ExtResource( 5 ) ]
+stats = ExtResource("2")
+techniques = [ExtResource("3")]
+spells = [ExtResource("4"), ExtResource("5")]

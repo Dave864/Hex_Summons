@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Potency" load_steps=2 format=3 uid="uid://drexvdb8gwvo4"]
+
+[ext_resource type="Script" uid="uid://8p7m0u3tqhb0" path="res://actions/potency.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+attack_potency = 1.5

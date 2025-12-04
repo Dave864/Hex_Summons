@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ActionStats" load_steps=6 format=3 uid="uid://wqwavjb6eivw"]
+
+[ext_resource type="Script" uid="uid://u40d4erg4smm" path="res://actions/action_stats.gd" id="1"]
+[ext_resource type="Resource" uid="uid://drexvdb8gwvo4" path="res://actions/SuperNova/potency.tres" id="2"]
+[ext_resource type="Resource" path="res://actions/SuperNova/source_range.tres" id="3"]
+[ext_resource type="Resource" path="res://actions/SuperNova/dead_range.tres" id="4"]
+[ext_resource type="Resource" uid="uid://dq510g0jlmxu" path="res://actions/SuperNova/effect_range.tres" id="5"]
+
+[resource]
+script = ExtResource("1")
+name = "SuperNova"
+potency = ExtResource("2")
+source_range = ExtResource("3")
+dead_range = ExtResource("4")
+effect_range = ExtResource("5")
+effect_ignore_heights = true

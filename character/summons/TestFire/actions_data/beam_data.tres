@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpellStats" load_steps=3 format=3 uid="uid://dp2mlpnt7qfxt"]
+
+[ext_resource type="Resource" path="res://actions/Beam/action_stats.tres" id="1_ljq3s"]
+[ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/spell_stats.gd" id="1_q21ft"]
+
+[resource]
+script = ExtResource("1_q21ft")
+action_stats = ExtResource("1_ljq3s")
+fire_req = 2
+fire_cost = 2
+metadata/_custom_type_script = "uid://bnw4xati435cd"

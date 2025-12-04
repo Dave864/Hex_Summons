@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="SummonData" load_steps=6 format=3 uid="uid://bucl831rabxgb"]
+
+[ext_resource type="Script" uid="uid://dkcxv3uxhnxgj" path="res://character/summons/summon_data.gd" id="1_sheyr"]
+[ext_resource type="Resource" uid="uid://wqwavjb6eivw" path="res://actions/SuperNova/action_stats.tres" id="2_1er12"]
+[ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/spell_stats.gd" id="2_wewqp"]
+[ext_resource type="Resource" uid="uid://dp2mlpnt7qfxt" path="res://character/summons/TestFire/actions_data/beam_data.tres" id="4_6enet"]
+[ext_resource type="Resource" uid="uid://bkfn73ekp37uo" path="res://character/summons/TestFire/actions_data/nova_data.tres" id="5_xlgu7"]
+
+[resource]
+script = ExtResource("1_sheyr")
+name = "TestFire"
+movement = 6
+attack = 2.0
+defense = 2.0
+magic_fire = 3.0
+res_earth = 2.0
+res_fire = 4.0
+res_water = 2.0
+res_wind = 2.0
+fire_req = 2
+summon_action = ExtResource("2_1er12")
+turn_actions = Array[ExtResource("2_wewqp")]([ExtResource("4_6enet"), ExtResource("5_xlgu7")])
+metadata/_custom_type_script = "uid://dkcxv3uxhnxgj"
