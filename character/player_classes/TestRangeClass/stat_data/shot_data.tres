@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://character/player_classes/technique_stats.gd" type="Script" id=1]
-[ext_resource path="res://actions/Shot/action_stats.tres" type="Resource" id=2]
+[ext_resource type="Script" uid="uid://ci8l3katyguri" path="res://character/scripts/technique_stats.gd" id="1"]
+[ext_resource type="Resource" path="res://actions/Shot/action_stats.tres" id="2"]
 
 [resource]
 script = ExtResource( 1 )

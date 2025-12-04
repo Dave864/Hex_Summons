@@ -9,27 +9,41 @@ signal health_changed(new_value, old_value)
 ## Indicates that the agility has been modified.
 signal agility_changed(new_value)
 
-## Original stat values
+## Original stat values.
 @export var base_stat_values: BaseStats = null
 
-## Reference to the character that the stats describe
+## Reference to the character that the stats describe.
 var character_id: int = -1
 
-## Modifier values for all stats
+## Modifier value for maximum health.
 var _max_health_mod: int = 0
+## Modifier value for attack.
 var _attack_mod: int = 0
+## Modifier value for defense.
 var _defense_mod: int = 0
+## Modifier value for agility.
 var _agility_mod: int = 0
+## Modifier value for movement.
 var _movement_mod: int = 0
+## Modifier value for earth magic.
 var _magic_earth_mod: int = 0
+## Modifier value for fire magic.
 var _magic_fire_mod: int = 0
+## Modifier value for water magic.
 var _magic_water_mod: int = 0
+## Modifier value for wind magic.
 var _magic_wind_mod: int = 0
+## Modifier value for earth resistance.
 var _res_earth_mod: int = 0
+## Modifier value for fire resistance.
 var _res_fire_mod: int = 0
+## Modifier value for water resistance.
 var _res_water_mod: int = 0
+## Modifier value for wind resistance.
 var _res_wind_mod: int = 0
+## The current level of the character.
 var _level: int = 1: get = get_level, set = set_level
+## The current health of the character.
 var _current_health: int = 0
 
 
