@@ -4,59 +4,12 @@ extends Object
 ## throughout the game.
 
 
-## The elements that define magic and resistance. LIGHT and DARK are considered
-## alignment elements. FIRE, EARTH, WATER, and WIND are core elements and can each
-## be aligned to either of the alignment elements.
-enum Element {
-	EARTH,
-	FIRE,
-	WATER,
-	WIND,
-	LIGHT,
-	DARK,
-}
-
-## The core elements that define magic and resistance. FIRE, EARTH, WATER, and WIND
-## are core elements and can each be aligned to either of the alignment elements.
-enum CoreElement {
-	EARTH,
-	FIRE,
-	WATER,
-	WIND,
-}
-
-## The alignment elements that define magic and resistance. LIGHT and DARK
-## are alignment elements and two core elements are assigned to each. Values are
-## consistent with the Element enum.
-enum AlignmentElement {
-	LIGHT = 4,
-	DARK = 5,
-}
-
 ## What the range finder is being used for.
 enum RangeTypes {
 	MOVE,
 	TECHNIQUE,
 	SPELL,
 }
-
-## The different operations that can be performed on character stats.
-enum Operation {
-	INCREASE,
-	DECREASE,
-	SET
-}
-
-## Words referring to different character stats.
-const LEVEL: String = "Level"
-const MOVEMENT: String = "Movement"
-const MAX_HEALTH: String = "Max Health"
-const CUR_HEALTH: String = "Current Health"
-const ATTACK: String = "Attack"
-const DEFENSE: String = "Defense"
-const AGILITY: String = "Agility"
-const MAGIC: String = "Magic"
-const RESISTANCE: String = "Resistance"
 
 ## The path to a default icon.
 const DEFAULT_ICON_PATH: String = "res://art/icon.png"

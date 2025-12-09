@@ -73,17 +73,17 @@ func is_met(
 func _get_requirements() -> Dictionary:
 	var element_reqs: Dictionary = {}
 	if earth_req > 0:
-		element_reqs[Constants.Element.EARTH] = earth_req
+		element_reqs[Element.Type.EARTH] = earth_req
 	if fire_req > 0:
-		element_reqs[Constants.Element.FIRE] = fire_req
+		element_reqs[Element.Type.FIRE] = fire_req
 	if water_req > 0:
-		element_reqs[Constants.Element.WATER] = water_req
+		element_reqs[Element.Type.WATER] = water_req
 	if wind_req > 0:
-		element_reqs[Constants.Element.WIND] = wind_req
+		element_reqs[Element.Type.WIND] = wind_req
 	if light_req > 0:
-		element_reqs[Constants.Element.LIGHT] = light_req
+		element_reqs[Element.Type.LIGHT] = light_req
 	if dark_req > 0:
-		element_reqs[Constants.Element.DARK] = dark_req
+		element_reqs[Element.Type.DARK] = dark_req
 	return element_reqs
 
 
@@ -91,17 +91,17 @@ func _get_requirements() -> Dictionary:
 func _get_costs() -> Dictionary:
 	var element_costs: Dictionary = {}
 	if earth_cost > 0:
-		element_costs[Constants.Element.EARTH] = earth_cost
+		element_costs[Element.Type.EARTH] = earth_cost
 	if fire_cost > 0:
-			element_costs[Constants.Element.FIRE] = fire_cost
+			element_costs[Element.Type.FIRE] = fire_cost
 	if water_cost > 0:
-			element_costs[Constants.Element.WATER] = water_cost
+			element_costs[Element.Type.WATER] = water_cost
 	if wind_cost > 0:
-			element_costs[Constants.Element.WIND] = wind_cost
+			element_costs[Element.Type.WIND] = wind_cost
 	if light_cost > 0:
-			element_costs[Constants.Element.LIGHT] = light_cost
+			element_costs[Element.Type.LIGHT] = light_cost
 	if dark_cost > 0:
-			element_costs[Constants.Element.DARK] = dark_cost
+			element_costs[Element.Type.DARK] = dark_cost
 	return element_costs
 
 

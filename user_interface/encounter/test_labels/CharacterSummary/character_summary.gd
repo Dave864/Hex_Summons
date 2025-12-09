@@ -4,10 +4,10 @@ extends VBoxContainer
 
 
 const ELEMENT_TAGS: Dictionary = {
-	Constants.Element.EARTH: "E",
-	Constants.Element.FIRE: "F",
-	Constants.Element.WATER: "Wt",
-	Constants.Element.WIND: "Wd",
+	Element.Type.EARTH: "E",
+	Element.Type.FIRE: "F",
+	Element.Type.WATER: "Wt",
+	Element.Type.WIND: "Wd",
 }
 
 

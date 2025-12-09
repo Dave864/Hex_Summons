@@ -8,8 +8,8 @@ extends Node
 ## Indicates that the alignment of core elements has changed.
 signal alignment_changed()
 
-const LIGHT: int = Constants.AlignmentElement.LIGHT
-const DARK: int = Constants.AlignmentElement.DARK
+const LIGHT: int = Element.Alignment.LIGHT
+const DARK: int = Element.Alignment.DARK
 
 var _alignments: Dictionary = {
 	LIGHT: [-1, -1],
@@ -135,7 +135,7 @@ func _set_elements_to_polarity(
 	element_1: int,
 	element_2: int
 ) -> void:
-	if target_polarity in Constants.AlignmentElement.keys():
+	if target_polarity in Element.Alignment.keys():
 		printerr("target_polarity is not a 'polar' element.")
 		return
 	var inverse_polarity: int = LIGHT if target_polarity == DARK else DARK
@@ -193,12 +193,12 @@ func _swap_alignments_at_index(index: int) -> void:
 
 ## Checks if a given value corresponds to an elemental type.
 func _is_valid_core_element(element: int) -> bool:
-	return element in Constants.CoreElement.keys()
+	return element in Element.Core.keys()
 
 
 ## Sets Fire and Wind to Light. Sets Earth and Water to Dark.
 func _set_to_default() -> void:
-	_alignments[LIGHT][0] = Constants.CoreElement.FIRE
-	_alignments[LIGHT][1] = Constants.CoreElement.WIND
-	_alignments[DARK][0] = Constants.CoreElement.EARTH
-	_alignments[DARK][1] = Constants.CoreElement.WATER
+	_alignments[LIGHT][0] = Element.Core.FIRE
+	_alignments[LIGHT][1] = Element.Core.WIND
+	_alignments[DARK][0] = Element.Core.EARTH
+	_alignments[DARK][1] = Element.Core.WATER

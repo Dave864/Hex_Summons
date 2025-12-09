@@ -24,17 +24,17 @@ const ELEMENTAL_POTENCY: Array = [0.0, 1.0, 1.5, 2.0, 2.33, 2.66, 3.0]
 ## Gets the potency value of an element.
 func get_elemental_potency(element: int) -> float:
 	match element:
-		Constants.Element.EARTH:
+		Element.Type.EARTH:
 			return ELEMENTAL_POTENCY[earth_alignment]
-		Constants.Element.FIRE:
+		Element.Type.FIRE:
 			return ELEMENTAL_POTENCY[fire_alignment]
-		Constants.Element.WATER:
+		Element.Type.WATER:
 			return ELEMENTAL_POTENCY[water_alignment]
-		Constants.Element.WIND:
+		Element.Type.WIND:
 			return ELEMENTAL_POTENCY[wind_alignment]
-		Constants.Element.LIGHT:
+		Element.Type.LIGHT:
 			return ELEMENTAL_POTENCY[light_alignment]
-		Constants.Element.DARK:
+		Element.Type.DARK:
 			return ELEMENTAL_POTENCY[dark_alignment]
 		_:
 			return 0.0

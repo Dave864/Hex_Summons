@@ -6,25 +6,25 @@ extends WispPool
 ## Tracks which wisps are set to the summon, i.e. which wisps are available
 ## to be used for actions.
 var pool: Dictionary = {
-	Constants.CoreElement.EARTH: [],
-	Constants.CoreElement.FIRE: [],
-	Constants.CoreElement.WATER: [],
-	Constants.CoreElement.WIND: [],
+	Element.Core.EARTH: [],
+	Element.Core.FIRE: [],
+	Element.Core.WATER: [],
+	Element.Core.WIND: [],
 }
 
 
 func _ready() -> void:
-	for element in Constants.CoreElement.values():
+	for element in Element.Core.values():
 		_active_count[element] = pool[element].size()
 
 
 ## Adds wisps to the specified element pool. The expectation is that wisp_ids
 ## will be an array with a size divisible by 2 when adding wisps for LIGHT and DARK.
 func add_wisps(wisp_ids: Array, element: int) -> void:
-	if element in Constants.AlignmentElement.values():
+	if element in Element.Alignment.values():
 		var elems: Array = (
 			ElementalAlignment.get_light_elements()
-			if element == Constants.AlignmentElement.LIGHT
+			if element == Element.Alignment.LIGHT
 			else ElementalAlignment.get_dark_elements()
 		)
 		var half_size: int = int(round(wisp_ids.size() / 2.0))
@@ -36,7 +36,7 @@ func add_wisps(wisp_ids: Array, element: int) -> void:
 		emit_signal("active_count_changed", elems[0])
 		emit_signal("active_count_changed", elems[1])
 		emit_signal("active_count_changed", element)
-	elif element in Constants.CoreElement.values():
+	elif element in Element.Core.values():
 		pool[element].append_array(wisp_ids)
 		_active_count[element] += wisp_ids.size()
 		emit_signal("active_count_changed", element)
@@ -47,10 +47,10 @@ func add_wisps(wisp_ids: Array, element: int) -> void:
 ## wisps are available for the given element.
 func pay_for_element(element: int, amount: int = 1) -> Array:
 	var wisps_paid: Array = []
-	if element in Constants.AlignmentElement.keys():
+	if element in Element.Alignment.keys():
 		var elems: Array = (
 			ElementalAlignment.get_light_elements() 
-			if element == Constants.AlignmentElement.LIGHT
+			if element == Element.Alignment.LIGHT
 			else ElementalAlignment.get_dark_elements()
 		)
 		_active_count[elems[0]] -= amount
@@ -61,7 +61,7 @@ func pay_for_element(element: int, amount: int = 1) -> Array:
 		for i in amount:
 			wisps_paid.append(pool[elems[0]].pop_front())
 			wisps_paid.append(pool[elems[1]].pop_front())
-	elif element in Constants.CoreElement.keys():
+	elif element in Element.Core.keys():
 		_active_count[element] -= amount
 		emit_signal("active_count_changed", element)
 		for i in amount:

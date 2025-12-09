@@ -4,13 +4,6 @@ extends Resource
 ## to set character.
 
 
-enum Element {
-	EARTH,
-	FIRE,
-	WATER,
-	WIND,
-}
-
-@export var element: Element = Element.EARTH
+@export var element: Element.Core = Element.Core.EARTH
 @export var portrait: Texture2D = load(Constants.DEFAULT_ICON_PATH)
 @export var effect_bonus: Resource =  null

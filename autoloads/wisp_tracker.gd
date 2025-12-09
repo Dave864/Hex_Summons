@@ -15,10 +15,10 @@ const DATA: String = "data"
 const ELEMENT: String = "element"
 const BONDED_PLAYER: String = "bonded_player"
 const ENCOUNTER_STATE: String = "encounter_state"
-const EARTH: int = Constants.CoreElement.EARTH
-const FIRE: int = Constants.CoreElement.FIRE
-const WATER: int = Constants.CoreElement.WATER
-const WIND: int = Constants.CoreElement.WIND
+const EARTH: int = Element.Core.EARTH
+const FIRE: int = Element.Core.FIRE
+const WATER: int = Element.Core.WATER
+const WIND: int = Element.Core.WIND
 
 enum WispState {
 	PLAYER_SET,
@@ -200,7 +200,7 @@ func _get_wisp_data(wisp_name: String, element: int) -> Wisp:
 	# Checks if the Resource at path is indeed a wisp resource.
 	var wisp_data: Wisp = load(path_format.format([wisp_name]))
 	if wisp_data == null:
-		var elem_name: String = Constants.CoreElement.find_key(element)
+		var elem_name: String = Element.Core.find_key(element)
 		printerr("No data could be found for {0} wisp, {1}.".format([elem_name, wisp_name]))
 	return wisp_data
 

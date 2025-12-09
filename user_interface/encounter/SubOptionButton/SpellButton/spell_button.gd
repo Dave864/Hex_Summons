@@ -30,7 +30,7 @@ func _wisp_cost_text(wc: WispCost) -> String:
 	for element in wc.cost_summary:
 		text += "{0} {1} -{2}-\n".format(
 				[
-					Constants.Element.find_key(element),
+					Element.Type.find_key(element),
 					wc.req_summary[element],
 					wc.cost_summary[element]
 				]
@@ -39,7 +39,7 @@ func _wisp_cost_text(wc: WispCost) -> String:
 		if not wc.cost_summary.has(element):
 			text += "{0} {1}\n".format(
 					[
-						Constants.Element.find_key(element),
+						Element.Type.find_key(element),
 						wc.req_summary[element]
 					]
 			)

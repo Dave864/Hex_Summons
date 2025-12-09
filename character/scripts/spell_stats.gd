@@ -45,17 +45,17 @@ func _ready():
 func _get_costs() -> Dictionary:
 	var element_costs: Dictionary = {}
 	if earth_cost > 0:
-		element_costs[Constants.Element.EARTH] = earth_cost
+		element_costs[Element.Type.EARTH] = earth_cost
 	if fire_cost > 0:
-			element_costs[Constants.Element.FIRE] = fire_cost
+			element_costs[Element.Type.FIRE] = fire_cost
 	if water_cost > 0:
-			element_costs[Constants.Element.WATER] = water_cost
+			element_costs[Element.Type.WATER] = water_cost
 	if wind_cost > 0:
-			element_costs[Constants.Element.WIND] = wind_cost
+			element_costs[Element.Type.WIND] = wind_cost
 	if light_cost > 0:
-			element_costs[Constants.Element.LIGHT] = light_cost
+			element_costs[Element.Type.LIGHT] = light_cost
 	if dark_cost > 0:
-			element_costs[Constants.Element.DARK] = dark_cost
+			element_costs[Element.Type.DARK] = dark_cost
 	return element_costs
 
 

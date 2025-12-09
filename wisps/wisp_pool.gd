@@ -9,18 +9,18 @@ signal active_count_changed(element)
 
 ## The current number of wisps active in the pool.
 var _active_count: Dictionary = {
-	Constants.CoreElement.EARTH: 0,
-	Constants.CoreElement.FIRE: 0,
-	Constants.CoreElement.WATER: 0,
-	Constants.CoreElement.WIND: 0,
+	Element.Core.EARTH: 0,
+	Element.Core.FIRE: 0,
+	Element.Core.WATER: 0,
+	Element.Core.WIND: 0,
 }
 
 
 ## Gets the number of active wisps for the specified element.
 func active_element_count(element: int) -> int:
-	if element == Constants.Element.LIGHT:
+	if element == Element.Type.LIGHT:
 		return active_light_count()
-	if element == Constants.Element.DARK:
+	if element == Element.Type.DARK:
 		return active_dark_count()
 	if not _active_count.has(element):
 		printerr("Invalid element enum provided.")
@@ -30,22 +30,22 @@ func active_element_count(element: int) -> int:
 
 ## Gets the number of earth wisps that are active for actions.
 func active_earth_count() -> int:
-	return _active_count[Constants.Element.EARTH]
+	return _active_count[Element.Type.EARTH]
 
 
 ## Gets the number of fire wisps that are active for actions.
 func active_fire_count() -> int:
-	return _active_count[Constants.Element.FIRE]
+	return _active_count[Element.Type.FIRE]
 
 
 ## Gets the number of water wisps that are active for actions.
 func active_water_count() -> int:
-	return _active_count[Constants.Element.WATER]
+	return _active_count[Element.Type.WATER]
 
 
 ## Gets the number of wind wisps that are active for actions.
 func active_wind_count() -> int:
-	return _active_count[Constants.Element.WIND]
+	return _active_count[Element.Type.WIND]
 
 
 ## Gets the total "strength" of light polarity wisps.

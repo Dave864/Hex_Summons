@@ -36,11 +36,11 @@ func process_operation(
 	operation: int
 ) -> int:
 	match operation:
-		Constants.Operation.SET:
+		Stat.Operation.SET:
 			return _set_operation(strength, efficacy_percent, stat_value)
-		Constants.Operation.INCREASE:
+		Stat.Operation.INCREASE:
 			return _increase_operation(strength, efficacy_percent, stat_value)
-		Constants.Operation.DECREASE:
+		Stat.Operation.DECREASE:
 			return _decrease_operation(strength, efficacy_percent, stat_value)
 		_:
 			return 0
@@ -95,8 +95,8 @@ func _calculate_resisted_strength(
 
 ## Combines the potency strength data into a single value.
 func _strength_scalar(strength_data: Dictionary) -> float:
-	var total_strength: float = strength_data[Constants.ATTACK]
-	for v in strength_data[Constants.MAGIC].values():
+	var total_strength: float = strength_data[Stat.ATTACK]
+	for v in strength_data[Stat.MAGIC].values():
 		total_strength += v
 	return total_strength
 
@@ -107,28 +107,28 @@ func _get_strength_potency(
 		action_potency: Potency
 ) -> Dictionary:
 	var p_vals: Dictionary = {}
-	p_vals[Constants.ATTACK] = (
+	p_vals[Stat.ATTACK] = (
 			action_potency.attack_potency \
-			* character_stats[Constants.ATTACK]
+			* character_stats[Stat.ATTACK]
 	)
-	p_vals[Constants.MAGIC] = {}
-	for element in Constants.Element.values():
+	p_vals[Stat.MAGIC] = {}
+	for element in Element.Type.values():
 		var elem_pot: float = action_potency.get_elemental_potency(element)
-		var c_stat: int = character_stats[Constants.MAGIC][element]
-		p_vals[Constants.MAGIC][element] = elem_pot + c_stat
+		var c_stat: int = character_stats[Stat.MAGIC][element]
+		p_vals[Stat.MAGIC][element] = elem_pot + c_stat
 	return p_vals
 
 
 ## Applies resistance values to the strength.
 func _apply_resistance(strength: Dictionary, resistance: Dictionary) -> void:
-	strength[Constants.ATTACK] = _bind_resistance(
-			strength[Constants.ATTACK],
-			resistance[Constants.DEFENSE]
+	strength[Stat.ATTACK] = _bind_resistance(
+			strength[Stat.ATTACK],
+			resistance[Stat.DEFENSE]
 	)
-	for element in Constants.Element.values():
-		strength[Constants.MAGIC][element] = _bind_resistance(
-				strength[Constants.MAGIC][element],
-				resistance[Constants.RESISTANCE][element]
+	for element in Element.Type.values():
+		strength[Stat.MAGIC][element] = _bind_resistance(
+				strength[Stat.MAGIC][element],
+				resistance[Stat.RESISTANCE][element]
 		)
 
 

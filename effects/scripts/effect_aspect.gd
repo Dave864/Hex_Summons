@@ -20,9 +20,9 @@ enum ResEffect {
 ## The target of this effect.
 @export var target: Target = Target.NONE
 ## The stat of the target that is affected by this effect.
-@export var stat_affected: Resource = null
+@export var stat_affected: Stat.Type = Stat.Type.CUR_HEALTH
 ## How the targeted stat is modified.
-@export var operation = Constants.Operation.SET # (Constants.Operation)
+@export var operation: Stat.Operation = Stat.Operation.SET
 ## The method that determines the strength of this effect.
 @export var calculation_method: Resource = null
 ## Flag that indicates if this effect is resisted by the target
@@ -83,7 +83,7 @@ func effect_on_target(target_stats: CharacterStats) -> int:
 			return calculation_method.process_operation(
 					b_str,
 					eff,
-					stat_affected.type,
+					stat_affected,
 					operation
 			)
 		_:
@@ -98,14 +98,6 @@ func _ready():
 
 ## Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
-	assert(
-			stat_affected != null,
-			ErrorUtil.missing_required_parameter(name, "stat_affected")
-	)
-	assert(
-			stat_affected is Stat,
-			"Effect %s stat_affected is not a Stat." % [name]
-	)
 	assert(
 			calculation_method != null,
 			ErrorUtil.missing_required_parameter(name, "strength_calculation")

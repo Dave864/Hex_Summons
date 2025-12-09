@@ -8,7 +8,7 @@ extends TextureRect
 ## Indicates that the element value should change.
 signal element_ping(e)
 
-@export var element: int = Constants.CoreElement.EARTH: set = set_element
+@export var element: int = Element.Core.EARTH: set = set_element
 @export var earth_region: Vector2 = Vector2(0,0)
 @export var fire_region: Vector2 = Vector2(0,0)
 @export var water_region: Vector2 = Vector2(0,0)
@@ -24,7 +24,7 @@ var _ping: bool = false
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	# Keep the icon from using the RESET position when set to default element.
-	if element == Constants.CoreElement.EARTH:
+	if element == Element.Core.EARTH:
 		texture.region.position = earth_region
 	_check_for_required_parameters()
 
@@ -32,13 +32,13 @@ func _ready():
 ## Sets the icon texture region to display the new element.
 func set_element(new_element: int) -> void:
 	match new_element:
-		Constants.CoreElement.EARTH:
+		Element.Core.EARTH:
 			texture.region.position = earth_region
-		Constants.CoreElement.FIRE:
+		Element.Core.FIRE:
 			texture.region.position = fire_region
-		Constants.CoreElement.WATER:
+		Element.Core.WATER:
 			texture.region.position = water_region
-		Constants.CoreElement.WIND:
+		Element.Core.WIND:
 			texture.region.position = wind_region
 		_:
 			return
@@ -50,22 +50,22 @@ func set_element(new_element: int) -> void:
 func change_element(new_element: int, ping: bool = true) -> void:
 	_ping = ping
 	match element:
-		Constants.CoreElement.EARTH:
+		Element.Core.EARTH:
 			ap.play("earth_from")
-		Constants.CoreElement.FIRE:
+		Element.Core.FIRE:
 			ap.play("fire_from")
-		Constants.CoreElement.WATER:
+		Element.Core.WATER:
 			ap.play("water_from")
-		Constants.CoreElement.WIND:
+		Element.Core.WIND:
 			ap.play("wind_from")
 	match new_element:
-		Constants.CoreElement.EARTH:
+		Element.Core.EARTH:
 			ap.queue("earth_to")
-		Constants.CoreElement.FIRE:
+		Element.Core.FIRE:
 			ap.queue("fire_to")
-		Constants.CoreElement.WATER:
+		Element.Core.WATER:
 			ap.queue("water_to")
-		Constants.CoreElement.WIND:
+		Element.Core.WIND:
 			ap.queue("wind_to")
 	set_element(new_element)
 

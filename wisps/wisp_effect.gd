@@ -6,9 +6,9 @@ extends Resource
 
 
 ## The stat of the target that is affected by this effect.
-@export var stat_affected: Resource = null
+@export var stat_affected: Stat.Type = Stat.Type.MAX_HEALTH
 ## How the targeted stat is modified.
-@export var operation = Constants.Operation.SET # (Constants.Operation)
+@export var operation: Stat.Operation = Stat.Operation.SET
 ## The method that determines the strength of this effect. Should either be
 ## a flat_value_calculation or percentage_calculation.
 @export var calculation_method: Resource = null
@@ -26,6 +26,6 @@ func effect_on_character(target_stats: CharacterStats) -> int:
 	return calculation_method.process_operation(
 			target_stats.get_stat(Stat.Type.ATTACK),
 			1.0,
-			stat_affected.type,
+			stat_affected,
 			operation
 	)

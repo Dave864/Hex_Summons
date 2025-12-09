@@ -8,7 +8,7 @@ extends TextureRect
 ## Indicates that the polar element has shined.
 signal shine_ping(e)
 
-@export var element: int = Constants.AlignmentElement.LIGHT: set = set_element
+@export var element: int = Element.Alignment.LIGHT: set = set_element
 @export var light_region: Vector2 = Vector2(0,0)
 @export var dark_region: Vector2 = Vector2(0,0)
 
@@ -18,9 +18,9 @@ signal shine_ping(e)
 ## Sets the icon texture region to display the new element.
 func set_element(new_element: int) -> void:
 	match new_element:
-		Constants.AlignmentElement.LIGHT:
+		Element.Alignment.LIGHT:
 			texture.region.position = light_region
-		Constants.AlignmentElement.DARK:
+		Element.Alignment.DARK:
 			texture.region.position = dark_region
 		_:
 			return
@@ -29,9 +29,9 @@ func set_element(new_element: int) -> void:
 
 ## Plays the shine animation of the given polar element.
 func shine() -> void:
-	if element == Constants.AlignmentElement.LIGHT:
+	if element == Element.Alignment.LIGHT:
 		ap.play("light_shine")
-	elif element == Constants.AlignmentElement.DARK:
+	elif element == Element.Alignment.DARK:
 		ap.play("dark_shine")
 
 

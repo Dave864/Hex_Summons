@@ -18,13 +18,13 @@ var wind: Dictionary = {}
 func add_new_wisp(wisp: String) -> void:
 	var element: int = WispTracker.wisp_element(wisp)
 	match element:
-		Constants.CoreElement.EARTH:
+		Element.Core.EARTH:
 			earth[wisp] = false
-		Constants.CoreElement.FIRE:
+		Element.Core.FIRE:
 			fire[wisp] = false
-		Constants.CoreElement.WATER:
+		Element.Core.WATER:
 			water[wisp] = false
-		Constants.CoreElement.WIND:
+		Element.Core.WIND:
 			wind[wisp] = false
 		_:
 			printerr("Wisp {0} is not of valid element.".format([wisp]))
@@ -38,19 +38,19 @@ func add_new_wisp(wisp: String) -> void:
 func remove_wisp(wisp: String) -> void:
 	if earth.has(wisp):
 		if earth[wisp]:
-			_active_count[Constants.CoreElement.EARTH] -= 1
+			_active_count[Element.Core.EARTH] -= 1
 		earth.erase(wisp)
 	elif fire.has(wisp):
 		if fire[wisp]:
-			_active_count[Constants.CoreElement.FIRE] -= 1
+			_active_count[Element.Core.FIRE] -= 1
 		fire.erase(wisp)
 	elif water.has(wisp):
 		if water[wisp]:
-			_active_count[Constants.CoreElement.WATER] -= 1
+			_active_count[Element.Core.WATER] -= 1
 		water.erase(wisp)
 	elif wind.has(wisp):
 		if wind[wisp]:
-			_active_count[Constants.CoreElement.WIND] -= 1
+			_active_count[Element.Core.WIND] -= 1
 		wind.erase(wisp)
 	else:
 		return
@@ -61,16 +61,16 @@ func remove_wisp(wisp: String) -> void:
 func set_active(wisp: String) -> void:
 	var element: int
 	if earth.has(wisp):
-		element = Constants.CoreElement.EARTH
+		element = Element.Core.EARTH
 		earth[wisp] = true
 	elif fire.has(wisp):
-		element = Constants.CoreElement.FIRE
+		element = Element.Core.FIRE
 		fire[wisp] = true
 	elif water.has(wisp):
-		element = Constants.CoreElement.WATER
+		element = Element.Core.WATER
 		water[wisp] = true
 	elif wind.has(wisp):
-		element = Constants.CoreElement.WIND
+		element = Element.Core.WIND
 		wind[wisp] = true
 	else:
 		return
@@ -83,28 +83,28 @@ func set_active(wisp: String) -> void:
 ## are available for the given element.
 func pay_for_element(element: int, count: int) -> Array:
 	match element:
-		Constants.Element.EARTH:
+		Element.Type.EARTH:
 			var wisps: Array = _deactivate_active_count(earth, element, count)
 			if wisps.size() > 0:
 				return wisps
-		Constants.Element.FIRE:
+		Element.Type.FIRE:
 			var wisps: Array = _deactivate_active_count(fire, element, count)
 			if wisps.size() > 0:
 				return wisps
-		Constants.Element.WATER:
+		Element.Type.WATER:
 			var wisps: Array = _deactivate_active_count(water, element, count)
 			if wisps.size() > 0:
 				return wisps
-		Constants.Element.WIND:
+		Element.Type.WIND:
 			var wisps: Array = _deactivate_active_count(wind, element, count)
 			if wisps.size() > 0:
 				return wisps
-		Constants.Element.LIGHT:
+		Element.Type.LIGHT:
 			var elems: Array = ElementalAlignment.get_light_elements()
 			var wisps: Array = _deactivate_polar_active(elems[0], elems[1], count)
 			emit_signal("active_count_changed", element)
 			return wisps
-		Constants.Element.DARK:
+		Element.Type.DARK:
 			var elems: Array = ElementalAlignment.get_dark_elements()
 			var wisps: Array = _deactivate_polar_active(elems[0], elems[1], count)
 			emit_signal("active_count_changed", element)
@@ -131,18 +131,18 @@ func _init(new_player_name: String = "") -> void:
 ## Gets the active count for each element pool.
 func _set_active_count() -> void:
 	# Reset count to prevent overcounting during initialization.
-	_active_count[Constants.CoreElement.EARTH] = 0
-	_active_count[Constants.CoreElement.FIRE] = 0
-	_active_count[Constants.CoreElement.WATER] = 0
-	_active_count[Constants.CoreElement.WIND] = 0
+	_active_count[Element.Core.EARTH] = 0
+	_active_count[Element.Core.FIRE] = 0
+	_active_count[Element.Core.WATER] = 0
+	_active_count[Element.Core.WIND] = 0
 	for is_active in earth.values():
-		_active_count[Constants.CoreElement.EARTH] += 1 if is_active else 0
+		_active_count[Element.Core.EARTH] += 1 if is_active else 0
 	for is_active in fire.values():
-		_active_count[Constants.CoreElement.FIRE] += 1 if is_active else 0
+		_active_count[Element.Core.FIRE] += 1 if is_active else 0
 	for is_active in water.values():
-		_active_count[Constants.CoreElement.WATER] += 1 if is_active else 0
+		_active_count[Element.Core.WATER] += 1 if is_active else 0
 	for is_active in wind.values():
-		_active_count[Constants.CoreElement.WIND] += 1 if is_active else 0
+		_active_count[Element.Core.WIND] += 1 if is_active else 0
 
 
 ## Helper function for pay_for_element. Deactivates a number of active wisps in the
@@ -188,12 +188,12 @@ func _deactivate_polar_active(elem_1: int, elem_2: int, count: int) -> Array:
 ## if no corresponding tracker is found.
 func _get_element_tracker(element: int) -> Dictionary:
 	match element:
-		Constants.CoreElement.EARTH:
+		Element.Core.EARTH:
 			return earth
-		Constants.CoreElement.FIRE:
+		Element.Core.FIRE:
 			return fire
-		Constants.CoreElement.WATER:
+		Element.Core.WATER:
 			return water
-		Constants.CoreElement.WIND:
+		Element.Core.WIND:
 			return wind
 	return {}

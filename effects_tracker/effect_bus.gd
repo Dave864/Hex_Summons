@@ -24,7 +24,7 @@ func add_effect(effect: Effect) -> void:
 	var effect_id: int = effect.get_instance_id()
 	for aspect in effect.get_aspects():
 		if (
-			aspect.stat_affected.type != _affected_stat
+			aspect.stat_affected != _affected_stat
 			or (
 				_is_percentage_calc
 				and not aspect.calculation_method is PercentageCalculation
@@ -34,10 +34,10 @@ func add_effect(effect: Effect) -> void:
 				and aspect.calculation_method is PercentageCalculation
 			)
 			or (
-				_is_set_op and aspect.operation != Constants.Operation.SET
+				_is_set_op and aspect.operation != Stat.Operation.SET
 			)
 			or (
-				!_is_set_op and aspect.operation == Constants.Operation.SET
+				!_is_set_op and aspect.operation == Stat.Operation.SET
 			)
 		):
 			continue
