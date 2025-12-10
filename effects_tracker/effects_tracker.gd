@@ -6,11 +6,11 @@ extends Node
 ## handlers.
 
 
-var _c_stats: CharacterStats = null: set = set_character_stats
+var _c_stats: CharacterStatModifiers = null: set = set_character_stats
 
 
-## Sets the reference to the provided CharacterStats.
-func set_character_stats(c_stats: CharacterStats) -> void:
+## Sets the reference to the provided CharacterStatModifiers.
+func set_character_stats(c_stats: CharacterStatModifiers) -> void:
 	_c_stats = c_stats
 	for e_handler in get_children():
 		e_handler.set_character_stats(_c_stats)

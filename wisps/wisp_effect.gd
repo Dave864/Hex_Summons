@@ -15,7 +15,7 @@ extends Resource
 
 
 ## Determines the numerical result of this effect on a target set of character stats.
-func effect_on_character(target_stats: CharacterStats) -> int:
+func effect_on_character(target_stats: CharacterStatModifiers) -> int:
 	assert(
 			(
 				calculation_method is FlatValueCalcultion

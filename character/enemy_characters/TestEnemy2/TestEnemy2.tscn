@@ -5,12 +5,12 @@
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
 [ext_resource type="Script" uid="uid://cof1wrll2np4x" path="res://fsm/enemy_character/EnemyCharacterMove.gd" id="4"]
 [ext_resource type="Script" uid="uid://bjdo0sq45ance" path="res://fsm/enemy_character/EnemyCharacterWait.gd" id="5"]
-[ext_resource type="Resource" path="res://character/enemy_characters/TestEnemy2/stat_data/stat_values.tres" id="6"]
+[ext_resource type="Resource" uid="uid://o6be5nr75721" path="res://character/enemy_characters/TestEnemy2/stat_data/stat_values.tres" id="6"]
 [ext_resource type="Script" uid="uid://dp6jkaqsiu5vq" path="res://fsm/enemy_character/EnemyCharacterThink.gd" id="7"]
 [ext_resource type="Script" uid="uid://cdrf5m57oe7j7" path="res://fsm/enemy_character/EnemyCharacterAction.gd" id="8"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="9"]
-[ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats.gd" id="10"]
-[ext_resource type="PackedScene" path="res://effects_tracker/EffectsTracker.tscn" id="11"]
+[ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stat_modifiers.gd" id="10"]
+[ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="12"]
 [ext_resource type="Texture2D" path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattlePortrait.atlastex" id="13"]
 [ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="14"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" path="res://actions/Empty/Empty.tscn" id="19"]
 [ext_resource type="Script" uid="uid://b020qxy754ll2" path="res://character_ai/action_conditions/group_condition.gd" id="20"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="21"]
+
 
 
 [sub_resource type="CapsuleShape3D" id="1"]

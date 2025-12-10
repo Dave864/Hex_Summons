@@ -4,11 +4,11 @@ extends Node
 ## a character.
 
 
-var _c_stats: CharacterStats = null: set = set_character_stats
+var _c_stats: CharacterStatModifiers = null: set = set_character_stats
 
 
 ## Sets the reference to the character stats.
-func set_character_stats(c_stats: CharacterStats) -> void:
+func set_character_stats(c_stats: CharacterStatModifiers) -> void:
 	_c_stats = c_stats
 
 

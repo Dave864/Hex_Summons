@@ -24,7 +24,7 @@ enum Type {
 
 ## Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false
-var stats: CharacterStats
+var stats: CharacterStatModifiers
 
 @onready var character_sprite: EncounterSprite = $Sprite3D
 @onready var character_label: CharacterLabel = $CharacterLabel
@@ -63,7 +63,7 @@ func deactivate_hit_box() -> void:
 	hit_box.monitoring = false
 
 
-## Sets the CharacterStats reference of the EffectsTracker.
+## Sets the CharacterStatModifiers reference of the EffectsTracker.
 func _connect_stats_to_effects_tracker() -> void:
 	var effects_tracker: EffectsTracker = $EffectsTracker
 	effects_tracker.set_character_stats(stats)
@@ -75,7 +75,7 @@ func _connect_to_character_label() -> void:
 			stats,
 			"health_changed",
 			character_label,
-			"_on_CharacterStats_health_changed"
+			"_on_CharacterStatModifiers_health_changed"
 	)
 	character_label.set_max_health(stats.get_stat(Stat.Type.MAX_HEALTH))
 	character_label.set_cur_health(stats.get_stat(Stat.Type.CUR_HEALTH))

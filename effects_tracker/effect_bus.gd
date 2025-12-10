@@ -70,7 +70,7 @@ func progress_duration(turn_step: int = 1) -> void:
 ## Determines the amount the affected stat changes after applying effects with a
 ## turn count of 0. Uses the provided character stats as reference. Removes
 ## immediate effects from the bus. Does not update the character stats.
-func process_immediate_effects(char_stats: CharacterStats) -> int:
+func process_immediate_effects(char_stats: CharacterStatModifiers) -> int:
 	var change_amt: int = 0
 	for id in _effect_bus.keys():
 		var effect: EffectAspect = _effect_bus[id][0]
@@ -83,7 +83,7 @@ func process_immediate_effects(char_stats: CharacterStats) -> int:
 ## Determines the amount the affected stat changes after applying all of
 ## the effects. Uses the provided character stats as reference. Does not
 ## update the character stats.
-func process_all_effects(char_stats: CharacterStats) -> int:
+func process_all_effects(char_stats: CharacterStatModifiers) -> int:
 	var change_amt: int = 0
 	for id in _effect_bus.keys():
 		change_amt += _effect_bus[id][0].effect_on_target(char_stats)

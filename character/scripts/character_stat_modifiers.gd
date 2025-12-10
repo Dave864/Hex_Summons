@@ -1,5 +1,5 @@
 @tool
-class_name CharacterStats
+class_name CharacterStatModifiers
 extends Node
 ## Node that keeps track of all of a character's statistics.
 
