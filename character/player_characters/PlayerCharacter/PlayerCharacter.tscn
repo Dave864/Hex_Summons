@@ -21,11 +21,11 @@ collision_mask = 2
 script = ExtResource("2")
 battle_portrait = ExtResource("2_mblau")
 
-[node name="CharacterLabel" parent="." instance=ExtResource("11")]
+[node name="CharacterLabel" parent="." node_paths=PackedStringArray("char_pos") instance=ExtResource("11")]
 offset_right = 0.0
 offset_bottom = 0.0
 character_type = 1
-character_pos_ref = NodePath("../MapCoordinate")
+char_pos = NodePath("../MapCoordinate")
 
 [node name="MapCoordinate" type="Marker3D" parent="."]
 script = ExtResource("9")

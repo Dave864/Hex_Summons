@@ -27,11 +27,11 @@ collision_layer = 8
 collision_mask = 2
 script = ExtResource("2")
 
-[node name="CharacterLabel" parent="." instance=ExtResource("11")]
+[node name="CharacterLabel" parent="." node_paths=PackedStringArray("char_pos") instance=ExtResource("11")]
 offset_right = 0.0
 offset_bottom = 0.0
 character_type = 0
-character_pos_ref = NodePath("../MapCoordinate")
+char_pos = NodePath("../MapCoordinate")
 
 [node name="MapCoordinate" type="Marker3D" parent="."]
 script = ExtResource("10")

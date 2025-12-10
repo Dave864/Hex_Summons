@@ -1,5 +1,5 @@
 class_name Summon
-extends Area3D
+extends Character
 ## Manages the creation and using of summons.
 ##
 ## Tracks which summons are selectable in an encounter scene. Represents an active
@@ -12,15 +12,6 @@ var summoner: PlayerCharacter = null
 ## The summons that are able to be conjured by the current player party in the
 ## encounter.
 var available_summons: Dictionary = {}
-
-## The sprite used for the summon character in the encounter world.
-@onready var character_sprite: EncounterSprite = $EncounterSprite
-## The node tracking the map coordinate of the character.
-@onready var map_coordinate: MapCoordinate = $MapCoordinate
-## The collision area used to interact with character actions.
-@onready var hit_box: Area3D = $HitBox
-## Creates curves for movement paths.
-@onready var hm_move_path: HexMapMovementCurve = HexMapMovementCurve.new()
 
 
 ## Called when the node enters the scene tree for the first time.

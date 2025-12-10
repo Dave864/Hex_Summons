@@ -22,8 +22,6 @@
 [ext_resource type="Script" uid="uid://b020qxy754ll2" path="res://character_ai/action_conditions/group_condition.gd" id="20"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="21"]
 
-
-
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.05
 height = 0.1
@@ -37,11 +35,11 @@ collision_mask = 2
 script = ExtResource("2")
 battle_portrait = ExtResource("13")
 
-[node name="CharacterLabel" parent="." instance=ExtResource("12")]
+[node name="CharacterLabel" parent="." node_paths=PackedStringArray("char_pos") instance=ExtResource("12")]
 offset_right = 0.0
 offset_bottom = 0.0
 character_type = 0
-character_pos_ref = NodePath("../MapCoordinate")
+char_pos = NodePath("../MapCoordinate")
 
 [node name="MapCoordinate" type="Marker3D" parent="."]
 script = ExtResource("9")

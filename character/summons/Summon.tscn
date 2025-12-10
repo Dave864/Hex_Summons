@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cqtyo80p26xko"]
+[gd_scene load_steps=8 format=3 uid="uid://cqtyo80p26xko"]
 
 [ext_resource type="Script" uid="uid://d3i6jxieb653y" path="res://character/summons/summon.gd" id="1_4f0v8"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="1_fa40w"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="1_uxi0t"]
 [ext_resource type="Texture2D" uid="uid://c6fhgxae2gu3h" path="res://art/square_48.png" id="1_vy2fr"]
+[ext_resource type="Script" uid="uid://dw5x2dj2p5xjb" path="res://user_interface/encounter/CharacterLabel/character_label.gd" id="2_dr147"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="2_fa11t"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="2_uxi0t"]
 
@@ -11,6 +12,16 @@
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_4f0v8")
+
+[node name="CharacterLabel" type="Control" parent="." node_paths=PackedStringArray("char_pos")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_dr147")
+character_type = 2
+char_pos = NodePath("../MapCoordinate")
+metadata/_custom_type_script = "uid://dw5x2dj2p5xjb"
 
 [node name="EncounterSprite" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
