@@ -17,6 +17,7 @@ signal turn_ended()
 enum Type {
 	ENEMY, ## NPC opposed to the user
 	PLAYER, ## Character controlled by the user
+	SUMMON, ## Temporay character controlled by the user
 	NONE ## No type assigned
 }
 
@@ -63,7 +64,7 @@ func deactivate_hit_box() -> void:
 	hit_box.monitoring = false
 
 
-## Sets the CharacterStatModifiers reference of the EffectsTracker.
+## Sets the StatModifiers reference of the EffectsTracker.
 func _connect_stats_to_effects_tracker() -> void:
 	var effects_tracker: EffectsTracker = $EffectsTracker
 	effects_tracker.set_character_stats(stats)

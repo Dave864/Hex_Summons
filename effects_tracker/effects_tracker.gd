@@ -36,5 +36,5 @@ func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
 			e_handler.apply_effects(
 					effects,
 					hit_box.caster_id,
-					_source_stats.entity_id
+					_source_stats.character_id
 			)
