@@ -43,14 +43,12 @@ var _spells: Array
 @onready var _default_portait: Texture2D = preload(DEFAULT_PORTRAIT_PATH)
 ## The default battle sprite for a player character.
 @onready var _default_battle: Texture2D = preload(DEFAULT_BATTLE_PATH)
-## The node reference for the battle sprite.
-@onready var _battle_sprite: EncounterSprite = $Sprite3D
 
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	battle_portrait = _default_portait
-	_battle_sprite.texture = _default_battle
+	character_sprite.texture = _default_battle
 
 
 ## Updates the character this node represents using data from the PartyController.
@@ -124,7 +122,7 @@ func _update_sprites(player_name: String) -> void:
 	var new_portrait: Texture2D = load(PORTRAIT_PATH_FORMAT.format([player_name]))
 	var new_battle: Texture2D = load(BATTLE_PATH_FORMAT.format([player_name]))
 	battle_portrait = new_portrait if new_portrait != null else _default_portait
-	_battle_sprite.texture = new_battle if new_battle != null else _default_battle
+	character_sprite.texture = new_battle if new_battle != null else _default_battle
 
 
 ## Virtual function. Updates emission points for all actions of the chracter.

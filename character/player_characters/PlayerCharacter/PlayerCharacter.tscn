@@ -33,7 +33,7 @@ script = ExtResource("9")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = ExtResource("6_htock")
 
-[node name="Sprite3D" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
+[node name="EncounterSprite" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.55, 0)
 pixel_size = 0.0054
 billboard = 1

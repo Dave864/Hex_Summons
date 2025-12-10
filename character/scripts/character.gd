@@ -27,7 +27,7 @@ enum Type {
 var _start_set: bool = false
 var stats: StatModifiers
 
-@onready var character_sprite: EncounterSprite = $Sprite3D
+@onready var character_sprite: EncounterSprite = $EncounterSprite
 @onready var character_label: CharacterLabel = $CharacterLabel
 @onready var map_coordinate: MapCoordinate = $MapCoordinate
 @onready var hit_box: Area3D = $HitBox
