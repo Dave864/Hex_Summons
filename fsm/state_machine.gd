@@ -9,10 +9,10 @@ signal transitioned(state_name)
 
 ## Path to the initial active state. We export it to be able to pick the initial
 ## state in the inspector.
-@export var initial_state := NodePath()
+@export var initial_state: State = null
 
 ## The current active state. At the start of the game, we get the `initial_state`.
-@onready var state: State = get_node(initial_state)
+@onready var state: State = initial_state
 
 
 func _ready() -> void:

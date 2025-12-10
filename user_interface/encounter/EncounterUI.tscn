@@ -146,7 +146,7 @@ layout_mode = 2
 [node name="EndButton" parent="Options" instance=ExtResource("1")]
 layout_mode = 2
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4")
 initial_state = NodePath("Wait")
 

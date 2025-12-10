@@ -105,7 +105,7 @@ script = ExtResource("18")
 target_focus = 1
 movement_behavior = 2
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3")
 initial_state = NodePath("Wait")
 

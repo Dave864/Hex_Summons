@@ -54,7 +54,7 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
 shape = ExtResource("11_8fhg1")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3")
 initial_state = NodePath("Wait")
 

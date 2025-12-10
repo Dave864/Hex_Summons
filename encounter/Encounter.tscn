@@ -42,7 +42,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.892926, 4.76837e-07, 7.937
 
 [node name="Selector" parent="." instance=ExtResource("3")]
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("13")
 initial_state = NodePath("Start")
 
