@@ -1,39 +1,39 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=9 format=3 uid="uid://c8v0hplmjs6lv"]
 
-[ext_resource path="res://character/player_classes/player_class.gd" type="Script" id=1]
-[ext_resource path="res://character/scripts/character_stats.gd" type="Script" id=2]
-[ext_resource path="res://character/player_classes/TestMeleeClass/stat_data/stat_values.tres" type="Resource" id=3]
-[ext_resource path="res://actions/Strike/Strike.tscn" type="PackedScene" id=4]
-[ext_resource path="res://actions/Sweep/Sweep.tscn" type="PackedScene" id=5]
-[ext_resource path="res://character_ai/action_conditions/cooldown.gd" type="Script" id=6]
-[ext_resource path="res://actions/Nova/Nova.tscn" type="PackedScene" id=7]
-[ext_resource path="res://character_ai/action_conditions/wisp_cost.gd" type="Script" id=8]
+[ext_resource type="Script" uid="uid://bqwgtiquxgb0a" path="res://character/player_classes/player_class.gd" id="1"]
+[ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats.gd" id="2"]
+[ext_resource type="Resource" uid="uid://c45mdtcgem73i" path="res://character/player_classes/TestMeleeClass/stat_data/stat_values.tres" id="3"]
+[ext_resource type="PackedScene" path="res://actions/Strike/Strike.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://actions/Sweep/Sweep.tscn" id="5"]
+[ext_resource type="Script" uid="uid://mxpbc437xmjm" path="res://character_ai/action_conditions/cooldown.gd" id="6"]
+[ext_resource type="PackedScene" path="res://actions/Nova/Nova.tscn" id="7"]
+[ext_resource type="Script" uid="uid://cylb1ft2glyfa" path="res://character_ai/action_conditions/wisp_cost.gd" id="8"]
 
 [node name="TestMeleeClass" type="Node"]
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="Stats" type="Node" parent="."]
-script = ExtResource( 2 )
-base_stat_values = ExtResource( 3 )
+script = ExtResource("2")
+base_stat_values = ExtResource("3")
 
 [node name="Techniques" type="Node" parent="."]
 
-[node name="Strike" parent="Techniques" instance=ExtResource( 4 )]
+[node name="Strike" parent="Techniques" instance=ExtResource("4")]
 
 [node name="Cooldown" type="Node" parent="Techniques/Strike"]
-script = ExtResource( 6 )
+script = ExtResource("6")
 
-[node name="Sweep" parent="Techniques" instance=ExtResource( 5 )]
+[node name="Sweep" parent="Techniques" instance=ExtResource("5")]
 
 [node name="Cooldown" type="Node" parent="Techniques/Sweep"]
-script = ExtResource( 6 )
+script = ExtResource("6")
 turn_count = 1
 
 [node name="Spells" type="Node" parent="."]
 
-[node name="Nova" parent="Spells" instance=ExtResource( 7 )]
+[node name="Nova" parent="Spells" instance=ExtResource("7")]
 
 [node name="WispCost" type="Node" parent="Spells/Nova"]
-script = ExtResource( 8 )
+script = ExtResource("8")
 earth_req = 2
 earth_cost = 1

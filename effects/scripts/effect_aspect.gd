@@ -24,7 +24,7 @@ enum ResEffect {
 ## How the targeted stat is modified.
 @export var operation: Stat.Operation = Stat.Operation.SET
 ## The method that determines the strength of this effect.
-@export var calculation_method: Resource = null
+@export var calculation_method: StrengthCalculation = null
 ## Flag that indicates if this effect is resisted by the target
 @export var resisted: bool = true
 ## Indicates if resistance affects aspect strength or duration.

@@ -8,8 +8,32 @@ extends Node
 ## and groups.
 
 
+## Indicates that the health has changed from one value to another.
+signal health_changed(new_value, old_value)
+
+
 func _ready() -> void:
 	_check_for_required_parameters()
+
+
+## Returns the movement stat. Can specify if the base value should be returned
+## or the value with current modifiers.
+@abstract func get_movement_range(modified: bool = true) -> int
+
+
+## Updates the current health by the given delta. The delta amount can be
+## positive or negative. Returns the new value of the current health.
+func set_cur_health(delta: int) -> int:
+	var new_health: int = get_stat(Stat.Type.CUR_HEALTH) + delta
+	var max_health: int = get_stat(Stat.Type.MAX_HEALTH)
+	new_health = int(clamp(new_health, 0, max_health))
+	emit_signal("health_changed", new_health, max_health)
+	return new_health
+
+
+## Set current health to the maximum value. Always uses the modified max health
+## as the maximum value.
+@abstract func max_cur_health() -> void
 
 
 ## Returns the values for all stats. Can specify if the base values should be
