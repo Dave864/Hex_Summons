@@ -6,14 +6,14 @@ extends Node
 ## handlers.
 
 
-var _c_stats: CharacterStatModifiers = null: set = set_character_stats
+var _source_stats: StatModifiers = null: set = set_character_stats
 
 
 ## Sets the reference to the provided CharacterStatModifiers.
-func set_character_stats(c_stats: CharacterStatModifiers) -> void:
-	_c_stats = c_stats
+func set_character_stats(source_stats: StatModifiers) -> void:
+	_source_stats = source_stats
 	for e_handler in get_children():
-		e_handler.set_character_stats(_c_stats)
+		e_handler.set_character_stats(_source_stats)
 
 
 ## Progress the duration of all effects in all handlers by the specified turn step.
@@ -36,5 +36,5 @@ func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
 			e_handler.apply_effects(
 					effects,
 					hit_box.caster_id,
-					_c_stats.character_id
+					_source_stats.entity_id
 			)

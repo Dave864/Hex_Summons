@@ -84,7 +84,7 @@ func _assign_class(class_details: PlayerClassData) -> void:
 	_techniques = _player_class.techniques
 	_spells = _player_class.spells
 	stats = _player_class.stats
-	stats.character_id = get_instance_id()
+	stats.entity_id = get_instance_id()
 	_connect_to_character_label()
 	_connect_stats_to_effects_tracker()
 	_initialize_actions()

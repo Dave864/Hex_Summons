@@ -23,7 +23,7 @@ func _ready() -> void:
 		else battle_portrait
 	)
 	stats = $Stats
-	stats.character_id = get_instance_id()
+	stats.entity_id = get_instance_id()
 	stats.max_cur_health()
 	_connect_stats_to_effects_tracker()
 	_connect_to_character_label()

@@ -24,7 +24,7 @@ enum Type {
 
 ## Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false
-var stats: CharacterStatModifiers
+var stats: StatModifiers
 
 @onready var character_sprite: EncounterSprite = $Sprite3D
 @onready var character_label: CharacterLabel = $CharacterLabel

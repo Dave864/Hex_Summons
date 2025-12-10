@@ -1,19 +1,14 @@
 @tool
 class_name CharacterStatModifiers
-extends Node
+extends StatModifiers
 ## Node that keeps track of all of a character's statistics.
 
 
-## Indicates that the health has changed from one value to another.
-signal health_changed(new_value, old_value)
 ## Indicates that the agility has been modified.
 signal agility_changed(new_value)
 
 ## Original stat values.
 @export var base_stat_values: BaseStats = null
-
-## Reference to the character that the stats describe.
-var character_id: int = -1
 
 ## Modifier value for maximum health.
 var _max_health_mod: int = 0
@@ -68,12 +63,9 @@ func get_movement_range(with_modifier: bool = true) -> int:
 
 
 ## Updates the current health by the given delta.
-func set_cur_health(delta: int) -> void:
-	var val: int = get_stat(Stat.Type.CUR_HEALTH) + delta
-	var mh: int = get_stat(Stat.Type.MAX_HEALTH)
-	val = int(clamp(val, 0, mh))
-	emit_signal("health_changed", val, mh)
-	_current_health = val
+func set_cur_health(delta: int) -> int:
+	_current_health = super.set_cur_health(delta)
+	return _current_health
 
 
 ## Set current health to the maximum value.

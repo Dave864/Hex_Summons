@@ -11,6 +11,9 @@ extends Node
 ## Indicates that the health has changed from one value to another.
 signal health_changed(new_value, old_value)
 
+## Reference to the entity (character, summon, etc.) that the stats describe.
+var entity_id: int = -1
+
 
 func _ready() -> void:
 	_check_for_required_parameters()
