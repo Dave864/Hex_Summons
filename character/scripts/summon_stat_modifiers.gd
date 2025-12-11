@@ -1,0 +1,70 @@
+class_name SummonStatModifiers
+extends StatModifiers
+## Tracks the stats of an active summon.
+##
+## Uses the stats of a PlayerCharacter in conjunction with a set of multipliers
+## from the active summon to determine the stats. Any modifier updates are
+## applied to the player character stats.
+
+
+var summoner_stats: CharacterStatModifiers = null
+var summon_multipliers: SummonData = null
+
+
+## Returns the movement stat. Can specify if the base value should be returned
+## or the value with current modifiers.
+func get_movement_range(_modified: bool = true) -> int:
+	return summon_multipliers.movement
+
+
+## Set current health to the maximum value. Always uses the modified max health
+## as the maximum value.
+func max_cur_health() -> void:
+	summoner_stats.max_cur_health()
+
+
+## Returns the values for all stats. Can specify if the base values should be
+## returned or the values with current modifiers.
+func get_all(modified: bool = true) -> Dictionary:
+	return {}
+
+
+## Returns the values of all offensive related stats. Can specify if the base
+## values should be returned or the values with current modifiers.
+func get_offensive(modified: bool = true) -> Dictionary:
+	return {}
+
+
+## Returns the values of all defensive related stats. Can specify if the base
+## values should be returned or the values with current modifiers.
+func get_defensive(modified: bool = true) -> Dictionary:
+	return {}
+
+
+## Returns the value for a specific stat. Can specify if the base value should
+## be returned or the value with current modifiers.
+func get_stat(stat: int, modified: bool = true) -> int:
+	return 0
+
+
+## Updates the modifier for the specified stat so that it results in the new
+## value when added to the base value of the stat.
+func update_modifier(stat: int, value: int) -> void:
+	pass
+
+
+## Sets the values of all the modifiers to zero.
+func clear_modifiers() -> void:
+	pass
+
+
+## Check that all required parameters are set.
+func _check_for_required_parameters() -> void:
+	assert(
+			summoner_stats != null,
+			"No CharacterStats has been assigned."
+	)
+	assert(
+			summon_multipliers != null,
+			"No SummonData has been assigned."
+	)
