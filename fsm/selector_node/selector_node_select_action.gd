@@ -1,3 +1,4 @@
+class_name SelectorNodeSelectAction
 extends SelectorState
 ## The logic for what happens when the Selector is in the 'SelectAction' state.
 ##
@@ -240,7 +241,9 @@ func _get_target_distances() -> Array:
 				option.map_coordinate.get_tile_index()
 		)
 		target_distances.append([option, dist])
-	target_distances.sort_custom(Callable(ArraySorters, "sort_distance_to_character_asc"))
+	target_distances.sort_custom(
+			Callable(ArraySorters, "sort_distance_to_character_asc")
+	)
 	return target_distances
 
 
@@ -248,7 +251,9 @@ func _get_target_distances() -> Array:
 func _is_target_tile(map_tile: MapTile) -> bool:
 	if map_tile == null:
 		return false
-	var is_caster: bool = map_tile.map_coordinate.get_tile_index() == _player_map_index
+	var is_caster: bool = (
+		map_tile.map_coordinate.get_tile_index() == _player_map_index
+	)
 	match map_tile.get_highlight_type():
 		HexHighlighter.Option.RANGE:
 			return true

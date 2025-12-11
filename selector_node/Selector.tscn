@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://b2pl6ff1ogcwn" path="res://selector_node/selector.gd" id="1"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
-[ext_resource type="Script" uid="uid://benfafebrex5y" path="res://fsm/selector_node/SelectorNodeSelectMove.gd" id="4"]
-[ext_resource type="Script" uid="uid://csc104uw0e2sj" path="res://fsm/selector_node/SelectorNodeWait.gd" id="5"]
-[ext_resource type="Script" uid="uid://gnsddwbhc82h" path="res://fsm/selector_node/SelectorNodePause.gd" id="7"]
-[ext_resource type="Script" uid="uid://dbkb7xtgojctc" path="res://fsm/selector_node/SelectorNodeSelectAction.gd" id="8"]
+[ext_resource type="Script" uid="uid://benfafebrex5y" path="res://fsm/selector_node/selector_node_select_move.gd" id="4"]
+[ext_resource type="Script" uid="uid://csc104uw0e2sj" path="res://fsm/selector_node/selector_node_wait.gd" id="5"]
+[ext_resource type="Script" uid="uid://gnsddwbhc82h" path="res://fsm/selector_node/selector_node_pause.gd" id="7"]
+[ext_resource type="Script" uid="uid://dbkb7xtgojctc" path="res://fsm/selector_node/selector_node_select_action.gd" id="8"]
 
 [node name="Selector" type="Node"]
 script = ExtResource("1")

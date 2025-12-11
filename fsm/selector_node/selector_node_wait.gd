@@ -1,3 +1,4 @@
+class_name SelectorNodeWait
 extends SelectorState
 ## The logic for what happens when the Selector is in the 'Wait' state.
 ##
@@ -8,11 +9,9 @@ extends SelectorState
 ## Connect to the player_turn_started signal from the SignalBus.
 func enter(_msg: Dictionary = {}) -> void:
 	selector.active_player = null
-	ErrorUtil.connect_signal(
-			SignalBus,
+	SignalBus.connect(
 			"player_turn_started",
-			self,
-			"_on_SignalBus_player_turn_started"
+			Callable(self, "_on_SignalBus_player_turn_started")
 	)
 
 

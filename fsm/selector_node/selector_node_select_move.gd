@@ -1,3 +1,4 @@
+class_name SelectorNodeSelectMove
 extends SelectorState
 ## The logic for what happens when the Selector is in the 'SelectMove' state.
 ##

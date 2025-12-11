@@ -1,3 +1,4 @@
+class_name SelectorNodePause
 extends SelectorState
 ## The logic for what happens when the Selector is in the 'Pause' state.
 ##
@@ -10,17 +11,13 @@ extends SelectorState
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg: Dictionary = {}) -> void:
-	ErrorUtil.connect_signal(
-			selector.active_player,
+	selector.active_player.connect(
 			"turn_ended",
-			self,
-			"_on_PlayerCharacter_turn_ended"
+			Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
-	ErrorUtil.connect_signal(
-			SignalBus,
+	SignalBus.connect(
 			"selector_required",
-			self,
-			"_on_SignalBus_selector_required"
+			Callable(self, "_on_SignalBus_selector_required")
 	)
 	SignalBus.emit_selector_paused()
 

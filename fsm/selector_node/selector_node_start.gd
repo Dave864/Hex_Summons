@@ -1,3 +1,4 @@
+class_name SelectorNodeStart
 extends SelectorState
 ## The logic for what happens when the Selector is in the 'Start' state.
 ##
@@ -8,18 +9,19 @@ extends SelectorState
 ## parameter is a dictionary with arbitrary data the state can use to 
 ## initialize itself.
 func enter(_msg := {}) -> void:
-	ErrorUtil.connect_signal(
-			selector,
+	selector.connect(
 			"area_entered",
-			self,
-			"_on_Selector_area_entered"
+			Callable(self, "_on_Selector_area_entered")
 	)
 
 
 ## Called by the state machine before changing the active state. Use this 
 ## function to clean up the state.
 func exit() -> void:
-	selector.disconnect("area_entered", Callable(self, "_on_Selector_area_entered"))
+	selector.disconnect(
+			"area_entered",
+			Callable(self, "_on_Selector_area_entered")
+	)
 
 
 ## Hit when the selector node enters a map tile.
