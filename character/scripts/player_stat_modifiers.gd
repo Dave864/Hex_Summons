@@ -1,6 +1,6 @@
 @tool
 class_name PlayerStatModifiers
-extends StatModifiers
+extends CharacterStatModifiers
 ## Node that keeps track of all of a character's statistics.
 
 
