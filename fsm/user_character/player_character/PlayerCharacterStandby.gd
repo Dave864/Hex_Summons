@@ -1,5 +1,6 @@
 extends PlayerCharacterState
 ## The logic for what happens when a Player Character is in the 'Standby' state.
+##
 ## The Player Character waits for user input and then goes to the appropriate
 ## state.
 
