@@ -154,7 +154,7 @@ func get_defensive(with_modifier: bool = true) -> Dictionary:
 
 
 ## Obtains the value for a given stat.
-func get_stat(stat: int, with_modifier: bool = true) -> int:
+func get_stat(stat: Stat.Type, with_modifier: bool = true) -> int:
 	var result: int
 	var modifier: int
 	match stat:
@@ -220,7 +220,7 @@ func get_stat(stat: int, with_modifier: bool = true) -> int:
 
 ## Updates the modifier for the specified stat so that it results in the new value
 ## when added to the base value of the stat.
-func update_modifier(type: int, value: int) -> void:
+func update_modifier(type: Stat.Type, value: int) -> void:
 	match type:
 		Stat.Type.MAX_HEALTH:
 			_max_health_mod = value

@@ -56,12 +56,12 @@ func set_cur_health(delta: int) -> int:
 
 ## Returns the value for a specific stat. Can specify if the base value should
 ## be returned or the value with current modifiers.
-@abstract func get_stat(stat: int, modified: bool = true) -> int
+@abstract func get_stat(stat: Stat.Type, modified: bool = true) -> int
 
 
 ## Updates the modifier for the specified stat so that it results in the new
 ## value when added to the base value of the stat.
-@abstract func update_modifier(stat: int, value: int) -> void
+@abstract func update_modifier(stat: Stat.Type, value: int) -> void
 
 
 ## Sets the values of all the modifiers to zero.

@@ -43,19 +43,21 @@ func get_defensive(modified: bool = true) -> Dictionary:
 
 ## Returns the value for a specific stat. Can specify if the base value should
 ## be returned or the value with current modifiers.
-func get_stat(stat: int, modified: bool = true) -> int:
-	return 0
+func get_stat(stat: Stat.Type, modified: bool = true) -> int:
+	var base_value: int = summoner_stats.get_stat(stat, modified)
+	var multiplier: float = summon_multipliers.multiplier_for_stat(stat)
+	return roundi(base_value * multiplier)
 
 
 ## Updates the modifier for the specified stat so that it results in the new
 ## value when added to the base value of the stat.
-func update_modifier(stat: int, value: int) -> void:
-	pass
+func update_modifier(stat: Stat.Type, value: int) -> void:
+	summoner_stats.update_modifier(stat, value)
 
 
 ## Sets the values of all the modifiers to zero.
 func clear_modifiers() -> void:
-	pass
+	summoner_stats.clear_modifiers()
 
 
 ## Check that all required parameters are set.
