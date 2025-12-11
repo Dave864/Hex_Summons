@@ -14,7 +14,7 @@ func base_strength(
 ## Determines the effectiveness of an action on a given target.
 func efficacy(
 	source_stats: Dictionary,
-	target_stats: CharacterStatModifiers,
+	target_stats: PlayerStatModifiers,
 	action_potency: Potency
 ) -> float:
 	var b_str: float = base_strength(source_stats, action_potency)
@@ -81,7 +81,7 @@ func _decrease_operation(
 ## by the target.
 func _calculate_resisted_strength(
 	source_stats: Dictionary,
-	target_stats: CharacterStatModifiers,
+	target_stats: PlayerStatModifiers,
 	action_potency: Potency
 ) -> float:
 	var strength_values: Dictionary = _get_strength_potency(

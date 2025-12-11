@@ -46,7 +46,7 @@ func populate_initiative(characters: Array) -> void:
 				c.stats,
 				"agility_changed",
 				self,
-				"_on_CharacterStatModifiers_agility_changed"
+				"_on_PlayerStatModifiers_agility_changed"
 		)
 	_determine_round_pace()
 	_calculate_full_initiative()
@@ -220,7 +220,7 @@ func _calculate_round_initiative(i_round: int) -> void:
 func _remove_character(c: Character) -> void:
 	c.stats.disconnect(
 			"agility_changed",
-			Callable(self, "_on_CharacterStatModifiers_agility_changed")
+			Callable(self, "_on_PlayerStatModifiers_agility_changed")
 	)
 	var c_id: int = c.get_instance_id()
 	var c_round_init: int = _get_character_round_init(c_id)
@@ -245,7 +245,7 @@ func _get_character_round_init(c_id: int) -> int:
 
 
 ## Updates the initiative tracker to match the change in agility.
-func _on_CharacterStatModifiers_agility_changed(new_agility: int) -> void:
+func _on_PlayerStatModifiers_agility_changed(new_agility: int) -> void:
 	_round_pace = new_agility if new_agility > _round_pace else _round_pace
 	_calculate_full_initiative()
 	_update_display()

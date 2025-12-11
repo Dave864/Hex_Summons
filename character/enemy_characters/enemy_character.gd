@@ -64,8 +64,8 @@ func _check_for_required_parameters() -> void:
 			"EnemyCharacter does not have a Stats node."
 	)
 	assert(
-			get_node(stats_path) is CharacterStatModifiers,
-			"EnemyCharacter Stats node is not of CharacterStatModifiers."
+			get_node(stats_path) is PlayerStatModifiers,
+			"EnemyCharacter Stats node is not of PlayerStatModifiers."
 	)
 	assert(
 			get_node_or_null(actions_path) != null,
