@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://dxny3bidwcnmv"]
 
 [ext_resource type="Script" uid="uid://dm50vglsj11ig" path="res://encounter/camera/encounter_camera.gd" id="1"]
-[ext_resource type="Script" uid="uid://c3u8o13e13nue" path="res://fsm/encounter/camera/EncounterCameraNormalize.gd" id="2"]
+[ext_resource type="Script" uid="uid://c3u8o13e13nue" path="res://fsm/encounter/camera/encounter_camera_normalize.gd" id="2"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="4"]
-[ext_resource type="Script" uid="uid://bsbs2o6tnkgem" path="res://fsm/encounter/camera/EncounterCameraReset.gd" id="5"]
-[ext_resource type="Script" uid="uid://8ingtrtxv6m1" path="res://fsm/encounter/camera/EncounterCameraPan.gd" id="6"]
+[ext_resource type="Script" uid="uid://bsbs2o6tnkgem" path="res://fsm/encounter/camera/encounter_camera_reset.gd" id="5"]
+[ext_resource type="Script" uid="uid://8ingtrtxv6m1" path="res://fsm/encounter/camera/encounter_camera_pan.gd" id="6"]
 
 [node name="EncounterCamera" type="Node3D"]
 script = ExtResource("1")

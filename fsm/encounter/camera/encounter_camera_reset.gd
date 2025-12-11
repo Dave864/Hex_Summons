@@ -1,3 +1,4 @@
+class_name EncounterCameraReset
 extends EncounterCameraState
 ## The logic for what happens when an EncounterCamera scene is in the `Reset` state.
 ##

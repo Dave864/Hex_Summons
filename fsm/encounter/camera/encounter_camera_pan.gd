@@ -1,3 +1,4 @@
+class_name EncounterCameraPan
 extends EncounterCameraState
 ## The logic for what happens when an EncounterCamera scene is in the `Pan` state.
 ##
