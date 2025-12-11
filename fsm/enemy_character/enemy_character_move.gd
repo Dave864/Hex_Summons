@@ -1,3 +1,4 @@
+class_name EnemyCharacterMove
 extends EnemyCharacterState
 ## The logic for what happens when an Enemy Character is in the `Move` state.
 ##
@@ -43,11 +44,9 @@ func exit() -> void:
 ## Virtual function. To be called in the _ready function to connect signals to 
 ## the state. The signals connected here should not be required by other states.
 func _ready_connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			ec.hm_move_path,
+	ec.hm_move_path.connect(
 			"movement_finished",
-			self,
-			"_on_HexMapMovementCurve_movement_finished"
+			Callable(self, "_on_HexMapMovementCurve_movement_finished")
 	)
 
 

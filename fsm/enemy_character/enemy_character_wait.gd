@@ -1,3 +1,4 @@
+class_name EnemyCharacterWait
 extends EnemyCharacterState
 ## The logic for what happens when an Enemy Character is in the 'Wait' state.
 ##
@@ -11,11 +12,9 @@ func enter(_msg := {}) -> void:
 ## To be called in the _ready function to connect signals to 
 ## the state. The signals connected here should not be required by other states.
 func _ready_connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			SignalBus,
+	SignalBus.connect(
 			"enemy_turn_started",
-			self,
-			"_on_SignalBus_enemy_turn_started"
+			Callable(self, "_on_SignalBus_enemy_turn_started")
 	)
 
 

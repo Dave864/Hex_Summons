@@ -1,3 +1,4 @@
+class_name EnemyCharacterThink
 extends EnemyCharacterState
 ## The logic for what happens when an Enemy Character is in the `Think` state.
 ##

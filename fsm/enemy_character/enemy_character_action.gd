@@ -1,3 +1,4 @@
+class_name EnemyCharacterAction
 extends EnemyCharacterState
 ## The logic for what happens when an Enemy Character is in the `Action` state.
 ##
