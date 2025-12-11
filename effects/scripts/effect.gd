@@ -6,7 +6,7 @@ extends Node
 ## Reference to the potency details of an action.
 var _action_potency: Potency = null: set = set_action_potency
 ## The stats of the entity that will apply this effect.
-var _source_stats: CharacterStatModifiers = null: set = set_source_stats
+var _source_stats: StatModifiers = null: set = set_source_stats
 var _aspects: Array: get = get_aspects
 
 
@@ -25,7 +25,7 @@ func set_action_potency(ap: Potency) -> void:
 
 
 ## Updates the source character stats of this effect.
-func set_source_stats(new_source: CharacterStatModifiers) -> void:
+func set_source_stats(new_source: StatModifiers) -> void:
 	_source_stats = new_source
 	_set_aspects_source_stats()
 

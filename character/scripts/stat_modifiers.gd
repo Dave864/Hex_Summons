@@ -1,5 +1,5 @@
 @abstract
-class_name CharacterStatModifiers
+class_name StatModifiers
 extends Node
 ## Base class for all nodes that manage and track stat changes in an encounter
 ## scene.

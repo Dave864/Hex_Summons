@@ -6,11 +6,11 @@ extends Node
 ## handlers.
 
 
-var _source_stats: CharacterStatModifiers = null: set = set_character_stats
+var _source_stats: StatModifiers = null: set = set_character_stats
 
 
 ## Sets the reference to the provided PlayerStatModifiers.
-func set_character_stats(source_stats: CharacterStatModifiers) -> void:
+func set_character_stats(source_stats: StatModifiers) -> void:
 	_source_stats = source_stats
 	for e_handler in get_children():
 		e_handler.set_character_stats(_source_stats)
