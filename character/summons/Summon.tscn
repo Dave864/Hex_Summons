@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqtyo80p26xko"]
+[gd_scene load_steps=13 format=3 uid="uid://cqtyo80p26xko"]
 
 [ext_resource type="Script" uid="uid://d3i6jxieb653y" path="res://character/summons/summon.gd" id="1_4f0v8"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="1_fa40w"]
@@ -8,6 +8,10 @@
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="2_fa11t"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="2_uxi0t"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="8_8b1as"]
+[ext_resource type="Script" uid="uid://bvuk1jb7d6def" path="res://fsm/user_character/summon_character/summon_character_action.gd" id="9_cjel2"]
+[ext_resource type="Script" uid="uid://b1bn5jkpyyh51" path="res://fsm/user_character/summon_character/summon_character_wait.gd" id="10_tll31"]
+[ext_resource type="Script" uid="uid://cuk41txbrftic" path="res://fsm/user_character/user_character_move.gd" id="11_7jwav"]
+[ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="12_405cv"]
 
 [node name="Summon" type="Area3D"]
 collision_layer = 4
@@ -45,6 +49,23 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
 shape = ExtResource("2_uxi0t")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("8_8b1as")
+initial_state = NodePath("Wait")
 metadata/_custom_type_script = "uid://dcm1t8lpe3xej"
+
+[node name="Action" type="Node" parent="StateMachine"]
+script = ExtResource("9_cjel2")
+metadata/_custom_type_script = "uid://bvuk1jb7d6def"
+
+[node name="Wait" type="Node" parent="StateMachine"]
+script = ExtResource("10_tll31")
+metadata/_custom_type_script = "uid://b1bn5jkpyyh51"
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("11_7jwav")
+metadata/_custom_type_script = "uid://cuk41txbrftic"
+
+[node name="Standby" type="Node" parent="StateMachine"]
+script = ExtResource("12_405cv")
+metadata/_custom_type_script = "uid://ci5c4y0r1wn1e"
