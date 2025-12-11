@@ -47,3 +47,57 @@ const DEFENSE: String = "Defense"
 const AGILITY: String = "Agility"
 const MAGIC: String = "Magic"
 const RESISTANCE: String = "Resistance"
+
+
+## Gets the magic stat types aligned with light element.
+static func get_light_aligned_magic() -> Array:
+	return _get_aligned_magic(ElementalAlignment.get_light_elements())
+
+
+## Gets the magic stat types aligned with dark element.
+static func get_dark_aligned_magic() -> Array:
+	return _get_aligned_magic(ElementalAlignment.get_dark_elements())
+
+
+## Gets the res stat types aligned with the light element.
+static func get_light_aligned_res() -> Array:
+	return _get_aligned_res(ElementalAlignment.get_light_elements())
+
+
+## Gets the res stat types aligned with the dark element.
+static func get_dark_aligned_res() -> Array:
+	return _get_aligned_res(ElementalAlignment.get_dark_elements())
+
+
+## Helper function for get_light_aligned_magic and get_dark_aligned_magic. Takes
+## the aligned elements and returns an array of the corresponding magic stat types.
+static func _get_aligned_magic(aligned_elements: Array) -> Array:
+	var parts: Array = []
+	for element in aligned_elements:
+		match element:
+			Element.Core.EARTH:
+				parts.append(Type.MAGIC_EARTH)
+			Element.Core.FIRE:
+				parts.append(Type.MAGIC_FIRE)
+			Element.Core.WATER:
+				parts.append(Type.MAGIC_WATER)
+			Element.Core.WIND:
+				parts.append(Type.MAGIC_WIND)
+	return parts
+
+
+## Helper function for get_light_aligned_res and get_dark_aligned_res. Takes
+## the aligned elements and returns an array of the corresponding res stat types.
+static func _get_aligned_res(aligned_elements: Array) -> Array:
+	var parts: Array = []
+	for element in aligned_elements:
+		match element:
+			Element.Core.EARTH:
+				parts.append(Type.RES_EARTH)
+			Element.Core.FIRE:
+				parts.append(Type.RES_FIRE)
+			Element.Core.WATER:
+				parts.append(Type.RES_WATER)
+			Element.Core.WIND:
+				parts.append(Type.RES_WIND)
+	return parts
