@@ -1,3 +1,4 @@
+class_name EncounterStart
 extends EncounterState
 ## The logic for what happens when an Encounter scene is in the `Start` state.
 ##

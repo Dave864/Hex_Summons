@@ -1,3 +1,4 @@
+class_name EncounterEnemyTurn
 extends EncounterState
 ## The logic for what happens when an Encounter scene is in the `EnemyTurn` state.
 ## 
