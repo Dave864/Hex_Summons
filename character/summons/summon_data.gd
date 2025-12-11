@@ -13,6 +13,10 @@ const DEFAULT: float = 1.0
 const MAX: float = 5.0
 ## The amount a stat multiplier can be adjusted by. Corresponds to 10%.
 const STEP: float = 0.1
+## The minimum possible number of wisps needed for a summon.
+const MIN_WISP: int = 0
+## The maximum possible number of wisps needed for a summon.
+const MAX_WISP: int = 4
 
 @export var name: String = ""
 @export_group("Images")
@@ -33,12 +37,12 @@ const STEP: float = 0.1
 @export_range(DEFAULT, MAX, STEP) var res_water: float = DEFAULT
 @export_range(DEFAULT, MAX, STEP) var res_wind: float = DEFAULT
 @export_group("Wisp Requirement and Cost")
-@export_range(0, 4) var earth_req: int = 0
-@export_range(0, 4) var fire_req: int = 0
-@export_range(0, 4) var water_req: int = 0
-@export_range(0, 4) var wind_req: int = 0
-@export_range(0, 4) var light_req: int = 0
-@export_range(0, 4) var dark_req: int = 0
+@export_range(MIN_WISP, MAX_WISP) var earth_req: int = MIN_WISP
+@export_range(MIN_WISP, MAX_WISP) var fire_req: int = MIN_WISP
+@export_range(MIN_WISP, MAX_WISP) var water_req: int = MIN_WISP
+@export_range(MIN_WISP, MAX_WISP) var wind_req: int = MIN_WISP
+@export_range(MIN_WISP, MAX_WISP) var light_req: int = MIN_WISP
+@export_range(MIN_WISP, MAX_WISP) var dark_req: int = MIN_WISP
 @export_group("Actions")
 @export var summon_action: ActionStats = null
 @export var turn_actions: Array[SpellStats] = []
