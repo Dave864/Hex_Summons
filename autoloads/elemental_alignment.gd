@@ -23,10 +23,10 @@ func swap_elements(element_1: int, element_2: int) -> void:
 		not _is_valid_core_element(element_1)
 		or not _is_valid_core_element(element_2)
 	):
-		printerr("Cannot swap the polarity of a nonexistant core element.")
+		printerr("Cannot swap the alignment of a nonexistant core element.")
 		return
-	var element_1_details: Array = _get_polarity_and_index(element_1)
-	var element_2_details: Array = _get_polarity_and_index(element_2)
+	var element_1_details: Array = _get_alignment_and_index(element_1)
+	var element_2_details: Array = _get_alignment_and_index(element_2)
 	_alignments[element_1_details[0]][element_1_details[1]] = element_2
 	_alignments[element_2_details[0]][element_2_details[1]] = element_1
 	emit_signal("alignment_changed")
@@ -40,14 +40,14 @@ func invert_all_alignments() -> void:
 
 
 ## Swap the polarities of the elements on the left side of the hex.
-## Corresponds to index 0 of each polarity array.
+## Corresponds to index 0 of each alignment array.
 func invert_left_alignments() -> void:
 	_swap_alignments_at_index(0)
 	emit_signal("alignment_changed")
 
 
 ## Swap the polarities of the elements on the right side of the hex.
-## Corresponds to index 1 of each polarity array.
+## Corresponds to index 1 of each alignment array.
 func invert_right_alignments() -> void:
 	_swap_alignments_at_index(1)
 	emit_signal("alignment_changed")
@@ -77,43 +77,43 @@ func shift_alignments_cw() -> void:
 	emit_signal("alignment_changed")
 
 
-## Changes the elements that are of the Light polarity.
+## Changes the elements that are of the Light alignment.
 func set_elements_to_light(element_1: int, element_2: int) -> void:
 	if (
 		not _is_valid_core_element(element_1)
 		or not _is_valid_core_element(element_2)
 	):
-		printerr("Cannot assign polarity to a non-core element.")
+		printerr("Cannot assign alignment to a non-core element.")
 		return
-	_set_elements_to_polarity(LIGHT, element_1, element_2)
+	_set_elements_to_alignment(LIGHT, element_1, element_2)
 	emit_signal("alignment_changed")
 
 
-## Changes the elements that are of the Dark polarity.
+## Changes the elements that are of the Dark alignment.
 func set_elements_to_dark(element_1: int, element_2: int) -> void:
 	if (
 		not _is_valid_core_element(element_1)
 		or not _is_valid_core_element(element_2)
 	):
-		printerr("Cannot assign polarity to a non-core element.")
+		printerr("Cannot assign alignment to a non-core element.")
 		return
-	_set_elements_to_polarity(DARK, element_1, element_2)
+	_set_elements_to_alignment(DARK, element_1, element_2)
 	emit_signal("alignment_changed")
 
 
-## Get the elements of the Light polarity.
+## Get the elements of the Light alignment.
 func get_light_elements() -> Array:
 	return _alignments[LIGHT]
 
 
-## Get the elements of the Dark polarity.
+## Get the elements of the Dark alignment.
 func get_dark_elements() -> Array:
 	return _alignments[DARK]
 
 
-## Gets the polarity of the given element, as defined by the Constants enum,
+## Gets the alignment of the given element, as defined by the Constants enum,
 ## AlignmentElement.
-func get_polarity(element: int) -> int:
+func get_alignment(element: int) -> int:
 	if element == LIGHT or element == DARK:
 		return element
 	elif element == _alignments[LIGHT][0] or element == _alignments[LIGHT][1]:
@@ -129,28 +129,28 @@ func _ready() -> void:
 	_set_to_default()
 
 
-## Sets the two elements to the specified polarity.
-func _set_elements_to_polarity(
-	target_polarity: int,
+## Sets the two elements to the specified alignment.
+func _set_elements_to_alignment(
+	target_alignment: int,
 	element_1: int,
 	element_2: int
 ) -> void:
-	if target_polarity in Element.Alignment.keys():
-		printerr("target_polarity is not a 'polar' element.")
+	if target_alignment in Element.Alignment.keys():
+		printerr("target_alignment is not a 'polar' element.")
 		return
-	var inverse_polarity: int = LIGHT if target_polarity == DARK else DARK
-	var element_1_details: Array = _get_polarity_and_index(element_1)
-	var element_2_details: Array = _get_polarity_and_index(element_2)
+	var inverse_alignment: int = LIGHT if target_alignment == DARK else DARK
+	var element_1_details: Array = _get_alignment_and_index(element_1)
+	var element_2_details: Array = _get_alignment_and_index(element_2)
 	
 	if (
-		element_1_details[0] == inverse_polarity
-		and element_2_details[0] == inverse_polarity
+		element_1_details[0] == inverse_alignment
+		and element_2_details[0] == inverse_alignment
 	):
 		_swap_alignments_at_index(element_1_details[1])
 		_swap_alignments_at_index(element_2_details[1])
 	elif (
-		element_1_details[0] == inverse_polarity
-		and element_2_details[0] == target_polarity
+		element_1_details[0] == inverse_alignment
+		and element_2_details[0] == target_alignment
 	):
 		if element_1_details[1] != element_2_details[1]:
 			_swap_alignments_at_index(element_1_details[1])
@@ -160,8 +160,8 @@ func _set_elements_to_polarity(
 			else:
 				shift_alignments_cw()
 	elif (
-		element_1_details[0] == target_polarity
-		and element_2_details[0] == inverse_polarity
+		element_1_details[0] == target_alignment
+		and element_2_details[0] == inverse_alignment
 	):
 		if element_1_details[1] != element_2_details[1]:
 			_swap_alignments_at_index(element_2_details[1])
@@ -170,13 +170,13 @@ func _set_elements_to_polarity(
 				shift_alignments_cw()
 			else:
 				shift_alignments_ccw()
-	_alignments[target_polarity][0] = element_1
-	_alignments[target_polarity][1] = element_2
+	_alignments[target_alignment][0] = element_1
+	_alignments[target_alignment][1] = element_2
 
 
-## Gets the polarity and index of a given element. Returns the details in an
-## array: [polarity, index]
-func _get_polarity_and_index(element: int) -> Array:
+## Gets the alignment and index of a given element. Returns the details in an
+## array: [alignment, index]
+func _get_alignment_and_index(element: int) -> Array:
 	for p in _alignments:
 		for i in len(p):
 			if _alignments[p][i] == element:
@@ -184,7 +184,7 @@ func _get_polarity_and_index(element: int) -> Array:
 	return [-1, -1]
 
 
-## Swap the elements at the given index for each polarity.
+## Swap the elements at the given index for each alignment.
 func _swap_alignments_at_index(index: int) -> void:
 	var light_element: int = _alignments[LIGHT][index]
 	_alignments[LIGHT][index] = _alignments[DARK][index]
