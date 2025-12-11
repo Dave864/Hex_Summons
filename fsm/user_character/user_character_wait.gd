@@ -6,9 +6,7 @@ extends UserCharacterState
 ## The Character waits  and is inactive until it is reenabled.
 
 
-@abstract func enter(_msg: Dictionary = {}) -> void
-
-
-## Called by the state machine before changing the active state. Use this 
-## function to clean up the state.
-@abstract func exit() -> void
+## Called by the state machine when entering the active state. Indicates that
+## the character is waiting.
+func enter(_msg: Dictionary = {}) -> void:
+	character.emit_is_waiting()

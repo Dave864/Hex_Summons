@@ -3,15 +3,17 @@ extends Node
 ## different scenes, usually between their state machines.
 
 
-# Player character related signals.
+# User controlled character related signals.
 ## Indicates a player character has started their turn.
 signal player_turn_started(character)
-## Indicates that an action for a player character has been selected.
-signal player_action_selected(character, action)
+## Indicates the summon has started their turn.
+signal summon_turn_started()
+## Indicates that an action for a user controlled character has been selected.
+signal character_action_selected(character, action)
 ## Indicates that an action has been confirmed.
-signal player_action_executed(character, action, targets)
+signal character_action_executed(character, action, targets)
 ## Indicates that a selected option has been canceled.
-signal player_action_type_canceled()
+signal character_action_type_canceled()
 # Enemy character related signals.
 ## Indicates an enemy character has started their turn.
 signal enemy_turn_started(character)
@@ -38,20 +40,24 @@ func emit_player_turn_started(pc: PlayerCharacter) -> void:
 	emit_signal("player_turn_started", pc)
 
 
-func emit_player_action_selected(pc: PlayerCharacter, action: Action) -> void:
-	emit_signal("player_action_selected", pc, action)
+func emit_summon_turn_started() -> void:
+	emit_signal("summon_turn_started")
 
 
-func emit_player_action_executed(
-	pc: PlayerCharacter,
+func emit_character_action_selected(c: Character, action: Action) -> void:
+	emit_signal("character_action_selected", c, action)
+
+
+func emit_character_action_executed(
+	c: Character,
 	action: Action,
 	targets: Array
 ) -> void:
-	emit_signal("player_action_executed", pc, action, targets)
+	emit_signal("character_action_executed", c, action, targets)
 
 
-func emit_player_action_type_canceled() -> void:
-	emit_signal("player_action_type_canceled")
+func emit_character_action_type_canceled() -> void:
+	emit_signal("character_action_type_canceled")
 
 
 func emit_enemy_turn_started(ec: EnemyCharacter) -> void:

@@ -420,7 +420,7 @@ func _resolve_joystick_for_cardinal(dir: int) -> void:
 func _execute_action() -> void:
 	selector.hex_map.selection_tracker.clear_highlights()
 	selector.hex_map.selection_tracker.clear_selector_highlights()
-	SignalBus.emit_player_action_executed(
+	SignalBus.emit_character_action_executed(
 			selector.active_player,
 			_action,
 			_get_targets()
@@ -441,35 +441,25 @@ func _reset() -> void:
 
 ## Connect signals to this state.
 func _connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			selector.active_player,
+	selector.active_player.connect(
 			"turn_ended",
-			self,
-			"_on_PlayerCharacter_turn_ended"
+			Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_action_selected",
-			self,
-			"_on_SignalBus_player_action_selected"
+	SignalBus.connect(
+			"character_action_selected",
+			Callable(self, "_on_SignalBus_character_action_selected")
 	)
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_action_type_canceled",
-			self,
-			"_on_SignalBus_player_action_type_canceled"
+	SignalBus.connect(
+			"character_action_type_canceled",
+			Callable(self, "_on_SignalBus_character_action_type_canceled")
 	)
-	ErrorUtil.connect_signal(
-			SignalBus,
+	SignalBus.connect(
 			"top_vertex_changed",
-			self,
-			"_on_SignalBus_top_vertex_changed"
+			Callable(self, "_on_SignalBus_top_vertex_changed")
 	)
-	ErrorUtil.connect_signal(
-			GamepadHandler,
+	GamepadHandler.connect(
 			"left_joystick_pulsed",
-			self,
-			"_on_GamepadHandler_left_joystick_pulsed"
+			Callable(self, "_on_GamepadHandler_left_joystick_pulsed")
 	)
 
 
@@ -480,12 +470,12 @@ func _disconnect_signals() -> void:
 			Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
 	SignalBus.disconnect(
-			"player_action_selected",
-			Callable(self, "_on_SignalBus_player_action_selected")
+			"character_action_selected",
+			Callable(self, "_on_SignalBus_character_action_selected")
 	)
 	SignalBus.disconnect(
-			"player_action_type_canceled",
-			Callable(self, "_on_SignalBus_player_action_type_canceled")
+			"character_action_type_canceled",
+			Callable(self, "_on_SignalBus_character_action_type_canceled")
 	)
 	SignalBus.disconnect(
 			"top_vertex_changed",
@@ -498,8 +488,8 @@ func _disconnect_signals() -> void:
 
 
 ## Go to the "SelectAction" state with the new action.
-func _on_SignalBus_player_action_selected(
-	_player: PlayerCharacter,
+func _on_SignalBus_character_action_selected(
+	_character: Character,
 	new_action: Action
 ) -> void:
 	if not _state_is_active():
@@ -527,7 +517,7 @@ func _can_execute() -> bool:
 
 
 ## Go to the "SelectMove" state when the player action selection is canceled.
-func _on_SignalBus_player_action_type_canceled() -> void:
+func _on_SignalBus_character_action_type_canceled() -> void:
 	if not _state_is_active():
 		return
 	selector.hex_map.selection_tracker.clear_highlights()

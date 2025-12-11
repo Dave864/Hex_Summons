@@ -21,9 +21,9 @@ func enter(_msg: Dictionary = {}) -> void:
 	)
 	ErrorUtil.connect_signal(
 			SignalBus,
-			"player_action_executed",
+			"character_action_executed",
 			self,
-			"_on_SignalBus_player_action_executed"
+			"_on_SignalBus_character_action_executed"
 	)
 
 
@@ -36,8 +36,8 @@ func exit() -> void:
 			Callable(self, "_on_SignalBus_move_path_created")
 	)
 	SignalBus.disconnect(
-			"player_action_executed",
-			Callable(self, "_on_SignalBus_player_action_executed")
+			"character_action_executed",
+			Callable(self, "_on_SignalBus_character_action_executed")
 	)
 
 
@@ -47,7 +47,7 @@ func _on_SignalBus_move_path_created(move_path: PackedVector3Array) -> void:
 
 
 ## Hit when the Selector confirms an action. 
-func _on_SignalBus_player_action_executed(
+func _on_SignalBus_character_action_executed(
 	player: PlayerCharacter,
 	action: Action,
 	targets: Array

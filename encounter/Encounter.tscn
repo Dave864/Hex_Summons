@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bh13wido3t2hc" path="res://hex_map/TestMap.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://b8653jyeljph1" path="res://user_interface/encounter/EncounterUI.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://selector_node/Selector.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://cnsy5crv75lm4" path="res://character/enemy_characters/TestEnemy2/TestEnemy2.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://cru13p0crj0kc" path="res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn" id="7"]
 [ext_resource type="Script" uid="uid://k5pevugk72ex" path="res://fsm/encounter/EncounterStart.gd" id="8"]
@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://cbt36kh8p1mfs" path="res://fsm/encounter/EncounterEnd.gd" id="11"]
 [ext_resource type="Script" uid="uid://5h132lxn112i" path="res://fsm/encounter/EncounterEnemyTurn.gd" id="12"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="13"]
-[ext_resource type="PackedScene" path="res://encounter/camera/EncounterCamera.tscn" id="14"]
+[ext_resource type="PackedScene" uid="uid://dxny3bidwcnmv" path="res://encounter/camera/EncounterCamera.tscn" id="14"]
 
 [node name="Encounter" type="Node" node_paths=PackedStringArray("hex_map")]
 script = ExtResource("10")

@@ -4,16 +4,16 @@
 [ext_resource type="Script" uid="uid://rqmmsouogt6p" path="res://character/player_characters/player_character.gd" id="2"]
 [ext_resource type="Texture2D" path="res://character/player_characters/PlayerCharacter/PlayerBattlePortrait.atlastex" id="2_mblau"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
-[ext_resource type="Script" uid="uid://dnto6uqhp4lld" path="res://fsm/user_character/player_character/PlayerCharacterStandby.gd" id="4"]
-[ext_resource type="Script" uid="uid://bso16fqj8p6fk" path="res://fsm/user_character/player_character/PlayerCharacterMove.gd" id="5"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="6_htock"]
-[ext_resource type="Script" uid="uid://cwd6nlnrmkb70" path="res://fsm/user_character/player_character/PlayerCharacterWait.gd" id="7"]
-[ext_resource type="Script" uid="uid://bccbuxlvavdd6" path="res://fsm/user_character/player_character/PlayerCharacterAction.gd" id="8"]
+[ext_resource type="Script" uid="uid://cwd6nlnrmkb70" path="res://fsm/user_character/player_character/player_character_wait.gd" id="7"]
+[ext_resource type="Script" uid="uid://bccbuxlvavdd6" path="res://fsm/user_character/player_character/player_character_action.gd" id="8"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="9"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="11"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="11_8fhg1"]
+[ext_resource type="Script" uid="uid://cuk41txbrftic" path="res://fsm/user_character/user_character_move.gd" id="11_mblau"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="12"]
+[ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="13_wufaw"]
 
 [node name="PlayerCharacter" type="Area3D"]
 collision_layer = 4
@@ -59,13 +59,13 @@ script = ExtResource("3")
 initial_state = NodePath("Wait")
 
 [node name="Move" type="Node" parent="StateMachine"]
-script = ExtResource("5")
+script = ExtResource("11_mblau")
 
 [node name="Action" type="Node" parent="StateMachine"]
 script = ExtResource("8")
 
 [node name="Standby" type="Node" parent="StateMachine"]
-script = ExtResource("4")
+script = ExtResource("13_wufaw")
 
 [node name="Wait" type="Node" parent="StateMachine"]
 script = ExtResource("7")

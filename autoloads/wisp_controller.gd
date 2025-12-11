@@ -26,8 +26,8 @@ func pay_cost_from_player(player_pool: PlayerWispPool, cost: WispCost) -> void:
 		summon_pool.add_wisps(spent_wisps, element)
 
 
-## Pays the cost from the summon pool, transferring the spent wisps to the active
-## summon pool.
+## Pays the cost from the summon pool, transferring the spent wisps to an active
+## summon's wisp pool.
 func pay_cost_from_summon_pool(cost: WispCost) -> void:
 	pass
 
@@ -51,7 +51,7 @@ func recall_for_player(player_pool: PlayerWispPool, recall_count: int) -> void:
 		player_pool.set_active(wisp)
 
 
-## Pays the cost from the active summon pool, transferring the spent wisps to
-## their bonded player's pool.
+## Pays the cost from the active summon wisp pool, transferring the spent wisps
+## to their bonded player's pool.
 func pay_cost_from_active_summon(cost: WispCost) -> void:
 	pass

@@ -3,8 +3,8 @@ extends SelectorState
 ##
 ## When the input for selecting a tile is given, the Selector moves to the
 ## 'Pause' state and a signal is emitted indicating which tile was selected.
-## If an action option is selected in the UI, the Selector moves to the 'SelectAction'
-## state. If a player turn ends, go to the 'Wait' state.
+## If an action option is selected in the UI, the Selector moves to the
+## 'SelectAction' state. If a player turn ends, go to the 'Wait' state.
 
 
 ## The starting index for the movement area.
@@ -38,29 +38,21 @@ func exit() -> void:
 ## Connect signals to this state.
 func _connect_signals() -> void:
 	_connect_player_turn_ended()
-	ErrorUtil.connect_signal(
-			SignalBus,
+	SignalBus.connect(
 			"move_path_requested",
-			self,
-			"_on_SignalBus_move_path_requested"
+			Callable(self, "_on_SignalBus_move_path_requested")
 	)
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_action_selected",
-			self,
-			"_on_SignalBus_player_action_selected"
+	SignalBus.connect(
+			"character_action_selected",
+			Callable(self, "_on_SignalBus_character_action_selected")
 	)
-	ErrorUtil.connect_signal(
-			SignalBus,
+	SignalBus.connect(
 			"top_vertex_changed",
-			self,
-			"_on_SignalBus_top_vertex_changed"
+			Callable(self, "_on_SignalBus_top_vertex_changed")
 	)
-	ErrorUtil.connect_signal(
-			GamepadHandler,
+	GamepadHandler.connect(
 			"left_joystick_pulsed",
-			self,
-			"_on_GamepadHandler_left_joystick_pulsed"
+			Callable(self, "_on_GamepadHandler_left_joystick_pulsed")
 	)
 
 
@@ -73,11 +65,9 @@ func _connect_player_turn_ended():
 			Callable(self, "_on_PlayerCharacter_turn_ended")
 	):
 		return
-	ErrorUtil.connect_signal(
-		selector.active_player,
+	selector.active_player.connect(
 		"turn_ended",
-		self,
-		"_on_PlayerCharacter_turn_ended"
+		Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
 
 
@@ -89,8 +79,8 @@ func _disconnect_signals() -> void:
 			Callable(self, "_on_SignalBus_move_path_requested")
 	)
 	SignalBus.disconnect(
-			"player_action_selected",
-			Callable(self, "_on_SignalBus_player_action_selected")
+			"character_action_selected",
+			Callable(self, "_on_SignalBus_character_action_selected")
 	)
 	SignalBus.disconnect(
 			"top_vertex_changed",
@@ -186,8 +176,8 @@ func _on_SignalBus_move_path_requested() -> void:
 
 
 ## Go to the "SelectAction" state when the UI signals that an action was selected.
-func _on_SignalBus_player_action_selected(
-	_player: PlayerCharacter,
+func _on_SignalBus_character_action_selected(
+	_character: Character,
 	action: Action
 ) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)

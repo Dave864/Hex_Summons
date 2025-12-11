@@ -16,6 +16,10 @@ func enter(_msg: Dictionary = {}) -> void:
 			"move_path_created",
 			Callable(self, "_on_SignalBus_move_path_created")
 	)
+	SignalBus.connect(
+			"character_action_executed",
+			Callable(self, "_on_SignalBus_character_action_executed")
+	)
 
 
 ## Called by the state machine before changing the active state. Use this 
@@ -29,11 +33,28 @@ func exit() -> void:
 			"move_path_created",
 			Callable(self, "_on_SignalBus_move_path_created")
 	)
+	SignalBus.disconnect(
+			"character_action_executed",
+			Callable(self, "_on_SignalBus_character_action_executed")
+	)
 
 
 ## Hit when the Selector sets the movement path.
 func _on_SignalBus_move_path_created(move_path: PackedVector3Array) -> void:
 	state_machine.transition_to(MOVE, {"travel_path": move_path})
+
+
+## Hit when the Selector confirms an action. 
+func _on_SignalBus_character_action_executed(
+	c: Character,
+	action: Action,
+	targets: Array
+) -> void:
+	if character.get_instance_id() == c.get_instance_id():
+		state_machine.transition_to(
+				ACTION,
+				{"action": action, "targets": targets}
+		)
 
 
 ## Hit when the character has finished their turn.

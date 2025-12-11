@@ -18,7 +18,7 @@ func enter(msg := {}) -> void:
 	encounter_ui.set_current_selection(_option_flag)
 	encounter_ui.grab_focus_for_sub_option_at_index(0)
 	_current_action = encounter_ui.get_sub_option_at_index(0)
-	SignalBus.emit_player_action_selected(
+	SignalBus.emit_character_action_selected(
 			encounter_ui.get_focused_player(),
 			_current_action
 	)
@@ -31,7 +31,7 @@ func handle_input(event: InputEvent) -> void:
 		InputController.source_is_keymouse()
 		and event.is_action_pressed("ui_selector_select")
 	):
-		SignalBus.emit_player_action_selected(
+		SignalBus.emit_character_action_selected(
 				encounter_ui.get_focused_player(),
 				_current_action
 		)
@@ -74,53 +74,37 @@ func exit() -> void:
 ## These signals are used by other states and will be disconnected to avoid
 ## unintended behavior.
 func _connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			encounter_ui.get_focused_player(),
+	encounter_ui.get_focused_player().connect(
 			"turn_ended",
-			self,
-			"_on_PlayerCharacter_turn_ended"
+			Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.movement_button,
+	encounter_ui.movement_button.connect(
 			"pressed",
-			self,
-			"_on_MovementButton_pressed"
+			Callable(self, "_on_MovementButton_pressed")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.technique_button,
+	encounter_ui.technique_button.connect(
 			"pressed",
-			self,
-			"_on_TechniqueButton_pressed"
+			Callable(self, "_on_TechniqueButton_pressed")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.spell_button,
+	encounter_ui.spell_button.connect(
 			"pressed",
-			self,
-			"_on_SpellButton_pressed"
+			Callable(self, "_on_SpellButton_pressed")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.summon_button,
+	encounter_ui.summon_button.connect(
 			"pressed",
-			self,
-			"_on_SummonButton_pressed"
+			Callable(self, "_on_SummonButton_pressed")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.item_button,
+	encounter_ui.item_button.connect(
 			"pressed",
-			self,
-			"_on_ItemButton_pressed"
+			Callable(self, "_on_ItemButton_pressed")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.end_button,
+	encounter_ui.end_button.connect(
 			"pressed",
-			self,
-			"_on_EndButton_pressed"
+			Callable(self, "_on_EndButton_pressed")
 	)
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"player_action_executed",
-			self,
-			"_on_SignalBus_player_action_executed"
+	SignalBus.connect(
+			"character_action_executed",
+			Callable(self, "_on_SignalBus_character_action_executed")
 	)
 
 
@@ -155,8 +139,8 @@ func _disconnect_signals() -> void:
 			Callable(self, "_on_EndButton_pressed")
 	)
 	SignalBus.disconnect(
-			"player_action_executed",
-			Callable(self, "_on_SignalBus_player_action_executed")
+			"character_action_executed",
+			Callable(self, "_on_SignalBus_character_action_executed")
 	)
 
 
@@ -203,7 +187,7 @@ func _toggle_off_current_option() -> void:
 ## Signal that an action type is no longer being looked at before transitioning
 ## to the 'Move' state.
 func _action_type_canceled() -> void:
-	SignalBus.emit_player_action_type_canceled()
+	SignalBus.emit_character_action_type_canceled()
 	state_machine.transition_to(MOVE)
 
 
@@ -248,14 +232,14 @@ func _on_PlayerCharacter_turn_ended() -> void:
 ## displayed options.
 func _on_SubOptions_option_selected(action_info: Action) -> void:
 	_current_action = action_info
-	SignalBus.emit_player_action_selected(
+	SignalBus.emit_character_action_selected(
 			encounter_ui.get_focused_player(),
 			_current_action
 	)
 
 
 ## Signal that a selected action has been executed. Hide the options UI elements.
-func _on_SignalBus_player_action_executed(
+func _on_SignalBus_character_action_executed(
 	_player: PlayerCharacter,
 	_action: Action,
 	_targets: Array

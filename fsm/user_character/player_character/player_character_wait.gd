@@ -1,17 +1,16 @@
-extends PlayerCharacterState
+class_name PlayerCharacterWait
+extends UserCharacterWait
 ## The logic for what happens when a Player Character is in the `Wait` state.
 ##
-## The Player Character waits  and is inactive until it is reenabled.
+## The Player Character waits and is inactive until it is reenabled.
 
 
-func enter(_msg: Dictionary = {}) -> void:
-	ErrorUtil.connect_signal(
-			SignalBus,
+func enter(msg: Dictionary = {}) -> void:
+	SignalBus.connect(
 			"player_turn_started",
-			self,
-			"_on_SignalBus_player_turn_started"
+			Callable(self, "_on_SignalBus_player_turn_started")
 	)
-	pc.emit_is_waiting()
+	super.enter(msg)
 
 
 ## Called by the state machine before changing the active state. Use this 
@@ -25,5 +24,5 @@ func exit() -> void:
 
 ## Hit when the player character is selected to take its turn.
 func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
-	if player.get_instance_id() == pc.get_instance_id():
+	if player.get_instance_id() == character.get_instance_id():
 		state_machine.transition_to(STANDBY)
