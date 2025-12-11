@@ -1,3 +1,4 @@
+class_name EncounterUIMove
 extends EncounterUIState
 ## The logic for what happens when an EncounterUI scene is in the `Move` state.
 ##
@@ -61,41 +62,29 @@ func exit() -> void:
 ## These signals are used by other states and will be later disconnected to avoid
 ## unintended behavior.
 func _connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			SignalBus,
+	SignalBus.connect(
 			"move_path_created",
-			self,
-			"_on_SignalBus_move_path_created"
+			Callable(self, "_on_SignalBus_move_path_created")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.technique_button,
+	encounter_ui.technique_button.connect(
 			"pressed",
-			self,
-			"_on_TechniqueButton_pressed"
+			Callable(self, "_on_TechniqueButton_pressed")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.spell_button,
+	encounter_ui.spell_button.connect(
 			"pressed",
-			self,
-			"_on_SpellButton_pressed"
+			Callable(self, "_on_SpellButton_pressed")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.summon_button,
+	encounter_ui.summon_button.connect(
 			"pressed",
-			self,
-			"_on_SummonButton_pressed"
+			Callable(self, "_on_SummonButton_pressed")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.item_button,
+	encounter_ui.item_button.connect(
 			"pressed",
-			self,
-			"_on_ItemButton_pressed"
+			Callable(self, "_on_ItemButton_pressed")
 	)
-	ErrorUtil.connect_signal(
-			encounter_ui.end_button,
+	encounter_ui.end_button.connect(
 			"pressed",
-			self,
-			"_on_EndButton_pressed"
+			Callable(self, "_on_EndButton_pressed")
 	)
 
 

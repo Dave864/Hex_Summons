@@ -1,3 +1,4 @@
+class_name EncounterUIPause
 extends EncounterUIState
 ## The logic for what happens when an EncounterUI scene is in the `Pause` state.
 ##
@@ -12,11 +13,9 @@ func enter(_msg := {}) -> void:
 	
 	# This signal is used by other states and will be disconnected to avoid
 	# unintended behavior.
-	ErrorUtil.connect_signal(
-			SignalBus,
+	SignalBus.connect(
 			"selector_required",
-			self,
-			"_on_SignalBus_selector_required"
+			Callable(self, "_on_SignalBus_selector_required")
 	)
 
 

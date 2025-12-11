@@ -1,3 +1,4 @@
+class_name EncounterUIWait
 extends EncounterUIState
 ## The logic for what happens when an EncounterUI scene is in the `Wait` state.
 ##
@@ -14,11 +15,9 @@ func enter(_msg := {}) -> void:
 	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
-	ErrorUtil.connect_signal(
-		SignalBus,
+	SignalBus.connect(
 		"player_turn_started",
-		self,
-		"_on_SignalBus_player_turn_started"
+		Callable(self, "_on_SignalBus_player_turn_started")
 	)
 	encounter_ui.emit_is_waiting()
 
