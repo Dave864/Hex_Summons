@@ -10,7 +10,7 @@ const TECHNIQUES: String = "Techniques"
 const SPELLS: String = "Spells"
 const ACTION_PATH_FORMAT: String = "res://actions/{0}/{0}.tscn"
 
-var stats: PlayerStatModifiers
+var stats: CharacterStatModifiers
 var techniques: Array
 var spells: Array
 
@@ -47,7 +47,7 @@ func _init(class_data: PlayerClassData = null) -> void:
 
 ## Creates the nodes for spells, techniques, and character stats.
 func _create_child_nodes() -> void:
-	stats = PlayerStatModifiers.new()
+	stats = CharacterStatModifiers.new()
 	var t_node: Node = Node.new()
 	var s_node: Node = Node.new()
 	stats.name = STATS

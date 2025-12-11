@@ -9,7 +9,7 @@ const EFFECTS: String = "Effects"
 @export var stats: ActionStats = null
 
 ## The path to the stats of the character that owns this action.
-var source_stats: PlayerStatModifiers = null
+var source_stats: CharacterStatModifiers = null
 ## The effects of this action
 var _effects: Array: get = get_effects
 ## Whether the area range is cardinal or ring.

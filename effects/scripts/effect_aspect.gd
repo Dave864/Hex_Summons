@@ -38,7 +38,7 @@ enum ResEffect {
 var turn_duration: int = max_turn_duration
 
 ## The stats of the character that will apply this effect.
-var _source_stats: PlayerStatModifiers = null: set = set_source_stats
+var _source_stats: CharacterStatModifiers = null: set = set_source_stats
 ## The current values of the character stats.
 var _current_stats: Dictionary = {}
 ## The potency of the action the parent effect is assigned to.
@@ -46,7 +46,7 @@ var _action_potency: Potency = null: set = set_action_potency
 
 
 ## Updates the source character stats of this effect aspect.
-func set_source_stats(new_source: PlayerStatModifiers) -> void:
+func set_source_stats(new_source: CharacterStatModifiers) -> void:
 	_source_stats = new_source
 	update_current_stats()
 
@@ -62,7 +62,7 @@ func update_current_stats() -> void:
 
 
 ## Determines the numerical result of the effect on a target set of character stats.
-func effect_on_target(target_stats: PlayerStatModifiers) -> int:
+func effect_on_target(target_stats: CharacterStatModifiers) -> int:
 	var b_str: float = calculation_method.base_strength(
 			_current_stats,
 			_action_potency

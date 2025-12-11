@@ -9,7 +9,7 @@ extends Node
 var _source_stats: StatModifiers = null: set = set_character_stats
 
 
-## Sets the reference to the provided PlayerStatModifiers.
+## Sets the reference to the provided CharacterStatModifiers.
 func set_character_stats(source_stats: StatModifiers) -> void:
 	_source_stats = source_stats
 	for e_handler in get_children():

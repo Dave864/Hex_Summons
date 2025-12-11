@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="11"]
 [ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="12"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="13"]
-[ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/player_stat_modifiers.gd" id="15"]
+[ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stat_modifiers.gd" id="15"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.05

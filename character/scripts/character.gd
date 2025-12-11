@@ -76,7 +76,7 @@ func _connect_to_character_label() -> void:
 			stats,
 			"health_changed",
 			character_label,
-			"_on_PlayerStatModifiers_health_changed"
+			"_on_CharacterStatModifiers_health_changed"
 	)
 	character_label.set_max_health(stats.get_stat(Stat.Type.MAX_HEALTH))
 	character_label.set_cur_health(stats.get_stat(Stat.Type.CUR_HEALTH))
