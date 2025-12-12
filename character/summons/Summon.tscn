@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cqtyo80p26xko"]
+[gd_scene load_steps=15 format=3 uid="uid://cqtyo80p26xko"]
 
 [ext_resource type="Script" uid="uid://d3i6jxieb653y" path="res://character/summons/summon.gd" id="1_4f0v8"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="1_fa40w"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="2_dr147"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="2_fa11t"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="2_uxi0t"]
+[ext_resource type="Script" uid="uid://dtcij6mogsbf4" path="res://character/scripts/summon_stat_modifiers.gd" id="7_gm0pc"]
+[ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="7_ihyy3"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="8_8b1as"]
 [ext_resource type="Script" uid="uid://bvuk1jb7d6def" path="res://fsm/user_character/summon_character/summon_character_action.gd" id="9_cjel2"]
 [ext_resource type="Script" uid="uid://b1bn5jkpyyh51" path="res://fsm/user_character/summon_character/summon_character_wait.gd" id="10_tll31"]
@@ -39,6 +41,12 @@ metadata/_custom_type_script = "uid://blq4c5w0gfdyw"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = ExtResource("1_fa40w")
+
+[node name="SummonStatModifiers" type="Node" parent="."]
+script = ExtResource("7_gm0pc")
+metadata/_custom_type_script = "uid://dtcij6mogsbf4"
+
+[node name="EffectsTracker" parent="." instance=ExtResource("7_ihyy3")]
 
 [node name="HitBox" type="Area3D" parent="."]
 collision_layer = 0

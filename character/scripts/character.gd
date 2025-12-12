@@ -23,9 +23,9 @@ enum Type {
 
 @export var battle_portrait: Texture2D = null
 
+var stats: StatModifiers
 ## Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false
-var stats: StatModifiers
 
 @onready var character_sprite: EncounterSprite = $EncounterSprite
 @onready var character_label: CharacterLabel = $CharacterLabel

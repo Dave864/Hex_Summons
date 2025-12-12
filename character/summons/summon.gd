@@ -11,12 +11,13 @@ extends Character
 var summoner: PlayerCharacter = null
 ## The summons that are able to be conjured by the current player party in the
 ## encounter.
-var available_summons: Dictionary = {}
+var available_summons: Dictionary[int, SummonData] = {}
 
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	stats = $SummonStatModifiers
+	_cache_available_summons()
 
 
 ## Sets the selected summon to be active and places them at the specified map
@@ -28,4 +29,9 @@ func load_summon(summon_id: int, spawn_coordinate: MapCoordinate) -> void:
 ## Loads the data for the summons that are able to be conjured based on the current
 ## wisps available to the party.
 func _cache_available_summons() -> void:
+	pass
+
+
+## Virtual function. Updates emission points for all actions of the chracter.
+func _update_emission_index(index: int) -> void:
 	pass

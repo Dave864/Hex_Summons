@@ -95,3 +95,14 @@ func multiplier_for_stat(stat: Stat.Type) -> float:
 			return mult_1 + mult_2
 		_:
 			return DEFAULT
+
+
+## Checks if the provided wisp pool matches the requirements for this summon.
+func wisp_pool_meets_requirements(pool: WispPool) -> bool:
+	return false
+
+
+## Checks if the provided core element counts match the requirements for this
+## summon.
+func core_requirements_met(counts: Dictionary[Element.Core, int]) -> bool:
+	return false

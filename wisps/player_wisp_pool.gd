@@ -8,10 +8,10 @@ const NONE: String = ""
 var player_name: String = ""
 # Tracks which wisps are "active", i.e. which wisps are available to be used
 # for actions.
-var earth: Dictionary = {}
-var fire: Dictionary = {}
-var water: Dictionary = {}
-var wind: Dictionary = {}
+var earth: Dictionary[String, bool] = {}
+var fire: Dictionary[String, bool] = {}
+var water: Dictionary[String, bool] = {}
+var wind: Dictionary[String, bool] = {}
 
 
 ## Adds wisp to the appropriate pool. Updates WispTracker.
@@ -186,7 +186,7 @@ func _deactivate_polar_active(elem_1: int, elem_2: int, count: int) -> Array:
 
 ## Gets the tracker Dictionary for the given element. Returns an empty Dictionary
 ## if no corresponding tracker is found.
-func _get_element_tracker(element: int) -> Dictionary:
+func _get_element_tracker(element: int) -> Dictionary[String, bool]:
 	match element:
 		Element.Core.EARTH:
 			return earth

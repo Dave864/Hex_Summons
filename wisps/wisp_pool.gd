@@ -8,7 +8,7 @@ extends Node
 signal active_count_changed(element)
 
 ## The current number of wisps active in the pool.
-var _active_count: Dictionary = {
+var _active_count: Dictionary[Element.Core, int] = {
 	Element.Core.EARTH: 0,
 	Element.Core.FIRE: 0,
 	Element.Core.WATER: 0,
@@ -17,7 +17,7 @@ var _active_count: Dictionary = {
 
 
 ## Gets the number of active wisps for the specified element.
-func active_element_count(element: int) -> int:
+func active_element_count(element: Element.Type) -> int:
 	if element == Element.Type.LIGHT:
 		return active_light_count()
 	if element == Element.Type.DARK:

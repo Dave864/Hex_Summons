@@ -15,10 +15,10 @@ const DATA: String = "data"
 const ELEMENT: String = "element"
 const BONDED_PLAYER: String = "bonded_player"
 const ENCOUNTER_STATE: String = "encounter_state"
-const EARTH: int = Element.Core.EARTH
-const FIRE: int = Element.Core.FIRE
-const WATER: int = Element.Core.WATER
-const WIND: int = Element.Core.WIND
+const EARTH: Element.Core = Element.Core.EARTH
+const FIRE: Element.Core = Element.Core.FIRE
+const WATER: Element.Core = Element.Core.WATER
+const WIND: Element.Core = Element.Core.WIND
 
 enum WispState {
 	PLAYER_SET,
@@ -40,10 +40,25 @@ enum WispState {
 
 
 ## Gets the data for the specified wisp.
-func get_data(wisp: String) -> Wisp:
+func get_wisp_data(wisp: String) -> Wisp:
 	if not _is_tracked(wisp):
 		return null
 	return _tracked_wisps[wisp][DATA]
+
+
+## Gets the number of wisps for each core element that are available for the
+## party to use.
+func get_usable_core_count() -> Dictionary[Element.Core, int]:
+	var counts: Dictionary[Element.Core, int] = {
+		Element.Core.EARTH: 0,
+		Element.Core.FIRE: 0,
+		Element.Core.WATER: 0,
+		Element.Core.WIND: 0,
+	}
+	for wisp_details in _tracked_wisps.values():
+		if wisp_details[ENCOUNTER_STATE] != WispState.INACTIVE:
+			counts[wisp_details[ELEMENT]] += 1
+	return counts
 
 
 ## Gets the element the wisp is part of. Returns -1 if the given name is not in
