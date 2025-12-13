@@ -8,13 +8,18 @@ extends Node
 ## Indicates that the alignment of core elements has changed.
 signal alignment_changed()
 
-const LIGHT: int = Element.Alignment.LIGHT
-const DARK: int = Element.Alignment.DARK
+const LIGHT: Element.Alignment = Element.Alignment.LIGHT
+const DARK: Element.Alignment = Element.Alignment.DARK
 
-var _alignments: Dictionary = {
+var _alignments: Dictionary[Element.Alignment, Array] = {
 	LIGHT: [-1, -1],
 	DARK: [-1, -1],
 }
+
+
+## Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_set_to_default()
 
 
 ## Swap the polarities of the given elements.
@@ -122,11 +127,6 @@ func get_alignment(element: int) -> int:
 		return DARK
 	else:
 		return -1
-
-
-## Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_set_to_default()
 
 
 ## Sets the two elements to the specified alignment.

@@ -99,10 +99,35 @@ func multiplier_for_stat(stat: Stat.Type) -> float:
 
 ## Checks if the provided wisp pool matches the requirements for this summon.
 func wisp_pool_meets_requirements(pool: WispPool) -> bool:
-	return false
+	return (
+		pool.active_earth_count() >= earth_req
+		and pool.active_fire_count() >= fire_req
+		and pool.active_water_count() >= water_req
+		and pool.active_wind_count() >= wind_req
+		and pool.active_light_count() >= light_req
+		and pool.active_dark_count() >= dark_req
+	)
 
 
 ## Checks if the provided core element counts match the requirements for this
 ## summon.
-func core_requirements_met(counts: Dictionary[Element.Core, int]) -> bool:
-	return false
+func core_elements_meet_requirements(counts: Dictionary[Element.Core, int]) -> bool:
+	return (
+		counts[Element.Core.EARTH] >= earth_req
+		and counts[Element.Core.FIRE] >= fire_req
+		and counts[Element.Core.WATER] >= water_req
+		and counts[Element.Core.WIND] >= wind_req
+		and _alignment_requirements_met(counts)
+	)
+
+
+## Helper function for core_requirements_met. Checks if it is possible for the
+## given core counts to meet the requirements for light and dark.
+func _alignment_requirements_met(counts: Dictionary[Element.Core, int]) -> bool:
+	var max_alignment_req: int = max(light_req, dark_req)
+	var meet_count: int = 0
+	for count in counts.values():
+		meet_count += 1 if count >= max_alignment_req else 0
+	# At least two core element counts need to meet the maximum alignment count
+	# as two core elements always fuel alignemt elements.
+	return meet_count >= 2
