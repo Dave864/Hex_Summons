@@ -48,6 +48,10 @@ metadata/_custom_type_script = "uid://dtcij6mogsbf4"
 
 [node name="EffectsTracker" parent="." instance=ExtResource("7_ihyy3")]
 
+[node name="Actions" type="Node" parent="."]
+
+[node name="TurnActions" type="Node" parent="Actions"]
+
 [node name="HitBox" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 16

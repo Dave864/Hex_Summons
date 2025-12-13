@@ -74,8 +74,8 @@ func max_cur_health() -> void:
 
 
 ## Get all the stats.
-func get_all(with_modifier: bool = true) -> Dictionary:
-	var all_stats: Dictionary = {
+func get_all(with_modifier: bool = true) -> Dictionary[String, Variant]:
+	var all_stats: Dictionary[String, Variant] = {
 		Stat.LEVEL: _level,
 		Stat.MAX_HEALTH: get_stat(Stat.Type.MAX_HEALTH, with_modifier),
 		Stat.CUR_HEALTH: get_stat(Stat.Type.CUR_HEALTH, with_modifier),
@@ -88,7 +88,7 @@ func get_all(with_modifier: bool = true) -> Dictionary:
 
 
 ## Get the offensive stats.
-func get_offensive(with_modifier: bool = true) -> Dictionary:
+func get_offensive(with_modifier: bool = true) -> Dictionary[String, Variant]:
 	return {
 		Stat.ATTACK: get_stat(Stat.Type.ATTACK, with_modifier),
 		Stat.MAGIC: {
@@ -121,7 +121,7 @@ func get_offensive(with_modifier: bool = true) -> Dictionary:
 
 
 ## Get the defensive stats.
-func get_defensive(with_modifier: bool = true) -> Dictionary:
+func get_defensive(with_modifier: bool = true) -> Dictionary[String, Variant]:
 	return {
 		Stat.DEFENSE: get_stat(Stat.Type.DEFENSE, with_modifier),
 		Stat.RESISTANCE: {

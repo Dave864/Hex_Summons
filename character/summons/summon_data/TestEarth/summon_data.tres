@@ -18,6 +18,6 @@ res_fire = 2.0
 res_water = 2.0
 res_wind = 2.0
 earth_req = 2
-summon_action = ExtResource("2_yqd0y")
+spawn_action = ExtResource("2_yqd0y")
 turn_actions = Array[ExtResource("2_wfegn")]([ExtResource("4_8ldr8"), ExtResource("5_3pknq")])
 metadata/_custom_type_script = "uid://dkcxv3uxhnxgj"

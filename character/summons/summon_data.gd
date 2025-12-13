@@ -44,7 +44,7 @@ const MAX_WISP: int = 4
 @export_range(MIN_WISP, MAX_WISP) var light_req: int = MIN_WISP
 @export_range(MIN_WISP, MAX_WISP) var dark_req: int = MIN_WISP
 @export_group("Actions")
-@export var summon_action: ActionStats = null
+@export var spawn_action: ActionStats = null
 @export var turn_actions: Array[SpellStats] = []
 
 

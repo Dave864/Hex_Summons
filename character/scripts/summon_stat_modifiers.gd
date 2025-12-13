@@ -8,13 +8,13 @@ extends StatModifiers
 
 
 var summoner_stats: CharacterStatModifiers = null
-var summon_multipliers: SummonData = null
+var summon_data: SummonData = null
 
 
 ## Returns the movement stat. Can specify if the base value should be returned
 ## or the value with current modifiers.
 func get_movement_range(_modified: bool = true) -> int:
-	return summon_multipliers.movement
+	return summon_data.movement
 
 
 ## Set current health to the maximum value. Always uses the modified max health
@@ -45,7 +45,7 @@ func get_defensive(modified: bool = true) -> Dictionary:
 ## be returned or the value with current modifiers.
 func get_stat(stat: Stat.Type, modified: bool = true) -> int:
 	var base_value: int = summoner_stats.get_stat(stat, modified)
-	var multiplier: float = summon_multipliers.multiplier_for_stat(stat)
+	var multiplier: float = summon_data.multiplier_for_stat(stat)
 	return roundi(base_value * multiplier)
 
 
@@ -67,6 +67,6 @@ func _check_for_required_parameters() -> void:
 			"No CharacterStats has been assigned."
 	)
 	assert(
-			summon_multipliers != null,
+			summon_data != null,
 			"No SummonData has been assigned."
 	)
