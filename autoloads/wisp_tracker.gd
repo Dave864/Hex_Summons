@@ -48,7 +48,7 @@ func get_wisp_data(wisp: String) -> Wisp:
 
 ## Gets the number of wisps for each core element that are available for the
 ## party to use.
-func get_usable_core_count() -> Dictionary[Element.Core, int]:
+func get_usable_wisp_count() -> Dictionary[Element.Core, int]:
 	var counts: Dictionary[Element.Core, int] = {
 		Element.Core.EARTH: 0,
 		Element.Core.FIRE: 0,
