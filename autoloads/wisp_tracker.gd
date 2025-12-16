@@ -82,6 +82,12 @@ func set_bonded_player(wisp: String, player: String = NO_PLAYER) -> bool:
 	return true
 
 
+## Gets the name of the player that the wisp is currently bonded to. Returns
+## "NONE" if the wisp is not bonded to any player. 
+func get_bonded_player(wisp: String) -> String:
+	return _tracked_wisps[wisp][BONDED_PLAYER]
+
+
 ## Gets all the wisps that are bonded to a specified player.
 func get_bonded_wisps(player: String) -> Dictionary[Element.Core, Array]:
 	var bonded_wisps: Dictionary[Element.Core, Array] = {

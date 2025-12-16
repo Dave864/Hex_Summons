@@ -14,6 +14,24 @@ var water: Dictionary[String, bool] = {}
 var wind: Dictionary[String, bool] = {}
 
 
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	_set_active_count()
+
+
+## Called when creating a new node.
+func _init(new_player_name: String = "") -> void:
+	player_name = new_player_name
+	name = "{0}WispPool".format([player_name])
+	var bonded_wisps: Dictionary[Element.Core, Array] = (
+		WispTracker.get_bonded_wisps(player_name)
+	)
+	for element_wisps: Array in bonded_wisps.values():
+		for wisp: String in element_wisps:
+			add_new_wisp(wisp)
+	_set_active_count()
+
+
 ## Adds wisp to the appropriate pool. Updates WispTracker.
 func add_new_wisp(wisp: String) -> void:
 	var element: int = WispTracker.wisp_element(wisp)
@@ -57,9 +75,10 @@ func remove_wisp(wisp: String) -> void:
 	WispTracker.set_bonded_player(wisp)
 
 
-## Updates the state of the specified wisp to "active"
+## Updates the state of the specified wisp to "active". Does nothing if the wisp
+## is not part of the pool.
 func set_active(wisp: String) -> void:
-	var element: int
+	var element: Element.Core
 	if earth.has(wisp):
 		element = Element.Core.EARTH
 		earth[wisp] = true
@@ -110,24 +129,6 @@ func pay_for_element(element: Element.Type, count: int) -> Array[String]:
 			emit_signal("active_count_changed", element)
 			return wisps
 	return []
-
-
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	_set_active_count()
-
-
-## Called when creating a new node.
-func _init(new_player_name: String = "") -> void:
-	player_name = new_player_name
-	name = "{0}WispPool".format([player_name])
-	var bonded_wisps: Dictionary[Element.Core, Array] = (
-		WispTracker.get_bonded_wisps(player_name)
-	)
-	for element_wisps: Array in bonded_wisps.values():
-		for wisp: String in element_wisps:
-			add_new_wisp(wisp)
-	_set_active_count()
 
 
 ## Gets the active count for each element pool.

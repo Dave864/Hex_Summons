@@ -34,7 +34,7 @@ func _ready():
 
 ## Gets the keys of all player characters that are currently active in the
 ## party.
-func get_party_player_names() -> Array[String]:
+func get_active_player_names() -> Array[String]:
 	var party_members: Array[String] = []
 	for player: String in party_details.keys():
 		if party_details[player][IN_PARTY]:
@@ -43,9 +43,9 @@ func get_party_player_names() -> Array[String]:
 
 
 ## Gets details of all characters that are currently in the party.
-func get_party_data() -> Dictionary[String, Dictionary]:
+func get_active_party_data() -> Dictionary[String, Dictionary]:
 	var party: Dictionary[String, Dictionary] = {}
-	for player: String in get_party_player_names():
+	for player: String in get_active_player_names():
 		party[player] = party_details[player]
 	return party
 
