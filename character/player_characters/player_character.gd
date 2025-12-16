@@ -52,7 +52,7 @@ func _ready() -> void:
 
 
 ## Updates the character this node represents using data from the PartyController.
-func update_player_details(player_details: Dictionary) -> void:
+func update_player_details(player_details: Dictionary[String, Variant]) -> void:
 	name = player_details[PartyController.NAME]
 	wisp_pool = player_details[PartyController.WISP_POOL]
 	_update_sprites(name)

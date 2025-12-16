@@ -81,7 +81,7 @@ func set_active(wisp: String) -> void:
 ## Gets the keys for the wisps that are used to pay for the specified element.
 ## Deactivates the wisps that are spent. Returns an empty array if no wisps
 ## are available for the given element.
-func pay_for_element(element: int, count: int) -> Array[String]:
+func pay_for_element(element: Element.Type, count: int) -> Array[String]:
 	match element:
 		Element.Type.EARTH:
 			var wisps: Array = _deactivate_active_count(earth, element, count)
@@ -124,8 +124,8 @@ func _init(new_player_name: String = "") -> void:
 	var bonded_wisps: Dictionary[Element.Core, Array] = (
 		WispTracker.get_bonded_wisps(player_name)
 	)
-	for element_wisps in bonded_wisps.values():
-		for wisp in element_wisps:
+	for element_wisps: Array in bonded_wisps.values():
+		for wisp: String in element_wisps:
 			add_new_wisp(wisp)
 	_set_active_count()
 
@@ -137,13 +137,13 @@ func _set_active_count() -> void:
 	_active_count[Element.Core.FIRE] = 0
 	_active_count[Element.Core.WATER] = 0
 	_active_count[Element.Core.WIND] = 0
-	for is_active in earth.values():
+	for is_active: bool in earth.values():
 		_active_count[Element.Core.EARTH] += 1 if is_active else 0
-	for is_active in fire.values():
+	for is_active: bool in fire.values():
 		_active_count[Element.Core.FIRE] += 1 if is_active else 0
-	for is_active in water.values():
+	for is_active: bool in water.values():
 		_active_count[Element.Core.WATER] += 1 if is_active else 0
-	for is_active in wind.values():
+	for is_active: bool in wind.values():
 		_active_count[Element.Core.WIND] += 1 if is_active else 0
 
 
@@ -152,12 +152,12 @@ func _set_active_count() -> void:
 ## if none are found.
 func _deactivate_active_count(
 	wisps: Dictionary[String, bool],
-	element: int,
+	element: Element.Type,
 	count: int
 ) -> Array[String]:
 	var count_tracker: int = 0
 	var deactivated_wisps: Array[String] = []
-	for wisp in wisps.keys():
+	for wisp: String in wisps.keys():
 		if count_tracker < count and wisps[wisp]:
 			wisps[wisp] = false
 			_active_count[element] -= 1
@@ -172,8 +172,8 @@ func _deactivate_active_count(
 ## relevant polar elements. Return an empty array if not enough elements are
 ## active.
 func _deactivate_polar_active(
-	elem_1: int,
-	elem_2: int,
+	elem_1: Element.Type,
+	elem_2: Element.Type,
 	count: int
 ) -> Array[String]:
 	var wisps: Array[String] = []

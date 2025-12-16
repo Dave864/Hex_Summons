@@ -24,9 +24,9 @@ extends ActionCondition
 var wisp_pool: WispPool = null
 
 ## A collated summary of the required number of wisps.
-@onready var req_summary: Dictionary = _get_requirements()
+@onready var req_summary: Dictionary[Element.Type, int] = _get_requirements()
 ## A collated summary of the costs.
-@onready var cost_summary: Dictionary = _get_costs()
+@onready var cost_summary: Dictionary[Element.Type, int] = _get_costs()
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -71,7 +71,7 @@ func is_met(
 
 ## Gets the required element quantities.
 func _get_requirements() -> Dictionary[Element.Type, int]:
-	var element_reqs: Dictionary = {}
+	var element_reqs: Dictionary[Element.Type, int] = {}
 	if earth_req > 0:
 		element_reqs[Element.Type.EARTH] = earth_req
 	if fire_req > 0:
@@ -89,7 +89,7 @@ func _get_requirements() -> Dictionary[Element.Type, int]:
 
 ## Gets the elements with cost values.
 func _get_costs() -> Dictionary[Element.Type, int]:
-	var element_costs: Dictionary = {}
+	var element_costs: Dictionary[Element.Type, int] = {}
 	if earth_cost > 0:
 		element_costs[Element.Type.EARTH] = earth_cost
 	if fire_cost > 0:

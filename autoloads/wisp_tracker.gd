@@ -129,9 +129,9 @@ func set_state_to_player(wisps: Array) -> bool:
 
 ## Updates the state of wisps to indicate it is in the standby pool. Returns
 ## if the operation was successful or not, such as if the provided wisp is valid.
-func set_state_to_standby_set(wisps: Array) -> bool:
+func set_state_to_standby_set(wisps: Array[String]) -> bool:
 	var success: bool = true
-	for wisp in wisps:
+	for wisp: String in wisps:
 		if not _update_encounter_state(wisp, WispState.STANDBY_SET):
 			success = false
 	return success
@@ -140,9 +140,9 @@ func set_state_to_standby_set(wisps: Array) -> bool:
 ## Updates the state of wisps to indicate it is part of the active summon's
 ## pool. Returns if the operation was successful or not, such as if the
 ## provided wisp is valid.
-func set_state_to_summon_set(wisps: Array) -> bool:
+func set_state_to_summon_set(wisps: Array[String]) -> bool:
 	var success: bool = true
-	for wisp in wisps:
+	for wisp: String in wisps:
 		if not _update_encounter_state(wisp, WispState.SUMMON_SET):
 			success = false
 	return success
@@ -157,7 +157,7 @@ func set_state_to_inactive(wisp: String) -> bool:
 
 
 ## Loads the save data for the wisps.
-func load_save_data(save_data: Dictionary) -> void:
+func load_save_data(save_data: Dictionary[String, Variant]) -> void:
 	for wisp in save_data.keys():
 		_tracked_wisps[wisp][ELEMENT] = save_data[wisp][ELEMENT]
 		_tracked_wisps[wisp][BONDED_PLAYER] = save_data[wisp][BONDED_PLAYER]
@@ -165,9 +165,9 @@ func load_save_data(save_data: Dictionary) -> void:
 
 
 ## Gets the current state of the wisp manager for the purposes of saving the data.
-func get_save_data() -> Dictionary:
-	var save_data: Dictionary = {}
-	for wisp in _tracked_wisps.keys():
+func get_save_data() -> Dictionary[String, Variant]:
+	var save_data: Dictionary[String, Variant] = {}
+	for wisp: String in _tracked_wisps.keys():
 		save_data[wisp] = {
 			ELEMENT: _tracked_wisps[wisp][ELEMENT],
 			BONDED_PLAYER: _tracked_wisps[wisp][BONDED_PLAYER],

@@ -16,7 +16,7 @@ func _ready() -> void:
 ## Pays the cost from the player's wisp pool, transferring the spent wisps to
 ## the standby pool.
 func pay_cost_from_player(player_pool: PlayerWispPool, cost: WispCost) -> void:
-	for element in cost.cost_summary.keys():
+	for element: Element.Type in cost.cost_summary.keys():
 		var spent_wisps: Array[String] = player_pool.pay_for_element(
 				element,
 				cost.cost_summary[element]
@@ -32,7 +32,15 @@ func pay_cost_for_summon(
 	summon_pool: SummonWispPool,
 	summon_cost: WispCost
 ) -> void:
-	pass
+	for element: Element.Type in summon_cost.cost_summary.keys():
+		var wisps_for_element: Array[String] = standby_pool.pay_for_element(
+			element,
+			summon_cost.cost_summary[element]
+		)
+		if WispTracker.set_state_to_summon_set(wisps_for_element):
+			summon_pool.add_wisps(wisps_for_element, element)
+		else:
+			printerr("Could not set all spent wisps to be in summon pool.")
 
 
 ## Moves the specified number of wisps in the standby pool back to the specified
@@ -58,8 +66,16 @@ func recall_for_player(player_pool: PlayerWispPool, recall_count: int) -> void:
 
 ## Pays the cost from the active summon wisp pool, transferring the spent wisps
 ## to their bonded player's pool.
-func pay_cost_from_active_summon(
+func pay_cost_from_summon(
 	summon_pool: SummonWispPool,
 	cost: WispCost
 ) -> void:
-	pass
+	for element: Element.Type in cost.cost_summary.keys():
+		var wisps_for_element: Array[String] = summon_pool.pay_for_element(
+			element,
+			cost.cost_summary[element]
+		)
+		if WispTracker.set_state_to_player(wisps_for_element):
+			pass
+		else:
+			printerr("Could not set all the spent wisps to their host players.")

@@ -14,7 +14,7 @@ var pool: Dictionary[Element.Core, Array] = {
 
 
 func _ready() -> void:
-	for element in Element.Core.values():
+	for element: int in Element.Core.values():
 		_active_count[element] = pool[element].size()
 
 
@@ -28,7 +28,7 @@ func add_wisps(wisp_ids: Array, element: Element.Type) -> void:
 			else ElementalAlignment.get_dark_elements()
 		)
 		var half_size: int = int(round(wisp_ids.size() / 2.0))
-		for i in half_size:
+		for i: int in half_size:
 			pool[elems[0]].append(wisp_ids[i])
 			pool[elems[1]].append(wisp_ids[i + half_size])
 		_active_count[elems[0]] += half_size
@@ -45,11 +45,11 @@ func add_wisps(wisp_ids: Array, element: Element.Type) -> void:
 ## Gets the keys for the wisps that are used to pay for the specified element.
 ## These wisps are also removed from this pool. Returns an empty array if no
 ## wisps are available for the given element.
-func pay_for_element(element: int, amount: int = 1) -> Array:
-	var wisps_paid: Array = []
+func pay_for_element(element: Element.Type, amount: int = 1) -> Array[String]:
+	var wisps_paid: Array[String] = []
 	if element in Element.Alignment.keys():
 		var elems: Array = (
-			ElementalAlignment.get_light_elements() 
+			ElementalAlignment.get_light_elements()
 			if element == Element.Alignment.LIGHT
 			else ElementalAlignment.get_dark_elements()
 		)
@@ -58,12 +58,14 @@ func pay_for_element(element: int, amount: int = 1) -> Array:
 		emit_signal("active_count_changed", elems[0])
 		emit_signal("active_count_changed", elems[1])
 		emit_signal("active_count_changed", element)
-		for i in amount:
-			wisps_paid.append(pool[elems[0]].pop_front())
-			wisps_paid.append(pool[elems[1]].pop_front())
+		wisps_paid.resize(amount * 2)
+		for i: int in amount:
+			wisps_paid[i] = pool[elems[0]].pop_front()
+			wisps_paid[amount + i] = pool[elems[1]].pop_front()
 	elif element in Element.Core.keys():
 		_active_count[element] -= amount
 		emit_signal("active_count_changed", element)
-		for i in amount:
-			wisps_paid.append(pool[element].pop_front())
+		wisps_paid.resize(amount)
+		for i: int in amount:
+			wisps_paid[i] = pool[element].pop_front()
 	return wisps_paid

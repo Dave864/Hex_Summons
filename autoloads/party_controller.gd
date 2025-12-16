@@ -14,7 +14,7 @@ const WISP_POOL: String = "wisp_pool"
 @onready var base_player_node: PackedScene = preload(
 		"res://character/player_characters/PlayerCharacter/PlayerCharacter.tscn"
 )
-@onready var party_details: Dictionary = {
+@onready var party_details: Dictionary[String, Dictionary] = {
 	"Player1": _initialize_details("Player1", "TestMeleeClass", true),
 	"Player2": _initialize_details("Player2", "TestRangeClass", true),
 	"Player3": _initialize_details("Player3", "TestClass", false),
@@ -32,12 +32,21 @@ func _ready():
 		add_child(wisp_pool)
 
 
-## Gets all characters that are currently in the party.
-func get_party_data() -> Array:
-	var party: Array = []
-	for player in party_details.keys():
+## Gets the keys of all player characters that are currently active in the
+## party.
+func get_party_player_names() -> Array[String]:
+	var party_members: Array[String] = []
+	for player: String in party_details.keys():
 		if party_details[player][IN_PARTY]:
-			party.append(party_details[player])
+			party_members.append(player)
+	return party_members
+
+
+## Gets details of all characters that are currently in the party.
+func get_party_data() -> Dictionary[String, Dictionary]:
+	var party: Dictionary[String, Dictionary] = {}
+	for player: String in get_party_player_names():
+		party[player] = party_details[player]
 	return party
 
 
@@ -75,7 +84,7 @@ func _initialize_details(
 	player_name: String,
 	p_class: String,
 	in_party: bool
-) -> Dictionary:
+) -> Dictionary[String, Variant]:
 	var class_path: String = CLASS_DATA_PATH.format([p_class])
 	var class_data: PlayerClassData = load(class_path)
 	return {
