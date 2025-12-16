@@ -9,6 +9,6 @@ func _ready():
 			"alignment_changed",
 			Callable(self, "_on_ElementalAlignment_alignment_changed")
 	)
-	set_wisp_pool(WispController.summon_pool)
+	set_wisp_pool(WispController.standby_pool)
 	_set_icons()
 	_set_labels_on_ready()

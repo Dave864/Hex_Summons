@@ -27,7 +27,7 @@ enum WispState {
 	INACTIVE
 }
 
-@onready var _tracked_wisps: Dictionary = {
+@onready var _tracked_wisps: Dictionary[String, Variant] = {
 	"test_earth_1": _initialize_data("test_earth_1", EARTH, "Player1"),
 	"test_earth_2": _initialize_data("test_earth_2", EARTH, "Player1"),
 	"test_fire_1": _initialize_data("test_fire_1", FIRE, "Player2"),
@@ -83,8 +83,13 @@ func set_bonded_player(wisp: String, player: String = NO_PLAYER) -> bool:
 
 
 ## Gets all the wisps that are bonded to a specified player.
-func get_bonded_wisps(player: String) -> Dictionary:
-	var bonded_wisps: Dictionary = {EARTH: [], FIRE: [], WATER: [], WIND: []}
+func get_bonded_wisps(player: String) -> Dictionary[Element.Core, Array]:
+	var bonded_wisps: Dictionary[Element.Core, Array] = {
+		EARTH: [],
+		FIRE: [],
+		WATER: [],
+		WIND: [],
+	}
 	for wisp in _tracked_wisps.keys():
 		if _tracked_wisps[wisp][BONDED_PLAYER] == player:
 			bonded_wisps[_tracked_wisps[wisp][ELEMENT]].append(wisp)
@@ -176,7 +181,7 @@ func _initialize_data(
 	wisp_name: String,
 	element: int,
 	bonded_player: String = NO_PLAYER
-) -> Dictionary:
+) -> Dictionary[String, Variant]:
 	return {
 		DATA: _get_wisp_data(wisp_name, element),
 		ELEMENT: element,

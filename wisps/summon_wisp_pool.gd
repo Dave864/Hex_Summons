@@ -5,7 +5,7 @@ extends WispPool
 
 ## Tracks which wisps are set to the summon, i.e. which wisps are available
 ## to be used for actions.
-var pool: Dictionary = {
+var pool: Dictionary[Element.Core, Array] = {
 	Element.Core.EARTH: [],
 	Element.Core.FIRE: [],
 	Element.Core.WATER: [],

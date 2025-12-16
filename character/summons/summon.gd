@@ -4,7 +4,7 @@ extends Character
 ##
 ## Tracks which summons are selectable in an encounter scene. Represents an active
 ## summon when the user executes the "Summon" action. Handles the swapping of
-## summon details. The summon wisp pool is handled by the WispController.
+## summon details.
 
 
 ## Path to the folder that contains all summon data.
@@ -25,6 +25,9 @@ var available_summons: Dictionary[String, SummonData] = {}
 var spawn_action: Action = null
 ## The actions the summon can use on their turn.
 var actions: Array[Action] = []
+
+## The wisp pool for the active summon.
+@onready var wisp_pool: SummonWispPool = $SummonWispPool
 
 
 ## Called when the node enters the scene tree for the first time.

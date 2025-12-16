@@ -81,7 +81,7 @@ func set_active(wisp: String) -> void:
 ## Gets the keys for the wisps that are used to pay for the specified element.
 ## Deactivates the wisps that are spent. Returns an empty array if no wisps
 ## are available for the given element.
-func pay_for_element(element: int, count: int) -> Array:
+func pay_for_element(element: int, count: int) -> Array[String]:
 	match element:
 		Element.Type.EARTH:
 			var wisps: Array = _deactivate_active_count(earth, element, count)
@@ -121,7 +121,9 @@ func _ready():
 func _init(new_player_name: String = "") -> void:
 	player_name = new_player_name
 	name = "{0}WispPool".format([player_name])
-	var bonded_wisps: Dictionary = WispTracker.get_bonded_wisps(player_name)
+	var bonded_wisps: Dictionary[Element.Core, Array] = (
+		WispTracker.get_bonded_wisps(player_name)
+	)
 	for element_wisps in bonded_wisps.values():
 		for wisp in element_wisps:
 			add_new_wisp(wisp)
@@ -148,9 +150,13 @@ func _set_active_count() -> void:
 ## Helper function for pay_for_element. Deactivates a number of active wisps in the
 ## given category. Returns the keys of said wisp, if any. Returns an empty array
 ## if none are found.
-func _deactivate_active_count(wisps: Dictionary, element: int, count: int) -> Array:
+func _deactivate_active_count(
+	wisps: Dictionary[String, bool],
+	element: int,
+	count: int
+) -> Array[String]:
 	var count_tracker: int = 0
-	var deactivated_wisps: Array = []
+	var deactivated_wisps: Array[String] = []
 	for wisp in wisps.keys():
 		if count_tracker < count and wisps[wisp]:
 			wisps[wisp] = false
@@ -165,16 +171,20 @@ func _deactivate_active_count(wisps: Dictionary, element: int, count: int) -> Ar
 ## Helper function for pay_for_element. Deactivates the first active wisps for the
 ## relevant polar elements. Return an empty array if not enough elements are
 ## active.
-func _deactivate_polar_active(elem_1: int, elem_2: int, count: int) -> Array:
-	var wisps: Array = []
+func _deactivate_polar_active(
+	elem_1: int,
+	elem_2: int,
+	count: int
+) -> Array[String]:
+	var wisps: Array[String] = []
 	if _active_count[elem_1] == 0 or _active_count[elem_2] == 0:
 		return wisps
-	var elem_1_wisps: Array = _deactivate_active_count(
+	var elem_1_wisps: Array[String] = _deactivate_active_count(
 			_get_element_tracker(elem_1),
 			elem_1,
 			count
 	)
-	var elem_2_wisps: Array = _deactivate_active_count(
+	var elem_2_wisps: Array[String] = _deactivate_active_count(
 			_get_element_tracker(elem_2),
 			elem_2,
 			count
