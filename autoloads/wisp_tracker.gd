@@ -3,9 +3,9 @@ extends Node
 ## state they are in.
 ##
 ## This global class keeps track of the current state of all wisps. A wisp can
-## be set to bonded player, in the summon pool, set to active summon, or
+## be set to bonded player, in the standby pool, set to active summon, or
 ## completely inactve. An inactive wisp is not bonded to a player, and is
-## unable to be set to the summon pool or active summon. This class works in
+## unable to be set to the standby pool or active summon. This class works in
 ## tandem with WispController to manage the reorganization of wisps. If a wisp
 ## is not listed within this class, it will not be interacted with in game.
 
@@ -22,7 +22,7 @@ const WIND: Element.Core = Element.Core.WIND
 
 enum WispState {
 	PLAYER_SET,
-	SUMMON_POOL,
+	STANDBY_SET,
 	SUMMON_SET,
 	INACTIVE
 }
@@ -101,9 +101,9 @@ func is_player_set(wisp: String) -> bool:
 	return _is_in_state(wisp, WispState.PLAYER_SET)
 
 
-## Checks if the wisp is in the summmon pool.
-func is_summon_pool(wisp: String) -> bool:
-	return _is_in_state(wisp, WispState.SUMMON_POOL)
+## Checks if the wisp is in the standby pool.
+func is_standby_set(wisp: String) -> bool:
+	return _is_in_state(wisp, WispState.STANDBY_SET)
 
 
 ## Checks if the wisp is in the pool for an active summon.
@@ -127,12 +127,12 @@ func set_state_to_player(wisps: Array) -> bool:
 	return success
 
 
-## Updates the state of wisps to indicate it is in the summon pool. Returns
+## Updates the state of wisps to indicate it is in the standby pool. Returns
 ## if the operation was successful or not, such as if the provided wisp is valid.
-func set_state_to_summon_pool(wisps: Array) -> bool:
+func set_state_to_standby_set(wisps: Array) -> bool:
 	var success: bool = true
 	for wisp in wisps:
-		if not _update_encounter_state(wisp, WispState.SUMMON_POOL):
+		if not _update_encounter_state(wisp, WispState.STANDBY_SET):
 			success = false
 	return success
 

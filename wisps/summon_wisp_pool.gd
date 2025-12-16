@@ -20,7 +20,7 @@ func _ready() -> void:
 
 ## Adds wisps to the specified element pool. The expectation is that wisp_ids
 ## will be an array with a size divisible by 2 when adding wisps for LIGHT and DARK.
-func add_wisps(wisp_ids: Array, element: int) -> void:
+func add_wisps(wisp_ids: Array, element: Element.Type) -> void:
 	if element in Element.Alignment.values():
 		var elems: Array = (
 			ElementalAlignment.get_light_elements()

@@ -70,7 +70,7 @@ func is_met(
 
 
 ## Gets the required element quantities.
-func _get_requirements() -> Dictionary:
+func _get_requirements() -> Dictionary[Element.Type, int]:
 	var element_reqs: Dictionary = {}
 	if earth_req > 0:
 		element_reqs[Element.Type.EARTH] = earth_req
@@ -88,7 +88,7 @@ func _get_requirements() -> Dictionary:
 
 
 ## Gets the elements with cost values.
-func _get_costs() -> Dictionary:
+func _get_costs() -> Dictionary[Element.Type, int]:
 	var element_costs: Dictionary = {}
 	if earth_cost > 0:
 		element_costs[Element.Type.EARTH] = earth_cost

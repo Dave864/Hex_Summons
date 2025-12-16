@@ -21,16 +21,16 @@ func pay_cost_from_player(player_pool: PlayerWispPool, cost: WispCost) -> void:
 				element,
 				cost.cost_summary[element]
 		)
-		if not WispTracker.set_state_to_summon_pool(spent_wisps):
+		if not WispTracker.set_state_to_standby_set(spent_wisps):
 			printerr("Failed to set all spent wisps.")
 		standby_pool.add_wisps(spent_wisps, element)
 
 
 ## Pays the cost required to conjure a summon from the controller's standby pool,
-## transferring the spent wisps to the new summon's wisp pool.
+## transferring the spent wisps to the summon's wisp pool.
 func pay_cost_for_summon(
 	summon_pool: SummonWispPool,
-	cost: WispCost
+	summon_cost: WispCost
 ) -> void:
 	pass
 
@@ -46,7 +46,7 @@ func recall_for_player(player_pool: PlayerWispPool, recall_count: int) -> void:
 	var standby_pool_wisps: Array[String] = []
 	for wisps in bonded_wisps.values():
 		for wisp in wisps:
-			if WispTracker.is_summon_pool(wisp):
+			if WispTracker.is_standby_set(wisp):
 				standby_pool_wisps.append(wisp)
 	standby_pool_wisps.shuffle()
 	var random_wisps: Array = standby_pool_wisps.slice(0, recall_count - 1)
