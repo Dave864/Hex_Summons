@@ -3,6 +3,7 @@ extends Node
 ## any active summon.
 
 
+## The pool that wisps used by player characters go to.
 var standby_pool: SummonWispPool
 
 

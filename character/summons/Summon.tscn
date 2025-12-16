@@ -57,6 +57,8 @@ metadata/_custom_type_script = "uid://b6m2gr6i1qb7c"
 
 [node name="TurnActions" type="Node" parent="Actions"]
 
+[node name="SpawnActions" type="Node" parent="Actions"]
+
 [node name="HitBox" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 16

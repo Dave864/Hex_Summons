@@ -2,9 +2,9 @@ class_name Summon
 extends Character
 ## Manages the creation and using of summons.
 ##
-## Tracks which summons are selectable in an encounter scene. Represents an active
-## summon when the user executes the "Summon" action. Handles the swapping of
-## summon details.
+## Tracks which summons are selectable in an encounter scene. Represents an
+## active summon when the user executes the "Summon" action. Handles the
+## swapping of summon details.
 
 
 ## Path to the folder that contains all summon data.
@@ -21,10 +21,10 @@ var summoner: PlayerCharacter = null
 ## The summons that are able to be conjured by the current player party in the
 ## encounter.
 var available_summons: Dictionary[String, SummonData] = {}
-## The action the summon uses when it is summoned.
-var spawn_action: Action = null
+## The actions summons use when conjured.
+var spawn_actions: Dictionary[String, Action] = {}
 ## The actions the summon can use on their turn.
-var actions: Array[Action] = []
+var turn_actions: Array[Action] = []
 
 ## The wisp pool for the active summon.
 @onready var wisp_pool: SummonWispPool = $SummonWispPool
@@ -44,6 +44,7 @@ func load_summon(summon_name: String, spawn_coordinate: MapCoordinate) -> void:
 	stats.summon_data = available_summons[summon_name]
 	visible = true
 	position = spawn_coordinate.position
+	_load_actions()
 
 
 ## Sets the summon to be inactive, placing them out of the map and resetting the
@@ -51,56 +52,60 @@ func load_summon(summon_name: String, spawn_coordinate: MapCoordinate) -> void:
 func dismiss_summon() -> void:
 	position = STANDBY_POSITION
 	visible = false
-	$Actions.remove_child(spawn_action)
-	spawn_action.queue_free()
-	for action in actions:
+	for action: Action in turn_actions:
 		$Actions/TurnActions.remove_child(action)
 		action.queue_free()
-	actions.clear()
+	turn_actions.clear()
 	stats.summon_data = null
 
 
-## Loads the data for the summons that are able to be conjured based on the current
-## wisps available to the party.
+## Loads the data for the summons that are able to be conjured based on the
+## current wisps available to the party.
 func _cache_available_summons() -> void:
 	var summon_folders: PackedStringArray = (
 			DirAccess.get_directories_at(SUMMON_DATA_PATH)
 	)
 	var core_elems_count: Dictionary[Element.Core, int]
 	core_elems_count = WispTracker.get_usable_wisp_count()
-	for folder_name in summon_folders:
-		var data: SummonData = load(SUMMON_DATA_RESOURCE_PATH.format([folder_name]))
+	for summon_name: String in summon_folders:
+		var data: SummonData = load(SUMMON_DATA_RESOURCE_PATH.format([summon_name]))
 		if data.core_elements_meet_requirements(core_elems_count):
-			available_summons[folder_name] = data
+			available_summons[summon_name] = data
+			_create_spawn_action_node(summon_name, data.spawn_action)
+
+
+## Creates an action node that represents an action that is used when a summon
+## is spawned. Adds them to the scene tree for future reference.
+func _create_spawn_action_node(
+	summon_name: String,
+	action_stats: ActionStats
+) -> void:
+	var action_node: Action = _create_action_node(action_stats.name)
+	$Actions/SpawnActions.add_child(action_node)
+	spawn_actions[summon_name] = action_node
 
 
 ## Loads the action nodes relevant to this summon.
 func _load_actions() -> void:
-	spawn_action = _create_action_node(stats.summon_data.spawn_action)
-	$Actions.add_child(spawn_action)
-	for action_data in stats.summon_data.turn_actions:
-		_create_action_node(action_data)
+	var action_count: int = stats.summon_data.turn_actions.size()
+	turn_actions.resize(action_count)
+	for i: int in action_count:
+		var action_data: SpellStats = stats.summon_data.turn_actions[i]
+		var action_name: String = action_data.action_stats.name
+		var action_node: Action = _create_action_node(action_name)
+		$Actions/TurnActions.add_child(action_node)
+		action_node.add_child(WispCost.new(action_data))
+		turn_actions[i] = action_node
 
 
-## Helper function for _load_actions. Creates a new instance of an action node
-## based on the provided details.
-func _create_action_node(action_stats: SpellStats) -> Action:
-	var action_name: String = action_stats.action_stats.name
+## Creates a new instance of an action node of the given name.
+func _create_action_node(action_name: String) -> Action:
 	var action_path: String = ACTION_PATH_FORMAT.format([action_name])
 	var action_node: Action = load(action_path).instantiate()
 	return action_node
 
 
-## Helper function for _load_actions. Creates an action node that represents an
-## action that can be used on a summon's turn. Adds 
-func _create_turn_action_node(action_stats: SpellStats) -> void:
-	var action_node: Action = _create_action_node(action_stats)
-	var wisp_cost_node: WispCost = WispCost.new(action_stats)
-	action_node.add_child(wisp_cost_node)
-	$Actions/TurnActions.add_child(action_node)
-
-
-## Virtual function. Updates emission points for all actions of the chracter.
+## Virtual function. Updates emission points for all turn actions of the chracter.
 func _update_emission_index(index: int) -> void:
-	for action in actions:
+	for action in turn_actions:
 		action.set_emission_map_index(index)
