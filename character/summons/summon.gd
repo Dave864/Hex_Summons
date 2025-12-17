@@ -45,6 +45,7 @@ func load_summon(summon_name: String, spawn_coordinate: MapCoordinate) -> void:
 	visible = true
 	character_label.show()
 	position = spawn_coordinate.position
+	spawn_actions[summon_name].source_stats = stats
 	_load_actions()
 
 
@@ -100,6 +101,7 @@ func _load_actions() -> void:
 		var action_data: SpellStats = stats.summon_data.turn_actions[i]
 		var action_name: String = action_data.action_stats.name
 		var action_node: Action = _create_action_node(action_name)
+		action_node.source_stats = stats
 		$Actions/TurnActions.add_child(action_node)
 		action_node.add_child(WispCost.new(action_data))
 		turn_actions[i] = action_node
