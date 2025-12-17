@@ -43,6 +43,7 @@ func _ready() -> void:
 func load_summon(summon_name: String, spawn_coordinate: MapCoordinate) -> void:
 	stats.summon_data = available_summons[summon_name]
 	visible = true
+	character_label.show()
 	position = spawn_coordinate.position
 	_load_actions()
 
@@ -52,6 +53,7 @@ func load_summon(summon_name: String, spawn_coordinate: MapCoordinate) -> void:
 func dismiss_summon() -> void:
 	position = STANDBY_POSITION
 	visible = false
+	character_label.hide()
 	for action: Action in turn_actions:
 		$Actions/TurnActions.remove_child(action)
 		action.queue_free()
