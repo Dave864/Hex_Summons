@@ -45,7 +45,11 @@ func set_height(value: int) -> void:
 	var collision_shape: CollisionShape3D = get_node_or_null("CollisionShape3D")
 	if collision_shape == null:
 		return
-	collision_shape.position.y = height * Constants.HEX_TILE_UNIT_HEIGHT
+	var y_pos: float = height * Constants.HEX_TILE_UNIT_HEIGHT
+	collision_shape.position.y = y_pos
+	# Do not update height of map_coordinate if has yet to be set.
+	if map_coordinate != null:
+		map_coordinate.position.y = y_pos
 	emit_signal("height_changed", value)
 	_update_highlighter_positions()
 
@@ -98,9 +102,7 @@ func is_active() -> bool:
 ## Return the translation that a character will be placed at when moving onto the
 ## tile.
 func get_character_position() -> Vector3:
-	var cp: Vector3 = position
-	cp.y = Constants.HEX_TILE_UNIT_HEIGHT * height
-	return cp
+	return map_coordinate.global_position
 
 
 ## Update the position of the tile highlighters so that they are on top of the tile.
