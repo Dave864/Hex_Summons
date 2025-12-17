@@ -7,19 +7,27 @@ extends StatModifiers
 ## applied to the player character stats.
 
 
+## The stats of the character that conjured the summon.
 var summoner_stats: CharacterStatModifiers = null
+## The stat modifiers of the summon.
 var summon_data: SummonData = null
 
 
 ## Returns the movement stat. Can specify if the base value should be returned
 ## or the value with current modifiers.
 func get_movement_range(_modified: bool = true) -> int:
+	if summon_data == null:
+		printerr("No value for summon_data has been set.")
+		return 0
 	return summon_data.movement
 
 
 ## Set current health to the maximum value. Always uses the modified max health
 ## as the maximum value.
 func max_cur_health() -> void:
+	if summon_data == null:
+		printerr("No value for summon_data has been set.")
+		return
 	summoner_stats.max_cur_health()
 
 
@@ -72,6 +80,9 @@ func get_defensive(modified: bool = true) -> Dictionary[String, Variant]:
 ## Returns the value for a specific stat. Can specify if the base value should
 ## be returned or the value with current modifiers.
 func get_stat(stat: Stat.Type, modified: bool = true) -> int:
+	if summoner_stats == null or summon_data == null:
+		printerr("Missing either summoner_stats or summon_data.")
+		return 0
 	var base_value: int = summoner_stats.get_stat(stat, modified)
 	var multiplier: float = summon_data.multiplier_for_stat(stat)
 	return roundi(base_value * multiplier)
@@ -80,21 +91,20 @@ func get_stat(stat: Stat.Type, modified: bool = true) -> int:
 ## Updates the modifier for the specified stat so that it results in the new
 ## value when added to the base value of the stat.
 func update_modifier(stat: Stat.Type, value: int) -> void:
+	if summoner_stats == null:
+		printerr("Missing summoner_stats.")
+		return
 	summoner_stats.update_modifier(stat, value)
 
 
 ## Sets the values of all the modifiers to zero.
 func clear_modifiers() -> void:
+	if summoner_stats == null:
+		printerr("Missing summoner_stats.")
+		return
 	summoner_stats.clear_modifiers()
 
 
 ## Check that all required parameters are set.
 func _check_for_required_parameters() -> void:
-	assert(
-			summoner_stats != null,
-			"No CharacterStats has been assigned."
-	)
-	assert(
-			summon_data != null,
-			"No SummonData has been assigned."
-	)
+	pass

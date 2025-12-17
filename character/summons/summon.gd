@@ -14,7 +14,7 @@ const SUMMON_DATA_RESOURCE_PATH: String = SUMMON_DATA_PATH + "{0}/summon_data.tr
 ## The string format for retrieving actions given a name.
 const ACTION_PATH_FORMAT: String = "res://actions/{0}/{0}.tscn"
 ## Position the summon is placed when not active.
-const STANDBY_POSITION: Vector3 = Vector3(0.0, 0.0, -10.0)
+const STANDBY_POSITION: Vector3 = Vector3(0.0, -10.0, 0.0)
 
 ## The character that conjured the active summon.
 var summoner: PlayerCharacter = null
@@ -80,8 +80,13 @@ func _create_spawn_action_node(
 	summon_name: String,
 	action_stats: ActionStats
 ) -> void:
-	var action_node: Action = _create_action_node(action_stats.name)
-	$Actions/SpawnActions.add_child(action_node)
+	var action_node: Action
+	if $Actions/SpawnActions.has_node(action_stats.name):
+		action_node = $Actions/SpawnActions.get_node(action_stats.name)
+	else:
+		action_node = _create_action_node(action_stats.name)
+		action_node.name = action_stats.name
+		$Actions/SpawnActions.add_child(action_node)
 	spawn_actions[summon_name] = action_node
 
 
