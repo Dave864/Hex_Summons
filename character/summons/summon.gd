@@ -26,6 +26,9 @@ var spawn_actions: Dictionary[String, Action] = {}
 ## The actions the summon can use on their turn.
 var turn_actions: Array[Action] = []
 
+## The spawn action of the currently active summon. 
+var _current_spawn_action: Action = null
+
 ## The wisp pool for the active summon.
 @onready var wisp_pool: SummonWispPool = $SummonWispPool
 
@@ -46,6 +49,7 @@ func load_summon(summon_name: String, spawn_coordinate: MapCoordinate) -> void:
 	character_label.show()
 	position = spawn_coordinate.position
 	spawn_actions[summon_name].source_stats = stats
+	_current_spawn_action = spawn_actions[summon_name]
 	_load_actions()
 
 
@@ -60,6 +64,7 @@ func dismiss_summon() -> void:
 		action.queue_free()
 	turn_actions.clear()
 	stats.summon_data = null
+	_current_spawn_action = null
 
 
 ## Loads the data for the summons that are able to be conjured based on the
