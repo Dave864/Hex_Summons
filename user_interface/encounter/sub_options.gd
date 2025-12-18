@@ -45,6 +45,11 @@ func populate_spells(player: PlayerCharacter, spells: Array) -> void:
 	_populate_sub_options(spells, player, _spell_button)
 
 
+## Populate the sub-options container with summon options.
+func populate_summons(player: PlayerCharacter) -> void:
+	pass
+
+
 ## Clear out the sub-options container.
 func clear_sub_options() -> void:
 	for option_button in _sub_options_container.get_children():

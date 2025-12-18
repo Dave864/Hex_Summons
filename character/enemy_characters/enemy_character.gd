@@ -9,6 +9,7 @@ signal enemy_actions_required()
 ## Contains the actions associated with the enemy character.
 var _actions: Array
 
+## The default image to use for an enemy character's battle sprite.
 @onready var _default_portait: Texture2D = preload(
 		"res://character/enemy_characters/EnemyCharacter/" + \
 		"EnemyBattlePortrait.atlastex"

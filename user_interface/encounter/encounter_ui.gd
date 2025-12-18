@@ -30,11 +30,17 @@ enum Options {
 var _character_summary: PackedScene = preload(
 	"res://user_interface/encounter/test_labels/CharacterSummary/CharacterSummary.tscn"
 )
-var _current_selection: int = Options.NONE: get = get_current_selection, set = set_current_selection
-var _focused_player: PlayerCharacter = null: get = get_focused_player, set = set_focused_player
+var _current_selection: int = Options.NONE:
+	get = get_current_selection,
+	set = set_current_selection
+var _focused_player: PlayerCharacter = null:
+	get = get_focused_player,
+	set = set_focused_player
 var _party_stat_map: Dictionary = {}
-var _techniques: Array = []: get = get_techniques
-var _spells: Array = []: get = get_spells
+var _techniques: Array = []:
+	get = get_techniques
+var _spells: Array = []:
+	get = get_spells
 
 @onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
 @onready var active_player_stats: PlayerStatsUI = $ActivePlayerStats
@@ -238,7 +244,7 @@ func _update_sub_options() -> void:
 		Options.SPELL:
 			sub_options.populate_spells(_focused_player, _spells)
 		Options.SUMMON:
-			pass
+			sub_options.populate_summons(_focused_player)
 		Options.ITEM:
 			pass
 		_:
