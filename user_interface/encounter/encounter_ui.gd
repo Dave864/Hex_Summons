@@ -4,8 +4,9 @@ extends Control
 ##
 ## EncounterUI handles the overall management of the various UI nodes used
 ## during an encounter. This scene also provides a convenient access point for
-## said UI nodes. The nodes are the InitiativeTracker, the SummonPool, PlayerStats,
-## an PlayerOptionButtons for movement, techniques, summons, items, and end.
+## said UI nodes. The nodes are the InitiativeTracker, the SummonPool,
+## PlayerStats, an PlayerOptionButtons for movement, techniques, summons, items,
+## and end.
 
 
 ## Indicates that the UI is waiting to be activated.
@@ -32,7 +33,8 @@ enum Options {
 }
 
 
-# TODO: Currently loading CharacterSummary scene to visualize the hp values of characters
+# TODO: Currently loading CharacterSummary scene to visualize the hp values
+# of enemy characters
 var _character_summary: PackedScene = preload(
 	"res://user_interface/encounter/test_labels/CharacterSummary/CharacterSummary.tscn"
 )
@@ -53,6 +55,9 @@ var _techniques: Array[Action] = []:
 ## The spells the focused character has access to.
 var _spells: Array[Action] = []:
 	get = get_spells
+## Reference to the node that handles summons.
+var _summon: Summon = null:
+	set = set_summon
 
 @onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
 @onready var active_player_stats: PlayerStatsUI = $ActivePlayerStats
@@ -122,7 +127,7 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	_set_player_option_focus_neighbors()
 
 
-## Get the current player the UI is focused on.
+## Get the current character the UI is focused on.
 func get_focused_player() -> PlayerCharacter:
 	return _focused_player
 
@@ -135,6 +140,16 @@ func get_techniques() -> Array[Action]:
 ## Get the spells of the focused player.
 func get_spells() -> Array[Action]:
 	return _spells
+
+
+## Set the Summon node reference.
+func set_summon(summon: Summon) -> void:
+	_summon = summon
+
+
+## Sets the focused character as the summon.
+func set_focused_summon() -> void:
+	pass
 
 
 ## Get an action from the currently active sub-options selection.
@@ -163,9 +178,9 @@ func set_active_options() -> void:
 	movement_button.disable(false)
 	technique_button.disable(_techniques.size() <= 0)
 	spell_button.disable(_spells.size() <= 0)
-	# TODO: summon option will depend on different logic that has yet to be implemented.
-	summon_button.disable()
-	# TODO: item option will depend on different logic that has yet to be implemented.
+	summon_button.disable(_summon.available_summons.size() <= 0)
+	# TODO: item option will depend on different logic that has yet to
+	# be implemented.
 	item_button.disable()
 	end_button.disable(false)
 
@@ -218,6 +233,8 @@ func track_party_members(players: Array) -> void:
 
 
 ## Adds the enemy character details to the UI.
+## TODO: This is to allow for CharacterSummary nodes to be used for testing
+## purposes.
 func track_enemy(e: EnemyCharacter) -> void:
 	var e_label: CharacterSummary = _character_summary.instantiate()
 	e_label.set_character_name(e.name)
@@ -227,7 +244,10 @@ func track_enemy(e: EnemyCharacter) -> void:
 	)
 	e_label.set_enemy_wisp_count()
 	e_label.set_text_alignment(HORIZONTAL_ALIGNMENT_RIGHT)
-	e.stats.connect("health_changed", Callable(e_label, "_on_Character_hp_changed"))
+	e.stats.connect(
+			"health_changed",
+			Callable(e_label, "_on_Character_hp_changed")
+	)
 	enemy_stats.add_child(e_label)
 
 
@@ -264,7 +284,7 @@ func _update_sub_options() -> void:
 		Options.SPELL:
 			sub_options.populate_spells(_focused_player, _spells)
 		Options.SUMMON:
-			sub_options.populate_summons(_focused_player)
+			sub_options.populate_summons(_focused_player, _summon)
 		Options.ITEM:
 			pass
 		_:

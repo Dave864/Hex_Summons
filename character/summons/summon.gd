@@ -43,6 +43,12 @@ func _ready() -> void:
 	dismiss_summon()
 
 
+## Checks if there is an active summon that has been loaded. An active summon
+## always has a summoner specified.
+func is_active() -> bool:
+	return summoner != null
+
+
 ## Sets the selected summon to be active and places them at the specified map
 ## coordinate.
 func load_summon(

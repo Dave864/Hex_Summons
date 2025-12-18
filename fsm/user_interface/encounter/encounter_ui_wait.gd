@@ -3,7 +3,7 @@ extends EncounterUIState
 ## The logic for what happens when an EncounterUI scene is in the `Wait` state.
 ##
 ## Hides the options and suboptions menus. Goes to the 'Move' state when a player
-## turn starts.
+## or summon turn starts.
 
 
 ## Called by the state machine upon changing the active state. The `msg` parameter
@@ -31,10 +31,28 @@ func exit() -> void:
 	)
 
 
-## Wait for the EncounterUI object to recieve signal that user input needs to
-## be obtained.
+## Connects the SignalBus summon_turn_started signal.
+func _ready_connect_signals() -> void:
+	SignalBus.connect(
+			"summon_turn_started",
+			Callable(self, "")
+	)
+
+
+## Set the specified player as the character of focus in EncounterUI and moves
+## to the `MOVE` state.
 func _on_SignalBus_player_turn_started(character: PlayerCharacter) -> void:
 	if not _state_is_active():
 		return
 	encounter_ui.set_focused_player(character)
 	state_machine.transition_to(MOVE)
+
+
+## Set the active summon as the character of focus in EncounterUI and moves to
+## the `MOVE` state.
+func _on_SignalBus_summon_turn_started() -> void:
+	# TODO: Call appropriate functions to set summon as focused character when
+	# they have been implemented.
+	print("Summon turn start detected")
+	state_machine.transition_to(WAIT)
+	#state_machine.transition_to(MOVE)

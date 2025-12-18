@@ -10,7 +10,7 @@ extends ScrollContainer
 ## Indicates that one of the sub-options was selected
 signal option_selected(option_info)
 
-var _options: Array = []
+var _options: Array[Action] = []
 var _technique_button: PackedScene = preload(
 		"res://user_interface/encounter/" \
 		+ "SubOptionButton/TechniqueButton/TechniqueButton.tscn"
@@ -46,7 +46,7 @@ func populate_spells(player: PlayerCharacter, spells: Array) -> void:
 
 
 ## Populate the sub-options container with summon options.
-func populate_summons(player: PlayerCharacter) -> void:
+func populate_summons(player: PlayerCharacter, summon: Summon) -> void:
 	pass
 
 
