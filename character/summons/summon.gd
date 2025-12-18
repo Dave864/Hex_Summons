@@ -4,7 +4,8 @@ extends Character
 ##
 ## Tracks which summons are selectable in an encounter scene. Represents an
 ## active summon when the user executes the "Summon" action. Handles the
-## swapping of summon details.
+## swapping of summon details. That stat variable is considered of type
+## SummonStatModifiers.
 
 
 ## Path to the folder that contains all summon data.
@@ -36,6 +37,7 @@ var _current_spawn_action: Action = null
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	stats = $SummonStatModifiers
+	stats.summoner_stats = summoner
 	_cache_available_summons()
 	# Ensure that the summon node is set to inactive at the start of an encounter.
 	dismiss_summon()
@@ -43,10 +45,15 @@ func _ready() -> void:
 
 ## Sets the selected summon to be active and places them at the specified map
 ## coordinate.
-func load_summon(summon_name: String, spawn_coordinate: MapCoordinate) -> void:
+func load_summon(
+	new_summoner: PlayerCharacter,
+	summon_name: String,
+	spawn_coordinate: MapCoordinate
+) -> void:
+	summoner = new_summoner
 	stats.summon_data = available_summons[summon_name]
 	visible = true
-	character_label.show()
+	character_label.show_all()
 	position = spawn_coordinate.position
 	spawn_actions[summon_name].source_stats = stats
 	_current_spawn_action = spawn_actions[summon_name]
@@ -58,12 +65,13 @@ func load_summon(summon_name: String, spawn_coordinate: MapCoordinate) -> void:
 func dismiss_summon() -> void:
 	position = STANDBY_POSITION
 	visible = false
-	character_label.hide()
+	character_label.hide_all()
 	for action: Action in turn_actions:
 		$Actions/TurnActions.remove_child(action)
 		action.queue_free()
 	turn_actions.clear()
 	stats.summon_data = null
+	summoner = null
 	_current_spawn_action = null
 
 

@@ -8,7 +8,7 @@ extends Node
 @export var hex_map: HexMap = null
 
 ## The player characters active in the encounter.
-var players: Array = []
+var players: Array[PlayerCharacter] = []
 
 ## The scene used to create player characters from out of encounter data.
 var _player_template: PackedScene = preload(
@@ -17,7 +17,9 @@ var _player_template: PackedScene = preload(
 )
 
 ## List of enemy characters active in the encounter.
-@onready var enemies: Array = $Enemies.get_children()
+@onready var enemies: Array[Node] = $Enemies.get_children()
+## Node that handles player character summons.
+@onready var summon: Summon = $Summon
 ## Reference to the Selector node; used to highlight and select map tiles.
 @onready var selector: Selector = $Selector
 ## Reference to the UI elements for the encounter.

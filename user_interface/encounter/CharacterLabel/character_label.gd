@@ -31,6 +31,18 @@ func set_initiative_label(new_initiative: int) -> void:
 	_initiative_label.text = String.num_int64(new_initiative)
 
 
+## Shows all elements of this node.
+func show_all() -> void:
+	show()
+	$CanvasLayer.show()
+
+
+## Hides all elements of this node.
+func hide_all() -> void:
+	hide()
+	$CanvasLayer.hide()
+
+
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()

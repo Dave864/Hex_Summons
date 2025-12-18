@@ -23,6 +23,7 @@ enum Type {
 
 @export var battle_portrait: Texture2D = null
 
+## The modifiers applied to the base stats of the character.
 var stats: StatModifiers
 ## Flag that indicates whether the creature has been set to its starting location.
 var _start_set: bool = false
