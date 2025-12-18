@@ -11,8 +11,8 @@ const SPELLS: String = "Spells"
 const ACTION_PATH_FORMAT: String = "res://actions/{0}/{0}.tscn"
 
 var stats: CharacterStatModifiers
-var techniques: Array
-var spells: Array
+var techniques: Array[Action]
+var spells: Array[Action]
 
 ## Reference to the scene tree root.
 @onready var _root_node: Node = get_tree().edited_scene_root
@@ -28,8 +28,10 @@ func _ready():
 		$Spells.set_owner(_root_node)
 	else:
 		stats = get_node(STATS)
-	techniques = get_node(TECHNIQUES).get_children()
-	spells = get_node(SPELLS).get_children()
+	for technique: Action in get_node(TECHNIQUES).get_children():
+		techniques.append(technique)
+	for spell: Action in get_node(SPELLS).get_children():
+		spells.append(spell)
 
 
 ## Called when creating a new instance of this object.

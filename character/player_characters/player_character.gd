@@ -35,9 +35,9 @@ var wisp_pool: PlayerWispPool = null
 ## The current player class; determines stat adjusters and abilities.
 var _player_class: PlayerClass
 ## The techniques the character has access to.
-var _techniques: Array
+var _techniques: Array[Action]
 ## The spells the character has access to.
-var _spells: Array
+var _spells: Array[Action]
 
 ## The default portrait for a player character.
 @onready var _default_portait: Texture2D = preload(DEFAULT_PORTRAIT_PATH)
@@ -60,12 +60,12 @@ func update_player_details(player_details: Dictionary[String, Variant]) -> void:
 
 
 ## Get the techniques associated with the character
-func get_techniques() -> Array:
+func get_techniques() -> Array[Action]:
 	return _techniques
 
 
 ## Get the spells associated with the character
-func get_spells() -> Array:
+func get_spells() -> Array[Action]:
 	return _spells
 
 

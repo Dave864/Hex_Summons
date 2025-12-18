@@ -11,9 +11,15 @@ extends Control
 ## Indicates that the UI is waiting to be activated.
 signal is_waiting()
 
+## The maximumum number of players that can be in an encounter.
 const MAX_PARTY_SIZE: int = 4
+## The width of the PartyStats container node.
 const PARTY_WIDTH: int = 128
+## The height used for the PartyStats container node when not displaying the
+## maximum party count.
 const PART_PARTY_HEIGHT: int = 168
+## The height used for the PartyStats container node when displaying the
+## maximum party count.
 const FULL_PARTY_HEIGHT: int = 224
 
 enum Options {
@@ -30,16 +36,22 @@ enum Options {
 var _character_summary: PackedScene = preload(
 	"res://user_interface/encounter/test_labels/CharacterSummary/CharacterSummary.tscn"
 )
-var _current_selection: int = Options.NONE:
+## Flag that describes the options currently on display.
+var _current_selection: Options = Options.NONE:
 	get = get_current_selection,
 	set = set_current_selection
+## The PlayerCharacter that the UI is displaying the details of.
 var _focused_player: PlayerCharacter = null:
 	get = get_focused_player,
 	set = set_focused_player
-var _party_stat_map: Dictionary = {}
-var _techniques: Array = []:
+## Holds references for all player characters in the party. Used for toggling
+## UI elements in PartyStats container.
+var _party_stat_map: Dictionary[int, PlayerStatsUI] = {}
+## The techniques the focused character has access to.
+var _techniques: Array[Action] = []:
 	get = get_techniques
-var _spells: Array = []:
+## The spells the focused character has access to.
+var _spells: Array[Action] = []:
 	get = get_spells
 
 @onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
@@ -62,13 +74,13 @@ func emit_is_waiting() -> void:
 
 
 ## Sets the selection flag.
-func set_current_selection(new_flag: int) -> void:
+func set_current_selection(new_flag: Options) -> void:
 	_current_selection = new_flag
 	_update_sub_options()
 
 
 ## Gets the value of the selection flag.
-func get_current_selection() -> int:
+func get_current_selection() -> Options:
 	return _current_selection
 
 
@@ -81,6 +93,9 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 				Callable(active_player_stats, "_on_Character_hp_changed")
 			)
 	)
+	# Disconnect the health_changed signal from the previous focused player
+	# to ensure that the ActivePlayerStats node is only affected by the changes
+	# applied to the health of the new focused player.
 	if player_connected:
 		_focused_player.stats.disconnect(
 				"health_changed",
@@ -88,11 +103,16 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 		)
 	if _focused_player != null:
 		_party_stat_map[_focused_player.get_instance_id()].show()
+	# Hide the party stats of the new focused player as they will be represented
+	# by the ActivePlayerStats node.
 	_party_stat_map[new_player.get_instance_id()].hide()
 	_focused_player = new_player
 	_techniques = _focused_player.get_techniques()
 	_spells = _focused_player.get_spells()
 	
+	# Not all members of the party are being displayed in the PartyStats
+	# container, so the partial height should be used to keep the UI display
+	# from being too spread out.
 	party_stats.size.y = PART_PARTY_HEIGHT
 	active_player_stats.set_stats(_focused_player)
 	active_player_stats.show()
@@ -108,12 +128,12 @@ func get_focused_player() -> PlayerCharacter:
 
 
 ## Get the techniques of the focused player.
-func get_techniques() -> Array:
+func get_techniques() -> Array[Action]:
 	return _techniques
 
 
 ## Get the spells of the focused player.
-func get_spells() -> Array:
+func get_spells() -> Array[Action]:
 	return _spells
 
 
