@@ -22,12 +22,12 @@ func get_dir_area_indexes(
 	start: int,
 	dir: int,
 	hm: HexMap
-) -> Array:
+) -> Array[int]:
 	# Adjust the direction based on the spread so that the resulting indexes
 	# are aligned to the original direction.
 	@warning_ignore("integer_division")
 	dir = posmod(dir - round(spread / 2), 6)
-	var tile_ids: Array = []
+	var tile_ids: Array[int] = []
 	var start_coord: Vector3 = (
 			hm.get_tile_at(start) \
 			.map_coordinate.get_cube_coord()
@@ -53,6 +53,19 @@ func get_dir_area_indexes(
 			if s < spread:
 				_determine_ray_indexes(d, cur_dir, cur_coord, hm, tile_ids)
 	return tile_ids
+
+
+## Gets all tiles that could fall within range of this cone area. If this
+## cone area was applied in all directions at once, what tiles would be in
+## that area?
+func get_area_indexes(start: int, hm: HexMap) -> Array[int]:
+	# Using as set to prevent duplicates as GDScript does not have a Set data
+	# structure.
+	var total_coverage: Dictionary[int, bool] = {}
+	for dir: int in 6:
+		for index: int in get_dir_area_indexes(start, dir, hm):
+			total_coverage[index] = true
+	return total_coverage.keys()
 
 
 ## Modifies a RangeDisplay hex matrix so that it reflects the details of this

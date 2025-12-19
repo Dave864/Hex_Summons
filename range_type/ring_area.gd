@@ -16,8 +16,8 @@ func get_reach() -> int:
 ## Determines which map tiles are in the ring area positioned at the start index.
 ## Does not account for tile heights.
 ## Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
-func get_area_indexes(start: int, hm: HexMap) -> Array:
-	var tile_ids: Array = []
+func get_area_indexes(start: int, hm: HexMap) -> Array[int]:
+	var tile_ids: Array[int] = []
 	var start_coord: Vector3 = hm.get_tile_at(start).map_coordinate.get_cube_coord()
 	for x in range(-radius, radius + 1):
 		var x_lower: int = max(-radius, -x - radius) as int
@@ -35,7 +35,7 @@ func get_dir_area_indexes(
 	start: int,
 	_dir: int,
 	hm: HexMap
-) -> Array:
+) -> Array[int]:
 	return get_area_indexes(start, hm)
 
 

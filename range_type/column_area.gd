@@ -19,18 +19,26 @@ func get_reach() -> int:
 ## Determines which map tiles are in the column area positioned at the start index,
 ## oriented to face the specified direction (0 - 5). Does not account for tile
 ## heights.
-func get_dir_area_indexes(start: int, dir: int, hm: HexMap) -> Array:
+func get_dir_area_indexes(start: int, dir: int, hm: HexMap) -> Array[int]:
 	var left_dir: int = dir - 1 if dir > 0 else 5
 	var right_dir: int = dir + 1 if dir < 5 else 0
-	var tile_ids: Array = []
+	var tile_ids: Array[int] = []
 	var start_coord: Vector3 = (
 			hm.get_tile_at(start) \
 			.map_coordinate.get_cube_coord()
 	)
 	tile_ids.append(start)
 	for s in range(spread + 1):
-		var left_coord: Vector3 = HexUtil.cube_at_distance(start_coord, s, left_dir)
-		var right_coord: Vector3 = HexUtil.cube_at_distance(start_coord, s, right_dir)
+		var left_coord: Vector3 = HexUtil.cube_at_distance(
+				start_coord,
+				s,
+				left_dir
+		)
+		var right_coord: Vector3 = HexUtil.cube_at_distance(
+				start_coord,
+				s,
+				right_dir
+		)
 		if s > 0:
 			if hm.is_valid_cube(left_coord):
 				var tile_id = HexUtil.cube_to_index(
@@ -49,30 +57,55 @@ func get_dir_area_indexes(start: int, dir: int, hm: HexMap) -> Array:
 		for d in range(distance + spread - s + 1):
 			# Only cast ray from starting point when spread is at 0.
 			if s == 0:
-				var ray_coord: Vector3 = HexUtil.cube_at_distance(start_coord, d, dir)
+				var ray_coord: Vector3 = HexUtil.cube_at_distance(
+						start_coord,
+						d,
+						dir
+				)
 				if hm.is_valid_cube(ray_coord):
 					var tile_id = HexUtil.cube_to_index(
-						ray_coord,
-						hm.get_x_count()
+							ray_coord,
+							hm.get_x_count()
 					)
 					tile_ids.append(tile_id)
 			# Cast rays from both left and right points.
 			else:
-				var ray_coord_l: Vector3 = HexUtil.cube_at_distance(left_coord, d, dir)
-				var ray_coord_r: Vector3 = HexUtil.cube_at_distance(right_coord, d, dir)
+				var ray_coord_l: Vector3 = HexUtil.cube_at_distance(
+						left_coord,
+						d,
+						dir
+				)
+				var ray_coord_r: Vector3 = HexUtil.cube_at_distance(
+						right_coord,
+						d,
+						dir
+				)
 				if hm.is_valid_cube(ray_coord_l):
 					var tile_id = HexUtil.cube_to_index(
-						ray_coord_l,
-						hm.get_x_count()
+							ray_coord_l,
+							hm.get_x_count()
 					)
 					tile_ids.append(tile_id)
 				if hm.is_valid_cube(ray_coord_r):
 					var tile_id = HexUtil.cube_to_index(
-						ray_coord_r,
-						hm.get_x_count()
+							ray_coord_r,
+							hm.get_x_count()
 					)
 					tile_ids.append(tile_id)
 	return tile_ids
+
+
+## Gets all tiles that could fall within range of this column area. If this
+## column area was applied in all directions at once, what tiles would be in
+## that area?
+func get_area_indexes(start: int, hm: HexMap) -> Array[int]:
+	# Using as set to prevent duplicates as GDScript does not have a Set data
+	# structure.
+	var total_coverage: Dictionary[int, bool] = {}
+	for dir: int in 6:
+		for index: int in get_dir_area_indexes(start, dir, hm):
+			total_coverage[index] = true
+	return total_coverage.keys()
 
 
 ## Modifies a RangeDisplay hex matrix so that it reflects the details of this
