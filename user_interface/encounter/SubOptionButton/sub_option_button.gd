@@ -11,9 +11,9 @@ class_name SubOptionButton
 signal option_selected(option_info)
 
 ## The details of the option described by this button.
-var _option_details: Node = null: get = get_option_details, set = set_option_details
-## The player the sub option belongs to.
-var _player: PlayerCharacter = null: set = set_player
+var _option_details: Action = null:
+	get = get_option_details,
+	set = set_option_details
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -23,20 +23,14 @@ func _ready() -> void:
 
 ## Virtual function. Set the action details for the button. Can be either an
 ## action, a summon, or an item depending on the derived class.
-func set_option_details(a: Node) -> void:
+func set_option_details(a: Action) -> void:
 	_option_details = a
 	$Button.set_text(_option_details.name)
 
 
 ## Get the details of the option described the button.
-func get_option_details() -> Node:
+func get_option_details() -> Action:
 	return _option_details
-
-
-## Set the player character reference for the owner of the option this UI element
-## describes.
-func set_player(p: PlayerCharacter) -> void:
-	_player = p
 
 
 ## Sets the right focus neighbor for controller support.

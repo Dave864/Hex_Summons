@@ -161,7 +161,7 @@ func get_sub_option_at_index(index: int) -> Action:
 		Options.SPELL:
 			a = sub_options.get_option_at_index(index)
 		Options.SUMMON:
-			a = null
+			a = sub_options.get_option_at_index(index)
 		_:
 			a = null
 	return a
@@ -280,11 +280,11 @@ func _set_player_option_focus_neighbors() -> void:
 func _update_sub_options() -> void:
 	match _current_selection:
 		Options.TECHNIQUE:
-			sub_options.populate_techinques(_focused_player, _techniques)
+			sub_options.populate_techinques(_techniques)
 		Options.SPELL:
-			sub_options.populate_spells(_focused_player, _spells)
+			sub_options.populate_spells(_spells)
 		Options.SUMMON:
-			sub_options.populate_summons(_focused_player, _summon)
+			sub_options.populate_summons(_summon)
 		Options.ITEM:
 			pass
 		_:

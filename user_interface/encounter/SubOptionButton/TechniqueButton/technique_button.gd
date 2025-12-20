@@ -7,9 +7,9 @@ extends SubOptionButton
 
 
 ## Virtual function. Set the technique action details for the button.
-func set_option_details(a: Node) -> void:
+func set_option_details(a: Action) -> void:
 	# Technique buttons display details for actions, so we cast to check.
-	_option_details = a as Action
+	_option_details = a
 	$HBoxContainer/Label.set_text(_option_details.name)
 	$HBoxContainer/RangeDisplay.update_action(_option_details)
 	

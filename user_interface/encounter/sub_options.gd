@@ -10,14 +10,22 @@ extends ScrollContainer
 ## Indicates that one of the sub-options was selected
 signal option_selected(option_info)
 
+## Stores all action sub options.
 var _options: Array[Action] = []
+## Reference to the scene used to display sub-options for techniques.
 var _technique_button: PackedScene = preload(
 		"res://user_interface/encounter/" \
 		+ "SubOptionButton/TechniqueButton/TechniqueButton.tscn"
 )
+## Reference to the scene used to display sub-options for spells.
 var _spell_button: PackedScene = preload(
 		"res://user_interface/encounter/" \
 		+ "SubOptionButton/SpellButton/SpellButton.tscn"
+)
+## Reference to the scene used to display sub-options for summons.
+var _summon_button: PackedScene = preload(
+		"res://user_interface/encounter/" \
+		+ "SubOptionButton/SummonButton/SummonButton.tscn"
 )
 
 @onready var _sub_options_container: HBoxContainer = $HBoxContainer
@@ -36,18 +44,27 @@ func deactivate() -> void:
 
 
 ## Populate the sub-options container with techniques.
-func populate_techinques(player: PlayerCharacter, techniques: Array) -> void:
-	_populate_sub_options(techniques, player, _technique_button)
+func populate_techinques(techniques: Array[Action]) -> void:
+	_populate_sub_options(techniques, _technique_button)
 
 
 ## Populate the sub-options container with spells.
-func populate_spells(player: PlayerCharacter, spells: Array) -> void:
-	_populate_sub_options(spells, player, _spell_button)
+func populate_spells(spells: Array[Action]) -> void:
+	_populate_sub_options(spells, _spell_button)
 
 
 ## Populate the sub-options container with summon options.
-func populate_summons(player: PlayerCharacter, summon: Summon) -> void:
-	pass
+func populate_summons(summon_handler: Summon) -> void:
+	for summon_name: String in summon_handler.available_summons:
+		var new_button: SummonButton = _summon_button.instantiate()
+		new_button.set_summon_details(summon_name, summon_handler)
+		new_button.connect(
+			"option_selected",
+			Callable(self, "_on_SubOptionButton_option_selected")
+		)
+		_options.append(new_button.get_option_details())
+		_sub_options_container.add_child(new_button)
+	_set_neighbors()
 
 
 ## Clear out the sub-options container.
@@ -83,14 +100,12 @@ func _set_neighbors() -> void:
 
 ## Create the buttons for the given sub-options.
 func _populate_sub_options(
-	options: Array,
-	player: PlayerCharacter,
+	options: Array[Action],
 	button: PackedScene
 ) -> void:
-	for option in options:
+	for option: Action in options:
 		var new_button: SubOptionButton = button.instantiate()
 		new_button.set_option_details(option)
-		new_button.set_player(player)
 		new_button.connect(
 			"option_selected",
 			Callable(self, "_on_SubOptionButton_option_selected")
