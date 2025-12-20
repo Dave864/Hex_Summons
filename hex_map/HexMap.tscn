@@ -6,7 +6,7 @@
 [ext_resource type="PlaneMesh" uid="uid://br278ydbqio75" path="res://hex_map/resources/hex_map_floor.tres" id="4"]
 [ext_resource type="Script" uid="uid://c36u7jqkdm14" path="res://hex_map/scripts/range_finder.gd" id="5"]
 [ext_resource type="Script" uid="uid://cyfb6co2ug8qv" path="res://hex_map/scripts/selection_tracker.gd" id="6"]
-[ext_resource type="Resource" uid="uid://bln5vipe2catt" path="res://hex_map/hex_map_distances.tres" id="7"]
+[ext_resource type="Resource" uid="uid://bln5vipe2catt" path="res://hex_map/hex_map_distances/hex_map_distances.tres" id="7"]
 
 
 [node name="HexMap" type="Node3D"]

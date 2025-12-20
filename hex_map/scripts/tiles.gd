@@ -18,7 +18,7 @@ const MAP_TILE = "MapTile"
 @export var regenerate: bool = false: set = _regenerate_grid
 
 var _grid_start: Vector3 = _calculate_grid_start()
-var _map_tile: PackedScene = preload("res://hex_map/map_tile_node/MapTile.tscn")
+var _map_tile: PackedScene = preload("res://hex_map/MapTile/MapTile.tscn")
 
 ## Referene to the scene tree root.
 @onready var _root_node: Node = get_tree().edited_scene_root

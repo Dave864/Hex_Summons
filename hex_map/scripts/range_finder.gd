@@ -321,10 +321,7 @@ func get_character_farthest_point_away(
 ## the RangeFinder script in inspector.
 func _update_distance_map() -> void:
 	var d_hash: int = hash(get_parent().name)
-	if (
-			dist_maps == null 
-			or (dist_maps.map_hash == d_hash and dist_maps.d_maps.size() > 0)
-	):
+	if dist_maps == null or dist_maps.d_maps.size() > 0:
 		return
 	var d_maps: Dictionary[int, DistanceMap] = {}
 

@@ -6,7 +6,6 @@ extends Resource
 ## The extension for files that store the serialized data for this resource
 const FILE_EXTENSION: String = "distances"
 
-var map_hash: int = -1
 var d_maps: Dictionary[int, DistanceMap] = {}
 
 
