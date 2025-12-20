@@ -6,9 +6,6 @@ extends Object
 ## The logic for actually populating the distance map is in HexMapAStar.
 
 
-const TILE_KEY: String = "tile"
-const TRAVEL_KEY: String = "travel"
-
 ## The origin point for the distance map.
 var origin: int = -1
 ## Stores the travel and tile distances from the origin point.

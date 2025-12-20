@@ -3,7 +3,10 @@ extends Resource
 ## Stores the distance maps for all tiles for a given hex map.
 
 
-@export var map_hash: int = -1
+## The extension for files that store the serialized data for this resource
+const FILE_EXTENSION: String = "distances"
+
+var map_hash: int = -1
 var d_maps: Dictionary[int, DistanceMap] = {}
 
 

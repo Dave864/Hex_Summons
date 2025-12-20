@@ -1,15 +1,15 @@
 [gd_scene load_steps=15 format=3 uid="uid://cg633481rl4ed"]
 
 [ext_resource type="Script" uid="uid://bx23fuvw0qnbb" path="res://hex_map/scripts/occupant.gd" id="1"]
-[ext_resource type="Script" uid="uid://dj7oaoibsxx4h" path="res://hex_map/map_tile_node/scripts/hex_highlighter.gd" id="2"]
+[ext_resource type="Script" uid="uid://dj7oaoibsxx4h" path="res://hex_map/MapTile/scripts/hex_highlighter.gd" id="2"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="3"]
-[ext_resource type="Script" uid="uid://h5qffnpmr4uh" path="res://hex_map/map_tile_node/scripts/scaling_hex_collider.gd" id="4"]
-[ext_resource type="Script" uid="uid://ol1mo6vkbgfw" path="res://hex_map/map_tile_node/scripts/scaling_hex_mesh.gd" id="5"]
-[ext_resource type="Script" uid="uid://6ahwnnqrnsqp" path="res://hex_map/map_tile_node/scripts/MapTileDebugLabel.gd" id="6"]
-[ext_resource type="Script" uid="uid://fn76j8x64ebc" path="res://hex_map/map_tile_node/scripts/map_tile.gd" id="7"]
-[ext_resource type="CylinderMesh" uid="uid://bfmxst1fcnorm" path="res://hex_map/map_tile_node/hex_tile_shape.tres" id="7_yubl7"]
-[ext_resource type="Shape3D" uid="uid://c366eqoe2avhk" path="res://hex_map/map_tile_node/hex_tile_collision.tres" id="8"]
-[ext_resource type="Shape3D" uid="uid://bn2i5bxre6gvq" path="res://hex_map/map_tile_node/tile_top_collision.tres" id="9"]
+[ext_resource type="Script" uid="uid://h5qffnpmr4uh" path="res://hex_map/MapTile/scripts/scaling_hex_collider.gd" id="4"]
+[ext_resource type="Script" uid="uid://ol1mo6vkbgfw" path="res://hex_map/MapTile/scripts/scaling_hex_mesh.gd" id="5"]
+[ext_resource type="Script" uid="uid://6ahwnnqrnsqp" path="res://hex_map/MapTile/scripts/MapTileDebugLabel.gd" id="6"]
+[ext_resource type="Script" uid="uid://fn76j8x64ebc" path="res://hex_map/MapTile/scripts/map_tile.gd" id="7"]
+[ext_resource type="CylinderMesh" uid="uid://bfmxst1fcnorm" path="res://hex_map/MapTile/hex_tile_shape.tres" id="7_yubl7"]
+[ext_resource type="Shape3D" uid="uid://c366eqoe2avhk" path="res://hex_map/MapTile/hex_tile_collision.tres" id="8"]
+[ext_resource type="Shape3D" uid="uid://bn2i5bxre6gvq" path="res://hex_map/MapTile/tile_top_collision.tres" id="9"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yubl7"]
 resource_local_to_scene = true

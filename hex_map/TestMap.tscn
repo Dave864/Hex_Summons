@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bcd08sdl2f7b6" path="res://hex_map/scripts/tiles.gd" id="1"]
 [ext_resource type="Script" uid="uid://c36u7jqkdm14" path="res://hex_map/scripts/range_finder.gd" id="2"]
 [ext_resource type="Script" uid="uid://bifjkm55y01x1" path="res://hex_map/scripts/hex_map.gd" id="3"]
-[ext_resource type="PackedScene" uid="uid://cg633481rl4ed" path="res://hex_map/map_tile_node/MapTile.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://cg633481rl4ed" path="res://hex_map/MapTile/MapTile.tscn" id="4"]
 [ext_resource type="PlaneMesh" uid="uid://br278ydbqio75" path="res://hex_map/resources/hex_map_floor.tres" id="5"]
 [ext_resource type="Script" uid="uid://cyfb6co2ug8qv" path="res://hex_map/scripts/selection_tracker.gd" id="6"]
 [ext_resource type="Resource" uid="uid://chrvjngv04dn2" path="res://hex_map/test_map_distances.tres" id="7"]
