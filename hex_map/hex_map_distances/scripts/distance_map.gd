@@ -70,7 +70,7 @@ func all_dist_at(index: int) -> DistanceData:
 	return _d_map[index]
 
 
-## Gets the area map that reaches out to a given tile radius.
+## Creates a new area map that reaches out to a given tile radius.
 func map_from_tile_dist(radius: int) -> DistanceMap:
 	var area_map: Dictionary[int, DistanceData] = {}
 	for id: int in _d_map.keys():
@@ -79,7 +79,7 @@ func map_from_tile_dist(radius: int) -> DistanceMap:
 	return DistanceMap.new(origin, area_map)
 
 
-## Gets the area map that reaches out to a given travel radius.
+## Creates a new area map that reaches out to a given travel radius.
 func map_from_travel_dist(radius: int) -> DistanceMap:
 	var area_map: Dictionary[int, DistanceData] = {}
 	for id in _d_map.keys():

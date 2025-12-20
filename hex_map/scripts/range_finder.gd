@@ -19,16 +19,20 @@ var dist_maps: HexMapDistances = null
 
 ## AStar instance that handles pathfinding and distance calculations.
 var _hm_astar: HexMapAStar = null
+
 ## The node containing the MapTiles.
-var _map_tiles: Tiles = null
+@onready var _map_tiles: Tiles = get_node(map_tiles_reference)
+
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
+	# Waiting for _map_tiles to be ready allows for the RangeFinder node to be
+	# placed in any position relative to node with map tiles data. Without this,
+	# RangeFinder node would always need to be after Tiles node.
+	await _map_tiles.ready
 	_hm_astar = HexMapAStar.new(_map_tiles.get_all(), _map_tiles.get_x_count())
 	if not _load_distance_map():
 		_initialize_distance_map()
-	else:
-		print(dist_maps.d_maps)
 	if Engine.is_editor_hint():
 		_update_distance_map()
 
@@ -63,7 +67,6 @@ func set_distance_map(new_dist_map: HexMapDistances) -> void:
 func travel_distance(start_id: int, dest_id: int) -> float:
 	var d_map: DistanceMap = dist_maps.at(start_id)
 	var dist: float = d_map.travel_dist_at(dest_id)
-	d_map.free()
 	return dist
 
 
@@ -71,7 +74,6 @@ func travel_distance(start_id: int, dest_id: int) -> float:
 func tile_distance(start_id: int, dest_id: int) -> float:
 	var d_map: DistanceMap = dist_maps.at(start_id)
 	var dist: float = d_map.tile_dist_at(dest_id)
-	d_map.free()
 	return dist
 
 
@@ -88,11 +90,9 @@ func get_distance_map(
 		return d_map
 	if use_tile:
 		var tile_map: DistanceMap = d_map.map_from_tile_dist(reach)
-		d_map.free()
 		return tile_map
 	else:
 		var travel_map: DistanceMap = d_map.map_from_travel_dist(reach)
-		d_map.free()
 		return travel_map
 
 
@@ -185,7 +185,7 @@ func get_closest_id_path(
 ## opposing characters for determining the tiles to disable.
 func get_character_travesible_tiles(
 	c: Character,
-	opponents: Array,
+	opponents: Array[Character],
 	move_override: int = -1
 ) -> Array[int]:
 	_hm_astar.set_all_disabled(false)
@@ -203,7 +203,6 @@ func get_character_travesible_tiles(
 	_hm_astar.set_all_disabled()
 	# Get copy of ids as we delete the move_distances object later.
 	var tile_ids: Array[int] = move_distances.tile_ids().duplicate()
-	move_distances.free()
 	return tile_ids
 
 
@@ -327,6 +326,7 @@ func get_character_farthest_point_away(
 ## saves the data to a file. Intended to be used when there is no data file
 ## present yet.
 func _initialize_distance_map() -> void:
+	print("Creating new file for HexMapDistances.")
 	dist_maps = HexMapDistances.new()
 	_update_distance_map()
 
@@ -364,18 +364,18 @@ func _update_distance_map() -> void:
 ## saved Should only ever be called when running the RangeFinder script in
 ## inspector.
 func _save_distance_map() -> bool:
-	var file_path: String = DISTANCE_MAP_PATH_FORMAT.format([name])
+	var file_path: String = DISTANCE_MAP_PATH_FORMAT.format([get_parent().name])
 	return ResourceSaver.save(dist_maps, file_path) == Error.OK
 
 
 ## Loads the distance map for this map. Returns if the map was successfully
 ## loaded. The distance map is set to empty if loading failed.
 func _load_distance_map() -> bool:
-	var file_path: String = DISTANCE_MAP_PATH_FORMAT.format([name])
+	var file_path: String = DISTANCE_MAP_PATH_FORMAT.format([get_parent().name])
 	if not FileAccess.file_exists(file_path):
 		printerr("File for HexMapDistances data does not exist.")
 		return false
-	dist_maps = ResourceLoader.load(file_path)
+	dist_maps = ResourceLoader.load(file_path) as HexMapDistances
 	return dist_maps != null
 
 

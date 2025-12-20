@@ -319,7 +319,6 @@ func _get_source_range() -> Array[int]:
 			if _action.stats.source_ignore_heights
 			else d_map.map_from_travel_dist(_action.stats.source_range.get_reach())
 	)
-	d_map.free()
 	var dead_indexes: Array = _action.stats.dead_range.get_area_indexes(
 			_player_map_index,
 			selector.hex_map
@@ -357,7 +356,6 @@ func _get_effect_range() -> Array[int]:
 	var effect_d_map: DistanceMap = (
 			d_map.map_from_travel_dist(_action.stats.effect_range.get_reach())
 	)
-	d_map.free()
 	var valid_effect_indexes: Array[int] = []
 	for index: int in effect_indexes:
 		if effect_d_map.has(index):

@@ -10,9 +10,9 @@ var top_vertex: int = 0
 ## Reference to the active player character.
 var active_player: PlayerCharacter = null
 ## Reference to the player characters in the current encounter.
-var players_ref: Array = []
+var players_ref: Array[Character] = []
 ## Reference to the enemy characer in the current encounter.
-var enemies_ref: Array = []
+var enemies_ref: Array[Character] = []
 ## Reference to the HexMap of the current encounter map.
 var hex_map: HexMap = null
 
