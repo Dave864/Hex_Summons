@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="HexMapDistances" load_steps=2 format=3 uid="uid://chrvjngv04dn2"]
 
-[ext_resource type="Script" uid="uid://c2rf67fau6nay" path="res://hex_map/HexMapDistances/hex_map_distances.gd" id="1"]
+[ext_resource type="Script" uid="uid://c2rf67fau6nay" path="res://hex_map/hex_map_distances/scripts/hex_map_distances.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
