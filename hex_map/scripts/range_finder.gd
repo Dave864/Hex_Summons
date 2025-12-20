@@ -5,30 +5,37 @@ extends Node
 ## Requires a reference to the map tiles.
 
 
-@export var map_tiles_reference: NodePath = NodePath(""): set = set_map_tiles
-@export var dist_maps: HexMapDistances = null: set = set_distance_map
+## The path format for HexMapDistances resource data.
+const DISTANCE_MAP_PATH_FORMAT: String = (
+	"res://hex_map/hex_map_distances/{0}.distances"
+)
 
+## Reference to the MapTiles for this map.
+@export var map_tiles_reference: NodePath = NodePath(""):
+	set = set_map_tiles
+
+## The collection of distances across the map for all tiles.
+var dist_maps: HexMapDistances = null
+
+## AStar instance that handles pathfinding and distance calculations.
 var _hm_astar: HexMapAStar = null
-
-@onready var _map_tiles: Tiles = get_node(map_tiles_reference)
-
+## The node containing the MapTiles.
+var _map_tiles: Tiles = null
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	_check_for_required_parameters()
-	# Waiting for _map_tiles to be ready allows for RangeFinder node being
-	# able to be placed in any position relative to node with map tiles data.
-	# Without this, RangeFinder node would always need to be after map tiles
-	# node.
-	await _map_tiles.ready
 	_hm_astar = HexMapAStar.new(_map_tiles.get_all(), _map_tiles.get_x_count())
+	if not _load_distance_map():
+		_initialize_distance_map()
+	else:
+		print(dist_maps.d_maps)
 	if Engine.is_editor_hint():
 		_update_distance_map()
 
 
-## Updates the reference path for map tiles node. Is intended only for use when
-## running the RangeFinder script in the inspector for the purposes of saving
-## the distance map resource data.
+## Updates the map tiles node. Is intended only for use when running the
+## RangeFinder script in the inspector for the purposes of saving the distance
+## map resource data.
 func set_map_tiles(ref_path: NodePath) -> void:
 	map_tiles_reference = ref_path
 	notify_property_list_changed()
@@ -314,14 +321,21 @@ func get_character_farthest_point_away(
 	# Reset for future range finder operations.
 	_hm_astar.set_all_disabled()
 	return true_farthest_pt
-	
 
 
-## Updates the distance map if necessary. Should only ever be called when running
-## the RangeFinder script in inspector.
+## Creates a new HexMapDistances object for the current state of the map and
+## saves the data to a file. Intended to be used when there is no data file
+## present yet.
+func _initialize_distance_map() -> void:
+	dist_maps = HexMapDistances.new()
+	_update_distance_map()
+
+
+## Updates the distance map. Should only ever be called when running the
+## RangeFinder script in inspector.
 func _update_distance_map() -> void:
-	var d_hash: int = hash(get_parent().name)
-	if dist_maps == null or dist_maps.d_maps.size() > 0:
+	if dist_maps == null:
+		printerr("No distance map to update.")
 		return
 	var d_maps: Dictionary[int, DistanceMap] = {}
 
@@ -341,18 +355,36 @@ func _update_distance_map() -> void:
 	_hm_astar.set_all_disabled()
 
 	dist_maps.d_maps = d_maps
-	dist_maps.map_hash = d_hash
-	var err: int = ResourceSaver.save(dist_maps, dist_maps.resource_path)
-	if err != OK:
+	#var err: int = ResourceSaver.save(dist_maps, dist_maps.resource_path)
+	if not _save_distance_map():
 		printerr("Failed to save distance maps")
+
+
+## Saves the current distances of the map. Returns if the data was successfully
+## saved Should only ever be called when running the RangeFinder script in
+## inspector.
+func _save_distance_map() -> bool:
+	var file_path: String = DISTANCE_MAP_PATH_FORMAT.format([name])
+	return ResourceSaver.save(dist_maps, file_path) == Error.OK
+
+
+## Loads the distance map for this map. Returns if the map was successfully
+## loaded. The distance map is set to empty if loading failed.
+func _load_distance_map() -> bool:
+	var file_path: String = DISTANCE_MAP_PATH_FORMAT.format([name])
+	if not FileAccess.file_exists(file_path):
+		printerr("File for HexMapDistances data does not exist.")
+		return false
+	dist_maps = ResourceLoader.load(file_path)
+	return dist_maps != null
 
 
 ## Updates the astar disabled flag for the tiles occupied by the specified characters.
 func _disable_character_tiles(
-	characters: Array,
+	characters: Array[Character],
 	disabled: bool
 ) -> void:
-	for c in characters:
+	for c: Character in characters:
 		_hm_astar.set_point_disabled(c.map_coordinate.get_tile_index(), disabled)
 
 
@@ -360,18 +392,6 @@ func _disable_character_tiles(
 func _get_traversible_ids(
 	start_index: int,
 	reach: int
-) -> Array:
+) -> Array[int]:
 	var d_map: DistanceMap = get_distance_map(start_index, false, reach)
 	return d_map.tile_ids()
-
-
-## Check that all required parameters are set.
-func _check_for_required_parameters() -> void:
-	assert(
-			dist_maps != null,
-			"RangeFinder distance_maps has not been set."
-	)
-	assert(
-			dist_maps is HexMapDistances,
-			"RangeFinder distance_maps is not of type HexMapDistances."
-	)

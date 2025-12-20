@@ -35,7 +35,7 @@ func _load(
 	_use_sub_threads: bool,
 	_cache_mode: int
 ) -> Variant:
-	var hex_map_distances:= HexMapDistances.new()
+	var hex_map_distances := HexMapDistances.new()
 	#TODO: set up logic for using open_encrypted
 	var file := FileAccess.open(path, FileAccess.READ)
 	var distance_map_size: int = file.get_32()
