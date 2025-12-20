@@ -17,11 +17,11 @@ var _player_map_index: int = -1
 ## Stores the distance map of the source range.
 var _source_d_map: DistanceMap = null
 ## The type of targets the action will hit.
-var _action_targets: Dictionary = {}
+var _action_targets: Dictionary[EffectAspect.Target, bool] = {}
 ## Caches the tile ids of the effect area at different emission points.
-var _ranges_cache: Dictionary = {}
+var _ranges_cache: Dictionary[int, Array] = {}
 ## Caches the characters that the action will hit at different emission points.
-var _targets_cache: Dictionary = {}
+var _targets_cache: Dictionary[int, Array] = {}
 
 ## Reference to the function that will update the tile highlights.
 @onready var _update_selection_ref: Callable = Callable(self, "_update_selection")
@@ -248,7 +248,7 @@ func _get_target_distances() -> Array[Array]:
 		potential_targets.append_array(selector.players_ref)
 	
 	var target_distances: Array[Array] = []
-	for option in potential_targets:
+	for option: Character in potential_targets:
 		var dist: float = selector.hex_map.range_finder.travel_distance(
 				_player_map_index,
 				option.map_coordinate.get_tile_index()
@@ -309,7 +309,7 @@ func _highlight_effect_range() -> void:
 
 ## Gets the tile ids of all tiles within the source range. Accounts for dead
 ## range.
-func _get_source_range() -> Array:
+func _get_source_range() -> Array[int]:
 	var d_map: DistanceMap = (
 			selector.hex_map.range_finder \
 			.dist_maps.at(_player_map_index)
@@ -338,7 +338,7 @@ func _get_source_range() -> Array:
 
 
 ## Gets the tile ids of all tiles within the effect range.
-func _get_effect_range() -> Array:
+func _get_effect_range() -> Array[int]:
 	var e_index: int = _action.get_emission_map_index()
 	var e_dir: int = _action.get_emission_direction()
 	if _action.stats.emit_from_center and _ranges_cache.has(e_dir):
@@ -358,8 +358,8 @@ func _get_effect_range() -> Array:
 			d_map.map_from_travel_dist(_action.stats.effect_range.get_reach())
 	)
 	d_map.free()
-	var valid_effect_indexes: Array = []
-	for index in effect_indexes:
+	var valid_effect_indexes: Array[int] = []
+	for index: int in effect_indexes:
 		if effect_d_map.has(index):
 			valid_effect_indexes.append(index)
 	_update_effect_ranges(e_index, e_dir, valid_effect_indexes)
@@ -367,7 +367,7 @@ func _get_effect_range() -> Array:
 
 
 ## Gets the targets for the current emission area.
-func _get_targets() -> Array:
+func _get_targets() -> Array[Character]:
 	if _action.stats.emit_from_center:
 		return _targets_cache[_action.get_emission_direction()]
 	else:
@@ -376,7 +376,7 @@ func _get_targets() -> Array:
 
 ## Updates the _effect_ranges dictionary to store the listed effect indexes
 ## under either the emission point or direction.
-func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array) -> void:
+func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array[int]) -> void:
 	if _action.stats.emit_from_center:
 		_ranges_cache[e_dir] = indexes
 	else:
@@ -384,7 +384,7 @@ func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array) -> void:
 
 
 ## Gets the characters that will be hit by the action.
-func _update_targets(effect_range: Array) -> void:
+func _update_targets(effect_range: Array[int]) -> void:
 	var e_index: int = _action.get_emission_map_index()
 	var e_dir: int = _action.get_emission_direction()
 	if (
@@ -392,8 +392,8 @@ func _update_targets(effect_range: Array) -> void:
 		or _targets_cache.has(e_index)
 	):
 		return
-	var targets: Array = []
-	for index in effect_range:
+	var targets: Array[Character] = []
+	for index: int in effect_range:
 		var tile: MapTile = selector.hex_map.get_tile_at(index)
 		var c: Character = tile.occupant.get_current_occupant()
 		if (
