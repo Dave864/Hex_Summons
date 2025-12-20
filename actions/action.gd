@@ -11,15 +11,21 @@ const EFFECTS: String = "Effects"
 ## The path to the stats of the character that owns this action.
 var source_stats: CharacterStatModifiers = null
 ## The effects of this action
-var _effects: Array: get = get_effects
+var _effects: Array[Effect]:
+	get = get_effects
 ## Whether the area range is cardinal or ring.
-var _is_cardinal: bool = false: get = get_is_cardinal
+var _is_cardinal: bool = false:
+	get = get_is_cardinal
 ## The index of the tile the effect is emitted from.
-var _emission_map_index: int = -1: get = get_emission_map_index, set = set_emission_map_index
+var _emission_map_index: int = -1:
+	get = get_emission_map_index,
+	set = set_emission_map_index
 ## The transform the effect is emitted from.
 var _emission_transform: Transform3D = Transform3D.IDENTITY
 ## The direction the effect is emitted. Only updated if the action is cardinal.
-var _emission_direction: int: get = get_emission_direction, set = set_emission_direction
+var _emission_direction: int:
+	get = get_emission_direction,
+	set = set_emission_direction
 
 ## The animation player for this node.
 @onready var ani_player: AnimationPlayer = $AnimationPlayer
@@ -44,10 +50,10 @@ func get_is_cardinal() -> bool:
 
 
 ## Returns a set of targets this action effects.
-func get_targets() -> Dictionary:
-	var targets: Dictionary = {}
-	for effect in _effects:
-		for aspect in effect.get_aspects():
+func get_targets() -> Dictionary[EffectAspect.Target, bool]:
+	var targets: Dictionary[EffectAspect.Target, bool] = {}
+	for effect: Effect in _effects:
+		for aspect: EffectAspect in effect.get_aspects():
 			targets[aspect.target] = true
 	return targets
 
@@ -116,16 +122,13 @@ func initialize_caster_id(caster_id: int) -> void:
 
 ## Initialize the effects list of the action, checking that all effects are valid.
 func initialize_effects() -> void:
-	_effects = get_node("Effects").get_children()
+	for effect: Effect in get_node("Effects").get_children():
+		_effects.append(effect)
 	assert(
 			len(_effects) > 0,
 			"Action %s does not have any effects" % [name]
 	)
 	for effect in _effects:
-		assert(
-				effect is Effect,
-				"Action %s effect %s is not an Effect" % [name, effect.name]
-		)
 		# Type checking for the node referenced at the path.
 		effect.set_source_stats(source_stats)
 		effect.set_action_potency(stats.potency)

@@ -3,7 +3,7 @@ extends Resource
 ## Stores the distance maps for all tiles for a given hex map.
 
 
-@export var d_maps: Dictionary = {}
+@export var d_maps: Dictionary[int, Dictionary] = {}
 @export var map_hash: int = -1
 
 
@@ -12,13 +12,13 @@ extends Resource
 func at(index: int) -> DistanceMap:
 	if not d_maps.has(index):
 		return null
-	return DistanceMap.new(index, d_maps[index])
+	var map_at_index: Dictionary[int, Dictionary] = d_maps[index]
+	return DistanceMap.new(index, map_at_index)
 
 
 ## Clears out the recorded DistanceMaps.
 func clear() -> void:
 	for i in d_maps.keys():
-		d_maps[i].free()
 		d_maps.erase(i)
 
 

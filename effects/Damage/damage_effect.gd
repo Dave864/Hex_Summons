@@ -5,8 +5,7 @@ extends Effect
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	_aspects = get_children()
-	_check_for_required_parameters()
+	super._ready()
 	_check_for_required_damage_parameters()
 
 

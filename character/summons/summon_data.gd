@@ -47,6 +47,9 @@ const MAX_WISP: int = 4
 @export var spawn_action: ActionStats = null
 @export var turn_actions: Array[SpellStats] = []
 
+## A collated summary of the costs.
+var cost_summary: Dictionary[Element.Type, int] = _get_costs()
+
 
 ## Returns the multiplier value for the given stat.
 func multiplier_for_stat(stat: Stat.Type) -> float:
@@ -111,7 +114,9 @@ func wisp_pool_meets_requirements(pool: WispPool) -> bool:
 
 ## Checks if the provided core element counts match the requirements for this
 ## summon.
-func core_elements_meet_requirements(counts: Dictionary[Element.Core, int]) -> bool:
+func core_elements_meet_requirements(
+	counts: Dictionary[Element.Core, int]
+) -> bool:
 	return (
 		counts[Element.Core.EARTH] >= earth_req
 		and counts[Element.Core.FIRE] >= fire_req
@@ -119,6 +124,24 @@ func core_elements_meet_requirements(counts: Dictionary[Element.Core, int]) -> b
 		and counts[Element.Core.WIND] >= wind_req
 		and _alignment_requirements_met(counts)
 	)
+
+
+## Gets the elements with cost values.
+func _get_costs() -> Dictionary[Element.Type, int]:
+	var element_costs: Dictionary[Element.Type, int] = {}
+	if earth_req > 0:
+		element_costs[Element.Type.EARTH] = earth_req
+	if fire_req > 0:
+			element_costs[Element.Type.FIRE] = fire_req
+	if water_req > 0:
+			element_costs[Element.Type.WATER] = water_req
+	if wind_req > 0:
+			element_costs[Element.Type.WIND] = wind_req
+	if light_req > 0:
+			element_costs[Element.Type.LIGHT] = light_req
+	if dark_req > 0:
+			element_costs[Element.Type.DARK] = dark_req
+	return element_costs
 
 
 ## Helper function for core_requirements_met. Checks if it is possible for the

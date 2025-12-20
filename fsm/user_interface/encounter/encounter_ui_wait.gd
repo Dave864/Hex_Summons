@@ -35,7 +35,7 @@ func exit() -> void:
 func _ready_connect_signals() -> void:
 	SignalBus.connect(
 			"summon_turn_started",
-			Callable(self, "")
+			Callable(self, "_on_SignalBus_summon_turn_started")
 	)
 
 

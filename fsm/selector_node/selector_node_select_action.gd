@@ -71,7 +71,9 @@ func _determine_changes(action: Action) -> void:
 		_action = action
 		_action_targets = _action.get_targets()
 		need_new_ranges = true
-	var player_map_index: int = selector.active_player.map_coordinate.get_tile_index()
+	var player_map_index: int = (
+		selector.active_player.map_coordinate.get_tile_index()
+	)
 	if _player_map_index != player_map_index:
 		_player_map_index = player_map_index
 		_player_pos = selector.active_player.position
@@ -112,7 +114,8 @@ func _update_selection(map_tile: MapTile) -> void:
 		_place_closest_to_tile(map_tile.map_coordinate.get_tile_index())
 
 
-## Orients the direction of an action cast from the player based on mouse position.
+## Orients the direction of an action cast from the player based on mouse
+## position.
 func _orient_emission_to_mouse() -> void:
 	_action.set_emission_map_index(_player_map_index)
 	_action.set_emission_pos(_player_pos)
@@ -121,7 +124,8 @@ func _orient_emission_to_mouse() -> void:
 		MouseHandler.get_3d_position().x,
 		MouseHandler.get_3d_position().z
 	)
-	# Relative top not needed as mouse position translates to direct map coordinates.
+	# Relative top not needed as mouse position translates to direct map
+	# coordinates.
 	var dir: int = HexUtil.get_hex_direction((mouse_pt - player_pt).normalized())
 	var source_tile: MapTile = selector.hex_map.get_tile_at(_player_map_index)
 	var target_tile: MapTile = source_tile.get_adjacent_tile(dir)
@@ -130,7 +134,8 @@ func _orient_emission_to_mouse() -> void:
 		_highlight_effect_range()
 
 
-## Orients the direction of an action cast from the player based on tile position.
+## Orients the direction of an action cast from the player based on tile
+## position.
 func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	_action.set_emission_map_index(_player_map_index)
 	_action.set_emission_pos(_player_pos)
@@ -169,7 +174,10 @@ func _fix_orientation() -> bool:
 				dir_cube,
 				selector.hex_map.get_x_count()
 		)
-		if selector.hex_map.is_valid_cube(dir_cube) and _source_d_map.has(dir_index):
+		if (
+			selector.hex_map.is_valid_cube(dir_cube)
+			and _source_d_map.has(dir_index)
+		):
 			_action.set_emission_direction(dir)
 			return true
 	return false
@@ -178,9 +186,11 @@ func _fix_orientation() -> bool:
 ## Places the effect emission so that the effect area highlights the closest
 ## target. Emission is not placed if no valid tile could be found.
 func _place_closest_to_target() -> void:
-	var target_details: Array = _get_target_distances()[0]
+	var target_details: Array[Variant] = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_tile_index()
-	var player_index_details: Dictionary = _source_d_map.all_dist_at(_player_map_index)
+	var player_index_details: Dictionary[String, float] = (
+		_source_d_map.all_dist_at(_player_map_index)
+	)
 	var ignore_player_index: bool = _action.stats.dead_range.get_reach() > 0
 	if ignore_player_index:
 		_source_d_map.remove(_player_map_index)
@@ -203,7 +213,9 @@ func _place_closest_to_target() -> void:
 ## Places the effect emission so that it is on the source tile closest to the
 ## specified tile. Emission is not placed if no valid source tile could be found.
 func _place_closest_to_tile(tile_index: int) -> void:
-	var player_index_details: Dictionary = _source_d_map.all_dist_at(_player_map_index)
+	var player_index_details: Dictionary[String, float] = (
+		_source_d_map.all_dist_at(_player_map_index)
+	)
 	var ignore_player_index: bool = _action.stats.dead_range.get_reach() > 0
 	# Remove player index when looking at dead range to prevent player position
 	# from being considered a valid placement spot.
@@ -226,15 +238,16 @@ func _place_closest_to_tile(tile_index: int) -> void:
 
 
 ## Gets an array of the targets sorted by distance from player. The closest
-## target is at the first index. Each index contains the target character and distance.
-func _get_target_distances() -> Array:
-	var potential_targets: Array = []
+## target is at the first index. Each index contains the target character and
+## distance.
+func _get_target_distances() -> Array[Array]:
+	var potential_targets: Array[Character] = []
 	if _action_targets.has(EffectAspect.Target.OPPONENTS):
 		potential_targets.append_array(selector.enemies_ref)
 	if _action_targets.has(EffectAspect.Target.ALLIES):
 		potential_targets.append_array(selector.players_ref)
 	
-	var target_distances: Array = []
+	var target_distances: Array[Array] = []
 	for option in potential_targets:
 		var dist: float = selector.hex_map.range_finder.travel_distance(
 				_player_map_index,
@@ -294,7 +307,8 @@ func _highlight_effect_range() -> void:
 	)
 
 
-## Gets the tile ids of all tiles within the source range. Accounts for dead range.
+## Gets the tile ids of all tiles within the source range. Accounts for dead
+## range.
 func _get_source_range() -> Array:
 	var d_map: DistanceMap = (
 			selector.hex_map.range_finder \

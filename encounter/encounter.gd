@@ -34,6 +34,7 @@ func _ready() -> void:
 	## out of scene.
 	_connect_map_to_selector()
 	
+	ui.set_summon(summon)
 	var p_index: int = 0
 	var party_data: Dictionary[String, Dictionary] = (
 		PartyController.get_active_party_data()

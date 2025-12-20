@@ -7,14 +7,15 @@ extends Node
 var _action_potency: Potency = null: set = set_action_potency
 ## The stats of the entity that will apply this effect.
 var _source_stats: StatModifiers = null: set = set_source_stats
-var _aspects: Array: get = get_aspects
+var _aspects: Array[EffectAspect]: get = get_aspects
 
 
 ## Called when the node enters the scene tree for the first time.
 ## The _action_potency and _source_stats variables are set by the Action 
 ## this node is a child of.
 func _ready():
-	_aspects = get_children()
+	for aspect: EffectAspect in get_children():
+		_aspects.append(aspect)
 	_check_for_required_parameters()
 
 
@@ -31,7 +32,7 @@ func set_source_stats(new_source: StatModifiers) -> void:
 
 
 ## Get all aspects associated with this effect.
-func get_aspects() -> Array:
+func get_aspects() -> Array[EffectAspect]:
 	return _aspects
 
 
@@ -53,8 +54,3 @@ func _check_for_required_parameters() -> void:
 			_aspects.size() > 0,
 			"Error: %s Effect does not have any EffectAspects." % [name]
 	)
-	for a in _aspects:
-		assert(
-				a is EffectAspect,
-				"Error: Node %s of %s Effect is not an EffectAspect." % [a.name, name]
-		)
