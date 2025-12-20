@@ -142,7 +142,7 @@ func get_closest_in_area(target_id: int, area_indices: Array[int]) -> int:
 	if area_indices.size() == 1:
 		return d_map.tile_ids()[0]
 	var closest: Array = [-1, INF]
-	for id in area_indices:
+	for id: int in area_indices:
 		if id == target_id:
 			return target_id
 		if closest[1] > d_map.tile_dist_at(id):
@@ -233,7 +233,7 @@ func get_character_closest_point_toward(
 		# Determine the last point in the path that is within the movement 
 		# range. A tile occupied by an opponent is not considered within
 		# movement range.
-		for i in range(closest_path.size() - 1, 0, -1):
+		for i: int in range(closest_path.size() - 1, 0, -1):
 			var occupant: Character = (
 					_map_tiles.get_at(closest_path[i]) \
 					.occupant.get_current_occupant()
@@ -265,8 +265,8 @@ func get_character_closest_point_toward(
 func get_character_farthest_point_away(
 	c: Character,
 	target_id: int,
-	opponents: Array,
-	movement_indexes: Array
+	opponents: Array[Character],
+	movement_indexes: Array[int]
 ) -> int:
 	# Enable all connections to make sure the point can be found.
 	_hm_astar.set_all_disabled(false)
@@ -289,7 +289,7 @@ func get_character_farthest_point_away(
 		# Determine the last point in the path that is within the movement 
 		# range. A tile occupied by an opponent is not considered within
 		# movement range.
-		for i in range(farthest_path.size() - 1, 0, -1):
+		for i: int in range(farthest_path.size() - 1, 0, -1):
 			var occupant: Character = (
 					_map_tiles.get_at(farthest_path[i]) \
 					.occupant.get_current_occupant()
