@@ -77,8 +77,12 @@ func get_from_ids(ids: Array) -> Array:
 
 
 ## Gets all the MapTiles.
-func get_all() -> Array:
-	return get_children()
+func get_all() -> Array[MapTile]:
+	var map_tiles: Array[MapTile] = []
+	map_tiles.resize(get_child_count())
+	for tile_index: int in get_child_count():
+		map_tiles[tile_index] = get_at(tile_index)
+	return map_tiles
 
 
 ## Checks if the given cube coordinates are within the bounds of the map.

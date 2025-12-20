@@ -1,12 +1,12 @@
 @tool
 class_name RangeFinder
 extends Node
-## Contains the logic for determining area ranges and paths for a HexMap. Requires
-## a reference to the map tiles.
+## Contains the logic for determining area ranges and paths for a HexMap.
+## Requires a reference to the map tiles.
 
 
 @export var map_tiles_reference: NodePath = NodePath(""): set = set_map_tiles
-@export var dist_maps: Resource = null: set = set_distance_map
+@export var dist_maps: HexMapDistances = null: set = set_distance_map
 
 var _hm_astar: HexMapAStar = null
 
@@ -41,15 +41,10 @@ func set_map_tiles(ref_path: NodePath) -> void:
 ## Updates the distance map when the reference is changed. Is intended only for
 ## use when running the RangeFinder script in the inspector for the purposes of
 ## saving the distance map resource data.
-func set_distance_map(new_dist_map: Resource) -> void:
+func set_distance_map(new_dist_map: HexMapDistances) -> void:
 	if new_dist_map == null:
 		dist_maps = null
 		printerr("RangeFinder distance map needs to be defined.")
-		return
-	if not new_dist_map is HexMapDistances:
-		printerr("Resource is not of type HexMapDistances.")
-		dist_maps = null
-		notify_property_list_changed()
 		return
 	dist_maps = new_dist_map
 	# Allow for the distance_map to be updated in the _ready function.
@@ -76,22 +71,20 @@ func tile_distance(start_id: int, dest_id: int) -> float:
 ## Gets the distances from the starting point to all tiles within a given reach.
 ## A negative reach indicates that all map tiles should be looked at. The use_tile
 ## flag indicates that the tile distance should be used instead of travel distance.
-func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> DistanceMap:
+func get_distance_map(
+	start_id: int,
+	use_tile: bool,
+	reach: int = -1
+) -> DistanceMap:
 	var d_map: DistanceMap = dist_maps.at(start_id)
 	if reach < 0:
 		return d_map
 	if use_tile:
-		var tile_map: DistanceMap = DistanceMap.new(
-				start_id,
-				d_map.map_from_tile_dist(reach)
-		)
+		var tile_map: DistanceMap = d_map.map_from_tile_dist(reach)
 		d_map.free()
 		return tile_map
 	else:
-		var travel_map: DistanceMap = DistanceMap.new(
-				start_id,
-				d_map.map_from_travel_dist(reach)
-		)
+		var travel_map: DistanceMap = d_map.map_from_travel_dist(reach)
 		d_map.free()
 		return travel_map
 
@@ -142,7 +135,7 @@ func get_character_id_path(
 
 ## Finds the point in the area that is closest to target_id. The area is an array
 ## of tile ids. Returns -1 if no closest index could be found.
-func get_closest_in_area(target_id: int, area_indices: Array) -> int:
+func get_closest_in_area(target_id: int, area_indices: Array[int]) -> int:
 	if area_indices.size() == 0:
 		return -1
 	var d_map: DistanceMap = dist_maps.at(target_id)
@@ -187,21 +180,24 @@ func get_character_travesible_tiles(
 	c: Character,
 	opponents: Array,
 	move_override: int = -1
-) -> Array:
+) -> Array[int]:
 	_hm_astar.set_all_disabled(false)
 	_disable_character_tiles(opponents, true)
 	var move: int = (
 			c.stats.get_movement_range() if move_override < 0
 			else move_override
 	)
-	var move_distances: Dictionary = _hm_astar.get_distance_map(
+	var move_distances: DistanceMap = _hm_astar.get_distance_map(
 			c.map_coordinate.get_tile_index(),
 			false,
 			move
 	)
 	# Reset for future range finder operations.
 	_hm_astar.set_all_disabled()
-	return move_distances.keys()
+	# Get copy of ids as we delete the move_distances object later.
+	var tile_ids: Array[int] = move_distances.tile_ids().duplicate()
+	move_distances.free()
+	return tile_ids
 
 
 ## Finds the closest path to a destination within a character's movement range
@@ -330,7 +326,7 @@ func _update_distance_map() -> void:
 			or (dist_maps.map_hash == d_hash and dist_maps.d_maps.size() > 0)
 	):
 		return
-	var d_maps: Dictionary = {}
+	var d_maps: Dictionary[int, DistanceMap] = {}
 
 	if _hm_astar == null:
 		_hm_astar = HexMapAStar.new(
@@ -341,7 +337,7 @@ func _update_distance_map() -> void:
 	# Enable all connections to make sure distance can be found.
 	_hm_astar.set_all_disabled(false)
 	var index: int
-	for tile in _map_tiles.get_all():
+	for tile: MapTile in _map_tiles.get_all():
 		index = tile.map_coordinate.get_tile_index()
 		d_maps[index] = _hm_astar.get_full_distance_map(index)
 	# Reset for future range finder operations.

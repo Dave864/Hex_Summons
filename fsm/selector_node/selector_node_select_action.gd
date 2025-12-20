@@ -188,7 +188,7 @@ func _fix_orientation() -> bool:
 func _place_closest_to_target() -> void:
 	var target_details: Array[Variant] = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_tile_index()
-	var player_index_details: Dictionary[String, float] = (
+	var player_index_details: DistanceData = (
 		_source_d_map.all_dist_at(_player_map_index)
 	)
 	var ignore_player_index: bool = _action.stats.dead_range.get_reach() > 0
@@ -213,7 +213,7 @@ func _place_closest_to_target() -> void:
 ## Places the effect emission so that it is on the source tile closest to the
 ## specified tile. Emission is not placed if no valid source tile could be found.
 func _place_closest_to_tile(tile_index: int) -> void:
-	var player_index_details: Dictionary[String, float] = (
+	var player_index_details: DistanceData = (
 		_source_d_map.all_dist_at(_player_map_index)
 	)
 	var ignore_player_index: bool = _action.stats.dead_range.get_reach() > 0
@@ -314,12 +314,11 @@ func _get_source_range() -> Array:
 			selector.hex_map.range_finder \
 			.dist_maps.at(_player_map_index)
 	)
-	var src_area: Dictionary = (
+	_source_d_map = (
 			d_map.map_from_tile_dist(_action.stats.source_range.get_reach())
 			if _action.stats.source_ignore_heights
 			else d_map.map_from_travel_dist(_action.stats.source_range.get_reach())
 	)
-	_source_d_map = DistanceMap.new(_player_map_index, src_area)
 	d_map.free()
 	var dead_indexes: Array = _action.stats.dead_range.get_area_indexes(
 			_player_map_index,
@@ -355,7 +354,7 @@ func _get_effect_range() -> Array:
 		_update_effect_ranges(e_index, e_dir, effect_indexes)
 		return effect_indexes
 	var d_map: DistanceMap = selector.hex_map.range_finder.dist_maps.at(e_index)
-	var effect_d_map: Dictionary = (
+	var effect_d_map: DistanceMap = (
 			d_map.map_from_travel_dist(_action.stats.effect_range.get_reach())
 	)
 	d_map.free()

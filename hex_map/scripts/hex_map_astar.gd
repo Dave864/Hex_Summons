@@ -12,7 +12,7 @@ var _add_path_item_func: Callable = Callable(self, "_add_id")
 var _x_count: int = 0
 
 
-func _init(hex_map_tiles: Array, x_count: int) -> void:
+func _init(hex_map_tiles: Array[MapTile], x_count: int) -> void:
 	_x_count = x_count
 	set_cost_to_travel()
 	# Empty out the current astar map and resize if necessary.
@@ -21,7 +21,7 @@ func _init(hex_map_tiles: Array, x_count: int) -> void:
 		reserve_space(hex_map_tiles.size())
 	
 	# Add the tiles to the astar map.
-	for tile in hex_map_tiles:
+	for tile: MapTile in hex_map_tiles:
 		if !tile.is_active():
 			continue
 		## TODO: weight will need to be updated when different tile types
@@ -40,30 +40,39 @@ func _init(hex_map_tiles: Array, x_count: int) -> void:
 ## flag indicates that the tile distance should be used instead of travel distance.
 ## Each entry has the travel distance and tile distance stored in a dictionary.
 ## Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
-func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Dictionary:
+func get_distance_map(
+	start_id: int,
+	use_tile: bool,
+	reach: int = -1
+) -> DistanceMap:
 	var frontier: PQueue = PQueue.new()
-	var id_distances: Dictionary = {}
+	var id_distances: DistanceMap = DistanceMap.new(start_id)
 
 	frontier.push(0.0, start_id)
-	id_distances[start_id] = {"travel": 0.0, "tile": 0}
+	id_distances.add(start_id, DistanceData.new(0, 0.0))
 	while not frontier.empty():
 		var current: Array = frontier.min()
 		frontier.pop_min()
-		for next_id in get_point_connections(current[1]):
+		for next_id: int in get_point_connections(current[1]):
 			if is_point_disabled(next_id):
 				continue
-			var dist: Dictionary = id_distances[current[1]]
-			var travel_dist: float = _travel_dist(current[1], next_id) + dist["travel"]
+			var dist: DistanceData = id_distances.all_dist_at(current[1])
+			var travel_dist: float = (
+				_travel_dist(current[1], next_id) + dist.travel
+			)
 			var tile_dist: int = int(_cube_dist(start_id, next_id))
 			if (
 				(
 					not id_distances.has(next_id)
-					or travel_dist < id_distances[next_id]["travel"]
+					or travel_dist < id_distances.travel_dist_at(next_id)
 				)
 				and (reach < 0 or tile_dist <= reach)
 				and (use_tile or travel_dist <= reach)
 			):
-				id_distances[next_id] = {"travel": travel_dist, "tile": tile_dist}
+				id_distances.add(
+						next_id,
+						DistanceData.new(tile_dist, travel_dist)
+				)
 				frontier.push(travel_dist, next_id)
 	frontier.free()
 	return id_distances
@@ -71,26 +80,31 @@ func get_distance_map(start_id: int, use_tile: bool, reach: int = -1) -> Diction
 
 ## Gets the distances from the starting point to all tiles within the map.
 ## Reference: https://www.redblobgames.com/pathfinding/a-star/introduction.html#dijkstra
-func get_full_distance_map(start_id: int) -> Dictionary:
+func get_full_distance_map(start_id: int) -> DistanceMap:
 	var frontier: PQueue = PQueue.new()
-	var id_distances: Dictionary = {}
+	var id_distances: DistanceMap = DistanceMap.new(start_id)
 
 	frontier.push(0.0, start_id)
-	id_distances[start_id] = {"travel": 0.0, "tile": 0}
+	id_distances.add(start_id, DistanceData.new(0, 0.0))
 	while not frontier.empty():
 		var current: Array = frontier.min()
 		frontier.pop_min()
-		for next_id in get_point_connections(current[1]):
+		for next_id: int in get_point_connections(current[1]):
 			if is_point_disabled(next_id):
 				continue
-			var dist: Dictionary = id_distances[current[1]]
-			var travel_dist: float = _travel_dist(current[1], next_id) + dist["travel"]
+			var dist: DistanceData = id_distances.all_dist_at(current[1])
+			var travel_dist: float = (
+				_travel_dist(current[1], next_id) + dist.travel
+			)
 			var tile_dist: int = int(_cube_dist(start_id, next_id))
 			if (
 				not id_distances.has(next_id)
-				or travel_dist < id_distances[next_id]["travel"]
+				or travel_dist < id_distances.travel_dist_at(next_id)
 			):
-				id_distances[next_id] = {"travel": travel_dist, "tile": tile_dist}
+				id_distances.add(
+						next_id,
+						DistanceData.new(tile_dist, travel_dist)
+				)
 				frontier.push(travel_dist, next_id)
 	frontier.free()
 	return id_distances
@@ -98,14 +112,14 @@ func get_full_distance_map(start_id: int) -> Dictionary:
 
 ## Finds the point in the area that is farthest from target. The area is an
 ## array of map tile ids. Returns -1 if no farthest index could be found.
-func get_farthest_in_area(target_id: int, area_indexes: Array) -> int:
+func get_farthest_in_area(target_id: int, area_indexes: Array[int]) -> int:
 	if area_indexes.size() == 0:
 		return -1
 	if area_indexes.size() == 1:
 		return area_indexes[0]
 	var farthest_pt: int = -1
 	var farthest_d: float = 0.0
-	for id in area_indexes:
+	for id: int in area_indexes:
 		if is_point_disabled(id):
 			continue
 		var dist: float = _compute_cost(id, target_id)
@@ -122,7 +136,7 @@ func get_closest_id_path(
 	target_id: int,
 	max_dist: int
 ) -> PackedInt32Array:
-	_add_path_item_func =  Callable(self, "_add_id")
+	_add_path_item_func = Callable(self, "_add_id")
 	return PackedInt32Array(_get_closest_path(source_id, target_id, max_dist))
 
 
@@ -133,7 +147,7 @@ func get_closest_point_path(
 	target_id: int,
 	max_dist: int
 ) -> PackedVector3Array:
-	_add_path_item_func =  Callable(self, "_add_point")
+	_add_path_item_func = Callable(self, "_add_point")
 	return PackedVector3Array(_get_closest_path(source_id, target_id, max_dist))
 
 
@@ -185,8 +199,8 @@ func set_cost_to_tile() -> void:
 
 
 ## Establish the connections in the astar map for the specified area.
-func _connect_tiles(map_tiles: Array) -> void:
-	for tile in map_tiles:
+func _connect_tiles(map_tiles: Array[MapTile]) -> void:
+	for tile: MapTile in map_tiles:
 		if !tile.is_active():
 			continue
 		for neighbor in tile.get_all_adjacent():

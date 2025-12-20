@@ -291,12 +291,11 @@ func _dead_range_details(
 ## Gets the distance map for the source range of the action, accounting for
 ## dead range.
 func _get_source_d_map(action: Action) -> DistanceMap:
-	var src_area: Dictionary = (
+	var src_map: DistanceMap = (
 			d_map.map_from_tile_dist(action.stats.source_range.get_reach())
 			if action.stats.source_ignore_heights
 			else d_map.map_from_travel_dist(action.stats.source_range.get_reach())
 	)
-	var src_map: DistanceMap = DistanceMap.new(d_map.origin, src_area)
 	# The overall distance map has its origin defined at the character position.
 	var dead_indexes: Array = action.stats.dead_range.get_area_indexes(
 			d_map.origin,
