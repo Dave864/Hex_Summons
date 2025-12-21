@@ -48,7 +48,7 @@ func add_wisps(wisp_names: Array[String], element: Element.Type) -> void:
 func pay_for_element(element: Element.Type, amount: int = 1) -> Array[String]:
 	var wisps_paid: Array[String] = []
 	if element in Element.Alignment.keys():
-		var elems: Array = (
+		var elems: Array[Element.Core] = (
 			ElementalAlignment.get_light_elements()
 			if element == Element.Alignment.LIGHT
 			else ElementalAlignment.get_dark_elements()

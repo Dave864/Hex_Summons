@@ -80,14 +80,22 @@ func _set_labels_on_ready() -> void:
 
 ## Sets the labels for the elements.
 func _set_labels() -> void:
-	var light_elems: Array = ElementalAlignment.get_light_elements()
-	var dark_elems: Array = ElementalAlignment.get_dark_elements()
+	var light_elems: Array[Element.Core] = ElementalAlignment.get_light_elements()
+	var dark_elems: Array[Element.Core] = ElementalAlignment.get_dark_elements()
 	light_label.text = String.num_uint64(pool.active_light_count())
-	light_elem_1_label.text = String.num_uint64(pool.active_element_count(light_elems[0]))
-	light_elem_2_label.text = String.num_uint64(pool.active_element_count(light_elems[1]))
+	light_elem_1_label.text = String.num_uint64(
+			pool.active_element_count(light_elems[0] as Element.Type)
+	)
+	light_elem_2_label.text = String.num_uint64(
+			pool.active_element_count(light_elems[1] as Element.Type)
+	)
 	dark_label.text = String.num_uint64(pool.active_dark_count())
-	dark_elem_1_label.text = String.num_uint64(pool.active_element_count(dark_elems[0]))
-	dark_elem_2_label.text = String.num_uint64(pool.active_element_count(dark_elems[1]))
+	dark_elem_1_label.text = String.num_uint64(
+			pool.active_element_count(dark_elems[0] as Element.Type)
+	)
+	dark_elem_2_label.text = String.num_uint64(
+			pool.active_element_count(dark_elems[1] as Element.Type)
+	)
 
 
 ## Shines all the element icons at set intervals.
@@ -103,8 +111,8 @@ func _on_Timer_timeout() -> void:
 ## Changes the core element icons and all labels to reflect the change in polarity.
 func _on_ElementalAlignment_alignment_changed() -> void:
 	timer.paused = true
-	var light_elems: Array = ElementalAlignment.get_light_elements()
-	var dark_elems: Array = ElementalAlignment.get_dark_elements()
+	var light_elems: Array[Element.Core] = ElementalAlignment.get_light_elements()
+	var dark_elems: Array[Element.Core] = ElementalAlignment.get_dark_elements()
 	var light_changed: bool = false
 	var dark_changed: bool = false
 	if light_elems[0] != _alignments[LIGHT][0]:

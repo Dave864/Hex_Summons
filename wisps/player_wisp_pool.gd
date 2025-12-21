@@ -26,6 +26,8 @@ func _init(new_player_name: String = "") -> void:
 	var bonded_wisps: Dictionary[Element.Core, Array] = (
 		WispTracker.get_bonded_wisps(player_name)
 	)
+	# Unable to set contents type for element_wisps as Godot v4.5 does not allow
+	# for nested type collections.
 	for element_wisps: Array in bonded_wisps.values():
 		for wisp: String in element_wisps:
 			add_new_wisp(wisp)
@@ -103,29 +105,57 @@ func set_active(wisp: String) -> void:
 func pay_for_element(element: Element.Type, count: int) -> Array[String]:
 	match element:
 		Element.Type.EARTH:
-			var wisps: Array = _deactivate_active_count(earth, element, count)
+			var wisps: Array[String] = _deactivate_active_count(
+					earth,
+					element,
+					count
+			)
 			if wisps.size() > 0:
 				return wisps
 		Element.Type.FIRE:
-			var wisps: Array = _deactivate_active_count(fire, element, count)
+			var wisps: Array[String] = _deactivate_active_count(
+					fire,
+					element,
+					count
+			)
 			if wisps.size() > 0:
 				return wisps
 		Element.Type.WATER:
-			var wisps: Array = _deactivate_active_count(water, element, count)
+			var wisps: Array[String] = _deactivate_active_count(
+					water,
+					element,
+					count
+			)
 			if wisps.size() > 0:
 				return wisps
 		Element.Type.WIND:
-			var wisps: Array = _deactivate_active_count(wind, element, count)
+			var wisps: Array[String] = _deactivate_active_count(
+					wind,
+					element,
+					count
+			)
 			if wisps.size() > 0:
 				return wisps
 		Element.Type.LIGHT:
-			var elems: Array = ElementalAlignment.get_light_elements()
-			var wisps: Array = _deactivate_polar_active(elems[0], elems[1], count)
+			var elems: Array[Element.Core] = (
+				ElementalAlignment.get_light_elements()
+			)
+			var wisps: Array[String] = _deactivate_polar_active(
+					elems[0] as Element.Type,
+					elems[1] as Element.Type,
+					count
+			)
 			emit_signal("active_count_changed", element)
 			return wisps
 		Element.Type.DARK:
-			var elems: Array = ElementalAlignment.get_dark_elements()
-			var wisps: Array = _deactivate_polar_active(elems[0], elems[1], count)
+			var elems: Array[Element.Core] = (
+				ElementalAlignment.get_dark_elements()
+			)
+			var wisps: Array[String] = _deactivate_polar_active(
+					elems[0] as Element.Type,
+					elems[1] as Element.Type,
+					count
+			)
 			emit_signal("active_count_changed", element)
 			return wisps
 	return []

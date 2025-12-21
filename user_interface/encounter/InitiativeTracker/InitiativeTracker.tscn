@@ -1,7 +1,7 @@
 [gd_scene load_steps=31 format=3 uid="uid://d3i1mqeluj5hv"]
 
 [ext_resource type="Script" uid="uid://dmopj8h81nvdc" path="res://user_interface/encounter/InitiativeTracker/initiative_tracker.gd" id="1"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/InitiativeTracker/InitiativeSlot.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://3fxn0walrbhe" path="res://user_interface/encounter/InitiativeTracker/InitiativeSlot.tscn" id="2"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="3"]
 [ext_resource type="Texture2D" uid="uid://c7jbdsahx5x83" path="res://art/ui/Init.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://brvrgnwi2ctlg" path="res://art/ui/ThemeBlueSigil/panel.png" id="5"]
@@ -453,6 +453,7 @@ offset_left = 66.0
 offset_top = 4.0
 offset_right = -62.0
 offset_bottom = 38.0
+grow_horizontal = 2
 mouse_filter = 2
 theme = ExtResource("3")
 script = ExtResource("1")
@@ -486,6 +487,7 @@ mouse_filter = 2
 [node name="InitiativeSlot0" parent="InitiativeSlots" instance=ExtResource("2")]
 material = SubResource("1")
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.035
 anchor_top = 0.5
 anchor_right = 0.035
@@ -499,6 +501,7 @@ texture = SubResource("13")
 [node name="InitiativeSlot1" parent="InitiativeSlots" instance=ExtResource("2")]
 material = SubResource("2")
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.133
 anchor_top = 0.5
 anchor_right = 0.133
@@ -512,6 +515,7 @@ texture = SubResource("14")
 [node name="InitiativeSlot2" parent="InitiativeSlots" instance=ExtResource("2")]
 material = SubResource("3")
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.234
 anchor_top = 0.5
 anchor_right = 0.234
@@ -525,6 +529,7 @@ texture = SubResource("15")
 [node name="InitiativeSlot3" parent="InitiativeSlots" instance=ExtResource("2")]
 material = SubResource("4")
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.334
 anchor_top = 0.5
 anchor_right = 0.334
@@ -538,6 +543,7 @@ texture = SubResource("16")
 [node name="InitiativeSlot4" parent="InitiativeSlots" instance=ExtResource("2")]
 material = SubResource("5")
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.434
 anchor_top = 0.5
 anchor_right = 0.434
@@ -551,6 +557,7 @@ texture = SubResource("17")
 [node name="InitiativeSlot5" parent="InitiativeSlots" instance=ExtResource("2")]
 material = SubResource("6")
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.534
 anchor_top = 0.5
 anchor_right = 0.534
@@ -564,6 +571,7 @@ texture = SubResource("18")
 [node name="InitiativeSlot6" parent="InitiativeSlots" instance=ExtResource("2")]
 material = SubResource("7")
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.633
 anchor_top = 0.5
 anchor_right = 0.633
@@ -577,6 +585,7 @@ texture = SubResource("19")
 [node name="InitiativeSlot7" parent="InitiativeSlots" instance=ExtResource("2")]
 material = SubResource("8")
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.733
 anchor_top = 0.5
 anchor_right = 0.733
@@ -590,6 +599,7 @@ texture = SubResource("20")
 [node name="InitiativeSlot8" parent="InitiativeSlots" instance=ExtResource("2")]
 material = SubResource("9")
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.834
 anchor_top = 0.5
 anchor_right = 0.834
@@ -603,6 +613,7 @@ texture = SubResource("21")
 [node name="InitiativeSlot9" parent="InitiativeSlots" instance=ExtResource("2")]
 material = SubResource("10")
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.933
 anchor_top = 0.5
 anchor_right = 0.933

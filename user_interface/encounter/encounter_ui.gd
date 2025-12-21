@@ -253,8 +253,8 @@ func track_enemy(e: EnemyCharacter) -> void:
 
 ## Sets the focus neighbors for the player options.
 func _set_player_option_focus_neighbors() -> void:
-	var a_ops: Array = []
-	for p_op in options.get_children():
+	var a_ops: Array[Control] = []
+	for p_op: Control in options.get_children():
 		if not p_op.disabled:
 			a_ops.append(p_op)
 		else:

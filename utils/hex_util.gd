@@ -100,8 +100,8 @@ static func cube_dist(start: Vector3, end: Vector3) -> float:
 
 ## Gets the cube coordinates of the hexes that are in a line from start to end.
 ## Reference: https://www.redblobgames.com/grids/hexagons/#line-drawing
-static func cube_line(start: Vector3, end: Vector3) -> Array:
-	var line_cubes: Array = []
+static func cube_line(start: Vector3, end: Vector3) -> Array[Vector3]:
+	var line_cubes: Array[Vector3] = []
 	var dist: float = cube_dist(start, end)
 	for step in range(dist + 1):
 		var step_lerp: float = 1.0 / dist * step

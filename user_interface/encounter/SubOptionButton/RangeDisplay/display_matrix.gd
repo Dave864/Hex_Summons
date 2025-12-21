@@ -18,7 +18,7 @@ const FILL: String = "Fill"
 var _row_count: int = 0: get = get_row_count
 var _col_count: int = 0: get = get_col_count
 var _mid_row: int = 0
-var _matrix: Array = []
+var _matrix: Array[Array] = []
 
 
 ## Gets the row count of the matrix.
@@ -107,8 +107,8 @@ func _init(row_count: int, col_count: int):
 	_row_count = row_count
 	_col_count = col_count
 	_mid_row = int(round(_row_count / 2.0)) - 1
-	for row in _row_count:
-		var row_array: Array = []
+	for row: int in _row_count:
+		var row_array: Array[Dictionary] = []
 		for col in _col_count:
 			var hex_details: Dictionary = {
 				OUTLINE: Detail.EMPTY,

@@ -10,14 +10,17 @@ extends Control
 ## initiative slots in the UI.
 
 
+## The maximimum number of consecutive rounds a character can go without a turn.
 @export_range(2, 10) var pity_round_count: int = 2
 
+## The collection of InitiativeSlot objects.
+var init_slots: Array[InitiativeSlot]
 ## Tracks the character and number of rounds said character has gone without
 ## taking a turn using the instance id as the key. Each entry has the
 ## following details:
 ## "character": <character reference>
 ## "no_turn_count": <number of turns passed where character did not act>
-var _c_pity_tracker: Dictionary = {}
+var _c_pity_tracker: Dictionary[int, Dictionary] = {}
 ## Stores the initiative details of a number of rounds equal to the number of
 ## initiative slot UI elements. The keys are the rounds, starting at round 0.
 ## Each round stores an Array which contains the character initiative details.
@@ -25,19 +28,28 @@ var _c_pity_tracker: Dictionary = {}
 ## "cid": <the id of the character>
 ## "pace": <the current progress towards round_pace>
 ## "present": <is the character active in the round>
-var _init_order: Dictionary = {}
+var _init_order: Dictionary[int, Array] = {}
 var _cur_init: int = 0
 var _round_pace: int = 0
 var _round_turns: int = 0
 
-@onready var init_slots: Array = $InitiativeSlots.get_children()
 @onready var ap: AnimationPlayer = $AnimationPlayer
 
 
+## Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	var init: int = 0
+	for slot: InitiativeSlot in $InitiativeSlots.get_children():
+		init_slots.append(slot)
+		slot.update_initiative_label(init)
+		_init_order[init] = []
+		init += 1
+
+
 ## Populates the initiative tracker with character details.
-func populate_initiative(characters: Array) -> void:
+func populate_initiative(characters: Array[Character]) -> void:
 	_round_turns = characters.size()
-	for c in characters:
+	for c: Character in characters:
 		_c_pity_tracker[c.get_instance_id()] = {
 			"character": c,
 			"no_turn_count": 0
@@ -104,19 +116,10 @@ func get_next_character() -> Character:
 	return _c_pity_tracker[c_id]["character"]
 
 
-## Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	var init: int = 0
-	for slot in init_slots:
-		slot.update_initiative_label(init)
-		_init_order[init] = []
-		init += 1
-
-
 ## Determines the round pace based on the current characters.
 func _determine_round_pace() -> void:
 	_round_pace = 0
-	for details in _c_pity_tracker.values():
+	for details: Dictionary in _c_pity_tracker.values():
 		var c: Character = details["character"]
 		var c_agility: int = c.stats.get_stat(Stat.Type.AGILITY)
 		_round_pace = c_agility if _round_pace < c_agility else _round_pace
@@ -133,7 +136,7 @@ func _get_next_init_step() -> int:
 
 ## Updates the display to reflect the current initiative.
 func _update_display() -> void:
-	var char_order: Array = []
+	var char_order: Array[Character] = []
 	var earliest_init: Dictionary = {}
 	for c_id in _c_pity_tracker.keys():
 		earliest_init[c_id] = -1
@@ -177,8 +180,8 @@ func _calculate_full_initiative() -> void:
 ## Helper for _calculate_inititative. Determines the initiative data for
 ## round zero.
 func _calculate_round_zero_initiative() -> void:
-	var characters: Array = []
-	var initiative_data: Array = []
+	var characters: Array[Character] = []
+	var initiative_data: Array[Dictionary] = []
 	for details in _c_pity_tracker.values():
 		characters.append(details["character"])
 	characters.sort_custom(Callable(ArraySorters, "sort_character_initiative"))
@@ -197,8 +200,10 @@ func _calculate_round_zero_initiative() -> void:
 ## Helper for _calculate_inititative. Determines the initiative data for a given
 ## round.
 func _calculate_round_initiative(i_round: int) -> void:
-	var initiative_data: Array = _init_order[i_round - 1].duplicate(true)
-	for i in initiative_data.size():
+	var initiative_data: Array[Dictionary] = (
+		_init_order[i_round - 1].duplicate(true)
+	)
+	for i: int in initiative_data.size():
 		var c: Character = _c_pity_tracker[initiative_data[i]["c_id"]]["character"]
 		var c_id = c.get_instance_id()
 		initiative_data[i]["pace"] += c.stats.get_stat(Stat.Type.AGILITY)

@@ -28,20 +28,25 @@ func set_hp(cur_hp: int, max_hp: int) -> void:
 
 ## Sets the wisp counts of the summary for a player character.
 func set_player_wisp_count(wisp_pool: PlayerWispPool) -> void:
-	var text_format: String = "L: {0}\n{1}: {2}, {3}: {4}\n{5}: {6}, {7}: {8}\nD: {9}"
-	var l_elems: Array = ElementalAlignment.get_light_elements()
-	var d_elems: Array = ElementalAlignment.get_dark_elements()
+	var text_format: String = (
+		"L: {0}\n" \
+		+ "{1}: {2}, {3}: {4}\n" \
+		+ "{5}: {6}, {7}: {8}\n" \
+		+ "D: {9}"
+	)
+	var l_elems: Array[Element.Core] = ElementalAlignment.get_light_elements()
+	var d_elems: Array[Element.Core] = ElementalAlignment.get_dark_elements()
 	$WispCount.text = text_format.format(
 			[
 				wisp_pool.active_light_count(),
 				ELEMENT_TAGS[l_elems[0]],
-				wisp_pool.active_element_count(l_elems[0]),
+				wisp_pool.active_element_count(l_elems[0] as Element.Type),
 				ELEMENT_TAGS[l_elems[1]],
-				wisp_pool.active_element_count(l_elems[1]),
+				wisp_pool.active_element_count(l_elems[1] as Element.Type),
 				ELEMENT_TAGS[d_elems[0]],
-				wisp_pool.active_element_count(d_elems[0]),
+				wisp_pool.active_element_count(d_elems[0] as Element.Type),
 				ELEMENT_TAGS[d_elems[1]],
-				wisp_pool.active_element_count(d_elems[1]),
+				wisp_pool.active_element_count(d_elems[1] as Element.Type),
 				wisp_pool.active_dark_count()
 			]
 	)
