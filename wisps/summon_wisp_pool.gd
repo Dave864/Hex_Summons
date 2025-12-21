@@ -20,25 +20,25 @@ func _ready() -> void:
 
 ## Adds wisps to the specified element pool. The expectation is that wisp_ids
 ## will be an array with a size divisible by 2 when adding wisps for LIGHT and DARK.
-func add_wisps(wisp_ids: Array, element: Element.Type) -> void:
+func add_wisps(wisp_names: Array[String], element: Element.Type) -> void:
 	if element in Element.Alignment.values():
-		var elems: Array = (
+		var elems: Array[Element.Core] = (
 			ElementalAlignment.get_light_elements()
 			if element == Element.Alignment.LIGHT
 			else ElementalAlignment.get_dark_elements()
 		)
-		var half_size: int = int(round(wisp_ids.size() / 2.0))
+		var half_size: int = int(round(wisp_names.size() / 2.0))
 		for i: int in half_size:
-			pool[elems[0]].append(wisp_ids[i])
-			pool[elems[1]].append(wisp_ids[i + half_size])
+			pool[elems[0]].append(wisp_names[i])
+			pool[elems[1]].append(wisp_names[i + half_size])
 		_active_count[elems[0]] += half_size
 		_active_count[elems[1]] += half_size
 		emit_signal("active_count_changed", elems[0])
 		emit_signal("active_count_changed", elems[1])
 		emit_signal("active_count_changed", element)
 	elif element in Element.Core.values():
-		pool[element].append_array(wisp_ids)
-		_active_count[element] += wisp_ids.size()
+		pool[element].append_array(wisp_names)
+		_active_count[element] += wisp_names.size()
 		emit_signal("active_count_changed", element)
 
 

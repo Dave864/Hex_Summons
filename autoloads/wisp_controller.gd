@@ -60,7 +60,7 @@ func recall_for_player(player_pool: PlayerWispPool, recall_count: int) -> void:
 			if WispTracker.is_standby_set(wisp):
 				standby_pool_wisps.append(wisp)
 	standby_pool_wisps.shuffle()
-	var random_wisps: Array = standby_pool_wisps.slice(0, recall_count - 1)
+	var random_wisps: Array[String] = standby_pool_wisps.slice(0, recall_count - 1)
 	if not WispTracker.set_state_to_player(random_wisps):
 		printerr("failed to recall all requested wisps.")
 		return

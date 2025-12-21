@@ -12,7 +12,7 @@ class_name EncounterCamera
 ##  |   |
 ## 4 \ / 2
 ##    3
-const HEX_VERTEX_RADIANS: Array = [
+const HEX_VERTEX_RADIANS: Array[float] = [
 	0.0,
 	-PI / 3.0,
 	-2.0 * PI / 3.0,

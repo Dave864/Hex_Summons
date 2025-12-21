@@ -29,7 +29,7 @@ var _floor_mesh_node: MeshInstance3D = null
 var _tiles_node: Tiles = null
 
 ## The collection of all map tiles stored in the Tiles node.
-@onready var _map_tiles: Array = []: get = get_map_tiles
+@onready var _map_tiles: Array[MapTile] = []: get = get_map_tiles
 ## Reference to the scene tree root.
 @onready var _root_node: Node = get_tree().edited_scene_root
 
@@ -39,7 +39,8 @@ func _ready() -> void:
 	_create_pathfinder()
 	_create_floor_mesh()
 	_create_tiles_node()
-	_map_tiles = _tiles_node.get_children()
+	for tile: MapTile in _tiles_node.get_children():
+		_map_tiles.append(tile)
 	_check_for_required_parameters()
 
 

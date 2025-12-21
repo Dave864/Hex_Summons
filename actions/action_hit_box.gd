@@ -9,13 +9,13 @@ extends Area3D
 
 var caster_id: int = -1
 
-var _effects: Array = []: get = get_effects
+var _effects: Array[Effect] = []: get = get_effects
 
 @onready var _c_shape: CollisionShape3D = $CollisionShape3D
 
 
 ## Gets the effects this hit box is transferring.
-func get_effects() -> Array:
+func get_effects() -> Array[Effect]:
 	return _effects
 
 
@@ -36,7 +36,8 @@ func _ready():
 	_check_for_required_parameters()
 	var effects_node: Node = get_node(effects_ref)
 	await effects_node.ready
-	_effects = effects_node.get_children()
+	for effect: Effect in effects_node.get_children():
+		_effects.append(effect)
 
 
 ## Checks that all required parameters are set.

@@ -5,7 +5,8 @@ extends CollisionShape3D
 ## CollisionShapes described by hex_tile_collision.
 
 
-var _top_y_at_zero: Array = []
+## The y coordinate of the top of each map tile.
+var _top_y_at_zero: Array[float] = []
 
 
 func _ready() -> void:

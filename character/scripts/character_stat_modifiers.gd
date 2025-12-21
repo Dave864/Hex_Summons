@@ -303,13 +303,17 @@ func _magic_for_level(element: int, with_modifier: bool) -> int:
 			)
 			modifier = _magic_wind_mod
 		Element.Type.LIGHT:
-			var light_elements: Array = ElementalAlignment.get_light_elements()
+			var light_elements: Array[Element.Core] = (
+				ElementalAlignment.get_light_elements()
+			)
 			return (
 				_magic_for_level(light_elements[0], with_modifier)
 				+ _magic_for_level(light_elements[1], with_modifier)
 			)
 		Element.Type.DARK:
-			var dark_elements: Array = ElementalAlignment.get_dark_elements()
+			var dark_elements: Array[Element.Core] = (
+				ElementalAlignment.get_dark_elements()
+			)
 			return (
 				_magic_for_level(dark_elements[0], with_modifier)
 				+ _magic_for_level(dark_elements[1], with_modifier)
@@ -350,13 +354,17 @@ func _resistance_for_level(element: int, with_modifier: bool) -> int:
 			)
 			modifier = _res_wind_mod
 		Element.Type.LIGHT:
-			var light_elements: Array = ElementalAlignment.get_light_elements()
+			var light_elements: Array[Element.Core] = (
+				ElementalAlignment.get_light_elements()
+			)
 			return (
 				_resistance_for_level(light_elements[0], with_modifier)
 				+ _resistance_for_level(light_elements[1], with_modifier)
 			)
 		Element.Type.DARK:
-			var dark_elements: Array = ElementalAlignment.get_dark_elements()
+			var dark_elements: Array[Element.Core] = (
+				ElementalAlignment.get_dark_elements()
+			)
 			return (
 				_resistance_for_level(dark_elements[0], with_modifier)
 				+ _resistance_for_level(dark_elements[1], with_modifier)
@@ -380,11 +388,15 @@ func _update_magic_modifier(element: int, value: int) -> void:
 		Element.Type.WIND:
 			_magic_wind_mod = value
 		Element.Type.LIGHT:
-			var light_elements: Array = ElementalAlignment.get_light_elements()
+			var light_elements: Array[Element.Core] = (
+				ElementalAlignment.get_light_elements()
+			)
 			_update_magic_modifier(light_elements[0], value)
 			_update_magic_modifier(light_elements[1], value)
 		Element.Type.DARK:
-			var dark_elements: Array = ElementalAlignment.get_dark_elements()
+			var dark_elements: Array[Element.Core] = (
+				ElementalAlignment.get_dark_elements()
+			)
 			_update_magic_modifier(dark_elements[0], value)
 			_update_magic_modifier(dark_elements[1], value)
 
@@ -402,11 +414,15 @@ func _update_res_modifier(element: int, value: int) -> void:
 		Element.Type.WIND:
 			_res_wind_mod = value
 		Element.Type.LIGHT:
-			var light_elements: Array = ElementalAlignment.get_light_elements()
+			var light_elements: Array[Element.Core] = (
+				ElementalAlignment.get_light_elements()
+			)
 			_update_res_modifier(light_elements[0], value)
 			_update_res_modifier(light_elements[1], value)
 		Element.Type.DARK:
-			var dark_elements: Array = ElementalAlignment.get_dark_elements()
+			var dark_elements: Array[Element.Core] = (
+				ElementalAlignment.get_dark_elements()
+			)
 			_update_res_modifier(dark_elements[0], value)
 			_update_res_modifier(dark_elements[1], value)
 

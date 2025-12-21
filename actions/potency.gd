@@ -8,7 +8,7 @@ extends Resource
 
 ## The potency values of given elemental alignment values.
 ## The index is the alignment value.
-const ELEMENTAL_POTENCY: Array = [0.0, 1.0, 1.5, 2.0, 2.33, 2.66, 3.0]
+const ELEMENTAL_POTENCY: Array[float] = [0.0, 1.0, 1.5, 2.0, 2.33, 2.66, 3.0]
 
 ## The percentage of a character's attack to use for potency calculations.
 @export_range(0.0, 3.0, 0.01) var attack_potency: float = 1.0

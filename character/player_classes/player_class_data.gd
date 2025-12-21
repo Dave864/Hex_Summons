@@ -8,9 +8,9 @@ extends Resource
 ## The base stats for the player character.
 @export var stats: BaseStats = null
 ## The list of technique actions associated with this class.
-@export var techniques: Array = []
+@export var techniques: Array[TechniqueStats] = []
 ## The list of spell actions assiciated with this class.
-@export var spells: Array = []
+@export var spells: Array[SpellStats] = []
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -21,14 +21,3 @@ func _ready():
 ## Checks that all required parameters are set and/or valid.
 func _check_for_required_parameters() -> void:
 	assert(stats != null, "Stats have not been set.")
-	assert(stats is BaseStats, "Stats is not of type BaseStats.")
-	for technique in techniques:
-		assert(
-				technique is TechniqueStats,
-				"Not all techniques are of type TechniqueStats."
-		)
-	for spell in spells:
-		assert(
-				spell is SpellStats,
-				"Not all spells are of type SpellStats."
-		)

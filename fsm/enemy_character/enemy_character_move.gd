@@ -12,7 +12,7 @@ var _movement_active: bool = false
 ## The current interpolation weight.
 var _weight: float = 0.0
 ## The list of commands the enemy will execute.
-var _command_chain: Array = []
+var _command_chain: Array[Array] = []
 
 
 ## Set the starting point for the path.

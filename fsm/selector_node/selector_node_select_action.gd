@@ -154,7 +154,7 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 
 ## Orients the action emission to the closest valid target.
 func _orient_to_closest_target() -> void:
-	var target_distances: Array = _get_target_distances()
+	var target_distances: Array[Array] = _get_target_distances()
 	var target_index: int = target_distances[0][0].map_coordinate.get_tile_index()
 	var target_tile: MapTile = selector.hex_map.get_tile_at(target_index)
 	_orient_emission_to_tile(target_tile)
@@ -296,7 +296,7 @@ func _highlight_source_range() -> void:
 ## Updates the selection display to show the effect area.
 func _highlight_effect_range() -> void:
 	selector.hex_map.selection_tracker.clear_selector_highlights()
-	var effect_range: Array = _get_effect_range()
+	var effect_range: Array[int] = _get_effect_range()
 	_update_targets(effect_range)
 	selector.hex_map.selection_tracker.select_effect_range(
 			effect_range,
@@ -319,7 +319,7 @@ func _get_source_range() -> Array[int]:
 			if _action.stats.source_ignore_heights
 			else d_map.map_from_travel_dist(_action.stats.source_range.get_reach())
 	)
-	var dead_indexes: Array = _action.stats.dead_range.get_area_indexes(
+	var dead_indexes: Array[int] = _action.stats.dead_range.get_area_indexes(
 			_player_map_index,
 			selector.hex_map
 	)
@@ -344,7 +344,7 @@ func _get_effect_range() -> Array[int]:
 		return _ranges_cache[e_dir]
 	elif _ranges_cache.has(e_index):
 		return _ranges_cache[e_index]
-	var effect_indexes: Array = _action.stats.effect_range.get_dir_area_indexes(
+	var effect_indexes: Array[int] = _action.stats.effect_range.get_dir_area_indexes(
 			e_index,
 			e_dir,
 			selector.hex_map

@@ -13,7 +13,7 @@ extends UserCharacterState
 ## initialize itself.
 func enter(msg := {}) -> void:
 	var action: Action = msg["action"]
-	var targets: Array = msg["targets"]
+	var targets: Array[Character] = msg["targets"]
 	_change_target_state(targets, true)
 	await action.execute_action()
 	_change_target_state(targets, false)
@@ -23,8 +23,8 @@ func enter(msg := {}) -> void:
 
 
 ## Changes the state of the targets.
-func _change_target_state(targets: Array, active: bool) -> void:
-	for t in targets:
+func _change_target_state(targets: Array[Character], active: bool) -> void:
+	for t: Character in targets:
 		if active:
 			t.activate_hit_box()
 		else:

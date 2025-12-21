@@ -60,7 +60,7 @@ func update_distance_map() -> void:
 
 ## Determines the actions that need to be taken for the character based on the
 ## current state of the map.
-func determine_action_chain() -> Array:
+func determine_action_chain() -> Array[Array]:
 	var ab: ActionBehavior = null
 	for action in _actions:
 		ab = action.get_node_or_null("ActionBehavior")
@@ -546,8 +546,8 @@ func _calc_move_path(
 
 ## Default behaviour. The character moves as close as it can to the closest
 ## target character with the highest threat.
-func _default_chain() -> Array[Variant]:
-	var action_chain: Array[Variant] = []
+func _default_chain() -> Array[Array]:
+	var action_chain: Array[Array] = []
 	var target_indexes: Array[int] = _determine_opponent_index_threat_order()
 	action_chain.push_front([MOVE, _calculate_toward_path(target_indexes[0])])
 	return action_chain

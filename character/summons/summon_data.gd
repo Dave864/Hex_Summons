@@ -69,12 +69,12 @@ func multiplier_for_stat(stat: Stat.Type) -> float:
 		Stat.Type.MAGIC_WIND:
 			return magic_wind
 		Stat.Type.MAGIC_LIGHT:
-			var light_elems: Array = Stat.get_light_aligned_magic()
+			var light_elems: Array[Stat.Type] = Stat.get_light_aligned_magic()
 			var mult_1: float = multiplier_for_stat(light_elems[0])
 			var mult_2: float = multiplier_for_stat(light_elems[1])
 			return mult_1 + mult_2
 		Stat.Type.MAGIC_DARK:
-			var dark_elems: Array = Stat.get_dark_aligned_magic()
+			var dark_elems: Array[Stat.Type] = Stat.get_dark_aligned_magic()
 			var mult_1: float = multiplier_for_stat(dark_elems[0])
 			var mult_2: float = multiplier_for_stat(dark_elems[1])
 			return mult_1 + mult_2
@@ -87,12 +87,12 @@ func multiplier_for_stat(stat: Stat.Type) -> float:
 		Stat.Type.RES_WIND:
 			return res_wind
 		Stat.Type.RES_LIGHT:
-			var light_elems: Array = Stat.get_light_aligned_res()
+			var light_elems: Array[Stat.Type] = Stat.get_light_aligned_res()
 			var mult_1: float = multiplier_for_stat(light_elems[0])
 			var mult_2: float = multiplier_for_stat(light_elems[1])
 			return mult_1 + mult_2
 		Stat.Type.RES_DARK:
-			var dark_elems: Array = Stat.get_dark_aligned_res()
+			var dark_elems: Array[Stat.Type] = Stat.get_dark_aligned_res()
 			var mult_1: float = multiplier_for_stat(dark_elems[0])
 			var mult_2: float = multiplier_for_stat(dark_elems[1])
 			return mult_1 + mult_2

@@ -30,7 +30,7 @@ func enter(_msg := {}) -> void:
 
 ## Initializes the initiative tracker.
 func _set_up_initative() -> void:
-	var characters: Array = []
+	var characters: Array[Character] = []
 	characters.append_array(enc.players)
 	characters.append_array(enc.enemies)
 	enc.ui.initiative_tracker.populate_initiative(characters)

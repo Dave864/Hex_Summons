@@ -148,7 +148,7 @@ func get_closest_in_area(target_id: int, area_indices: Array[int]) -> int:
 	var d_map: DistanceMap = dist_maps.at(target_id)
 	if area_indices.size() == 1:
 		return d_map.tile_ids()[0]
-	var closest: Array = [-1, INF]
+	var closest: Array[Variant] = [-1, INF]
 	for id: int in area_indices:
 		if id == target_id:
 			return target_id

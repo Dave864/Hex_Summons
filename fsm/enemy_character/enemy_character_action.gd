@@ -11,16 +11,16 @@ extends EnemyCharacterState
 const COOLDOWN_PATH: String = "ActionBehavior/Cooldown"
 
 ## The list of commands the enemy will execute.
-var _command_chain: Array = []
+var _command_chain: Array[Array] = []
 
 
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(msg := {}) -> void:
 	_command_chain = msg["command_chain"]
-	var action_details: Array = _command_chain.pop_back()
+	var action_details: Array[Variant] = _command_chain.pop_back()
 	var action: Action = action_details[1]
-	var targets: Array = action_details[3]
+	var targets: Array[Character] = action_details[3]
 	_change_target_state(targets, true)
 	await action.execute_action()
 	_change_target_state(targets, false)

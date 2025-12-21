@@ -22,7 +22,7 @@ func _ready() -> void:
 	_set_to_default()
 
 
-## Swap the polarities of the given elements.
+## Swap the alignments of the given elements.
 func swap_elements(element_1: int, element_2: int) -> void:
 	if (
 		not _is_valid_core_element(element_1)
@@ -30,35 +30,35 @@ func swap_elements(element_1: int, element_2: int) -> void:
 	):
 		printerr("Cannot swap the alignment of a nonexistant core element.")
 		return
-	var element_1_details: Array = _get_alignment_and_index(element_1)
-	var element_2_details: Array = _get_alignment_and_index(element_2)
+	var element_1_details: Array[int] = _get_alignment_and_index(element_1)
+	var element_2_details: Array[int] = _get_alignment_and_index(element_2)
 	_alignments[element_1_details[0]][element_1_details[1]] = element_2
 	_alignments[element_2_details[0]][element_2_details[1]] = element_1
 	emit_signal("alignment_changed")
 
 
-## Swap the polarities of all elements.
+## Swap the alignments of all elements.
 func invert_all_alignments() -> void:
 	_swap_alignments_at_index(0)
 	_swap_alignments_at_index(1)
 	emit_signal("alignment_changed")
 
 
-## Swap the polarities of the elements on the left side of the hex.
+## Swap the alignments of the elements on the left side of the hex.
 ## Corresponds to index 0 of each alignment array.
 func invert_left_alignments() -> void:
 	_swap_alignments_at_index(0)
 	emit_signal("alignment_changed")
 
 
-## Swap the polarities of the elements on the right side of the hex.
+## Swap the alignments of the elements on the right side of the hex.
 ## Corresponds to index 1 of each alignment array.
 func invert_right_alignments() -> void:
 	_swap_alignments_at_index(1)
 	emit_signal("alignment_changed")
 
 
-## Shift the polarities of all elements "counter-clockwise".
+## Shift the alignments of all elements "counter-clockwise".
 ## L: [0, 1] => [1, 3]
 ## D: [2, 3] => [0, 2]
 func shift_alignments_ccw() -> void:
@@ -107,12 +107,12 @@ func set_elements_to_dark(element_1: int, element_2: int) -> void:
 
 
 ## Get the elements of the Light alignment.
-func get_light_elements() -> Array:
+func get_light_elements() -> Array[Element.Core]:
 	return _alignments[LIGHT]
 
 
 ## Get the elements of the Dark alignment.
-func get_dark_elements() -> Array:
+func get_dark_elements() -> Array[Element.Core]:
 	return _alignments[DARK]
 
 
@@ -139,8 +139,8 @@ func _set_elements_to_alignment(
 		printerr("target_alignment is not a 'polar' element.")
 		return
 	var inverse_alignment: int = LIGHT if target_alignment == DARK else DARK
-	var element_1_details: Array = _get_alignment_and_index(element_1)
-	var element_2_details: Array = _get_alignment_and_index(element_2)
+	var element_1_details: Array[int] = _get_alignment_and_index(element_1)
+	var element_2_details: Array[int] = _get_alignment_and_index(element_2)
 	
 	if (
 		element_1_details[0] == inverse_alignment
@@ -176,9 +176,9 @@ func _set_elements_to_alignment(
 
 ## Gets the alignment and index of a given element. Returns the details in an
 ## array: [alignment, index]
-func _get_alignment_and_index(element: int) -> Array:
-	for p in _alignments:
-		for i in len(p):
+func _get_alignment_and_index(element: int) -> Array[int]:
+	for p: Element.Alignment in _alignments:
+		for i: int in len(p):
 			if _alignments[p][i] == element:
 				return [p, i]
 	return [-1, -1]

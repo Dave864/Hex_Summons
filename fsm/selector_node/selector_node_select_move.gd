@@ -12,7 +12,7 @@ extends SelectorState
 var _move_origin_index: int = -1
 ## Tracks the travel and tile distances from the original character position
 ## to the tiles within movement range.
-var _movement_ids: Array = []
+var _movement_ids: Array[int] = []
 
 ## Reference to the function that will update the tile highlights.
 @onready var _update_selection_ref: Callable = Callable(self, "_update_selection")

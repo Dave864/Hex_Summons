@@ -31,16 +31,16 @@ func enter(_msg := {}) -> void:
 #	_ai_thread.wait_to_finish()
 #	_ai_thread = Thread.new()
 #	_ai_thread.start(_ai_node, "determine_action_chain")
-#	var action_chain: Array = _ai_thread.wait_to_finish()
+#	var action_chain: Array[Array] = _ai_thread.wait_to_finish()
 	ai_node.update_distance_map()
-	var action_chain: Array = ai_node.determine_action_chain()
+	var action_chain: Array[Array] = ai_node.determine_action_chain()
 	
 	if action_chain.size() <= 1:
 		_process_action_chain(action_chain)
 		return
 	_action = action_chain[0][1]
 	_target_index = action_chain[0][2]
-	var possible_targets: Array = action_chain[0][3]
+	var possible_targets: Array[Character] = action_chain[0][3]
 	_move_end_index = ai_node.get_move_dest_id()
 	if _action != null and _action.stats.emit_from_center:
 		action_chain[0][3] = _orient_to_target(possible_targets)
@@ -88,11 +88,11 @@ func _place_on_target(possible_targets: Array) -> Array:
 
 
 ## Gets the targets that will be hit by the action.
-func _get_targets(possible_targets: Array) -> Array:
-	var targets: Array = []
-	var effect_area: Array 
-	var p_t_set: Dictionary = {}
-	for pt in possible_targets:
+func _get_targets(possible_targets: Array[Character]) -> Array[Character]:
+	var targets: Array[Character] = []
+	var effect_area: Array[int]
+	var p_t_set: Dictionary[int, Character] = {}
+	for pt: Character in possible_targets:
 		p_t_set[pt.get_instance_id()] = pt
 	if _action.stats.emit_from_center:
 		effect_area = _action.stats.effect_range.get_dir_area_indexes(
@@ -107,7 +107,7 @@ func _get_targets(possible_targets: Array) -> Array:
 		)
 	var map_tile: MapTile = null
 	var c: Character = null
-	for tile_id in effect_area:
+	for tile_id: int in effect_area:
 		map_tile = ai_node.h_map.get_tile_at(tile_id)
 		c = map_tile.occupant.get_current_occupant()
 		if c != null and p_t_set.has(c.get_instance_id()):
@@ -116,7 +116,7 @@ func _get_targets(possible_targets: Array) -> Array:
 
 
 ## Processes the action change determined by the character AI.
-func _process_action_chain(action_chain: Array) -> void:
+func _process_action_chain(action_chain: Array[Array]) -> void:
 	if action_chain.size() > 0:
 		if action_chain.back()[0] == MOVE:
 			print("Go to move")

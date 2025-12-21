@@ -16,7 +16,7 @@ func get_reach() -> int:
 ## Determines which map tiles are in the cardinal area positioned at the start index.
 ## Does not account for tile heights.
 func get_area_indexes(start: int, hm: HexMap) -> Array[int]:
-	var tile_ids: Array = []
+	var tile_ids: Array[int] = []
 	var start_coord: Vector3 = hm.get_tile_at(start).map_coordinate.get_cube_coord()
 	tile_ids.append(start)
 	for d in range(1, distance + 1):

@@ -23,7 +23,11 @@ func process_effects() -> void:
 
 
 ## Virtual function. Adds relevant effects to this handler.
-func apply_effects(_effects: Array, _caster_id: int, _target_id: int) -> void:
+func apply_effects(
+	_effects: Array[Effect],
+	_caster_id: int,
+	_target_id: int
+) -> void:
 	pass
 
 

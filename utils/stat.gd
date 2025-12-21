@@ -50,29 +50,31 @@ const RESISTANCE: String = "Resistance"
 
 
 ## Gets the magic stat types aligned with light element.
-static func get_light_aligned_magic() -> Array:
+static func get_light_aligned_magic() -> Array[Type]:
 	return _get_aligned_magic(ElementalAlignment.get_light_elements())
 
 
 ## Gets the magic stat types aligned with dark element.
-static func get_dark_aligned_magic() -> Array:
+static func get_dark_aligned_magic() -> Array[Type]:
 	return _get_aligned_magic(ElementalAlignment.get_dark_elements())
 
 
 ## Gets the res stat types aligned with the light element.
-static func get_light_aligned_res() -> Array:
+static func get_light_aligned_res() -> Array[Type]:
 	return _get_aligned_res(ElementalAlignment.get_light_elements())
 
 
 ## Gets the res stat types aligned with the dark element.
-static func get_dark_aligned_res() -> Array:
+static func get_dark_aligned_res() -> Array[Type]:
 	return _get_aligned_res(ElementalAlignment.get_dark_elements())
 
 
 ## Helper function for get_light_aligned_magic and get_dark_aligned_magic. Takes
 ## the aligned elements and returns an array of the corresponding magic stat types.
-static func _get_aligned_magic(aligned_elements: Array) -> Array:
-	var parts: Array = []
+static func _get_aligned_magic(
+	aligned_elements: Array[Element.Core]
+) -> Array[Type]:
+	var parts: Array[Type] = []
 	for element in aligned_elements:
 		match element:
 			Element.Core.EARTH:
@@ -88,8 +90,10 @@ static func _get_aligned_magic(aligned_elements: Array) -> Array:
 
 ## Helper function for get_light_aligned_res and get_dark_aligned_res. Takes
 ## the aligned elements and returns an array of the corresponding res stat types.
-static func _get_aligned_res(aligned_elements: Array) -> Array:
-	var parts: Array = []
+static func _get_aligned_res(
+	aligned_elements: Array[Element.Core]
+) -> Array[Type]:
+	var parts: Array[Type] = []
 	for element in aligned_elements:
 		match element:
 			Element.Core.EARTH:

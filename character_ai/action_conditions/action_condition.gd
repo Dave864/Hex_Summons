@@ -8,7 +8,7 @@ extends Node
 ## state of the characters and map.
 func is_met(
 	_character: Character,
-	_targets: Array,
+	_targets: Array[Character],
 	_distance_map: DistanceMap
 ) -> bool:
 	return true

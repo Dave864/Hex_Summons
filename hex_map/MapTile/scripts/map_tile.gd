@@ -24,7 +24,7 @@ const SELECTOR_Y_OFFSET = 0.125
 ##  0  / \  1
 ##  5 |   | 2
 ##  4  \ /  3
-var _adjacent_tiles: Array = [null, null, null, null, null, null]: \
+var _adjacent_tiles: Array[MapTile] = [null, null, null, null, null, null]: \
 	get = get_all_adjacent
 ## Flag that indicates the highlight of the tile.
 var _highlight_type: int = HexHighlighter.Option.NONE: \
@@ -66,7 +66,7 @@ func set_adjacent_tile(edge: int, map_tile: Area3D):
 
 
 ## Gets the array of all adjacent tiles.
-func get_all_adjacent() -> Array:
+func get_all_adjacent() -> Array[MapTile]:
 	return _adjacent_tiles
 
 

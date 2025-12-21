@@ -6,8 +6,8 @@ extends Node
 
 @export var map_tiles_reference: NodePath = NodePath("")
 
-var _highlighted_map_indexes: Array = []
-var _selectable_map_indexes: Array = []
+var _highlighted_map_indexes: Array[int] = []
+var _selectable_map_indexes: Array[int] = []
 
 @onready var _map_tiles: Tiles = get_node(map_tiles_reference)
 
@@ -65,14 +65,14 @@ func highlight_action_source_area(tile_ids: Array, pc: PlayerCharacter) -> void:
 ## Highlight the selector for the specified tiles to represent the effect area
 ## of an action.
 func select_effect_range(
-		tile_ids: Array,
+		tile_ids: Array[int],
 		caster_index: int,
 		emission_index: int,
 		ignore_caster: bool,
 		effect_is_cardinal: bool
 ) -> void:
-	var map_section: Array = _map_tiles.get_from_ids(tile_ids)
-	for tile in map_section:
+	var map_section: Array[MapTile] = _map_tiles.get_from_ids(tile_ids)
+	for tile: MapTile in map_section:
 		var occupant: Character = tile.occupant.get_current_occupant()
 		var tile_index: int = tile.map_coordinate.get_tile_index()
 		if tile_index == emission_index:

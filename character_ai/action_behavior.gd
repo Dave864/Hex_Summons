@@ -29,7 +29,7 @@ enum Movement {
 @export var randomize_move_dist: bool = false
 
 var _cooldown: Cooldown = null
-var _conditions: Array = []
+var _conditions: Array[ActionCondition] = []
 var _target_group: bool = false: get = target_group
 var _group_condition: GroupCondition = null: get = get_group_condition
 
@@ -37,7 +37,7 @@ var _group_condition: GroupCondition = null: get = get_group_condition
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	_target_group = false
-	for n in get_children():
+	for n: Node in get_children():
 		if n is ActionCondition:
 			_conditions.append(n)
 			if n is GroupCondition:
@@ -58,14 +58,14 @@ func _ready():
 ## Evaluates if all conditions have been met.
 func conditions_met(
 	character: Character,
-	targets: Array,
+	targets: Array[Character],
 	distance_map: DistanceMap
 ) -> bool:
 	if _cooldown != null and _cooldown.is_active():
 		return false
 	if _conditions.size() == 0:
 		return true
-	for c in _conditions:
+	for c: ActionCondition in _conditions:
 		if not c.is_met(character, targets, distance_map):
 			return false
 	return true

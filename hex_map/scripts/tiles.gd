@@ -69,10 +69,10 @@ func get_at(index: int) -> Node:
 
 
 ## Gets the MapTiles of the specified ids.
-func get_from_ids(ids: Array) -> Array:
-	var tiles: Array = []
-	for i in ids:
-		tiles.append(get_child(i))
+func get_from_ids(ids: Array[int]) -> Array[MapTile]:
+	var tiles: Array[MapTile] = []
+	for i: int in ids:
+		tiles.append(get_child(i) as MapTile)
 	return tiles
 
 
@@ -234,16 +234,16 @@ func _update_grid_x(old_x: int) -> void:
 
 ## Add new tiles to account for an increase in the value of x_count.
 func _grow_x(old_x: int) -> void:
-	var old_tiles: Array = get_children()
+	var old_tiles: Array[Node] = get_children()
 	var x_offset: float = (old_x - x_count) * HexUtil.HEX_EDGE_RATIO
-	for t in get_children():
+	for t: Node in old_tiles:
 		t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
 	# Calculates the position for each tile so that the grid is centered to
 	# origin and adds new tiles.
-	for z in z_count:
+	for z: int in z_count:
 		var offset: Vector3 = Vector3.ZERO
 		offset.z = 1.5 * z
-		for x in x_count:
+		for x: int in x_count:
 			if x >= old_x:
 				offset.x = 2 * HexUtil.HEX_EDGE_RATIO * x
 				if !_is_even(z):
@@ -260,15 +260,15 @@ func _grow_x(old_x: int) -> void:
 
 ## Remove tiles to account for a decrease in the value of x_count.
 func _shrink_x(old_x: int) -> void:
-	var tiles: Array = get_children()
+	var tiles: Array[Node] = get_children()
 	for i in old_x - x_count:
 		var x: int = old_x - i - 1
-		for z in z_count:
+		for z: int in z_count:
 			var index: int = (z * old_x) + x
 			_delete_tile(tiles[index])
 	# Move remaining tiles to the right
 	var x_offset: float = (old_x - x_count) * HexUtil.HEX_EDGE_RATIO
-	for t in get_children():
+	for t: Node in get_children():
 		t.translate_object_local(Vector3(x_offset, 0.0, 0.0))
 
 
@@ -302,8 +302,8 @@ func _grow_z(old_z: int) -> void:
 
 ## Remove tiles to account for a decrease in the value of z_count.
 func _shrink_z(old_z: int) -> void:
-	var tiles: Array = get_children()
-	for i in range(old_z - z_count):
+	var tiles: Array[Node] = get_children()
+	for i: int in range(old_z - z_count):
 		var z: int = old_z - i - 1
 		for x in x_count:
 			var index: int = (z * x_count) + x
