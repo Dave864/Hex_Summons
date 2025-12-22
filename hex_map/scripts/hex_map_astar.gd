@@ -51,7 +51,7 @@ func get_distance_map(
 	frontier.push(0.0, start_id)
 	id_distances.add(start_id, DistanceData.new(0, 0.0))
 	while not frontier.empty():
-		var current: Array = frontier.min()
+		var current: Array[Variant] = frontier.min()
 		frontier.pop_min()
 		for next_id: int in get_point_connections(current[1]):
 			if is_point_disabled(next_id):
@@ -87,7 +87,7 @@ func get_full_distance_map(start_id: int) -> DistanceMap:
 	frontier.push(0.0, start_id)
 	id_distances.add(start_id, DistanceData.new(0, 0.0))
 	while not frontier.empty():
-		var current: Array = frontier.min()
+		var current: Array[Variant] = frontier.min()
 		frontier.pop_min()
 		for next_id: int in get_point_connections(current[1]):
 			if is_point_disabled(next_id):
@@ -169,14 +169,17 @@ func tile_distance(start_index: int, end_index: int) -> float:
 
 
 ## Updates the astar disabled flag for the tiles occupied by the specified characters.
-func update_astar_disabled_for_characters(characters: Array, disabled: bool) -> void:
-	for c in characters:
+func update_astar_disabled_for_characters(
+	characters: Array[Character],
+	disabled: bool
+) -> void:
+	for c: Character in characters:
 		set_point_disabled(c.get_index_at(), disabled)
 
 
 ## Set the disabled flag for the specified area in the astar map.
-func set_area_disabled(tile_ids: Array, disabled: bool = true) -> void:
-	for id in tile_ids:
+func set_area_disabled(tile_ids: Array[int], disabled: bool = true) -> void:
+	for id: int in tile_ids:
 		set_point_disabled(id, disabled)
 
 
@@ -218,7 +221,7 @@ func _get_closest_path(
 	source_id: int,
 	target_id: int,
 	max_dist: int
-) -> Array:
+) -> Array[Variant]:
 	var frontier: PQueue = PQueue.new()
 	var distances: Dictionary = {}
 	var came_from: Dictionary = {}
@@ -229,7 +232,7 @@ func _get_closest_path(
 	}
 	came_from[source_id] = -1
 	while not frontier.empty():
-		var cur: Array = frontier.min()
+		var cur: Array[Variant] = frontier.min()
 		var cur_dist: float = distances[cur[1]]["travel"]
 		frontier.pop_min()
 		# Exit loop early if target is reached
@@ -261,7 +264,7 @@ func _get_closest_path(
 			or distances[pt]["to_target"] < distances[closest_pt]["to_target"]
 		):
 			closest_pt = pt
-	var path: Array = []
+	var path: Array[Variant] = []
 	while closest_pt > 0:
 		path.append(_add_path_item_func.call(closest_pt))
 		closest_pt = came_from[closest_pt]

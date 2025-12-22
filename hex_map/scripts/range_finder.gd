@@ -102,8 +102,8 @@ func get_distance_map(
 func get_character_point_path(
 	c: Character,
 	dest_id: int,
-	opponents: Array,
-	movement_area_ids: Array
+	opponents: Array[Character],
+	movement_area_ids: Array[int]
 ) -> PackedVector3Array:
 	_hm_astar.set_area_disabled(movement_area_ids, false)
 	# Disable connection points of the opposite character type to prevent character
@@ -123,8 +123,8 @@ func get_character_point_path(
 func get_character_id_path(
 	c: Character,
 	dest_id: int,
-	opponents: Array,
-	movement_area_ids: Array
+	opponents: Array[Character],
+	movement_area_ids: Array[int]
 ) -> PackedInt64Array:
 	_hm_astar.set_area_disabled(movement_area_ids, false)
 	# Disable connection points of the opposite character type to prevent character
@@ -211,7 +211,7 @@ func get_character_travesible_tiles(
 func get_character_closest_point_toward(
 	c: Character,
 	dest_id: int,
-	opponents: Array,
+	opponents: Array[Character],
 	move_override: int = -1
 ) -> int:
 	# Enable all connections to make sure the path can be found.

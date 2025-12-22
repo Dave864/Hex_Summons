@@ -54,8 +54,8 @@ func _move_to_next_state() -> void:
 
 
 ## Changes the state of the targets.
-func _change_target_state(targets: Array, active: bool) -> void:
-	for t in targets:
+func _change_target_state(targets: Array[Character], active: bool) -> void:
+	for t: Character in targets:
 		if active:
 			t.activate_hit_box()
 		else:

@@ -15,7 +15,7 @@ extends ActionCondition
 ## state of the characters and map.
 func is_met(
 	character: Character,
-	_targets: Array,
+	_targets: Array[Character],
 	_distance_map: DistanceMap
 ) -> bool:
 	var cur_health: int = character.stats.get_stat(Stat.Type.CUR_HEALTH)

@@ -16,7 +16,7 @@ var _selectable_map_indexes: Array[int] = []
 ## Setting player_index to -1 indicates that we want to use the current player position
 ## to determine where to set the Player highlight.
 func highlight_player_movement(
-	tile_ids: Array,
+	tile_ids: Array[int],
 	pc: PlayerCharacter,
 	player_index: int = -1
 ) -> void:
@@ -25,7 +25,7 @@ func highlight_player_movement(
 	player_tile.set_selector_type(HexHighlighter.Option.MOVE)
 	
 	# Set the tile highlights.
-	for i in tile_ids:
+	for i: int in tile_ids:
 		var tile: MapTile = _map_tiles.get_at(i)
 		if tile.occupant.get_current_occupant() == null:
 			if i == player_index:
@@ -48,8 +48,11 @@ func highlight_player_movement(
 
 
 ## Highlight the specified tiles as being within the source range of an action.
-func highlight_action_source_area(tile_ids: Array, pc: PlayerCharacter) -> void:
-	for index in tile_ids:
+func highlight_action_source_area(
+	tile_ids: Array[int],
+	pc: PlayerCharacter
+) -> void:
+	for index: int in tile_ids:
 		var tile: MapTile = _map_tiles.get_at(index)
 		if index == pc.map_coordinate.get_tile_index():
 			tile.set_highlight_type(HexHighlighter.Option.PLAYER)

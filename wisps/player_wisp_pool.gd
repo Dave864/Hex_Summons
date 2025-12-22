@@ -27,7 +27,7 @@ func _init(new_player_name: String = "") -> void:
 		WispTracker.get_bonded_wisps(player_name)
 	)
 	# Unable to set contents type for element_wisps as Godot v4.5 does not allow
-	# for nested type collections.
+	# for nested type collections. Setting contents type here results in an error.
 	for element_wisps: Array in bonded_wisps.values():
 		for wisp: String in element_wisps:
 			add_new_wisp(wisp)

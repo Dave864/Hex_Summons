@@ -12,7 +12,10 @@ static func sort_character_initiative(a: Character, b: Character) -> bool:
 ## Takes in two arrays, each of which contains two items.
 ## The first element is the character.
 ## The second element is the distance.
-static func sort_distance_to_character_asc(c1: Array, c2: Array) -> bool:
+static func sort_distance_to_character_asc(
+	c1: Array[Variant],
+	c2: Array[Variant]
+) -> bool:
 	return c1[1] < c2[1]
 
 
@@ -20,5 +23,8 @@ static func sort_distance_to_character_asc(c1: Array, c2: Array) -> bool:
 ## Takes in two arrays, each of which contains two items.
 ## The first element is the character.
 ## The second element is the distance.
-static func sort_distance_to_character_desc(c1: Array, c2: Array) -> bool:
+static func sort_distance_to_character_desc(
+	c1: Array[Variant],
+	c2: Array[Variant]
+) -> bool:
 	return not sort_distance_to_character_asc(c1, c2)
