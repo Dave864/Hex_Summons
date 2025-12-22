@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="2_dr147"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="2_fa11t"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="2_uxi0t"]
-[ext_resource type="Script" uid="uid://dtcij6mogsbf4" path="res://character/scripts/summon_stat_modifiers.gd" id="7_gm0pc"]
+[ext_resource type="Script" uid="uid://dtcij6mogsbf4" path="res://character/scripts/character_stats/summon_stat_modifiers.gd" id="7_gm0pc"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="7_ihyy3"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="8_8b1as"]
 [ext_resource type="Script" uid="uid://b6m2gr6i1qb7c" path="res://wisps/summon_wisp_pool.gd" id="8_ikibm"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://b1bn5jkpyyh51" path="res://fsm/user_character/summon_character/summon_character_wait.gd" id="10_tll31"]
 [ext_resource type="Script" uid="uid://cuk41txbrftic" path="res://fsm/user_character/user_character_move.gd" id="11_7jwav"]
 [ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="12_405cv"]
+
 
 [node name="Summon" type="Area3D"]
 collision_layer = 4

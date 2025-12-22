@@ -1,6 +1,6 @@
 class_name SummonStatModifiers
 extends StatModifiers
-## Tracks the stats of an active summon.
+## Tracks the stat modifications of an active summon.
 ##
 ## Uses the stats of a PlayerCharacter in conjunction with a set of multipliers
 ## from the active summon to determine the stats. Any modifier updates are

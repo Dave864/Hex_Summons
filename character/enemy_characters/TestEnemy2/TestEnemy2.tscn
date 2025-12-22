@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://dp6jkaqsiu5vq" path="res://fsm/enemy_character/enemy_character_think.gd" id="7"]
 [ext_resource type="Script" uid="uid://cdrf5m57oe7j7" path="res://fsm/enemy_character/enemy_character_action.gd" id="8"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="9"]
-[ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stat_modifiers.gd" id="10"]
+[ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="10"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="12"]
 [ext_resource type="Texture2D" path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattlePortrait.atlastex" id="13"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" path="res://actions/Empty/Empty.tscn" id="19"]
 [ext_resource type="Script" uid="uid://b020qxy754ll2" path="res://character_ai/action_conditions/group_condition.gd" id="20"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="21"]
+
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.05

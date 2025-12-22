@@ -58,8 +58,8 @@ func change_class(player: String, new_class: String) -> void:
 
 
 ## Loads the save data for the party.
-func load_save_data(save_data: Dictionary) -> void:
-	for player in save_data.keys():
+func load_save_data(save_data: Dictionary[String, Variant]) -> void:
+	for player: String in save_data.keys():
 		party_details[player][NAME] = save_data[NAME]
 		party_details[player][IN_PARTY] = save_data[IN_PARTY]
 		var class_path: String = CLASS_DATA_PATH.format([save_data[CLASS]])
@@ -68,9 +68,9 @@ func load_save_data(save_data: Dictionary) -> void:
 
 
 ## Gets the current state of the party for the purposes of saving the data.
-func get_save_data() -> Dictionary:
-	var save_data: Dictionary = {}
-	for player in party_details.keys():
+func get_save_data() -> Dictionary[String, Dictionary]:
+	var save_data: Dictionary[String, Dictionary] = {}
+	for player: String in party_details.keys():
 		save_data[player] = {
 			NAME: party_details[player][NAME],
 			CLASS: party_details[player][CLASS].name,

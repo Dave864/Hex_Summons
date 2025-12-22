@@ -21,7 +21,7 @@ extends Resource
 @export_range(0, 4) var light_cost: int = 0
 @export_range(0, 4) var dark_cost: int = 0
 
-var summary: Dictionary = _get_costs()
+var summary: Dictionary[Element.Type, int] = _get_costs()
 
 
 ## Checks if the wisp pool meets the requirements described by these stats.
@@ -42,8 +42,8 @@ func _ready():
 
 
 ## Gets the elements with cost values.
-func _get_costs() -> Dictionary:
-	var element_costs: Dictionary = {}
+func _get_costs() -> Dictionary[Element.Type, int]:
+	var element_costs: Dictionary[Element.Type, int] = {}
 	if earth_cost > 0:
 		element_costs[Element.Type.EARTH] = earth_cost
 	if fire_cost > 0:

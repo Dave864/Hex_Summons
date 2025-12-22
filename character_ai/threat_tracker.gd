@@ -7,13 +7,14 @@ extends Object
 ## The id value of the observer.
 var _observer_id: int = -1
 ## Tracks the threat values of tracked characters.
-var _threat_values: Dictionary = {}: get = get_threat_values
+var _threat_values: Dictionary[int, Dictionary] = {}:
+	get = get_threat_values
 ## The rate at which threat decays for tracked characters.
 var _decay_rate: float = 2.0
 
 
 ## Returns the threat values recorded by the observer.
-func get_threat_values() -> Dictionary:
+func get_threat_values() -> Dictionary[int, Dictionary]:
 	return _threat_values
 
 
@@ -45,9 +46,9 @@ func reset_active() -> void:
 
 
 # Initializes the object.
-func _init(observer_id: int, chars: Array) -> void:
+func _init(observer_id: int, chars: Array[Character]) -> void:
 	_observer_id = observer_id
-	for c in chars:
+	for c: Character in chars:
 		_threat_values[c.get_instance_id()] = {
 			"value": 0.0,
 			"active": false

@@ -5,7 +5,7 @@ extends Resource
 
 ## Determines the strength of the effect for a given character.
 func base_strength(
-		source_stats: Dictionary,
+		source_stats: Dictionary[],
 		action_potency: Potency
 ) -> float:
 	return _strength_scalar(_get_strength_potency(source_stats, action_potency))
@@ -13,7 +13,7 @@ func base_strength(
 
 ## Determines the effectiveness of an action on a given target.
 func efficacy(
-	source_stats: Dictionary,
+	source_stats: Dictionary[],
 	target_stats: CharacterStatModifiers,
 	action_potency: Potency
 ) -> float:
@@ -80,33 +80,33 @@ func _decrease_operation(
 ## Determines the strength of the effect for a given character when resisted
 ## by the target.
 func _calculate_resisted_strength(
-	source_stats: Dictionary,
+	source_stats: Dictionary[],
 	target_stats: CharacterStatModifiers,
 	action_potency: Potency
 ) -> float:
-	var strength_values: Dictionary = _get_strength_potency(
+	var strength_values: Dictionary[String, Variant] = _get_strength_potency(
 			source_stats,
 			action_potency
 	)
-	var res_values: Dictionary = target_stats.get_defensive()
+	var res_values: Dictionary[String, Variant] = target_stats.get_defensive()
 	_apply_resistance(strength_values, res_values)
 	return _strength_scalar(strength_values)
 
 
 ## Combines the potency strength data into a single value.
-func _strength_scalar(strength_data: Dictionary) -> float:
+func _strength_scalar(strength_data: Dictionary[String, Variant]) -> float:
 	var total_strength: float = strength_data[Stat.ATTACK]
-	for v in strength_data[Stat.MAGIC].values():
+	for v: float in strength_data[Stat.MAGIC].values():
 		total_strength += v
 	return total_strength
 
 
 ## Determines the raw potency values for a given character.
 func _get_strength_potency(
-		character_stats: Dictionary,
+		character_stats: Dictionary[String, Variant],
 		action_potency: Potency
-) -> Dictionary:
-	var p_vals: Dictionary = {}
+) -> Dictionary[String, Variant]:
+	var p_vals: Dictionary[String, Variant] = {}
 	p_vals[Stat.ATTACK] = (
 			action_potency.attack_potency \
 			* character_stats[Stat.ATTACK]
@@ -120,7 +120,10 @@ func _get_strength_potency(
 
 
 ## Applies resistance values to the strength.
-func _apply_resistance(strength: Dictionary, resistance: Dictionary) -> void:
+func _apply_resistance(
+	strength: Dictionary[String, Variant],
+	resistance: Dictionary[String, Variant]
+) -> void:
 	strength[Stat.ATTACK] = _bind_resistance(
 			strength[Stat.ATTACK],
 			resistance[Stat.DEFENSE]

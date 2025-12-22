@@ -1,7 +1,7 @@
 @tool
 class_name CharacterStatModifiers
 extends StatModifiers
-## Node that keeps track of all of a character's statistics.
+## Node that keeps track of the modifications to a character's stats.
 
 
 ## Indicates that the agility has been modified.

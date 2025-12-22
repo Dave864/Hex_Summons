@@ -40,7 +40,7 @@ var turn_duration: int = max_turn_duration
 ## The stats of the character that will apply this effect.
 var _source_stats: CharacterStatModifiers = null: set = set_source_stats
 ## The current values of the character stats.
-var _current_stats: Dictionary = {}
+var _current_stats: Dictionary[String, Variant] = {}
 ## The potency of the action the parent effect is assigned to.
 var _action_potency: Potency = null: set = set_action_potency
 
