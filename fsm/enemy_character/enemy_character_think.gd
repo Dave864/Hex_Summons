@@ -15,8 +15,6 @@ var _action: Action = null
 var _target_index: int = -1
 ## The index the enemy will end their movement on.
 var _move_end_index: int = -1
-## Stores the distance map of the source range at the end of character movement.
-var _source_d_map: Dictionary = {}
 ## Runs the AI logic in a separate thread.
 var _ai_thread: Thread
 
@@ -53,11 +51,10 @@ func enter(_msg := {}) -> void:
 ## function to clean up the state.
 func exit() -> void:
 	_action = null
-	_source_d_map.clear()
 
 
 ## Orients the action emission to target. Returns the targets the action will hit.
-func _orient_to_target(possible_targets: Array) -> Array:
+func _orient_to_target(possible_targets: Array[Character]) -> Array:
 	var target_tile: MapTile = ai_node.h_map.get_tile_at(_target_index)
 	_action.set_emission_map_index(_move_end_index)
 	var char_pos: Vector3 = (
@@ -78,7 +75,7 @@ func _orient_to_target(possible_targets: Array) -> Array:
 
 ## Places the effect emission on target. Returns the targets that the action will
 ## hit.
-func _place_on_target(possible_targets: Array) -> Array:
+func _place_on_target(possible_targets: Array[Character]) -> Array:
 	_action.set_emission_map_index(_target_index)
 	var em_pos: Vector3 = (
 		ai_node.h_map.get_tile_at(_target_index).get_character_position()
