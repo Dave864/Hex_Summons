@@ -4,6 +4,21 @@ extends Object
 ## ranges.
 
 
+## The contents of a display hex. Contains the outline and fill details.
+class HexDetails:
+	## The details for the outline of the hex.
+	var outline: Detail = Detail.EMPTY
+	## The details for the interior of the hex.
+	var fill: Detail = Detail.EMPTY
+	
+	
+	## Resets the hex details to be empty.
+	func empty() -> void:
+		outline = Detail.EMPTY
+		fill = Detail.EMPTY
+
+
+## Describes what is being displayed at each hex.
 enum Detail {
 	EMPTY,
 	CASTER,
@@ -12,13 +27,29 @@ enum Detail {
 	EFFECT_SOURCE
 }
 
-const OUTLINE: String = "Outline"
-const FILL: String = "Fill"
-
-var _row_count: int = 0: get = get_row_count
-var _col_count: int = 0: get = get_col_count
+## The number of rows in the display.
+var _row_count: int = 0:
+	get = get_row_count
+## The number of columns in the display.
+var _col_count: int = 0:
+	get = get_col_count
+## The index of the middle row of the display.
 var _mid_row: int = 0
+## The grid of hexes that are to be displayed.
 var _matrix: Array[Array] = []
+
+
+## Initializes this DisplayMatrix.
+func _init(row_count: int, col_count: int):
+	_row_count = row_count
+	_col_count = col_count
+	_mid_row = int(round(_row_count / 2.0)) - 1
+	for row: int in _row_count:
+		var row_array: Array[HexDetails] = []
+		for col in _col_count:
+			var hex_details := HexDetails.new()
+			row_array.append(hex_details)
+		_matrix.append(row_array)
 
 
 ## Gets the row count of the matrix.
@@ -32,40 +63,36 @@ func get_col_count() -> int:
 
 
 ## Gets the details at the given index.
-func at(index: Vector2) -> Dictionary:
+func at(index: Vector2) -> HexDetails:
 	return _matrix[index.y][index.x]
 
 
 ## Gets the outline details at the given index.
-func outline_at(index: Vector2) -> int:
-	return _matrix[index.y][index.x][OUTLINE]
+func outline_at(index: Vector2) -> Detail:
+	return _matrix[index.y][index.x].outline
 
 
 ## Gets the fill details at the given index.
-func fill_at(index: Vector2) -> int:
-	return _matrix[index.y][index.x][FILL]
+func fill_at(index: Vector2) -> Detail:
+	return _matrix[index.y][index.x].fill
 
 
 ## Set the outline detail for the given index.
-func set_outline(index: Vector2, outline_detail: int) -> void:
-	assert(
-			outline_detail in Detail.values(),
-			"Passed outline_detail is not valid."
-	)
-	_matrix[index.y][index.x][OUTLINE] = outline_detail
+func set_outline(index: Vector2, outline_detail: Detail) -> void:
+	_matrix[index.y][index.x].outline = outline_detail
 
 
 ## Sets the fill detail for the given index.
-func set_fill(index: Vector2, fill_detail: int) -> void:
-	assert(
-			fill_detail in Detail.values(),
-			"Passed outline_detail is not valid."
-	)
-	_matrix[index.y][index.x][FILL] = fill_detail
+func set_fill(index: Vector2, fill_detail: Detail) -> void:
+	_matrix[index.y][index.x].fill = fill_detail
 
 
 ## Sets the details for the given index.
-func set_details(index: Vector2, outline_detail: int, fill_detail: int) -> void:
+func set_details(
+	index: Vector2,
+	outline_detail: Detail,
+	fill_detail: Detail
+) -> void:
 	# Don't update effect outline if new outline is a source.
 	if (
 		outline_detail != Detail.SOURCE_RANGE
@@ -82,8 +109,8 @@ func set_details(index: Vector2, outline_detail: int, fill_detail: int) -> void:
 
 ## Sets the details for the caster point.
 func set_caster_details() -> void:
-	_matrix[_mid_row][1][OUTLINE] = Detail.CASTER
-	_matrix[_mid_row][1][FILL] = Detail.CASTER
+	_matrix[_mid_row][1].outline = Detail.CASTER
+	_matrix[_mid_row][1].fill = Detail.CASTER
 
 
 ## Sets the details for the emission point.
@@ -98,21 +125,5 @@ func set_emission_details(emission_index: Vector2) -> void:
 func reset_display() -> void:
 	for row in _row_count:
 		for col in _col_count:
-			_matrix[row][col][OUTLINE] = Detail.EMPTY
-			_matrix[row][col][FILL] = Detail.EMPTY
-
-
-## Initializes this DisplayMatrix.
-func _init(row_count: int, col_count: int):
-	_row_count = row_count
-	_col_count = col_count
-	_mid_row = int(round(_row_count / 2.0)) - 1
-	for row: int in _row_count:
-		var row_array: Array[Dictionary] = []
-		for col in _col_count:
-			var hex_details: Dictionary = {
-				OUTLINE: Detail.EMPTY,
-				FILL: Detail.EMPTY
-			}
-			row_array.append(hex_details)
-		_matrix.append(row_array)
+			_matrix[row][col].outline = Detail.EMPTY
+			_matrix[row][col].fill = Detail.EMPTY
