@@ -14,6 +14,12 @@ var _res: Dictionary[Element.Core, int] = {
 	Element.Core.WATER: 0,
 	Element.Core.WIND: 0,
 }
+## The override value for light resistance. Negative means that there is no
+## override.
+var _light_override: int = -1
+## The overrida value for dark resistance. Negative means that there is no
+## override.
+var _dark_override: int = -1
 
 
 func _init(
@@ -82,14 +88,42 @@ func set_wind_res(value: int) -> void:
 
 ## Gets the resistance value for light element.
 func get_light_res() -> int:
+	if _light_override >= 0:
+		return _light_override
 	var light_elems := ElementalAlignment.get_light_elements()
 	return _get_alignment_sum(light_elems)
 
 
+## Sets an override value for light resistance.
+func override_light_res(value: int) -> void:
+	if value >= 0:
+		return
+	_light_override = value
+
+
+## Clears out the override value for light resistance.
+func clear_light_override() -> void:
+	_light_override = -1
+
+
 ## Gets the resistance value for dark element.
 func get_dark_res() -> int:
+	if _dark_override >= 0:
+		return _dark_override
 	var dark_elems := ElementalAlignment.get_dark_elements()
 	return _get_alignment_sum(dark_elems)
+
+
+## Sets an override value for dark resistance.
+func override_dark_res(value: int) -> void:
+	if value >= 0:
+		return
+	_dark_override = value
+
+
+## Clears out the override value for dark resistance.
+func clear_dark_override() -> void:
+	_dark_override = -1
 
 
 ## Gets the resistance value for a specified core element.

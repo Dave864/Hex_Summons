@@ -22,7 +22,7 @@ const ELEMENTAL_POTENCY: Array[float] = [0.0, 1.0, 1.5, 2.0, 2.33, 2.66, 3.0]
 
 
 ## Gets the potency value of an element.
-func get_elemental_potency(element: int) -> float:
+func get_elemental_potency(element: Element.Type) -> float:
 	match element:
 		Element.Type.EARTH:
 			return ELEMENTAL_POTENCY[earth_alignment]

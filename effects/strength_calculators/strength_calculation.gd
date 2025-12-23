@@ -5,7 +5,7 @@ extends Resource
 
 ## Determines the strength of the effect for a given character.
 func base_strength(
-		source_stats: Dictionary[],
+		source_stats: AllStats,
 		action_potency: Potency
 ) -> float:
 	return _strength_scalar(_get_strength_potency(source_stats, action_potency))
@@ -13,7 +13,7 @@ func base_strength(
 
 ## Determines the effectiveness of an action on a given target.
 func efficacy(
-	source_stats: Dictionary[],
+	source_stats: AllStats,
 	target_stats: CharacterStatModifiers,
 	action_potency: Potency
 ) -> float:
@@ -46,7 +46,8 @@ func process_operation(
 			return 0
 
 
-## Determines the value that will be used to change the stat to be the desired value.
+## Determines the value that will be used to change the stat to be the desired
+## value.
 func _set_operation(
 	target_strength: float,
 	efficacy_percent: float,
@@ -80,61 +81,78 @@ func _decrease_operation(
 ## Determines the strength of the effect for a given character when resisted
 ## by the target.
 func _calculate_resisted_strength(
-	source_stats: Dictionary[],
+	source_stats: AllStats,
 	target_stats: CharacterStatModifiers,
 	action_potency: Potency
-) -> float:
-	var strength_values: Dictionary[String, Variant] = _get_strength_potency(
+) -> int:
+	var strength_values: OffensiveStats = _get_strength_potency(
 			source_stats,
 			action_potency
 	)
-	var res_values: Dictionary[String, Variant] = target_stats.get_defensive()
+	var res_values: DefensiveStats = target_stats.get_defensive()
 	_apply_resistance(strength_values, res_values)
 	return _strength_scalar(strength_values)
 
 
 ## Combines the potency strength data into a single value.
-func _strength_scalar(strength_data: Dictionary[String, Variant]) -> float:
-	var total_strength: float = strength_data[Stat.ATTACK]
-	for v: float in strength_data[Stat.MAGIC].values():
-		total_strength += v
+func _strength_scalar(strength_data: OffensiveStats) -> int:
+	var total_strength: int = strength_data.get_attack()
+	for element in Element.Type:
+		total_strength += strength_data.get_magic(element)
 	return total_strength
 
 
 ## Determines the raw potency values for a given character.
 func _get_strength_potency(
-		character_stats: Dictionary[String, Variant],
+		character_stats: AllStats,
 		action_potency: Potency
-) -> Dictionary[String, Variant]:
-	var p_vals: Dictionary[String, Variant] = {}
-	p_vals[Stat.ATTACK] = (
-			action_potency.attack_potency \
-			* character_stats[Stat.ATTACK]
+) -> OffensiveStats:
+	var strength := OffensiveStats.new(
+		int(action_potency.attack_potency * character_stats.get_attack())
 	)
-	p_vals[Stat.MAGIC] = {}
-	for element in Element.Type.values():
-		var elem_pot: float = action_potency.get_elemental_potency(element)
-		var c_stat: int = character_stats[Stat.MAGIC][element]
-		p_vals[Stat.MAGIC][element] = elem_pot + c_stat
-	return p_vals
+	for element in Element.Core:
+		var magic_value := int(
+			action_potency.get_elemental_potency(element as Element.Type)
+			* character_stats.get_magic(element as Element.Type)
+		)
+		strength.set_core_magic(element, magic_value)
+	var light_magic := int(
+		action_potency.get_elemental_potency(Element.Type.LIGHT)
+		* character_stats.get_magic(Element.Type.LIGHT)
+	)
+	var dark_magic := int(
+		action_potency.get_elemental_potency(Element.Type.DARK)
+		* character_stats.get_magic(Element.Type.DARK)
+	)
+	strength.override_light_magic(light_magic)
+	strength.override_dark_magic(dark_magic)
+	return strength
 
 
 ## Applies resistance values to the strength.
 func _apply_resistance(
-	strength: Dictionary[String, Variant],
-	resistance: Dictionary[String, Variant]
+	strength: OffensiveStats,
+	resistance: DefensiveStats
 ) -> void:
-	strength[Stat.ATTACK] = _bind_resistance(
-			strength[Stat.ATTACK],
-			resistance[Stat.DEFENSE]
+	var resisted_attack: int = _bind_resistance(
+			strength.get_attack(),
+			resistance.get_defense()
 	)
-	for element in Element.Type.values():
-		strength[Stat.MAGIC][element] = _bind_resistance(
-				strength[Stat.MAGIC][element],
-				resistance[Stat.RESISTANCE][element]
+	strength.set_attack(resisted_attack)
+	for element in Element.Type:
+		var resisted_magic: int = _bind_resistance(
+			strength.get_magic(element),
+			resistance.get_res(element)
 		)
+		if element == Element.Type.LIGHT:
+			strength.override_light_magic(resisted_magic)
+		elif element == Element.Type.DARK:
+			strength.override_dark_magic(resisted_magic)
+		else:
+			strength.set_core_magic(element, resisted_magic)
 
 
-## Calculates the result of resistance, binding the result to be no lower than zero.
-func _bind_resistance(strength: float, resistance: float) -> float:
-	return clamp(strength - resistance, 0.0, strength)
+## Calculates the result of resistance, binding the result to be no lower than
+## zero.
+func _bind_resistance(strength: int, resistance: int) -> int:
+	return clampi(strength - resistance, 0, strength)

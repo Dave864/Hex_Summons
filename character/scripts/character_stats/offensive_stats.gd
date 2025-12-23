@@ -14,6 +14,10 @@ var _magic: Dictionary[Element.Core, int] = {
 	Element.Core.WATER: 0,
 	Element.Core.WIND: 0,
 }
+## The override value for light magic. Negative means that there is no override.
+var _light_override: int = -1
+## The overrida value for dark magic. Negative means that there is no override.
+var _dark_override: int = -1
 
 
 func _init(
@@ -82,14 +86,42 @@ func set_wind_magic(value: int) -> void:
 
 ## Gets the magic value for light element.
 func get_light_magic() -> int:
+	if _light_override >= 0:
+		return _light_override
 	var light_elems := ElementalAlignment.get_light_elements()
 	return _get_alignment_sum(light_elems)
 
 
+## Sets an override value for light magic.
+func override_light_magic(value: int) -> void:
+	if value >= 0:
+		return
+	_light_override = value
+
+
+## Clears out the override value for light magic.
+func clear_light_override() -> void:
+	_light_override = -1
+
+
 ## Gets the magic value for dark element.
 func get_dark_magic() -> int:
+	if _dark_override >= 0:
+		return _dark_override
 	var dark_elems := ElementalAlignment.get_dark_elements()
 	return _get_alignment_sum(dark_elems)
+
+
+## Sets an override value for dark magic.
+func override_dark_magic(value: int) -> void:
+	if value >= 0:
+		return
+	_dark_override = value
+
+
+## Clears out the override value for dark magic.
+func clear_dark_override() -> void:
+	_dark_override = -1
 
 
 ## Gets the magic value for a specified element.
@@ -101,6 +133,18 @@ func get_magic(element: Element.Type) -> int:
 			return get_dark_magic()
 		_:
 			return _magic[element as Element.Core]
+
+
+## Sets the magic value for a specified element. Sets the override values for
+## light and dark magic.
+func set_magic(element: Element.Type, value: int) -> void:
+	match element:
+		Element.Type.LIGHT:
+			override_light_magic(value)
+		Element.Type.DARK:
+			override_dark_magic(value)
+		_:
+			set_core_magic(element as Element.Core, value)
 
 
 ## Sets the magic value for a specified core element.
