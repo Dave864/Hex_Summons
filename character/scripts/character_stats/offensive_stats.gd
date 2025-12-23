@@ -42,49 +42,75 @@ func set_attack(new_attack: int) -> void:
 
 ## Gets the magic value for the earth element.
 func get_earth_magic() -> int:
-	return get_magic(Element.Core.EARTH)
+	return get_magic(Element.Core.EARTH as Element.Type)
 
 
 ## Sets the magic value for the earth element.
 func set_earth_magic(value: int) -> void:
-	set_magic(Element.Core.EARTH, value)
+	set_core_magic(Element.Core.EARTH, value)
 
 
 ## Gets the magic value for the fire element.
 func get_fire_magic() -> int:
-	return get_magic(Element.Core.FIRE)
+	return get_magic(Element.Core.FIRE as Element.Type)
 
 
 ## Sets the magic value for the fire element.
 func set_fire_magic(value: int) -> void:
-	set_magic(Element.Core.FIRE, value)
+	set_core_magic(Element.Core.FIRE, value)
 
 
 ## Gets the magic value for the water element.
 func get_water_magic() -> int:
-	return get_magic(Element.Core.WATER)
+	return get_magic(Element.Core.WATER as Element.Type)
 
 
 ## Sets the magic value for the water element.
 func set_water_magic(value: int) -> void:
-	set_magic(Element.Core.WATER, value)
+	set_core_magic(Element.Core.WATER, value)
 
 
 ## Gets the magic value for the wind element.
 func get_wind_magic() -> int:
-	return get_magic(Element.Core.WIND)
+	return get_magic(Element.Core.WIND as Element.Type)
 
 
 ## Sets the magic value for the wind element.
 func set_wind_magic(value: int) -> void:
-	set_magic(Element.Core.WIND, value)
+	set_core_magic(Element.Core.WIND, value)
 
 
-## Gets the magic value for a specified core element.
-func get_magic(element: Element.Core) -> int:
-	return _magic[element]
+## Gets the magic value for light element.
+func get_light_magic() -> int:
+	var light_elems := ElementalAlignment.get_light_elements()
+	return _get_alignment_sum(light_elems)
+
+
+## Gets the magic value for dark element.
+func get_dark_magic() -> int:
+	var dark_elems := ElementalAlignment.get_dark_elements()
+	return _get_alignment_sum(dark_elems)
+
+
+## Gets the magic value for a specified element.
+func get_magic(element: Element.Type) -> int:
+	match element:
+		Element.Type.LIGHT:
+			return get_light_magic()
+		Element.Type.DARK:
+			return get_dark_magic()
+		_:
+			return _magic[element as Element.Core]
 
 
 ## Sets the magic value for a specified core element.
-func set_magic(element: Element.Core, value: int) -> void:
+func set_core_magic(element: Element.Core, value: int) -> void:
 	_magic[element] = value
+
+
+## Gets the total sum of the magic value of the specified elements. 
+func _get_alignment_sum(alignment_elements: Array[Element.Core]) -> int:
+	var total_value: int = 0
+	for elem: Element.Core in alignment_elements:
+		total_value += get_magic(elem as Element.Type)
+	return total_value

@@ -42,6 +42,41 @@ func _init(
 	_defensive_stats = new_defensive_stats
 
 
+## Gets the value for the given stat.
+func get_stat(stat: Stat.Type) -> int:
+	match stat:
+		Stat.Type.CUR_HEALTH:
+			return get_cur_health()
+		Stat.Type.MAX_HEALTH:
+			return get_max_health()
+		Stat.Type.ATTACK:
+			return get_attack()
+		Stat.Type.DEFENSE:
+			return get_defense()
+		Stat.Type.AGILITY:
+			return get_agility()
+		Stat.Type.MOVEMENT:
+			return get_movement()
+		Stat.Type.MAGIC_EARTH:
+			return get_magic(Element.Type.EARTH)
+		Stat.Type.MAGIC_FIRE:
+			return get_magic(Element.Type.FIRE)
+		Stat.Type.MAGIC_WATER:
+			return get_magic(Element.Type.WATER)
+		Stat.Type.MAGIC_WIND:
+			return get_magic(Element.Type.WIND)
+		Stat.Type.RES_EARTH:
+			return get_resistance(Element.Type.EARTH)
+		Stat.Type.RES_FIRE:
+			return get_resistance(Element.Type.FIRE)
+		Stat.Type.RES_WATER:
+			return get_resistance(Element.Type.WATER)
+		Stat.Type.RES_WIND:
+			return get_resistance(Element.Type.WIND)
+		_:
+			return 0
+
+
 ## Gets the level value.
 func get_level() -> int:
 	return _level
@@ -72,8 +107,8 @@ func get_attack() -> int:
 	return _offensive_stats.get_attack()
 
 
-## Gets the value for the magic stat of a given core element.
-func get_magic(element: Element.Core) -> int:
+## Gets the value for the magic stat of a given element.
+func get_magic(element: Element.Type) -> int:
 	return _offensive_stats.get_magic(element)
 
 
@@ -82,6 +117,6 @@ func get_defense() -> int:
 	return _defensive_stats.get_defense()
 
 
-## Gets the value for the resistance stat of a given core element.
-func get_resistance(element: Element.Core) -> int:
+## Gets the value for the resistance stat of a given element.
+func get_resistance(element: Element.Type) -> int:
 	return _defensive_stats.get_res(element)

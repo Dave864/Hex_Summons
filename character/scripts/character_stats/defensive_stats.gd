@@ -42,49 +42,75 @@ func set_defense(new_defense: int) -> void:
 
 ## Gets the resistance value for the earth element.
 func get_earth_res() -> int:
-	return get_res(Element.Core.EARTH)
+	return get_res(Element.Core.EARTH as Element.Type)
 
 
 ## Sets the resistance value for the earth element.
 func set_earth_res(value: int) -> void:
-	set_res(Element.Core.EARTH, value)
+	set_core_res(Element.Core.EARTH, value)
 
 
 ## Gets the resistance value for the fire element.
 func get_fire_res() -> int:
-	return get_res(Element.Core.FIRE)
+	return get_res(Element.Core.FIRE as Element.Type)
 
 
 ## Sets the resistance value for the fire element.
 func set_fire_res(value: int) -> void:
-	set_res(Element.Core.FIRE, value)
+	set_core_res(Element.Core.FIRE, value)
 
 
 ## Gets the resistance value for the water element.
 func get_water_res() -> int:
-	return get_res(Element.Core.WATER)
+	return get_res(Element.Core.WATER as Element.Type)
 
 
 ## Sets the resistance value for the water element.
 func set_water_res(value: int) -> void:
-	set_res(Element.Core.WATER, value)
+	set_core_res(Element.Core.WATER, value)
 
 
 ## Gets the resistance value for the wind element.
 func get_wind_res() -> int:
-	return get_res(Element.Core.WIND)
+	return get_res(Element.Core.WIND as Element.Type)
 
 
 ## Sets the resistance value for the wind element.
 func set_wind_res(value: int) -> void:
-	set_res(Element.Core.WIND, value)
+	set_core_res(Element.Core.WIND, value)
+
+
+## Gets the resistance value for light element.
+func get_light_res() -> int:
+	var light_elems := ElementalAlignment.get_light_elements()
+	return _get_alignment_sum(light_elems)
+
+
+## Gets the resistance value for dark element.
+func get_dark_res() -> int:
+	var dark_elems := ElementalAlignment.get_dark_elements()
+	return _get_alignment_sum(dark_elems)
 
 
 ## Gets the resistance value for a specified core element.
-func get_res(element: Element.Core) -> int:
-	return _res[element]
+func get_res(element: Element.Type) -> int:
+	match element:
+		Element.Type.LIGHT:
+			return get_light_res()
+		Element.Type.DARK:
+			return get_dark_res()
+		_:
+			return _res[element as Element.Core]
 
 
 ## Sets the resistance value for a specified core element.
-func set_res(element: Element.Core, value: int) -> void:
+func set_core_res(element: Element.Core, value: int) -> void:
 	_res[element] = value
+
+
+## Gets the total sum of the magic value of the specified elements. 
+func _get_alignment_sum(alignment_elements: Array[Element.Core]) -> int:
+	var total_value: int = 0
+	for elem: Element.Core in alignment_elements:
+		total_value += get_res(elem as Element.Type)
+	return total_value
