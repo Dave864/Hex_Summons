@@ -13,7 +13,8 @@ const EFFECTS: String = "Effects"
 var source_stats: CharacterStatModifiers = null:
 	set(new_source):
 		source_stats = new_source
-		## Updates the stats references of the effects to be the same as the action.
+		# Updates the stats references of the effects to be the same as the
+		# action.
 		for effect: Effect in _effects:
 			effect.set_source_stats(source_stats)
 ## The effects of this action

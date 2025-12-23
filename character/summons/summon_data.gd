@@ -47,9 +47,6 @@ const MAX_WISP: int = 4
 @export var spawn_action: ActionStats = null
 @export var turn_actions: Array[SpellStats] = []
 
-## A collated summary of the costs.
-var cost_summary: Dictionary[Element.Type, int] = _get_costs()
-
 
 ## Returns the multiplier value for the given stat.
 func multiplier_for_stat(stat: Stat.Type) -> float:
@@ -126,8 +123,8 @@ func core_elements_meet_requirements(
 	)
 
 
-## Gets the elements with cost values.
-func _get_costs() -> Dictionary[Element.Type, int]:
+## Gets the summary of the wisp cost for the summon.
+func cost_summary() -> Dictionary[Element.Type, int]:
 	var element_costs: Dictionary[Element.Type, int] = {}
 	if earth_req > 0:
 		element_costs[Element.Type.EARTH] = earth_req
