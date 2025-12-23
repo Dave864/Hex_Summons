@@ -55,9 +55,9 @@ func _set_operation(
 ) -> int:
 	var diff: float = target_strength - stat_value
 	if diff >= 0.0:
-		return convert(diff * efficacy_percent, TYPE_INT)
+		return type_convert(diff * efficacy_percent, TYPE_INT)
 	else:
-		return -convert(diff * efficacy_percent, TYPE_INT)
+		return -type_convert(diff * efficacy_percent, TYPE_INT)
 
 
 ## Determines the value to increase the target stat by.
@@ -66,7 +66,7 @@ func _increase_operation(
 	efficacy_percent: float,
 	_stat_value: int
 ) -> int:
-	return convert(base_strength_value * efficacy_percent, TYPE_INT)
+	return type_convert(base_strength_value * efficacy_percent, TYPE_INT)
 
 
 ## Determines the value to decrease the target stat by.
@@ -75,7 +75,7 @@ func _decrease_operation(
 	efficacy_percent: float,
 	_stat_value: int
 ) -> int:
-	return -convert(base_strength_value * efficacy_percent, TYPE_INT) 
+	return -type_convert(base_strength_value * efficacy_percent, TYPE_INT) 
 
 
 ## Determines the strength of the effect for a given character when resisted
@@ -110,22 +110,12 @@ func _get_strength_potency(
 	var strength := OffensiveStats.new(
 		int(action_potency.attack_potency * character_stats.get_attack())
 	)
-	for element in Element.Core:
+	for element in Element.Type:
 		var magic_value := int(
-			action_potency.get_elemental_potency(element as Element.Type)
-			* character_stats.get_magic(element as Element.Type)
+			action_potency.get_elemental_potency(element)
+			* character_stats.get_magic(element)
 		)
-		strength.set_core_magic(element, magic_value)
-	var light_magic := int(
-		action_potency.get_elemental_potency(Element.Type.LIGHT)
-		* character_stats.get_magic(Element.Type.LIGHT)
-	)
-	var dark_magic := int(
-		action_potency.get_elemental_potency(Element.Type.DARK)
-		* character_stats.get_magic(Element.Type.DARK)
-	)
-	strength.override_light_magic(light_magic)
-	strength.override_dark_magic(dark_magic)
+		strength.set_magic(element, magic_value)
 	return strength
 
 
@@ -144,12 +134,7 @@ func _apply_resistance(
 			strength.get_magic(element),
 			resistance.get_res(element)
 		)
-		if element == Element.Type.LIGHT:
-			strength.override_light_magic(resisted_magic)
-		elif element == Element.Type.DARK:
-			strength.override_dark_magic(resisted_magic)
-		else:
-			strength.set_core_magic(element, resisted_magic)
+		strength.set_magic(element, resisted_magic)
 
 
 ## Calculates the result of resistance, binding the result to be no lower than

@@ -137,6 +137,18 @@ func get_res(element: Element.Type) -> int:
 			return _res[element as Element.Core]
 
 
+## Sets the resistance value for a specified element. Sets the override values
+## for light and dark resistance.
+func set_res(element: Element.Type, value: int) -> void:
+	match element:
+		Element.Type.LIGHT:
+			override_light_res(value)
+		Element.Type.DARK:
+			override_dark_res(value)
+		_:
+			set_core_res(element as Element.Core, value)
+
+
 ## Sets the resistance value for a specified core element.
 func set_core_res(element: Element.Core, value: int) -> void:
 	_res[element] = value
