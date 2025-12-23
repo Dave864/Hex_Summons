@@ -1,7 +1,7 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" script_class="RingArea" load_steps=2 format=3 uid="uid://4faasybv3td"]
 
 [ext_resource type="Script" uid="uid://b47eadwui0tav" path="res://range_type/ring_area.gd" id="1"]
 
 [resource]
-script = ExtResource( 1 )
-radius = 0
+script = ExtResource("1")
+radius = 10

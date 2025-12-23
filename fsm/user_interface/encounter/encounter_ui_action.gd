@@ -8,7 +8,9 @@ extends EncounterUIState
 ## `Action` state using the features of the new option.
 
 
-var _option_flag: int
+## The current option menu that is open.
+var _option_flag: EncounterUI.Options
+## The current action highlighted from the chosen option.
 var _current_action: Action
 
 
@@ -19,6 +21,8 @@ func enter(msg := {}) -> void:
 	encounter_ui.set_current_selection(_option_flag)
 	encounter_ui.grab_focus_for_sub_option_at_index(0)
 	_current_action = encounter_ui.get_sub_option_at_index(0)
+	#if _option_flag == EncounterUI.Options.SUMMON:
+		#_current_action.set_effects_stats()
 	SignalBus.emit_character_action_selected(
 			encounter_ui.get_focused_player(),
 			_current_action
@@ -60,8 +64,7 @@ func handle_input(event: InputEvent) -> void:
 		not encounter_ui.summon_button.disabled
 		and event.is_action_pressed("ui_encounter_option_4")
 	):
-		print("Summon option selected")
-#		_category_selected(EncounterUI.Options.SUMMON)
+		_category_selected(EncounterUI.Options.SUMMON)
 
 
 ## Called by the state machine before changing the active state.
@@ -209,8 +212,7 @@ func _on_SpellButton_pressed() -> void:
 
 ## Catches the signal for when the Summon button is pressed.
 func _on_SummonButton_pressed() -> void:
-	print("Summon option selected")
-#	_category_selected(EncounterUI.Options.SUMMON)
+	_category_selected(EncounterUI.Options.SUMMON)
 
 
 ## Catches the signal for when the Item button is pressed.

@@ -103,7 +103,6 @@ func _initialize_actions() -> void:
 				"_on_Character_turn_ended"
 		)
 		t.source_stats = stats
-		t.initialize_effects()
 		t.initialize_caster_id(get_instance_id())
 	for s in _spells:
 		assert(
@@ -113,7 +112,6 @@ func _initialize_actions() -> void:
 		)
 		s.get_node("WispCost").wisp_pool = wisp_pool
 		s.source_stats = stats
-		s.initialize_effects()
 		s.initialize_caster_id(get_instance_id())
 
 

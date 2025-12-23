@@ -7,7 +7,7 @@ extends Character
 signal enemy_actions_required()
 
 ## Contains the actions associated with the enemy character.
-var _actions: Array
+var _actions: Array[Action]
 
 ## The default image to use for an enemy character's battle sprite.
 @onready var _default_portait: Texture2D = preload(
@@ -28,7 +28,8 @@ func _ready() -> void:
 	stats.max_cur_health()
 	_connect_stats_to_effects_tracker()
 	_connect_to_character_label()
-	_actions = $Actions.get_children()
+	for action: Action in $Actions.get_children():
+		_actions.append(action)
 	_initialize_actions()
 
 
@@ -44,16 +45,15 @@ func emit_enemy_actions_required() -> void:
 
 ## Virtual function. Updates emission points for all actions of the chracter.
 func _update_emission_index(_index: int) -> void:
-	for action in _actions:
+	for action: Action in _actions:
 		action.set_emission_map_index(_index)
 
 
 ## Initializes the action effects.
 func _initialize_actions() -> void:
-	for a in _actions:
+	for a: Action in _actions:
 		a.source_stats = stats
 		a.initialize_caster_id(get_instance_id())
-		a.initialize_effects()
 
 
 ## Checks that all required parameters are set.

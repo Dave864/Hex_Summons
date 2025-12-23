@@ -6,10 +6,16 @@ extends Node
 const EFFECTS: String = "Effects"
 
 @export var hit_box_ref: NodePath = NodePath("")
+## The stats associated with this action.
 @export var stats: ActionStats = null
 
 ## The path to the stats of the character that owns this action.
-var source_stats: CharacterStatModifiers = null
+var source_stats: CharacterStatModifiers = null:
+	set(new_source):
+		source_stats = new_source
+		## Updates the stats references of the effects to be the same as the action.
+		for effect: Effect in _effects:
+			effect.set_source_stats(source_stats)
 ## The effects of this action
 var _effects: Array[Effect]:
 	get = get_effects
@@ -35,6 +41,13 @@ var _emission_direction: int:
 
 func _ready() -> void:
 	_check_for_required_parameters()
+	for effect: Effect in get_node(EFFECTS).get_children():
+		effect.set_action_potency(stats.potency)
+		_effects.append(effect)
+	assert(
+			len(_effects) > 0,
+			"Action %s does not have any effects" % [name]
+	)
 	_is_cardinal = stats.source_range is CardinalArea
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
@@ -118,20 +131,6 @@ func execute_action() -> bool:
 ## Sets the caster id reference in the action hit box.
 func initialize_caster_id(caster_id: int) -> void:
 	_hit_box.caster_id = caster_id
-
-
-## Initialize the effects list of the action, checking that all effects are valid.
-func initialize_effects() -> void:
-	for effect: Effect in get_node("Effects").get_children():
-		_effects.append(effect)
-	assert(
-			len(_effects) > 0,
-			"Action %s does not have any effects" % [name]
-	)
-	for effect in _effects:
-		# Type checking for the node referenced at the path.
-		effect.set_source_stats(source_stats)
-		effect.set_action_potency(stats.potency)
 
 
 ## Checks that all required parameters are set.
