@@ -9,8 +9,9 @@ extends EffectsHandler
 ## the flat values.
 
 
-## Represents the stats that can be managed.
-enum stat {
+## Represents the stats that can be managed by this handler. Does not include
+## cur_health, max_health, or movement as those are managed by other handlers.
+enum RelevantStat {
 	ATTACK,
 	DEFENSE,
 	AGILITY,
@@ -28,27 +29,27 @@ enum stat {
 	RES_DARK,
 }
 
-## Maps the stat to the respective enum value in the Stat resource.
-var _global_reference: Dictionary = {
-	stat.ATTACK: Stat.Type.ATTACK,
-	stat.DEFENSE: Stat.Type.DEFENSE,
-	stat.AGILITY: Stat.Type.AGILITY,
-	stat.MAGIC_EARTH: Stat.Type.MAGIC_EARTH,
-	stat.MAGIC_FIRE: Stat.Type.MAGIC_FIRE,
-	stat.MAGIC_WATER: Stat.Type.MAGIC_WATER,
-	stat.MAGIC_WIND: Stat.Type.MAGIC_WIND,
-	stat.MAGIC_LIGHT: Stat.Type.MAGIC_LIGHT,
-	stat.MAGIC_DARK: Stat.Type.MAGIC_DARK,
-	stat.RES_EARTH: Stat.Type.RES_EARTH,
-	stat.RES_FIRE: Stat.Type.RES_FIRE,
-	stat.RES_WATER: Stat.Type.RES_WATER,
-	stat.RES_WIND: Stat.Type.RES_WIND,
-	stat.RES_LIGHT: Stat.Type.RES_LIGHT,
-	stat.RES_DARK: Stat.Type.RES_DARK,
+## Maps the RelevantStat value to the corresponding Stat.Type enum.
+var _global_reference: Dictionary[RelevantStat, Stat.Type] = {
+	RelevantStat.ATTACK: Stat.Type.ATTACK,
+	RelevantStat.DEFENSE: Stat.Type.DEFENSE,
+	RelevantStat.AGILITY: Stat.Type.AGILITY,
+	RelevantStat.MAGIC_EARTH: Stat.Type.MAGIC_EARTH,
+	RelevantStat.MAGIC_FIRE: Stat.Type.MAGIC_FIRE,
+	RelevantStat.MAGIC_WATER: Stat.Type.MAGIC_WATER,
+	RelevantStat.MAGIC_WIND: Stat.Type.MAGIC_WIND,
+	RelevantStat.MAGIC_LIGHT: Stat.Type.MAGIC_LIGHT,
+	RelevantStat.MAGIC_DARK: Stat.Type.MAGIC_DARK,
+	RelevantStat.RES_EARTH: Stat.Type.RES_EARTH,
+	RelevantStat.RES_FIRE: Stat.Type.RES_FIRE,
+	RelevantStat.RES_WATER: Stat.Type.RES_WATER,
+	RelevantStat.RES_WIND: Stat.Type.RES_WIND,
+	RelevantStat.RES_LIGHT: Stat.Type.RES_LIGHT,
+	RelevantStat.RES_DARK: Stat.Type.RES_DARK,
 }
 
 ## The stat that is represented.
-@export var target_stat: stat = stat.ATTACK
+@export var target_stat: RelevantStat = RelevantStat.ATTACK
 
 ## Bus that keeps track of the flat change effects that affect the managed stat.
 var _flat_change_bus: EffectBus

@@ -5,14 +5,14 @@ extends Object
 ## Provides logic to evaluate the result of the effects.
 
 
-var _affected_stat: int
+var _affected_stat: Stat.Type
 var _is_percentage_calc: bool
 var _is_set_op: bool
-var _effect_bus: Dictionary = {}
+var _effect_bus: Dictionary[int, Array] = {}
 
 
 ## Called when an instance of this object is created.
-func _init(affected_stat: int, is_percentage_calc: bool, is_set_op: bool):
+func _init(affected_stat: Stat.Type, is_percentage_calc: bool, is_set_op: bool):
 	_affected_stat = affected_stat
 	_is_percentage_calc = is_percentage_calc
 	_is_set_op = is_set_op
