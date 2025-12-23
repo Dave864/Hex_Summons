@@ -16,7 +16,7 @@ enum HexDirection {
 ## Collection of vectors that represent the direction for a hex tile described
 ## in cube coordinates.
 ## Reference: https://www.redblobgames.com/grids/hexagons/#neighbors-cube
-const CUBE_DIRECTION_VECTORS: Dictionary = {
+const CUBE_DIRECTION_VECTORS: Dictionary[HexDirection, Vector3] = {
 	HexDirection.UPPER_LEFT: Vector3(0.0, -1.0, 1.0),
 	HexDirection.UPPER_RIGHT: Vector3(1.0, -1.0, 0.0),
 	HexDirection.RIGHT: Vector3(1.0, 0.0, -1.0),

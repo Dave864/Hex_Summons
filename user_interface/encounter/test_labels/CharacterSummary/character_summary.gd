@@ -3,7 +3,7 @@ extends VBoxContainer
 ## Displays a summary of the listed character.
 
 
-const ELEMENT_TAGS: Dictionary = {
+const ELEMENT_TAGS: Dictionary[Element.Type, String] = {
 	Element.Type.EARTH: "E",
 	Element.Type.FIRE: "F",
 	Element.Type.WATER: "Wt",

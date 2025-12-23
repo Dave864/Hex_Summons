@@ -3,8 +3,8 @@ extends Control
 ## Manages the labels and element icons of the wisp pool.
 
 
-const LIGHT: int = Element.Alignment.LIGHT
-const DARK: int = Element.Alignment.DARK
+const LIGHT := Element.Alignment.LIGHT
+const DARK := Element.Alignment.DARK
 
 
 @export var timer: VariableTimer = null
@@ -30,7 +30,7 @@ const DARK: int = Element.Alignment.DARK
 
 var pool: WispPool = null
 
-@onready var _alignments: Dictionary = {
+@onready var _alignments: Dictionary[Element.Alignment, Array] = {
 	LIGHT: ElementalAlignment.get_light_elements().duplicate(),
 	DARK: ElementalAlignment.get_dark_elements().duplicate()
 }

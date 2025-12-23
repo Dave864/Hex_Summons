@@ -119,6 +119,9 @@ func get_next_character() -> Character:
 ## Determines the round pace based on the current characters.
 func _determine_round_pace() -> void:
 	_round_pace = 0
+	# Unable to define Dictionary type for details as _c_pity_tracker values are
+	# defined as Dictionary and GDScript v4.5 does not allow for nested typed
+	# collections.
 	for details: Dictionary in _c_pity_tracker.values():
 		var c: Character = details["character"]
 		var c_agility: int = c.stats.get_stat(Stat.Type.AGILITY)
@@ -137,17 +140,17 @@ func _get_next_init_step() -> int:
 ## Updates the display to reflect the current initiative.
 func _update_display() -> void:
 	var char_order: Array[Character] = []
-	var earliest_init: Dictionary = {}
-	for c_id in _c_pity_tracker.keys():
-		earliest_init[c_id] = -1
+	var earliest_init: Dictionary[int, int] = {}
+	for character_id: int in _c_pity_tracker.keys():
+		earliest_init[character_id] = -1
 	char_order.resize(init_slots.size())
 	_populate_display_data(char_order)
-	for i in init_slots.size():
-		var c: Character = char_order[i]
-		init_slots[i].change_character(c)
-		if earliest_init[c.get_instance_id()] < 0:
-			earliest_init[c.get_instance_id()] = i
-			c.character_label.set_initiative_label(i)
+	for i: int in init_slots.size():
+		var character: Character = char_order[i]
+		init_slots[i].change_character(character)
+		if earliest_init[character.get_instance_id()] < 0:
+			earliest_init[character.get_instance_id()] = i
+			character.character_label.set_initiative_label(i)
 
 
 ## Helper for _update_display. Populates the char_order array with the characters

@@ -223,8 +223,8 @@ func _get_closest_path(
 	max_dist: int
 ) -> Array[Variant]:
 	var frontier: PQueue = PQueue.new()
-	var distances: Dictionary = {}
-	var came_from: Dictionary = {}
+	var distances: Dictionary[int, Dictionary] = {}
+	var came_from: Dictionary[int, int] = {}
 	frontier.push(0.0, source_id)
 	distances[source_id] = {
 		"travel": 0.0,
