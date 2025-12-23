@@ -33,48 +33,40 @@ func max_cur_health() -> void:
 
 ## Returns the values for all stats. Can specify if the base values should be
 ## returned or the values with current modifiers.
-func get_all(modified: bool = true) -> Dictionary[String, Variant]:
-	var all_stats: Dictionary[String, Variant] = {
-		Stat.MAX_HEALTH: get_stat(Stat.Type.MAX_HEALTH, modified),
-		Stat.CUR_HEALTH: get_stat(Stat.Type.CUR_HEALTH, modified),
-		Stat.AGILITY: get_stat(Stat.Type.AGILITY, modified),
-		Stat.MOVEMENT: get_stat(Stat.Type.MOVEMENT, modified),
-	}
-	all_stats.merge(get_offensive(modified))
-	all_stats.merge(get_defensive(modified))
-	return all_stats
+func get_all(modified: bool = true) -> AllStats:
+	return AllStats.new(
+		summoner_stats.get_level(),
+		get_stat(Stat.Type.CUR_HEALTH, modified),
+		get_stat(Stat.Type.MAX_HEALTH, modified),
+		get_stat(Stat.Type.AGILITY, modified),
+		get_stat(Stat.Type.MOVEMENT, modified),
+		get_offensive(modified),
+		get_defensive(modified)
+	)
 
 
 ## Returns the values of all offensive related stats. Can specify if the base
 ## values should be returned or the values with current modifiers.
-func get_offensive(modified: bool = true) -> Dictionary[String, Variant]:
-	return {
-		Stat.ATTACK: get_stat(Stat.Type.ATTACK, modified),
-		Stat.MAGIC: {
-			Element.Type.EARTH: get_stat(Stat.Type.MAGIC_EARTH, modified),
-			Element.Type.FIRE: get_stat(Stat.Type.MAGIC_FIRE, modified),
-			Element.Type.WATER: get_stat(Stat.Type.MAGIC_WATER, modified),
-			Element.Type.WIND: get_stat(Stat.Type.MAGIC_WIND, modified),
-			Element.Type.LIGHT: get_stat(Stat.Type.MAGIC_LIGHT, modified),
-			Element.Type.DARK: get_stat(Stat.Type.MAGIC_DARK, modified),
-		}
-	}
+func get_offensive(modified: bool = true) -> OffensiveStats:
+	return OffensiveStats.new(
+		get_stat(Stat.Type.ATTACK, modified),
+		get_stat(Stat.Type.MAGIC_EARTH, modified),
+		get_stat(Stat.Type.MAGIC_FIRE, modified),
+		get_stat(Stat.Type.MAGIC_WATER, modified),
+		get_stat(Stat.Type.MAGIC_WIND, modified)
+	)
 
 
 ## Returns the values of all defensive related stats. Can specify if the base
 ## values should be returned or the values with current modifiers.
-func get_defensive(modified: bool = true) -> Dictionary[String, Variant]:
-	return {
-		Stat.DEFENSE: get_stat(Stat.Type.DEFENSE, modified),
-		Stat.RESISTANCE: {
-			Element.Type.EARTH: get_stat(Stat.Type.RES_EARTH, modified),
-			Element.Type.FIRE: get_stat(Stat.Type.RES_FIRE, modified),
-			Element.Type.WATER: get_stat(Stat.Type.RES_WATER, modified),
-			Element.Type.WIND: get_stat(Stat.Type.RES_WIND, modified),
-			Element.Type.LIGHT: get_stat(Stat.Type.RES_LIGHT, modified),
-			Element.Type.DARK: get_stat(Stat.Type.RES_DARK, modified),
-		}
-	}
+func get_defensive(modified: bool = true) -> DefensiveStats:
+	return DefensiveStats.new(
+		get_stat(Stat.Type.DEFENSE, modified),
+		get_stat(Stat.Type.RES_EARTH, modified),
+		get_stat(Stat.Type.RES_FIRE, modified),
+		get_stat(Stat.Type.RES_WATER, modified),
+		get_stat(Stat.Type.RES_WIND, modified),
+	)
 
 
 ## Returns the value for a specific stat. Can specify if the base value should

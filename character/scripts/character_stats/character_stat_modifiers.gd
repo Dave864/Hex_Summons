@@ -74,83 +74,38 @@ func max_cur_health() -> void:
 
 
 ## Get all the stats.
-func get_all(with_modifier: bool = true) -> Dictionary[String, Variant]:
-	var all_stats: Dictionary[String, Variant] = {
-		Stat.LEVEL: _level,
-		Stat.MAX_HEALTH: get_stat(Stat.Type.MAX_HEALTH, with_modifier),
-		Stat.CUR_HEALTH: get_stat(Stat.Type.CUR_HEALTH, with_modifier),
-		Stat.AGILITY: get_stat(Stat.Type.AGILITY, with_modifier),
-		Stat.MOVEMENT: get_stat(Stat.Type.MOVEMENT, with_modifier),
-	}
-	all_stats.merge(get_offensive(with_modifier))
-	all_stats.merge(get_defensive(with_modifier))
-	return all_stats
+func get_all(with_modifier: bool = true) -> AllStats:
+	return AllStats.new(
+		_level,
+		get_stat(Stat.Type.CUR_HEALTH, with_modifier),
+		get_stat(Stat.Type.MAX_HEALTH, with_modifier),
+		get_stat(Stat.Type.AGILITY, with_modifier),
+		get_stat(Stat.Type.MOVEMENT, with_modifier),
+		get_offensive(with_modifier),
+		get_defensive(with_modifier)
+	)
 
 
 ## Get the offensive stats.
-func get_offensive(with_modifier: bool = true) -> Dictionary[String, Variant]:
-	return {
-		Stat.ATTACK: get_stat(Stat.Type.ATTACK, with_modifier),
-		Stat.MAGIC: {
-			Element.Type.EARTH: _magic_for_level(
-					Element.Type.EARTH,
-					with_modifier
-			),
-			Element.Type.FIRE: _magic_for_level(
-					Element.Type.FIRE,
-					with_modifier
-			),
-			Element.Type.WATER: _magic_for_level(
-					Element.Type.WATER,
-					with_modifier
-			),
-			Element.Type.WIND: _magic_for_level(
-					Element.Type.WIND,
-					with_modifier
-			),
-			Element.Type.LIGHT: _magic_for_level(
-					Element.Type.LIGHT,
-					with_modifier
-			),
-			Element.Type.DARK: _magic_for_level(
-					Element.Type.DARK,
-					with_modifier
-			),
-		}
-	}
+func get_offensive(with_modifier: bool = true) -> OffensiveStats:
+	return OffensiveStats.new(
+		get_stat(Stat.Type.ATTACK, with_modifier),
+		_magic_for_level(Element.Type.EARTH, with_modifier),
+		_magic_for_level(Element.Type.FIRE, with_modifier),
+		_magic_for_level(Element.Type.WATER, with_modifier),
+		_magic_for_level(Element.Type.WIND, with_modifier)
+	)
 
 
 ## Get the defensive stats.
-func get_defensive(with_modifier: bool = true) -> Dictionary[String, Variant]:
-	return {
-		Stat.DEFENSE: get_stat(Stat.Type.DEFENSE, with_modifier),
-		Stat.RESISTANCE: {
-			Element.Type.EARTH: _resistance_for_level(
-					Element.Type.EARTH,
-					with_modifier
-			),
-			Element.Type.FIRE: _resistance_for_level(
-					Element.Type.FIRE,
-					with_modifier
-			),
-			Element.Type.WATER: _resistance_for_level(
-					Element.Type.WATER,
-					with_modifier
-			),
-			Element.Type.WIND: _resistance_for_level(
-					Element.Type.WIND,
-					with_modifier
-			),
-			Element.Type.LIGHT: _resistance_for_level(
-					Element.Type.LIGHT,
-					with_modifier
-			),
-			Element.Type.DARK: _resistance_for_level(
-					Element.Type.DARK,
-					with_modifier
-			),
-		}
-	}
+func get_defensive(with_modifier: bool = true) -> DefensiveStats:
+	return DefensiveStats.new(
+		get_stat(Stat.Type.DEFENSE, with_modifier),
+		_resistance_for_level(Element.Type.EARTH, with_modifier),
+		_resistance_for_level(Element.Type.FIRE, with_modifier),
+		_resistance_for_level(Element.Type.WATER, with_modifier),
+		_resistance_for_level(Element.Type.WIND, with_modifier)
+	)
 
 
 ## Obtains the value for a given stat.

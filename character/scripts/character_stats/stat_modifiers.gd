@@ -41,17 +41,17 @@ func set_cur_health(delta: int) -> int:
 
 ## Returns the values for all stats. Can specify if the base values should be
 ## returned or the values with current modifiers.
-@abstract func get_all(modified: bool = true) -> Dictionary
+@abstract func get_all(modified: bool = true) -> AllStats
 
 
 ## Returns the values of all offensive related stats. Can specify if the base
 ## values should be returned or the values with current modifiers.
-@abstract func get_offensive(modified: bool = true) -> Dictionary
+@abstract func get_offensive(modified: bool = true) -> OffensiveStats
 
 
 ## Returns the values of all defensive related stats. Can specify if the base
 ## values should be returned or the values with current modifiers.
-@abstract func get_defensive(modified: bool = true) -> Dictionary
+@abstract func get_defensive(modified: bool = true) -> DefensiveStats
 
 
 ## Returns the value for a specific stat. Can specify if the base value should
