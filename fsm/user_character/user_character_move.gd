@@ -15,7 +15,7 @@ var _selector_paused: bool = false
 
 
 ## Set the starting point for the path.
-func enter(_msg: Dictionary = {}) -> void:
+func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	character.hm_move_path.create_segmented_bezier_path(_msg["travel_path"])
 	_movement_active = true
 	

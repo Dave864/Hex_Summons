@@ -7,7 +7,7 @@ extends SelectorState
 
 
 ## Connect to the player_turn_started signal from the SignalBus.
-func enter(_msg: Dictionary = {}) -> void:
+func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	selector.active_player = null
 	SignalBus.connect(
 			"player_turn_started",

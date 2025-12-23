@@ -10,7 +10,7 @@ extends SelectorState
 
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
-func enter(_msg: Dictionary = {}) -> void:
+func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	selector.active_player.connect(
 			"turn_ended",
 			Callable(self, "_on_PlayerCharacter_turn_ended")

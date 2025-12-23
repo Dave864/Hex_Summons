@@ -19,7 +19,7 @@ var _movement_ids: Array[int] = []
 
 
 ## Reveal the selector shape and enable the ability to update tile highlights.
-func enter(_msg: Dictionary = {}) -> void:
+func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	var player_index: int = selector.active_player.map_coordinate.get_tile_index()
 	if _move_origin_index < 0:
 		_move_origin_index = player_index

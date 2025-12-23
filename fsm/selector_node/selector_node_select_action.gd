@@ -27,7 +27,7 @@ var _targets_cache: Dictionary[int, Array] = {}
 @onready var _update_selection_ref: Callable = Callable(self, "_update_selection")
 
 
-func enter(msg: Dictionary = {}) -> void:
+func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	assert(msg.has("action"), "Missing action key data in SelectAction")
 	assert(
 			msg["action"] is Action,

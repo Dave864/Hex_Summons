@@ -5,7 +5,7 @@ extends UserCharacterWait
 ## The Player Character waits and is inactive until it is reenabled.
 
 
-func enter(msg: Dictionary = {}) -> void:
+func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	SignalBus.connect(
 			"player_turn_started",
 			Callable(self, "_on_SignalBus_player_turn_started")

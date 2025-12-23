@@ -7,7 +7,7 @@ extends UserCharacterState
 
 
 ## Connect this state to the signals it needs to observe.
-func enter(_msg: Dictionary = {}) -> void:
+func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	character.connect(
 			"turn_ended",
 			Callable(self, "_on_Character_turn_ended")
