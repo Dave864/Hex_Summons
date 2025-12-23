@@ -41,7 +41,9 @@ func is_met(
 ## center points as the key and an array of the Character members as the value.
 func find_group_index_centers(x_count: int) -> Dictionary[int, Array]:
 	var group_centers: Dictionary[int, Array] = {}
-	for g: Array[Character] in _groups.values():
+	# Cannot specify a type for the array as GDScript v4.5 does not allow for
+	# nested type collections.
+	for g: Array in _groups.values():
 		var center: Vector3 = Vector3.ZERO
 		for c: Character in g:
 			center += c.map_coordinate.get_cube_coord()
