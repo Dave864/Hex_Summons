@@ -97,7 +97,7 @@ func _calculate_resisted_strength(
 ## Combines the potency strength data into a single value.
 func _strength_scalar(strength_data: OffensiveStats) -> int:
 	var total_strength: int = strength_data.get_attack()
-	for element in Element.Type:
+	for element: Element.Type in Element.Type.values():
 		total_strength += strength_data.get_magic(element)
 	return total_strength
 
@@ -110,7 +110,7 @@ func _get_strength_potency(
 	var strength := OffensiveStats.new(
 		int(action_potency.attack_potency * character_stats.get_attack())
 	)
-	for element in Element.Type:
+	for element: Element.Type in Element.Type.values():
 		var magic_value := int(
 			action_potency.get_elemental_potency(element)
 			* character_stats.get_magic(element)
@@ -129,7 +129,7 @@ func _apply_resistance(
 			resistance.get_defense()
 	)
 	strength.set_attack(resisted_attack)
-	for element in Element.Type:
+	for element: Element.Type in Element.Type.values():
 		var resisted_magic: int = _bind_resistance(
 			strength.get_magic(element),
 			resistance.get_res(element)

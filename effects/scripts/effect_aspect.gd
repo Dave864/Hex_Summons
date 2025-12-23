@@ -38,11 +38,13 @@ enum ResEffect {
 var turn_duration: int = max_turn_duration
 
 ## The stats of the character that will apply this effect.
-var _source_stats: CharacterStatModifiers = null: set = set_source_stats
+var _source_stats: CharacterStatModifiers = null:
+	set = set_source_stats
 ## The current values of the character stats.
-var _current_stats: Dictionary[String, Variant] = {}
+var _current_stats: AllStats = null
 ## The potency of the action the parent effect is assigned to.
-var _action_potency: Potency = null: set = set_action_potency
+var _action_potency: Potency = null:
+	set = set_action_potency
 
 
 ## Updates the source character stats of this effect aspect.
