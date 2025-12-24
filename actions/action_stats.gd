@@ -18,7 +18,7 @@ extends Resource
 @export var dead_range: AreaRange = null
 ## Describes the area that the action affects.
 @export var effect_range: AreaRange = null
-## Flag that denotes if the emission is fixed to the center of the area.
+## Flag that denotes if the emission is fixed to the center of the source area.
 @export var emit_from_center: bool = true
 ## Flag that denotes if the effect should include the casting character tile.
 @export var effect_ignores_caster: bool = true

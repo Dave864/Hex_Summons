@@ -38,6 +38,8 @@ var turn_actions: Array[Action] = []
 
 ## The spawn action of the currently active summon. 
 var _current_spawn_action: Action = null
+## Flag that indicates the summon is active.
+var _active: bool = false
 
 ## The wisp pool for the active summon.
 @onready var wisp_pool: SummonWispPool = $SummonWispPool
@@ -55,7 +57,7 @@ func _ready() -> void:
 ## Checks if there is an active summon that has been loaded. An active summon
 ## always has a summoner specified.
 func is_active() -> bool:
-	return summoner != null
+	return _active
 
 
 ## Sets the selected summon to be active and places them at the specified map
@@ -75,17 +77,19 @@ func load_summon(
 	position = spawn_coordinate.position
 	_current_spawn_action = spawn_actions[summon_name]
 	_load_actions()
+	_active = true
 
 
 ## Sets the summon to be inactive, placing them out of the map and resetting the
 ## specific summon details in preparation for the next summon.
 func dismiss_summon() -> void:
-	position = STANDBY_POSITION
+	_active = false
 	visible = false
 	character_label.hide_all()
 	for action: Action in turn_actions:
 		$Actions/TurnActions.remove_child(action)
 		action.queue_free()
+	position = STANDBY_POSITION
 	turn_actions.clear()
 	stats.summon_data = null
 	summoner = null
