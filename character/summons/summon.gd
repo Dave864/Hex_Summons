@@ -11,14 +11,23 @@ extends Character
 ## Path to the folder that contains all summon data.
 const SUMMON_DATA_PATH: String = "res://character/summons/summon_data/"
 ## Name of resource file for summon data.
-const SUMMON_DATA_RESOURCE_PATH: String = SUMMON_DATA_PATH + "{0}/summon_data.tres"
+const SUMMON_DATA_RESOURCE_PATH: String = (
+	SUMMON_DATA_PATH \
+	+ "{0}/summon_data.tres"
+)
 ## The string format for retrieving actions given a name.
 const ACTION_PATH_FORMAT: String = "res://actions/{0}/{0}.tscn"
 ## Position the summon is placed when not active.
 const STANDBY_POSITION: Vector3 = Vector3(0.0, -10.0, 0.0)
 
 ## The character that conjured the active summon.
-var summoner: PlayerCharacter = null
+var summoner: PlayerCharacter = null:
+	set(value):
+		summoner = value
+		if summoner == null:
+			return
+		for action: Action in spawn_actions.values():
+			action.source_stats = summoner.stats
 ## The summons that are able to be conjured by the current player party in the
 ## encounter.
 var available_summons: Dictionary[String, SummonData] = {}
@@ -56,12 +65,14 @@ func load_summon(
 	summon_name: String,
 	spawn_coordinate: MapCoordinate
 ) -> void:
-	summoner = new_summoner
+	# Prevent resetting of summoner_stats for spawn actions if summoner has
+	# been set to the new_summon prevously.
+	if summoner != new_summoner:
+		summoner = new_summoner
 	stats.summon_data = available_summons[summon_name]
 	visible = true
 	character_label.show_all()
 	position = spawn_coordinate.position
-	spawn_actions[summon_name].source_stats = stats
 	_current_spawn_action = spawn_actions[summon_name]
 	_load_actions()
 

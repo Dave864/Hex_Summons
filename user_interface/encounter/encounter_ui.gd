@@ -36,7 +36,8 @@ enum Options {
 # TODO: Currently loading CharacterSummary scene to visualize the hp values
 # of enemy characters
 var _character_summary: PackedScene = preload(
-	"res://user_interface/encounter/test_labels/CharacterSummary/CharacterSummary.tscn"
+	"res://user_interface/encounter/test_labels/" \
+	+ "CharacterSummary/CharacterSummary.tscn"
 )
 ## Flag that describes the options currently on display.
 var _current_selection: Options = Options.NONE:
@@ -60,7 +61,7 @@ var _summon: Summon = null:
 	set = set_summon
 
 @onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
-@onready var active_player_stats: PlayerStatsUI = $ActivePlayerStats
+@onready var active_player_stats_ui: PlayerStatsUI = $ActivePlayerStats
 @onready var enemy_stats: VBoxContainer = $EnemyStats
 @onready var party_stats: VBoxContainer = $PartyStats
 @onready var options: HBoxContainer = $Options
@@ -95,7 +96,7 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 			_focused_player != null 
 			and _focused_player.stats.is_connected(
 				"health_changed",
-				Callable(active_player_stats, "_on_Character_hp_changed")
+				Callable(active_player_stats_ui, "_on_Character_hp_changed")
 			)
 	)
 	# Disconnect the health_changed signal from the previous focused player
@@ -104,14 +105,17 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	if player_connected:
 		_focused_player.stats.disconnect(
 				"health_changed",
-				Callable(active_player_stats, "_on_Character_hp_changed")
+				Callable(active_player_stats_ui, "_on_Character_hp_changed")
 		)
+	# Reveal the party stats of any previous focused player as their details
+	# in the ActivePlayerStats node will be overridden by the new_player.
 	if _focused_player != null:
 		_party_stat_map[_focused_player.get_instance_id()].show()
 	# Hide the party stats of the new focused player as they will be represented
 	# by the ActivePlayerStats node.
 	_party_stat_map[new_player.get_instance_id()].hide()
 	_focused_player = new_player
+	_summon.summoner = _focused_player
 	_techniques = _focused_player.get_techniques()
 	_spells = _focused_player.get_spells()
 	
@@ -119,8 +123,8 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	# container, so the partial height should be used to keep the UI display
 	# from being too spread out.
 	party_stats.size.y = PART_PARTY_HEIGHT
-	active_player_stats.set_stats(_focused_player)
-	active_player_stats.show()
+	active_player_stats_ui.set_stats(_focused_player)
+	active_player_stats_ui.show()
 	
 	reset_all_options()
 	set_active_options()
@@ -145,6 +149,8 @@ func get_spells() -> Array[Action]:
 ## Set the Summon node reference.
 func set_summon(summon: Summon) -> void:
 	_summon = summon
+	if _focused_player != null:
+		_summon.summoner = _focused_player
 
 
 ## Sets the focused character as the summon.
@@ -188,7 +194,7 @@ func set_active_options() -> void:
 ## Hides the active player stats and reveals the relevant party summary for the
 ## "active" character.
 func hide_active_stats() -> void:
-	active_player_stats.hide()
+	active_player_stats_ui.hide()
 	if _focused_player != null:
 		party_stats.size.y = (
 				FULL_PARTY_HEIGHT if _party_stat_map.size() == MAX_PARTY_SIZE
