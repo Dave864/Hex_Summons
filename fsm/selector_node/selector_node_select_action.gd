@@ -344,11 +344,18 @@ func _get_effect_range() -> Array[int]:
 		return _ranges_cache[e_dir]
 	elif _ranges_cache.has(e_index):
 		return _ranges_cache[e_index]
-	var effect_indexes: Array[int] = _action.stats.effect_range.get_dir_area_indexes(
-			e_index,
-			e_dir,
-			selector.hex_map
-	)
+	var effect_indexes: Array[int]
+	if _action.stats.effect_range is DirectionalAreaRange:
+		effect_indexes = _action.stats.effect_range.get_dir_area_indexes(
+				e_index,
+				e_dir,
+				selector.hex_map
+		)
+	else:
+		effect_indexes = _action.stats.effect_range.get_area_indexes(
+				e_index,
+				selector.hex_map
+		)
 	if _action.stats.effect_ignore_heights:
 		_update_effect_ranges(e_index, e_dir, effect_indexes)
 		return effect_indexes

@@ -256,7 +256,6 @@ func _dead_range_details(
 			src_map.tile_ids()
 	)
 	if c_src < 0:
-		src_map.free()
 		return []
 	var dist_to_src: float = (
 			h_map.range_finder.tile_distance(t_index, c_src)

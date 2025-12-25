@@ -13,6 +13,6 @@ potency = ExtResource("2")
 source_range = ExtResource("3")
 dead_range = ExtResource("1_t6x0e")
 effect_range = ExtResource("5")
-emit_from_center = false
+emit_from_caster = false
 source_ignore_heights = true
 effect_ignore_heights = true

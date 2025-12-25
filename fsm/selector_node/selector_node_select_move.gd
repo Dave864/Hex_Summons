@@ -192,7 +192,7 @@ func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
 	)
 
 
-#3 Resolves the left joystick pulse input.
+## Resolves the left joystick pulse input.
 func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
 	var hex_dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
 	_resolve_joystick_direction(hex_dir)

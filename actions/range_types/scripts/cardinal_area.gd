@@ -3,7 +3,7 @@ extends RadialAreaRange
 ## Describes an area whose area is constrained by the six directions of a hexagon.
 
 
-## How many tiles out the range will reach.
+## How many tiles out from the center point the range will reach.
 @export_range(1, 100) var distance: int = 1
 
 

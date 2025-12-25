@@ -13,4 +13,4 @@ potency = ExtResource("2")
 source_range = ExtResource("3")
 dead_range = ExtResource("4")
 effect_range = ExtResource("2_0onms")
-emit_from_center = false
+emit_from_caster = false

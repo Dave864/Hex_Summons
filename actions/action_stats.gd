@@ -1,4 +1,3 @@
-@tool
 class_name ActionStats
 extends Resource
 ## Resource that describes the potency and various ranges of an action.
@@ -18,20 +17,11 @@ extends Resource
 ## cannot be placed.
 @export var dead_range: RadialAreaRange = null
 ## Describes the area that the action affects.
-@export var effect_range: AreaRange = null:
-	set(value):
-		effect_range = value
-		if effect_range is DirectionalAreaRange:
-			emit_from_caster = true
-			notify_property_list_changed()
+@export var effect_range: AreaRange = null
 ## Flag that denotes if the emission is fixed to the caster position.
 @export var emit_from_caster: bool = true:
-	set(value):
-		if not effect_range is DirectionalAreaRange:
-			emit_from_caster = value
-		else:
-			emit_from_caster = true
-		notify_property_list_changed()
+	get:
+		return true if effect_range is DirectionalAreaRange else emit_from_caster
 ## Flag that denotes if the effect should include the casting character
 ## tile.
 @export var effect_ignores_caster: bool = true

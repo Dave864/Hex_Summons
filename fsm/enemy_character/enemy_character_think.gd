@@ -91,7 +91,7 @@ func _get_targets(possible_targets: Array[Character]) -> Array[Character]:
 	var p_t_set: Dictionary[int, Character] = {}
 	for pt: Character in possible_targets:
 		p_t_set[pt.get_instance_id()] = pt
-	if _action.stats.emit_from_caster:
+	if _action.stats.effect_range is DirectionalAreaRange:
 		effect_area = _action.stats.effect_range.get_dir_area_indexes(
 				_target_index,
 				_action.get_emission_direction(),
