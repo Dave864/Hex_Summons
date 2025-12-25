@@ -49,6 +49,7 @@ func _init(spell_stats: SpellStats = null) -> void:
 	light_cost = 0 if spell_stats == null else spell_stats.light_cost
 	dark_req = 0 if spell_stats == null else spell_stats.dark_req
 	dark_cost = 0 if spell_stats == null else spell_stats.dark_cost
+	req_summary = _get_requirements()
 	cost_summary = _get_costs()
 
 

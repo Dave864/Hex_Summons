@@ -4,16 +4,16 @@ extends SelectorState
 ##
 ## Goes to the 'SelectAction' state when a new action is chosen.
 ## Goes to the 'SelectMove' state when the UI signals that the action type has
-## been canceled. Goes to the 'Wait' state when the UI signals that the player
-## turn has been terminated.
+## been canceled. Goes to the 'Wait' state when the UI signals that the
+## character turn has been terminated.
 
 
 ## The action to display the effect area for.
 var _action: Action = null
-## The translation of the player that is using the action.
-var _player_pos: Vector3 = Vector3.ZERO
-## The tile index of the player that is using the action.
-var _player_map_index: int = -1
+## The translation of the character that is using the action.
+var _character_pos: Vector3 = Vector3.ZERO
+## The tile index of the character that is using the action.
+var _character_map_index: int = -1
 ## Stores the distance map of the source range.
 var _source_d_map: DistanceMap = null
 ## The type of targets the action will hit.
@@ -71,12 +71,12 @@ func _determine_changes(action: Action) -> void:
 		_action = action
 		_action_targets = _action.get_targets()
 		need_new_ranges = true
-	var player_map_index: int = (
-		selector.active_player.map_coordinate.get_tile_index()
+	var character_map_index: int = (
+		selector.active_character.map_coordinate.get_tile_index()
 	)
-	if _player_map_index != player_map_index:
-		_player_map_index = player_map_index
-		_player_pos = selector.active_player.position
+	if _character_map_index != character_map_index:
+		_character_map_index = character_map_index
+		_character_pos = selector.active_character.position
 		need_new_ranges = true
 	if need_new_ranges:
 		if _source_d_map != null:
@@ -90,13 +90,13 @@ func _determine_changes(action: Action) -> void:
 func _update_selection(map_tile: MapTile) -> void:
 	assert(map_tile != null, "SelectAction given a null MapTile.")
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
-	# Actions with dead range need to display the player tile highlight, but
-	# not allow emission from player position.
+	# Actions with dead range need to display the character tile highlight, but
+	# not allow emission from character position.
 	if (
 		!map_tile.is_active()
 		or (
 			_action.stats.dead_range.get_reach() > 0
-			and map_tile.map_coordinate.get_tile_index() == _player_map_index
+			and map_tile.map_coordinate.get_tile_index() == _character_map_index
 		)
 	):
 		return
@@ -114,34 +114,34 @@ func _update_selection(map_tile: MapTile) -> void:
 		_place_closest_to_tile(map_tile.map_coordinate.get_tile_index())
 
 
-## Orients the direction of an action cast from the player based on mouse
+## Orients the direction of an action cast from the character based on mouse
 ## position.
 func _orient_emission_to_mouse() -> void:
-	_action.set_emission_map_index(_player_map_index)
-	_action.set_emission_pos(_player_pos)
-	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
+	_action.set_emission_map_index(_character_map_index)
+	_action.set_emission_pos(_character_pos)
+	var character_pt: Vector2 = Vector2(_character_pos.x, _character_pos.z)
 	var mouse_pt: Vector2 = Vector2(
 		MouseHandler.get_3d_position().x,
 		MouseHandler.get_3d_position().z
 	)
 	# Relative top not needed as mouse position translates to direct map
 	# coordinates.
-	var dir: int = HexUtil.get_hex_direction((mouse_pt - player_pt).normalized())
-	var source_tile: MapTile = selector.hex_map.get_tile_at(_player_map_index)
+	var dir: int = HexUtil.get_hex_direction((mouse_pt - character_pt).normalized())
+	var source_tile: MapTile = selector.hex_map.get_tile_at(_character_map_index)
 	var target_tile: MapTile = source_tile.get_adjacent_tile(dir)
 	if _is_target_tile(target_tile):
 		_action.set_emission_direction(dir)
 		_highlight_effect_range()
 
 
-## Orients the direction of an action cast from the player based on tile
+## Orients the direction of an action cast from the character based on tile
 ## position.
 func _orient_emission_to_tile(map_tile: MapTile) -> void:
-	_action.set_emission_map_index(_player_map_index)
-	_action.set_emission_pos(_player_pos)
-	var player_pt: Vector2 = Vector2(_player_pos.x, _player_pos.z)
+	_action.set_emission_map_index(_character_map_index)
+	_action.set_emission_pos(_character_pos)
+	var character_pt: Vector2 = Vector2(_character_pos.x, _character_pos.z)
 	var tile_pt: Vector2 = Vector2(map_tile.position.x, map_tile.position.z)
-	var vector_dir: Vector2 = (tile_pt - player_pt).normalized()
+	var vector_dir: Vector2 = (tile_pt - character_pt).normalized()
 	# Relative top not needed as we are using direct map coordinates.
 	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
 	_action.set_emission_direction(emission_dir)
@@ -161,10 +161,10 @@ func _orient_to_closest_target() -> void:
 
 
 ## Adjusts the orientation of an effect emitted from caster to make sure it is
-## in a direction the player can reach. Returns if the direction was set.
+## in a direction the character can reach. Returns if the direction was set.
 func _fix_orientation() -> bool:
 	var p_cube: Vector3 = HexUtil.index_to_cube(
-			_player_map_index,
+			_character_map_index,
 			selector.hex_map.get_x_count()
 	)
 	for i in 6:
@@ -188,19 +188,19 @@ func _fix_orientation() -> bool:
 func _place_closest_to_target() -> void:
 	var target_details: Array[Variant] = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_tile_index()
-	var player_index_details: DistanceData = (
-		_source_d_map.all_dist_at(_player_map_index)
+	var character_index_details: DistanceData = (
+		_source_d_map.all_dist_at(_character_map_index)
 	)
-	var ignore_player_index: bool = _action.stats.dead_range.get_reach() > 0
-	if ignore_player_index:
-		_source_d_map.remove(_player_map_index)
+	var ignore_character_index: bool = _action.stats.dead_range.get_reach() > 0
+	if ignore_character_index:
+		_source_d_map.remove(_character_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
 			target_index,
 			_source_d_map.tile_ids()
 	)
-	# Add back in player details if they were removed to preserve details.
-	if ignore_player_index:
-		_source_d_map.add(_player_map_index, player_index_details)
+	# Add back in character details if they were removed to preserve details.
+	if ignore_character_index:
+		_source_d_map.add(_character_map_index, character_index_details)
 	if closest_index < 0:
 		selector.hex_map.selection_tracker.clear_selector_highlights()
 		return
@@ -213,21 +213,21 @@ func _place_closest_to_target() -> void:
 ## Places the effect emission so that it is on the source tile closest to the
 ## specified tile. Emission is not placed if no valid source tile could be found.
 func _place_closest_to_tile(tile_index: int) -> void:
-	var player_index_details: DistanceData = (
-		_source_d_map.all_dist_at(_player_map_index)
+	var character_index_details: DistanceData = (
+		_source_d_map.all_dist_at(_character_map_index)
 	)
-	var ignore_player_index: bool = _action.stats.dead_range.get_reach() > 0
-	# Remove player index when looking at dead range to prevent player position
+	var ignore_character_index: bool = _action.stats.dead_range.get_reach() > 0
+	# Remove character index when looking at dead range to prevent character position
 	# from being considered a valid placement spot.
-	if ignore_player_index:
-		_source_d_map.remove(_player_map_index)
+	if ignore_character_index:
+		_source_d_map.remove(_character_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
 			tile_index,
 			_source_d_map.tile_ids()
 	)
-	# Add back in player details if they were removed to preserve distance map.
-	if ignore_player_index:
-		_source_d_map.add(_player_map_index, player_index_details)
+	# Add back in character details if they were removed to preserve distance map.
+	if ignore_character_index:
+		_source_d_map.add(_character_map_index, character_index_details)
 	if closest_index < 0:
 		selector.hex_map.selection_tracker.clear_selector_highlights()
 		return
@@ -237,7 +237,7 @@ func _place_closest_to_tile(tile_index: int) -> void:
 	_highlight_effect_range()
 
 
-## Gets an array of the targets sorted by distance from player. The closest
+## Gets an array of the targets sorted by distance from character. The closest
 ## target is at the first index. Each index contains the target character and
 ## distance.
 func _get_target_distances() -> Array[Array]:
@@ -245,12 +245,12 @@ func _get_target_distances() -> Array[Array]:
 	if _action_targets.has(EffectAspect.Target.OPPONENTS):
 		potential_targets.append_array(selector.enemies_ref)
 	if _action_targets.has(EffectAspect.Target.ALLIES):
-		potential_targets.append_array(selector.players_ref)
+		potential_targets.append_array(selector.characters_ref)
 	
 	var target_distances: Array[Array] = []
 	for option: Character in potential_targets:
 		var dist: float = selector.hex_map.range_finder.travel_distance(
-				_player_map_index,
+				_character_map_index,
 				option.map_coordinate.get_tile_index()
 		)
 		target_distances.append([option, dist])
@@ -265,7 +265,7 @@ func _is_target_tile(map_tile: MapTile) -> bool:
 	if map_tile == null:
 		return false
 	var is_caster: bool = (
-		map_tile.map_coordinate.get_tile_index() == _player_map_index
+		map_tile.map_coordinate.get_tile_index() == _character_map_index
 	)
 	match map_tile.get_highlight_type():
 		HexHighlighter.Option.RANGE:
@@ -289,7 +289,7 @@ func _highlight_source_range() -> void:
 	selector.hex_map.selection_tracker.clear_highlights()
 	selector.hex_map.selection_tracker.highlight_action_source_area(
 			_get_source_range(),
-			selector.active_player
+			selector.active_character
 	)
 
 
@@ -300,7 +300,7 @@ func _highlight_effect_range() -> void:
 	_update_targets(effect_range)
 	selector.hex_map.selection_tracker.select_effect_range(
 			effect_range,
-			_player_map_index,
+			_character_map_index,
 			_action.get_emission_map_index(),
 			_action.stats.effect_ignores_caster,
 			_action.get_is_cardinal()
@@ -312,7 +312,7 @@ func _highlight_effect_range() -> void:
 func _get_source_range() -> Array[int]:
 	var d_map: DistanceMap = (
 			selector.hex_map.range_finder \
-			.dist_maps.at(_player_map_index)
+			.dist_maps.at(_character_map_index)
 	)
 	_source_d_map = (
 			d_map.map_from_tile_dist(_action.stats.source_range.get_reach())
@@ -320,12 +320,12 @@ func _get_source_range() -> Array[int]:
 			else d_map.map_from_travel_dist(_action.stats.source_range.get_reach())
 	)
 	var dead_indexes: Array[int] = _action.stats.dead_range.get_area_indexes(
-			_player_map_index,
+			_character_map_index,
 			selector.hex_map
 	)
 	for index in dead_indexes:
 		if (
-			index != _player_map_index 
+			index != _character_map_index 
 			and _source_d_map.has(index)
 			and (
 				_action.stats.source_ignore_heights or
@@ -408,7 +408,7 @@ func _update_targets(effect_range: Array[int]) -> void:
 					c is EnemyCharacter 
 					and _action_targets.has(EffectAspect.Target.OPPONENTS)
 				) or (
-					c.map_coordinate.get_tile_index() == _player_map_index
+					c.map_coordinate.get_tile_index() == _character_map_index
 					and _action_targets.has(EffectAspect.Target.SELF)
 				) or _action_targets.has(EffectAspect.Target.ALLIES)
 			)
@@ -433,8 +433,8 @@ func _resolve_joystick_for_area(dir: int) -> void:
 ## and does so if able.
 func _resolve_joystick_for_cardinal(dir: int) -> void:
 	if dir >= 0 and dir <= 5:
-		var player_tile: MapTile = selector.hex_map.get_tile_at(_player_map_index)
-		var direction_tile: MapTile = player_tile.get_adjacent_tile(dir)
+		var character_tile: MapTile = selector.hex_map.get_tile_at(_character_map_index)
+		var direction_tile: MapTile = character_tile.get_adjacent_tile(dir)
 		if _is_target_tile(direction_tile):
 			_update_selection(direction_tile)
 
@@ -444,7 +444,7 @@ func _execute_action() -> void:
 	selector.hex_map.selection_tracker.clear_highlights()
 	selector.hex_map.selection_tracker.clear_selector_highlights()
 	SignalBus.emit_character_action_executed(
-			selector.active_player,
+			selector.active_character,
 			_action,
 			_get_targets()
 	)
@@ -455,8 +455,8 @@ func _execute_action() -> void:
 ## Clears out the caches and resets recorded details.
 func _reset() -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
-	_player_map_index = -1
-	_player_pos = Vector3.ZERO
+	_character_map_index = -1
+	_character_pos = Vector3.ZERO
 	_ranges_cache.clear()
 	_targets_cache.clear()
 	_action = null
@@ -464,9 +464,9 @@ func _reset() -> void:
 
 ## Connect signals to this state.
 func _connect_signals() -> void:
-	selector.active_player.connect(
+	selector.active_character.connect(
 			"turn_ended",
-			Callable(self, "_on_PlayerCharacter_turn_ended")
+			Callable(self, "_on_Character_turn_ended")
 	)
 	SignalBus.connect(
 			"character_action_selected",
@@ -488,9 +488,9 @@ func _connect_signals() -> void:
 
 ## Disconnect signals from this state.
 func _disconnect_signals() -> void:
-	selector.active_player.disconnect(
+	selector.active_character.disconnect(
 			"turn_ended",
-			Callable(self, "_on_PlayerCharacter_turn_ended")
+			Callable(self, "_on_Character_turn_ended")
 	)
 	SignalBus.disconnect(
 			"character_action_selected",
@@ -539,7 +539,7 @@ func _can_execute() -> bool:
 	return true
 
 
-## Go to the "SelectMove" state when the player action selection is canceled.
+## Go to the "SelectMove" state when the character action selection is canceled.
 func _on_SignalBus_character_action_type_canceled() -> void:
 	if not _state_is_active():
 		return
@@ -548,8 +548,8 @@ func _on_SignalBus_character_action_type_canceled() -> void:
 	state_machine.transition_to(SELECT_MOVE)
 
 
-## Go to the "WAIT" state when a player has signaled that their turn is ended.
-func _on_PlayerCharacter_turn_ended() -> void:
+## Go to the "WAIT" state when a character has signaled that their turn is ended.
+func _on_Character_turn_ended() -> void:
 	_reset()
 	state_machine.transition_to(WAIT)
 

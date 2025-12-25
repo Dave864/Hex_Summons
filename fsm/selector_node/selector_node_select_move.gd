@@ -20,7 +20,7 @@ var _movement_ids: Array[int] = []
 
 ## Reveal the selector shape and enable the ability to update tile highlights.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
-	var player_index: int = selector.active_player.map_coordinate.get_tile_index()
+	var player_index: int = selector.active_character.map_coordinate.get_tile_index()
 	if _move_origin_index < 0:
 		_move_origin_index = player_index
 	_determine_movement_ids()
@@ -61,12 +61,12 @@ func _connect_signals() -> void:
 ## clear out movement details when the turn is ended while in the SelectAction
 ## state.
 func _connect_player_turn_ended():
-	if selector.active_player.is_connected(
+	if selector.active_character.is_connected(
 			"turn_ended",
 			Callable(self, "_on_PlayerCharacter_turn_ended")
 	):
 		return
-	selector.active_player.connect(
+	selector.active_character.connect(
 		"turn_ended",
 		Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
@@ -100,7 +100,7 @@ func _determine_movement_ids() -> void:
 	if _movement_ids.size() > 0:
 		return
 	_movement_ids = selector.hex_map.range_finder.get_character_travesible_tiles(
-			selector.active_player,
+			selector.active_character,
 			selector.enemies_ref
 	)
 
@@ -109,7 +109,7 @@ func _determine_movement_ids() -> void:
 func _highlight_movement_range(player_index: int) -> void:
 	selector.hex_map.selection_tracker.highlight_player_movement(
 			_movement_ids,
-			selector.active_player,
+			selector.active_character,
 			_move_origin_index
 	)
 	var start_tile: MapTile = selector.hex_map.get_tile_at(player_index)
@@ -153,7 +153,7 @@ func _on_PlayerCharacter_turn_ended() -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	_move_origin_index = -1
 	_movement_ids.clear()
-	selector.active_player.disconnect(
+	selector.active_character.disconnect(
 			"turn_ended",
 			Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
@@ -166,7 +166,7 @@ func _on_SignalBus_move_path_requested() -> void:
 	if selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY:
 		var path_data: PackedVector3Array = (
 			selector.hex_map.range_finder.get_character_point_path(
-					selector.active_player,
+					selector.active_character,
 					selector.tile_hovered.map_coordinate.get_tile_index(),
 					selector.enemies_ref,
 					_movement_ids

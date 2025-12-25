@@ -8,7 +8,7 @@ extends SelectorState
 
 ## Connect to the player_turn_started signal from the SignalBus.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
-	selector.active_player = null
+	selector.active_character = null
 	SignalBus.connect(
 			"player_turn_started",
 			Callable(self, "_on_SignalBus_player_turn_started")
@@ -27,5 +27,5 @@ func exit() -> void:
 ## Set the position of the selector to the player whose turn has started and move
 ## to the `SelectMove` state.
 func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
-	selector.active_player = player
+	selector.active_character = player
 	state_machine.transition_to(SELECT_MOVE)
