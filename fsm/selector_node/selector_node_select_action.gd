@@ -37,7 +37,7 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	_highlight_source_range()
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
-	if _action.stats.emit_from_center:
+	if _action.stats.emit_from_caster:
 		_orient_to_closest_target()
 	else:
 		_place_closest_to_target()
@@ -54,11 +54,11 @@ func exit() -> void:
 func handle_input(_event: InputEvent) -> void:
 	# Handles the instances where the mouse goes over an area without a map tile.
 	if InputController.source_is_keymouse():
-		if _action.stats.emit_from_center:
+		if _action.stats.emit_from_caster:
 			_orient_emission_to_mouse()
 	elif InputController.source_is_gamepad():
 		var joy_dir: Vector2 = GamepadHandler.left_joystick_dir()
-		if _action.stats.emit_from_center and not joy_dir.is_zero_approx():
+		if _action.stats.emit_from_caster and not joy_dir.is_zero_approx():
 			var dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
 			_resolve_joystick_for_cardinal(dir)
 
@@ -100,7 +100,7 @@ func _update_selection(map_tile: MapTile) -> void:
 		)
 	):
 		return
-	if _action.stats.emit_from_center:
+	if _action.stats.emit_from_caster:
 		selector.tile_hovered = map_tile
 		# Orienting to mouse position is handled by handle_input.
 		if InputController.get_source() == InputController.Source.GAMEPAD:
@@ -340,7 +340,7 @@ func _get_source_range() -> Array[int]:
 func _get_effect_range() -> Array[int]:
 	var e_index: int = _action.get_emission_map_index()
 	var e_dir: int = _action.get_emission_direction()
-	if _action.stats.emit_from_center and _ranges_cache.has(e_dir):
+	if _action.stats.emit_from_caster and _ranges_cache.has(e_dir):
 		return _ranges_cache[e_dir]
 	elif _ranges_cache.has(e_index):
 		return _ranges_cache[e_index]
@@ -366,7 +366,7 @@ func _get_effect_range() -> Array[int]:
 
 ## Gets the targets for the current emission area.
 func _get_targets() -> Array[Character]:
-	if _action.stats.emit_from_center:
+	if _action.stats.emit_from_caster:
 		return _targets_cache[_action.get_emission_direction()]
 	else:
 		return _targets_cache[_action.get_emission_map_index()]
@@ -375,7 +375,7 @@ func _get_targets() -> Array[Character]:
 ## Updates the _effect_ranges dictionary to store the listed effect indexes
 ## under either the emission point or direction.
 func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array[int]) -> void:
-	if _action.stats.emit_from_center:
+	if _action.stats.emit_from_caster:
 		_ranges_cache[e_dir] = indexes
 	else:
 		_ranges_cache[e_pt] = indexes
@@ -386,7 +386,7 @@ func _update_targets(effect_range: Array[int]) -> void:
 	var e_index: int = _action.get_emission_map_index()
 	var e_dir: int = _action.get_emission_direction()
 	if (
-		(_action.stats.emit_from_center and _targets_cache.has(e_dir))
+		(_action.stats.emit_from_caster and _targets_cache.has(e_dir))
 		or _targets_cache.has(e_index)
 	):
 		return
@@ -407,7 +407,7 @@ func _update_targets(effect_range: Array[int]) -> void:
 			)
 		):
 			targets.append(c)
-	if _action.stats.emit_from_center:
+	if _action.stats.emit_from_caster:
 		_targets_cache[e_dir] = targets
 	else:
 		_targets_cache[e_index] = targets
@@ -555,7 +555,7 @@ func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
 ## Resolves the left joystick pulse input. Pulses should only be used when the
 ## effect is not bound to the caster's position.
 func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
-	if _action.stats.emit_from_center:
+	if _action.stats.emit_from_caster:
 		return
 	# Relative top needed as joystick direction does not account for camera orientation.
 	var hex_dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)

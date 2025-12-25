@@ -1,7 +1,6 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" script_class="CircleArea" load_steps=2 format=3 uid="uid://cieqbgj46s1wc"]
 
-[ext_resource path="res://range_type/cardinal_area.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://b47eadwui0tav" path="res://actions/range_types/scripts/circle_area.gd" id="1_eivib"]
 
 [resource]
-script = ExtResource( 1 )
-distance = 1
+script = ExtResource("1_eivib")

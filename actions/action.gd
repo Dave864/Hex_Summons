@@ -91,7 +91,7 @@ func set_emission_pos(pos: Vector3) -> void:
 ## Set the direction of the emission (0 - 5). Only updates the direction if
 ## the action is emitted from center.
 func set_emission_direction(dir: int) -> void:
-	if stats.emit_from_center:
+	if stats.emit_from_caster:
 		_emission_direction = 0 if dir < 0 else 5 if dir > 5 else dir
 		_emission_transform.basis = Basis(
 				Vector3.UP,

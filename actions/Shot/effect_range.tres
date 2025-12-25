@@ -1,7 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=2]
-
-[ext_resource type="Script" uid="uid://b47eadwui0tav" path="res://range_type/circle_area.gd" id="1"]
-
-[resource]
-script = ExtResource( 1 )
-radius = 0

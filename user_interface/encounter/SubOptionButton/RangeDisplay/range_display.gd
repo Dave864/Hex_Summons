@@ -155,7 +155,7 @@ func _determine_source_hexes() -> void:
 
 ## Determine the hex colors that will represent the effect range.
 func _determine_effect_hexes() -> void:
-	if not _action.stats.emit_from_center:
+	if not _action.stats.emit_from_caster:
 		# Determine the emission point.
 		for x in range(2, col_count):
 			var index: Vector2 = Vector2(x, _mid_row)

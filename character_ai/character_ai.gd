@@ -472,7 +472,7 @@ func _source_step(
 	var source_stop: int
 	var results: Array[int] = [0, 0]
 	# Source range not applied when action is emitted from center.
-	if action.stats.emit_from_center:
+	if action.stats.emit_from_caster:
 		source_stop = effect_stop
 	else:
 		var path: PackedInt32Array = []

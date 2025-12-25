@@ -1,3 +1,4 @@
+@tool
 class_name ActionStats
 extends Resource
 ## Resource that describes the potency and various ranges of an action.
@@ -12,17 +13,30 @@ extends Resource
 ## The potency stats of this action.
 @export var potency: Potency = null
 ## Describes the area where the action's casting point can be placed.
-@export var source_range: AreaRange = null
+@export var source_range: RadialAreaRange = null
 ## Describes the area within a source range that the action's casting point
 ## cannot be placed.
-@export var dead_range: AreaRange = null
+@export var dead_range: RadialAreaRange = null
 ## Describes the area that the action affects.
-@export var effect_range: AreaRange = null
-## Flag that denotes if the emission is fixed to the center of the source area.
-@export var emit_from_center: bool = true
-## Flag that denotes if the effect should include the casting character tile.
+@export var effect_range: AreaRange = null:
+	set(value):
+		effect_range = value
+		if effect_range is DirectionalAreaRange:
+			emit_from_caster = true
+			notify_property_list_changed()
+## Flag that denotes if the emission is fixed to the caster position.
+@export var emit_from_caster: bool = true:
+	set(value):
+		if not effect_range is DirectionalAreaRange:
+			emit_from_caster = value
+		else:
+			emit_from_caster = true
+		notify_property_list_changed()
+## Flag that denotes if the effect should include the casting character
+## tile.
 @export var effect_ignores_caster: bool = true
-## Flag that denotes if the possible source of the emmision is affected by tile heights.
+## Flag that denotes if the possible source of the emmision is affected
+## by tile heights.
 @export var source_ignore_heights: bool = false
 ## Flag that denotes if the emission area is affected by tile heights.
 @export var effect_ignore_heights: bool = false
@@ -44,16 +58,8 @@ func _check_for_required_parameters() -> void:
 			"ActionStats source range not set."
 	)
 	assert(
-			source_range is CardinalArea or source_range is CircleArea,
-			"ActionStats source range is neither a CardinalArea or CircleArea."
-	)
-	assert(
 			dead_range != null,
 			"ActionStats dead range not set."
-	)
-	assert(
-			dead_range is CardinalArea or dead_range is CircleArea,
-			"ActionStats dead range is neither a CardinalArea or CircleArea."
 	)
 	assert(
 			effect_range != null,

@@ -1,19 +1,13 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" script_class="ActionStats" load_steps=4 format=3 uid="uid://d3caj5hc33ef6"]
 
-[ext_resource path="res://actions/action_stats.gd" type="Script" id=1]
-[ext_resource path="res://actions/Empty/potency.tres" type="Resource" id=2]
-[ext_resource path="res://actions/Empty/source_range.tres" type="Resource" id=3]
-[ext_resource path="res://actions/Empty/dead_range.tres" type="Resource" id=4]
-[ext_resource path="res://actions/Empty/effect_range.tres" type="Resource" id=5]
+[ext_resource type="Script" uid="uid://u40d4erg4smm" path="res://actions/action_stats.gd" id="1"]
+[ext_resource type="Resource" uid="uid://4a58t5adakfm" path="res://actions/range_types/common_ranges/empty_area.tres" id="1_ynr6u"]
+[ext_resource type="Resource" path="res://actions/Empty/potency.tres" id="2"]
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource("1")
 name = "Empty"
-potency = ExtResource( 2 )
-source_range = ExtResource( 3 )
-dead_range = ExtResource( 4 )
-effect_range = ExtResource( 5 )
-emit_from_center = false
-effect_ignores_caster = false
-source_ignore_heights = false
-effect_ignore_heights = false
+potency = ExtResource("2")
+source_range = ExtResource("1_ynr6u")
+dead_range = ExtResource("1_ynr6u")
+effect_range = ExtResource("1_ynr6u")

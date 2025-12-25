@@ -1,36 +1,43 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://casp4g057u5ty"]
 
-[ext_resource path="res://actions/action.gd" type="Script" id=3]
-[ext_resource path="res://actions/action_hit_box.gd" type="Script" id=4]
-[ext_resource path="res://effects/Damage/Damage.tscn" type="PackedScene" id=6]
-[ext_resource path="res://actions/Action/action_stats.tres" type="Resource" id=7]
+[ext_resource type="Script" uid="uid://b4nchvbsc7a5a" path="res://actions/action.gd" id="3"]
+[ext_resource type="Script" uid="uid://bmwncc537t588" path="res://actions/action_hit_box.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://c72e1ocpd832p" path="res://effects/Damage/Damage.tscn" id="6"]
+[ext_resource type="Resource" uid="uid://df2o2b4j5x8vm" path="res://actions/Action/action_stats.tres" id="7"]
 
-[sub_resource type="SphereShape3D" id=1]
+[sub_resource type="SphereShape3D" id="1"]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 resource_name = "execute"
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3jj0b"]
+_data = {
+&"execute": SubResource("2")
+}
+
 [node name="Action" type="Node"]
-script = ExtResource( 3 )
+script = ExtResource("3")
 hit_box_ref = NodePath("ActionHitBox")
-stats = ExtResource( 7 )
+stats = ExtResource("7")
 
 [node name="ActionHitBox" type="Area3D" parent="."]
 collision_layer = 16
 collision_mask = 0
 monitoring = false
 monitorable = false
-script = ExtResource( 4 )
+script = ExtResource("4")
 effects_ref = NodePath("../Effects")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ActionHitBox"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
-shape = SubResource( 1 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+shape = SubResource("1")
 disabled = true
 
 [node name="Effects" type="Node" parent="."]
 
-[node name="Damage" parent="Effects" instance=ExtResource( 6 )]
+[node name="Damage" parent="Effects" instance=ExtResource("6")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/execute = SubResource( 2 )
+libraries = {
+&"": SubResource("AnimationLibrary_3jj0b")
+}

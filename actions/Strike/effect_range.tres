@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://range_type/cone_area.gd" type="Script" id=1]
+[ext_resource type="Script" uid="uid://0kmipcuoidr3" path="res://actions/range_types/scripts/cone_area.gd" id="1"]
 
 [resource]
 script = ExtResource( 1 )
