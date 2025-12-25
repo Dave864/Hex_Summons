@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AdjacentPointArea" load_steps=2 format=3 uid="uid://bd2vgy6hv66ai"]
+
+[ext_resource type="Script" uid="uid://dxbclqbr8qjo7" path="res://actions/range_types/scripts/adjacent_point_area.gd" id="1_h707q"]
+
+[resource]
+script = ExtResource("1_h707q")
+metadata/_custom_type_script = "uid://dxbclqbr8qjo7"

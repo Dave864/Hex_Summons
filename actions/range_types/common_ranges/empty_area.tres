@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="EmptyArea" load_steps=2 format=3 uid="uid://4a58t5adakfm"]
+
+[ext_resource type="Script" uid="uid://vjrbbbuhfhm5" path="res://actions/range_types/scripts/empty_area.gd" id="1_6ih6l"]
+
+[resource]
+script = ExtResource("1_6ih6l")
+metadata/_custom_type_script = "uid://vjrbbbuhfhm5"

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PointArea" load_steps=2 format=3 uid="uid://bm4wdsdx4k56h"]
+
+[ext_resource type="Script" uid="uid://bmglf46b4csdw" path="res://actions/range_types/scripts/point_area.gd" id="1_7odmr"]
+
+[resource]
+script = ExtResource("1_7odmr")
+metadata/_custom_type_script = "uid://bmglf46b4csdw"

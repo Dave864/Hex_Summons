@@ -4,7 +4,7 @@ extends RadialAreaRange
 
 
 ## How many tiles out from the cast point the area will reach.
-@export_range(0, 1000) var radius: int = 0
+@export_range(1, 1000) var radius: int = 1
 
 
 ## Returns the reach of the CircleArea. Used when determining which tiles are
