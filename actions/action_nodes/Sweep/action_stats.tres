@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ActionStats" load_steps=6 format=3 uid="uid://8ylvvlqc5h6e"]
+
+[ext_resource type="Script" uid="uid://u40d4erg4smm" path="res://actions/action_stats.gd" id="1"]
+[ext_resource type="Resource" uid="uid://bm4wdsdx4k56h" path="res://actions/range_types/common_ranges/point_area.tres" id="1_105y6"]
+[ext_resource type="Resource" path="res://actions/action_nodes/Sweep/potency.tres" id="2"]
+[ext_resource type="Resource" uid="uid://cjgisgxrjn5ks" path="res://actions/action_nodes/Sweep/source_range.tres" id="3"]
+[ext_resource type="Resource" uid="uid://cuu31jeja4h4l" path="res://actions/action_nodes/Sweep/effect_range.tres" id="5"]
+
+[resource]
+script = ExtResource("1")
+name = "Sweep"
+potency = ExtResource("2")
+source_range = ExtResource("3")
+dead_range = ExtResource("1_105y6")
+effect_range = ExtResource("5")

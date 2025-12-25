@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="SummonData" load_steps=6 format=3 uid="uid://bucl831rabxgb"]
 
 [ext_resource type="Script" uid="uid://dkcxv3uxhnxgj" path="res://character/summons/summon_data.gd" id="1_sheyr"]
-[ext_resource type="Resource" uid="uid://wqwavjb6eivw" path="res://actions/SuperNova/action_stats.tres" id="2_1er12"]
+[ext_resource type="Resource" uid="uid://wqwavjb6eivw" path="res://actions/action_nodes/SuperNova/action_stats.tres" id="2_1er12"]
 [ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/action_stats/spell_stats.gd" id="2_wewqp"]
 [ext_resource type="Resource" uid="uid://dp2mlpnt7qfxt" path="res://character/summons/summon_data/TestFire/actions_data/beam_data.tres" id="4_6enet"]
 [ext_resource type="Resource" uid="uid://bkfn73ekp37uo" path="res://character/summons/summon_data/TestFire/actions_data/nova_data.tres" id="5_xlgu7"]
+
 
 
 [resource]

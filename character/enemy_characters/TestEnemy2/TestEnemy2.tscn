@@ -14,13 +14,14 @@
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="12"]
 [ext_resource type="Texture2D" path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattlePortrait.atlastex" id="13"]
 [ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="14"]
-[ext_resource type="PackedScene" path="res://actions/Shot/Shot.tscn" id="15"]
-[ext_resource type="PackedScene" path="res://actions/Blast/Blast.tscn" id="16"]
+[ext_resource type="PackedScene" path="res://actions/action_nodes/Shot/Shot.tscn" id="15"]
+[ext_resource type="PackedScene" uid="uid://6pb0gwn4gr8t" path="res://actions/action_nodes/Blast/Blast.tscn" id="16"]
 [ext_resource type="Script" uid="uid://mxpbc437xmjm" path="res://character_ai/action_conditions/cooldown.gd" id="17"]
 [ext_resource type="Script" uid="uid://bdkgr4241wqcj" path="res://character_ai/action_behavior.gd" id="18"]
-[ext_resource type="PackedScene" path="res://actions/Empty/Empty.tscn" id="19"]
+[ext_resource type="PackedScene" path="res://actions/action_nodes/Empty/Empty.tscn" id="19"]
 [ext_resource type="Script" uid="uid://b020qxy754ll2" path="res://character_ai/action_conditions/group_condition.gd" id="20"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="21"]
+
 
 
 [sub_resource type="CapsuleShape3D" id="1"]

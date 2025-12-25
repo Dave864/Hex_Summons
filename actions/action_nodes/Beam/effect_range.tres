@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ColumnArea" load_steps=2 format=3 uid="uid://7x10akqhy3to"]
+
+[ext_resource type="Script" uid="uid://c3una6s5pjs01" path="res://actions/range_types/scripts/column_area.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+distance = 3

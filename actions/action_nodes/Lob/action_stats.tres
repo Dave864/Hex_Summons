@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ActionStats" load_steps=6 format=3 uid="uid://cu3ujpuqcywfj"]
+
+[ext_resource type="Script" uid="uid://u40d4erg4smm" path="res://actions/action_stats.gd" id="1"]
+[ext_resource type="Resource" path="res://actions/action_nodes/Lob/potency.tres" id="2"]
+[ext_resource type="Resource" uid="uid://d3y3ayi6k4to6" path="res://actions/action_nodes/Lob/source_range.tres" id="3"]
+[ext_resource type="Resource" uid="uid://b17pi3dpmak3f" path="res://actions/action_nodes/Lob/dead_range.tres" id="4"]
+[ext_resource type="Resource" uid="uid://bnjntcmwq1ql4" path="res://actions/action_nodes/Lob/effect_range.tres" id="5"]
+
+[resource]
+script = ExtResource("1")
+name = "Lob"
+potency = ExtResource("2")
+source_range = ExtResource("3")
+dead_range = ExtResource("4")
+effect_range = ExtResource("5")
+emit_from_caster = false
+source_ignore_heights = true

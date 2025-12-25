@@ -3,11 +3,12 @@
 [ext_resource type="Script" uid="uid://bqwgtiquxgb0a" path="res://character/player_classes/player_class.gd" id="1"]
 [ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="2"]
 [ext_resource type="Resource" uid="uid://c45mdtcgem73i" path="res://character/player_classes/TestMeleeClass/stat_data/stat_values.tres" id="3"]
-[ext_resource type="PackedScene" uid="uid://bwq1llmyfdw5o" path="res://actions/Strike/Strike.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://actions/Sweep/Sweep.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://bwq1llmyfdw5o" path="res://actions/action_nodes/Strike/Strike.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://actions/action_nodes/Sweep/Sweep.tscn" id="5"]
 [ext_resource type="Script" uid="uid://mxpbc437xmjm" path="res://character_ai/action_conditions/cooldown.gd" id="6"]
-[ext_resource type="PackedScene" path="res://actions/Nova/Nova.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://actions/action_nodes/Nova/Nova.tscn" id="7"]
 [ext_resource type="Script" uid="uid://cylb1ft2glyfa" path="res://character_ai/action_conditions/wisp_cost.gd" id="8"]
+
 
 
 [node name="TestMeleeClass" type="Node"]

@@ -2,10 +2,10 @@ class_name EncounterUIAction
 extends EncounterUIState
 ## The logic for what happens when an EncounterUI scene is in the `Action` state.
 ##
-## Populates the SubOptions node with buttons descrbing available choices. Selecting
-## the button for the currently active action will clear the SubOptions node and
-## allow for movement. Selecting a different button will transition refresh the
-## `Action` state using the features of the new option.
+## Populates the SubOptions node with buttons descrbing available choices.
+## Selecting the button for the currently active action will clear the
+## SubOptions node and allow for movement. Selecting a different button will
+## transition refresh the `Action` state using the features of the new option.
 
 
 ## The current option menu that is open.
@@ -156,8 +156,8 @@ func _end_selected() -> void:
 	encounter_ui.get_focused_player().emit_turn_ended()
 
 
-## Handles the behavior for when the movement button has been selected. The current
-## option menu closes and the state machine goes to the MOVE state.
+## Handles the behavior for when the movement button has been selected. The
+## current option menu closes and the state machine goes to the MOVE state.
 func _movement_selected() -> void:
 	_toggle_off_current_option()
 	_action_type_canceled()
@@ -165,7 +165,7 @@ func _movement_selected() -> void:
 
 ## Handles the behavior for when a option category has been selected. Closes
 ## the current menu and triggers the loading of a new menu if applicable.
-func _category_selected(option: int) -> void:
+func _category_selected(option: EncounterUI.Options) -> void:
 	_toggle_off_current_option()
 	if _option_flag == option:
 		_action_type_canceled()
@@ -231,8 +231,7 @@ func _on_PlayerCharacter_turn_ended() -> void:
 	state_machine.transition_to(WAIT)
 
 
-## Signal that an option has been selected from the currently
-## displayed options.
+## Signal that an option has been selected from the currently displayed options.
 func _on_SubOptions_option_selected(action_info: Action) -> void:
 	_current_action = action_info
 	SignalBus.emit_character_action_selected(

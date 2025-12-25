@@ -1,7 +1,8 @@
 [gd_resource type="Resource" script_class="SpellStats" load_steps=3 format=3 uid="uid://dp2mlpnt7qfxt"]
 
-[ext_resource type="Resource" path="res://actions/Beam/action_stats.tres" id="1_ljq3s"]
+[ext_resource type="Resource" uid="uid://c7tacoqetxp51" path="res://actions/action_nodes/Beam/action_stats.tres" id="1_ljq3s"]
 [ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/action_stats/spell_stats.gd" id="1_q21ft"]
+
 
 
 [resource]

@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dkcxv3uxhnxgj" path="res://character/summons/summon_data.gd" id="1_yidd1"]
 [ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/action_stats/spell_stats.gd" id="2_wfegn"]
-[ext_resource type="Resource" uid="uid://wqwavjb6eivw" path="res://actions/SuperNova/action_stats.tres" id="2_yqd0y"]
+[ext_resource type="Resource" uid="uid://wqwavjb6eivw" path="res://actions/action_nodes/SuperNova/action_stats.tres" id="2_yqd0y"]
 [ext_resource type="Resource" uid="uid://03j8tehoyanp" path="res://character/summons/summon_data/TestEarth/actions_data/blast_data.tres" id="4_8ldr8"]
 [ext_resource type="Resource" uid="uid://b4665rpambgu3" path="res://character/summons/summon_data/TestEarth/actions_data/sweep_data.tres" id="5_3pknq"]
+
 
 
 [resource]

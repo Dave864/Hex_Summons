@@ -1,7 +1,8 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource type="Script" uid="uid://ci8l3katyguri" path="res://character/scripts/action_stats/technique_stats.gd" id="1"]
-[ext_resource type="Resource" path="res://actions/Sweep/action_stats.tres" id="2"]
+[ext_resource type="Resource" uid="uid://8ylvvlqc5h6e" path="res://actions/action_nodes/Sweep/action_stats.tres" id="2"]
+
 
 
 [resource]

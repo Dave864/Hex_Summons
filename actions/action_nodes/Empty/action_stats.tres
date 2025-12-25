@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ActionStats" load_steps=4 format=3 uid="uid://d3caj5hc33ef6"]
+
+[ext_resource type="Script" uid="uid://u40d4erg4smm" path="res://actions/action_stats.gd" id="1"]
+[ext_resource type="Resource" uid="uid://4a58t5adakfm" path="res://actions/range_types/common_ranges/empty_area.tres" id="1_ynr6u"]
+[ext_resource type="Resource" path="res://actions/action_nodes/Empty/potency.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+name = "Empty"
+potency = ExtResource("2")
+source_range = ExtResource("1_ynr6u")
+dead_range = ExtResource("1_ynr6u")
+effect_range = ExtResource("1_ynr6u")

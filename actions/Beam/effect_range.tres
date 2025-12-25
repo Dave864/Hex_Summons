@@ -1,8 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=2]
-
-[ext_resource type="Script" uid="uid://c3una6s5pjs01" path="res://actions/range_types/scripts/column_area.gd" id="1"]
-
-[resource]
-script = ExtResource( 1 )
-spread = 1
-distance = 3

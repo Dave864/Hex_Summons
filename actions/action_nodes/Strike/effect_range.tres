@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ConeArea" load_steps=2 format=3 uid="uid://bqu6t2o41yijt"]
+
+[ext_resource type="Script" uid="uid://0kmipcuoidr3" path="res://actions/range_types/scripts/cone_area.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+spread = 0

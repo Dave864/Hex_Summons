@@ -16,9 +16,16 @@ const SUMMON_DATA_RESOURCE_PATH: String = (
 	+ "{0}/summon_data.tres"
 )
 ## The string format for retrieving actions given a name.
-const ACTION_PATH_FORMAT: String = "res://actions/{0}/{0}.tscn"
+const ACTION_PATH_FORMAT: String = "res://actions/action_nodes/{0}/{0}.tscn"
+## Formatted String for the error message indicating that an action is not
+## valid as a spawn action.
+const INVALID_ACTION_ERROR_FORMAT: String = (
+	"Action {0} is not a valid option for a summon spawn action as its " \
+	+ "effect is emitted from the summoner."
+)
 ## Position the summon is placed when not active.
 const STANDBY_POSITION: Vector3 = Vector3(0.0, -10.0, 0.0)
+
 
 ## The character that conjured the active summon.
 var summoner: PlayerCharacter = null:
@@ -105,7 +112,9 @@ func _cache_available_summons() -> void:
 	var core_elems_count: Dictionary[Element.Core, int]
 	core_elems_count = WispTracker.get_usable_wisp_count()
 	for summon_name: String in summon_folders:
-		var data: SummonData = load(SUMMON_DATA_RESOURCE_PATH.format([summon_name]))
+		var data: SummonData = (
+			load(SUMMON_DATA_RESOURCE_PATH.format([summon_name]))
+		)
 		if data.core_elements_meet_requirements(core_elems_count):
 			available_summons[summon_name] = data
 			_create_spawn_action_node(summon_name, data.spawn_action)
@@ -117,6 +126,10 @@ func _create_spawn_action_node(
 	summon_name: String,
 	action_stats: ActionStats
 ) -> void:
+	assert(
+			not action_stats.emit_from_caster,
+			INVALID_ACTION_ERROR_FORMAT.format([action_stats.name])
+	)
 	var action_node: Action
 	if $Actions/SpawnActions.has_node(action_stats.name):
 		action_node = $Actions/SpawnActions.get_node(action_stats.name)

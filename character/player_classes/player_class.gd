@@ -5,13 +5,20 @@ extends Node
 ## statistics the player will have, along with some techniques and spells that the
 ## player will have access to.
 
+## Name of the node that holds the character stats.
 const STATS: String = "Stats"
+## Name of the node that contains the technique actions.
 const TECHNIQUES: String = "Techniques"
+## Name of the node that contains the spell actions.
 const SPELLS: String = "Spells"
-const ACTION_PATH_FORMAT: String = "res://actions/{0}/{0}.tscn"
+## Path format to access the scene of an action.
+const ACTION_PATH_FORMAT: String = "res://actions/action_nodes/{0}/{0}.tscn"
 
+## The modified stats of the class that are used for a player character.
 var stats: CharacterStatModifiers
+## The techniques inherent to this class.
 var techniques: Array[Action]
+## The spells inherent to this class.
 var spells: Array[Action]
 
 ## Reference to the scene tree root.
