@@ -67,6 +67,17 @@ func is_active() -> bool:
 	return _active
 
 
+## Sets the wisp cost of the spawn action for the given summon.
+func set_cost_for_spawn_action(summon_name: String) -> void:
+	var spawn_action: Action = spawn_actions[summon_name]
+	var wisp_cost: WispCost = spawn_action.get_node("WispCost")
+	var summon_cost_summary: Dictionary[Element.Type, int] = (
+		available_summons[summon_name].cost_summary()
+	)
+	wisp_cost.update_requirements(summon_cost_summary)
+	wisp_cost.update_costs(summon_cost_summary)
+
+
 ## Sets the selected summon to be active and places them at the specified map
 ## coordinate.
 func load_summon(
@@ -137,6 +148,11 @@ func _create_spawn_action_node(
 		action_node = _create_action_node(action_stats.name)
 		action_node.name = action_stats.name
 		$Actions/SpawnActions.add_child(action_node)
+		var wisp_cost_node: WispCost = WispCost.new(
+				available_summons[summon_name].cost_summary(),
+				available_summons[summon_name].cost_summary()
+		)
+		action_node.add_child(wisp_cost_node)
 	spawn_actions[summon_name] = action_node
 
 

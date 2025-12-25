@@ -41,7 +41,8 @@ func _init(
 ) -> void:
 	name = "WispCost"
 	for element: Element.Type in Element.Type.values():
-		_cost_and_req_for_element(element, requirements, costs)
+		_req_for_element(element, requirements)
+		_cost_for_element(element, costs)
 	req_summary = requirements
 	cost_summary = costs
 
@@ -63,36 +64,63 @@ func is_met(
 	)
 
 
-## Helper function for _init. Sets the requirement and cost value for the given
-## element based on the details provided.
-func _cost_and_req_for_element(
+## Updates the requirement values to the specified elements.
+func update_requirements(new_requirements: Dictionary[Element.Type, int]) -> void:
+	for element: Element.Type in Element.Type.values():
+		_req_for_element(element, new_requirements)
+	req_summary = new_requirements
+
+
+## Updates the cost values to the specified elements.
+func update_costs(new_costs: Dictionary[Element.Type, int]) -> void:
+	for element: Element.Type in Element.Type.values():
+		_cost_for_element(element, new_costs)
+	cost_summary = new_costs
+
+
+## Sets the requirement value for the given element based on the details
+## provided.
+func _req_for_element(
 	element: Element.Type,
-	requirements: Dictionary[Element.Type, int],
-	costs: Dictionary[Element.Type, int]
+	requirements: Dictionary[Element.Type, int]
 ) -> void:
 	var req_value: int = (
 		0 if not requirements.has(element)
 		else requirements[element]
 	)
-	var cost_value: int = 0 if not costs.has(element) else costs[element]
 	match element:
 		Element.Type.EARTH:
 			req_earth = req_value
-			cost_earth = cost_value
 		Element.Type.FIRE:
 			req_fire = req_value
-			cost_fire = cost_value
 		Element.Type.WATER:
 			req_water = req_value
-			cost_water = cost_value
 		Element.Type.WIND:
 			req_wind = req_value
-			cost_wind = cost_value
 		Element.Type.LIGHT:
 			req_light = req_value
-			cost_light = cost_value
 		Element.Type.DARK:
 			req_dark = req_value
+
+
+## Sets the cost value for the given element based on the details provided.
+func _cost_for_element(
+	element: Element.Type,
+	costs: Dictionary[Element.Type, int]
+) -> void:
+	var cost_value: int = 0 if not costs.has(element) else costs[element]
+	match element:
+		Element.Type.EARTH:
+			cost_earth = cost_value
+		Element.Type.FIRE:
+			cost_fire = cost_value
+		Element.Type.WATER:
+			cost_water = cost_value
+		Element.Type.WIND:
+			cost_wind = cost_value
+		Element.Type.LIGHT:
+			cost_light = cost_value
+		Element.Type.DARK:
 			cost_dark = cost_value
 
 
