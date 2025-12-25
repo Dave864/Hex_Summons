@@ -44,16 +44,16 @@ func _check_for_required_parameters() -> void:
 			"ActionStats source range not set."
 	)
 	assert(
-			source_range is CardinalArea or source_range is RingArea,
-			"ActionStats source range is neither a CardinalArea or RingArea."
+			source_range is CardinalArea or source_range is CircleArea,
+			"ActionStats source range is neither a CardinalArea or CircleArea."
 	)
 	assert(
 			dead_range != null,
 			"ActionStats dead range not set."
 	)
 	assert(
-			dead_range is CardinalArea or dead_range is RingArea,
-			"ActionStats dead range is neither a CardinalArea or RingArea."
+			dead_range is CardinalArea or dead_range is CircleArea,
+			"ActionStats dead range is neither a CardinalArea or CircleArea."
 	)
 	assert(
 			effect_range != null,

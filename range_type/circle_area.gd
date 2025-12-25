@@ -1,5 +1,5 @@
-class_name RingArea
-extends AreaRange
+class_name CircleArea
+extends RadialAreaRange
 ## Describes a range whose area encompasses all hexes within a defined distance.
 
 
@@ -7,7 +7,7 @@ extends AreaRange
 @export_range(0, 1000) var radius: int = 0
 
 
-## Returns the reach of the RingArea. Used when determining which tiles are
+## Returns the reach of the CircleArea. Used when determining which tiles are
 ## affected by tile heights.
 func get_reach() -> int:
 	return radius
@@ -18,7 +18,9 @@ func get_reach() -> int:
 ## Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
 func get_area_indexes(start: int, hm: HexMap) -> Array[int]:
 	var tile_ids: Array[int] = []
-	var start_coord: Vector3 = hm.get_tile_at(start).map_coordinate.get_cube_coord()
+	var start_coord: Vector3 = (
+		hm.get_tile_at(start).map_coordinate.get_cube_coord()
+	)
 	for x in range(-radius, radius + 1):
 		var x_lower: int = max(-radius, -x - radius) as int
 		var x_upper: int = min(radius, radius - x) as int
@@ -30,16 +32,8 @@ func get_area_indexes(start: int, hm: HexMap) -> Array[int]:
 	return tile_ids
 
 
-## Calls get_area_indexes as RingAreas do not require a direction.
-func get_dir_area_indexes(
-	start: int,
-	_dir: int,
-	hm: HexMap
-) -> Array[int]:
-	return get_area_indexes(start, hm)
-
-
-## Modifies a RangeDisplay hex matrix so that it reflects the details of this RingArea.
+## Modifies a RangeDisplay hex matrix so that it reflects the details of this
+## CircleArea.
 ## Reference: https://www.redblobgames.com/grids/hexagons/#range-coordinate
 func update_range_display(
 	center_point: Vector2,

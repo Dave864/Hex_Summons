@@ -4,23 +4,9 @@ extends Resource
 ## Describes the function signatures for area ranges.
 
 
-## Returns the reach of the AreaRange. Used when determining which tiles are
-## affected by tile heights.
+## Returns the reach of the AreaRange. This is the maximum distance from a
+## startng point the area can reach.
 @abstract func get_reach() -> int
-
-
-## Base function for area ranges that define a general area around a starting
-## point.
-@abstract func get_area_indexes(start: int, hm: HexMap) -> Array[int]
-
-
-## Base function for area ranges that define an area emitted in a direction from
-## starting point.
-@abstract func get_dir_area_indexes(
-	start: int,
-	dir: int,
-	hm: HexMap
-) -> Array[int]
 
 
 ## Base function for area ranges that take modifies a RangeDisplay hex matrix

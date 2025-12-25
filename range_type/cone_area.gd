@@ -1,10 +1,10 @@
 class_name ConeArea
-extends AreaRange
+extends DirectionalAreaRange
 ## Describes a range whose area can be described as a cone.
 
 
 ## Describes how wide the cone area is.
-@export_range(0, 5) var spread: int = 0
+@export_range(1, 5) var spread: int = 1
 ## Describes how far out the cone extends away from the start point.
 @export_range(1, 100) var distance: int = 1
 
@@ -18,11 +18,7 @@ func get_reach() -> int:
 ## Determines which map tiles are in the cone area position at the start index,
 ## oriented to face the specified direction (0 - 5). Does not account for tile
 ## heights.
-func get_dir_area_indexes(
-	start: int,
-	dir: int,
-	hm: HexMap
-) -> Array[int]:
+func get_dir_area_indexes(start: int, dir: int, hm: HexMap) -> Array[int]:
 	# Adjust the direction based on the spread so that the resulting indexes
 	# are aligned to the original direction.
 	@warning_ignore("integer_division")
@@ -53,19 +49,6 @@ func get_dir_area_indexes(
 			if s < spread:
 				_determine_ray_indexes(d, cur_dir, cur_coord, hm, tile_ids)
 	return tile_ids
-
-
-## Gets all tiles that could fall within range of this cone area. If this
-## cone area was applied in all directions at once, what tiles would be in
-## that area?
-func get_area_indexes(start: int, hm: HexMap) -> Array[int]:
-	# Using as set to prevent duplicates as GDScript does not have a Set data
-	# structure.
-	var total_coverage: Dictionary[int, bool] = {}
-	for dir: int in 6:
-		for index: int in get_dir_area_indexes(start, dir, hm):
-			total_coverage[index] = true
-	return total_coverage.keys()
 
 
 ## Modifies a RangeDisplay hex matrix so that it reflects the details of this
