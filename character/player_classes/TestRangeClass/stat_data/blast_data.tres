@@ -1,22 +1,10 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" script_class="SpellStats" load_steps=3 format=3 uid="uid://l21g03a8js3m"]
 
 [ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/action_stats/spell_stats.gd" id="1"]
 [ext_resource type="Resource" uid="uid://d3mnhvmer2x8m" path="res://actions/action_nodes/Blast/action_stats.tres" id="2"]
 
-
-
 [resource]
-script = ExtResource( 1 )
-action_stats = ExtResource( 2 )
-earth_req = 0
-earth_cost = 0
-fire_req = 1
-fire_cost = 1
-water_req = 0
-water_cost = 0
-wind_req = 0
-wind_cost = 0
-light_req = 0
-light_cost = 0
-dark_req = 0
-dark_cost = 0
+script = ExtResource("1")
+action_stats = ExtResource("2")
+req_fire = 1
+cost_fire = 1

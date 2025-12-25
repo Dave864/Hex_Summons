@@ -150,7 +150,11 @@ func _load_actions() -> void:
 		var action_node: Action = _create_action_node(action_name)
 		action_node.source_stats = stats
 		$Actions/TurnActions.add_child(action_node)
-		action_node.add_child(WispCost.new(action_data))
+		var wisp_cost := WispCost.new(
+				action_data.get_requirements(),
+				action_data.get_costs()
+		)
+		action_node.add_child(wisp_cost)
 		turn_actions[i] = action_node
 
 

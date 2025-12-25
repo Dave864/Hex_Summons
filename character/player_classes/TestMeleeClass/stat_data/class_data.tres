@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="PlayerClassData" load_steps=6 format=3 uid="uid://dd02hrkc1dn85"]
+[gd_resource type="Resource" script_class="PlayerClassData" load_steps=8 format=3 uid="uid://dd02hrkc1dn85"]
 
 [ext_resource type="Script" uid="uid://cfj3adhe5oqk4" path="res://character/player_classes/player_class_data.gd" id="1"]
-[ext_resource type="Resource" path="res://character/player_classes/TestMeleeClass/stat_data/stat_values.tres" id="2"]
+[ext_resource type="Resource" uid="uid://c45mdtcgem73i" path="res://character/player_classes/TestMeleeClass/stat_data/stat_values.tres" id="2"]
 [ext_resource type="Resource" uid="uid://5utncprawn87" path="res://character/player_classes/TestMeleeClass/stat_data/nova_data.tres" id="2_kye6u"]
+[ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/action_stats/spell_stats.gd" id="2_n1nb4"]
 [ext_resource type="Resource" path="res://character/player_classes/TestMeleeClass/stat_data/strike_data.tres" id="3"]
 [ext_resource type="Resource" path="res://character/player_classes/TestMeleeClass/stat_data/sweep_data.tres" id="4"]
+[ext_resource type="Script" uid="uid://ci8l3katyguri" path="res://character/scripts/action_stats/technique_stats.gd" id="5_1i026"]
 
 [resource]
 script = ExtResource("1")
 name = "TestMelee"
 stats = ExtResource("2")
-techniques = [ExtResource("3"), ExtResource("4")]
-spells = [ExtResource("2_kye6u")]
+techniques = Array[ExtResource("5_1i026")]([ExtResource("3"), ExtResource("4")])
+spells = Array[ExtResource("2_n1nb4")]([ExtResource("2_kye6u")])

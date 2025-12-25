@@ -82,6 +82,9 @@ func _create_spell_node(spell_stats: SpellStats) -> void:
 	var spell_name: String = spell_stats.action_stats.name
 	var action_path: String = ACTION_PATH_FORMAT.format([spell_name])
 	var spell_node: Action = load(action_path).instantiate()
-	var wisp_cost_node: WispCost = WispCost.new(spell_stats)
+	var wisp_cost_node: WispCost = WispCost.new(
+			spell_stats.get_requirements(),
+			spell_stats.get_costs()
+	)
 	spell_node.add_child(wisp_cost_node)
 	$Spells.add_child(spell_node)
