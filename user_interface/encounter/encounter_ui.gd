@@ -158,11 +158,11 @@ func get_sub_option_at_index(index: int) -> Action:
 	var a: Action
 	match _current_selection:
 		Options.TECHNIQUE:
-			a = sub_options.get_option_at_index(index)
+			a = sub_options.get_action_at_index(index)
 		Options.SPELL:
-			a = sub_options.get_option_at_index(index)
+			a = sub_options.get_action_at_index(index)
 		Options.SUMMON:
-			a = sub_options.get_option_at_index(index)
+			a = sub_options.get_action_at_index(index)
 		_:
 			a = null
 	return a

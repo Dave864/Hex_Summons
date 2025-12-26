@@ -53,7 +53,7 @@ func _check_for_required_parameters() -> void:
 
 
 ## Virtual function. The behavior that is to happen when the button is pressed.
-## By default, it will simply emit the "option_selected" signal.
+## By default, the SignalBus will emit the "character_action_selected" signal.
 func _process_button_press() -> void:
 	SignalBus.emit_character_action_selected(_option_details)
 

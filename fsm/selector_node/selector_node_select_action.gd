@@ -10,8 +10,9 @@ extends SelectorState
 
 ## The action to display the effect area for.
 var _action: Action = null
-## Indicates whether the action is a spawn action for a summon.
-var _is_spawn_action: bool = false
+## The name of the summon that uses the action on spawn. If empty, the action is
+## not used as a spawn action.
+var _summon: String = ""
 ## The translation of the character that is using the action.
 var _character_pos: Vector3 = Vector3.ZERO
 ## The tile index of the character that is using the action.
@@ -36,14 +37,14 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 			"Data at 'action' key is not an Action in SelectAction."
 	)
 	assert(
-			msg.has("is_spawn_action"),
-			"Missing 'is_spawn_action' in SelectAction"
+			msg.has("summon"),
+			"Missing 'summon' key data in SelectAction"
 	)
 	assert(
-			msg["is_spawn_action"] is bool,
-			"Data at 'is_spawn_action' key is not of type bool in SelectAction."
+			msg["summon"] is String,
+			"Data at 'summon' key is not of type String in SelectAction."
 	)
-	_is_spawn_action = msg["is_spawn_action"]
+	_summon = msg["summon"]
 	_determine_changes(msg["action"])
 	_highlight_source_range()
 	selector.set_update_selection_func(_update_selection_ref)
@@ -206,7 +207,12 @@ func _place_closest_to_target() -> void:
 	var character_index_details: DistanceData = (
 		_source_d_map.all_dist_at(_character_map_index)
 	)
-	var ignore_character_index: bool = _action.stats.dead_range.get_reach() > 0
+	# When processing a spawn action, all character indexes are removed from the
+	# source range. We don't need to ignore the index if it is not present.
+	var ignore_character_index: bool = (
+		_source_d_map.has(_character_map_index)
+		and _action.stats.dead_range.get_reach() > 0
+	)
 	if ignore_character_index:
 		_source_d_map.remove(_character_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
@@ -350,7 +356,7 @@ func _get_source_range() -> Array[int]:
 			)
 		):
 			_source_d_map.remove(index)
-	if _is_spawn_action:
+	if not _summon.is_empty():
 		_remove_characters_from_source_range()
 	return _source_d_map.tile_ids()
 
@@ -360,7 +366,8 @@ func _get_source_range() -> Array[int]:
 ## tiles with characters.
 func _remove_characters_from_source_range() -> void:
 	for tile_id: int in _source_d_map.tile_ids():
-		if selector.hex_map.get_tile_at(tile_id).occupant != null:
+		var map_tile: MapTile = selector.hex_map.get_tile_at(tile_id)
+		if map_tile.occupant.get_current_occupant() != null:
 			_source_d_map.remove(tile_id)
 
 
@@ -551,22 +558,22 @@ func _disconnect_signals() -> void:
 
 ## Go to the "SelectAction" state with the new action.
 func _on_SignalBus_character_action_selected(new_action: Action) -> void:
-	_action_selected(new_action, false)
+	_action_selected(new_action, "")
 
 
 ## Go to the "SelectAction" state with the new action, specifying that it is a
 ## spawn action.
 func _on_SignalBus_spawn_action_selected(
-	_summon: String,
+	summon: String,
 	spawn_action: Action
 ) -> void:
-	_action_selected(spawn_action, true)
+	_action_selected(spawn_action, summon)
 
 
 ## Executes the action if it has been confirmed, otherwise resetting the
 ## "SelectAction" state with the new action, specifying if it is a spawn action
 ## or not.
-func _action_selected(action: Action, is_spawn_action: bool) -> void:
+func _action_selected(action: Action, summon: String) -> void:
 	if not _state_is_active():
 		return
 	elif (
@@ -578,7 +585,7 @@ func _action_selected(action: Action, is_spawn_action: bool) -> void:
 	else:
 		state_machine.transition_to(
 				SELECT_ACTION,
-				{"action": action, "is_spawn_action": is_spawn_action}
+				{"action": action, "summon": summon}
 		)
 
 

@@ -190,22 +190,22 @@ func _on_SignalBus_move_path_requested() -> void:
 
 ## Go to the "SelectAction" state when the UI signals that an action was selected.
 func _on_SignalBus_character_action_selected(action: Action) -> void:
-	_action_selected(action, false)
+	_action_selected(action, "")
 
 
 ## Go to the "SelectAction" state when the UI signals that an action was selected,
 ## specifying that the action is a spawn action.
-func _on_SignalBus_spawn_action_selected(action: Action) -> void:
-	_action_selected(action, true)
+func _on_SignalBus_spawn_action_selected(summon: String, action: Action) -> void:
+	_action_selected(action, summon)
 
 
 ## Clears the hovered selector highlights and goes to the "SelectAction" state,
 ## passing along an action and whether it's a spawn action or not.
-func _action_selected(action: Action, is_spawn_action: bool) -> void:
+func _action_selected(action: Action, summon: String) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	state_machine.transition_to(
 			SELECT_ACTION,
-			{"action": action, "is_spawn_action": is_spawn_action}
+			{"action": action, "summon": summon}
 	)
 
 

@@ -14,6 +14,11 @@ var _summon_name: String = ""
 var _summon_handler: Summon = null
 
 
+## Returns the name of the summon whose spawn action is displayed.
+func get_summon_name() -> String:
+	return _summon_name
+
+
 ## Virtual function. Set the action detail node for the button.
 func set_option_details(a: Action) -> void:
 	# Summon buttons display details for actions, so we cast to check.

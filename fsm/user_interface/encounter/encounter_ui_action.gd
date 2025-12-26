@@ -12,18 +12,30 @@ extends EncounterUIState
 var _option_flag: EncounterUI.Options
 ## The current action highlighted from the chosen option.
 var _current_action: Action
+## The name of the summon the _current_action is the spawn action of. Empty
+## String means that the _current_action is not a spawn action.
+var _summon_name: String
 
 
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(msg := {}) -> void:
 	_option_flag = msg["option_flag"]
+	_summon_name = ""
 	encounter_ui.set_current_selection(_option_flag)
 	encounter_ui.grab_focus_for_sub_option_at_index(0)
 	_current_action = encounter_ui.get_sub_option_at_index(0)
-	#if _option_flag == EncounterUI.Options.SUMMON:
-		#_current_action.set_effects_stats()
-	SignalBus.emit_character_action_selected(_current_action)
+	if _option_flag == EncounterUI.Options.SUMMON:
+		var summon_button: SummonButton = (
+			encounter_ui.sub_options.get_button_at_index(0) as SummonButton
+		)
+		_summon_name = summon_button.get_summon_name()
+		SignalBus.emit_spawn_action_selected(
+				_summon_name,
+				_current_action
+		)
+	else:
+		SignalBus.emit_character_action_selected(_current_action)
 	_connect_signals()
 
 
@@ -33,7 +45,10 @@ func handle_input(event: InputEvent) -> void:
 		InputController.source_is_keymouse()
 		and event.is_action_pressed("ui_selector_select")
 	):
-		SignalBus.emit_character_action_selected(_current_action)
+		if _option_flag == EncounterUI.Options.SUMMON:
+			SignalBus.emit_spawn_action_selected(_summon_name, _current_action)
+		else:
+			SignalBus.emit_character_action_selected(_current_action)
 	if event.is_action_pressed("ui_encounter_movement"):
 		_movement_selected()
 	if event.is_action_pressed("ui_encounter_player_end"):
@@ -64,7 +79,7 @@ func handle_input(event: InputEvent) -> void:
 ## Called by the state machine before changing the active state.
 ## Use this function to clean up the state.
 func exit() -> void:
-	encounter_ui.sub_options.clear_sub_options()
+	encounter_ui.sub_options.clear_selection()
 	_disconnect_signals()
 
 

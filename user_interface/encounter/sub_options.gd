@@ -1,10 +1,11 @@
 class_name SubOptions
 extends ScrollContainer
-## Manages the creation and removal of sub-option buttons for a given option category.
+## Manages the creation and removal of sub-option buttons for a given option
+## category.
 ##
-## Manages SubOptionButton nodes that represent options for either techniques,
-## spells, summons, or items. This includes the creation of new nodes, the removal
-## of current nodes, and the accessing of specific nodes.
+## Manages SubOptionButton nodes that represent actions for either techniques,
+## spells, summons, or items. This includes the creation of new nodes, the
+## removal of current nodes, and the accessing of specific nodes.
 
 
 ## Stores all action sub options.
@@ -61,7 +62,7 @@ func populate_summons(summon_handler: Summon) -> void:
 
 
 ## Clear out the sub-options container.
-func clear_sub_options() -> void:
+func clear_selection() -> void:
 	for option_button in _sub_options_container.get_children():
 		_sub_options_container.remove_child(option_button)
 		option_button.queue_free()
@@ -69,9 +70,14 @@ func clear_sub_options() -> void:
 	_set_neighbors()
 
 
-## Get the option stored at the specified index.
-func get_option_at_index(index: int) -> Action:
+## Get the action stored at the specified index.
+func get_action_at_index(index: int) -> Action:
 	return _options[index]
+
+
+## Gets the SubOptionButton node at the specified index.
+func get_button_at_index(index: int) -> SubOptionButton:
+	return _sub_options_container.get_child(index) as SubOptionButton
 
 
 ## Sets the focus for the SubOption at the given child index.
