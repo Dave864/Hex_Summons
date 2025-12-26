@@ -8,6 +8,12 @@ extends SubOptionButton
 ## to how spell actions are normally structured.
 
 
+## The name of the summon the displayed spawn action is for.
+var _summon_name: String = ""
+## The handler for the encounter scene summon.
+var _summon_handler: Summon = null
+
+
 ## Virtual function. Set the action detail node for the button.
 func set_option_details(a: Action) -> void:
 	# Summon buttons display details for actions, so we cast to check.
@@ -18,11 +24,13 @@ func set_option_details(a: Action) -> void:
 ## Populates the UI elements of this node with details relevant to the specified
 ## summon.
 func set_summon_details(summon_name: String, summon_handler: Summon) -> void:
-	$HBoxContainer/Label.set_text(summon_name)
-	var spawn_action: Action = summon_handler.spawn_actions[summon_name]
+	_summon_handler = summon_handler
+	_summon_name = summon_name
+	$HBoxContainer/Label.set_text(_summon_name)
+	var spawn_action: Action = _summon_handler.spawn_actions[_summon_name]
 	set_option_details(spawn_action)
-	var summon_details: SummonData = summon_handler.available_summons[summon_name]
-	if summon_details.wisp_pool_meets_requirements(summon_handler.wisp_pool):
+	var summon_details: SummonData = _summon_handler.available_summons[_summon_name]
+	if summon_details.wisp_pool_meets_requirements(_summon_handler.wisp_pool):
 		$InactiveFilter.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	else:
@@ -44,3 +52,15 @@ func _wisp_cost_text(summon_details: SummonData) -> String:
 				]
 		)
 	return text
+
+
+## Virtual function. The behavior that is to happen when the button is pressed.
+## Emits the "option_selected" signal and updates the WispCost data of the 
+## spaen action described by this button to match the wisp cost of the summon
+## the spawn action is for.
+func _process_button_press() -> void:
+	if _summon_handler == null or _summon_name == "":
+		printerr("No summon handler or summon name specified for SummonButton.")
+		return
+	_summon_handler.set_cost_for_spawn_action(_summon_name)
+	emit_signal("option_selected", _option_details)

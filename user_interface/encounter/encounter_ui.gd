@@ -153,11 +153,6 @@ func set_summon(summon: Summon) -> void:
 		_summon.summoner = _focused_player
 
 
-## Sets the focused character as the summon.
-func set_focused_summon() -> void:
-	pass
-
-
 ## Get an action from the currently active sub-options selection.
 func get_sub_option_at_index(index: int) -> Action:
 	var a: Action

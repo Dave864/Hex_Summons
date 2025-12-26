@@ -152,6 +152,7 @@ func _create_spawn_action_node(
 				available_summons[summon_name].cost_summary(),
 				available_summons[summon_name].cost_summary()
 		)
+		wisp_cost_node.wisp_pool = WispController.standby_pool
 		action_node.add_child(wisp_cost_node)
 	spawn_actions[summon_name] = action_node
 
@@ -170,6 +171,7 @@ func _load_actions() -> void:
 				action_data.get_requirements(),
 				action_data.get_costs()
 		)
+		wisp_cost.wisp_pool = wisp_pool
 		action_node.add_child(wisp_cost)
 		turn_actions[i] = action_node
 
