@@ -9,7 +9,9 @@ signal player_turn_started(character)
 ## Indicates the summon has started their turn.
 signal summon_turn_started()
 ## Indicates that an action for a user controlled character has been selected.
-signal character_action_selected(character, action)
+signal character_action_selected(action)
+## Indicates that a spawn action for a summon has been selected.
+signal spawn_action_selected(summon, action)
 ## Indicates that an action has been confirmed.
 signal character_action_executed(character, action, targets)
 ## Indicates that a selected option has been canceled.
@@ -44,8 +46,12 @@ func emit_summon_turn_started() -> void:
 	emit_signal("summon_turn_started")
 
 
-func emit_character_action_selected(c: Character, action: Action) -> void:
-	emit_signal("character_action_selected", c, action)
+func emit_character_action_selected(action: Action) -> void:
+	emit_signal("character_action_selected", action)
+
+
+func emit_spawn_action_selected(summon: String, action: Action) -> void:
+	emit_signal("spawn_action_selected", summon, action)
 
 
 func emit_character_action_executed(

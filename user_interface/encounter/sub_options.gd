@@ -7,9 +7,6 @@ extends ScrollContainer
 ## of current nodes, and the accessing of specific nodes.
 
 
-## Indicates that one of the sub-options was selected
-signal option_selected(option_info)
-
 ## Stores all action sub options.
 var _options: Array[Action] = []
 ## Reference to the scene used to display sub-options for techniques.
@@ -58,10 +55,6 @@ func populate_summons(summon_handler: Summon) -> void:
 	for summon_name: String in summon_handler.available_summons:
 		var new_button: SummonButton = _summon_button.instantiate()
 		new_button.set_summon_details(summon_name, summon_handler)
-		new_button.connect(
-			"option_selected",
-			Callable(self, "_on_SubOptionButton_option_selected")
-		)
 		_options.append(new_button.get_option_details())
 		_sub_options_container.add_child(new_button)
 	_set_neighbors()
@@ -70,10 +63,6 @@ func populate_summons(summon_handler: Summon) -> void:
 ## Clear out the sub-options container.
 func clear_sub_options() -> void:
 	for option_button in _sub_options_container.get_children():
-		option_button.disconnect(
-				"option_selected",
-				Callable(self, "_on_SubOptionButton_option_selected")
-		)
 		_sub_options_container.remove_child(option_button)
 		option_button.queue_free()
 		_options.clear()
@@ -87,7 +76,8 @@ func get_option_at_index(index: int) -> Action:
 
 ## Sets the focus for the SubOption at the given child index.
 func grab_focus_at_index(index: int) -> void:
-	_sub_options_container.get_child(index).get_button().call_deferred("grab_focus")
+	var action_option: Node = _sub_options_container.get_child(index)
+	action_option.get_button().call_deferred("grab_focus")
 
 
 ## Sets the focus neighbors of the currently populated sub options.
@@ -106,15 +96,6 @@ func _populate_sub_options(
 	for option: Action in options:
 		var new_button: SubOptionButton = button.instantiate()
 		new_button.set_option_details(option)
-		new_button.connect(
-			"option_selected",
-			Callable(self, "_on_SubOptionButton_option_selected")
-		)
 		_options.append(option)
 		_sub_options_container.add_child(new_button)
 	_set_neighbors()
-
-
-## Emits the "action_selected" signal when one of the button options has been pressed.
-func _on_SubOptionButton_option_selected(option_info: Node) -> void:
-	emit_signal("option_selected", option_info)

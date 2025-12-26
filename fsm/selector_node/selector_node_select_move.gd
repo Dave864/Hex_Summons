@@ -20,7 +20,9 @@ var _movement_ids: Array[int] = []
 
 ## Reveal the selector shape and enable the ability to update tile highlights.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
-	var player_index: int = selector.active_character.map_coordinate.get_tile_index()
+	var player_index: int = (
+		selector.active_character.map_coordinate.get_tile_index()
+	)
 	if _move_origin_index < 0:
 		_move_origin_index = player_index
 	_determine_movement_ids()
@@ -46,6 +48,10 @@ func _connect_signals() -> void:
 	SignalBus.connect(
 			"character_action_selected",
 			Callable(self, "_on_SignalBus_character_action_selected")
+	)
+	SignalBus.connect(
+			"spawn_action_selected",
+			Callable(self, "_on_SignalBus_spawn_action_selected")
 	)
 	SignalBus.connect(
 			"top_vertex_changed",
@@ -82,6 +88,10 @@ func _disconnect_signals() -> void:
 	SignalBus.disconnect(
 			"character_action_selected",
 			Callable(self, "_on_SignalBus_character_action_selected")
+	)
+	SignalBus.disconnect(
+			"spawn_action_selected",
+			Callable(self, "_on_SignalBus_spawn_action_selected")
 	)
 	SignalBus.disconnect(
 			"top_vertex_changed",
@@ -143,7 +153,9 @@ func _update_selection(map_tile: MapTile) -> void:
 ## given direction (0 - 5) and does so if able.
 func _resolve_joystick_direction(direction: int) -> void:
 	if direction >= 0 and direction <= 5:
-		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(direction)
+		var adjacent_tile: MapTile = (
+			selector.tile_hovered.get_adjacent_tile(direction)
+		)
 		if adjacent_tile != null:
 			_update_selection(adjacent_tile)
 
@@ -177,12 +189,24 @@ func _on_SignalBus_move_path_requested() -> void:
 
 
 ## Go to the "SelectAction" state when the UI signals that an action was selected.
-func _on_SignalBus_character_action_selected(
-	_character: Character,
-	action: Action
-) -> void:
+func _on_SignalBus_character_action_selected(action: Action) -> void:
+	_action_selected(action, false)
+
+
+## Go to the "SelectAction" state when the UI signals that an action was selected,
+## specifying that the action is a spawn action.
+func _on_SignalBus_spawn_action_selected(action: Action) -> void:
+	_action_selected(action, true)
+
+
+## Clears the hovered selector highlights and goes to the "SelectAction" state,
+## passing along an action and whether it's a spawn action or not.
+func _action_selected(action: Action, is_spawn_action: bool) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
-	state_machine.transition_to(SELECT_ACTION, {"action": action})
+	state_machine.transition_to(
+			SELECT_ACTION,
+			{"action": action, "is_spawn_action": is_spawn_action}
+	)
 
 
 ## Update the mouse tracker when the camera changes orientation.

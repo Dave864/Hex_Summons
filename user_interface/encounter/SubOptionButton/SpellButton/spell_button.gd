@@ -51,4 +51,4 @@ func _wisp_cost_text(wc: WispCost) -> String:
 func _process_button_press() -> void:
 	var wisp_cost: WispCost = _option_details.get_node_or_null("WispCost")
 	if wisp_cost == null or wisp_cost.is_met():
-		emit_signal("option_selected", _option_details)
+		SignalBus.emit_character_action_selected(_option_details)

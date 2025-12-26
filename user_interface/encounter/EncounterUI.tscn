@@ -38,6 +38,7 @@ offset_left = 64.0
 offset_top = 2.0
 offset_right = 576.0
 offset_bottom = 36.0
+grow_horizontal = 1
 
 [node name="SummonPool" parent="." instance=ExtResource("18")]
 layout_mode = 0
@@ -161,5 +162,3 @@ script = ExtResource("7")
 
 [node name="Action" type="Node" parent="StateMachine"]
 script = ExtResource("9")
-
-[connection signal="option_selected" from="SubOptions" to="StateMachine/Action" method="_on_SubOptions_option_selected"]

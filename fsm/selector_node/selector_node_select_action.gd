@@ -10,6 +10,8 @@ extends SelectorState
 
 ## The action to display the effect area for.
 var _action: Action = null
+## Indicates whether the action is a spawn action for a summon.
+var _is_spawn_action: bool = false
 ## The translation of the character that is using the action.
 var _character_pos: Vector3 = Vector3.ZERO
 ## The tile index of the character that is using the action.
@@ -28,11 +30,20 @@ var _targets_cache: Dictionary[int, Array] = {}
 
 
 func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
-	assert(msg.has("action"), "Missing action key data in SelectAction")
+	assert(msg.has("action"), "Missing 'action' key data in SelectAction")
 	assert(
 			msg["action"] is Action,
-			"Data at action key is not an Action in SelectAction."
+			"Data at 'action' key is not an Action in SelectAction."
 	)
+	assert(
+			msg.has("is_spawn_action"),
+			"Missing 'is_spawn_action' in SelectAction"
+	)
+	assert(
+			msg["is_spawn_action"] is bool,
+			"Data at 'is_spawn_action' key is not of type bool in SelectAction."
+	)
+	_is_spawn_action = msg["is_spawn_action"]
 	_determine_changes(msg["action"])
 	_highlight_source_range()
 	selector.set_update_selection_func(_update_selection_ref)
@@ -59,7 +70,10 @@ func handle_input(_event: InputEvent) -> void:
 	elif InputController.source_is_gamepad():
 		var joy_dir: Vector2 = GamepadHandler.left_joystick_dir()
 		if _action.stats.emit_from_caster and not joy_dir.is_zero_approx():
-			var dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
+			var dir: int = HexUtil.get_hex_direction(
+					joy_dir,
+					selector.top_vertex
+			)
 			_resolve_joystick_for_cardinal(dir)
 
 
@@ -126,7 +140,8 @@ func _orient_emission_to_mouse() -> void:
 	)
 	# Relative top not needed as mouse position translates to direct map
 	# coordinates.
-	var dir: int = HexUtil.get_hex_direction((mouse_pt - character_pt).normalized())
+	var vector_to_mouse: Vector2 = (mouse_pt - character_pt).normalized()
+	var dir: int = HexUtil.get_hex_direction(vector_to_mouse)
 	var source_tile: MapTile = selector.hex_map.get_tile_at(_character_map_index)
 	var target_tile: MapTile = source_tile.get_adjacent_tile(dir)
 	if _is_target_tile(target_tile):
@@ -217,8 +232,8 @@ func _place_closest_to_tile(tile_index: int) -> void:
 		_source_d_map.all_dist_at(_character_map_index)
 	)
 	var ignore_character_index: bool = _action.stats.dead_range.get_reach() > 0
-	# Remove character index when looking at dead range to prevent character position
-	# from being considered a valid placement spot.
+	# Remove character index when looking at dead range to prevent character
+	# position from being considered a valid placement spot.
 	if ignore_character_index:
 		_source_d_map.remove(_character_map_index)
 	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
@@ -314,26 +329,39 @@ func _get_source_range() -> Array[int]:
 			selector.hex_map.range_finder \
 			.dist_maps.at(_character_map_index)
 	)
+	var source_reach: int = _action.stats.source_range.get_reach()
 	_source_d_map = (
-			d_map.map_from_tile_dist(_action.stats.source_range.get_reach())
+			d_map.map_from_tile_dist(source_reach)
 			if _action.stats.source_ignore_heights
-			else d_map.map_from_travel_dist(_action.stats.source_range.get_reach())
+			else d_map.map_from_travel_dist(source_reach)
 	)
 	var dead_indexes: Array[int] = _action.stats.dead_range.get_area_indexes(
 			_character_map_index,
 			selector.hex_map
 	)
+	var dead_reach: int = _action.stats.dead_range.get_reach()
 	for index in dead_indexes:
 		if (
 			index != _character_map_index 
 			and _source_d_map.has(index)
 			and (
 				_action.stats.source_ignore_heights or
-				_source_d_map.travel_dist_at(index) <= _action.stats.dead_range.get_reach()
+				_source_d_map.travel_dist_at(index) <= dead_reach
 			)
 		):
 			_source_d_map.remove(index)
+	if _is_spawn_action:
+		_remove_characters_from_source_range()
 	return _source_d_map.tile_ids()
+
+
+## Removes tile indices that contain a character from the current source range.
+## Used for spawn actions to prevent their emission point from being placed on
+## tiles with characters.
+func _remove_characters_from_source_range() -> void:
+	for tile_id: int in _source_d_map.tile_ids():
+		if selector.hex_map.get_tile_at(tile_id).occupant != null:
+			_source_d_map.remove(tile_id)
 
 
 ## Gets the tile ids of all tiles within the effect range.
@@ -432,11 +460,14 @@ func _resolve_joystick_for_area(dir: int) -> void:
 ## Determines if the selector is able to move to the given direction (0 - 5)
 ## and does so if able.
 func _resolve_joystick_for_cardinal(dir: int) -> void:
-	if dir >= 0 and dir <= 5:
-		var character_tile: MapTile = selector.hex_map.get_tile_at(_character_map_index)
-		var direction_tile: MapTile = character_tile.get_adjacent_tile(dir)
-		if _is_target_tile(direction_tile):
-			_update_selection(direction_tile)
+	if dir < 0 or dir > 5:
+		return
+	var character_tile: MapTile = selector.hex_map.get_tile_at(
+			_character_map_index
+	)
+	var direction_tile: MapTile = character_tile.get_adjacent_tile(dir)
+	if _is_target_tile(direction_tile):
+		_update_selection(direction_tile)
 
 
 ## Activates the targets and prompts the action to be executed.
@@ -473,6 +504,10 @@ func _connect_signals() -> void:
 			Callable(self, "_on_SignalBus_character_action_selected")
 	)
 	SignalBus.connect(
+			"spawn_action_selected",
+			Callable(self, "_on_SignalBus_spawn_action_selected")
+	)
+	SignalBus.connect(
 			"character_action_type_canceled",
 			Callable(self, "_on_SignalBus_character_action_type_canceled")
 	)
@@ -497,6 +532,10 @@ func _disconnect_signals() -> void:
 			Callable(self, "_on_SignalBus_character_action_selected")
 	)
 	SignalBus.disconnect(
+			"spawn_action_selected",
+			Callable(self, "_on_SignalBus_spawn_action_selected")
+	)
+	SignalBus.disconnect(
 			"character_action_type_canceled",
 			Callable(self, "_on_SignalBus_character_action_type_canceled")
 	)
@@ -511,20 +550,36 @@ func _disconnect_signals() -> void:
 
 
 ## Go to the "SelectAction" state with the new action.
-func _on_SignalBus_character_action_selected(
-	_character: Character,
-	new_action: Action
+func _on_SignalBus_character_action_selected(new_action: Action) -> void:
+	_action_selected(new_action, false)
+
+
+## Go to the "SelectAction" state with the new action, specifying that it is a
+## spawn action.
+func _on_SignalBus_spawn_action_selected(
+	_summon: String,
+	spawn_action: Action
 ) -> void:
+	_action_selected(spawn_action, true)
+
+
+## Executes the action if it has been confirmed, otherwise resetting the
+## "SelectAction" state with the new action, specifying if it is a spawn action
+## or not.
+func _action_selected(action: Action, is_spawn_action: bool) -> void:
 	if not _state_is_active():
 		return
 	elif (
-		new_action == _action
+		action == _action
 		and not _get_targets().is_empty()
 		and _can_execute()
 	):
 		_execute_action()
 	else:
-		state_machine.transition_to(SELECT_ACTION, {"action": new_action})
+		state_machine.transition_to(
+				SELECT_ACTION,
+				{"action": action, "is_spawn_action": is_spawn_action}
+		)
 
 
 ## Checks that the current action is in a state to be used, i.e. whether the
@@ -556,7 +611,8 @@ func _on_Character_turn_ended() -> void:
 
 ## Update the mouse tracker when the camera changes orientation.
 func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
-	MouseHandler.update_mouse_tracker_3d(selector.tile_hovered.get_character_position())
+	var position: Vector3 = selector.tile_hovered.get_character_position()
+	MouseHandler.update_mouse_tracker_3d(position)
 
 
 ## Resolves the left joystick pulse input. Pulses should only be used when the
@@ -564,6 +620,7 @@ func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
 func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
 	if _action.stats.emit_from_caster:
 		return
-	# Relative top needed as joystick direction does not account for camera orientation.
+	# Relative top needed as joystick direction does not account for camera
+	# orientation.
 	var hex_dir: int = HexUtil.get_hex_direction(joy_dir, selector.top_vertex)
 	_resolve_joystick_for_area(hex_dir)

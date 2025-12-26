@@ -7,9 +7,6 @@ class_name SubOptionButton
 ## an item.
 
 
-## Indicates when the option described by the button has been selected.
-signal option_selected(option_info)
-
 ## The details of the option described by this button.
 var _option_details: Action = null:
 	get = get_option_details,
@@ -58,7 +55,7 @@ func _check_for_required_parameters() -> void:
 ## Virtual function. The behavior that is to happen when the button is pressed.
 ## By default, it will simply emit the "option_selected" signal.
 func _process_button_press() -> void:
-	emit_signal("option_selected", _option_details)
+	SignalBus.emit_character_action_selected(_option_details)
 
 
 ## Catches the signal for when the button is pressed.

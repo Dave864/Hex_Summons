@@ -29,4 +29,4 @@ func set_option_details(a: Action) -> void:
 func _process_button_press() -> void:
 	var cooldown: Cooldown = _option_details.get_node_or_null("Cooldown")
 	if cooldown == null or not cooldown.is_active():
-		emit_signal("option_selected", _option_details)
+		SignalBus.emit_character_action_selected(_option_details)

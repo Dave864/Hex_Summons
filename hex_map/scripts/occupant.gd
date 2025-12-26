@@ -5,7 +5,8 @@ class_name Occupant
 
 
 ## The current occupant of the tile.
-var _occupant: Character = null: get = get_current_occupant
+var _occupant: Character = null:
+	get = get_current_occupant
 
 
 ## Gets the current character occupying this tile.

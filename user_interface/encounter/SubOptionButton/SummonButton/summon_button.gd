@@ -30,7 +30,7 @@ func set_summon_details(summon_name: String, summon_handler: Summon) -> void:
 	var spawn_action: Action = _summon_handler.spawn_actions[_summon_name]
 	set_option_details(spawn_action)
 	var summon_details: SummonData = _summon_handler.available_summons[_summon_name]
-	if summon_details.wisp_pool_meets_requirements(_summon_handler.wisp_pool):
+	if summon_details.wisp_pool_meets_requirements(WispController.standby_pool):
 		$InactiveFilter.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	else:
@@ -55,12 +55,12 @@ func _wisp_cost_text(summon_details: SummonData) -> String:
 
 
 ## Virtual function. The behavior that is to happen when the button is pressed.
-## Emits the "option_selected" signal and updates the WispCost data of the 
-## spaen action described by this button to match the wisp cost of the summon
+## Emits the "spawn_action_selected" signal and updates the WispCost data of the 
+## spawn action described by this button to match the wisp cost of the summon
 ## the spawn action is for.
 func _process_button_press() -> void:
 	if _summon_handler == null or _summon_name == "":
 		printerr("No summon handler or summon name specified for SummonButton.")
 		return
 	_summon_handler.set_cost_for_spawn_action(_summon_name)
-	emit_signal("option_selected", _option_details)
+	SignalBus.emit_spawn_action_selected(_summon_name, _option_details)

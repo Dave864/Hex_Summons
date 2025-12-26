@@ -23,10 +23,7 @@ func enter(msg := {}) -> void:
 	_current_action = encounter_ui.get_sub_option_at_index(0)
 	#if _option_flag == EncounterUI.Options.SUMMON:
 		#_current_action.set_effects_stats()
-	SignalBus.emit_character_action_selected(
-			encounter_ui.get_focused_player(),
-			_current_action
-	)
+	SignalBus.emit_character_action_selected(_current_action)
 	_connect_signals()
 
 
@@ -36,10 +33,7 @@ func handle_input(event: InputEvent) -> void:
 		InputController.source_is_keymouse()
 		and event.is_action_pressed("ui_selector_select")
 	):
-		SignalBus.emit_character_action_selected(
-				encounter_ui.get_focused_player(),
-				_current_action
-		)
+		SignalBus.emit_character_action_selected(_current_action)
 	if event.is_action_pressed("ui_encounter_movement"):
 		_movement_selected()
 	if event.is_action_pressed("ui_encounter_player_end"):
@@ -107,6 +101,14 @@ func _connect_signals() -> void:
 			Callable(self, "_on_EndButton_pressed")
 	)
 	SignalBus.connect(
+			"character_action_selected",
+			Callable(self, "_on_SignalBus_character_action_selected")
+	)
+	SignalBus.connect(
+			"spawn_action_selected", 
+			Callable(self, "_on_SignalBus_spawn_action_selected")
+	)
+	SignalBus.connect(
 			"character_action_executed",
 			Callable(self, "_on_SignalBus_character_action_executed")
 	)
@@ -141,6 +143,14 @@ func _disconnect_signals() -> void:
 	encounter_ui.end_button.disconnect(
 			"pressed",
 			Callable(self, "_on_EndButton_pressed")
+	)
+	SignalBus.disconnect(
+			"character_action_selected",
+			Callable(self, "_on_SignalBus_character_action_selected")
+	)
+	SignalBus.disconnect(
+			"spawn_action_selected", 
+			Callable(self, "_on_SignalBus_spawn_action_selected")
 	)
 	SignalBus.disconnect(
 			"character_action_executed",
@@ -231,13 +241,17 @@ func _on_PlayerCharacter_turn_ended() -> void:
 	state_machine.transition_to(WAIT)
 
 
-## Signal that an option has been selected from the currently displayed options.
-func _on_SubOptions_option_selected(action_info: Action) -> void:
+## Update the current action to match the selected action.
+func _on_SignalBus_character_action_selected(action_info: Action) -> void:
 	_current_action = action_info
-	SignalBus.emit_character_action_selected(
-			encounter_ui.get_focused_player(),
-			_current_action
-	)
+
+
+## Update the current action to match the selected spawn action.
+func _on_SignalBus_spawn_action_selected(
+	_summon: String,
+	spawn_action: Action
+) -> void:
+	_current_action = spawn_action
 
 
 ## Signal that a selected action has been executed. Hide the options UI elements.
