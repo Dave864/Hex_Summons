@@ -21,12 +21,11 @@ func enter(_msg := {}) -> void:
 
 ## Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(event: InputEvent) -> void:
+	var gui_focus: Control = encounter_ui.get_viewport().gui_get_focus_owner()
+	var movement_focused: bool = gui_focus == encounter_ui.movement_button
 	if (
-		event.is_action_pressed("ui_select")
-		and (
-			InputController.source_is_keymouse()
-			or encounter_ui.get_viewport().gui_get_focus_owner() == encounter_ui.movement_button
-		)
+		event.is_action_pressed("ui_selector_select")
+		and (InputController.source_is_keymouse() or movement_focused)
 	):
 		SignalBus.emit_move_path_requested()
 	if event.is_action_pressed("ui_encounter_player_end"):
