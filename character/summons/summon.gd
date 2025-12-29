@@ -49,7 +49,7 @@ var _current_spawn_action: Action = null
 var _active: bool = false
 
 ## The wisp pool for the active summon.
-@onready var wisp_pool: SummonWispPool = $SummonWispPool
+@onready var summon_wisp_pool: SummonWispPool = $SummonWispPool
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -83,10 +83,14 @@ func set_cost_for_spawn_action(summon_name: String) -> void:
 ## position.
 func load_summon(summon_name: String, spawn_position: Vector3) -> void:
 	stats.summon_data = available_summons[summon_name]
+	_current_spawn_action = spawn_actions[summon_name]
+	WispController.pay_cost_for_summon(
+			summon_wisp_pool,
+			_current_spawn_action.get_node("WispCost")
+	)
 	visible = true
 	character_label.show_all()
 	position = spawn_position
-	_current_spawn_action = spawn_actions[summon_name]
 	_load_actions()
 	_active = true
 
@@ -164,7 +168,7 @@ func _load_actions() -> void:
 				action_data.get_requirements(),
 				action_data.get_costs()
 		)
-		wisp_cost.wisp_pool = wisp_pool
+		wisp_cost.wisp_pool = summon_wisp_pool
 		action_node.add_child(wisp_cost)
 		turn_actions[i] = action_node
 

@@ -47,7 +47,7 @@ func add_wisps(wisp_names: Array[String], element: Element.Type) -> void:
 ## wisps are available for the given element.
 func pay_for_element(element: Element.Type, amount: int = 1) -> Array[String]:
 	var wisps_paid: Array[String] = []
-	if element in Element.Alignment.keys():
+	if element in Element.Alignment.values():
 		var elems: Array[Element.Core] = (
 			ElementalAlignment.get_light_elements()
 			if element == Element.Alignment.LIGHT
@@ -62,7 +62,7 @@ func pay_for_element(element: Element.Type, amount: int = 1) -> Array[String]:
 		for i: int in amount:
 			wisps_paid[i] = pool[elems[0]].pop_front()
 			wisps_paid[amount + i] = pool[elems[1]].pop_front()
-	elif element in Element.Core.keys():
+	elif element in Element.Core.values():
 		_active_count[element] -= amount
 		emit_signal("active_count_changed", element)
 		wisps_paid.resize(amount)

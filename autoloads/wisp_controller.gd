@@ -37,8 +37,8 @@ func pay_cost_for_summon(
 ) -> void:
 	for element: Element.Type in summon_cost.cost_summary.keys():
 		var wisps_for_element: Array[String] = standby_pool.pay_for_element(
-			element,
-			summon_cost.cost_summary[element]
+				element,
+				summon_cost.cost_summary[element]
 		)
 		if not WispTracker.set_state_to_summon_set(wisps_for_element):
 			printerr("Could not set all spent wisps to be in summon pool.")
