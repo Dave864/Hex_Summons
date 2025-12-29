@@ -494,7 +494,7 @@ anchor_right = 0.035
 anchor_bottom = 0.5
 offset_left = -17.0
 offset_top = -17.0
-offset_right = 16.999998
+offset_right = 17.000013
 offset_bottom = 17.0
 texture = SubResource("13")
 
@@ -508,7 +508,7 @@ anchor_right = 0.133
 anchor_bottom = 0.5
 offset_left = -16.812
 offset_top = -17.0
-offset_right = 17.188103
+offset_right = 17.188057
 offset_bottom = 17.0
 texture = SubResource("14")
 
@@ -522,7 +522,7 @@ anchor_right = 0.234
 anchor_bottom = 0.5
 offset_left = -17.154
 offset_top = -17.0
-offset_right = 16.8461
+offset_right = 16.846329
 offset_bottom = 17.0
 texture = SubResource("15")
 
@@ -550,7 +550,7 @@ anchor_right = 0.434
 anchor_bottom = 0.5
 offset_left = -17.21399
 offset_top = -17.0
-offset_right = 16.787415
+offset_right = 16.78743
 offset_bottom = 17.0
 texture = SubResource("17")
 
