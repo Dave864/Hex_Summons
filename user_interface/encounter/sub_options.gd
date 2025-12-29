@@ -76,7 +76,7 @@ func get_action_at_index(index: int) -> Action:
 
 
 ## Gets the SubOptionButton node at the specified index.
-func get_SubOptionButton_node_at_index(index: int) -> SubOptionButton:
+func get_SubOptionButton_at_index(index: int) -> SubOptionButton:
 	return _sub_options_container.get_child(index) as SubOptionButton
 
 

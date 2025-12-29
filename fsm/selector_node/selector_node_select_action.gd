@@ -12,7 +12,7 @@ extends SelectorState
 var _action: Action = null
 ## The name of the summon that uses the action on spawn. If empty, the action is
 ## not used as a spawn action.
-var _summon: String = ""
+var _summon_name: String = ""
 ## The translation of the character that is using the action.
 var _character_pos: Vector3 = Vector3.ZERO
 ## The tile index of the character that is using the action.
@@ -44,8 +44,8 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 			msg["summon"] is String,
 			"Data at 'summon' key is not of type String in SelectAction."
 	)
-	_summon = msg["summon"]
-	_determine_changes(msg["action"])
+	_summon_name = msg["summon"]
+	_determine_range_changes(msg["action"])
 	_highlight_source_range()
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
@@ -80,7 +80,7 @@ func handle_input(_event: InputEvent) -> void:
 
 ## Checks if the action being processed is the same as last time and if the
 ## cached effect ranges can be reused
-func _determine_changes(action: Action) -> void:
+func _determine_range_changes(action: Action) -> void:
 	var need_new_ranges: bool = false
 	if action != _action:
 		_action = action
@@ -356,7 +356,7 @@ func _get_source_range() -> Array[int]:
 			)
 		):
 			_source_d_map.remove(index)
-	if not _summon.is_empty():
+	if not _summon_name.is_empty():
 		_remove_characters_from_source_range()
 	return _source_d_map.tile_ids()
 
@@ -573,11 +573,12 @@ func _on_SignalBus_spawn_action_selected(
 ## Executes the action if it has been confirmed, otherwise resetting the
 ## "SelectAction" state with the new action, specifying if it is a spawn action
 ## or not.
-func _action_selected(action: Action, summon: String) -> void:
+func _action_selected(action: Action, summon_name: String) -> void:
 	if not _state_is_active():
 		return
 	elif (
 		action == _action
+		and summon_name == _summon_name
 		and not _get_targets().is_empty()
 		and _can_execute()
 	):
@@ -585,7 +586,7 @@ func _action_selected(action: Action, summon: String) -> void:
 	else:
 		state_machine.transition_to(
 				SELECT_ACTION,
-				{"action": action, "summon": summon}
+				{"action": action, "summon": summon_name}
 		)
 
 

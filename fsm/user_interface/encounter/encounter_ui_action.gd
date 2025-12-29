@@ -26,8 +26,8 @@ func enter(msg := {}) -> void:
 	encounter_ui.grab_focus_for_sub_option_at_index(0)
 	_current_action = encounter_ui.get_sub_option_at_index(0)
 	if _option_flag == EncounterUI.Options.SUMMON:
-		var summon_button: SummonButton = (
-			encounter_ui.sub_options.get_SubOptionButton_node_at_index(0) as SummonButton
+		var summon_button := (
+			encounter_ui.sub_options.get_SubOptionButton_at_index(0) as SummonButton
 		)
 		_summon_name = summon_button.get_summon_name()
 		SignalBus.emit_spawn_action_selected(
@@ -263,9 +263,10 @@ func _on_SignalBus_character_action_selected(action_info: Action) -> void:
 
 ## Update the current action to match the selected spawn action.
 func _on_SignalBus_spawn_action_selected(
-	_summon: String,
+	summon_name: String,
 	spawn_action: Action
 ) -> void:
+	_summon_name = summon_name
 	_current_action = spawn_action
 
 
