@@ -6,6 +6,7 @@ extends Node
 ## handlers.
 
 
+## The stat modifiers for the character this tracker is for.
 var _source_stats: StatModifiers = null: set = set_character_stats
 
 

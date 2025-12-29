@@ -1,3 +1,4 @@
+@abstract
 class_name EffectsHandler
 extends Node
 ## Base class for handler that tracks the effects that are currently active on
@@ -12,25 +13,17 @@ func set_character_stats(c_stats: CharacterStatModifiers) -> void:
 	_c_stats = c_stats
 
 
-## Virtual function. Updates the duration for all effects.
-func progress_duration(_turn_step: int = 1) -> void:
-	pass
+## Updates the duration for all effects.
+@abstract func progress_duration(_turn_step: int = 1) -> void
 
 
-## Virtual function. Processes the effects currently active on the character.
-func process_effects() -> void:
-	pass
+## Processes the effects currently active on the character.
+@abstract func process_effects() -> void
 
 
-## Virtual function. Adds relevant effects to this handler.
-func apply_effects(
+## Adds relevant effects to this handler.
+@abstract func apply_effects(
 	_effects: Array[Effect],
 	_caster_id: int,
 	_target_id: int
-) -> void:
-	pass
-
-
-## Virtual function. Check that all required parameters are set.
-func _check_for_required_parameters() -> void:
-	pass
+) -> void
