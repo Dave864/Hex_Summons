@@ -3,6 +3,10 @@ extends Node
 ## Handles the selection of map tiles for player movement and actions.
 
 
+## Indicates that the selector has confirmed the details of a spawn action for
+## a summon character.
+signal spawn_action_confirmed(name, emission_position)
+
 ## The MapTile that was last passed over.
 var tile_hovered: MapTile = null
 ## Describes which hex vertex is the top with respect to the camera
@@ -33,6 +37,15 @@ func _ready() -> void:
 ## Sets the _update_selection_func.
 func set_update_selection_func(new_func: Callable) -> void:
 	_update_selection_func = new_func
+
+
+## Emits the spawn_action_confirmed signal with the summon name and emission
+## position.
+func emit_spawn_action_confirmed(
+	summon_name: String,
+	emission_position: Vector3
+) -> void:
+	emit_signal("spawn_action_confirmed", summon_name, emission_position)
 
 
 ## Gets the tile that the mouse last hovered over.

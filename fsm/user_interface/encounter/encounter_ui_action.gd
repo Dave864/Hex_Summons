@@ -278,4 +278,6 @@ func _on_SignalBus_character_action_executed(
 ) -> void:
 	encounter_ui.sub_options.deactivate()
 	encounter_ui.options.hide()
+	if _summon_name != "":
+		pass
 	#encounter_ui.active_player_stats.hide()

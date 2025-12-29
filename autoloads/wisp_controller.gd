@@ -70,14 +70,14 @@ func recall_for_player(player_pool: PlayerWispPool, recall_count: int) -> void:
 
 ## Pays the cost from the active summon wisp pool, transferring the spent wisps
 ## to their bonded player's pool.
-func pay_cost_from_summon(
+func pay_cost_from_active_summon(
 	summon_pool: SummonWispPool,
 	cost: WispCost
 ) -> void:
 	for element: Element.Type in cost.cost_summary.keys():
 		var wisps_for_element: Array[String] = summon_pool.pay_for_element(
-			element,
-			cost.cost_summary[element]
+				element,
+				cost.cost_summary[element]
 		)
 		if not WispTracker.set_state_to_player(wisps_for_element):
 			printerr("Could not set all the spent wisps to their host players.")

@@ -161,8 +161,8 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	# Relative top not needed as we are using direct map coordinates.
 	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
 	_action.set_emission_direction(emission_dir)
-	# No need to fix orientation for non-cardinal effect ranges.
-	if not _action.get_is_cardinal() or _fix_orientation():
+	# No need to fix orientation for radial effect ranges.
+	if _action.stats.effect_range is RadialAreaRange or _fix_orientation():
 		_highlight_effect_range()
 	else:
 		selector.hex_map.selection_tracker.clear_selector_highlights()
@@ -324,7 +324,7 @@ func _highlight_effect_range() -> void:
 			_character_map_index,
 			_action.get_emission_map_index(),
 			_action.stats.effect_ignores_caster,
-			_action.get_is_cardinal()
+			_action.get_is_directional()
 	)
 
 
@@ -481,6 +481,11 @@ func _resolve_joystick_for_cardinal(dir: int) -> void:
 func _execute_action() -> void:
 	selector.hex_map.selection_tracker.clear_highlights()
 	selector.hex_map.selection_tracker.clear_selector_highlights()
+	if _summon_name != "":
+		selector.emit_spawn_action_confirmed(
+				_summon_name,
+				_action.get_emission_pos()
+		)
 	SignalBus.emit_character_action_executed(
 			selector.active_character,
 			_action,
@@ -497,6 +502,7 @@ func _reset() -> void:
 	_character_pos = Vector3.ZERO
 	_ranges_cache.clear()
 	_targets_cache.clear()
+	_summon_name = ""
 	_action = null
 
 

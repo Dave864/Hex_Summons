@@ -54,8 +54,9 @@ var _active: bool = false
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	stats = $SummonStatModifiers
+	stats = $SummonStatModifiers as SummonStatModifiers
 	stats.summoner_stats = summoner
+	_connect_stats_to_effects_tracker()
 	_cache_available_summons()
 	# Ensure that the summon node is set to inactive at the start of an encounter.
 	dismiss_summon()
@@ -78,21 +79,13 @@ func set_cost_for_spawn_action(summon_name: String) -> void:
 	wisp_cost.update_costs(summon_cost_summary)
 
 
-## Sets the selected summon to be active and places them at the specified map
-## coordinate.
-func load_summon(
-	new_summoner: PlayerCharacter,
-	summon_name: String,
-	spawn_coordinate: MapCoordinate
-) -> void:
-	# Prevent resetting of summoner_stats for spawn actions if summoner has
-	# been set to the new_summon prevously.
-	if summoner != new_summoner:
-		summoner = new_summoner
+## Sets the specified summon to be active and places them at the specified
+## position.
+func load_summon(summon_name: String, spawn_position: Vector3) -> void:
 	stats.summon_data = available_summons[summon_name]
 	visible = true
 	character_label.show_all()
-	position = spawn_coordinate.position
+	position = spawn_position
 	_current_spawn_action = spawn_actions[summon_name]
 	_load_actions()
 	_active = true
@@ -187,3 +180,12 @@ func _create_action_node(action_name: String) -> Action:
 func _update_emission_index(index: int) -> void:
 	for action in turn_actions:
 		action.set_emission_map_index(index)
+
+
+## Activates the specified summon and places it at the listed emission position
+## of the spawn action.
+func _on_Selector_spawn_action_confirmed(
+	summon_name: String,
+	emission_position: Vector3
+) -> void:
+	load_summon(summon_name, emission_position)

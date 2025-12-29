@@ -60,3 +60,5 @@ script = ExtResource("12")
 
 [node name="End" type="Node" parent="StateMachine"]
 script = ExtResource("11")
+
+[connection signal="spawn_action_confirmed" from="Selector" to="Summon" method="_on_Selector_spawn_action_confirmed"]

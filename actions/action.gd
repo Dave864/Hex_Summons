@@ -10,7 +10,7 @@ const EFFECTS: String = "Effects"
 @export var stats: ActionStats = null
 
 ## The path to the stats of the character that owns this action.
-var source_stats: CharacterStatModifiers = null:
+var source_stats: StatModifiers = null:
 	set(new_source):
 		source_stats = new_source
 		# Updates the stats references of the effects to be the same as the
@@ -20,16 +20,17 @@ var source_stats: CharacterStatModifiers = null:
 ## The effects of this action
 var _effects: Array[Effect]:
 	get = get_effects
-## Whether the area range is cardinal or ring.
-var _is_cardinal: bool = false:
-	get = get_is_cardinal
+## Whether the effect is emitted from caster in a direction or emitted from a
+## chosen location.
+var _is_directional: bool = false:
+	get = get_is_directional
 ## The index of the tile the effect is emitted from.
 var _emission_map_index: int = -1:
 	get = get_emission_map_index,
 	set = set_emission_map_index
 ## The transform the effect is emitted from.
 var _emission_transform: Transform3D = Transform3D.IDENTITY
-## The direction the effect is emitted. Only updated if the action is cardinal.
+## The direction the effect is emitted. Only updated if the action is directional.
 var _emission_direction: int:
 	get = get_emission_direction,
 	set = set_emission_direction
@@ -49,7 +50,7 @@ func _ready() -> void:
 			len(_effects) > 0,
 			"Action %s does not have any effects" % [name]
 	)
-	_is_cardinal = stats.source_range is CardinalArea
+	_is_directional = stats.emit_from_caster
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
@@ -58,9 +59,9 @@ func get_effects() -> Array:
 	return _effects
 
 
-## Returns if the area range is bound cardinally or not.
-func get_is_cardinal() -> bool:
-	return _is_cardinal
+## Returns if the effect range is bound directionally or not.
+func get_is_directional() -> bool:
+	return _is_directional
 
 
 ## Returns a set of targets this action effects.
@@ -80,6 +81,11 @@ func set_emission_map_index(index: int) -> void:
 ## Return the index of the map tile the emission point is at.
 func get_emission_map_index() -> int:
 	return _emission_map_index
+
+
+## Returns the origin point of the emission transform.
+func get_emission_pos() -> Vector3:
+	return _emission_transform.origin
 
 
 ## Updates the origin of the emission transform.
@@ -103,7 +109,7 @@ func set_emission_direction(dir: int) -> void:
 	_hit_box.transform = _emission_transform
 
 
-## Get the direction of the emission. Returns -1 if the action is not cardinal.
+## Get the direction of the emission. Returns -1 if the action is not directional.
 func get_emission_direction() -> int:
 	return _emission_direction
 
