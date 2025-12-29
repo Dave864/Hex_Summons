@@ -6,8 +6,6 @@
 [ext_resource type="Resource" uid="uid://dp2mlpnt7qfxt" path="res://character/summons/summon_data/TestFire/actions_data/beam_data.tres" id="4_6enet"]
 [ext_resource type="Resource" uid="uid://bkfn73ekp37uo" path="res://character/summons/summon_data/TestFire/actions_data/nova_data.tres" id="5_xlgu7"]
 
-
-
 [resource]
 script = ExtResource("1_sheyr")
 name = "TestFire"

@@ -82,8 +82,12 @@ var _current_turn: int = 0
 var _round_pace: int = 0
 ## The maximum number of turns that can take place in a round.
 var _round_turns: int = 0
+## Reference to the summon character.
+var _summon: Summon = null
 
 @onready var ap: AnimationPlayer = $AnimationPlayer
+## The maximum number of rounds that are tracked.
+@onready var _max_rounds: int = $InitiativeSlots.get_child_count()
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -94,6 +98,19 @@ func _ready() -> void:
 		slot.update_initiative_label(init)
 		_init_order[init] = RoundDetails.new()
 		init += 1
+
+
+## Updates the summon character reference.
+func set_summon_reference(new_summon: Summon) -> void:
+	if _summon != null:
+		_summon.disconnect("activated", Callable(self, "_on_Summon_activated"))
+		_summon.disconnect(
+				"deactivated",
+				Callable(self, "_on_Summon_deactivated")
+		)
+	_summon = new_summon
+	_summon.connect("activated", Callable(self, "_on_Summon_activated"))
+	_summon.connect("deactivated", Callable(self, "_on_Summon_deactivated"))
 
 
 ## Populates the initiative tracker with character details.
@@ -185,11 +202,11 @@ func _get_next_init_step() -> int:
 ## Updates the display to reflect the current initiative.
 func _update_display() -> void:
 	var char_order: Array[Character] = []
-	var earliest_init: Dictionary[int, int] = {}
-	for character_id: int in _c_pity_tracker.keys():
-		earliest_init[character_id] = -1
 	char_order.resize(init_slots.size())
 	_populate_display_data(char_order)
+	var earliest_init: Dictionary[int, int] = {}
+	for character: Character in char_order:
+		earliest_init[character.get_instance_id()] = -1
 	for i: int in init_slots.size():
 		var character: Character = char_order[i]
 		init_slots[i].change_character(character)
@@ -202,19 +219,25 @@ func _update_display() -> void:
 ## that will go next from the current round initiative.
 func _populate_display_data(char_order: Array) -> void:
 	var init_step: int = _current_turn
-	var round_index: int = 0
 	var c_index: int = 0
-	while true:
+	for round_number: int in _max_rounds:
 		for i: int in range(init_step, _round_turns):
-			var turn: TurnDetails = _init_order[round_index].details_for_turn(i)
-			if turn.is_present:
-				var c_id: int = turn.c_id
+			var turn: TurnDetails = _init_order[round_number].details_for_turn(i)
+			if not turn.is_present:
+				continue
+			var c_id: int = turn.c_id
+			if (
+				_summon.is_active()
+				and _summon.summoner.get_instance_id() == c_id
+			):
+				char_order[c_index] = _summon
+			else:
 				char_order[c_index] = _c_pity_tracker[c_id].character
-				c_index += 1
-				if c_index >= char_order.size():
-					return
+			c_index += 1
+			if c_index >= char_order.size():
+				return
+		# Start looking at first turn in next round.
 		init_step = 0
-		round_index += 1
 
 
 ## Determines the initiative order starting from the specified round.
@@ -313,4 +336,15 @@ func _on_CharacterStatModifiers_agility_changed(new_agility: int) -> void:
 func _on_Character_zero_health(c: Character) -> void:
 	_remove_character(c)
 	_calculate_full_initiative()
+	_update_display()
+
+
+## Updates the intiative tracker display to portray the summon portrait in place
+## of the summoner.
+func _on_Summon_activated() -> void:
+	_update_display()
+
+
+## Updates the intiative tracker display to retore the portrait of the summoner.
+func _on_Summon_deactivated() -> void:
 	_update_display()

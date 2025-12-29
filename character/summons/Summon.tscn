@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cqtyo80p26xko"]
+[gd_scene load_steps=17 format=3 uid="uid://cqtyo80p26xko"]
 
 [ext_resource type="Script" uid="uid://d3i6jxieb653y" path="res://character/summons/summon.gd" id="1_4f0v8"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="1_fa40w"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="2_dr147"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="2_fa11t"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="2_uxi0t"]
+[ext_resource type="Texture2D" uid="uid://c0jyk14j103hn" path="res://art/icon_green.png" id="2_x1ayg"]
 [ext_resource type="Script" uid="uid://dtcij6mogsbf4" path="res://character/scripts/character_stats/summon_stat_modifiers.gd" id="7_gm0pc"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="7_ihyy3"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="8_8b1as"]
@@ -20,6 +21,7 @@
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_4f0v8")
+battle_portrait = ExtResource("2_x1ayg")
 
 [node name="CharacterLabel" parent="." node_paths=PackedStringArray("char_pos") instance=ExtResource("2_dr147")]
 character_type = 2

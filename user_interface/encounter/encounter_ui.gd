@@ -149,6 +149,7 @@ func get_spells() -> Array[Action]:
 ## Set the Summon node reference.
 func set_summon(summon: Summon) -> void:
 	_summon = summon
+	initiative_tracker.set_summon_reference(_summon)
 	if _focused_player != null:
 		_summon.summoner = _focused_player
 
@@ -179,7 +180,11 @@ func set_active_options() -> void:
 	movement_button.disable(false)
 	technique_button.disable(_techniques.size() <= 0)
 	spell_button.disable(_spells.size() <= 0)
-	summon_button.disable(_summon.available_summons.size() <= 0)
+	var disable_summon: bool = (
+		_summon.is_active()
+		or _summon.available_summons.size() <= 0
+	)
+	summon_button.disable(disable_summon)
 	# TODO: item option will depend on different logic that has yet to
 	# be implemented.
 	item_button.disable()

@@ -8,6 +8,12 @@ extends Character
 ## SummonStatModifiers.
 
 
+## Indicates that the summon has been activated and has been placed in
+## the encounter.
+signal activated()
+## Indicates that the summon has been deactivated and has left the encounter.
+signal deactivated()
+
 ## Path to the folder that contains all summon data.
 const SUMMON_DATA_PATH: String = "res://character/summons/summon_data/"
 ## Name of resource file for summon data.
@@ -82,6 +88,7 @@ func set_cost_for_spawn_action(summon_name: String) -> void:
 ## Sets the specified summon to be active and places them at the specified
 ## position.
 func load_summon(summon_name: String, spawn_position: Vector3) -> void:
+	summoner.character_label.hide_all()
 	stats.summon_data = available_summons[summon_name]
 	_current_spawn_action = spawn_actions[summon_name]
 	WispController.pay_cost_for_summon(
@@ -98,8 +105,11 @@ func load_summon(summon_name: String, spawn_position: Vector3) -> void:
 ## Sets the summon to be inactive, placing them out of the map and resetting the
 ## specific summon details in preparation for the next summon.
 func dismiss_summon() -> void:
+	emit_signal("deactivated")
 	_active = false
 	visible = false
+	if summoner != null:
+		summoner.character_label.show_all()
 	character_label.hide_all()
 	for action: Action in turn_actions:
 		$Actions/TurnActions.remove_child(action)
@@ -193,3 +203,4 @@ func _on_Selector_spawn_action_confirmed(
 	emission_position: Vector3
 ) -> void:
 	load_summon(summon_name, emission_position)
+	emit_signal("activated")
