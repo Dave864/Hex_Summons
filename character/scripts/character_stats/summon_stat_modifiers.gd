@@ -22,6 +22,11 @@ func get_movement_range(_modified: bool = true) -> int:
 	return summon_data.movement
 
 
+## Updates the current health by the given delta.
+func set_cur_health(delta: int) -> int:
+	return summoner_stats.set_cur_health(delta)
+
+
 ## Set current health to the maximum value. Always uses the modified max health
 ## as the maximum value.
 func max_cur_health() -> void:
