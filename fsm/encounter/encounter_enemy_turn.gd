@@ -40,11 +40,9 @@ func exit() -> void:
 ## These signals are used by other states and will be disconnected to avoid
 ## unintended behavior.
 func _connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			_active_char,
+	_active_char.connect(
 			"turn_ended",
-			self,
-			"_on_EnemyCharacter_turn_ended"
+			Callable(self, "_on_EnemyCharacter_turn_ended")
 	)
 
 

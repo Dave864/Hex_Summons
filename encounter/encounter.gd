@@ -94,12 +94,10 @@ func _connect_map_to_selector() -> void:
 	selector.players_ref = players
 	selector.enemies_ref = enemies
 	selector.hex_map = hex_map
-	for mt in hex_map.get_map_tiles():
-		ErrorUtil.connect_signal(
-				mt,
+	for mt: MapTile in hex_map.get_map_tiles():
+		mt.connect(
 				"mouse_hovered",
-				selector,
-				"_on_MapTile_mouse_hovered"
+				Callable(selector, "_on_MapTile_mouse_hovered")
 		)
 
 

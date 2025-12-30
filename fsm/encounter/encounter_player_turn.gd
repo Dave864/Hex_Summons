@@ -51,27 +51,21 @@ func exit() -> void:
 ## These signals are used by other states and will be disconnected to avoid
 ## unintended behavior.
 func _connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			_active_char,
+	_active_char.connect(
 			"is_waiting",
-			self,
-			"_on_PlayerCharacter_is_waiting"
+			Callable(self, "_on_PlayerCharacter_is_waiting")
 	)
-	ErrorUtil.connect_signal(
-			_active_char,
+	_active_char.connect(
 			"turn_ended",
-			self,
-			"_on_PlayerCharacter_turn_ended"
+			Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
 
 
 ## Connect signals that will persist throughout the life of this state.
 func _ready_connect_signals() -> void:
-	ErrorUtil.connect_signal(
-			enc.ui,
+	enc.ui.connect(
 			"is_waiting",
-			self,
-			"_on_EncounterUI_is_waiting"
+			Callable(self, "_on_EncounterUI_is_waiting")
 	)
 
 

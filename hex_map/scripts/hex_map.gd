@@ -61,7 +61,7 @@ func place_character_at_tile(character: Character, tile_index: int) -> void:
 
 
 ## Retrieve the map tiles of this hex map.
-func get_map_tiles() -> Array:
+func get_map_tiles() -> Array[MapTile]:
 	return _map_tiles
 
 
