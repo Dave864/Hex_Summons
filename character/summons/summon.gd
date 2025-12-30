@@ -36,9 +36,9 @@ const STANDBY_POSITION: Vector3 = Vector3(0.0, -10.0, 0.0)
 ## The character that conjured the active summon.
 var summoner: PlayerCharacter = null:
 	set(value):
-		summoner = value
-		if summoner == null:
+		if _active or value == null:
 			return
+		summoner = value
 		for action: Action in spawn_actions.values():
 			action.source_stats = summoner.stats
 ## The summons that are able to be conjured by the current player party in the
