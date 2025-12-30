@@ -1,3 +1,4 @@
+@abstract
 class_name SelectorState
 extends State
 ## Boilerplate class to get full autocompletion and type checks for the `selector` 

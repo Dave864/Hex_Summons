@@ -1,3 +1,4 @@
+@abstract
 extends State
 class_name EncounterCameraState
 ## Boilerplate class to get full autocompletion and type checks for an 

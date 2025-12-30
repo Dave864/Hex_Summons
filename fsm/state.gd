@@ -1,3 +1,4 @@
+@abstract
 class_name State
 extends Node
 ## Virtual base class for all states.
@@ -5,11 +6,11 @@ extends Node
 
 ## Reference to the state machine, to call its `transition_to()` method directly.
 ## The state machine node will set it.
-var state_machine: Node = null
+var state_machine: StateMachine = null
 
 
-## Virtual function. Called by the state machine upon changing the active state. 
-## The `msg` parameter is a dictionary with arbitrary data the state can use to 
+## Virtual function. Called by the state machine upon changing the active state.
+## The `msg` parameter is a dictionary with arbitrary data the state can use to
 ## initialize itself.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	pass
@@ -30,7 +31,7 @@ func physics_update(_delta: float) -> void:
 	pass
 
 
-## Virtual function. Called by the state machine before changing the active 
+## Virtual function. Called by the state machine before changing the active
 ## state. Use this function to clean up the state.
 func exit() -> void:
 	pass

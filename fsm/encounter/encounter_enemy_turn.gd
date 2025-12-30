@@ -4,9 +4,11 @@ extends EncounterState
 ## 
 ## Handles the encounter logic needed to allow the enemy character to properly
 ## run during their turn. Remains in the `EnemyTurn` state if the next character
-## in initiative is also an enemy character. Goes to the `PlayerTurn` state if an
-## player character is next in intiative. Goes to the `End` state if either all
-## player characters or all enemy characters are defeated. 
+## in initiative is also an enemy character. Goes to the `PlayerTurn` state if
+## a player character is next in intiative. Goes to the `SummonTurn` state if
+## the next player character is the summoner of an active summon. Goes to the
+## `End` state if either all player characters or all enemy characters are
+## defeated. 
 
 
 ## The enemy character currently active
@@ -54,13 +56,16 @@ func _disconnect_signals() -> void:
 	)
 
 
-## Update the initiative tracker and transition to either the PlayerTurn state
-## or the EnemyTurn state depending on the next character.
+## Update the initiative tracker and transition to either the PlayerTurn state,
+## the SummonTurn state, or the EnemyTurn state depending on the next character.
 func _on_EnemyCharacter_turn_ended() -> void:
 	await _active_char.is_waiting
 	var next_character: Character = enc.get_next_character()
 	await enc.progress_initiative()
 	if next_character is PlayerCharacter:
-		state_machine.transition_to(PLAYER_TURN)
+		if enc.summon.is_active() and enc.summon.summoner == next_character:
+			state_machine.transition_to(SUMMON_TURN)
+		else:
+			state_machine.transition_to(PLAYER_TURN)
 	elif next_character is EnemyCharacter:
 		state_machine.transition_to(ENEMY_TURN)

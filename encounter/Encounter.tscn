@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://x4o3gls28fh"]
+[gd_scene load_steps=15 format=3 uid="uid://x4o3gls28fh"]
 
 [ext_resource type="PackedScene" uid="uid://bh13wido3t2hc" path="res://hex_map/TestMap.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://b8653jyeljph1" path="res://user_interface/encounter/EncounterUI.tscn" id="2"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://bet15deb5w7us" path="res://encounter/encounter.gd" id="10"]
 [ext_resource type="Script" uid="uid://cbt36kh8p1mfs" path="res://fsm/encounter/encounter_end.gd" id="11"]
 [ext_resource type="Script" uid="uid://5h132lxn112i" path="res://fsm/encounter/encounter_enemy_turn.gd" id="12"]
+[ext_resource type="Script" uid="uid://bfd3p1gudo2k4" path="res://fsm/encounter/encounter_summon_turn.gd" id="12_vwj2q"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="13"]
 [ext_resource type="PackedScene" uid="uid://dxny3bidwcnmv" path="res://encounter/camera/EncounterCamera.tscn" id="14"]
 
@@ -54,6 +55,9 @@ script = ExtResource("8")
 
 [node name="PlayerTurn" type="Node" parent="StateMachine"]
 script = ExtResource("9")
+
+[node name="SummonTurn" type="Node" parent="StateMachine"]
+script = ExtResource("12_vwj2q")
 
 [node name="EnemyTurn" type="Node" parent="StateMachine"]
 script = ExtResource("12")
