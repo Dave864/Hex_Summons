@@ -90,3 +90,5 @@ metadata/_custom_type_script = "uid://cuk41txbrftic"
 [node name="Standby" type="Node" parent="StateMachine"]
 script = ExtResource("12_405cv")
 metadata/_custom_type_script = "uid://ci5c4y0r1wn1e"
+
+[connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
