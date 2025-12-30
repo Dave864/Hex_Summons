@@ -49,7 +49,7 @@ var _focused_player: PlayerCharacter = null:
 	set = set_focused_player
 ## Holds references for all player characters in the party. Used for toggling
 ## UI elements in PartyStats container.
-var _party_stat_map: Dictionary[int, PlayerStatsUI] = {}
+var _party_stat_map: Dictionary[int, UserCharacterStatsUI] = {}
 ## The techniques the focused character has access to.
 var _techniques: Array[Action] = []:
 	get = get_techniques
@@ -61,7 +61,7 @@ var _summon: Summon = null:
 	set = set_summon
 
 @onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
-@onready var active_player_stats_ui: PlayerStatsUI = $ActivePlayerStats
+@onready var active_character_ui: UserCharacterStatsUI = $ActiveCharacterStats
 @onready var enemy_stats: VBoxContainer = $EnemyStats
 @onready var party_stats: VBoxContainer = $PartyStats
 @onready var options: HBoxContainer = $Options
@@ -90,27 +90,14 @@ func get_current_selection() -> Options:
 	return _current_selection
 
 
-## Updates the player character being focused on.
+## Get the current player the UI is focused on.
+func get_focused_player() -> PlayerCharacter:
+	return _focused_player
+
+
+## Updates the active player being focused on.
 func set_focused_player(new_player: PlayerCharacter) -> void:
-	var player_connected: bool = (
-			_focused_player != null 
-			and _focused_player.stats.is_connected(
-				"health_changed",
-				Callable(active_player_stats_ui, "_on_Character_hp_changed")
-			)
-	)
-	# Disconnect the health_changed signal from the previous focused player
-	# to ensure that the ActivePlayerStats node is only affected by the changes
-	# applied to the health of the new focused player.
-	if player_connected:
-		_focused_player.stats.disconnect(
-				"health_changed",
-				Callable(active_player_stats_ui, "_on_Character_hp_changed")
-		)
-	# Reveal the party stats of any previous focused player as their details
-	# in the ActivePlayerStats node will be overridden by the new_player.
-	if _focused_player != null:
-		_party_stat_map[_focused_player.get_instance_id()].show()
+	_show_focused_player_in_party()
 	# Hide the party stats of the new focused player as they will be represented
 	# by the ActivePlayerStats node.
 	_party_stat_map[new_player.get_instance_id()].hide()
@@ -118,22 +105,29 @@ func set_focused_player(new_player: PlayerCharacter) -> void:
 	_summon.summoner = _focused_player
 	_techniques = _focused_player.get_techniques()
 	_spells = _focused_player.get_spells()
-	
-	# Not all members of the party are being displayed in the PartyStats
-	# container, so the partial height should be used to keep the UI display
-	# from being too spread out.
-	party_stats.size.y = PART_PARTY_HEIGHT
-	active_player_stats_ui.set_stats(_focused_player)
-	active_player_stats_ui.show()
-	
-	reset_all_options()
-	set_active_options()
-	_set_player_option_focus_neighbors()
+	# Disconnect the health_changed signal from the previous focused player
+	# to ensure that the ActivePlayerStats node is only affected by the changes
+	# applied to the health of the new focused player.
+	_disconnect_focus_player_health_changed()
+	active_character_ui.set_player_stats(_focused_player)
+	_show_active_options()
 
 
-## Get the current character the UI is focused on.
-func get_focused_player() -> PlayerCharacter:
-	return _focused_player
+## Updates the focused character to reflect the summon's details.
+func set_summon_as_focus() -> void:
+	_show_focused_player_in_party()
+	# Hide the party stats of the summoner as they will be represented
+	# by the ActivePlayerStats node.
+	_party_stat_map[_summon.summoner.get_instance_id()].hide()
+	_focused_player = _summon.summoner
+	_techniques.clear()
+	_spells = _summon.turn_actions
+	# Disconnect the health_changed signal from the previous focused player
+	# to ensure that the ActivePlayerStats node is only affected by the changes
+	# applied to the health of the new focused player.
+	_disconnect_focus_player_health_changed()
+	active_character_ui.set_summon_stats(_summon)
+	_show_active_options()
 
 
 ## Get the techniques of the focused player.
@@ -174,27 +168,19 @@ func grab_focus_for_sub_option_at_index(index: int) -> void:
 	sub_options.grab_focus_at_index(index)
 
 
-## Updates the disabled flag for all player options depending on respective
-## criteria.
+## Updates the disabled flag for all user options depending on if the active
+## focused character is a player or summon.
 func set_active_options() -> void:
-	movement_button.disable(false)
-	technique_button.disable(_techniques.size() <= 0)
-	spell_button.disable(_spells.size() <= 0)
-	var disable_summon: bool = (
-		_summon.is_active()
-		or _summon.available_summons.size() <= 0
-	)
-	summon_button.disable(disable_summon)
-	# TODO: item option will depend on different logic that has yet to
-	# be implemented.
-	item_button.disable()
-	end_button.disable(false)
+	if _summon.is_active() and _summon.summoner == _focused_player:
+		_set_active_summon_options()
+	else:
+		_set_active_player_options()
 
 
 ## Hides the active player stats and reveals the relevant party summary for the
 ## "active" character.
 func hide_active_stats() -> void:
-	active_player_stats_ui.hide()
+	active_character_ui.hide()
 	if _focused_player != null:
 		party_stats.size.y = (
 				FULL_PARTY_HEIGHT if _party_stat_map.size() == MAX_PARTY_SIZE
@@ -230,11 +216,11 @@ func track_party_members(players: Array) -> void:
 			else PART_PARTY_HEIGHT
 	)
 	party_stats.set_deferred("size", Vector2(PARTY_WIDTH, height))
-	for i in p_count:
-		var player_stats: PlayerStatsUI = party_stats.get_child(i)
+	for i: int in p_count:
+		var player_stats: UserCharacterStatsUI = party_stats.get_child(i)
 		var player: PlayerCharacter = players[i]
 		_party_stat_map[player.get_instance_id()] = player_stats
-		player_stats.set_stats(player)
+		player_stats.set_player_stats(player)
 		player_stats.show()
 
 
@@ -257,29 +243,96 @@ func track_enemy(e: EnemyCharacter) -> void:
 	enemy_stats.add_child(e_label)
 
 
-## Sets the focus neighbors for the player options.
-func _set_player_option_focus_neighbors() -> void:
-	var a_ops: Array[Control] = []
-	for p_op: Control in options.get_children():
-		if not p_op.disabled:
-			a_ops.append(p_op)
+## Helper function for set_focused_player and set_summon_as_focus. Reveals the
+## focused player's party stats UI node.
+func _show_focused_player_in_party() -> void:
+	# Not all members of the party are being displayed in the PartyStats
+	# container, so the partial height should be used to keep the UI display
+	# from being too spread out.
+	party_stats.size.y = PART_PARTY_HEIGHT
+	# Reveal the party stats of any previous focused player as their details
+	# in the ActivePlayerStats node will be overridden by the new_player.
+	if _focused_player != null:
+		_party_stat_map[_focused_player.get_instance_id()].show()
+
+
+## Disconnects the focused character from the ActiveCharacterStats node.
+func _disconnect_focus_player_health_changed() -> void:
+	var character_connected: bool = (
+			_focused_player != null 
+			and _focused_player.stats.is_connected(
+				"health_changed",
+				Callable(active_character_ui, "_on_Character_hp_changed")
+			)
+	)
+	if character_connected:
+		_focused_player.stats.disconnect(
+				"health_changed",
+				Callable(active_character_ui, "_on_Character_hp_changed")
+		)
+
+
+## Helper function for set_focused_player and set_summon_as_focus. Reveals the
+## ActiveCharacterStats node and toggles the active options.
+func _show_active_options() -> void:
+	active_character_ui.show()
+	reset_all_options()
+	set_active_options()
+	_set_character_option_focus_neighbors()
+
+
+## Updates the disabled flag for all player options depending on respective
+## criteria.
+func _set_active_player_options() -> void:
+	movement_button.disable(false)
+	technique_button.disable(_techniques.size() <= 0)
+	spell_button.disable(_spells.size() <= 0)
+	var disable_summon: bool = (
+		_summon.is_active()
+		or _summon.available_summons.size() <= 0
+	)
+	summon_button.disable(disable_summon)
+	# TODO: item option will depend on different logic that has yet to
+	# be implemented.
+	item_button.disable()
+	end_button.disable(false)
+
+
+## Updates the disabled flag for all summon options depending on respective
+## criteria.
+func _set_active_summon_options() -> void:
+	movement_button.disable(false)
+	technique_button.disable()
+	spell_button.disable(_spells.size() <= 0)
+	summon_button.disable()
+	summon_button.disable()
+	item_button.disable()
+	end_button.disable()
+
+
+## Sets the focus neighbors for the character options.
+func _set_character_option_focus_neighbors() -> void:
+	var active_options: Array[Control] = []
+	for option_node: Control in options.get_children():
+		if not option_node.disabled:
+			active_options.append(option_node)
 		else:
-			p_op.focus_neighbor_top = p_op.get_path()
-			p_op.focus_neighbor_bottom = p_op.get_path()
-			p_op.focus_neighbor_left = p_op.get_path()
-			p_op.focus_previous = p_op.get_path()
-			p_op.focus_neighbor_right = p_op.get_path()
-			p_op.focus_next = p_op.get_path()
+			option_node.focus_neighbor_top = option_node.get_path()
+			option_node.focus_neighbor_bottom = option_node.get_path()
+			option_node.focus_neighbor_left = option_node.get_path()
+			option_node.focus_previous = option_node.get_path()
+			option_node.focus_neighbor_right = option_node.get_path()
+			option_node.focus_next = option_node.get_path()
 	
-	for i in range(a_ops.size()):
-		a_ops[i].focus_neighbor_top = a_ops[i].get_path()
-		a_ops[i].focus_neighbor_bottom = a_ops[i].get_path()
+	for i: int in active_options.size():
+		active_options[i].focus_neighbor_top = active_options[i].get_path()
+		active_options[i].focus_neighbor_bottom = active_options[i].get_path()
 		# Arrays indexed at -1 refers to the last element.
-		a_ops[i].focus_neighbor_left = a_ops[i - 1].get_path()
-		a_ops[i].focus_previous = a_ops[i - 1].get_path()
-		var n: int = i + 1 if i < a_ops.size() - 1 else 0
-		a_ops[i].focus_neighbor_right = a_ops[n].get_path()
-		a_ops[i].focus_next = a_ops[n].get_path()
+		active_options[i].focus_neighbor_left = active_options[i - 1].get_path()
+		active_options[i].focus_previous = active_options[i - 1].get_path()
+		var n: int = i + 1 if i < active_options.size() - 1 else 0
+		active_options[i].focus_neighbor_right = active_options[n].get_path()
+		active_options[i].focus_next = active_options[n].get_path()
 
 
 ## Update the SubOptions element with the currently selected option

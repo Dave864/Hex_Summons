@@ -53,6 +53,8 @@ var turn_actions: Array[Action] = []
 var _current_spawn_action: Action = null
 ## Flag that indicates the summon is active.
 var _active: bool = false
+## Name of the currently active summon.
+var _active_summon: String = ""
 
 ## The wisp pool for the active summon.
 @onready var summon_wisp_pool: SummonWispPool = $SummonWispPool
@@ -74,6 +76,14 @@ func is_active() -> bool:
 	return _active
 
 
+## Gets the name of the currently active summon. Returns empty string if no
+## summon is active.
+func get_active_summon_name() -> String:
+	if is_active():
+		return ""
+	return _active_summon
+
+
 ## Sets the wisp cost of the spawn action for the given summon.
 func set_cost_for_spawn_action(summon_name: String) -> void:
 	var spawn_action: Action = spawn_actions[summon_name]
@@ -91,6 +101,7 @@ func load_summon(summon_name: String, spawn_position: Vector3) -> void:
 	summoner.character_label.hide_all()
 	stats.summon_data = available_summons[summon_name]
 	_current_spawn_action = spawn_actions[summon_name]
+	_active_summon = summon_name
 	WispController.pay_cost_for_summon(
 			summon_wisp_pool,
 			_current_spawn_action.get_node("WispCost")
