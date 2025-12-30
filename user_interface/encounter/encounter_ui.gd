@@ -348,3 +348,21 @@ func _update_sub_options() -> void:
 			pass
 		_:
 			pass
+
+
+## Updates the PartyCharacterStats node of the summoner to show the summon's
+## details.
+func _on_Summon_activated() -> void:
+	var summoner_id: int = _summon.summoner.get_instance_id()
+	_party_stat_map[summoner_id].set_summon_stats(_summon)
+
+
+## Updates the PartyCharacterStats node of the summoner to revert back to
+## showing said character's details.
+func _on_Summon_deactivated() -> void:
+	# Summon is deactivated on start, before its reference in this node is set.
+	if _summon == null:
+		return
+	var summoner: PlayerCharacter = _summon.summoner
+	_party_stat_map[summoner.get_instance_id()].set_player_stats(summoner)
+	_summon.summoner = null

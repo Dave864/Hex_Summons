@@ -39,6 +39,7 @@ var summoner: PlayerCharacter = null:
 		if _active or value == null:
 			return
 		summoner = value
+		stats.summoner_stats = summoner.stats
 		for action: Action in spawn_actions.values():
 			action.source_stats = summoner.stats
 ## The summons that are able to be conjured by the current player party in the
@@ -63,7 +64,6 @@ var _active_summon: String = ""
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	stats = $SummonStatModifiers as SummonStatModifiers
-	stats.summoner_stats = summoner
 	_connect_stats_to_effects_tracker()
 	_cache_available_summons()
 	# Ensure that the summon node is set to inactive at the start of an encounter.
@@ -108,6 +108,12 @@ func load_summon(summon_name: String, spawn_position: Vector3) -> void:
 	)
 	visible = true
 	character_label.show_all()
+	character_label.set_max_health(summoner.stats.get_stat(Stat.Type.MAX_HEALTH))
+	character_label.set_cur_health(summoner.stats.get_stat(Stat.Type.CUR_HEALTH))
+	summoner.stats.connect(
+			"health_changed",
+			Callable(character_label, "_on_CharacterStatModifiers_health_changed")
+	)
 	position = spawn_position
 	_load_actions()
 	_active = true
@@ -121,6 +127,13 @@ func dismiss_summon() -> void:
 	visible = false
 	if summoner != null:
 		summoner.character_label.show_all()
+		summoner.stats.disconnect(
+				"health_changed",
+				Callable(
+					character_label,
+					"_on_CharacterStatModifiers_health_changed"
+				)
+		)
 	character_label.hide_all()
 	for action: Action in turn_actions:
 		$Actions/TurnActions.remove_child(action)
@@ -128,7 +141,6 @@ func dismiss_summon() -> void:
 	position = STANDBY_POSITION
 	turn_actions.clear()
 	stats.summon_data = null
-	summoner = null
 	_current_spawn_action = null
 
 

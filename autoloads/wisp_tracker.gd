@@ -227,7 +227,10 @@ func _get_wisp_data(wisp_name: String, element: int) -> Wisp:
 	var wisp_data: Wisp = load(path_format.format([wisp_name]))
 	if wisp_data == null:
 		var elem_name: String = Element.Core.find_key(element)
-		printerr("No data could be found for {0} wisp, {1}.".format([elem_name, wisp_name]))
+		printerr(
+				"No data could be found for {0} wisp, {1}." \
+				.format([elem_name, wisp_name])
+		)
 	return wisp_data
 
 

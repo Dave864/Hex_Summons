@@ -51,8 +51,5 @@ func _on_SignalBus_player_turn_started(character: PlayerCharacter) -> void:
 ## Set the active summon as the character of focus in EncounterUI and moves to
 ## the `MOVE` state.
 func _on_SignalBus_summon_turn_started() -> void:
-	# TODO: Call appropriate functions to set summon as focused character when
-	# they have been implemented.
-	print("Summon turn start detected")
-	state_machine.transition_to(WAIT)
-	#state_machine.transition_to(MOVE)
+	encounter_ui.set_summon_as_focus()
+	state_machine.transition_to(MOVE)

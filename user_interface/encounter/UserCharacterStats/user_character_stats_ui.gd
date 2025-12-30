@@ -16,7 +16,8 @@ var _default_portrait: Texture2D = load(Constants.DEFAULT_ICON_PATH)
 
 
 ## Populate the display elements with the player character stats.
-func set_player_stats(player: Character) -> void:
+func set_player_stats(player: PlayerCharacter) -> void:
+	wisp_pool_ui.set_wisp_pool(player.wisp_pool)
 	_set_character_stats(player)
 	_name_label.text = player.name
 	player.stats.connect(
@@ -27,12 +28,9 @@ func set_player_stats(player: Character) -> void:
 
 ## Populate the display elements with the summon character stats.
 func set_summon_stats(summon: Summon) -> void:
+	wisp_pool_ui.set_wisp_pool(summon.summon_wisp_pool)
 	_set_character_stats(summon)
 	_name_label.text = summon.get_active_summon_name()
-	summon.summoner.stats.connect(
-			"health_changed",
-			Callable(self, "_on_Character_hp_changed")
-	)
 
 
 ## Sets the hp values of the summary.

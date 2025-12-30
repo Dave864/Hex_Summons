@@ -73,11 +73,9 @@ func _connect_stats_to_effects_tracker() -> void:
 
 ## Connects the relevant stat signals to the character label.
 func _connect_to_character_label() -> void:
-	ErrorUtil.connect_signal(
-			stats,
+	stats.connect(
 			"health_changed",
-			character_label,
-			"_on_CharacterStatModifiers_health_changed"
+			Callable(character_label, "_on_CharacterStatModifiers_health_changed")
 	)
 	character_label.set_max_health(stats.get_stat(Stat.Type.MAX_HEALTH))
 	character_label.set_cur_health(stats.get_stat(Stat.Type.CUR_HEALTH))

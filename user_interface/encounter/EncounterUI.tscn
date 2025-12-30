@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://cuwbd4bjywig0" path="res://user_interface/encounter/PlayerOptionButton/SummonButton.tscn" id="15"]
 [ext_resource type="PackedScene" uid="uid://bbic645b0237g" path="res://user_interface/encounter/PlayerOptionButton/TechniqueButton.tscn" id="16"]
 [ext_resource type="PackedScene" uid="uid://bbb4rvu44d041" path="res://user_interface/encounter/PlayerOptionButton/MovementButton.tscn" id="17"]
-[ext_resource type="PackedScene" uid="uid://5td8sfwtxdp6" path="res://user_interface/encounter/WispPool/SummonWispPool/SummonWispPool.tscn" id="18"]
+[ext_resource type="PackedScene" uid="uid://5td8sfwtxdp6" path="res://user_interface/encounter/WispPool/StandbyWispPool/StandbyWispPool.tscn" id="18"]
 
 [node name="EncounterUI" type="Control"]
 layout_mode = 3
@@ -40,13 +40,9 @@ offset_right = 576.0
 offset_bottom = 36.0
 grow_horizontal = 1
 
-[node name="SummonPool" parent="." instance=ExtResource("18")]
+[node name="StandbyPool" parent="." instance=ExtResource("18")]
 layout_mode = 0
 anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
 
 [node name="SubOptions" type="ScrollContainer" parent="."]
 layout_mode = 0
