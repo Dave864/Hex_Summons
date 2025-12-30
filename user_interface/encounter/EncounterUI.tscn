@@ -10,8 +10,8 @@
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="8"]
 [ext_resource type="Script" uid="uid://bi03nel8te0u4" path="res://fsm/user_interface/encounter/encounter_ui_action.gd" id="9"]
 [ext_resource type="PackedScene" uid="uid://d3i1mqeluj5hv" path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" id="10"]
-[ext_resource type="PackedScene" uid="uid://cy3ef1wdf5tu" path="res://user_interface/encounter/PlayerStats/ActivePlayerStats.tscn" id="11"]
-[ext_resource type="PackedScene" uid="uid://by7j6btb8hhip" path="res://user_interface/encounter/PlayerStats/PartyPlayerStats.tscn" id="12"]
+[ext_resource type="PackedScene" uid="uid://cy3ef1wdf5tu" path="res://user_interface/encounter/UserCharacterStats/ActiveCharacterStats.tscn" id="11"]
+[ext_resource type="PackedScene" uid="uid://by7j6btb8hhip" path="res://user_interface/encounter/UserCharacterStats/PartyCharacterStats.tscn" id="12"]
 [ext_resource type="PackedScene" uid="uid://5vv4y7a5a1ay" path="res://user_interface/encounter/PlayerOptionButton/SpellButton.tscn" id="13"]
 [ext_resource type="PackedScene" uid="uid://dtfgs8438te8w" path="res://user_interface/encounter/PlayerOptionButton/ItemButton.tscn" id="14"]
 [ext_resource type="PackedScene" uid="uid://cuwbd4bjywig0" path="res://user_interface/encounter/PlayerOptionButton/SummonButton.tscn" id="15"]
@@ -91,22 +91,22 @@ grow_vertical = 2
 mouse_filter = 2
 alignment = 2
 
-[node name="PartyPlayerStats1" parent="PartyStats" instance=ExtResource("12")]
+[node name="PartyCharacterStats1" parent="PartyStats" instance=ExtResource("12")]
 layout_mode = 2
 
-[node name="PartyPlayerStats2" parent="PartyStats" instance=ExtResource("12")]
+[node name="PartyCharacterStats2" parent="PartyStats" instance=ExtResource("12")]
 visible = false
 layout_mode = 2
 
-[node name="PartyPlayerStats3" parent="PartyStats" instance=ExtResource("12")]
+[node name="PartyCharacterStats3" parent="PartyStats" instance=ExtResource("12")]
 visible = false
 layout_mode = 2
 
-[node name="PartyPlayerStats4" parent="PartyStats" instance=ExtResource("12")]
+[node name="PartyCharacterStats4" parent="PartyStats" instance=ExtResource("12")]
 visible = false
 layout_mode = 2
 
-[node name="ActivePlayerStats" parent="." instance=ExtResource("11")]
+[node name="ActiveCharacterStats" parent="." instance=ExtResource("11")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0

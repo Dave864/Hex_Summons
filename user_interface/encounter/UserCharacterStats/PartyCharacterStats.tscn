@@ -1,0 +1,116 @@
+[gd_scene load_steps=9 format=3 uid="uid://by7j6btb8hhip"]
+
+[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_b8f0o"]
+[ext_resource type="Script" uid="uid://blseqgdfu5205" path="res://user_interface/encounter/UserCharacterStats/user_character_stats_ui.gd" id="2_0ir13"]
+[ext_resource type="Texture2D" uid="uid://30s2sfbgvhje" path="res://art/ui/ThemeBlueSigil/HealthBorder.png" id="3_mii14"]
+[ext_resource type="Texture2D" uid="uid://c5b60fk50dtu8" path="res://art/ui/ThemeBlueSigil/HealthBar.png" id="4_tdy0w"]
+[ext_resource type="PackedScene" uid="uid://ckrj8wx5k0slu" path="res://user_interface/encounter/WispPool/PartyWispPool/PartyWispPool.tscn" id="5_1rccw"]
+[ext_resource type="Texture2D" uid="uid://osiqpd8jhoyd" path="res://art/icon.png" id="6_bjsw2"]
+[ext_resource type="Shader" uid="uid://d1rqm2l1tcof8" path="res://user_interface/shaders/change_color.gdshader" id="7_kon6o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4qf6x"]
+shader = ExtResource("7_kon6o")
+shader_parameter/old_color = Color(0, 0.4509804, 1, 1)
+shader_parameter/new_color = Color(0, 0.14901961, 1, 1)
+
+[node name="PartyCharacterStats" type="Control" node_paths=PackedStringArray("character_portrait", "wisp_pool_ui")]
+layout_mode = 3
+anchor_right = 0.2
+anchor_bottom = 0.133
+offset_bottom = 0.119999
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme = ExtResource("1_b8f0o")
+script = ExtResource("2_0ir13")
+portrait_size = Vector2(22, 22)
+character_portrait = NodePath("PartyWispPool/PlayerPortrait")
+wisp_pool_ui = NodePath("PartyWispPool")
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -18.0
+offset_right = 51.0
+offset_bottom = -10.0
+text = "NAME"
+horizontal_alignment = 1
+
+[node name="HealthNumberLabel" type="Label" parent="."]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = 10.0
+offset_right = 51.0
+offset_bottom = 18.0
+text = "00/00"
+horizontal_alignment = 1
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+z_index = -1
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -8.0
+offset_right = 62.0
+offset_bottom = 8.0
+mouse_filter = 2
+value = 60.0
+rounded = true
+texture_under = ExtResource("3_mii14")
+texture_progress = ExtResource("4_tdy0w")
+texture_progress_offset = Vector2(11, 3)
+
+[node name="PartyWispPool" parent="." instance=ExtResource("5_1rccw")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -24.0
+offset_right = -56.208
+offset_bottom = -17.496
+mouse_filter = 2
+
+[node name="PlayerPortrait" type="TextureRect" parent="PartyWispPool"]
+show_behind_parent = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -11.0
+offset_right = 11.0
+offset_bottom = 11.0
+mouse_filter = 2
+texture = ExtResource("6_bjsw2")
+expand_mode = 1
+
+[node name="BackPanel" type="Panel" parent="PartyWispPool"]
+z_index = -1
+material = SubResource("ShaderMaterial_4qf6x")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 13.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
