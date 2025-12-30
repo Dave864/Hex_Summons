@@ -24,6 +24,7 @@ func enter(_msg := {}) -> void:
 	# UI is active when summon turn starts.
 	_ui_waiting = false
 	_summon_waiting = false
+	enc.selector.active_character = enc.summon
 	SignalBus.emit_summon_turn_started()
 
 

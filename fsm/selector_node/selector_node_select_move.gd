@@ -5,7 +5,7 @@ extends SelectorState
 ## When the input for selecting a tile is given, the Selector moves to the
 ## 'Pause' state and a signal is emitted indicating which tile was selected.
 ## If an action option is selected in the UI, the Selector moves to the
-## 'SelectAction' state. If a player turn ends, go to the 'Wait' state.
+## 'SelectAction' state. If the character turn ends, go to the 'Wait' state.
 
 
 ## The starting index for the movement area.
@@ -20,13 +20,13 @@ var _movement_ids: Array[int] = []
 
 ## Reveal the selector shape and enable the ability to update tile highlights.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
-	var player_index: int = (
+	var character_index: int = (
 		selector.active_character.map_coordinate.get_tile_index()
 	)
 	if _move_origin_index < 0:
-		_move_origin_index = player_index
+		_move_origin_index = character_index
 	_determine_movement_ids()
-	_highlight_movement_range(player_index)
+	_highlight_movement_range(character_index)
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
 
@@ -40,7 +40,7 @@ func exit() -> void:
 
 ## Connect signals to this state.
 func _connect_signals() -> void:
-	_connect_player_turn_ended()
+	_connect_character_turn_ended()
 	SignalBus.connect(
 			"move_path_requested",
 			Callable(self, "_on_SignalBus_move_path_requested")
@@ -63,18 +63,18 @@ func _connect_signals() -> void:
 	)
 
 
-## Need to keep connection to active player's turn_ended signal in order to
+## Need to keep connection to active character's turn_ended signal in order to
 ## clear out movement details when the turn is ended while in the SelectAction
 ## state.
-func _connect_player_turn_ended():
+func _connect_character_turn_ended():
 	if selector.active_character.is_connected(
 			"turn_ended",
-			Callable(self, "_on_PlayerCharacter_turn_ended")
+			Callable(self, "_on_Character_turn_ended")
 	):
 		return
 	selector.active_character.connect(
 		"turn_ended",
-		Callable(self, "_on_PlayerCharacter_turn_ended")
+		Callable(self, "_on_Character_turn_ended")
 	)
 
 
@@ -160,14 +160,15 @@ func _resolve_joystick_direction(direction: int) -> void:
 			_update_selection(adjacent_tile)
 
 
-## Go to the "WAIT" state when the UI has signaled that a player turn has ended.
-func _on_PlayerCharacter_turn_ended() -> void:
+## Go to the "WAIT" state when the UI has signaled that a character turn has
+## ended.
+func _on_Character_turn_ended() -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	_move_origin_index = -1
 	_movement_ids.clear()
 	selector.active_character.disconnect(
 			"turn_ended",
-			Callable(self, "_on_PlayerCharacter_turn_ended")
+			Callable(self, "_on_Character_turn_ended")
 	)
 	if _state_is_active():
 		state_machine.transition_to(WAIT)

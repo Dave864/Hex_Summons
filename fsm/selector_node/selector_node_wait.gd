@@ -24,8 +24,14 @@ func exit() -> void:
 	)
 
 
-## Set the position of the selector to the player whose turn has started and move
+## Set the active character to be the player whose turn has started and move
 ## to the `SelectMove` state.
 func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
 	selector.active_character = player
+	state_machine.transition_to(SELECT_MOVE)
+
+
+## Move to the `SelectMove` state. The active character should have already
+## been set by the Encounter FSM.
+func _on_SignalBus_summon_turn_started() -> void:
 	state_machine.transition_to(SELECT_MOVE)
