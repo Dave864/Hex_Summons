@@ -3,11 +3,9 @@
 [ext_resource type="Resource" uid="uid://d3mnhvmer2x8m" path="res://actions/action_nodes/Blast/action_stats.tres" id="1_7vr67"]
 [ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/action_stats/spell_stats.gd" id="1_kwgq3"]
 
-
-
 [resource]
 script = ExtResource("1_kwgq3")
 action_stats = ExtResource("1_7vr67")
-earth_req = 1
-earth_cost = 1
+req_earth = 1
+cost_earth = 1
 metadata/_custom_type_script = "uid://bnw4xati435cd"
