@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("1")
 action_stats = ExtResource("2")
-req_fire = 2
+req_fire = 1
 cost_fire = 1

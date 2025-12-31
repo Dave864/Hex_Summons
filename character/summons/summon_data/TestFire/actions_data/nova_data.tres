@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_k6i7m")
 action_stats = ExtResource("1_b4xom")
-req_fire = 1
-cost_fire = 1
+req_fire = 2
+cost_fire = 2
 metadata/_custom_type_script = "uid://bnw4xati435cd"

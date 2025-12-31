@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("1")
 action_stats = ExtResource("2")
-req_earth = 1
-cost_earth = 1
+req_earth = 2
+cost_earth = 2

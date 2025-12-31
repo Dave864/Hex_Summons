@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_kwgq3")
 action_stats = ExtResource("1_7vr67")
-req_earth = 1
-cost_earth = 1
+req_earth = 2
+cost_earth = 2
 metadata/_custom_type_script = "uid://bnw4xati435cd"
