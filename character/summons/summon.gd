@@ -195,9 +195,9 @@ func _load_actions() -> void:
 		var action_data: SpellStats = stats.summon_data.turn_actions[i]
 		var action_name: String = action_data.action_stats.name
 		var action_node: Action = _create_action_node(action_name)
+		$Actions/TurnActions.add_child(action_node)
 		action_node.source_stats = stats
 		action_node.initialize_caster_id(summoner.get_instance_id())
-		$Actions/TurnActions.add_child(action_node)
 		var wisp_cost := WispCost.new(
 				action_data.get_requirements(),
 				action_data.get_costs()
