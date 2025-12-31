@@ -4,27 +4,65 @@ extends Object
 ## character.
 
 
-## The id value of the observer.
+## The data associated with threat level.
+class ThreatData:
+	## The amount of health that has been affected across characters,
+	## which correlates to how much of a target something is.
+	var value: float = MIN_THREAT
+	## Whether the value has been increased recently, indicating that the value
+	## should not decay.
+	var active: bool = false
+	
+	
+	func _init(
+		start_value: float = MIN_THREAT,
+		start_active: bool = false
+	) -> void:
+		value = start_value
+		active = start_active
+
+
+## The minimum amount of threat a character can have.
+const MIN_THREAT: float = 1.0
+## An invalid character id.
+const INVALID_ID: int = -1
+
+## The id of the observer.
 var _observer_id: int = -1
-## Tracks the threat values of tracked characters.
-var _threat_values: Dictionary[int, Dictionary] = {}:
+## Tracks the threat values of characters.
+var _threat_values: Dictionary[int, ThreatData] = {}:
 	get = get_threat_values
+## Tracks the original threat values of a summoner.
+var _summoner_data: Dictionary[String, Variant] = {
+	"id": INVALID_ID,
+	"old_value": 0.0
+}
 ## The rate at which threat decays for tracked characters.
 var _decay_rate: float = 2.0
 
 
+# Initializes the object.
+func _init(observer_id: int, chars: Array[Character], summon: Summon) -> void:
+	_observer_id = observer_id
+	for c: Character in chars:
+		_threat_values[c.get_instance_id()] = ThreatData.new()
+	SignalBus.connect(
+			"health_changed",
+			Callable(self, "_on_SignalBus_health_changed")
+	)
+	summon.connect("activated", Callable(self, "_on_Summon_activated"))
+	summon.connect("deactivated", Callable(self, "_on_Summon_deactivated"))
+
+
 ## Returns the threat values recorded by the observer.
-func get_threat_values() -> Dictionary[int, Dictionary]:
+func get_threat_values() -> Dictionary[int, ThreatData]:
 	return _threat_values
 
 
 ## Add the character to the threat tracker if they are not already present.
 func add_threat(c: Character) -> void:
 	if not _threat_values.has(c.get_instance_id()):
-		_threat_values[c.get_instance_id()] = {
-			"value": 0.0,
-			"active": false
-		}
+		_threat_values[c.get_instance_id()] = ThreatData.new()
 
 
 # Removes the specified character from the threat tracker.
@@ -34,31 +72,20 @@ func remove_threat(c: Character) -> void:
 
 # Decreases the threat rate of all characters that have not acted.
 func decay_threat() -> void:
-	for c_id in _threat_values.keys():
-		if _threat_values[c_id]["active"]:
-			_threat_values[c_id]["value"] /= _decay_rate
+	for c_id: int in _threat_values.keys():
+		if _threat_values[c_id].active:
+			var old_value: float = _threat_values[c_id].value
+			_threat_values[c_id].value = clampf(
+					old_value / _decay_rate,
+					MIN_THREAT,
+					INF
+			)
 
 
 # Resets the active state of all characters.
 func reset_active() -> void:
 	for c_id in _threat_values.keys():
-		_threat_values[c_id]["active"] = false
-
-
-# Initializes the object.
-func _init(observer_id: int, chars: Array[Character]) -> void:
-	_observer_id = observer_id
-	for c: Character in chars:
-		_threat_values[c.get_instance_id()] = {
-			"value": 0.0,
-			"active": false
-		}
-	ErrorUtil.connect_signal(
-			SignalBus,
-			"health_changed",
-			self,
-			"_on_SignalBus_health_changed"
-	)
+		_threat_values[c_id].active = false
 
 
 # Updates the threat value based on the amount of damage or healing a character
@@ -71,11 +98,25 @@ func _on_SignalBus_health_changed(
 	# Don't adjust threat if caster threat is not tracked or if caster is observer
 	if !_threat_values.has(caster_id) or caster_id == _observer_id:
 		return
-	_threat_values[caster_id]["value"] += abs(change_amount)
+	_threat_values[caster_id].value += abs(change_amount)
 	# Double threat if damage is done to this observer
-	if (
-		target_id == _observer_id
-		and change_amount < 0
-	):
-		_threat_values[caster_id]["value"] += abs(change_amount)
-	_threat_values[caster_id]["active"] = true
+	if target_id == _observer_id and change_amount < 0:
+		_threat_values[caster_id].value += abs(change_amount)
+	_threat_values[caster_id].active = true
+
+
+## Saves a copy of the summoner's orignal threat values. Does nothing if the
+## summoner is not in this ThreatTracker.
+func _on_Summon_activated(summoner_id: int) -> void:
+	if not _threat_values.has(summoner_id):
+		return
+	_summoner_data["id"] = summoner_id
+	_summoner_data["old_value"] = _threat_values[summoner_id].value
+
+
+## Restores the summoner's original threat values. Does nothing if no previous
+## values were recorded.
+func _on_Summon_deactivated() -> void:
+	if _summoner_data["id"] == INVALID_ID:
+		return
+	_threat_values[_summoner_data["id"]].value = _summoner_data["old_value"]

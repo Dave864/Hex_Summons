@@ -341,7 +341,7 @@ func _on_Character_zero_health(c: Character) -> void:
 
 ## Updates the intiative tracker display to portray the summon portrait in place
 ## of the summoner.
-func _on_Summon_activated() -> void:
+func _on_Summon_activated(_summoner_id) -> void:
 	_update_display()
 
 

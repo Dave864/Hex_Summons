@@ -362,8 +362,7 @@ func _update_sub_options() -> void:
 
 ## Updates the PartyCharacterStats node of the summoner to show the summon's
 ## details.
-func _on_Summon_activated() -> void:
-	var summoner_id: int = _summon.summoner.get_instance_id()
+func _on_Summon_activated(summoner_id: int) -> void:
 	_party_stat_map[summoner_id].set_summon_stats(_summon)
 
 

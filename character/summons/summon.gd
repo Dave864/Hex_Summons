@@ -10,7 +10,7 @@ extends Character
 
 ## Indicates that the summon has been activated and has been placed in
 ## the encounter.
-signal activated()
+signal activated(summoner_id)
 ## Indicates that the summon has been deactivated and has left the encounter.
 signal deactivated()
 
@@ -227,4 +227,4 @@ func _on_Selector_spawn_action_confirmed(
 	emission_position: Vector3
 ) -> void:
 	load_summon(summon_name, emission_position)
-	emit_signal("activated")
+	emit_signal("activated", summoner.get_instance_id())
