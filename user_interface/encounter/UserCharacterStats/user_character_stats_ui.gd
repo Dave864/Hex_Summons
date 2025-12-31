@@ -20,10 +20,16 @@ func set_player_stats(player: PlayerCharacter) -> void:
 	wisp_pool_ui.set_wisp_pool(player.wisp_pool)
 	_set_character_stats(player)
 	_name_label.text = player.name
-	player.stats.connect(
-			"health_changed",
-			Callable(self, "_on_Character_hp_changed")
-	)
+	if (
+		not player.stats.is_connected(
+				"health_changed",
+				Callable(self, "_on_Character_hp_changed")
+		)
+	):
+		player.stats.connect(
+				"health_changed",
+				Callable(self, "_on_Character_hp_changed")
+		)
 
 
 ## Populate the display elements with the summon character stats.

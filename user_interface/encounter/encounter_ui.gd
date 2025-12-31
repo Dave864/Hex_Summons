@@ -118,7 +118,9 @@ func set_summon_as_focus() -> void:
 	# by the ActivePlayerStats node.
 	_party_stat_map[_summon.summoner.get_instance_id()].hide()
 	_focused_character = _summon
-	_techniques.clear()
+	# Set to empty as to not erase the techniques list of previous focused
+	# player character.
+	_techniques = []
 	_spells = _summon.turn_actions
 	# Disconnect the health_changed signal from the previous focused player
 	# to ensure that the ActivePlayerStats node is only affected by the changes
@@ -169,7 +171,7 @@ func grab_focus_for_sub_option_at_index(index: int) -> void:
 ## Updates the disabled flag for all user options depending on if the active
 ## focused character is a player or summon.
 func set_active_options() -> void:
-	if _summon.is_active() and _summon.summoner == _focused_character:
+	if _summon.is_active() and _summon == _focused_character:
 		_set_active_summon_options()
 	else:
 		_set_active_player_options()
@@ -253,8 +255,8 @@ func _show_focused_character_in_party() -> void:
 	# container, so the partial height should be used to keep the UI display
 	# from being too spread out.
 	party_stats.size.y = PART_PARTY_HEIGHT
-	# Reveal the party stats of any previous focused player as their details
-	# in the ActivePlayerStats node will be overridden by the new_player.
+	# Reveal the party stats of focused character as their details in the
+	# ActivePlayerStats node will be overridden.
 	if _focused_character != null:
 		var character_id: int
 		if _focused_character == _summon and _summon.is_active():
@@ -373,4 +375,6 @@ func _on_Summon_deactivated() -> void:
 		return
 	var summoner: PlayerCharacter = _summon.summoner
 	_party_stat_map[summoner.get_instance_id()].set_player_stats(summoner)
+	# This will allow for the party stats to be properly updated.
+	_focused_character = summoner
 	_summon.summoner = null

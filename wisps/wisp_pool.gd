@@ -16,6 +16,15 @@ var _active_count: Dictionary[Element.Core, int] = {
 }
 
 
+## Checks if there are any active wisps in the pool. Returns true if there are
+## none.
+func empty() -> bool:
+	for element: Element.Core in _active_count.keys():
+		if _active_count[element] > 0:
+			return false
+	return true
+
+
 ## Gets the number of active wisps for the specified element.
 func active_element_count(element: Element.Type) -> int:
 	if element == Element.Type.LIGHT:
