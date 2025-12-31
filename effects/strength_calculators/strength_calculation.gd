@@ -14,7 +14,7 @@ func base_strength(
 ## Determines the effectiveness of an action on a given target.
 func efficacy(
 	source_stats: AllStats,
-	target_stats: CharacterStatModifiers,
+	target_stats: StatModifiers,
 	action_potency: Potency
 ) -> float:
 	var b_str: float = base_strength(source_stats, action_potency)

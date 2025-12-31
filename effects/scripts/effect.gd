@@ -38,13 +38,13 @@ func get_aspects() -> Array[EffectAspect]:
 
 ## Initializes the action potency of each aspect to the referenced potency.
 func _set_aspects_action_potency() -> void:
-	for a in _aspects:
+	for a: EffectAspect in _aspects:
 		a.set_action_potency(_action_potency)
 
 
 ## Initializes the source stats of each aspect to the referenced stats.
 func _set_aspects_source_stats() -> void:
-	for a in _aspects:
+	for a: EffectAspect in _aspects:
 		a.set_source_stats(_source_stats)
 
 
