@@ -87,9 +87,9 @@ func exit() -> void:
 ## These signals are used by other states and will be disconnected to avoid
 ## unintended behavior.
 func _connect_signals() -> void:
-	encounter_ui.get_focused_player().connect(
+	encounter_ui.get_focused_character().connect(
 			"turn_ended",
-			Callable(self, "_on_PlayerCharacter_turn_ended")
+			Callable(self, "_on_Character_turn_ended")
 	)
 	encounter_ui.movement_button.connect(
 			"pressed",
@@ -131,9 +131,9 @@ func _connect_signals() -> void:
 
 ## Disconnect the signals connected to this state.
 func _disconnect_signals() -> void:
-	encounter_ui.get_focused_player().disconnect(
+	encounter_ui.get_focused_character().disconnect(
 			"turn_ended",
-			Callable(self, "_on_PlayerCharacter_turn_ended")
+			Callable(self, "_on_Character_turn_ended")
 	)
 	encounter_ui.movement_button.disconnect(
 			"pressed",
@@ -178,7 +178,7 @@ func _disconnect_signals() -> void:
 func _end_selected() -> void:
 	encounter_ui.end_button.call_deferred("grab_focus")
 	encounter_ui.reset_all_options()
-	encounter_ui.get_focused_player().emit_turn_ended()
+	encounter_ui.get_focused_character().emit_turn_ended()
 
 
 ## Handles the behavior for when the movement button has been selected. The
@@ -251,8 +251,8 @@ func _on_EndButton_pressed() -> void:
 	_end_selected()
 
 
-## Go to the WAIT state when the player turn has ended.
-func _on_PlayerCharacter_turn_ended() -> void:
+## Go to the WAIT state when the character turn has ended.
+func _on_Character_turn_ended() -> void:
 	state_machine.transition_to(WAIT)
 
 
@@ -272,7 +272,7 @@ func _on_SignalBus_spawn_action_selected(
 
 ## Signal that a selected action has been executed. Hide the options UI elements.
 func _on_SignalBus_character_action_executed(
-	_player: PlayerCharacter,
+	_character: Character,
 	_action: Action,
 	_targets: Array
 ) -> void:

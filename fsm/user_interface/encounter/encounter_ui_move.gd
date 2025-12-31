@@ -163,7 +163,7 @@ func _item_selected() -> void:
 ## is signaled to have ended, all options are reset, and the state machine goes
 ## to the WAIT state.
 func _end_selected() -> void:
-	encounter_ui.get_focused_player().emit_turn_ended()
+	encounter_ui.get_focused_character().emit_turn_ended()
 	encounter_ui.reset_all_options()
 	state_machine.transition_to(WAIT)
 

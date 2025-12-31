@@ -44,7 +44,7 @@ func _ready_connect_signals() -> void:
 func _on_SignalBus_player_turn_started(character: PlayerCharacter) -> void:
 	if not _state_is_active():
 		return
-	encounter_ui.set_focused_player(character)
+	encounter_ui.set_focused_character(character)
 	state_machine.transition_to(MOVE)
 
 
