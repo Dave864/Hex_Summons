@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxny3bidwcnmv"]
+[gd_scene load_steps=7 format=3 uid="uid://dxny3bidwcnmv"]
 
 [ext_resource type="Script" uid="uid://dm50vglsj11ig" path="res://encounter/camera/encounter_camera.gd" id="1"]
 [ext_resource type="Script" uid="uid://c3u8o13e13nue" path="res://fsm/encounter/camera/encounter_camera_normalize.gd" id="2"]
+[ext_resource type="Script" uid="uid://ctmpg6vw5ri8i" path="res://encounter/camera/tracking_point.gd" id="2_ykgfb"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="4"]
 [ext_resource type="Script" uid="uid://bsbs2o6tnkgem" path="res://fsm/encounter/camera/encounter_camera_reset.gd" id="5"]
 [ext_resource type="Script" uid="uid://8ingtrtxv6m1" path="res://fsm/encounter/camera/encounter_camera_pan.gd" id="6"]
@@ -13,6 +14,7 @@ joystick_lateral_pan_speed = 200.0
 
 [node name="FocusPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.6087603, 0.7933518, 0, -0.7933518, 0.6087603, 0, 0, 0)
+script = ExtResource("2_ykgfb")
 
 [node name="Camera3D" type="Camera3D" parent="FocusPoint"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, -4.76837e-07, 15)

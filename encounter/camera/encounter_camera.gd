@@ -40,7 +40,8 @@ const HEX_VERTEX_RADIANS: Array[float] = [
 
 ## The midpoint between the vertical rotation bounds. Considered the default
 ## rotation for the camera.
-var _vert_pan_midpoint: float = _panning_vertical_midpoint(): get = get_vert_pan_midpoint
+var _vert_pan_midpoint: float = _panning_vertical_midpoint():
+	get = get_vert_pan_midpoint
 ## The index position of a hex tile that is considered to be the top, relative
 ## to the camera position.
 ##    0
@@ -48,12 +49,24 @@ var _vert_pan_midpoint: float = _panning_vertical_midpoint(): get = get_vert_pan
 ##  |   |
 ## 4 \ / 2
 ##    3
-var _relative_top_vertex: int = 0: get = get_relative_top_vertex, set = set_relative_top_vertex
+var _relative_top_vertex: int = 0:
+	get = get_relative_top_vertex,
+	set = set_relative_top_vertex
 ## The default orientation of the camera
 var _default_orientation: Vector3
 
+## The point the camera looks at.
 @onready var _focus_pt: Marker3D = $FocusPoint
+## The camera node.
 @onready var _camera: Camera3D = $FocusPoint/Camera3D
+
+
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	_check_for_required_parameters()
+	_focus_pt.rotation = Vector3(deg_to_rad(_vert_pan_midpoint), 0.0, 0.0)
+	_default_orientation = _focus_pt.rotation
+	set_camera_distance(default_distance)
 
 
 ## Sets the value of the default distance.
@@ -154,12 +167,9 @@ func set_camera_distance(distance: float) -> void:
 func interpolate_camera_rotation(
 	original_o: Vector3,
 	weight: float,
-	target_o: Vector3 = _default_orientation
+	target_orientation: Vector3 = _default_orientation
 ):
-	_focus_pt.rotation = original_o.lerp(
-			target_o,
-			weight
-	)
+	_focus_pt.rotation = original_o.lerp(target_orientation, weight)
 
 
 ## Determines which radian rotation is closest to the camera's current rotation.
@@ -182,14 +192,6 @@ func get_closest_vertex_radian() -> float:
 			closest_radian = next_v_radian
 			set_relative_top_vertex(next_v)
 	return closest_radian
-
-
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	_check_for_required_parameters()
-	_focus_pt.rotation = Vector3(deg_to_rad(_vert_pan_midpoint), 0.0, 0.0)
-	_default_orientation = _focus_pt.rotation
-	set_camera_distance(default_distance)
 
 
 ## Calculates the midpoint between the vertical bounds.
@@ -225,7 +227,10 @@ func _check_for_required_parameters() -> void:
 			_focus_pt != null,
 			ErrorUtil.missing_required_parameter(name, "FocusPoint")
 	)
-	assert(_camera != null, ErrorUtil.missing_required_parameter(name, "Camera3D"))
+	assert(
+			_camera != null,
+			ErrorUtil.missing_required_parameter(name, "Camera3D")
+	)
 	# Check vertical panning bounds.
 	assert(
 			vert_panning_l_bound < vert_panning_u_bound,
@@ -236,8 +241,12 @@ func _check_for_required_parameters() -> void:
 			_camera.projection == Camera3D.PROJECTION_ORTHOGONAL,
 			"EncounterCamera projection is not Orthogonal."
 	)
+	var camera_bound_to_z_axis: bool = (
+		is_zero_approx(_camera.position.x)
+		and is_zero_approx(_camera.position.y)
+	)
 	assert(
-			is_zero_approx(_camera.position.x) and is_zero_approx(_camera.position.y),
+			camera_bound_to_z_axis,
 			"EncounterCamera camera distance position not bound along z-axis."
 	)
 	assert(
