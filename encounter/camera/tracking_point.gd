@@ -6,12 +6,8 @@ extends Marker3D
 ## or decaying, where the point slows down as it reached the destination.
 
 
-## The lowest possible value for speed.
-const MIN_SPEED := 1.0
-## The highest possible value for speed.
-const MAX_SPEED := 100.0
-## The increment that speed changes.
-const SPEED_STEP := 0.1
+## Indicates that this point has reached a new point.
+signal new_point_reached()
 
 ## The different types of movement.
 enum MovementType {
@@ -20,10 +16,20 @@ enum MovementType {
 	DECAYING, ## The speed decreases as the destination nears.
 }
 
+## The lowest possible value for speed.
+const MIN_SPEED := 1.0
+## The highest possible value for speed.
+const MAX_SPEED := 100.0
+## The increment that speed changes.
+const SPEED_STEP := 0.1
+
 ## How the point should move towards the destination.
 @export var movement_type := MovementType.LINEAR
+## The maximum distance away from the destintation the point can be before
+## stopping a decaying move pattern.
+@export_range(0.0001, 0.01, 0.0001, "exp") var decay_cutoff: float = 0.001
 ## The movement speed of the point.
-@export_range(MIN_SPEED, MAX_SPEED, SPEED_STEP, "exp") var speed: float:
+@export_range(MIN_SPEED, MAX_SPEED, SPEED_STEP, "exp") var speed: float = 10.0:
 	set(value):
 		speed = value
 		_decay_rate = (speed - MIN_SPEED + SPEED_STEP) / (MAX_SPEED - MIN_SPEED)
@@ -73,6 +79,7 @@ func update_destination(new_destination: Vector3) -> void:
 func _snap_movement() -> void:
 	position = _destination
 	_destination_reached = true
+	emit_signal("new_point_reached")
 	_start_point = position
 
 
@@ -88,9 +95,14 @@ func _linear_movement(delta: float) -> void:
 		else updated_position
 	)
 	_destination_reached = position.is_equal_approx(_destination)
+	if _destination_reached:
+		emit_signal("new_point_reached")
 
 
 ## The logic for handling decaying movement.
 func _decaying_movement() -> void:
 	position = position.lerp(_destination, _decay_rate)
-	_destination_reached = position.is_equal_approx(_destination)
+	var distance: float = position.distance_squared_to(_destination)
+	if distance <= decay_cutoff:
+		emit_signal("new_point_reached")
+		_destination_reached = true

@@ -29,6 +29,7 @@ func enter(_msg := {}) -> void:
 	_player_waiting = false
 	_active_char = enc.get_current_character()
 	_connect_signals()
+	await enc.camera.move_focus_decay(_active_char.position)
 	SignalBus.emit_player_turn_started(_active_char)
 
 
@@ -61,14 +62,6 @@ func _connect_signals() -> void:
 	)
 
 
-## Connect signals that will persist throughout the life of this state.
-func _ready_connect_signals() -> void:
-	enc.ui.connect(
-			"is_waiting",
-			Callable(self, "_on_EncounterUI_is_waiting")
-	)
-
-
 ## Disconnect the signals connected to this state.
 func _disconnect_signals() -> void:
 	_active_char.disconnect(
@@ -97,12 +90,10 @@ func _on_PlayerCharacter_is_waiting() -> void:
 func _on_PlayerCharacter_turn_ended() -> void:
 	enc.hex_map.selection_tracker.clear_highlights()
 	enc.hex_map.selection_tracker.clear_selector_highlights()
-	if not _ui_waiting:
-		await enc.ui.is_waiting
 	if not _player_waiting:
 		await _active_char.is_waiting
 	var next_character: Character = enc.get_next_character()
-	await enc.progress_initiative()
+	enc.progress_initiative()
 	if next_character is PlayerCharacter:
 		if enc.summon.is_active() and enc.summon.summoner == next_character:
 			state_machine.transition_to(SUMMON_TURN)

@@ -56,7 +56,7 @@ var _relative_top_vertex: int = 0:
 var _default_orientation: Vector3
 
 ## The point the camera looks at.
-@onready var _focus_pt: Marker3D = $FocusPoint
+@onready var _focus_pt: TrackingPoint = $FocusPoint
 ## The camera node.
 @onready var _camera: Camera3D = $FocusPoint/Camera3D
 
@@ -192,6 +192,27 @@ func get_closest_vertex_radian() -> float:
 			closest_radian = next_v_radian
 			set_relative_top_vertex(next_v)
 	return closest_radian
+
+
+## Snap the focus point.
+func move_focus_snap(new_focus_point: Vector3) -> void:
+	_focus_pt.movement_type = TrackingPoint.MovementType.SNAP
+	_focus_pt.update_destination(new_focus_point)
+	await _focus_pt.new_point_reached
+
+
+## Move the focus point using its linear speed.
+func move_focus_lineaer(new_focus_point: Vector3) -> void:
+	_focus_pt.movement_type = TrackingPoint.MovementType.LINEAR
+	_focus_pt.update_destination(new_focus_point)
+	await _focus_pt.new_point_reached
+
+
+## Move the focus point using its decaying speed.
+func move_focus_decay(new_focus_point: Vector3) -> void:
+	_focus_pt.movement_type = TrackingPoint.MovementType.DECAYING
+	_focus_pt.update_destination(new_focus_point)
+	await _focus_pt.new_point_reached
 
 
 ## Calculates the midpoint between the vertical bounds.

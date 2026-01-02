@@ -6,6 +6,8 @@ extends Node
 ## Indicates that the selector has confirmed the details of a spawn action for
 ## a summon character.
 signal spawn_action_confirmed(name, emission_position)
+## Indicates that the encounter camera should focus on a new point.
+signal new_focus_point(new_position)
 
 ## The MapTile that was last passed over.
 var tile_hovered: MapTile = null
@@ -46,6 +48,12 @@ func emit_spawn_action_confirmed(
 	emission_position: Vector3
 ) -> void:
 	emit_signal("spawn_action_confirmed", summon_name, emission_position)
+
+
+## Emits the camera_reposition signal with the position the encounter camera
+## should point to.
+func emit_new_focus_point(new_position: Vector3) -> void:
+	emit_signal("new_focus_point", new_position)
 
 
 ## Gets the tile that the mouse last hovered over.

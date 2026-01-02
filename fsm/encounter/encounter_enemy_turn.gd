@@ -20,6 +20,7 @@ var _active_char: EnemyCharacter = null
 func enter(_msg := {}) -> void:
 	_active_char = enc.get_current_character()
 	_connect_signals()
+	await enc.camera.move_focus_decay(_active_char.position)
 	SignalBus.emit_enemy_turn_started(_active_char)
 
 
@@ -59,7 +60,7 @@ func _disconnect_signals() -> void:
 func _on_EnemyCharacter_turn_ended() -> void:
 	await _active_char.is_waiting
 	var next_character: Character = enc.get_next_character()
-	await enc.progress_initiative()
+	enc.progress_initiative()
 	if next_character is PlayerCharacter:
 		if enc.summon.is_active() and enc.summon.summoner == next_character:
 			state_machine.transition_to(SUMMON_TURN)

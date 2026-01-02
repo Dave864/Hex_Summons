@@ -129,9 +129,8 @@ func populate_initiative(characters: Array[Character]) -> void:
 	_update_display()
 
 
-## Updates the initiative track by one. Returns true when completed, allowing
-## for the use of the 'await' keyword when called.
-func progress_initiative() -> bool:
+## Updates the initiative track by one.
+func progress_initiative() -> void:
 	_current_turn = _get_next_init_step()
 	# Initiative goes to the next round if _current_turn is negative.
 	if _current_turn < 0:
@@ -145,7 +144,6 @@ func progress_initiative() -> bool:
 	ap.play("shift")
 	_update_display()
 	await ap.animation_finished
-	return true
 
 
 ## Called during the "shift" animation. Sets the initiative labels to the

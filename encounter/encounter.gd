@@ -24,6 +24,8 @@ var _player_template: PackedScene = preload(
 @onready var selector: Selector = $Selector
 ## Reference to the UI elements for the encounter.
 @onready var ui: EncounterUI = $EncounterUI
+## Reference to the camera.
+@onready var camera: EncounterCamera = $EncounterCamera
 
 
 ## Called when the node enters the scene tree for the first time.

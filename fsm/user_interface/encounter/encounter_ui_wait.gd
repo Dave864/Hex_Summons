@@ -19,7 +19,6 @@ func enter(_msg := {}) -> void:
 		"player_turn_started",
 		Callable(self, "_on_SignalBus_player_turn_started")
 	)
-	encounter_ui.emit_is_waiting()
 
 
 ## Called by the state machine before changing the active state.

@@ -9,9 +9,6 @@ extends Control
 ## and end.
 
 
-## Indicates that the UI is waiting to be activated.
-signal is_waiting()
-
 ## The maximumum number of players that can be in an encounter.
 const MAX_PARTY_SIZE: int = 4
 ## The width of the PartyStats container node.
@@ -70,11 +67,6 @@ var _summon: Summon = null:
 @onready var summon_button: PlayerOptionButton = $Options/SummonButton
 @onready var item_button: PlayerOptionButton = $Options/ItemButton
 @onready var end_button: PlayerOptionButton = $Options/EndButton
-
-
-## Emits the is_waiting signal.
-func emit_is_waiting() -> void:
-	emit_signal("is_waiting")
 
 
 ## Sets the selection flag.

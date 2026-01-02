@@ -13,6 +13,12 @@ var _offset: float = 0.0
 var _path_length: float = 0.0
 
 
+# Called when a new instance of this object is created.
+func _init() -> void:
+	_offset = 0.0
+	_path_length = 0.0
+
+
 ## Updates the offset amount by the given value.
 func move_offset(offset_update: float) -> void:
 	if get_point_count() <= 1:
@@ -106,12 +112,6 @@ func reset_path() -> void:
 	_offset = 0.0
 	_path_length = 0.0
 	clear_points()
-
-
-# Called when a new instance of this object is created.
-func _init() -> void:
-	_offset = 0.0
-	_path_length = 0.0
 
 
 # Validates that a provided path has at least one point.
