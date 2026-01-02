@@ -53,6 +53,7 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 		_orient_to_closest_target()
 	else:
 		_place_closest_to_target()
+	selector.emit_new_focus_point(_action.get_emission_pos())
 
 
 ## Called by the state machine before changing the active state. Use this 
@@ -121,6 +122,7 @@ func _update_selection(map_tile: MapTile) -> void:
 		if InputController.get_source() == InputController.Source.GAMEPAD:
 			_orient_emission_to_tile(map_tile)
 	elif _is_target_tile(map_tile):
+		selector.emit_new_focus_point(map_tile.get_character_position())
 		selector.tile_hovered = map_tile
 		_action.set_emission_map_index(map_tile.map_coordinate.get_tile_index())
 		_action.set_emission_pos(map_tile.get_character_position())
@@ -255,6 +257,7 @@ func _place_closest_to_tile(tile_index: int) -> void:
 	selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
 	_action.set_emission_map_index(closest_index)
 	_action.set_emission_pos(selector.tile_hovered.get_character_position())
+	selector.emit_new_focus_point(selector.tile_hovered.get_character_position())
 	_highlight_effect_range()
 
 

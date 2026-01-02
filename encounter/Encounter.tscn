@@ -67,4 +67,5 @@ script = ExtResource("11")
 
 [connection signal="activated" from="Summon" to="EncounterUI" method="_on_Summon_activated"]
 [connection signal="deactivated" from="Summon" to="EncounterUI" method="_on_Summon_deactivated"]
+[connection signal="new_focus_point" from="Selector" to="EncounterCamera" method="_on_Selector_new_focus_point"]
 [connection signal="spawn_action_confirmed" from="Selector" to="Summon" method="_on_Selector_spawn_action_confirmed"]

@@ -274,3 +274,8 @@ func _check_for_required_parameters() -> void:
 			_camera.rotation.is_zero_approx(),
 			"EncounterCamera camera rotation is not zero"
 	)
+
+
+## Moves the focus point to the position indicated by the selector.
+func _on_Selector_new_focus_point(new_position: Vector3) -> void:
+	move_focus_lineaer(new_position)

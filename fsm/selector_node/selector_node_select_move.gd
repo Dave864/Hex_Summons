@@ -25,6 +25,10 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	)
 	if _move_origin_index < 0:
 		_move_origin_index = character_index
+	var move_origin_tile: MapTile = selector.hex_map.get_tile_at(
+			_move_origin_index
+	)
+	selector.emit_new_focus_point(move_origin_tile.get_character_position())
 	_determine_movement_ids()
 	_highlight_movement_range(character_index)
 	selector.set_update_selection_func(_update_selection_ref)
