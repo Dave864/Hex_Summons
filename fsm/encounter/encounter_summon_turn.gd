@@ -10,9 +10,6 @@ extends EncounterState
 ## player characters or all enemy characters are defeated.
 
 
-## Flag that tracks if the UI is waiting. Used when changing to another
-## character's turn.
-var _ui_waiting: bool = false
 ## Flag that tracks if the summon is waiting. Used when changing to another
 ## character's turn.
 var _summon_waiting: bool = false
@@ -21,8 +18,6 @@ var _summon_waiting: bool = false
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	# UI is active when summon turn starts.
-	_ui_waiting = false
 	_summon_waiting = false
 	enc.selector.active_character = enc.summon
 	await enc.camera.move_focus_decay(enc.summon.position)
@@ -47,11 +42,6 @@ func _ready_connect_signals() -> void:
 			"turn_ended",
 			Callable(self, "_on_Summon_turn_ended")
 	)
-
-
-## Marks the UI as waiting.
-func _on_EncounterUI_is_waiting() -> void:
-	_ui_waiting = true
 
 
 ## Marks the player as waiting.

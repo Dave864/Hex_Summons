@@ -13,9 +13,6 @@ extends EncounterState
 
 ## The player character currently active
 var _active_char: PlayerCharacter = null
-## Flag that tracks if the UI is waiting. Used when changing to another
-## character's turn.
-var _ui_waiting: bool = false
 ## Flag that tracks if the player is waiting. Used when changing to another
 ## character's turn.
 var _player_waiting: bool = false
@@ -24,8 +21,6 @@ var _player_waiting: bool = false
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	# UI is active when player turn starts.
-	_ui_waiting = false
 	_player_waiting = false
 	_active_char = enc.get_current_character()
 	_connect_signals()
@@ -73,10 +68,6 @@ func _disconnect_signals() -> void:
 			Callable(self, "_on_PlayerCharacter_turn_ended")
 	)
 
-
-## Marks the UI as waiting.
-func _on_EncounterUI_is_waiting() -> void:
-	_ui_waiting = true
 
 
 ## Marks the player as waiting.
