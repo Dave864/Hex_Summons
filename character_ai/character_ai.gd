@@ -113,7 +113,7 @@ func determine_action_chain() -> Array[Array]:
 				[MOVE, details[0]]
 			]
 		else:
-			print("execute acton {0}".format([action.name]))
+			print("{0} action selected".format([action.name]))
 			return [
 				[ACTION, action, details[1], _possible_targets],
 				[MOVE, details[0]]

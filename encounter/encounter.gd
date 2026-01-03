@@ -83,11 +83,20 @@ func _load_enemies() -> void:
 		enemies.append(enemy)
 	
 	var e_index: int = 0
-	for e: EnemyCharacter in enemies:
-		var ai_node: CharacterAI = e.get_node("CharacterAI")
-		ai_node.connect_encounter_details(hex_map, e, players, enemies, summon)
-		ui.track_enemy(e)
-		hex_map.place_character_at_tile(e, hex_map.enemy_start_tiles[e_index])
+	for enemy: EnemyCharacter in enemies:
+		var ai_node: CharacterAI = enemy.get_node("CharacterAI")
+		ai_node.connect_encounter_details(
+				hex_map,
+				enemy,
+				players,
+				enemies,
+				summon
+		)
+		ui.track_enemy(enemy)
+		hex_map.place_character_at_tile(
+				enemy,
+				hex_map.enemy_start_tiles[e_index]
+		)
 		e_index += 1
 
 
