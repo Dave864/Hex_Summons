@@ -27,6 +27,10 @@ func update(delta: float) -> void:
 	if _movement_active:
 		_weight += delta * Constants.MOVE_SPEED
 		ec.hm_move_path.move_offset(_weight)
+		SignalBus.emit_position_camera_focus(
+				ec.position,
+				TrackingPoint.MovementType.SNAP
+		)
 	# This is to prevent the character from being moved to an undesired location
 	# after the movement_ended signal has been caught.
 	if _movement_active:

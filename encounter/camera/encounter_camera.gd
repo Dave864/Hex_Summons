@@ -63,6 +63,10 @@ var _default_orientation: Vector3
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
+	SignalBus.connect(
+			"position_camera_focus",
+			Callable(self, "_on_SignalBus_position_camera_focus")
+	)
 	_check_for_required_parameters()
 	_focus_pt.rotation = Vector3(deg_to_rad(_vert_pan_midpoint), 0.0, 0.0)
 	_default_orientation = _focus_pt.rotation
@@ -197,22 +201,26 @@ func get_closest_vertex_radian() -> float:
 ## Snap the focus point.
 func move_focus_snap(new_focus_point: Vector3) -> void:
 	_focus_pt.movement_type = TrackingPoint.MovementType.SNAP
-	_focus_pt.update_destination(new_focus_point)
-	await _focus_pt.new_point_reached
+	await move_focus(new_focus_point)
 
 
 ## Move the focus point using its linear speed.
-func move_focus_lineaer(new_focus_point: Vector3) -> void:
+func move_focus_linear(new_focus_point: Vector3) -> void:
 	_focus_pt.movement_type = TrackingPoint.MovementType.LINEAR
-	_focus_pt.update_destination(new_focus_point)
-	await _focus_pt.new_point_reached
+	await move_focus(new_focus_point)
 
 
 ## Move the focus point using its decaying speed.
 func move_focus_decay(new_focus_point: Vector3) -> void:
 	_focus_pt.movement_type = TrackingPoint.MovementType.DECAYING
+	await move_focus(new_focus_point)
+
+
+## Move the focus point using its current speed settings.
+func move_focus(new_focus_point: Vector3) -> void:
 	_focus_pt.update_destination(new_focus_point)
-	await _focus_pt.new_point_reached
+	if _focus_pt.is_moving():
+		await _focus_pt.new_point_reached
 
 
 ## Calculates the midpoint between the vertical bounds.
@@ -278,4 +286,19 @@ func _check_for_required_parameters() -> void:
 
 ## Moves the focus point to the position indicated by the selector.
 func _on_Selector_new_focus_point(new_position: Vector3) -> void:
-	move_focus_lineaer(new_position)
+	move_focus_linear(new_position)
+
+
+## MOves the focus point to the specified position in the specified movement
+## pattern.
+func _on_SignalBus_position_camera_focus(
+	new_position: Vector3,
+	movement_type: TrackingPoint.MovementType
+) -> void:
+	match movement_type:
+		TrackingPoint.MovementType.SNAP:
+			move_focus_snap(new_position)
+		TrackingPoint.MovementType.LINEAR:
+			move_focus_linear(new_position)
+		TrackingPoint.MovementType.DECAYING:
+			move_focus_decay(new_position)

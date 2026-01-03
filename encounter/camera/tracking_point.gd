@@ -67,6 +67,11 @@ func _process(delta: float) -> void:
 			pass
 
 
+## Returns if the point is moving.
+func is_moving() -> bool:
+	return not _destination_reached
+
+
 ## Changes the destination.
 func update_destination(new_destination: Vector3) -> void:
 	_destination = new_destination
@@ -80,7 +85,6 @@ func _snap_movement() -> void:
 	position = _destination
 	_destination_reached = true
 	emit_signal("new_point_reached")
-	_start_point = position
 
 
 ## The logic for handling linear movement.
@@ -104,5 +108,5 @@ func _decaying_movement() -> void:
 	position = position.lerp(_destination, _decay_rate)
 	var distance: float = position.distance_squared_to(_destination)
 	if distance <= decay_cutoff:
-		emit_signal("new_point_reached")
 		_destination_reached = true
+		emit_signal("new_point_reached")

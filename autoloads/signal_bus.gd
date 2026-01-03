@@ -28,8 +28,10 @@ signal selector_paused()
 signal action_selector_required(action)
 ## Indicates that a move path needs to be created.
 signal move_path_requested()
-## Indicates that a move path has been created,
+## Indicates that a move path has been created.
 signal move_path_created(move_path)
+## Indicates that the encounter camera should focus on a specific position.
+signal position_camera_focus(position, movement_type)
 # Encounter threat update signals
 ## Indicates that health has changed for a given target as a result of some caster.
 signal health_changed(caster_id, target_id, change_value)
@@ -88,6 +90,13 @@ func emit_move_path_requested() -> void:
 
 func emit_move_path_created(move_path: PackedVector3Array) -> void:
 	emit_signal("move_path_created", move_path)
+
+
+func emit_position_camera_focus(
+	position: Vector3,
+	movement_type: TrackingPoint.MovementType
+) -> void:
+	emit_signal("position_camera_focus", position, movement_type)
 
 
 func emit_health_changed(
