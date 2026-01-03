@@ -3,9 +3,9 @@ extends Node
 ## Describes the details of an action.
 
 
+## Name of node that holds the action effects.
 const EFFECTS: String = "Effects"
 
-@export var hit_box_ref: NodePath = NodePath("")
 ## The stats associated with this action.
 @export var stats: ActionStats = null
 
@@ -13,7 +13,7 @@ const EFFECTS: String = "Effects"
 var source_stats: StatModifiers = null:
 	set(new_source):
 		source_stats = new_source
-		# Updates the stats references of the effects to be the same as the
+		# UPdates the stats references of the effects to be the same as the
 		# action.
 		for effect: Effect in _effects:
 			effect.set_source_stats(source_stats)
@@ -38,7 +38,9 @@ var _emission_direction: int:
 ## The animation player for this node.
 @onready var ani_player: AnimationPlayer = $AnimationPlayer
 ## The hit box object.
-@onready var _hit_box: ActionHitBox = get_node(hit_box_ref)
+@onready var _hit_box: ActionHitBox = $ActionHitBox
+## The point the camera should focus on when the action is executing.
+@onready var _camera_focus_point: Marker3D = $ActionHitBox/CameraFocusPoint
 
 
 func _ready() -> void:
@@ -140,12 +142,35 @@ func initialize_caster_id(caster_id: int) -> void:
 	_hit_box.caster_id = caster_id
 
 
+## Signals that the encounter camera should snap to the focus position. Used
+## as part of the "execute" animation.
+func _signal_focus_camera_snap() -> void:
+	SignalBus.emit_position_camera_focus(
+			_camera_focus_point.global_position,
+			TrackingPoint.MovementType.SNAP
+	)
+
+
+## Signals that the encounter camera should slide to the focus position. Used
+## as part of the "execute" animation.
+func _signal_focus_camera_linear() -> void:
+	SignalBus.emit_position_camera_focus(
+			_camera_focus_point.global_position,
+			TrackingPoint.MovementType.LINEAR
+	)
+
+
+## Signals that the encounter camera should gently slide to the focus position.
+## Used as part of the "execute" animation.
+func _signal_focus_camera_decay() -> void:
+	SignalBus.emit_position_camera_focus(
+			_camera_focus_point.global_position,
+			TrackingPoint.MovementType.DECAYING
+	)
+
+
 ## Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
-	assert(
-			hit_box_ref != null,
-			"Action {0} missing defined hit box reference.".format([name])
-	)
 	assert(
 			stats != null,
 			"Action {0} missing stats.".format([name])

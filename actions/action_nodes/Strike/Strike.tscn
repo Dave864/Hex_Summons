@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://c72e1ocpd832p" path="res://effects/Damage/Damage.tscn" id="7"]
 [ext_resource type="Material" path="res://actions/test_shader_material.tres" id="8"]
 
-
 [sub_resource type="SphereShape3D" id="4"]
 
 [sub_resource type="SphereMesh" id="7"]
@@ -99,7 +98,6 @@ _data = {
 
 [node name="Strike" type="Node"]
 script = ExtResource("3")
-hit_box_ref = NodePath("ActionHitBox")
 stats = ExtResource("2")
 
 [node name="ActionHitBox" type="Area3D" parent="."]
@@ -119,6 +117,8 @@ disabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.73)
 visible = false
 mesh = SubResource("7")
+
+[node name="CameraFocusPoint" type="Marker3D" parent="ActionHitBox"]
 
 [node name="Effects" type="Node" parent="."]
 

@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://c72e1ocpd832p" path="res://effects/Damage/Damage.tscn" id="6"]
 [ext_resource type="Resource" uid="uid://df2o2b4j5x8vm" path="res://actions/action_nodes/Action/action_stats.tres" id="7"]
 
-
 [sub_resource type="SphereShape3D" id="1"]
 
 [sub_resource type="Animation" id="2"]
@@ -18,7 +17,6 @@ _data = {
 
 [node name="Action" type="Node"]
 script = ExtResource("3")
-hit_box_ref = NodePath("ActionHitBox")
 stats = ExtResource("7")
 
 [node name="ActionHitBox" type="Area3D" parent="."]
@@ -33,6 +31,8 @@ effects_ref = NodePath("../Effects")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 shape = SubResource("1")
 disabled = true
+
+[node name="CameraFocusPoint" type="Marker3D" parent="ActionHitBox"]
 
 [node name="Effects" type="Node" parent="."]
 
