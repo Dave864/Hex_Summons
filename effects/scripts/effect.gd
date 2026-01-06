@@ -4,10 +4,10 @@ extends Node
 
 
 ## Reference to the potency details of an action.
-var _action_potency: Potency = null: set = set_action_potency
+var _action_potency: Potency = null
 ## The stats of the entity that will apply this effect.
-var _source_stats: StatModifiers = null: set = set_source_stats
-var _aspects: Array[EffectAspect]: get = get_aspects
+var _source_stats: StatModifiers = null
+var _aspects: Array[EffectAspect]
 
 
 ## Called when the node enters the scene tree for the first time.
