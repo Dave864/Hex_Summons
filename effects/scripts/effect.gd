@@ -5,8 +5,9 @@ extends Node
 
 ## Reference to the potency details of an action.
 var _action_potency: Potency = null
-## The stats of the entity that will apply this effect.
+## The stats of the character that will apply this effect.
 var _source_stats: StatModifiers = null
+## The ways that this effect impacts a target.
 var _aspects: Array[EffectAspect]
 
 

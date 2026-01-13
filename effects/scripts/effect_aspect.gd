@@ -29,7 +29,7 @@ enum ResEffect {
 @export var resisted: bool = true
 ## Indicates if resistance affects aspect strength or duration.
 @export var resistance_effect: ResEffect = ResEffect.STRENGTH
-## The maximum number of turns this effect can last afier application. A value
+## The maximum number of turns this effect can last after application. A value
 ## of zero means the effect is applied immediately.
 @export_range(0, 100) var max_turn_duration: int = 0
 
