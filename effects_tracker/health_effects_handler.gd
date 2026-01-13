@@ -28,20 +28,21 @@ func progress_duration(turn_step: int = 1) -> void:
 
 ## Applies the effects currently active on the character.
 func process_effects() -> void:
-	_flat_change_bus.process_all_effects(_c_stats)
-	_percent_change_bus.process_all_effects(_c_stats)
+	var f_change: float = _flat_change_bus.process_all_effects(_c_stats)
+	var p_change: float = _percent_change_bus.process_all_effects(_c_stats)
+	_c_stats.set_cur_health(int(f_change + p_change))
 
 
 ## Adds health changing effects to this handler. Processes immediate effects
-func apply_effects(
-	effects: Array[Effect],
-	caster_id: int,
-	target_id: int
-) -> void:
+func apply_effects(effects: Array[Effect], caster_id: int) -> void:
 	for effect: Effect in effects:
 		_flat_change_bus.add_effect(effect)
 		_percent_change_bus.add_effect(effect)
 	var f_change: float = _flat_change_bus.process_immediate_effects(_c_stats)
 	var p_change: float = _percent_change_bus.process_immediate_effects(_c_stats)
 	_c_stats.set_cur_health(int(f_change + p_change))
-	SignalBus.emit_health_changed(caster_id, target_id, f_change + p_change)
+	SignalBus.emit_health_changed(
+			caster_id,
+			_c_stats.character_id,
+			f_change + p_change
+	)

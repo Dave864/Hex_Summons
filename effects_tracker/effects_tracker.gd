@@ -6,15 +6,10 @@ extends Node
 ## handlers.
 
 
-## The stat modifiers for the character this tracker is for.
-var _source_stats: StatModifiers = null: set = set_character_stats
-
-
 ## Sets the reference to the provided CharacterStatModifiers.
 func set_character_stats(source_stats: StatModifiers) -> void:
-	_source_stats = source_stats
 	for e_handler: EffectsHandler in get_children():
-		e_handler.set_character_stats(_source_stats)
+		e_handler.set_character_stats(source_stats)
 
 
 ## Progress the duration of all effects in all handlers by the specified turn step.
@@ -33,8 +28,4 @@ func process_effects() -> void:
 func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
 	var effects: Array[Effect] = hit_box.get_effects()
 	for e_handler: EffectsHandler in get_children():
-		e_handler.apply_effects(
-				effects,
-				hit_box.caster_id,
-				_source_stats.character_id
-		)
+		e_handler.apply_effects(effects, hit_box.caster_id)

@@ -46,11 +46,7 @@ func process_effects() -> void:
 
 
 ## Adds movement changing effects to this handler.
-func apply_effects(
-	effects: Array[Effect],
-	_caster_id: int,
-	_target_id: int
-) -> void:
+func apply_effects(effects: Array[Effect], _caster_id: int) -> void:
 	for effect: Effect in effects:
 		_flat_change_bus.add_effect(effect)
 		_percent_change_bus.add_effect(effect)

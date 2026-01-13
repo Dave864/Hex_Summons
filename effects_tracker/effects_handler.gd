@@ -5,7 +5,7 @@ extends Node
 ## a character.
 
 
-var _c_stats: StatModifiers = null: set = set_character_stats
+var _c_stats: StatModifiers = null
 
 
 ## Sets the reference to the character stats.
@@ -22,8 +22,4 @@ func set_character_stats(c_stats: StatModifiers) -> void:
 
 
 ## Adds relevant effects to this handler.
-@abstract func apply_effects(
-	_effects: Array[Effect],
-	_caster_id: int,
-	_target_id: int
-) -> void
+@abstract func apply_effects(_effects: Array[Effect], _caster_id: int) -> void
