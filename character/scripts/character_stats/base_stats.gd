@@ -34,7 +34,7 @@ extends Resource
 @export_range(0, 1000) var res_fire_base: int = 0
 @export_range(0, 1000) var res_water_base: int = 0
 @export_range(0, 1000) var res_wind_base: int = 0
-@export_group("Growth Values")
+@export_subgroup("Growth Values")
 @export_range(0, 1000) var res_earth_growth: int = 0
 @export_range(0, 1000) var res_fire_growth: int = 0
 @export_range(0, 1000) var res_water_growth: int = 0
