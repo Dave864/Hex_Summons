@@ -9,7 +9,7 @@ extends Area3D
 
 var caster_id: int = -1
 
-var _effects: Array[Effect] = []: get = get_effects
+var _effects: Array[Effect] = []
 
 @onready var _c_shape: CollisionShape3D = $CollisionShape3D
 

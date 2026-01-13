@@ -13,27 +13,21 @@ const EFFECTS: String = "Effects"
 var source_stats: StatModifiers = null:
 	set(new_source):
 		source_stats = new_source
-		# UPdates the stats references of the effects to be the same as the
+		# Updates the stats references of the effects to be the same as the
 		# action.
 		for effect: Effect in _effects:
 			effect.set_source_stats(source_stats)
 ## The effects of this action
-var _effects: Array[Effect]:
-	get = get_effects
+var _effects: Array[Effect]
 ## Whether the effect is emitted from caster in a direction or emitted from a
 ## chosen location.
-var _is_directional: bool = false:
-	get = get_is_directional
+var _is_directional: bool = false
 ## The index of the tile the effect is emitted from.
-var _emission_map_index: int = -1:
-	get = get_emission_map_index,
-	set = set_emission_map_index
+var _emission_map_index: int = -1
 ## The transform the effect is emitted from.
 var _emission_transform: Transform3D = Transform3D.IDENTITY
 ## The direction the effect is emitted. Only updated if the action is directional.
-var _emission_direction: int:
-	get = get_emission_direction,
-	set = set_emission_direction
+var _emission_direction: int
 
 ## The animation player for this node.
 @onready var ani_player: AnimationPlayer = $AnimationPlayer
