@@ -3,6 +3,10 @@ extends Object
 ## Base class that is used to define the strength of an effect.
 
 
+## Defines the minimum value for strength after resistsnaces are applied.
+const MIN_STRENGTH: int = 1
+
+
 ## Determines the strength of the effect for a given character.
 func base_strength(
 		source_stats: AllStats,
@@ -24,7 +28,7 @@ func efficacy(
 			action_potency
 	)
 	# 0.0 means not effective, 1.0 means fully effective.
-	return clamp(resisted_strength / b_str, 0.0, 1.0)
+	return clampf(resisted_strength / b_str, 0.0, 1.0)
 
 
 ## Runs the specified operation on a given stat using the provided strength
@@ -43,7 +47,7 @@ func process_operation(
 		Stat.Operation.DECREASE:
 			return _decrease_operation(strength, efficacy_percent, stat_value)
 		_:
-			return 0
+			return MIN_STRENGTH
 
 
 ## Determines the value that will be used to change the stat to be the desired
@@ -140,4 +144,4 @@ func _apply_resistance(
 ## Calculates the result of resistance, binding the result to be no lower than
 ## zero.
 func _bind_resistance(strength: int, resistance: int) -> int:
-	return clampi(strength - resistance, 0, strength)
+	return clampi(strength - resistance, MIN_STRENGTH, strength)

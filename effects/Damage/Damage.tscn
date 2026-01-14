@@ -10,4 +10,3 @@ script = ExtResource("3")
 script = ExtResource("4")
 target = 2
 operation = 1
-resisted = false
