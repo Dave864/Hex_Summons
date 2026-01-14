@@ -1,10 +1,8 @@
-[gd_resource type="Resource" script_class="WispEffect" load_steps=3 format=3 uid="uid://kpa0mbpu1t5f"]
+[gd_resource type="Resource" script_class="WispEffect" load_steps=2 format=3 uid="uid://kpa0mbpu1t5f"]
 
 [ext_resource type="Script" uid="uid://4bfh87rmg8k0" path="res://wisps/wisp_effect.gd" id="1"]
-[ext_resource type="Resource" path="res://wisps/earth/test_earth_1/flat_increase.tres" id="2"]
 
 [resource]
 script = ExtResource("1")
 stat_affected = 3
 operation = 0
-calculation_method = ExtResource("2")

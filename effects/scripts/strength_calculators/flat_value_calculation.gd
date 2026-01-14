@@ -1,9 +1,17 @@
-class_name FlatValueCalcultion
+class_name FlatValueCalculation
 extends StrengthCalculation
 ## A strength calculation that simply sets the strength to a given value.
 
 
-@export_range(0, 1000) var flat_value: int = 0
+## The flat value to use.
+var flat_value: int = 0:
+	set(value):
+		flat_value = clampi(value, 0, 1000)
+
+
+## Initializes this object using the specified flat value.
+func _init(value: int = 0) -> void:
+	flat_value = value
 
 
 ## Determines the value that the target stat will be set to. If this effect is

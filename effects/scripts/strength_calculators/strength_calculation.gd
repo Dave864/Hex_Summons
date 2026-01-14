@@ -1,5 +1,5 @@
 class_name StrengthCalculation
-extends Resource
+extends Object
 ## Base class that is used to define the strength of an effect.
 
 

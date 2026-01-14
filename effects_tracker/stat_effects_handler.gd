@@ -81,11 +81,11 @@ func progress_duration(turn_step: int = 1) -> void:
 ## Determines the final value of the affected stat after applying all of
 ## the effects. Character stats are updated.
 func process_effects() -> void:
-	# Remove modifier to prevent stat effects from accumulating.
+	# Reset modifier to prevent stat effects from accumulating.
 	_c_stats.update_modifier(_global_reference[target_stat], 0)
-	var f_change: int = _flat_change_bus.process_immediate_effects(_c_stats)
+	var f_change: int = _flat_change_bus.process_all_effects(_c_stats)
 	_c_stats.update_modifier(_global_reference[target_stat], f_change)
-	var p_change: int = _percent_change_bus.process_immediate_effects(_c_stats)
+	var p_change: int = _percent_change_bus.process_all_effects(_c_stats)
 	_c_stats.update_modifier(_global_reference[target_stat], f_change + p_change)
 
 

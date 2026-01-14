@@ -3,7 +3,15 @@ extends StrengthCalculation
 ## A strength calculation that uses the percentage of a given number.
 
 
-@export_range(0.0, 5.0, 0.01) var percentage: float = 1.0
+## The percentage (multiplier) value to use.
+var percentage: float = 1.0:
+	set(value):
+		percentage = clampf(value, 0.0, 5.0)
+
+
+## Initializes this object using the specified percentage value.
+func _init(value: float = 1.0) -> void:
+	percentage = value
 
 
 ## Determines the value that will be used to change the stat to be the desired value.

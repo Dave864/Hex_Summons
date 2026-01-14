@@ -9,7 +9,14 @@ enum Target {
 	SELF,
 	ALLIES,
 	OPPONENTS,
-	NONE
+	NONE,
+}
+## The different calculation options. Corresponds to the respective strength
+## calculators.
+enum CalculationType {
+	STRENGTH,
+	FLAT,
+	PERCENT
 }
 ## Describes what changes when resistance is applied.
 enum ResEffect {
@@ -21,10 +28,10 @@ enum ResEffect {
 @export var target: Target = Target.NONE
 ## The stat of the target that is affected by this effect.
 @export var stat_affected: Stat.Type = Stat.Type.CUR_HEALTH
+## The method that determines the strength of this effect.
+@export var calculation_type: CalculationType = CalculationType.STRENGTH
 ## How the targeted stat is modified.
 @export var operation: Stat.Operation = Stat.Operation.SET
-## The method that determines the strength of this effect.
-@export var calculation_method: StrengthCalculation = null
 ## Flag that indicates if this effect is resisted by the target
 @export var resisted: bool = true
 ## Indicates if resistance affects aspect strength or duration.
@@ -36,15 +43,26 @@ enum ResEffect {
 ## How many turns does this effect last after application when adjusted for
 ## resistances.
 var turn_duration: int = max_turn_duration
+## The method that determines the strength of this effect.
+var calculation_method: StrengthCalculation = null:
+	set = _set_calculation_method
 
 ## The stats of the character that will apply this effect.
-var _source_stats: StatModifiers = null:
-	set = set_source_stats
+var _source_stats: StatModifiers = null
 ## The current values of the character stats.
 var _current_stats: AllStats = null
 ## The potency of the action the parent effect is assigned to.
-var _action_potency: Potency = null:
-	set = set_action_potency
+var _action_potency: Potency = null
+
+
+## Called when a new instance of this object is created.
+func _init() -> void:
+	_initialize_calculation_method()
+
+
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	_check_for_required_parameters()
 
 
 ## Updates the source character stats of this effect aspect.
@@ -93,9 +111,26 @@ func effect_on_target(target_stats: StatModifiers) -> int:
 			return 0
 
 
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	_check_for_required_parameters()
+## Sets the calculation method to match the set type. Called during initialization.
+func _initialize_calculation_method() -> void:
+	match calculation_type:
+		CalculationType.STRENGTH:
+			calculation_method = StrengthCalculation.new()
+		CalculationType.FLAT:
+			calculation_method = FlatValueCalculation.new()
+		CalculationType.PERCENT:
+			calculation_method = PercentageCalculation.new()
+
+
+## Sets the calculation method and updates the calculation type flag to match.
+func _set_calculation_method(new_method: StrengthCalculation) -> void:
+	calculation_method = new_method
+	if calculation_method is FlatValueCalculation:
+		calculation_type = CalculationType.FLAT
+	elif calculation_method is PercentageCalculation:
+		calculation_type = CalculationType.PERCENT
+	else:
+		calculation_type = CalculationType.STRENGTH
 
 
 ## Check that all required parameters are set.
