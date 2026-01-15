@@ -20,13 +20,13 @@ _data = {
 script = ExtResource("3")
 stats = ExtResource("7")
 
-[node name="ActionHitBox" type="Area3D" parent="."]
+[node name="ActionHitBox" type="Area3D" parent="." node_paths=PackedStringArray("effects_list")]
 collision_layer = 16
 collision_mask = 0
 monitoring = false
 monitorable = false
 script = ExtResource("4")
-effects_ref = NodePath("../EffectsList")
+effects_list = NodePath("../EffectsList")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ActionHitBox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)

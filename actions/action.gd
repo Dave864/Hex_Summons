@@ -3,9 +3,6 @@ extends Node
 ## Describes the details of an action.
 
 
-## Name of node that holds the action effects.
-const EFFECTS: String = "Effects"
-
 ## The stats associated with this action.
 @export var stats: ActionStats = null
 
@@ -15,8 +12,7 @@ var source_stats: StatModifiers = null:
 		source_stats = new_source
 		# Updates the stats references of the effects to be the same as the
 		# action.
-		for effect: Effect in _effects:
-			effect.set_source_stats(source_stats)
+		_effects_list.set_source_stats(source_stats)
 ## The effects of this action
 var _effects: Array[Effect]
 ## Whether the effect is emitted from caster in a direction or emitted from a
@@ -31,6 +27,8 @@ var _emission_direction: int
 
 ## The animation player for this node.
 @onready var ani_player: AnimationPlayer = $AnimationPlayer
+## The list of effects for this action.
+@onready var _effects_list: EffectsList = $EffectsList
 ## The hit box object.
 @onready var _hit_box: ActionHitBox = $ActionHitBox
 ## The point the camera should focus on when the action is executing.
@@ -39,20 +37,14 @@ var _emission_direction: int
 
 func _ready() -> void:
 	_check_for_required_parameters()
-	for effect: Effect in get_node(EFFECTS).get_children():
-		effect.set_action_potency(stats.potency)
-		_effects.append(effect)
-	assert(
-			len(_effects) > 0,
-			"Action %s does not have any effects" % [name]
-	)
+	_effects_list.set_action_potency(stats.potency)
 	_is_directional = stats.emit_from_caster
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
 ## Returns the effects of this action.
-func get_effects() -> Array:
-	return _effects
+func get_effects() -> Array[ActionEffect]:
+	return _effects_list.get_effects()
 
 
 ## Returns if the effect range is bound directionally or not.
@@ -168,8 +160,4 @@ func _check_for_required_parameters() -> void:
 	assert(
 			stats != null,
 			"Action {0} missing stats.".format([name])
-	)
-	assert(
-			has_node(EFFECTS),
-			"Action {0} is missing the Effects node.".format([name])
 	)

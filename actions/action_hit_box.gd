@@ -5,17 +5,21 @@ extends Area3D
 ## Tracks the potency and effects of the action this hit box is for.
 
 
-@export var effects_ref: NodePath = NodePath("")
+## Reference to the node that holds the action effects.
+@export var effects_list: EffectsList = null
 
+## The instance id for the user of the action.
 var caster_id: int = -1
 
-var _effects: Array[Effect] = []
+## The action effects for the action.
+var _effects: Array[ActionEffect] = []
 
+## The collision shape for the hit box.
 @onready var _c_shape: CollisionShape3D = $CollisionShape3D
 
 
 ## Gets the effects this hit box is transferring.
-func get_effects() -> Array[Effect]:
+func get_effects() -> Array[ActionEffect]:
 	return _effects
 
 
@@ -34,12 +38,10 @@ func deactivate() -> void:
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	_check_for_required_parameters()
-	var effects_node: Node = get_node(effects_ref)
-	await effects_node.ready
-	for effect: Effect in effects_node.get_children():
-		_effects.append(effect)
+	await effects_list.ready
+	_effects = effects_list.get_effects()
 
 
 ## Checks that all required parameters are set.
 func _check_for_required_parameters() -> void:
-	assert(effects_ref != null, "ActionHitBox is missing effect reference.")
+	assert(effects_list != null, "ActionHitBox is missing EffectList reference.")
