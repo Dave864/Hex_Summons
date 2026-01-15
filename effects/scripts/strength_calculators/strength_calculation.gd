@@ -142,6 +142,6 @@ func _apply_resistance(
 
 
 ## Calculates the result of resistance, binding the result to be no lower than
-## zero.
+## a minimum value.
 func _bind_resistance(strength: int, resistance: int) -> int:
 	return clampi(strength - resistance, MIN_STRENGTH, strength)

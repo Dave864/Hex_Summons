@@ -18,24 +18,23 @@ enum CalculationType {
 	FLAT,
 	PERCENT
 }
-## Describes what changes when resistance is applied.
+## Describes how this effect is impacted by resistances.
 enum ResEffect {
-	STRENGTH,
-	DURATION,
+	NONE, ## This effect is not affected.
+	STRENGTH, ## The strength of this effect is reduced.
+	DURATION, ## The duration of this effect is reduced.
 }
 
 ## The target of this effect.
 @export var target: Target = Target.NONE
-## The stat of the target that is affected by this effect.
+## The stat impacted by this effect.
 @export var stat_affected: Stat.Type = Stat.Type.CUR_HEALTH
 ## The method that determines the strength of this effect.
 @export var calculation_type: CalculationType = CalculationType.STRENGTH
 ## How the targeted stat is modified.
 @export var operation: Stat.Operation = Stat.Operation.SET
-## Flag that indicates if this effect is resisted by the target
-@export var resisted: bool = true
-## Indicates if resistance affects aspect strength or duration.
-@export var resistance_effect: ResEffect = ResEffect.STRENGTH
+## Indicates how resistance will impact this effect.
+@export var resistance_effect: ResEffect = ResEffect.NONE
 ## The maximum number of turns this effect can last after application. A value
 ## of zero means the effect is applied immediately.
 @export_range(0, 100) var max_turn_duration: int = 0
@@ -81,28 +80,29 @@ func update_current_stats() -> void:
 	_current_stats = _source_stats.get_all()
 
 
-## Determines the numerical result of the effect on a target set of character stats.
+## Determines the numerical result of the effect on a target set of character
+## stats.
 func effect_on_target(target_stats: StatModifiers) -> int:
-	var b_str: float = calculation_method.base_strength(
+	var base_str: float = calculation_method.base_strength(
 			_current_stats,
 			_action_potency
 	)
-	var eff: float = 1.0
-	if resisted:
-		eff = calculation_method.efficacy(
+	var efficacy: float = 1.0
+	if resistance_effect != ResEffect.NONE:
+		efficacy = calculation_method.efficacy(
 				_current_stats,
 				target_stats,
 				_action_potency
 		)
 	match resistance_effect:
 		ResEffect.DURATION:
-			turn_duration = int(round(max_turn_duration * eff))
-			return int(b_str)
+			turn_duration = int(round(max_turn_duration * efficacy))
+			return int(base_str)
 		ResEffect.STRENGTH:
 			turn_duration = max_turn_duration
 			return calculation_method.process_operation(
-					b_str,
-					eff,
+					base_str,
+					efficacy,
 					stat_affected,
 					operation
 			)
