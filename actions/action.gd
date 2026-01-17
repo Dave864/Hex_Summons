@@ -13,8 +13,7 @@ var source_stats: StatModifiers = null:
 		# Updates the stats references of the effects to be the same as the
 		# action.
 		_effects_list.set_source_stats(source_stats)
-## The effects of this action
-var _effects: Array[Effect]
+
 ## Whether the effect is emitted from caster in a direction or emitted from a
 ## chosen location.
 var _is_directional: bool = false
@@ -53,11 +52,10 @@ func get_is_directional() -> bool:
 
 
 ## Returns a set of targets this action effects.
-func get_targets() -> Dictionary[EffectAspect.Target, bool]:
-	var targets: Dictionary[EffectAspect.Target, bool] = {}
-	for effect: Effect in _effects:
-		for aspect: EffectAspect in effect.get_aspects():
-			targets[aspect.target] = true
+func get_targets() -> Dictionary[ActionEffect.Target, bool]:
+	var targets: Dictionary[ActionEffect.Target, bool] = {}
+	for effect: ActionEffect in _effects_list.get_effects():
+		targets[effect.target] = true
 	return targets
 
 
