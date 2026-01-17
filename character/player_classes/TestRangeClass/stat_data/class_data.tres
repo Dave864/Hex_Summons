@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="PlayerClassData" load_steps=8 format=3 uid="uid://beogs7sf02d0p"]
 
 [ext_resource type="Script" uid="uid://cfj3adhe5oqk4" path="res://character/player_classes/player_class_data.gd" id="1"]
-[ext_resource type="Resource" path="res://character/player_classes/TestRangeClass/stat_data/stat_values.tres" id="2"]
+[ext_resource type="Resource" uid="uid://cy5vgr1dvp0ss" path="res://character/player_classes/TestRangeClass/stat_data/stat_values.tres" id="2"]
 [ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/action_stats/spell_stats.gd" id="2_k60fn"]
 [ext_resource type="Resource" path="res://character/player_classes/TestRangeClass/stat_data/shot_data.tres" id="3"]
 [ext_resource type="Resource" uid="uid://crn31h4kwi7i3" path="res://character/player_classes/TestRangeClass/stat_data/beam_data.tres" id="4"]

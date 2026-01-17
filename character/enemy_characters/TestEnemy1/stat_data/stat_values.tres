@@ -4,7 +4,8 @@
 
 [resource]
 script = ExtResource("1")
-health_base = 7
-defense_base = 2
+health_base = 30
+attack_base = 2
+defense_base = 3
 agility_base = 5
 movement = 3

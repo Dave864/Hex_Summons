@@ -269,7 +269,7 @@ func _get_target_distances() -> Array[Array]:
 	if _action_targets.has(ActionEffect.Target.OPPONENTS):
 		potential_targets.append_array(selector.enemies_ref)
 	if _action_targets.has(ActionEffect.Target.ALLIES):
-		potential_targets.append_array(selector.characters_ref)
+		potential_targets.append_array(selector.players_ref)
 	
 	var target_distances: Array[Array] = []
 	for option: Character in potential_targets:

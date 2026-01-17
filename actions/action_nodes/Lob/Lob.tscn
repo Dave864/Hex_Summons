@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ctgoieguj4weo"]
+[gd_scene load_steps=13 format=3 uid="uid://ctgoieguj4weo"]
 
 [ext_resource type="Resource" uid="uid://cu3ujpuqcywfj" path="res://actions/action_nodes/Lob/action_stats.tres" id="2"]
 [ext_resource type="Script" uid="uid://bmwncc537t588" path="res://actions/action_hit_box.gd" id="3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Material" path="res://actions/test_shader_material.tres" id="5"]
 [ext_resource type="Script" uid="uid://bigg48w851oea" path="res://actions/effects/effects_list.gd" id="5_m3pxw"]
 [ext_resource type="Script" uid="uid://c3neh3ael3g72" path="res://actions/effects/action_effect.gd" id="6_m3pxw"]
+[ext_resource type="Script" uid="uid://bk5n62fatmjkt" path="res://actions/effects/percent_action_effect.gd" id="7_eunk6"]
 
 [sub_resource type="CylinderShape3D" id="4"]
 
@@ -167,6 +168,16 @@ target = 2
 operation = 1
 resistance_effect = 1
 metadata/_custom_type_script = "uid://c3neh3ael3g72"
+
+[node name="DecreaseDefense" type="Node" parent="EffectsList"]
+script = ExtResource("7_eunk6")
+percent_change_value = 0.25
+target = 2
+stat_affected = 3
+operation = 1
+resistance_effect = 1
+max_turn_duration = 1
+metadata/_custom_type_script = "uid://bk5n62fatmjkt"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

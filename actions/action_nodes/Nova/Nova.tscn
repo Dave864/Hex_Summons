@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bkqx7l8kj0bii"]
+[gd_scene load_steps=13 format=3 uid="uid://bkqx7l8kj0bii"]
 
 [ext_resource type="Script" uid="uid://b4nchvbsc7a5a" path="res://actions/action.gd" id="1"]
 [ext_resource type="Script" uid="uid://bmwncc537t588" path="res://actions/action_hit_box.gd" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bigg48w851oea" path="res://actions/effects/effects_list.gd" id="5_2qpbv"]
 [ext_resource type="Material" path="res://actions/test_shader_material.tres" id="6"]
 [ext_resource type="Script" uid="uid://c3neh3ael3g72" path="res://actions/effects/action_effect.gd" id="6_2qpbv"]
+[ext_resource type="Script" uid="uid://jdmr4u2vh1uj" path="res://actions/effects/flat_action_effect.gd" id="7_rdb5j"]
 
 [sub_resource type="CylinderShape3D" id="1"]
 height = 10.0
@@ -159,6 +160,14 @@ target = 2
 operation = 1
 resistance_effect = 1
 metadata/_custom_type_script = "uid://c3neh3ael3g72"
+
+[node name="DecreaseMovement" type="Node" parent="EffectsList"]
+script = ExtResource("7_rdb5j")
+flat_change_value = 1
+target = 2
+stat_affected = 5
+operation = 1
+metadata/_custom_type_script = "uid://jdmr4u2vh1uj"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
