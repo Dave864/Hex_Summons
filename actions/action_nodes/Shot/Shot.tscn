@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://b4nchvbsc7a5a" path="res://actions/action.gd" id="2"]
 [ext_resource type="Resource" uid="uid://dwr3s086j0bub" path="res://actions/action_nodes/Shot/action_stats.tres" id="3"]
 [ext_resource type="Script" uid="uid://bmwncc537t588" path="res://actions/action_hit_box.gd" id="4"]
-[ext_resource type="PackedScene" uid="uid://c72e1ocpd832p" path="res://effects/Damage/Damage.tscn" id="5"]
 [ext_resource type="Script" uid="uid://bigg48w851oea" path="res://effects/effects_list.gd" id="5_1mejq"]
 [ext_resource type="Material" path="res://actions/test_shader_material.tres" id="6"]
+[ext_resource type="Script" uid="uid://c3neh3ael3g72" path="res://effects/scripts/action_effect.gd" id="6_1mejq"]
 
 [sub_resource type="SphereShape3D" id="1"]
 
@@ -89,7 +89,12 @@ mesh = SubResource("3")
 script = ExtResource("5_1mejq")
 metadata/_custom_type_script = "uid://bigg48w851oea"
 
-[node name="Damage" parent="EffectsList" instance=ExtResource("5")]
+[node name="Damage" type="Node" parent="EffectsList"]
+script = ExtResource("6_1mejq")
+target = 2
+operation = 1
+resistance_effect = 1
+metadata/_custom_type_script = "uid://c3neh3ael3g72"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

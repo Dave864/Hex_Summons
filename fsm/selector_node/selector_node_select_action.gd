@@ -20,7 +20,7 @@ var _character_map_index: int = -1
 ## Stores the distance map of the source range.
 var _source_d_map: DistanceMap = null
 ## The type of targets the action will hit.
-var _action_targets: Dictionary[EffectAspect.Target, bool] = {}
+var _action_targets: Dictionary[ActionEffect.Target, bool] = {}
 ## Caches the tile ids of the effect area at different emission points.
 var _ranges_cache: Dictionary[int, Array] = {}
 ## Caches the characters that the action will hit at different emission points.
@@ -266,9 +266,9 @@ func _place_closest_to_tile(tile_index: int) -> void:
 ## distance.
 func _get_target_distances() -> Array[Array]:
 	var potential_targets: Array[Character] = []
-	if _action_targets.has(EffectAspect.Target.OPPONENTS):
+	if _action_targets.has(ActionEffect.Target.OPPONENTS):
 		potential_targets.append_array(selector.enemies_ref)
-	if _action_targets.has(EffectAspect.Target.ALLIES):
+	if _action_targets.has(ActionEffect.Target.ALLIES):
 		potential_targets.append_array(selector.characters_ref)
 	
 	var target_distances: Array[Array] = []
@@ -295,14 +295,14 @@ func _is_target_tile(map_tile: MapTile) -> bool:
 		HexHighlighter.Option.RANGE:
 			return true
 		HexHighlighter.Option.TARGET:
-			return _action_targets.has(EffectAspect.Target.OPPONENTS)
+			return _action_targets.has(ActionEffect.Target.OPPONENTS)
 		HexHighlighter.Option.PLAYER:
 			return (
 				(
-					_action_targets.has(EffectAspect.Target.SELF) 
+					_action_targets.has(ActionEffect.Target.SELF) 
 					and is_caster
 				)
-				or _action_targets.has(EffectAspect.Target.ALLIES)
+				or _action_targets.has(ActionEffect.Target.ALLIES)
 			)
 		_:
 			return false
@@ -444,11 +444,11 @@ func _update_targets(effect_range: Array[int]) -> void:
 			and (
 				(
 					c is EnemyCharacter 
-					and _action_targets.has(EffectAspect.Target.OPPONENTS)
+					and _action_targets.has(ActionEffect.Target.OPPONENTS)
 				) or (
 					c.map_coordinate.get_tile_index() == _character_map_index
-					and _action_targets.has(EffectAspect.Target.SELF)
-				) or _action_targets.has(EffectAspect.Target.ALLIES)
+					and _action_targets.has(ActionEffect.Target.SELF)
+				) or _action_targets.has(ActionEffect.Target.ALLIES)
 			)
 		):
 			targets.append(c)

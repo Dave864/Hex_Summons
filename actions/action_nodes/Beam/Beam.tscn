@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://c7tacoqetxp51" path="res://actions/action_nodes/Beam/action_stats.tres" id="4"]
 [ext_resource type="Script" uid="uid://bigg48w851oea" path="res://effects/effects_list.gd" id="5_wtpub"]
 [ext_resource type="Script" uid="uid://bmwncc537t588" path="res://actions/action_hit_box.gd" id="6"]
-[ext_resource type="PackedScene" uid="uid://c72e1ocpd832p" path="res://effects/Damage/Damage.tscn" id="7"]
+[ext_resource type="Script" uid="uid://c3neh3ael3g72" path="res://effects/scripts/action_effect.gd" id="6_wtpub"]
 [ext_resource type="Material" path="res://actions/test_shader_material.tres" id="8"]
 
 [sub_resource type="CylinderShape3D" id="5"]
@@ -265,7 +265,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.5)
 script = ExtResource("5_wtpub")
 metadata/_custom_type_script = "uid://bigg48w851oea"
 
-[node name="Damage" parent="EffectsList" instance=ExtResource("7")]
+[node name="Damage" type="Node" parent="EffectsList"]
+script = ExtResource("6_wtpub")
+target = 2
+operation = 1
+resistance_effect = 1
+metadata/_custom_type_script = "uid://c3neh3ael3g72"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
