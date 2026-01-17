@@ -33,8 +33,10 @@ func _init(affected_stat: Stat.Type):
 ## Looks at all aspects of an effect and adds aspects to the end of the bus if 
 ## they target the affected stat. Updates prior instances of the same effect aspect.
 func add_effect(effect: ActionEffect) -> void:
+	if effect.stat_affected != _affected_stat:
+		return
 	var effect_id: int = effect.get_instance_id()
-	effect.update_current_stats()
+	effect.update_stats_snapshot()
 	# Stores effect and current turn duration.
 	_effect_bus[effect_id] = EntryData.new(effect)
 
