@@ -5,49 +5,42 @@ extends Object
 ## Provides logic to evaluate the result of the effects.
 
 
+## Describes the specific details stored in a single entry in the bus.
+class EntryData:
+	## Reference to the ActionEffect node.
+	var effect: ActionEffect = null
+	## The number of turns the effect has been active for.
+	var turn_count: int = 0
+	
+	
+	## Creates a new instance of EntryData, tracking the given ActionEffect.
+	func _init(new_effect: ActionEffect) -> void:
+		effect = new_effect
+		turn_count = 0
+
+
+## The stat that is impacted by the tracked effects.
 var _affected_stat: Stat.Type
-var _is_percentage_calc: bool
-var _is_set_op: bool
-var _effect_bus: Dictionary[int, Array] = {}
+## Tracks the effects and their turn duration.
+var _effect_bus: Dictionary[int, EntryData] = {}
 
 
 ## Called when an instance of this object is created.
-func _init(affected_stat: Stat.Type, is_percentage_calc: bool, is_set_op: bool):
+func _init(affected_stat: Stat.Type):
 	_affected_stat = affected_stat
-	_is_percentage_calc = is_percentage_calc
-	_is_set_op = is_set_op
 
 
 ## Looks at all aspects of an effect and adds aspects to the end of the bus if 
 ## they target the affected stat. Updates prior instances of the same effect aspect.
-func add_effect(effect: Effect) -> void:
+func add_effect(effect: ActionEffect) -> void:
 	var effect_id: int = effect.get_instance_id()
-	for aspect in effect.get_aspects():
-		if (
-			aspect.stat_affected != _affected_stat
-			or (
-				_is_percentage_calc
-				and not aspect.calculation_method is PercentageCalculation
-			)
-			or (
-				!_is_percentage_calc
-				and aspect.calculation_method is PercentageCalculation
-			)
-			or (
-				_is_set_op and aspect.operation != Stat.Operation.SET
-			)
-			or (
-				!_is_set_op and aspect.operation == Stat.Operation.SET
-			)
-		):
-			continue
-		aspect.update_current_stats()
-		# Stores effect and current turn duration.
-		_effect_bus[effect_id] = [aspect, 0]
+	effect.update_current_stats()
+	# Stores effect and current turn duration.
+	_effect_bus[effect_id] = EntryData.new(effect)
 
 
 ## Removes the effect from the bus if it exists.
-func remove_effect(effect: Effect) -> void:
+func remove_effect(effect: ActionEffect) -> void:
 	var effect_id: int = effect.get_instance_id()
 	_effect_bus.erase(effect_id)
 
@@ -62,8 +55,8 @@ func clear() -> void:
 ## have expired.
 func progress_duration(turn_step: int = 1) -> void:
 	for id in _effect_bus.keys():
-		_effect_bus[id][1] += turn_step
-		if _effect_bus[id][0].turn_duration <= _effect_bus[id][1]:
+		_effect_bus[id].turn_count += turn_step
+		if _effect_bus[id].effect.turn_duration <= _effect_bus[id].turn_count:
 			_effect_bus.erase(id)
 
 
@@ -72,8 +65,8 @@ func progress_duration(turn_step: int = 1) -> void:
 ## immediate effects from the bus. Does not update the character stats.
 func process_immediate_effects(char_stats: CharacterStatModifiers) -> int:
 	var change_amt: int = 0
-	for id in _effect_bus.keys():
-		var effect: EffectAspect = _effect_bus[id][0]
+	for id: int in _effect_bus.keys():
+		var effect: ActionEffect = _effect_bus[id].effect
 		if effect.turn_duration == 0:
 			change_amt += effect.effect_on_target(char_stats)
 			_effect_bus.erase(id)
@@ -86,7 +79,7 @@ func process_immediate_effects(char_stats: CharacterStatModifiers) -> int:
 func process_all_effects(char_stats: CharacterStatModifiers) -> int:
 	var change_amt: int = 0
 	for id in _effect_bus.keys():
-		change_amt += _effect_bus[id][0].effect_on_target(char_stats)
+		change_amt += _effect_bus[id].effect.effect_on_target(char_stats)
 	return change_amt
 
 

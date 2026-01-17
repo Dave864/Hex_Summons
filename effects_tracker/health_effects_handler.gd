@@ -14,10 +14,10 @@ var _percent_change_bus: EffectBus
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	_flat_change_bus = EffectBus.new(Stat.Type.CUR_HEALTH, false, false)
+	_flat_change_bus = EffectBus.new(Stat.Type.CUR_HEALTH)
 	# Percent changes to health are with respect to max health, not current
 	# value of health.
-	_percent_change_bus = EffectBus.new(Stat.Type.MAX_HEALTH, true, false)
+	_percent_change_bus = EffectBus.new(Stat.Type.MAX_HEALTH)
 
 
 ## Virtual function. Updates the duration for all effects.
@@ -34,10 +34,15 @@ func process_effects() -> void:
 
 
 ## Adds health changing effects to this handler. Processes immediate effects
-func apply_effects(effects: Array[Effect], caster_id: int) -> void:
-	for effect: Effect in effects:
-		_flat_change_bus.add_effect(effect)
-		_percent_change_bus.add_effect(effect)
+func apply_effects(
+	effects: Array[ActionEffect],
+	caster_id: int
+) -> void:
+	for effect: ActionEffect in effects:
+		if effect is PercentActionEffect:
+			_percent_change_bus.add_effect(effect)
+		else:
+			_flat_change_bus.add_effect(effect)
 	var f_change: float = _flat_change_bus.process_immediate_effects(_c_stats)
 	var p_change: float = _percent_change_bus.process_immediate_effects(_c_stats)
 	_c_stats.set_cur_health(int(f_change + p_change))

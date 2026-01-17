@@ -42,8 +42,8 @@ var turn_duration: int = max_turn_duration
 var _calculation_method: StrengthCalculation = null
 ## The stats of the character that will apply this effect.
 var _source_stats: StatModifiers = null
-## The current values of the character stats.
-var _current_stats: AllStats = null
+## A recording of the values of the character stats.
+var _stats_snapshot: AllStats = null
 ## The potency of the action the parent effect is assigned to.
 var _action_potency: Potency = null
 
@@ -56,7 +56,7 @@ func _ready():
 ## Updates the source character stats of this effect aspect.
 func set_source_stats(new_source: StatModifiers) -> void:
 	_source_stats = new_source
-	update_current_stats()
+	update_stats_snapshot()
 
 
 ## Updates the action potency data.
@@ -64,22 +64,22 @@ func set_action_potency(new_potency: Potency) -> void:
 	_action_potency = new_potency
 
 
-## Gets the current values of the source stats.
-func update_current_stats() -> void:
-	_current_stats = _source_stats.get_all()
+## Updates the recorded values of the source stats.
+func update_stats_snapshot() -> void:
+	_stats_snapshot = _source_stats.get_all()
 
 
 ## Determines the numerical result of the effect on a target set of character
 ## stats.
 func effect_on_target(target_stats: StatModifiers) -> int:
 	var base_str: float = _calculation_method.base_strength(
-			_current_stats,
+			_stats_snapshot,
 			_action_potency
 	)
 	var efficacy: float = 1.0
 	if resistance_effect != ResEffect.NONE:
 		efficacy = _calculation_method.efficacy(
-				_current_stats,
+				_stats_snapshot,
 				target_stats,
 				_action_potency
 		)
