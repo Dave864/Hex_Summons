@@ -14,8 +14,8 @@ var _effects: Array[ActionEffect] = []
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for child_node: Node in get_children():
-		if child_node is Effect:
-			_effects.append(child_node as Effect)
+		if child_node is ActionEffect:
+			_effects.append(child_node as ActionEffect)
 	_check_for_required_parameters()
 
 
