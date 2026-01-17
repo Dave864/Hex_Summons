@@ -2,9 +2,9 @@
 
 [ext_resource type="Resource" uid="uid://cilieut7yedcx" path="res://actions/action_nodes/Strike/action_stats.tres" id="2"]
 [ext_resource type="Script" uid="uid://b4nchvbsc7a5a" path="res://actions/action.gd" id="3"]
-[ext_resource type="Script" uid="uid://bigg48w851oea" path="res://effects/effects_list.gd" id="5_nla5n"]
+[ext_resource type="Script" uid="uid://bigg48w851oea" path="res://actions/effects/effects_list.gd" id="5_nla5n"]
 [ext_resource type="Script" uid="uid://bmwncc537t588" path="res://actions/action_hit_box.gd" id="6"]
-[ext_resource type="Script" uid="uid://c3neh3ael3g72" path="res://effects/scripts/action_effect.gd" id="6_nla5n"]
+[ext_resource type="Script" uid="uid://c3neh3ael3g72" path="res://actions/effects/action_effect.gd" id="6_nla5n"]
 [ext_resource type="Material" path="res://actions/test_shader_material.tres" id="8"]
 
 [sub_resource type="SphereShape3D" id="4"]
