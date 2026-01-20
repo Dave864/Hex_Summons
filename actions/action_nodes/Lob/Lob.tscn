@@ -175,7 +175,6 @@ percent_change_value = 0.25
 target = 2
 stat_affected = 3
 operation = 1
-resistance_effect = 1
 max_turn_duration = 1
 metadata/_custom_type_script = "uid://bk5n62fatmjkt"
 

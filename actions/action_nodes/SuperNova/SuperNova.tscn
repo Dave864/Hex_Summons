@@ -163,11 +163,10 @@ metadata/_custom_type_script = "uid://c3neh3ael3g72"
 
 [node name="RaiseAttack" type="Node" parent="EffectsList"]
 script = ExtResource("7_l4p8o")
-percent_change_value = 0.25
 target = 1
 stat_affected = 2
 operation = 0
-max_turn_duration = 2
+max_turn_duration = 3
 metadata/_custom_type_script = "uid://bk5n62fatmjkt"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

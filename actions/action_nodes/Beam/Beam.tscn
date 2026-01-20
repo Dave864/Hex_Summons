@@ -280,7 +280,7 @@ target = 2
 stat_affected = 2
 operation = 1
 resistance_effect = 1
-max_turn_duration = 1
+max_turn_duration = 3
 metadata/_custom_type_script = "uid://bk5n62fatmjkt"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
