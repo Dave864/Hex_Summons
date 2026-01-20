@@ -1,3 +1,4 @@
+@abstract
 class_name EffectBus
 extends Object
 ## Data structure used to keep track of effects and their durations.
@@ -30,10 +31,13 @@ func _init(affected_stat: Stat.Type):
 	_affected_stat = affected_stat
 
 
-## Looks at all aspects of an effect and adds aspects to the end of the bus if 
-## they target the affected stat. Updates prior instances of the same effect aspect.
+## Adds the action effect to the bus if it targets the tracked stat and is of
+## the same operation type. Updates prior instances of the same effect.
 func add_effect(effect: ActionEffect) -> void:
-	if effect.stat_affected != _affected_stat:
+	if (
+		effect.stat_affected != _affected_stat
+		and not _is_tracked_strength_calculation(effect)
+	):
 		return
 	var effect_id: int = effect.get_instance_id()
 	effect.update_stats_snapshot()
@@ -88,3 +92,8 @@ func process_all_effects(char_stats: CharacterStatModifiers) -> int:
 ## Returns the current number of effects in the bus.
 func size() -> int:
 	return _effect_bus.size()
+
+
+## Virtual function. Checks if the effect matches the bus's tracked strength
+## calculation.
+@abstract func _is_tracked_strength_calculation(effect: ActionEffect) -> bool

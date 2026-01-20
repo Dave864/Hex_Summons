@@ -52,16 +52,16 @@ var _global_reference: Dictionary[RelevantStat, Stat.Type] = {
 @export var target_stat: RelevantStat = RelevantStat.ATTACK
 
 ## Bus that keeps track of the flat change effects that affect the managed stat.
-var _flat_change_bus: EffectBus
+var _flat_change_bus: FlatEffectBus
 ## Bus that keeps track of the percentage change effects that affect the
 ## managed stat.
-var _percent_change_bus: EffectBus
+var _percent_change_bus: PercentEffectBus
 
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	_flat_change_bus = EffectBus.new(_global_reference[target_stat])
-	_percent_change_bus = EffectBus.new(_global_reference[target_stat])
+	_flat_change_bus = FlatEffectBus.new(_global_reference[target_stat])
+	_percent_change_bus = PercentEffectBus.new(_global_reference[target_stat])
 
 
 ## Updates the duration for all effects.
@@ -84,8 +84,6 @@ func process_effects() -> void:
 ## Adds relevant effects to this handler.
 func apply_effects(effects: Array[ActionEffect], _caster_id: int) -> void:
 	for effect: ActionEffect in effects:
-		if effect is PercentActionEffect:
-			_percent_change_bus.add_effect(effect)
-		else:
-			_flat_change_bus.add_effect(effect)
+		_percent_change_bus.add_effect(effect)
+		_flat_change_bus.add_effect(effect)
 	process_effects()
