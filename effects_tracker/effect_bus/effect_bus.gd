@@ -84,7 +84,7 @@ func process_immediate_effects(char_stats: CharacterStatModifiers) -> int:
 ## update the character stats.
 func process_all_effects(char_stats: CharacterStatModifiers) -> int:
 	var change_amt: int = 0
-	for id in _effect_bus.keys():
+	for id: int in _effect_bus.keys():
 		change_amt += _effect_bus[id].effect.effect_on_target(char_stats)
 	return change_amt
 

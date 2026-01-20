@@ -28,4 +28,4 @@ func process_effects() -> void:
 func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
 	var effects: Array[ActionEffect] = hit_box.get_effects()
 	for e_handler: EffectsHandler in get_children():
-		e_handler.apply_effects(effects, hit_box.caster_id)
+		e_handler.apply_effects(effects)

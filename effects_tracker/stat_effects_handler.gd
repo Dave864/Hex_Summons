@@ -82,8 +82,11 @@ func process_effects() -> void:
 
 
 ## Adds relevant effects to this handler.
-func apply_effects(effects: Array[ActionEffect], _caster_id: int) -> void:
+func apply_effects(effects: Array[ActionEffect]) -> void:
+	if effects.size() == 0:
+		return
 	for effect: ActionEffect in effects:
-		_percent_change_bus.add_effect(effect)
-		_flat_change_bus.add_effect(effect)
+		if _effect_targets_character(effect):
+			_percent_change_bus.add_effect(effect)
+			_flat_change_bus.add_effect(effect)
 	process_effects()

@@ -34,18 +34,20 @@ func process_effects() -> void:
 
 
 ## Adds health changing effects to this handler. Processes immediate effects
-func apply_effects(
-	effects: Array[ActionEffect],
-	caster_id: int
-) -> void:
+func apply_effects(effects: Array[ActionEffect]) -> void:
+	if effects.size() == 0:
+		return
+	# All effects passed in have the same caster.
+	var c_id: int = effects[0].caster_id
 	for effect: ActionEffect in effects:
-		_percent_change_bus.add_effect(effect)
-		_flat_change_bus.add_effect(effect)
+		if _effect_targets_character(effect):
+			_percent_change_bus.add_effect(effect)
+			_flat_change_bus.add_effect(effect)
 	var f_change: float = _flat_change_bus.process_immediate_effects(_c_stats)
 	var p_change: float = _percent_change_bus.process_immediate_effects(_c_stats)
 	_c_stats.set_cur_health(int(f_change + p_change))
 	SignalBus.emit_health_changed(
-			caster_id,
+			c_id,
 			_c_stats.character_id,
 			f_change + p_change
 	)
