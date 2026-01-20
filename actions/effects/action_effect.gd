@@ -37,6 +37,18 @@ enum ResEffect {
 ## How many turns does this effect last after application when adjusted for
 ## resistances.
 var turn_duration: int = max_turn_duration
+## The id of the character that cast this action.
+var caster_id: int:
+	get:
+		if _source_stats == null:
+			return -1
+		return _source_stats.character_id
+## The type of the character that cast this action.
+var caster_type: Character.Type:
+	get:
+		if _source_stats == null:
+			return Character.Type.NONE
+		return _source_stats.character_type
 
 ## The method that determines the strength of this effect.
 var _calculation_method: StrengthCalculation = null
@@ -97,4 +109,4 @@ func effect_on_target(target_stats: StatModifiers) -> int:
 			)
 		_:
 			turn_duration = max_turn_duration
-			return 0
+			return int(base_str)

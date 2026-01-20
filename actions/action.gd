@@ -121,11 +121,6 @@ func execute_action() -> bool:
 	return true
 
 
-## Sets the caster id reference in the action hit box.
-func initialize_caster_id(caster_id: int) -> void:
-	_hit_box.caster_id = caster_id
-
-
 ## Signals that the encounter camera should snap to the focus position. Used
 ## as part of the "execute" animation.
 func _signal_focus_camera_snap() -> void:

@@ -8,9 +8,6 @@ extends Area3D
 ## Reference to the node that holds the action effects.
 @export var effects_list: EffectsList = null
 
-## The instance id for the user of the action.
-var caster_id: int = -1
-
 ## The action effects for the action.
 var _effects: Array[ActionEffect] = []
 
