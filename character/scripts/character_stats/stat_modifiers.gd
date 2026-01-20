@@ -13,6 +13,8 @@ signal health_changed(new_value, old_value)
 
 ## Reference to the character that the stats describe.
 var character_id: int = -1
+## Reference to the type of character the stats describe.
+var character_type: Character.Type = Character.Type.NONE
 
 
 func _ready() -> void:
