@@ -40,6 +40,7 @@ var summoner: PlayerCharacter = null:
 			return
 		summoner = value
 		stats.summoner_stats = summoner.stats
+		stats.character_id = summoner.get_instance_id()
 		for action: Action in spawn_actions.values():
 			action.source_stats = summoner.stats
 ## The summons that are able to be conjured by the current player party in the
@@ -62,6 +63,10 @@ var _active: bool = false
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	stats = $SummonStatModifiers as SummonStatModifiers
+	stats.character_type = Character.Type.SUMMON
+	# Initialized to summon's current instance for safety. Will be changed to the
+	# id of the summoner after first summon.
+	stats.character_id = get_instance_id()
 	_connect_stats_to_effects_tracker()
 	_cache_available_summons()
 	# Ensure that the summon node is set to inactive at the start of an encounter.
@@ -195,7 +200,6 @@ func _load_actions() -> void:
 		var action_node: Action = _create_action_node(action_name)
 		$Actions/TurnActions.add_child(action_node)
 		action_node.source_stats = stats
-		action_node.initialize_caster_id(summoner.get_instance_id())
 		var wisp_cost := WispCost.new(
 				action_data.get_requirements(),
 				action_data.get_costs()

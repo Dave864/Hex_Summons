@@ -83,6 +83,7 @@ func _assign_class(class_details: PlayerClassData) -> void:
 	_spells = _player_class.spells
 	stats = _player_class.stats
 	stats.character_id = get_instance_id()
+	stats.character_type = Character.Type.PLAYER
 	_connect_to_character_label()
 	_connect_stats_to_effects_tracker()
 	_initialize_actions()
@@ -90,7 +91,7 @@ func _assign_class(class_details: PlayerClassData) -> void:
 
 ## Initializes the action effects.
 func _initialize_actions() -> void:
-	for t in _techniques:
+	for t: Action in _techniques:
 		assert(
 				t.has_node("Cooldown"),
 				"Player class {0} technique {1} is missing a Cooldown " \
@@ -103,8 +104,7 @@ func _initialize_actions() -> void:
 				"_on_Character_turn_ended"
 		)
 		t.source_stats = stats
-		t.initialize_caster_id(get_instance_id())
-	for s in _spells:
+	for s: Action in _spells:
 		assert(
 				s.has_node("WispCost"),
 				"Player class {0} spell {1} is missing a WispCost " \
@@ -112,7 +112,6 @@ func _initialize_actions() -> void:
 		)
 		s.get_node("WispCost").wisp_pool = wisp_pool
 		s.source_stats = stats
-		s.initialize_caster_id(get_instance_id())
 
 
 ## Updates the sprites to the ones for the given player.

@@ -25,6 +25,7 @@ func _ready() -> void:
 	)
 	stats = $Stats
 	stats.character_id = get_instance_id()
+	stats.character_type = Character.Type.ENEMY
 	stats.max_cur_health()
 	_connect_stats_to_effects_tracker()
 	_connect_to_character_label()
@@ -53,7 +54,6 @@ func _update_emission_index(_index: int) -> void:
 func _initialize_actions() -> void:
 	for a: Action in _actions:
 		a.source_stats = stats
-		a.initialize_caster_id(get_instance_id())
 
 
 ## Checks that all required parameters are set.
