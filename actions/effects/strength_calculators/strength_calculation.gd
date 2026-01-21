@@ -58,10 +58,7 @@ func _set_operation(
 	stat_value: int
 ) -> int:
 	var diff: float = target_strength - stat_value
-	if diff >= 0.0:
-		return type_convert(diff * efficacy_percent, TYPE_INT)
-	else:
-		return -type_convert(diff * efficacy_percent, TYPE_INT)
+	return roundi(diff * efficacy_percent)
 
 
 ## Determines the value to increase the target stat by.
@@ -70,7 +67,7 @@ func _increase_operation(
 	efficacy_percent: float,
 	_stat_value: int
 ) -> int:
-	return type_convert(base_strength_value * efficacy_percent, TYPE_INT)
+	return roundi(base_strength_value * efficacy_percent)
 
 
 ## Determines the value to decrease the target stat by.
@@ -79,7 +76,7 @@ func _decrease_operation(
 	efficacy_percent: float,
 	_stat_value: int
 ) -> int:
-	return -type_convert(base_strength_value * efficacy_percent, TYPE_INT) 
+	return -roundi(base_strength_value * efficacy_percent) 
 
 
 ## Determines the strength of the effect for a given character when resisted

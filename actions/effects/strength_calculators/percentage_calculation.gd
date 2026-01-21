@@ -21,10 +21,7 @@ func _set_operation(
 	stat_value: int
 ) -> int:
 	var diff: float = (stat_value * percentage) - stat_value
-	if diff >= 0.0:
-		return convert(diff * efficacy_percent, TYPE_INT)
-	else:
-		return -convert(diff * efficacy_percent, TYPE_INT)
+	return roundi(diff * efficacy_percent)
 
 
 ## Determines the value to increase the target stat by.
@@ -33,7 +30,7 @@ func _increase_operation(
 	efficacy_percent: float,
 	stat_value: int
 ) -> int:
-	return convert(stat_value * percentage * efficacy_percent, TYPE_INT)
+	return round(stat_value * percentage * efficacy_percent)
 
 
 ## Determines the value to increase the target stat by.
@@ -42,4 +39,4 @@ func _decrease_operation(
 	efficacy_percent: float,
 	stat_value: int
 ) -> int:
-	return -convert(stat_value * percentage * efficacy_percent, TYPE_INT)
+	return -round(stat_value * percentage * efficacy_percent)

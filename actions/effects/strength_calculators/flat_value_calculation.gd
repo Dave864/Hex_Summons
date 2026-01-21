@@ -22,10 +22,7 @@ func _set_operation(
 	stat_value: int
 ) -> int:
 	var diff: float = flat_value - stat_value
-	if diff >= 0.0:
-		return convert(diff * efficacy_percent, TYPE_INT)
-	else:
-		return -convert(diff * efficacy_percent, TYPE_INT)
+	return roundi(diff * efficacy_percent)
 
 
 ## Increases the value specified stat of the target character by the value of
@@ -35,7 +32,7 @@ func _increase_operation(
 	efficacy_percent: float,
 	_stat_value: int
 ) -> int:
-	return convert(flat_value * efficacy_percent, TYPE_INT)
+	return roundi(flat_value * efficacy_percent)
 
 
 ## Descreases the value specified stat of the target character by the value of
@@ -45,4 +42,4 @@ func _decrease_operation(
 	efficacy_percent: float,
 	_stat_value: int
 ) -> int:
-	return -convert(flat_value * efficacy_percent, TYPE_INT)
+	return -roundi(flat_value * efficacy_percent)
