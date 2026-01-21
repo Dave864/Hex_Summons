@@ -4,20 +4,6 @@ extends Object
 ## ranges.
 
 
-## The contents of a display hex. Contains the outline and fill details.
-class HexDetails:
-	## The details for the outline of the hex.
-	var outline: Detail = Detail.EMPTY
-	## The details for the interior of the hex.
-	var fill: Detail = Detail.EMPTY
-	
-	
-	## Resets the hex details to be empty.
-	func empty() -> void:
-		outline = Detail.EMPTY
-		fill = Detail.EMPTY
-
-
 ## Describes what is being displayed at each hex.
 enum Detail {
 	EMPTY,
@@ -127,3 +113,17 @@ func reset_display() -> void:
 		for col in _col_count:
 			_matrix[row][col].outline = Detail.EMPTY
 			_matrix[row][col].fill = Detail.EMPTY
+
+
+## The contents of a display hex. Contains the outline and fill details.
+class HexDetails:
+	## The details for the outline of the hex.
+	var outline: Detail = Detail.EMPTY
+	## The details for the interior of the hex.
+	var fill: Detail = Detail.EMPTY
+	
+	
+	## Resets the hex details to be empty.
+	func empty() -> void:
+		outline = Detail.EMPTY
+		fill = Detail.EMPTY

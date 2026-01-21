@@ -10,60 +10,6 @@ extends Control
 ## initiative slots in the UI.
 
 
-## Tracks the number of rounds a character has gone without a turn.
-class NoTurnTracker:
-	## The character node.
-	var character: Character = null
-	## The number of rounds a character has gone without a turn
-	var inaction_count: int = 0
-	
-	
-	func _init(character_ref: Character) -> void:
-		character = character_ref
-		inaction_count = 0
-
-
-## Describes the details of a single turn.
-class TurnDetails:
-	## The id of the character allotted to this turn.
-	var c_id: int = 0
-	## The current progress towards the round pace.
-	var progress: int = 0
-	## Whether the character is active in the round this turn is in.
-	var is_present: bool = false
-	
-	
-	func _init(
-		character_id: int,
-		start_progress: int = 0,
-		presence_state: bool = true
-	) -> void:
-		c_id = character_id
-		progress = start_progress
-		is_present = presence_state
-
-
-## Describes the turns in a round.
-class RoundDetails:
-	## Tracks the turns of the round.
-	var _round_data: Array[TurnDetails] = []
-	
-	
-	## Returns the number of turns in the round.
-	func turn_count() -> int:
-		return _round_data.size()
-	
-	
-	## Adds turn details to the end of the round.
-	func add_turn_details(turn_details: TurnDetails) -> void:
-		_round_data.append(turn_details)
-	
-	
-	## Gets the details for a given turn.
-	func details_for_turn(turn: int) -> TurnDetails:
-		return _round_data[turn]
-
-
 ## The maximimum number of consecutive rounds a character can go without a turn.
 @export_range(2, 10) var pity_round_count: int = 2
 
@@ -346,3 +292,57 @@ func _on_Summon_activated(_summoner_id) -> void:
 ## Updates the intiative tracker display to retore the portrait of the summoner.
 func _on_Summon_deactivated() -> void:
 	_update_display()
+
+
+## Tracks the number of rounds a character has gone without a turn.
+class NoTurnTracker:
+	## The character node.
+	var character: Character = null
+	## The number of rounds a character has gone without a turn
+	var inaction_count: int = 0
+	
+	
+	func _init(character_ref: Character) -> void:
+		character = character_ref
+		inaction_count = 0
+
+
+## Describes the details of a single turn.
+class TurnDetails:
+	## The id of the character allotted to this turn.
+	var c_id: int = 0
+	## The current progress towards the round pace.
+	var progress: int = 0
+	## Whether the character is active in the round this turn is in.
+	var is_present: bool = false
+	
+	
+	func _init(
+		character_id: int,
+		start_progress: int = 0,
+		presence_state: bool = true
+	) -> void:
+		c_id = character_id
+		progress = start_progress
+		is_present = presence_state
+
+
+## Describes the turns in a round.
+class RoundDetails:
+	## Tracks the turns of the round.
+	var _round_data: Array[TurnDetails] = []
+	
+	
+	## Returns the number of turns in the round.
+	func turn_count() -> int:
+		return _round_data.size()
+	
+	
+	## Adds turn details to the end of the round.
+	func add_turn_details(turn_details: TurnDetails) -> void:
+		_round_data.append(turn_details)
+	
+	
+	## Gets the details for a given turn.
+	func details_for_turn(turn: int) -> TurnDetails:
+		return _round_data[turn]

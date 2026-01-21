@@ -4,24 +4,6 @@ extends Object
 ## character.
 
 
-## The data associated with threat level.
-class ThreatData:
-	## The amount of health that has been affected across characters,
-	## which correlates to how much of a target something is.
-	var value: float = MIN_THREAT
-	## Whether the value has been increased recently, indicating that the value
-	## should not decay.
-	var active: bool = false
-	
-	
-	func _init(
-		start_value: float = MIN_THREAT,
-		start_active: bool = false
-	) -> void:
-		value = start_value
-		active = start_active
-
-
 ## The minimum amount of threat a character can have.
 const MIN_THREAT: float = 1.0
 ## An invalid character id.
@@ -120,3 +102,21 @@ func _on_Summon_deactivated() -> void:
 	if _summoner_data["id"] == INVALID_ID:
 		return
 	_threat_values[_summoner_data["id"]].value = _summoner_data["old_value"]
+
+
+## The data associated with threat level.
+class ThreatData:
+	## The amount of health that has been affected across characters,
+	## which correlates to how much of a target something is.
+	var value: float = MIN_THREAT
+	## Whether the value has been increased recently, indicating that the value
+	## should not decay.
+	var active: bool = false
+	
+	
+	func _init(
+		start_value: float = MIN_THREAT,
+		start_active: bool = false
+	) -> void:
+		value = start_value
+		active = start_active
