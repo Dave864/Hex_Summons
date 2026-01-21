@@ -6,20 +6,6 @@ extends Object
 ## Provides logic to evaluate the result of the effects.
 
 
-## Describes the specific details stored in a single entry in the bus.
-class EntryData:
-	## Reference to the ActionEffect node.
-	var effect: ActionEffect = null
-	## The number of turns the effect has been active for.
-	var turn_count: int = 0
-	
-	
-	## Creates a new instance of EntryData, tracking the given ActionEffect.
-	func _init(new_effect: ActionEffect) -> void:
-		effect = new_effect
-		turn_count = 0
-
-
 ## The stat that is impacted by the tracked effects.
 var _affected_stat: Stat.Type
 ## Tracks the effects and their turn duration.
@@ -60,9 +46,11 @@ func clear() -> void:
 ## Updates the duration for all effects in the bus. Removes effects whose duration
 ## have expired.
 func progress_duration(turn_step: int = 1) -> void:
+	var active_count: int = 0
 	for id in _effect_bus.keys():
-		_effect_bus[id].turn_count += turn_step
-		if _effect_bus[id].effect.turn_duration <= _effect_bus[id].turn_count:
+		_effect_bus[id].turn_active_count += turn_step
+		active_count = _effect_bus[id].turn_active_count
+		if _effect_bus[id].effect.turn_duration <= active_count:
 			_effect_bus.erase(id)
 
 
@@ -97,3 +85,17 @@ func size() -> int:
 ## Virtual function. Checks if the effect matches the bus's tracked strength
 ## calculation.
 @abstract func _is_tracked_strength_calculation(effect: ActionEffect) -> bool
+
+
+## Describes the specific details stored in a single entry in the bus.
+class EntryData:
+	## Reference to the ActionEffect node.
+	var effect: ActionEffect = null
+	## The number of turns the effect has been active for.
+	var turn_active_count: int = 0
+	
+	
+	## Creates a new instance of EntryData, tracking the given ActionEffect.
+	func _init(new_effect: ActionEffect) -> void:
+		effect = new_effect
+		turn_active_count = 0
