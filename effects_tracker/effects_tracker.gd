@@ -29,3 +29,9 @@ func _on_HitBox_area_entered(hit_box: ActionHitBox) -> void:
 	var effects: Array[ActionEffect] = hit_box.get_effects()
 	for e_handler: EffectsHandler in get_children():
 		e_handler.apply_effects(effects)
+
+
+## Progresses effect duration when the character's turn ends.
+func _on_Character_turn_ended() -> void:
+	progress_duration()
+	process_effects()
