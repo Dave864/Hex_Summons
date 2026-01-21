@@ -22,7 +22,7 @@ func _init(affected_stat: Stat.Type):
 func add_effect(effect: ActionEffect) -> void:
 	if (
 		effect.stat_affected != _affected_stat
-		and not _is_tracked_strength_calculation(effect)
+		or not _is_tracked_strength_calculation(effect)
 	):
 		return
 	var effect_id: int = effect.get_instance_id()

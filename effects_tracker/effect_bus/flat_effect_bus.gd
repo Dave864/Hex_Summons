@@ -9,4 +9,7 @@ extends EffectBus
 ## Checks that the effect is a FlatActionEffect that does not set the stat
 ## to some value.
 func _is_tracked_strength_calculation(effect: ActionEffect) -> bool:
-	return effect.operation != Stat.Operation.SET and effect is FlatActionEffect
+	return (
+		effect.operation != Stat.Operation.SET
+		and not effect is PercentActionEffect
+	)
