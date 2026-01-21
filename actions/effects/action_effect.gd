@@ -81,32 +81,28 @@ func update_stats_snapshot() -> void:
 	_stats_snapshot = _source_stats.get_all()
 
 
-## Determines the numerical result of the effect on a target set of character
-## stats.
+## Determines the numerical result of the effect on the stat of the target.
 func effect_on_target(target_stats: StatModifiers) -> int:
 	var base_str: float = _calculation_method.base_strength(
 			_stats_snapshot,
 			_action_potency
 	)
-	var efficacy: float = 1.0
-	if resistance_effect != ResEffect.NONE:
-		efficacy = _calculation_method.efficacy(
-				_stats_snapshot,
-				target_stats,
-				_action_potency
-		)
-	match resistance_effect:
-		ResEffect.DURATION:
-			turn_duration = int(round(max_turn_duration * efficacy))
-			return int(base_str)
-		ResEffect.STRENGTH:
-			turn_duration = max_turn_duration
-			return _calculation_method.process_operation(
-					base_str,
-					efficacy,
-					stat_affected,
-					operation
-			)
-		_:
-			turn_duration = max_turn_duration
-			return int(base_str)
+	var efficacy: float = _calculation_method.efficacy(
+			_stats_snapshot,
+			target_stats,
+			_action_potency
+	)
+	turn_duration = (
+		int(round(max_turn_duration * efficacy))
+		if resistance_effect == ResEffect.DURATION 
+		else max_turn_duration
+	)
+	# Efficacy is used for both strength and duration resistance, so needs to
+	# be set to 1.0 when strength is not resisted.
+	efficacy = efficacy if resistance_effect == ResEffect.STRENGTH else 1.0
+	return _calculation_method.process_operation(
+			base_str,
+			efficacy,
+			stat_affected,
+			operation
+	)
