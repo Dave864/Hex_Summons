@@ -30,7 +30,7 @@ enum RelevantStat {
 }
 
 ## Maps the RelevantStat value to the corresponding Stat.Type enum.
-var _global_reference: Dictionary[RelevantStat, Stat.Type] = {
+const GLOBAL_REFERENCE: Dictionary[RelevantStat, Stat.Type] = {
 	RelevantStat.ATTACK: Stat.Type.ATTACK,
 	RelevantStat.DEFENSE: Stat.Type.DEFENSE,
 	RelevantStat.AGILITY: Stat.Type.AGILITY,
@@ -60,8 +60,8 @@ var _percent_change_bus: PercentEffectBus
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	_flat_change_bus = FlatEffectBus.new(_global_reference[target_stat])
-	_percent_change_bus = PercentEffectBus.new(_global_reference[target_stat])
+	_flat_change_bus = FlatEffectBus.new(GLOBAL_REFERENCE[target_stat])
+	_percent_change_bus = PercentEffectBus.new(GLOBAL_REFERENCE[target_stat])
 
 
 ## Updates the duration for all effects.
@@ -74,11 +74,11 @@ func progress_duration(turn_step: int = 1) -> void:
 ## the effects. Character stats are updated.
 func process_effects() -> void:
 	# Reset modifier to prevent stat effects from accumulating.
-	_c_stats.update_modifier(_global_reference[target_stat], 0)
+	_c_stats.update_modifier(GLOBAL_REFERENCE[target_stat], 0)
 	var f_change: int = _flat_change_bus.process_all_effects(_c_stats)
-	_c_stats.update_modifier(_global_reference[target_stat], f_change)
+	_c_stats.update_modifier(GLOBAL_REFERENCE[target_stat], f_change)
 	var p_change: int = _percent_change_bus.process_all_effects(_c_stats)
-	_c_stats.update_modifier(_global_reference[target_stat], f_change + p_change)
+	_c_stats.update_modifier(GLOBAL_REFERENCE[target_stat], f_change + p_change)
 
 
 ## Adds relevant effects to this handler.
