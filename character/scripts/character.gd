@@ -45,7 +45,7 @@ func emit_is_waiting() -> void:
 	emit_signal("is_waiting")
 
 
-## Emit the signal 'turn_ended'
+## Emit the signal 'turn_ended'.
 func emit_turn_ended() -> void:
 	emit_signal("turn_ended")
 

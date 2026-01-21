@@ -83,4 +83,5 @@ script = ExtResource("13_dgwq2")
 script = ExtResource("7")
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
+[connection signal="turn_ended" from="." to="EffectsTracker" method="_on_Character_turn_ended"]
 [connection signal="area_entered" from="HitBox" to="EffectsTracker" method="_on_HitBox_area_entered"]

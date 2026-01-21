@@ -14,15 +14,13 @@
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="12"]
 [ext_resource type="Texture2D" path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattlePortrait.atlastex" id="13"]
 [ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="14"]
-[ext_resource type="PackedScene" path="res://actions/action_nodes/Shot/Shot.tscn" id="15"]
+[ext_resource type="PackedScene" uid="uid://cp6hc4c3kwymm" path="res://actions/action_nodes/Shot/Shot.tscn" id="15"]
 [ext_resource type="PackedScene" uid="uid://6pb0gwn4gr8t" path="res://actions/action_nodes/Blast/Blast.tscn" id="16"]
 [ext_resource type="Script" uid="uid://mxpbc437xmjm" path="res://character_ai/action_conditions/cooldown.gd" id="17"]
 [ext_resource type="Script" uid="uid://bdkgr4241wqcj" path="res://character_ai/action_behavior.gd" id="18"]
-[ext_resource type="PackedScene" path="res://actions/action_nodes/Empty/Empty.tscn" id="19"]
+[ext_resource type="PackedScene" uid="uid://c4shujk0dhck0" path="res://actions/action_nodes/Empty/Empty.tscn" id="19"]
 [ext_resource type="Script" uid="uid://b020qxy754ll2" path="res://character_ai/action_conditions/group_condition.gd" id="20"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="21"]
-
-
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.05
@@ -125,5 +123,6 @@ ai_node = NodePath("../../CharacterAI")
 script = ExtResource("8")
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
+[connection signal="turn_ended" from="." to="EffectsTracker" method="_on_Character_turn_ended"]
 [connection signal="turn_ended" from="." to="Actions/Blast/ActionBehavior/Cooldown" method="_on_Character_turn_ended"]
 [connection signal="area_entered" from="HitBox" to="EffectsTracker" method="_on_HitBox_area_entered"]
