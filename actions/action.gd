@@ -22,7 +22,7 @@ var _emission_map_index: int = -1
 ## The transform the effect is emitted from.
 var _emission_transform: Transform3D = Transform3D.IDENTITY
 ## The direction the effect is emitted. Only updated if the action is directional.
-var _emission_direction: int
+var _emission_direction: HexUtil.HexDirection
 
 ## The animation player for this node.
 @onready var ani_player: AnimationPlayer = $AnimationPlayer
@@ -82,21 +82,20 @@ func set_emission_pos(pos: Vector3) -> void:
 
 ## Set the direction of the emission (0 - 5). Only updates the direction if
 ## the action is emitted from center.
-func set_emission_direction(dir: int) -> void:
+func set_emission_direction(dir: HexUtil.HexDirection) -> void:
 	if stats.emit_from_caster:
-		_emission_direction = 0 if dir < 0 else 5 if dir > 5 else dir
+		_emission_direction = dir
 		_emission_transform.basis = Basis(
 				Vector3.UP,
 				HexUtil.dir_rotation(_emission_direction)
 		)
 	else:
-		_emission_direction = -1
 		_emission_transform.basis = Basis.IDENTITY
 	_hit_box.transform = _emission_transform
 
 
-## Get the direction of the emission. Returns -1 if the action is not directional.
-func get_emission_direction() -> int:
+## Get the direction of the emission.
+func get_emission_direction() -> HexUtil.HexDirection:
 	return _emission_direction
 
 

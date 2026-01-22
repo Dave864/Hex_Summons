@@ -460,18 +460,15 @@ func _update_targets(effect_range: Array[int]) -> void:
 
 ## Determines if the selector is able to move to the adjacent tile in the
 ## given direction (0 - 5) and does so if able.
-func _resolve_joystick_for_area(dir: int) -> void:
-	if dir >= 0 and dir <= 5:
-		var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(dir)
-		if adjacent_tile != null and _is_target_tile(adjacent_tile):
-			_update_selection(adjacent_tile)
+func _resolve_joystick_for_area(dir: HexUtil.HexDirection) -> void:
+	var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(dir)
+	if adjacent_tile != null and _is_target_tile(adjacent_tile):
+		_update_selection(adjacent_tile)
 
 
 ## Determines if the selector is able to move to the given direction (0 - 5)
 ## and does so if able.
-func _resolve_joystick_for_cardinal(dir: int) -> void:
-	if dir < 0 or dir > 5:
-		return
+func _resolve_joystick_for_cardinal(dir: HexUtil.HexDirection) -> void:
 	var character_tile: MapTile = selector.hex_map.get_tile_at(
 			_character_map_index
 	)

@@ -24,14 +24,11 @@ const SELECTOR_Y_OFFSET = 0.125
 ##  0  / \  1
 ##  5 |   | 2
 ##  4  \ /  3
-var _adjacent_tiles: Array[MapTile] = [null, null, null, null, null, null]: \
-	get = get_all_adjacent
+var _adjacent_tiles: Array[MapTile] = [null, null, null, null, null, null]
 ## Flag that indicates the highlight of the tile.
-var _highlight_type: int = HexHighlighter.Option.NONE: \
-	get = get_highlight_type, set = set_highlight_type
+var _highlight_type: int = HexHighlighter.Option.NONE
 ## Flag that indicates the selector of the tile.
-var _selector_type: int = HexHighlighter.Option.NONE: \
-	get = get_selector_type, set = set_selector_type
+var _selector_type: int = HexHighlighter.Option.NONE
 
 
 func _ready() -> void:
@@ -54,14 +51,14 @@ func set_height(value: int) -> void:
 	_update_highlighter_positions()
 
 
-## Gets the adjacent tile of the specified edge.
-func get_adjacent_tile(edge: int) -> Node3D:
-	return _adjacent_tiles[edge]
+## Gets the adjacent tile of the specified direction.
+func get_adjacent_tile(direction: HexUtil.HexDirection) -> Node3D:
+	return _adjacent_tiles[direction]
 
 
-## Sets the adjacent tile of the specified edge.
-func set_adjacent_tile(edge: int, map_tile: Area3D):
-	_adjacent_tiles[edge] = map_tile
+## Sets the adjacent tile of the specified direction.
+func set_adjacent_tile(direction: HexUtil.HexDirection, map_tile: Area3D):
+	_adjacent_tiles[direction] = map_tile
 	$DebugLabel.update_label_display(height)
 
 
@@ -105,9 +102,12 @@ func get_character_position() -> Vector3:
 	return map_coordinate.global_position
 
 
-## Update the position of the tile highlighters so that they are on top of the tile.
+## Update the position of the tile highlighters so that they are on top of
+## the tile.
 func _update_highlighter_positions() -> void:
-	var y_translate: float = HIGHLIGHTER_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
+	var y_translate: float = (
+		HIGHLIGHTER_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
+	)
 	$TileHighlighter.position = Vector3(0.0, y_translate, 0.0)
 	y_translate = SELECTOR_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
 	$SelectorHighlighter.position = Vector3(0.0, y_translate, 0.0)

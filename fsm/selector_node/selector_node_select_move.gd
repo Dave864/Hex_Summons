@@ -155,7 +155,7 @@ func _update_selection(map_tile: MapTile) -> void:
 
 ## Determines if the selector is able to move to the adjacent tile in the
 ## given direction (0 - 5) and does so if able.
-func _resolve_joystick_direction(direction: int) -> void:
+func _resolve_joystick_direction(direction: HexUtil.HexDirection) -> void:
 	if direction >= 0 and direction <= 5:
 		var adjacent_tile: MapTile = (
 			selector.tile_hovered.get_adjacent_tile(direction)
