@@ -11,14 +11,18 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_gi2hs")
+top_edge = 35.0
+bottom_edge = 35.0
+left_edge = 30.0
+right_edge = 30.0
 
 [node name="DetectorTop" type="ReferenceRect" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 20.0
-offset_right = -20.0
-offset_bottom = 20.0
+offset_left = 30.0
+offset_right = -30.0
+offset_bottom = 35.0
 grow_horizontal = 2
 mouse_filter = 1
 border_color = Color(0, 1, 0, 1)
@@ -29,9 +33,9 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -20.0
-offset_right = -20.0
+offset_left = 30.0
+offset_top = -35.0
+offset_right = -30.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 1
@@ -41,9 +45,9 @@ border_color = Color(0, 1, 0, 1)
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_top = 20.0
-offset_right = 20.0
-offset_bottom = -20.0
+offset_top = 35.0
+offset_right = 30.0
+offset_bottom = -35.0
 grow_vertical = 2
 mouse_filter = 1
 border_color = Color(0, 1, 0, 1)
@@ -54,9 +58,9 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = 20.0
-offset_bottom = -20.0
+offset_left = -30.0
+offset_top = 35.0
+offset_bottom = -35.0
 grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 1
@@ -64,16 +68,16 @@ border_color = Color(0, 1, 0, 1)
 
 [node name="DetectorTopLeft" type="ReferenceRect" parent="."]
 layout_mode = 1
-offset_right = 20.0
-offset_bottom = 20.0
+offset_right = 30.0
+offset_bottom = 35.0
 
 [node name="DetectorTopRight" type="ReferenceRect" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -20.0
-offset_bottom = 20.0
+offset_left = -30.0
+offset_bottom = 35.0
 grow_horizontal = 0
 
 [node name="DetectorBottomLeft" type="ReferenceRect" parent="."]
@@ -81,8 +85,8 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -20.0
-offset_right = 20.0
+offset_top = -35.0
+offset_right = 30.0
 grow_vertical = 0
 
 [node name="DetectorBottomRight" type="ReferenceRect" parent="."]
@@ -92,7 +96,24 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -20.0
+offset_left = -30.0
+offset_top = -35.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[connection signal="mouse_entered" from="DetectorTop" to="." method="_on_Detector_mouse_entered"]
+[connection signal="mouse_exited" from="DetectorTop" to="." method="_on_Detector_mouse_exited"]
+[connection signal="mouse_entered" from="DetectorBottom" to="." method="_on_Detector_mouse_entered"]
+[connection signal="mouse_exited" from="DetectorBottom" to="." method="_on_Detector_mouse_exited"]
+[connection signal="mouse_entered" from="DetectorLeft" to="." method="_on_Detector_mouse_entered"]
+[connection signal="mouse_exited" from="DetectorLeft" to="." method="_on_Detector_mouse_exited"]
+[connection signal="mouse_entered" from="DetectorRight" to="." method="_on_Detector_mouse_entered"]
+[connection signal="mouse_exited" from="DetectorRight" to="." method="_on_Detector_mouse_exited"]
+[connection signal="mouse_entered" from="DetectorTopLeft" to="." method="_on_Detector_mouse_entered"]
+[connection signal="mouse_exited" from="DetectorTopLeft" to="." method="_on_Detector_mouse_exited"]
+[connection signal="mouse_entered" from="DetectorTopRight" to="." method="_on_Detector_mouse_entered"]
+[connection signal="mouse_exited" from="DetectorTopRight" to="." method="_on_Detector_mouse_exited"]
+[connection signal="mouse_entered" from="DetectorBottomLeft" to="." method="_on_Detector_mouse_entered"]
+[connection signal="mouse_exited" from="DetectorBottomLeft" to="." method="_on_Detector_mouse_exited"]
+[connection signal="mouse_entered" from="DetectorBottomRight" to="." method="_on_Detector_mouse_entered"]
+[connection signal="mouse_exited" from="DetectorBottomRight" to="." method="_on_Detector_mouse_exited"]

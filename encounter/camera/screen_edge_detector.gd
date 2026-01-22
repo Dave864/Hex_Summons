@@ -18,24 +18,39 @@ const DIST_STEP := 0.01
 ## The distance from the top of the screen to the end of the top edge area.
 @export_range(MIN_DIST, MAX_DIST, DIST_STEP) var top_edge = 20.0:
 	set(value):
+		if not is_node_ready():
+			return
 		top_edge = value
 		_adjust_top_positions()
 ## The distance from the bottom of the screen to the end of the bottom edge area.
 @export_range(MIN_DIST, MAX_DIST, DIST_STEP) var bottom_edge = 20.0:
 	set(value):
+		if not is_node_ready():
+			return
 		bottom_edge = value
 		_adjust_bottom_positions()
 ## The distance from the left of the screen to the end of the left edge area.
 @export_range(MIN_DIST, MAX_DIST, DIST_STEP) var left_edge = 20.0:
 	set(value):
+		if not is_node_ready():
+			return
 		left_edge = value
 		_adjust_left_positions()
 ## The distance from the right of the screen to the end of the right edge area.
 @export_range(MIN_DIST, MAX_DIST, DIST_STEP) var right_edge = 20.0:
 	set(value):
+		if not is_node_ready():
+			return
 		right_edge = value
 		_adjust_right_positions()
 
+## Indicates that the mouse is within the edge area.
+var _in_edge := false
+## The direction from center to where the mouse is in.
+var _direction := Vector2.ZERO
+
+## The center of the detection area.
+@onready var _center := Vector2(size.x / 2.0, size.y / 2.0)
 ## The detector for the top edge.
 @onready var _top_detector: ReferenceRect = $DetectorTop
 ## The detector for the bottom edge.
@@ -52,6 +67,13 @@ const DIST_STEP := 0.01
 @onready var _bottom_left_detector: ReferenceRect = $DetectorBottomLeft
 ## The detector for the bottom right corner.
 @onready var _bottom_right_detector: ReferenceRect = $DetectorBottomRight
+
+
+## Calculates the direction from center to the mouse position when the mouse is
+## within the edge area.
+func _process(_delta: float) -> void:
+	if InputController.source_is_keymouse() and _in_edge:
+		_direction = (MouseHandler.get_2d_position() - _center).normalized()
 
 
 ## Modify the dimensions of the edge detectors to match the top edge dimension.
@@ -104,3 +126,14 @@ func _adjust_right_positions() -> void:
 	_bottom_right_detector.position.x = new_pos
 	_top_detector.size.x = size.x - right_edge - _top_detector.position.x
 	_bottom_detector.size.x = size.x - right_edge - _bottom_detector.position.x
+
+
+## Gets the direction from screen center to the mouse position.
+func _on_Detector_mouse_entered() -> void:
+	_in_edge = true
+
+
+## Stops tracking the mouse position.
+func _on_Detector_mouse_exited() -> void:
+	_in_edge = false
+	_direction = Vector2.ZERO
