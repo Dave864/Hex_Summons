@@ -32,14 +32,15 @@ const SPEED_STEP := 0.1
 @export_range(MIN_SPEED, MAX_SPEED, SPEED_STEP, "exp") var speed: float = 10.0:
 	set(value):
 		speed = value
-		_decay_rate = (speed - MIN_SPEED + SPEED_STEP) / (MAX_SPEED - MIN_SPEED)
 
 ## Flag that indicates if the destination has been reached.
 var _destination_reached: bool = true
 ## The distance to the destination.
 var _distance_to_destination: float = 0.0
 ## The rate at which speed decays when using DECAYING movement.
-var _decay_rate: float = (speed - MIN_SPEED + SPEED_STEP) / (MAX_SPEED - MIN_SPEED)
+var _decay_rate: float:
+	get:
+		return (speed - MIN_SPEED + SPEED_STEP) / (MAX_SPEED - MIN_SPEED)
 
 ## The starting point for any movement step.
 @onready var _start_point: Vector3 = self.position

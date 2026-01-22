@@ -289,7 +289,7 @@ func _on_Selector_new_focus_point(new_position: Vector3) -> void:
 	move_focus_linear(new_position)
 
 
-## MOves the focus point to the specified position in the specified movement
+## Moves the focus point to the specified position in the specified movement
 ## pattern.
 func _on_SignalBus_position_camera_focus(
 	new_position: Vector3,
