@@ -29,9 +29,7 @@ const SPEED_STEP := 0.1
 ## stopping a decaying move pattern.
 @export_range(0.0001, 0.01, 0.0001, "exp") var decay_cutoff: float = 0.001
 ## The movement speed of the point.
-@export_range(MIN_SPEED, MAX_SPEED, SPEED_STEP, "exp") var speed: float = 10.0:
-	set(value):
-		speed = value
+@export_range(MIN_SPEED, MAX_SPEED, SPEED_STEP, "exp") var speed: float = 10.0
 
 ## Flag that indicates if the destination has been reached.
 var _destination_reached: bool = true
