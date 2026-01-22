@@ -56,9 +56,9 @@ var _relative_top_vertex: int = 0:
 var _default_orientation: Vector3
 
 ## The point the camera looks at.
-@onready var _focus_pt: TrackingPoint = $FocusPoint
+@onready var _focus_pt: MapTileTrackingPoint = $MapTileTrackingPoint
 ## The camera node.
-@onready var _camera: Camera3D = $FocusPoint/Camera3D
+@onready var _camera: Camera3D = $MapTileTrackingPoint/Camera3D
 
 
 ## Called when the node enters the scene tree for the first time.
