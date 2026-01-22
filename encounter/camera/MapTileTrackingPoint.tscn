@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://wppu8qh3p3a3"]
+
+[ext_resource type="Script" uid="uid://c0jiflqq6he7j" path="res://encounter/camera/map_tile_tracking_point.gd" id="1_yjec5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4jmyy"]
+radius = 0.1
+
+[node name="MapTileTrackingPoint" type="Marker3D"]
+script = ExtResource("1_yjec5")
+
+[node name="MapTileDetector" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MapTileDetector"]
+shape = SubResource("CylinderShape3D_4jmyy")
