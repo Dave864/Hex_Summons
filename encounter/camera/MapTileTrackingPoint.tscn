@@ -15,3 +15,5 @@ collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MapTileDetector"]
 shape = SubResource("CylinderShape3D_4jmyy")
+
+[connection signal="area_entered" from="MapTileDetector" to="." method="_on_MapTileDetector_area_entered"]
