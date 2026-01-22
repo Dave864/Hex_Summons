@@ -48,6 +48,8 @@ const DIST_STEP := 0.01
 var _in_edge := false
 ## The direction from center to where the mouse is in.
 var _direction := Vector2.ZERO
+## The index position of a hex tile that is considered to be the top.
+var _top_hex_vertex: int = 0
 
 ## The center of the detection area.
 @onready var _center := Vector2(size.x / 2.0, size.y / 2.0)
@@ -69,11 +71,29 @@ var _direction := Vector2.ZERO
 @onready var _bottom_right_detector: ReferenceRect = $DetectorBottomRight
 
 
+## Connects the top_vertex_changed signal from SignalBus.
+func _ready() -> void:
+	SignalBus.connect(
+			"top_vertex_changed",
+			Callable(self, "_on_SignalBus_top_vertex_changed")
+	)
+
+
 ## Calculates the direction from center to the mouse position when the mouse is
 ## within the edge area.
 func _process(_delta: float) -> void:
 	if InputController.source_is_keymouse() and _in_edge:
 		_direction = (MouseHandler.get_2d_position() - _center).normalized()
+
+
+## Gets the normalized vector direction.
+func get_direction_to_edge() -> Vector2:
+	return _direction
+
+
+## Gets the direction as a hex direction.
+func get_hex_direction_to_edge() -> HexUtil.HexDirection:
+	return HexUtil.get_hex_direction(_direction, _top_hex_vertex)
 
 
 ## Modify the dimensions of the edge detectors to match the top edge dimension.
@@ -137,3 +157,8 @@ func _on_Detector_mouse_entered() -> void:
 func _on_Detector_mouse_exited() -> void:
 	_in_edge = false
 	_direction = Vector2.ZERO
+
+
+## Updates the top hex vertex when the SignalBus indicates it has changed.
+func _on_SignalBus_top_vertex_changed(new_top_vertex: int) -> void:
+	_top_hex_vertex = new_top_vertex
