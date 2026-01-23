@@ -8,6 +8,9 @@ extends Control
 ## direction from the center of the screen to the hovered point in the edge area.
 
 
+## Indicates that the edge of the screen is entered.
+signal edge_hit
+
 ## The minimum distance that can be defined as the edge.
 const MIN_DIST := 1.0
 ## The maximum distance that can be defined as the edge.
@@ -82,8 +85,12 @@ func _ready() -> void:
 ## Calculates the direction from center to the mouse position when the mouse is
 ## within the edge area.
 func _process(_delta: float) -> void:
+	# Prevent issues when adding as packed scene to other scenes.
+	if Engine.is_editor_hint():
+		return
 	if InputController.source_is_keymouse() and _in_edge:
 		_direction = (MouseHandler.get_2d_position() - _center).normalized()
+		emit_signal("edge_hit")
 
 
 ## Gets the normalized vector direction.

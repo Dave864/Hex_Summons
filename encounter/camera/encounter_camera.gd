@@ -55,6 +55,8 @@ var _relative_top_vertex: int = 0:
 ## The default orientation of the camera
 var _default_orientation: Vector3
 
+## The edges of the screen.
+@onready var _screen_edge_detector: ScreenEdgeDetector = $ScreenEdgeDetector
 ## The point the camera looks at.
 @onready var _focus_pt: MapTileTrackingPoint = $MapTileTrackingPoint
 ## The camera node.
@@ -287,6 +289,15 @@ func _check_for_required_parameters() -> void:
 ## Moves the focus point to the position indicated by the selector.
 func _on_Selector_new_focus_point(new_position: Vector3) -> void:
 	move_focus_linear(new_position)
+
+
+## Moves the focus point to the tile in the adjacent direction.
+func _on_ScreenEdgeDetector_edge_hit() -> void:
+	if not _focus_pt.is_moving():
+		_focus_pt.move_to_adjacent_tile(
+				_screen_edge_detector.get_hex_direction_to_edge(),
+				TrackingPoint.MovementType.LINEAR
+		)
 
 
 ## Moves the focus point to the specified position in the specified movement

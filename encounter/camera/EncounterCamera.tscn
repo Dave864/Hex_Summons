@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dxny3bidwcnmv"]
+[gd_scene load_steps=9 format=3 uid="uid://dxny3bidwcnmv"]
 
 [ext_resource type="Script" uid="uid://dm50vglsj11ig" path="res://encounter/camera/encounter_camera.gd" id="1"]
 [ext_resource type="Script" uid="uid://c3u8o13e13nue" path="res://fsm/encounter/camera/encounter_camera_normalize.gd" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="4"]
 [ext_resource type="Script" uid="uid://bsbs2o6tnkgem" path="res://fsm/encounter/camera/encounter_camera_reset.gd" id="5"]
 [ext_resource type="Script" uid="uid://8ingtrtxv6m1" path="res://fsm/encounter/camera/encounter_camera_pan.gd" id="6"]
+[ext_resource type="PackedScene" uid="uid://revs8m56drl" path="res://encounter/camera/ScreenEdgeDetector.tscn" id="7_a4sf0"]
 
 [sub_resource type="Environment" id="Environment_ykgfb"]
 ambient_light_color = Color(1, 1, 1, 1)
@@ -16,11 +17,13 @@ script = ExtResource("1")
 joystick_vert_pan_speed = 120.0
 joystick_lateral_pan_speed = 200.0
 
+[node name="ScreenEdgeDetector" parent="." instance=ExtResource("7_a4sf0")]
+
 [node name="MapTileTrackingPoint" parent="." instance=ExtResource("2_ykgfb")]
-transform = Transform3D(1, 0, 0, 0, 0.611527, 0.7912235, 0, -0.7912235, 0.611527, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.6087614, 0.7933533, 0, -0.7933533, 0.6087614, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="MapTileTrackingPoint"]
-transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, -4.7683608e-07, 14.999971)
+transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, -4.7683608e-07, 15)
 environment = SubResource("Environment_ykgfb")
 projection = 1
 size = 10.0
@@ -37,3 +40,5 @@ script = ExtResource("5")
 
 [node name="Normalize" type="Node" parent="StateMachine"]
 script = ExtResource("2")
+
+[connection signal="edge_hit" from="ScreenEdgeDetector" to="." method="_on_ScreenEdgeDetector_edge_hit"]
