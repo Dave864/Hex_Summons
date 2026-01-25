@@ -25,6 +25,7 @@ func enter(_msg := {}) -> void:
 	_active_char = enc.get_current_character()
 	_connect_signals()
 	await enc.camera.move_focus_decay(_active_char.position)
+	enc.camera.enable_edge_detection()
 	SignalBus.emit_player_turn_started(_active_char)
 
 

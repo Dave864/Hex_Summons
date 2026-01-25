@@ -18,6 +18,7 @@ var _active_char: EnemyCharacter = null
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
+	enc.camera.disable_edge_detection()
 	_active_char = enc.get_current_character()
 	_connect_signals()
 	await enc.camera.move_focus_decay(_active_char.position)

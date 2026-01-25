@@ -21,6 +21,7 @@ func enter(_msg := {}) -> void:
 	_summon_waiting = false
 	enc.selector.active_character = enc.summon
 	await enc.camera.move_focus_decay(enc.summon.position)
+	enc.camera.enable_edge_detection()
 	SignalBus.emit_summon_turn_started()
 
 
