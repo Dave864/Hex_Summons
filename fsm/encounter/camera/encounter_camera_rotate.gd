@@ -19,8 +19,10 @@ var mouse_motion: Vector2 = Vector2.ZERO
 func handle_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_camera_pan"):
 		rotate_camera = true
+		enc_camera.disable_edge_detection()
 	if event.is_action_released("ui_camera_pan"):
 		rotate_camera = false
+		enc_camera.enable_edge_detection()
 		state_machine.transition_to(NORMALIZE)
 	if event.is_action_pressed("ui_camera_reset"):
 		state_machine.transition_to(RESET)

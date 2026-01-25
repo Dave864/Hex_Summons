@@ -124,6 +124,16 @@ func get_relative_top_vertex() -> int:
 	return _relative_top_vertex
 
 
+## Disable the screen edge detection.
+func disable_edge_detection() -> void:
+	_screen_edge_detector.disable()
+
+
+## Enable the screen edge detection.
+func enable_edge_detection() -> void:
+	_screen_edge_detector.enable()
+
+
 ## Handles vertical camera rotation from mouse drag.
 func vertical_rotation_mouse(v_motion: float) -> void:
 	if abs(v_motion) < mouse_drag_threshold:

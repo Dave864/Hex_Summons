@@ -11,10 +11,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_gi2hs")
-top_edge = 40.0
-bottom_edge = 40.0
-left_edge = 45.0
-right_edge = 45.0
 
 [node name="DetectorTop" type="ReferenceRect" parent="."]
 layout_mode = 1
