@@ -6,7 +6,7 @@ class_name EncounterCameraState
 
 
 # The name of the states for this FSM.
-var PAN: String = "Pan"
+var ROTATE: String = "Rotate"
 var NORMALIZE: String = "Normalize"
 var RESET: String = "Reset"
 

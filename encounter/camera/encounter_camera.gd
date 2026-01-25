@@ -50,7 +50,6 @@ var _vert_pan_midpoint: float = _panning_vertical_midpoint():
 ## 4 \ / 2
 ##    3
 var _relative_top_vertex: int = 0:
-	get = get_relative_top_vertex,
 	set = set_relative_top_vertex
 ## The default orientation of the camera
 var _default_orientation: Vector3
@@ -125,8 +124,8 @@ func get_relative_top_vertex() -> int:
 	return _relative_top_vertex
 
 
-## Handles vertical camera panning from mouse drag.
-func vertical_pan_mouse(v_motion: float) -> void:
+## Handles vertical camera rotation from mouse drag.
+func vertical_rotation_mouse(v_motion: float) -> void:
 	if abs(v_motion) < mouse_drag_threshold:
 		return
 	var vert_rot: float = rad_to_deg(_focus_pt.rotation.x)
@@ -136,14 +135,14 @@ func vertical_pan_mouse(v_motion: float) -> void:
 	_focus_pt.rotation.x = deg_to_rad(_bind_vertical_rotation(vert_rot))
 
 
-## Handles lateral camera panning from mouse drag.
-func lateral_pan_mouse(l_motion: float) -> void:
+## Handles lateral camera rotation from mouse drag.
+func lateral_rotation_mouse(l_motion: float) -> void:
 	_focus_pt.rotation.y -= deg_to_rad(l_motion * mouse_lateral_multiplier)
 	_focus_pt.rotation.y = _normalize_lateral_rotation(_focus_pt.rotation.y)
 
 
-## Handles vertical camera panning from joystick input.
-func vertical_pan_joystick(delta: float) -> void:
+## Handles vertical camera rotation from joystick input.
+func vertical_rotation_joystick(delta: float) -> void:
 	var v_move: float = Input.get_axis("right_joystick_d", "right_joystick_u")
 	if abs(v_move) == 0.0:
 		return
@@ -154,8 +153,8 @@ func vertical_pan_joystick(delta: float) -> void:
 	_focus_pt.rotation.x = deg_to_rad(_bind_vertical_rotation(vert_rot))
 
 
-## Handles lateral camera panning from joystick input.
-func lateral_pan_joystick(delta: float) -> void:
+## Handles lateral camera rotation from joystick input.
+func lateral_rotation_joystick(delta: float) -> void:
 	var h_move: float = Input.get_axis("right_joystick_l", "right_joystick_r")
 	if abs(h_move) == 0.0:
 		return

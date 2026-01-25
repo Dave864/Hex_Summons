@@ -34,7 +34,7 @@ func update(delta: float) -> void:
 			_target_orientation
 	)
 	if _weight >= 1.0:
-		state_machine.transition_to(PAN)
+		state_machine.transition_to(ROTATE)
 
 
 ## Called by the state machine before changing the active state.
