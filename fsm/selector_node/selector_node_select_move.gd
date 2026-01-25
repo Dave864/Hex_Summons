@@ -25,10 +25,8 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	)
 	if _move_origin_index < 0:
 		_move_origin_index = character_index
-	var move_origin_tile: MapTile = selector.hex_map.get_tile_at(
-			_move_origin_index
-	)
-	selector.emit_new_focus_point(move_origin_tile.get_character_position())
+	var character_tile: MapTile = selector.hex_map.get_tile_at(character_index)
+	selector.emit_new_focus_point(character_tile.get_character_position())
 	_determine_movement_ids()
 	_highlight_movement_range(character_index)
 	selector.set_update_selection_func(_update_selection_ref)
@@ -180,16 +178,18 @@ func _on_Character_turn_ended() -> void:
 
 ## Creates the movement path to the selected tile if said tile is valid.
 func _on_SignalBus_move_path_requested() -> void:
-	if selector.tile_hovered.get_selector_type() != HexHighlighter.Option.GRAY:
+	var target_tile: MapTile = selector.tile_hovered
+	if target_tile.get_selector_type() != HexHighlighter.Option.GRAY:
 		var path_data: PackedVector3Array = (
 			selector.hex_map.range_finder.get_character_point_path(
 					selector.active_character,
-					selector.tile_hovered.map_coordinate.get_tile_index(),
+					target_tile.map_coordinate.get_tile_index(),
 					selector.enemies_ref,
 					_movement_ids
 			)
 		)
 		SignalBus.emit_move_path_created(path_data)
+		selector.emit_new_focus_point(target_tile.get_character_position())
 		state_machine.transition_to(PAUSE)
 
 
