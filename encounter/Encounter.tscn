@@ -68,5 +68,6 @@ script = ExtResource("11")
 [connection signal="focus_moved_by_edge" from="EncounterCamera" to="Selector" method="_on_EncounterCamera_focus_moved_by_edge"]
 [connection signal="activated" from="Summon" to="EncounterUI" method="_on_Summon_activated"]
 [connection signal="deactivated" from="Summon" to="EncounterUI" method="_on_Summon_deactivated"]
+[connection signal="camera_focus_locked" from="Selector" to="EncounterCamera" method="_on_Selector_camera_focus_locked"]
 [connection signal="new_focus_point" from="Selector" to="EncounterCamera" method="_on_Selector_new_focus_point"]
 [connection signal="spawn_action_confirmed" from="Selector" to="Summon" method="_on_Selector_spawn_action_confirmed"]

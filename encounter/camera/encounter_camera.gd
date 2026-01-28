@@ -10,7 +10,7 @@ class_name EncounterCamera
 ## Passes along the new map tile that is being focused on.
 signal focus_moved_by_edge(new_focus_tile)
 
-## Defines the radians values that correspond to the vertices of a hexagon.
+## Defines the radian values that correspond to the vertices of a hexagon.
 ##    0
 ## 5 / \ 1
 ##  |   |
@@ -27,10 +27,12 @@ const HEX_VERTEX_RADIANS: Array[float] = [
 
 ## The default distance the camera is to be set from the focus point.
 @export var default_distance: float = 15.0: set = set_default_distance
-## The upper boundary for vertical rotation.
-@export var vert_panning_u_bound: float = 75.0: set = set_vert_panning_u_bound
-## The lower boundary for vertical rotation.
-@export var vert_panning_l_bound: float = 30.0: set = set_vert_panning_l_bound
+## The upper boundary for vertical rotation in degrees.
+@export_range(45.0, 90.0, 0.1) var vert_panning_u_bound: float = 75.0:
+	set = set_vert_panning_u_bound
+## The lower boundary for vertical rotation in degrees.
+@export_range(0.0, 45.0, 0.1) var vert_panning_l_bound: float = 30.0:
+	set = set_vert_panning_l_bound
 ## The threshold of mouse movement required to trigger a rotation change.
 @export_range(1.0, 5.0, 0.01) var mouse_drag_threshold: float = 1.0
 ## The percentage of lateral mouse movement to use when updating the camera.
@@ -44,8 +46,7 @@ const HEX_VERTEX_RADIANS: Array[float] = [
 
 ## The midpoint between the vertical rotation bounds. Considered the default
 ## rotation for the camera.
-var _vert_pan_midpoint: float = _panning_vertical_midpoint():
-	get = get_vert_pan_midpoint
+var _vert_pan_midpoint: float = _panning_vertical_midpoint()
 ## The index position of a hex tile that is considered to be the top, relative
 ## to the camera position.
 ##    0
@@ -55,6 +56,9 @@ var _vert_pan_midpoint: float = _panning_vertical_midpoint():
 ##    3
 var _relative_top_vertex: int = 0:
 	set = set_relative_top_vertex
+## Flag that indicates if the camera focus point is able to be updated via
+## screen edge detection.
+var _focus_point_locked: bool = false
 ## The default orientation of the camera
 var _default_orientation: Vector3
 
@@ -76,6 +80,12 @@ func _ready():
 	_focus_pt.rotation = Vector3(deg_to_rad(_vert_pan_midpoint), 0.0, 0.0)
 	_default_orientation = _focus_pt.rotation
 	set_camera_distance(default_distance)
+
+
+## Determines if the camera focus point is able to be updated using screen edge
+## detection.
+func is_focus_point_locked() -> bool:
+	return _focus_point_locked
 
 
 ## Sets the value of the default distance.
@@ -302,6 +312,16 @@ func _check_for_required_parameters() -> void:
 ## Moves the focus point to the position indicated by the selector.
 func _on_Selector_new_focus_point(new_position: Vector3) -> void:
 	move_focus_linear(new_position)
+
+
+## Disables or enables the screen edge detection if the selector has locked or
+## unlocked the camera focus respectively.
+func _on_Selector_camera_focus_locked(is_locked: bool) -> void:
+	_focus_point_locked = is_locked
+	if _focus_point_locked:
+		disable_edge_detection()
+	else:
+		enable_edge_detection()
 
 
 ## Moves the focus point to the tile in the adjacent direction.

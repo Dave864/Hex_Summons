@@ -8,6 +8,8 @@ extends Node
 signal spawn_action_confirmed(name, emission_position)
 ## Indicates that the encounter camera should focus on a new point.
 signal new_focus_point(new_position)
+## Indicates if the camera focus is locked to a point.
+signal camera_focus_locked(is_locked)
 
 ## The MapTile that was last passed over.
 var tile_hovered: MapTile = null
@@ -54,6 +56,16 @@ func emit_spawn_action_confirmed(
 ## should point to.
 func emit_new_focus_point(new_position: Vector3) -> void:
 	emit_signal("new_focus_point", new_position)
+
+
+## Emits the camera_focus_locked signal, indicating that the focus is locked.
+func emit_camera_focus_locked() -> void:
+	emit_signal("camera_focus_locked", true)
+
+
+## Emits the camera_focus_locked signal, indicating that the focus is unlocked.
+func emit_camera_focus_unlocked() -> void:
+	emit_signal("camera_focus_locked", false)
 
 
 ## Gets the tile that the mouse last hovered over.

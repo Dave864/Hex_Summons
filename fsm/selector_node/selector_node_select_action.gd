@@ -50,6 +50,7 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
 	if _action.stats.emit_from_caster:
+		selector.emit_camera_focus_locked()
 		_orient_to_closest_target()
 	else:
 		_place_closest_to_target()
@@ -59,6 +60,7 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 ## Called by the state machine before changing the active state. Use this 
 ## function to clean up the state.
 func exit() -> void:
+	selector.emit_camera_focus_unlocked()
 	selector.set_update_selection_func(Callable())
 	_disconnect_signals()
 

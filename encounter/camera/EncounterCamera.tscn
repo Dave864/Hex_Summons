@@ -18,6 +18,10 @@ joystick_vert_pan_speed = 120.0
 joystick_lateral_pan_speed = 200.0
 
 [node name="ScreenEdgeDetector" parent="." instance=ExtResource("7_a4sf0")]
+top_edge = 20.0
+bottom_edge = 20.0
+left_edge = 20.0
+right_edge = 20.0
 
 [node name="MapTileTrackingPoint" parent="." instance=ExtResource("2_ykgfb")]
 transform = Transform3D(1, 0, 0, 0, 0.6087614, 0.7933533, 0, -0.7933533, 0.6087614, 0, 0, 0)
