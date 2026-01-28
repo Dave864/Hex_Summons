@@ -12,10 +12,11 @@
 [ext_resource type="Resource" path="res://character/enemy_characters/EnemyCharacter/stat_data/stat_values.tres" id="9"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="10"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="10_kfcv6"]
-[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="11"]
+[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/button_layout/CharacterLabel/CharacterLabel.tscn" id="11"]
 [ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="12"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="13"]
 [ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="15"]
+
 
 [node name="EnemyCharacter" type="Area3D"]
 collision_layer = 8

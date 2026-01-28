@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://6wcjlnpvl3ol"]
+
+[ext_resource type="Script" uid="uid://dl34jxj0kevgn" path="res://user_interface/encounter/button_layout/SubOptionButton/sub_option_button.gd" id="1"]
+
+
+[node name="SubOptionButton" type="MarginContainer"]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.095
+size_flags_horizontal = 4
+script = ExtResource("1")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

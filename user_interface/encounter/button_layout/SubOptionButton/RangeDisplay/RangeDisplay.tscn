@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource type="Script" uid="uid://bfo867j3rde8c" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/range_display.gd" id="5"]
+
+
+[node name="RangeDisplay" type="Panel"]
+offset_right = 10.0
+offset_bottom = 10.0
+mouse_filter = 2
+size_flags_horizontal = 9
+size_flags_vertical = 5
+script = ExtResource( 5 )
+row_count = 7
+col_count = 7

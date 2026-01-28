@@ -8,12 +8,13 @@
 [ext_resource type="Script" uid="uid://bccbuxlvavdd6" path="res://fsm/user_character/player_character/player_character_action.gd" id="8"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="9"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="10"]
-[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="11"]
+[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/button_layout/CharacterLabel/CharacterLabel.tscn" id="11"]
 [ext_resource type="Script" uid="uid://cuk41txbrftic" path="res://fsm/user_character/user_character_move.gd" id="11_jvfqn"]
 [ext_resource type="Texture2D" path="res://character/player_characters/Player2/BattlePortrait.atlastex" id="12"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="13"]
 [ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="13_dgwq2"]
 [ext_resource type="Script" uid="uid://bv7t5hn7xo5ve" path="res://wisps/player_wisp_pool.gd" id="14"]
+
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.05

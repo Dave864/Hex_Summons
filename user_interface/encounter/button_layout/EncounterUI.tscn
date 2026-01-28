@@ -1,0 +1,164 @@
+[gd_scene load_steps=19 format=3 uid="uid://b8653jyeljph1"]
+
+[ext_resource type="PackedScene" uid="uid://bsdqilfcr4xqv" path="res://user_interface/encounter/button_layout/PlayerOptionButton/EndButton.tscn" id="1"]
+[ext_resource type="Script" uid="uid://dsv35awa3y33i" path="res://user_interface/encounter/button_layout/encounter_ui.gd" id="2"]
+[ext_resource type="Script" uid="uid://d5hvsefs34ls" path="res://user_interface/encounter/button_layout/sub_options.gd" id="3"]
+[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="4"]
+[ext_resource type="Script" uid="uid://ds7n6ekq64jsp" path="res://fsm/user_interface/encounter/encounter_ui_wait.gd" id="5"]
+[ext_resource type="Script" uid="uid://cugbgxwfqqcsm" path="res://fsm/user_interface/encounter/encounter_ui_move.gd" id="6"]
+[ext_resource type="Script" uid="uid://bivg5gtassi7s" path="res://fsm/user_interface/encounter/encounter_ui_pause.gd" id="7"]
+[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="8"]
+[ext_resource type="Script" uid="uid://bi03nel8te0u4" path="res://fsm/user_interface/encounter/encounter_ui_action.gd" id="9"]
+[ext_resource type="PackedScene" uid="uid://d3i1mqeluj5hv" path="res://user_interface/encounter/button_layout/InitiativeTracker/InitiativeTracker.tscn" id="10"]
+[ext_resource type="PackedScene" uid="uid://cy3ef1wdf5tu" path="res://user_interface/encounter/button_layout/UserCharacterStats/ActiveCharacterStats.tscn" id="11"]
+[ext_resource type="PackedScene" uid="uid://by7j6btb8hhip" path="res://user_interface/encounter/button_layout/UserCharacterStats/PartyCharacterStats.tscn" id="12"]
+[ext_resource type="PackedScene" uid="uid://5vv4y7a5a1ay" path="res://user_interface/encounter/button_layout/PlayerOptionButton/SpellButton.tscn" id="13"]
+[ext_resource type="PackedScene" uid="uid://dtfgs8438te8w" path="res://user_interface/encounter/button_layout/PlayerOptionButton/ItemButton.tscn" id="14"]
+[ext_resource type="PackedScene" uid="uid://cuwbd4bjywig0" path="res://user_interface/encounter/button_layout/PlayerOptionButton/SummonButton.tscn" id="15"]
+[ext_resource type="PackedScene" uid="uid://bbic645b0237g" path="res://user_interface/encounter/button_layout/PlayerOptionButton/TechniqueButton.tscn" id="16"]
+[ext_resource type="PackedScene" uid="uid://bbb4rvu44d041" path="res://user_interface/encounter/button_layout/PlayerOptionButton/MovementButton.tscn" id="17"]
+[ext_resource type="PackedScene" uid="uid://5td8sfwtxdp6" path="res://user_interface/encounter/button_layout/WispPool/StandbyWispPool/StandbyWispPool.tscn" id="18"]
+
+[node name="EncounterUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("8")
+script = ExtResource("2")
+
+[node name="InitiativeTracker" parent="." instance=ExtResource("10")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+offset_left = 64.0
+offset_top = 2.0
+offset_right = 576.0
+offset_bottom = 36.0
+grow_horizontal = 1
+
+[node name="StandbyPool" parent="." instance=ExtResource("18")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 60.0
+offset_bottom = 60.0
+
+[node name="SubOptions" type="ScrollContainer" parent="."]
+layout_mode = 0
+anchor_left = 0.189
+anchor_top = 0.891
+anchor_right = 1.0
+anchor_bottom = 0.891
+offset_left = 0.0399933
+offset_top = -65.12
+offset_bottom = -12.12
+size_flags_vertical = 3
+mouse_filter = 2
+follow_focus = true
+script = ExtResource("3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SubOptions"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 3
+
+[node name="EnemyStats" type="VBoxContainer" parent="."]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 0.003
+anchor_right = 1.0
+anchor_bottom = 0.725
+offset_left = -60.0
+offset_top = 0.04
+grow_horizontal = 0
+mouse_filter = 2
+alignment = 1
+
+[node name="PartyStats" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 64.0
+offset_right = 131.0
+offset_bottom = -128.0
+grow_vertical = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="PartyCharacterStats1" parent="PartyStats" instance=ExtResource("12")]
+layout_mode = 2
+
+[node name="PartyCharacterStats2" parent="PartyStats" instance=ExtResource("12")]
+visible = false
+layout_mode = 2
+
+[node name="PartyCharacterStats3" parent="PartyStats" instance=ExtResource("12")]
+visible = false
+layout_mode = 2
+
+[node name="PartyCharacterStats4" parent="PartyStats" instance=ExtResource("12")]
+visible = false
+layout_mode = 2
+
+[node name="ActiveCharacterStats" parent="." instance=ExtResource("11")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -122.0
+offset_right = 116.0
+offset_bottom = -2.0
+grow_vertical = 0
+
+[node name="Options" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.20600002
+anchor_top = 0.85600007
+anchor_right = 0.9875
+anchor_bottom = 0.99700004
+offset_left = 0.1599884
+offset_top = 0.8407593
+offset_bottom = 0.08078003
+
+[node name="MovementButton" parent="Options" instance=ExtResource("17")]
+layout_mode = 2
+
+[node name="TechniqueButton" parent="Options" instance=ExtResource("16")]
+layout_mode = 2
+
+[node name="SpellButton" parent="Options" instance=ExtResource("13")]
+layout_mode = 2
+
+[node name="SummonButton" parent="Options" instance=ExtResource("15")]
+layout_mode = 2
+
+[node name="ItemButton" parent="Options" instance=ExtResource("14")]
+layout_mode = 2
+
+[node name="EndButton" parent="Options" instance=ExtResource("1")]
+layout_mode = 2
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4")
+initial_state = NodePath("Wait")
+
+[node name="Wait" type="Node" parent="StateMachine"]
+script = ExtResource("5")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("6")
+
+[node name="Pause" type="Node" parent="StateMachine"]
+script = ExtResource("7")
+
+[node name="Action" type="Node" parent="StateMachine"]
+script = ExtResource("9")
