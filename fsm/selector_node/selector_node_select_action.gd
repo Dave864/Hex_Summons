@@ -124,7 +124,6 @@ func _update_selection(map_tile: MapTile) -> void:
 		if InputController.get_source() == InputController.Source.GAMEPAD:
 			_orient_emission_to_tile(map_tile)
 	elif _is_target_tile(map_tile):
-		selector.emit_new_focus_point(map_tile.get_character_position())
 		selector.tile_hovered = map_tile
 		_action.set_emission_map_index(map_tile.map_coordinate.get_tile_index())
 		_action.set_emission_pos(map_tile.get_character_position())
