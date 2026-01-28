@@ -11,16 +11,19 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_gi2hs")
+top_edge = 40.0
+bottom_edge = 40.0
+left_edge = 40.0
+right_edge = 40.0
 
 [node name="DetectorTop" type="ReferenceRect" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 45.0
-offset_right = -45.0
+offset_left = 40.0
+offset_right = -40.0
 offset_bottom = 40.0
 grow_horizontal = 2
-mouse_filter = 1
 border_color = Color(0, 1, 0, 1)
 
 [node name="DetectorBottom" type="ReferenceRect" parent="."]
@@ -29,12 +32,11 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 45.0
+offset_left = 40.0
 offset_top = -40.0
-offset_right = -45.0
+offset_right = -40.0
 grow_horizontal = 2
 grow_vertical = 0
-mouse_filter = 1
 border_color = Color(0, 1, 0, 1)
 
 [node name="DetectorLeft" type="ReferenceRect" parent="."]
@@ -42,10 +44,9 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_top = 40.0
-offset_right = 45.0
+offset_right = 40.0
 offset_bottom = -40.0
 grow_vertical = 2
-mouse_filter = 1
 border_color = Color(0, 1, 0, 1)
 
 [node name="DetectorRight" type="ReferenceRect" parent="."]
@@ -54,17 +55,16 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -45.0
+offset_left = -40.0
 offset_top = 40.0
 offset_bottom = -40.0
 grow_horizontal = 0
 grow_vertical = 2
-mouse_filter = 1
 border_color = Color(0, 1, 0, 1)
 
 [node name="DetectorTopLeft" type="ReferenceRect" parent="."]
 layout_mode = 1
-offset_right = 45.0
+offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="DetectorTopRight" type="ReferenceRect" parent="."]
@@ -72,7 +72,7 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -45.0
+offset_left = -40.0
 offset_bottom = 40.0
 grow_horizontal = 0
 
@@ -82,7 +82,7 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -40.0
-offset_right = 45.0
+offset_right = 40.0
 grow_vertical = 0
 
 [node name="DetectorBottomRight" type="ReferenceRect" parent="."]
@@ -92,7 +92,7 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -45.0
+offset_left = -40.0
 offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0

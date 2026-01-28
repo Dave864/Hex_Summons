@@ -62,6 +62,13 @@ func _on_MapTile_mouse_hovered(new_tile: MapTile) -> void:
 		_update_selection_func.call(new_tile)
 
 
+## Updates the hovered tile to be the new focus point as determined by the
+## encounter camera's screen edge detection.
+func _on_EncounterCamera_focus_moved_by_edge(new_focus_tile: MapTile) -> void:
+	if not _update_selection_func.is_null():
+		_update_selection_func.call(new_focus_tile)
+
+
 ## Updates the relative top vertex when the camera changes orientation.
 func _on_SignalBus_top_vertex_changed(new_top_vertex: int) -> void:
 	top_vertex = new_top_vertex

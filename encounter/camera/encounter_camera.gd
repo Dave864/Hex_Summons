@@ -6,6 +6,10 @@ class_name EncounterCamera
 ## Handles positioning, rotating, and resizing camera dimensions.
 
 
+## Indicates that the camera has shifted focus point due to edge detection.
+## Passes along the new map tile that is being focused on.
+signal focus_moved_by_edge(new_focus_tile)
+
 ## Defines the radians values that correspond to the vertices of a hexagon.
 ##    0
 ## 5 / \ 1
@@ -307,6 +311,7 @@ func _on_ScreenEdgeDetector_edge_hit() -> void:
 				_screen_edge_detector.get_hex_direction_to_edge(),
 				TrackingPoint.MovementType.LINEAR
 		)
+		emit_signal("focus_moved_by_edge", _focus_pt.get_map_tile())
 
 
 ## Moves the focus point to the specified position in the specified movement

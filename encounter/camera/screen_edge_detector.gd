@@ -107,14 +107,14 @@ func disable() -> void:
 
 ## Enables the ability to detect mouse movement.
 func enable() -> void:
-	_top_detector.mouse_filter = Control.MOUSE_FILTER_PASS
-	_bottom_detector.mouse_filter = Control.MOUSE_FILTER_PASS
-	_left_detector.mouse_filter = Control.MOUSE_FILTER_PASS
-	_right_detector.mouse_filter = Control.MOUSE_FILTER_PASS
-	_top_left_detector.mouse_filter = Control.MOUSE_FILTER_PASS
-	_top_right_detector.mouse_filter = Control.MOUSE_FILTER_PASS
-	_bottom_left_detector.mouse_filter = Control.MOUSE_FILTER_PASS
-	_bottom_right_detector.mouse_filter = Control.MOUSE_FILTER_PASS
+	_top_detector.mouse_filter = Control.MOUSE_FILTER_STOP
+	_bottom_detector.mouse_filter = Control.MOUSE_FILTER_STOP
+	_left_detector.mouse_filter = Control.MOUSE_FILTER_STOP
+	_right_detector.mouse_filter = Control.MOUSE_FILTER_STOP
+	_top_left_detector.mouse_filter = Control.MOUSE_FILTER_STOP
+	_top_right_detector.mouse_filter = Control.MOUSE_FILTER_STOP
+	_bottom_left_detector.mouse_filter = Control.MOUSE_FILTER_STOP
+	_bottom_right_detector.mouse_filter = Control.MOUSE_FILTER_STOP
 
 
 ## Gets the normalized vector direction.

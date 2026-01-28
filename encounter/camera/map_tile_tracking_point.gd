@@ -11,6 +11,11 @@ extends TrackingPoint
 var _current_tile: MapTile = null
 
 
+## Gets the tile this point is hovering over.
+func get_map_tile() -> MapTile:
+	return _current_tile
+
+
 ## Moves this point to the adjacent tile in the given direction.
 func move_to_adjacent_tile(
 	direction: HexUtil.HexDirection,
