@@ -37,11 +37,17 @@ const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 #  |   |
 # 4 \ / 2
 #    3
+## The unit circle position of vertex 0 (top).
 const HV_COORD_0: Vector2 = Vector2(0.0, -1.0)
+## The unit circle position of vertex 1 (top right).
 const HV_COORD_1: Vector2 = Vector2(HEX_EDGE_RATIO, -0.5)
+## The unit circle position of vertex 2 (bottom right)
 const HV_COORD_2: Vector2 = Vector2(HEX_EDGE_RATIO, 0.5)
+## The unit circle position of vertex 3 (bottom).
 const HV_COORD_3: Vector2 = Vector2(0.0, 1.0)
+## The unit circle position of vertex 4 (bottom left).
 const HV_COORD_4: Vector2 = Vector2(-HEX_EDGE_RATIO, 0.5)
+## The unit circle position of vertex 5 (top left).
 const HV_COORD_5: Vector2 = Vector2(-HEX_EDGE_RATIO, -0.5)
 
 
@@ -167,7 +173,7 @@ static func dir_rotation(dir: HexDirection) -> float:
 	var true_dir: int = 6 if dir == HexDirection.UPPER_LEFT else dir
 	# Want to position rotation at midpoint of line. Testing revealed that the
 	# rotation needs to be negative in order to align with the direction.
-	return -(2 * true_dir - 1) * PI / 6.0
+	return (2 * true_dir - 1) * PI / 6.0
 
 
 ## Get the hexagonal direction relative to the defined top vertex. Used to
