@@ -27,15 +27,25 @@ enum Options {
 ## The button for summons.
 @onready var _summon_button: Button = $PlayerActions/VBoxContainer/Summon
 ## The button for items.
-@onready var _item_button: Button = $PlayerActions/VBoxContainer/Summon
-## The button for waiting.
-@onready var _wait_button: Button = $PlayerActions/VBoxContainer/Wait
+@onready var _item_button: Button = $PlayerActions/VBoxContainer/Item
 ## The container that holds the options for a selected action.
 @onready var _action_options: PlayerActionOptions = $ActionOptions
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var techniques: Array[Action]
+	techniques.resize($Techniques.get_child_count())
+	for i: int in techniques.size():
+		techniques[i] = $Techniques.get_child(i) as Action
+	var spells: Array[Action]
+	spells.resize($Spells.get_child_count())
+	for i: int in spells.size():
+		spells[i] = $Spells.get_child(i) as Action
+	populate_technique_options(techniques)
+	populate_spell_options(spells)
+	populate_item_options([])
+	populate_summon_options([])
 	display()
 
 
@@ -121,3 +131,8 @@ func clear_item_options() -> void:
 ## Clears out the recorded options for all action types.
 func clear_all_options() -> void:
 	_action_options.clear_all_options()
+
+
+## Hides this menu.
+func _on_Wait_pressed() -> void:
+	dismiss()

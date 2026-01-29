@@ -102,8 +102,8 @@ func _create_buttons_for_action_options(
 ) -> void:
 	for action: Action in action_options:
 		_create_button(option_container, action)
-	var first_button: Button = option_container[0].button_node
-	var last_button: Button = option_container[-1].button_node
+	var first_button: ActionOptionButton = option_container[0]
+	var last_button: ActionOptionButton = option_container[-1]
 	first_button.focus_previous = last_button.get_path()
 	first_button.focus_neighbor_top = last_button.get_path()
 	last_button.focus_next = first_button.get_path()
@@ -121,6 +121,7 @@ func _create_button(
 		var previous_button: ActionOptionButton = option_container[-1]
 		previous_button.focus_next = option_button.get_path()
 		option_button.focus_previous = previous_button.get_path()
+	option_button.hide()
 	option_container.append(option_button)
 
 
@@ -144,6 +145,8 @@ func _display_buttons(
 	action_options: Array[ActionOptionButton],
 	make_visible: bool = true
 ) -> void:
+	if make_visible:
+		action_options[0].call_deferred("grab_focus")
 	for option_button: ActionOptionButton in action_options:
 		option_button.visible = make_visible
 
@@ -189,4 +192,4 @@ func _on_Item_pressed() -> void:
 ## Hides this UI element, clearing out the saved action options.
 func _on_Wait_pressed() -> void:
 	hide()
-	#clear_all_options()
+	clear_all_options()

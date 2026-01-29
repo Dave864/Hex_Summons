@@ -1,8 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://dp3b42qitf0at"]
+[gd_scene load_steps=11 format=3 uid="uid://dp3b42qitf0at"]
 
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_uo2p1"]
 [ext_resource type="Script" uid="uid://b4pkwviamfe4m" path="res://user_interface/encounter/menu_layout/PlayerOptions/player_options_menu.gd" id="2_b51x4"]
 [ext_resource type="Script" uid="uid://drfkxuuxn4m7t" path="res://user_interface/encounter/menu_layout/PlayerOptions/player_action_options.gd" id="3_f0o6x"]
+[ext_resource type="PackedScene" uid="uid://b63u8x16ow4ir" path="res://actions/action_nodes/Beam/Beam.tscn" id="4_f0o6x"]
+[ext_resource type="PackedScene" uid="uid://ctgoieguj4weo" path="res://actions/action_nodes/Lob/Lob.tscn" id="4_ydqs4"]
+[ext_resource type="PackedScene" uid="uid://cp6hc4c3kwymm" path="res://actions/action_nodes/Shot/Shot.tscn" id="5_rdt83"]
+[ext_resource type="PackedScene" uid="uid://6pb0gwn4gr8t" path="res://actions/action_nodes/Blast/Blast.tscn" id="5_ydqs4"]
+[ext_resource type="PackedScene" uid="uid://bwq1llmyfdw5o" path="res://actions/action_nodes/Strike/Strike.tscn" id="6_85t8o"]
+[ext_resource type="PackedScene" uid="uid://dw8dgt1uo4nrp" path="res://actions/action_nodes/Sweep/Sweep.tscn" id="7_m7trg"]
+[ext_resource type="PackedScene" uid="uid://bkqx7l8kj0bii" path="res://actions/action_nodes/Nova/Nova.tscn" id="10_ddqho"]
 
 [node name="PlayerOptionsMenu" type="Control"]
 layout_mode = 3
@@ -130,6 +137,24 @@ offset_top = -80.0
 offset_right = 168.0
 offset_bottom = -8.0
 grow_vertical = 0
+
+[node name="Techniques" type="Node" parent="."]
+
+[node name="Lob" parent="Techniques" instance=ExtResource("4_ydqs4")]
+
+[node name="Shot" parent="Techniques" instance=ExtResource("5_rdt83")]
+
+[node name="Strike" parent="Techniques" instance=ExtResource("6_85t8o")]
+
+[node name="Sweep" parent="Techniques" instance=ExtResource("7_m7trg")]
+
+[node name="Spells" type="Node" parent="."]
+
+[node name="Beam" parent="Spells" instance=ExtResource("4_f0o6x")]
+
+[node name="Blast" parent="Spells" instance=ExtResource("5_ydqs4")]
+
+[node name="Nova" parent="Spells" instance=ExtResource("10_ddqho")]
 
 [connection signal="pressed" from="PlayerActions/VBoxContainer/Movement" to="ActionOptions" method="_on_Movement_pressed"]
 [connection signal="pressed" from="PlayerActions/VBoxContainer/Technique" to="ActionOptions" method="_on_Technique_pressed"]

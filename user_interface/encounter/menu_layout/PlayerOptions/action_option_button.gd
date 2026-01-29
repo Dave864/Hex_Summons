@@ -17,9 +17,21 @@ var _action: Action = null
 func _init(stored_action: Action) -> void:
 	_action = stored_action
 	name = _action.name
+	text = name
+	alignment = HORIZONTAL_ALIGNMENT_CENTER
+	flat = true
 	connect("pressed", Callable(self, "_on_ActionOptionButton_pressed"))
+	connect(
+			"focus_entered",
+			Callable(self, "_on_ActionOptionButton_focus_entered")
+	)
 
 
 ## Passes along the stored action.
 func _on_ActionOptionButton_pressed() -> void:
+	emit_signal("action_selected", _action)
+
+
+## Passes along the stored action.
+func _on_ActionOptionButton_focus_entered() -> void:
 	emit_signal("action_selected", _action)
