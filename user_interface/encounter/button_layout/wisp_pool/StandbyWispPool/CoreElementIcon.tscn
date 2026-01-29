@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource type="Texture2D" uid="uid://4ifp0h7gjo1o" path="res://art/ui/SummonWispPool/Summon Core Gem.png" id="1"]
-[ext_resource type="Script" uid="uid://cwffiqfhuskoq" path="res://user_interface/encounter/button_layout/WispPool/core_element_icon.gd" id="2"]
+[ext_resource type="Script" uid="uid://cwffiqfhuskoq" path="res://user_interface/encounter/button_layout/wisp_pool/core_element_icon.gd" id="2"]
 
 
 [sub_resource type="AtlasTexture" id=1]

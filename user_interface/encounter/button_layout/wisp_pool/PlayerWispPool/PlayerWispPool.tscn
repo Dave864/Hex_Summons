@@ -1,12 +1,12 @@
 [gd_scene load_steps=15 format=3 uid="uid://lr3lmar6lskp"]
 
 [ext_resource type="Texture2D" uid="uid://dwiffc3bbluwm" path="res://art/ui/PlayerWispPool/Wisp Pool Large Base.png" id="1"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/WispPool/PlayerWispPool/AnimatedLabel.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/PlayerWispPool/AnimatedLabel.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://swnmxppp2rgi" path="res://art/ui/PlayerWispPool/Polar Gem L.png" id="3"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/WispPool/PlayerWispPool/PolarElementIcon.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/PlayerWispPool/PolarElementIcon.tscn" id="4"]
 [ext_resource type="Texture2D" uid="uid://bf6hd711vjxom" path="res://art/ui/PlayerWispPool/Core Gem L.png" id="5"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/WispPool/PlayerWispPool/CoreElementIcon.tscn" id="6"]
-[ext_resource type="Script" uid="uid://dtb85y8tre5kg" path="res://user_interface/encounter/button_layout/WispPool/PlayerWispPool/player_wisp_pool_ui.gd" id="7"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/PlayerWispPool/CoreElementIcon.tscn" id="6"]
+[ext_resource type="Script" uid="uid://dtb85y8tre5kg" path="res://user_interface/encounter/button_layout/wisp_pool/PlayerWispPool/player_wisp_pool_ui.gd" id="7"]
 [ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="9"]
 
 

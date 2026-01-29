@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://by7j6btb8hhip"]
 
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_b8f0o"]
-[ext_resource type="Script" uid="uid://blseqgdfu5205" path="res://user_interface/encounter/button_layout/UserCharacterStats/user_character_stats_ui.gd" id="2_0ir13"]
+[ext_resource type="Script" uid="uid://blseqgdfu5205" path="res://user_interface/encounter/button_layout/user_character_stats/user_character_stats_ui.gd" id="2_0ir13"]
 [ext_resource type="Texture2D" uid="uid://30s2sfbgvhje" path="res://art/ui/ThemeBlueSigil/HealthBorder.png" id="3_mii14"]
 [ext_resource type="Texture2D" uid="uid://c5b60fk50dtu8" path="res://art/ui/ThemeBlueSigil/HealthBar.png" id="4_tdy0w"]
-[ext_resource type="PackedScene" uid="uid://ckrj8wx5k0slu" path="res://user_interface/encounter/button_layout/WispPool/PartyWispPool/PartyWispPool.tscn" id="5_1rccw"]
+[ext_resource type="PackedScene" uid="uid://ckrj8wx5k0slu" path="res://user_interface/encounter/button_layout/wisp_pool/PartyWispPool/PartyWispPool.tscn" id="5_1rccw"]
 [ext_resource type="Texture2D" uid="uid://osiqpd8jhoyd" path="res://art/icon.png" id="6_bjsw2"]
 [ext_resource type="Shader" uid="uid://d1rqm2l1tcof8" path="res://user_interface/shaders/change_color.gdshader" id="7_kon6o"]
 
