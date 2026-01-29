@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://3fxn0walrbhe"]
 
 [ext_resource type="Texture2D" uid="uid://osiqpd8jhoyd" path="res://art/icon.png" id="1"]
-[ext_resource type="Script" uid="uid://cx4xhnu7auu6q" path="res://user_interface/encounter/button_layout/InitiativeTracker/initiative_slot.gd" id="2"]
+[ext_resource type="Script" uid="uid://cx4xhnu7auu6q" path="res://user_interface/encounter/InitiativeTracker/initiative_slot.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://c7jbdsahx5x83" path="res://art/ui/Init.png" id="3"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="4"]
 [ext_resource type="Texture2D" uid="uid://deqeke6drdev4" path="res://art/ui/Number Panel.png" id="5"]
