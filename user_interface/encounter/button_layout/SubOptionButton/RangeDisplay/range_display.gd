@@ -1,20 +1,24 @@
 @tool
 class_name RangeDisplay
 extends Panel
-## Test UI node that is meant to check the feasability of drawing the range data
-## of actions on a specific UI element.
+## Displays the range data of an action.
 
 
 ## The number of rows of hexes in the display.
-@export var row_count = 9: set = set_row_count
+@export_range(1, 20) var row_count = 9:
+	set = set_row_count
 ## The number of hexes in each row.
-@export var col_count = 8: set = set_col_count
+@export_range(1, 20) var col_count = 8:
+	set = set_col_count
 ## The distance from the center of a hex to a vertex in pixels.
-@export var hex_radius = 4.0: set = set_hex_radius
+@export_range(0.5, 10.0, 0.1) var hex_radius = 4.0:
+	set = set_hex_radius
 ## The width of the outline border in pixels.
-@export var outline_width = 1.0: set = set_outline_width
+@export_range(0.5, 10.0, 0.1) var outline_width = 1.0:
+	set = set_outline_width
 ## The amount of space between each hex in pixels.
-@export var hex_spacing = 0.0: set = set_hex_spacing
+@export_range(0.0, 5.0, 0.1) var hex_spacing = 0.0:
+	set = set_hex_spacing
 
 ## The middle row of the display.
 var _mid_row: int = int(round(row_count / 2.0)) - 1
@@ -34,7 +38,8 @@ var _draw_order: Dictionary[String, Array] = {
 }
 ## The vertex positions for a hex at origin.
 var _origin_pts: PackedVector2Array = []
-## The positions of each hex in the display.
+## The vertex positions for a hex fill at origin. Drawn over a base edge to
+## simulate a border.
 var _origin_fill_pts: PackedVector2Array = []
 
 
@@ -42,6 +47,7 @@ func _ready() -> void:
 	_d_matrix = DisplayMatrix.new(row_count, col_count)
 	_origin_pts = _init_origin_vertices()
 	_origin_fill_pts = _init_origin_vertices(outline_width)
+	update_action($Beam)
 
 
 func _init() -> void:
@@ -184,10 +190,8 @@ func _update_draw_order() -> void:
 	var center: Vector2 = Vector2.ZERO
 	for row in row_count:
 		center.y = hex_radius * 1.5 * (row + 1) + (row * hex_spacing)
-		center.x = (
-				hex_radius * HexUtil.HEX_EDGE_RATIO * 2 if row % 2 == 0
-				else hex_radius * HexUtil.HEX_EDGE_RATIO * 3 + (hex_spacing / 2)
-		)
+		center.x = hex_radius * HexUtil.HEX_EDGE_RATIO 
+		center.x = center.x * 2 if row % 2 == 0 else center.x * 3
 		var draw_data: DisplayMatrix.HexDetails = (
 			_d_matrix.at(Vector2(0, row))
 		)
@@ -293,8 +297,9 @@ func _get_points_for_hex(
 ## always within its bounds. 
 func _set_min_size() -> void:
 	var x_size: float = (
-			hex_radius * 2 * col_count \
-			+ (col_count * hex_spacing)
+			5 * hex_radius * HexUtil.HEX_EDGE_RATIO \
+			+ (col_count - 1) \
+			* (2 * hex_radius * HexUtil.HEX_EDGE_RATIO + hex_spacing)
 	)
 	var y_size: float = (
 			hex_radius * 1.5 * (row_count + 1) \
