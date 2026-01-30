@@ -2,10 +2,7 @@ class_name PlayerOptionsMenu
 extends Control
 ## Displays the actions available to the current active player character.
 ##
-## Handles the population of the actions menu. Also handles the display
-## of the details of a selected action. Buttons for action options are not
-## created and destroyed when a different action is selected. Instead, the
-## buttons are revealed or hidden as needed.
+## Handles the population of the actions menu.
 
 
 ## The options available to a player character.

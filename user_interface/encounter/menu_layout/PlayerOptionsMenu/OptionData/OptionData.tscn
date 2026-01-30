@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://cww308tl4jk5n"]
+
+[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_iahou"]
+[ext_resource type="Script" uid="uid://bfo867j3rde8c" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/range_display.gd" id="2_jrdtc"]
+[ext_resource type="PackedScene" uid="uid://b63u8x16ow4ir" path="res://actions/action_nodes/Beam/Beam.tscn" id="3_jrdtc"]
+
+[node name="OptionData" type="Panel"]
+anchors_preset = -1
+anchor_right = 0.2
+anchor_bottom = 0.178
+offset_bottom = -0.08000183
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_iahou")
+
+[node name="RangeDisplay" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 16.0
+offset_bottom = -2.0
+grow_vertical = 2
+script = ExtResource("2_jrdtc")
+metadata/_custom_type_script = "uid://bfo867j3rde8c"
+
+[node name="Beam" parent="RangeDisplay" instance=ExtResource("3_jrdtc")]
+
+[node name="WispCost" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_right = -8.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Cooldown" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_right = -8.0
+grow_horizontal = 0
+grow_vertical = 2
