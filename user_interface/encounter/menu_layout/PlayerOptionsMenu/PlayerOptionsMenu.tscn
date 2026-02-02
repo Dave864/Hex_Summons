@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dp3b42qitf0at"]
+[gd_scene load_steps=12 format=3 uid="uid://dp3b42qitf0at"]
 
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_uo2p1"]
 [ext_resource type="Script" uid="uid://b4pkwviamfe4m" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/player_options_menu.gd" id="2_b51x4"]
 [ext_resource type="Script" uid="uid://drfkxuuxn4m7t" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/player_action_options.gd" id="3_f0o6x"]
 [ext_resource type="PackedScene" uid="uid://b63u8x16ow4ir" path="res://actions/action_nodes/Beam/Beam.tscn" id="4_f0o6x"]
+[ext_resource type="PackedScene" uid="uid://cww308tl4jk5n" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/OptionData/OptionData.tscn" id="4_gmehl"]
 [ext_resource type="PackedScene" uid="uid://ctgoieguj4weo" path="res://actions/action_nodes/Lob/Lob.tscn" id="4_ydqs4"]
 [ext_resource type="PackedScene" uid="uid://cp6hc4c3kwymm" path="res://actions/action_nodes/Shot/Shot.tscn" id="5_rdt83"]
 [ext_resource type="PackedScene" uid="uid://6pb0gwn4gr8t" path="res://actions/action_nodes/Blast/Blast.tscn" id="5_ydqs4"]
@@ -103,7 +104,7 @@ text = "WAIT"
 flat = true
 alignment = 0
 
-[node name="ActionOptions" type="PanelContainer" parent="."]
+[node name="ActionOptions" type="PanelContainer" parent="." node_paths=PackedStringArray("action_display")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -114,6 +115,7 @@ offset_right = 168.0
 offset_bottom = -80.0
 grow_vertical = 0
 script = ExtResource("3_f0o6x")
+action_display = NodePath("../OptionData")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ActionOptions"]
 layout_direction = 3
@@ -127,16 +129,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 6
 alignment = 1
 
-[node name="OptionData" type="Panel" parent="."]
+[node name="OptionData" parent="." instance=ExtResource("4_gmehl")]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
 offset_left = 8.0
-offset_top = -80.0
-offset_right = 168.0
-offset_bottom = -8.0
-grow_vertical = 0
+offset_top = 280.0
+offset_right = 40.0
+offset_bottom = 279.91998
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Techniques" type="Node" parent="."]
 

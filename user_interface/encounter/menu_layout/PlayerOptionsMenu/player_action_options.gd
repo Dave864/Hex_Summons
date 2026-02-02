@@ -17,7 +17,7 @@ enum Option {
 }
 
 ## The control node that displays the specific details of a highlighted action.
-@export var action_display: Node = null
+@export var action_display: OptionData = null
 ## The currently displayed action options.
 var _active_option: Option = Option.NONE
 ## The current set of options for techniques.
@@ -37,6 +37,7 @@ var _item_options: Array[ActionOptionButton] = []
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hide()
+	action_display.hide()
 
 
 ## Populates the action options menu with the listed techniques.
@@ -116,6 +117,10 @@ func _create_button(
 	action: Action
 ) -> void:
 	var option_button := ActionOptionButton.new(action)
+	option_button.connect(
+			"action_selected",
+			Callable(action_display, "_on_ActionOptionButton_action_selected")
+	)
 	_action_options_container.add_child(option_button)
 	if option_container.size() > 0:
 		var previous_button: ActionOptionButton = option_container[-1]
@@ -151,40 +156,45 @@ func _display_buttons(
 		option_button.visible = make_visible
 
 
+## Helper function for pressed button functions. Shows the action options menu
+## as well as the action display.
+func _show_menu() -> void:
+	action_display.show()
+	show()
+	_hide_active_options()
+
+
 ## Hides the currently displayed action options.
 func _on_Movement_pressed() -> void:
 	hide()
+	action_display.hide()
 	_hide_active_options()
 
 
 ## Shows the options for techniques.
 func _on_Technique_pressed() -> void:
-	show()
-	_hide_active_options()
+	_show_menu()
 	_display_buttons(_technique_options)
 	_active_option = Option.TECHNIQUE
 
 
 ## Shows the options for spells.
 func _on_Spell_pressed() -> void:
-	show()
-	_hide_active_options()
+	_show_menu()
 	_display_buttons(_spell_options)
 	_active_option = Option.SPELL
 
 
 ## Shows the options for summons.
 func _on_Summon_pressed() -> void:
-	show()
-	_hide_active_options()
+	_show_menu()
 	_display_buttons(_summon_options)
 	_active_option = Option.SUMMON
 
 
 ## Shows the options for items.
 func _on_Item_pressed() -> void:
-	show()
-	_hide_active_options()
+	_show_menu()
 	_display_buttons(_item_options)
 	_active_option = Option.ITEM
 
@@ -192,4 +202,5 @@ func _on_Item_pressed() -> void:
 ## Hides this UI element, clearing out the saved action options.
 func _on_Wait_pressed() -> void:
 	hide()
-	clear_all_options()
+	action_display.hide()
+	#clear_all_options()

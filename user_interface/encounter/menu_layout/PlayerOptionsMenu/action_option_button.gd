@@ -27,7 +27,7 @@ func _init(stored_action: Action) -> void:
 	)
 
 
-## Passes along the stored action.
+### Passes along the stored action.
 func _on_ActionOptionButton_pressed() -> void:
 	emit_signal("action_selected", _action)
 
