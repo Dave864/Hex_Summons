@@ -12,5 +12,3 @@ mouse_filter = 2
 script = ExtResource("5")
 row_count = 7
 col_count = 7
-hex_radius = 3.0
-outline_width = 0.5

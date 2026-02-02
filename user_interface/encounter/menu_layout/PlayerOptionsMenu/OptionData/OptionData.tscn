@@ -14,15 +14,17 @@ grow_vertical = 2
 theme = ExtResource("1_iahou")
 
 [node name="RangeDisplay" type="Panel" parent="."]
+custom_minimum_size = Vector2(64, 60)
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 4.0
-offset_top = 2.0
-offset_right = 16.0
-offset_bottom = -2.0
+offset_top = 24.0
+offset_right = 24.0
+offset_bottom = -24.0
 grow_vertical = 2
 script = ExtResource("2_jrdtc")
+col_count = 7
 metadata/_custom_type_script = "uid://bfo867j3rde8c"
 
 [node name="Beam" parent="RangeDisplay" instance=ExtResource("3_jrdtc")]
