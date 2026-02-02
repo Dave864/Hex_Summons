@@ -132,6 +132,7 @@ func set_border_width(bw: float) -> void:
 ## Redraws the range display for the given action.
 func update_action(action: Action) -> void:
 	_action = action
+	_emission_index = Vector2(1, _mid_row)
 	_update_display_details()
 	_set_min_size()
 	queue_redraw()
@@ -329,3 +330,4 @@ func _set_min_size() -> void:
 			+ hex_spacing * (row_count - 1) - 2
 	)
 	set_custom_minimum_size(Vector2(x_size, y_size))
+	set_size(Vector2(x_size, y_size))
