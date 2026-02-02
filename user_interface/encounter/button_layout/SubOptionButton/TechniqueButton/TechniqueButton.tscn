@@ -1,8 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://t7dfdsdvqeqx"]
 
 [ext_resource type="Script" uid="uid://bhmjbe6apcnjx" path="res://user_interface/encounter/button_layout/SubOptionButton/TechniqueButton/technique_button.gd" id="1_8t5ev"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/RangeDisplay.tscn" id="2_hkjod"]
-
+[ext_resource type="PackedScene" uid="uid://brswtgdm48yey" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/RangeDisplay.tscn" id="2_hkjod"]
 
 [node name="TechniqueButton" type="MarginContainer"]
 anchors_preset = -1
@@ -25,7 +24,9 @@ size_flags_horizontal = 6
 text = "Test"
 
 [node name="RangeDisplay" parent="HBoxContainer" instance=ExtResource("2_hkjod")]
+custom_minimum_size = Vector2(70, 54)
 layout_mode = 2
+hex_spacing = 1.0
 
 [node name="InactiveFilter" type="Panel" parent="."]
 visible = false
