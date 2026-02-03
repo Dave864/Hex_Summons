@@ -36,8 +36,8 @@ func _ready():
 
 ## Creates a new instance of this node with the given cost details.
 func _init(
-	requirements: Dictionary[Element.Type, int],
-	costs: Dictionary[Element.Type, int]
+	requirements: Dictionary[Element.Type, int] = {},
+	costs: Dictionary[Element.Type, int] = {}
 ) -> void:
 	name = "WispCost"
 	for element: Element.Type in Element.Type.values():
