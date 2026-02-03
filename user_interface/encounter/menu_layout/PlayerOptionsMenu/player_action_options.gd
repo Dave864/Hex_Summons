@@ -266,4 +266,4 @@ func _on_Item_pressed() -> void:
 func _on_Wait_pressed() -> void:
 	hide()
 	action_display.hide()
-	#clear_all_options()
+	clear_all_options()

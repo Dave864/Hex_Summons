@@ -29,21 +29,9 @@ enum Options {
 @onready var _action_options: PlayerActionOptions = $ActionOptions
 
 
-# Called when the node enters the scene tree for the first time.
+## Hides this menu from display.
 func _ready() -> void:
-	var techniques: Array[Action]
-	techniques.resize($Techniques.get_child_count())
-	for i: int in techniques.size():
-		techniques[i] = $Techniques.get_child(i) as Action
-	var spells: Array[Action]
-	spells.resize($Spells.get_child_count())
-	for i: int in spells.size():
-		spells[i] = $Spells.get_child(i) as Action
-	populate_technique_options(techniques)
-	populate_spell_options(spells)
-	populate_item_options([])
-	_summon_button.hide()
-	display()
+	dismiss()
 
 
 ## Handles button input.
