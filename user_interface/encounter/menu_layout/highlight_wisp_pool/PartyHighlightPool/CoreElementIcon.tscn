@@ -264,11 +264,11 @@ _data = {
 }
 
 [node name="CoreElementIcon" type="TextureRect"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -629.0
-offset_bottom = -349.0
+anchors_preset = -1
+anchor_right = 0.017
+anchor_bottom = 0.031000001
+offset_right = 0.11999893
+offset_bottom = -0.1600008
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_txwh5")
