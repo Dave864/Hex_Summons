@@ -8,8 +8,6 @@ extends Button
 
 ## Indicates that the action this button represents has been highlighted.
 signal action_highlighted(action)
-## Indicates that the action this button represents has been selected.
-signal action_selected(action)
 
 ## The action this button represents.
 var _action: Action = null
