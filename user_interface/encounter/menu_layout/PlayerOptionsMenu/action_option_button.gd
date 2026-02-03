@@ -6,6 +6,8 @@ extends Button
 ## this button is pressed.
 
 
+## Indicates that the action this button represents has been highlighted.
+signal action_highlighted(action)
 ## Indicates that the action this button represents has been selected.
 signal action_selected(action)
 
@@ -34,4 +36,4 @@ func _on_ActionOptionButton_pressed() -> void:
 
 ## Passes along the stored action.
 func _on_ActionOptionButton_focus_entered() -> void:
-	emit_signal("action_selected", _action)
+	emit_signal("action_highlighted", _action)
