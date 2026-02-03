@@ -1,0 +1,112 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwsaruqrrcvp6"]
+
+[ext_resource type="Texture2D" uid="uid://ba3xbkufepb4m" path="res://art/ui/PlayerWispPool/Party Wisp Pool Gems.png" id="1_0l6bb"]
+[ext_resource type="Script" uid="uid://b7cfu4tj51jnl" path="res://user_interface/encounter/button_layout/wisp_pool/polar_element_icon.gd" id="1_0npl6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sauxo"]
+atlas = ExtResource("1_0l6bb")
+region = Rect2(0, 26, 14, 13)
+
+[sub_resource type="Animation" id="Animation_0l6bb"]
+resource_name = "light_shine"
+length = 0.8333417
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.41666666, 0.5, 0.5833334, 0.6666667, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 39, 14, 13), Rect2(0, 78, 14, 13), Rect2(14, 78, 14, 13), Rect2(28, 78, 14, 13), Rect2(0, 26, 14, 13), Rect2(0, 26, 14, 13), Rect2(0, 65, 14, 13), Rect2(14, 65, 14, 13), Rect2(28, 65, 14, 13), Rect2(0, 39, 14, 13)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.33333334),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_emit_ping"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_sauxo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 26, 14, 13)]
+}
+
+[sub_resource type="Animation" id="Animation_ydya1"]
+resource_name = "dark_shine"
+length = 0.8333417
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.41666666, 0.5, 0.5833334, 0.6666667, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 52, 14, 13), Rect2(0, 104, 14, 13), Rect2(14, 104, 14, 13), Rect2(28, 104, 14, 13), Rect2(0, 26, 14, 13), Rect2(0, 26, 14, 13), Rect2(0, 91, 14, 13), Rect2(14, 91, 14, 13), Rect2(28, 91, 14, 13), Rect2(0, 52, 14, 13)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.33333334),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_emit_ping"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sauxo"]
+_data = {
+&"RESET": SubResource("Animation_sauxo"),
+&"dark_shine": SubResource("Animation_ydya1"),
+&"light_shine": SubResource("Animation_0l6bb")
+}
+
+[node name="AlignmentElementIcon" type="TextureRect"]
+anchors_preset = -1
+anchor_right = 0.022000002
+anchor_bottom = 0.036000002
+offset_right = -0.08000088
+offset_bottom = 0.03999901
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_sauxo")
+stretch_mode = 2
+script = ExtResource("1_0npl6")
+light_region = Vector2(0, 39)
+dark_region = Vector2(0, 52)
+metadata/_custom_type_script = "uid://b7cfu4tj51jnl"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_sauxo")
+}
