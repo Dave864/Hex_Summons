@@ -19,3 +19,8 @@ func _init(summon_name: String, spawn_action: Action) -> void:
 			"focus_entered",
 			Callable(self, "_on_ActionOptionButton_focus_entered")
 	)
+
+
+### Inidicates that a spawn action has been selected.
+func _on_ActionOptionButton_pressed() -> void:
+	SignalBus.emit_spawn_action_selected(name, _action)

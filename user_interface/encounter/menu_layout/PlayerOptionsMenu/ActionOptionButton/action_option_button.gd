@@ -29,9 +29,9 @@ func _init(stored_action: Action) -> void:
 	)
 
 
-### Passes along the stored action.
+### Inidicates that a character action has been selected.
 func _on_ActionOptionButton_pressed() -> void:
-	emit_signal("action_selected", _action)
+	SignalBus.emit_character_action_selected(_action)
 
 
 ## Passes along the stored action.
