@@ -1,23 +1,32 @@
 @tool
 class_name CoreElementIcon
 extends TextureRect
-## Represents a core element in the UI: earth, fire, water, or wind. Manages
-## the changes from one element to another.
+## Represents a core element in the UI: earth, fire, water, or wind. Also allows
+## for a blank element. Manages the changes from one element to another.
 
 
 ## Indicates that the element value should change.
 signal element_ping(e)
 
-@export var element: int = Element.Core.EARTH: set = set_element
-@export var earth_region: Vector2 = Vector2(0,0)
-@export var fire_region: Vector2 = Vector2(0,0)
-@export var water_region: Vector2 = Vector2(0,0)
-@export var wind_region: Vector2 = Vector2(0,0)
+## The element currently being displayed. Set as int to allow for -1 to be used.
+@export var element: int = Element.Core.EARTH:
+	set = set_element
+## The region of the texture for earth element icon.
+@export var earth_region := Vector2(0,0)
+## The region of the texture for fire element icon.
+@export var fire_region := Vector2(0,0)
+## The region of the texture for water element icon.
+@export var water_region := Vector2(0,0)
+## The region of the texture for wind element icon.
+@export var wind_region := Vector2(0,0)
+## The region of the texture for a blank element icon.
+@export var blank_region := Vector2(0,0)
 
 ## Internal flag that indicates if the element ping should be emitted during
 ## the animation.
 var _ping: bool = false
 
+## The AnimationPlayer for the texture.
 @onready var ap: AnimationPlayer = $AnimationPlayer
 
 
@@ -29,8 +38,9 @@ func _ready():
 	_check_for_required_parameters()
 
 
-## Sets the icon texture region to display the new element.
-func set_element(new_element: int) -> void:
+## Sets the icon texture region to display the new element. A -1 indicates that
+## the blank texture should be used.
+func set_element(new_element: int = -1) -> void:
 	match new_element:
 		Element.Core.EARTH:
 			texture.region.position = earth_region
@@ -41,7 +51,7 @@ func set_element(new_element: int) -> void:
 		Element.Core.WIND:
 			texture.region.position = wind_region
 		_:
-			return
+			texture.region.position = blank_region
 	element = new_element
 
 
@@ -58,6 +68,8 @@ func change_element(new_element: int, ping: bool = true) -> void:
 			ap.play("water_from")
 		Element.Core.WIND:
 			ap.play("wind_from")
+		_:
+			ap.play("blank_from")
 	match new_element:
 		Element.Core.EARTH:
 			ap.queue("earth_to")
@@ -67,6 +79,8 @@ func change_element(new_element: int, ping: bool = true) -> void:
 			ap.queue("water_to")
 		Element.Core.WIND:
 			ap.queue("wind_to")
+		_:
+			ap.queue("blank_to")
 	set_element(new_element)
 
 
@@ -75,7 +89,7 @@ func _check_for_required_parameters() -> void:
 	assert(texture is AtlasTexture, "Icon texture is not an AtlasTexture.")
 
 
-## Called during the a "from" animation. Emits a ping.
+## Called during the a "from" animation from a non-blank element. Emits a ping.
 func _emit_ping() -> void:
 	if _ping:
 		emit_signal("element_ping", element)
