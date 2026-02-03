@@ -44,7 +44,7 @@ func _ready() -> void:
 func populate_technique_options(technique_actions: Array[Action]) -> void:
 	if technique_actions.size() == 0:
 		return
-	_create_buttons_for_action_options(_technique_options, technique_actions)
+	_create_buttons_for_technique_options(technique_actions)
 
 
 ## Clears out the recorded technique options.
@@ -56,7 +56,7 @@ func clear_technique_options() -> void:
 func populate_spell_options(spell_actions: Array[Action]) -> void:
 	if spell_actions.size() == 0:
 		return
-	_create_buttons_for_action_options(_spell_options, spell_actions)
+	_create_buttons_for_spell_options(spell_actions)
 
 
 ## Clears out the recorded spell options.
@@ -65,10 +65,10 @@ func clear_spell_options() -> void:
 
 
 ## Populates the action options menu with the listed summon spawn actions.
-func populate_summon_options(summon_actions: Array[Action]) -> void:
-	if summon_actions.size() == 0:
+func populate_summon_options(summon_manager: Summon) -> void:
+	if summon_manager.available_summons.size() == 0:
 		return
-	_create_buttons_for_action_options(_summon_options, summon_actions)
+	_create_buttons_for_summon_options(summon_manager)
 
 
 ## Clears out the recorded summon options.
@@ -80,7 +80,7 @@ func clear_summon_options() -> void:
 func populate_item_options(item_actions: Array[Action]) -> void:
 	if item_actions.size() == 0:
 		return
-	_create_buttons_for_action_options(_item_options, item_actions)
+	_create_buttons_for_item_options(item_actions)
 
 
 ## Clears out the recorded item options.
@@ -96,13 +96,53 @@ func clear_all_options() -> void:
 	clear_item_options()
 
 
-## Creates buttons for the provided actions, setting up the focus neighbors.
-func _create_buttons_for_action_options(
-	option_container: Array[ActionOptionButton],
-	action_options: Array[Action]
+## Creates buttons for the provided techniques, setting up the focus neighbors.
+func _create_buttons_for_technique_options(techniques: Array[Action]) -> void:
+	for technique: Action in techniques:
+		_create_action_option_button(
+				_technique_options,
+				technique,
+				"_on_TechniqueOptionButton_action_highlighted"
+		)
+	_set_end_button_neighbors(_technique_options)
+
+
+## Creates buttons for the provided spells, setting up the focus neighbors.
+func _create_buttons_for_spell_options(spells: Array[Action]) -> void:
+	for spell: Action in spells:
+		_create_action_option_button(
+				_spell_options,
+				spell,
+				"_on_SpellOptionButton_action_highlighted"
+		)
+	_set_end_button_neighbors(_spell_options)
+
+
+## Creates buttons for the available summons, setting up the focus neighbors.
+func _create_buttons_for_summon_options(summon_manager: Summon) -> void:
+	for summon_name: String in summon_manager.spawn_actions:
+		_create_summon_option_button(
+				summon_name,
+				summon_manager.spawn_actions[summon_name]
+		)
+	_set_end_button_neighbors(_summon_options)
+
+
+## Creates buttons for the provided item actions, setting up the focus neighbors. 
+func _create_buttons_for_item_options(item_actions: Array[Action]) -> void:
+	for action: Action in item_actions:
+		_create_action_option_button(
+				_item_options,
+				action,
+				"_on_ActionOptionButton_action_highlighted"
+		)
+	_set_end_button_neighbors(_item_options)
+
+
+## Sets the neighbors for the first and last buttons in the option container.
+func _set_end_button_neighbors(
+	option_container: Array[ActionOptionButton]
 ) -> void:
-	for action: Action in action_options:
-		_create_button(option_container, action)
 	var first_button: ActionOptionButton = option_container[0]
 	var last_button: ActionOptionButton = option_container[-1]
 	first_button.focus_previous = last_button.get_path()
@@ -112,16 +152,39 @@ func _create_buttons_for_action_options(
 
 
 ## Creates a new button for the given action option.
-func _create_button(
+func _create_action_option_button(
 	option_container: Array[ActionOptionButton],
-	action: Action
+	action: Action,
+	action_display_function: String
 ) -> void:
 	var option_button := ActionOptionButton.new(action)
 	option_button.connect(
-			"action_selected",
-			Callable(action_display, "_on_ActionOptionButton_action_selected")
+			"action_highlighted",
+			Callable(action_display, action_display_function)
 	)
 	_action_options_container.add_child(option_button)
+	_set_button_neighbors(option_button, option_container)
+
+
+## Creates a new button for the given summon option.
+func _create_summon_option_button(
+	summon_name: String,
+	spawn_action: Action
+) -> void:
+	var option_button := SummonOptionButton.new(summon_name, spawn_action)
+	option_button.connect(
+			"action_highlighted",
+			Callable(action_display, "_on_SummonOptionButton_action_highlighted")
+	)
+	_action_options_container.add_child(option_button)
+	_set_button_neighbors(option_button, _summon_options)
+
+
+## Sets the neighbors for the button. 
+func _set_button_neighbors(
+	option_button: ActionOptionButton,
+	option_container: Array[ActionOptionButton]
+) -> void:
 	if option_container.size() > 0:
 		var previous_button: ActionOptionButton = option_container[-1]
 		previous_button.focus_next = option_button.get_path()

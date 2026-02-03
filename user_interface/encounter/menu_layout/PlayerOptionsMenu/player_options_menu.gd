@@ -42,7 +42,7 @@ func _ready() -> void:
 	populate_technique_options(techniques)
 	populate_spell_options(spells)
 	populate_item_options([])
-	populate_summon_options([])
+	_summon_button.hide()
 	display()
 
 
@@ -97,12 +97,12 @@ func clear_spell_options() -> void:
 
 ## Populates the action options menu with the listed summon spawn actions.
 ## Hides the summon button if no actions are provided.
-func populate_summon_options(summon_actions: Array[Action]) -> void:
-	if summon_actions.size() == 0:
+func populate_summon_options(summon_manager: Summon) -> void:
+	if summon_manager.available_summons.size() == 0:
 		_summon_button.hide()
 		return
 	_summon_button.show()
-	_action_options.populate_summon_options(summon_actions)
+	_action_options.populate_summon_options(summon_manager)
 
 
 ## Clears out the recorded summon options.

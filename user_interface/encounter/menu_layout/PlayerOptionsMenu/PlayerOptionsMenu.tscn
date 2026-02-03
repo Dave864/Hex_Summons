@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dp3b42qitf0at"]
+[gd_scene load_steps=14 format=3 uid="uid://dp3b42qitf0at"]
 
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_uo2p1"]
 [ext_resource type="Script" uid="uid://b4pkwviamfe4m" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/player_options_menu.gd" id="2_b51x4"]
@@ -8,9 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://ctgoieguj4weo" path="res://actions/action_nodes/Lob/Lob.tscn" id="4_ydqs4"]
 [ext_resource type="PackedScene" uid="uid://cp6hc4c3kwymm" path="res://actions/action_nodes/Shot/Shot.tscn" id="5_rdt83"]
 [ext_resource type="PackedScene" uid="uid://6pb0gwn4gr8t" path="res://actions/action_nodes/Blast/Blast.tscn" id="5_ydqs4"]
+[ext_resource type="Script" uid="uid://mxpbc437xmjm" path="res://character_ai/action_conditions/cooldown.gd" id="6_2xqc1"]
 [ext_resource type="PackedScene" uid="uid://bwq1llmyfdw5o" path="res://actions/action_nodes/Strike/Strike.tscn" id="6_85t8o"]
 [ext_resource type="PackedScene" uid="uid://dw8dgt1uo4nrp" path="res://actions/action_nodes/Sweep/Sweep.tscn" id="7_m7trg"]
 [ext_resource type="PackedScene" uid="uid://bkqx7l8kj0bii" path="res://actions/action_nodes/Nova/Nova.tscn" id="10_ddqho"]
+[ext_resource type="Script" uid="uid://cylb1ft2glyfa" path="res://character_ai/action_conditions/wisp_cost.gd" id="11_7eeko"]
 
 [node name="PlayerOptionsMenu" type="Control"]
 layout_mode = 3
@@ -28,9 +30,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
-offset_top = -232.0
+offset_top = -224.0
 offset_right = 88.0
-offset_bottom = -80.0
+offset_bottom = -72.0
 grow_vertical = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PlayerActions"]
@@ -110,9 +112,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 88.0
-offset_top = -232.0
+offset_top = -224.0
 offset_right = 168.0
-offset_bottom = -80.0
+offset_bottom = -72.0
 grow_vertical = 0
 script = ExtResource("3_f0o6x")
 action_display = NodePath("../OptionData")
@@ -132,7 +134,7 @@ alignment = 1
 [node name="OptionData" parent="." instance=ExtResource("4_gmehl")]
 layout_mode = 1
 offset_left = 8.0
-offset_top = 280.0
+offset_top = 288.0
 offset_right = 40.0
 offset_bottom = 279.91998
 grow_horizontal = 1
@@ -142,19 +144,57 @@ grow_vertical = 1
 
 [node name="Lob" parent="Techniques" instance=ExtResource("4_ydqs4")]
 
+[node name="Cooldown" type="Node" parent="Techniques/Lob"]
+script = ExtResource("6_2xqc1")
+turn_count = 2
+metadata/_custom_type_script = "uid://mxpbc437xmjm"
+
 [node name="Shot" parent="Techniques" instance=ExtResource("5_rdt83")]
+
+[node name="Cooldown" type="Node" parent="Techniques/Shot"]
+script = ExtResource("6_2xqc1")
+metadata/_custom_type_script = "uid://mxpbc437xmjm"
 
 [node name="Strike" parent="Techniques" instance=ExtResource("6_85t8o")]
 
+[node name="Cooldown" type="Node" parent="Techniques/Strike"]
+script = ExtResource("6_2xqc1")
+metadata/_custom_type_script = "uid://mxpbc437xmjm"
+
 [node name="Sweep" parent="Techniques" instance=ExtResource("7_m7trg")]
+
+[node name="Cooldown" type="Node" parent="Techniques/Sweep"]
+script = ExtResource("6_2xqc1")
+turn_count = 1
+metadata/_custom_type_script = "uid://mxpbc437xmjm"
 
 [node name="Spells" type="Node" parent="."]
 
 [node name="Beam" parent="Spells" instance=ExtResource("4_f0o6x")]
 
+[node name="WispCost" type="Node" parent="Spells/Beam"]
+script = ExtResource("11_7eeko")
+req_earth = 2
+cost_earth = 1
+metadata/_custom_type_script = "uid://cylb1ft2glyfa"
+
 [node name="Blast" parent="Spells" instance=ExtResource("5_ydqs4")]
 
+[node name="WispCost" type="Node" parent="Spells/Blast"]
+script = ExtResource("11_7eeko")
+req_fire = 1
+req_water = 1
+cost_fire = 1
+metadata/_custom_type_script = "uid://cylb1ft2glyfa"
+
 [node name="Nova" parent="Spells" instance=ExtResource("10_ddqho")]
+
+[node name="WispCost" type="Node" parent="Spells/Nova"]
+script = ExtResource("11_7eeko")
+req_wind = 1
+req_light = 1
+cost_light = 1
+metadata/_custom_type_script = "uid://cylb1ft2glyfa"
 
 [connection signal="pressed" from="PlayerActions/VBoxContainer/Movement" to="ActionOptions" method="_on_Movement_pressed"]
 [connection signal="pressed" from="PlayerActions/VBoxContainer/Technique" to="ActionOptions" method="_on_Technique_pressed"]
