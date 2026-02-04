@@ -89,7 +89,8 @@ func _check_for_required_parameters() -> void:
 	assert(texture is AtlasTexture, "Icon texture is not an AtlasTexture.")
 
 
-## Called during the a "from" animation from a non-blank element. Emits a ping.
+## Called during the a "from" animation from a non-blank element. Emits a ping
+## if specified during the last change_element call.
 func _emit_ping() -> void:
 	if _ping:
 		emit_signal("element_ping", element)
