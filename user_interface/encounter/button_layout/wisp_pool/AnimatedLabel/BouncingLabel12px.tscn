@@ -67,9 +67,9 @@ _data = {
 
 [node name="BouncingLabel12px" type="Label"]
 anchors_preset = -1
-anchor_right = 0.009
-anchor_bottom = 0.022
-offset_right = 0.24
+anchor_right = 0.009000001
+anchor_bottom = 0.033
+offset_right = 0.23999977
 theme = ExtResource("1_657wp")
 text = "0"
 script = ExtResource("2_uamsq")
