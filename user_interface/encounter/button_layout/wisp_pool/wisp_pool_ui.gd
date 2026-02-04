@@ -11,7 +11,7 @@ const DARK := Element.Alignment.DARK
 
 ## The timer for triggering shine.
 @export var timer: VariableTimer = null
-@export_group("Light Polarity UI Nodes", "light_")
+@export_group("Light Alignment UI Nodes", "light_")
 ## The text label for the light element count.
 @export var light_label: AnimatedLabel = null
 ## The animated icon for light element.
@@ -27,7 +27,7 @@ const DARK := Element.Alignment.DARK
 ## The animated icon for the second element aligned with light.
 @export var light_elem_2_icon: CoreElementIcon = null
 
-@export_group("Dark Polarity UI Elements", "dark_")
+@export_group("Dark Alignment UI Elements", "dark_")
 ## The text label for the dark element count.
 @export var dark_label: AnimatedLabel = null
 ## The animated icon for dark element.
