@@ -22,6 +22,9 @@ signal shine_ping(e)
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
+	# Keep the icon from using the RESET position when set to default element.
+	if element == Element.Alignment.LIGHT:
+		element = Element.Alignment.LIGHT
 	_check_for_required_parameters()
 
 
