@@ -171,7 +171,7 @@ _data = {
 &"wind_to": SubResource("Animation_uai0t")
 }
 
-[node name="HighlightElementIcon" type="TextureRect"]
+[node name="HighlightUpperRight" type="TextureRect"]
 anchors_preset = -1
 anchor_right = 0.009000001
 anchor_bottom = 0.017
