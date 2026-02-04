@@ -1,0 +1,194 @@
+[gd_scene load_steps=14 format=3 uid="uid://bva02osf072uo"]
+
+[ext_resource type="Texture2D" uid="uid://yhx0hs8vj4kj" path="res://art/ui/SummonWispPool/Highlight Summon Pool Gems.png" id="1_qox43"]
+[ext_resource type="Script" uid="uid://cwffiqfhuskoq" path="res://user_interface/encounter/button_layout/wisp_pool/core_element_icon.gd" id="2_jjucx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k686t"]
+atlas = ExtResource("1_qox43")
+region = Rect2(104, 42, 6, 6)
+
+[sub_resource type="Animation" id="Animation_mq3j1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(104, 42, 6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_pjvxr"]
+resource_name = "earth_from"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(60, 0, 6, 6), Rect2(66, 0, 6, 6), Rect2(72, 0, 6, 6), Rect2(78, 0, 6, 6), Rect2(104, 42, 6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_4iafb"]
+resource_name = "earth_to"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(104, 42, 6, 6), Rect2(42, 0, 6, 6), Rect2(48, 0, 6, 6), Rect2(54, 0, 6, 6), Rect2(60, 0, 6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_rjlgw"]
+resource_name = "fire_from"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(60, 6, 6, 6), Rect2(66, 6, 6, 6), Rect2(72, 6, 6, 6), Rect2(78, 6, 6, 6), Rect2(104, 42, 6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_cattd"]
+resource_name = "fire_to"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(104, 42, 6, 6), Rect2(42, 6, 6, 6), Rect2(48, 6, 6, 6), Rect2(54, 6, 6, 6), Rect2(60, 6, 6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_fmtha"]
+resource_name = "water_from"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(60, 12, 6, 6), Rect2(66, 12, 6, 6), Rect2(72, 12, 6, 6), Rect2(78, 12, 6, 6), Rect2(104, 42, 6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_3qb14"]
+resource_name = "water_to"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(104, 42, 6, 6), Rect2(42, 12, 6, 6), Rect2(48, 12, 6, 6), Rect2(54, 12, 6, 6), Rect2(60, 12, 6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_wgqs5"]
+resource_name = "wind_from"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(60, 18, 6, 6), Rect2(66, 18, 6, 6), Rect2(72, 18, 6, 6), Rect2(78, 18, 6, 6), Rect2(104, 42, 6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_uai0t"]
+resource_name = "wind_to"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(104, 42, 6, 6), Rect2(42, 18, 6, 6), Rect2(48, 18, 6, 6), Rect2(54, 18, 6, 6), Rect2(60, 18, 6, 6)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mq3j1"]
+_data = {
+&"RESET": SubResource("Animation_mq3j1"),
+&"earth_from": SubResource("Animation_pjvxr"),
+&"earth_to": SubResource("Animation_4iafb"),
+&"fire_from": SubResource("Animation_rjlgw"),
+&"fire_to": SubResource("Animation_cattd"),
+&"water_from": SubResource("Animation_fmtha"),
+&"water_to": SubResource("Animation_3qb14"),
+&"wind_from": SubResource("Animation_wgqs5"),
+&"wind_to": SubResource("Animation_uai0t")
+}
+
+[node name="HighlightElementIcon" type="TextureRect"]
+anchors_preset = -1
+anchor_right = 0.009000001
+anchor_bottom = 0.017
+offset_right = 0.23999977
+offset_bottom = -0.12000036
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_k686t")
+stretch_mode = 4
+script = ExtResource("2_jjucx")
+earth_region = Vector2(60, 0)
+fire_region = Vector2(60, 6)
+water_region = Vector2(60, 12)
+wind_region = Vector2(60, 18)
+metadata/_custom_type_script = "uid://cwffiqfhuskoq"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_mq3j1")
+}
