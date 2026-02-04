@@ -4,8 +4,24 @@
 [ext_resource type="Script" uid="uid://cwffiqfhuskoq" path="res://user_interface/encounter/button_layout/wisp_pool/core_element_icon.gd" id="2_0a0ne"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_juh15"]
+resource_local_to_scene = true
 atlas = ExtResource("1_bglph")
 region = Rect2(0, 0, 15, 15)
+
+[sub_resource type="Animation" id="Animation_0a0ne"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 15, 15)]
+}
 
 [sub_resource type="Animation" id="Animation_bglph"]
 resource_name = "earth_from"
@@ -36,21 +52,6 @@ tracks/1/keys = {
 "args": [],
 "method": &"_emit_ping"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_0a0ne"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(0, 0, 15, 15)]
 }
 
 [sub_resource type="Animation" id="Animation_juh15"]
@@ -101,6 +102,23 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_dfs6c"]
+resource_name = "fire_to"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 15, 15), Rect2(15, 15, 15, 15), Rect2(30, 15, 15, 15), Rect2(45, 15, 15, 15), Rect2(60, 15, 15, 15)]
+}
+
 [sub_resource type="Animation" id="Animation_jaxbu"]
 resource_name = "water_from"
 length = 0.416675
@@ -132,6 +150,23 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_f372t"]
+resource_name = "water_to"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 15, 15), Rect2(15, 30, 15, 15), Rect2(30, 30, 15, 15), Rect2(45, 30, 15, 15), Rect2(60, 30, 15, 15)]
+}
+
 [sub_resource type="Animation" id="Animation_qesrp"]
 resource_name = "wind_from"
 length = 0.416675
@@ -161,40 +196,6 @@ tracks/1/keys = {
 "args": [],
 "method": &"_emit_ping"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_dfs6c"]
-resource_name = "fire_to"
-length = 0.416675
-step = 0.083333336
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture:region")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Rect2(0, 0, 15, 15), Rect2(15, 15, 15, 15), Rect2(30, 15, 15, 15), Rect2(45, 15, 15, 15), Rect2(60, 15, 15, 15)]
-}
-
-[sub_resource type="Animation" id="Animation_f372t"]
-resource_name = "water_to"
-length = 0.416675
-step = 0.083333336
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture:region")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Rect2(0, 0, 15, 15), Rect2(15, 30, 15, 15), Rect2(30, 30, 15, 15), Rect2(45, 30, 15, 15), Rect2(60, 30, 15, 15)]
 }
 
 [sub_resource type="Animation" id="Animation_uiswg"]
@@ -236,7 +237,7 @@ offset_bottom = -0.12000084
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_juh15")
-stretch_mode = 2
+stretch_mode = 4
 script = ExtResource("2_0a0ne")
 earth_region = Vector2(60, 0)
 fire_region = Vector2(60, 15)

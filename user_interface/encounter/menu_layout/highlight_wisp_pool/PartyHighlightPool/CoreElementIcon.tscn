@@ -4,8 +4,58 @@
 [ext_resource type="Texture2D" uid="uid://ba3xbkufepb4m" path="res://art/ui/PlayerWispPool/Party Wisp Pool Gems.png" id="1_txwh5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_txwh5"]
+resource_local_to_scene = true
 atlas = ExtResource("1_txwh5")
 region = Rect2(0, 15, 11, 11)
+
+[sub_resource type="Animation" id="Animation_dnate"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 15, 11, 11)]
+}
+
+[sub_resource type="Animation" id="Animation_cvtc8"]
+resource_name = "blank_from"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(75, 104, 11, 11), Rect2(86, 104, 11, 11), Rect2(97, 104, 11, 11), Rect2(108, 104, 11, 11), Rect2(0, 15, 11, 11)]
+}
+
+[sub_resource type="Animation" id="Animation_kghf4"]
+resource_name = "blank_to"
+length = 0.416675
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 15, 11, 11), Rect2(42, 104, 11, 11), Rect2(53, 104, 11, 11), Rect2(64, 104, 11, 11), Rect2(75, 104, 11, 11)]
+}
 
 [sub_resource type="Animation" id="Animation_txwh5"]
 resource_name = "earth_from"
@@ -199,55 +249,6 @@ tracks/0/keys = {
 "values": [Rect2(0, 15, 11, 11), Rect2(42, 93, 11, 11), Rect2(53, 93, 11, 11), Rect2(64, 93, 11, 11), Rect2(75, 93, 11, 11)]
 }
 
-[sub_resource type="Animation" id="Animation_cvtc8"]
-resource_name = "blank_from"
-length = 0.416675
-step = 0.083333336
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture:region")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Rect2(75, 104, 11, 11), Rect2(86, 104, 11, 11), Rect2(97, 104, 11, 11), Rect2(108, 104, 11, 11), Rect2(0, 15, 11, 11)]
-}
-
-[sub_resource type="Animation" id="Animation_kghf4"]
-resource_name = "blank_to"
-length = 0.416675
-step = 0.083333336
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture:region")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Rect2(0, 15, 11, 11), Rect2(42, 104, 11, 11), Rect2(53, 104, 11, 11), Rect2(64, 104, 11, 11), Rect2(75, 104, 11, 11)]
-}
-
-[sub_resource type="Animation" id="Animation_dnate"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(0, 15, 11, 11)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j15co"]
 _data = {
 &"RESET": SubResource("Animation_dnate"),
@@ -272,7 +273,7 @@ offset_bottom = -0.1600008
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_txwh5")
-stretch_mode = 2
+stretch_mode = 4
 script = ExtResource("1_pj4cq")
 earth_region = Vector2(75, 71)
 fire_region = Vector2(75, 60)
