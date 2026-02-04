@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://da8impbpdpj78" path="res://art/ui/PartyWispPool/Wisp Pool Small Base.png" id="1"]
 [ext_resource type="Script" uid="uid://dtb85y8tre5kg" path="res://user_interface/encounter/button_layout/wisp_pool/PlayerWispPool/player_wisp_pool_ui.gd" id="2"]
 [ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="3"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/PartyWispPool/AnimatedLabel.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://cu8ls0tyba6bj" path="res://user_interface/encounter/button_layout/wisp_pool/AnimatedLabel/AnimatedLabel10px.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/PartyWispPool/PolarElementIcon.tscn" id="5"]
 [ext_resource type="Texture2D" uid="uid://f5t1jiw26l2r" path="res://art/ui/PartyWispPool/Polar Gem S.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://ss4f1b7etv3f" path="res://art/ui/PartyWispPool/Core Gem S.png" id="7"]

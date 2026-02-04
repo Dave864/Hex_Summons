@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ba3xbkufepb4m" path="res://art/ui/PlayerWispPool/Party Wisp Pool Gems.png" id="5_7p8a4"]
 [ext_resource type="PackedScene" uid="uid://c8ncfadyxfqyc" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/PartyHighlightPool/CoreElementIcon.tscn" id="5_aycs1"]
 [ext_resource type="PackedScene" uid="uid://kcxvh115l3hf" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/PartyHighlightPool/HighlightElementIcon.tscn" id="6_ekm2o"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/PartyWispPool/AnimatedLabel.tscn" id="8_3fgrd"]
+[ext_resource type="PackedScene" uid="uid://cu8ls0tyba6bj" path="res://user_interface/encounter/button_layout/wisp_pool/AnimatedLabel/AnimatedLabel10px.tscn" id="8_3fgrd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lh5d6"]
 resource_local_to_scene = true
@@ -238,10 +238,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -3.0
-offset_top = -24.0
-offset_right = 3.0
-offset_bottom = -12.0
+offset_left = -2.0
+offset_top = -23.0
+offset_right = 4.0
+offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -280,10 +280,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -3.0
-offset_top = 15.0
-offset_right = 3.0
-offset_bottom = 27.0
+offset_left = -2.0
+offset_top = 16.0
+offset_right = 4.0
+offset_bottom = 28.0
 grow_horizontal = 2
 grow_vertical = 2
 
