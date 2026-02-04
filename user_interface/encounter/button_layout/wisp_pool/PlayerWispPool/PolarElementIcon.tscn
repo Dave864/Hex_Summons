@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://d03a4p7aqmrpi"]
 
 [ext_resource type="Texture2D" uid="uid://swnmxppp2rgi" path="res://art/ui/PlayerWispPool/Polar Gem L.png" id="1"]
-[ext_resource type="Script" uid="uid://b7cfu4tj51jnl" path="res://user_interface/encounter/button_layout/wisp_pool/polar_element_icon.gd" id="2"]
+[ext_resource type="Script" uid="uid://b7cfu4tj51jnl" path="res://user_interface/encounter/button_layout/wisp_pool/alignment_element_icon.gd" id="2"]
 
 [sub_resource type="AtlasTexture" id="1"]
 resource_local_to_scene = true

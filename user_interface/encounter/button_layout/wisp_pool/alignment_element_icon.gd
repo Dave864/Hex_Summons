@@ -1,22 +1,32 @@
 @tool
 class_name AlignmentElementIcon
 extends TextureRect
-## Represents a polar element in the UI: light or dark. Manages the shine of
+## Represents a alignment element in the UI: light or dark. Manages the shine of
 ## the icon.
 
 
 ## Indicates that the polar element has shined.
 signal shine_ping(e)
 
-@export var element: int = Element.Alignment.LIGHT: set = set_element
+## The alignment element this icon represents.
+@export var element: Element.Alignment = Element.Alignment.LIGHT:
+	set = set_element
+## The starting point for the texture region for a fully displayed light element.
 @export var light_region: Vector2 = Vector2(0,0)
+## The starting point for the texture region for a fully displayed dark element.
 @export var dark_region: Vector2 = Vector2(0,0)
 
+## The animation player for the icon shine.
 @onready var ap: AnimationPlayer = $AnimationPlayer
 
 
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	_check_for_required_parameters()
+
+
 ## Sets the icon texture region to display the new element.
-func set_element(new_element: int) -> void:
+func set_element(new_element: Element.Alignment) -> void:
 	match new_element:
 		Element.Alignment.LIGHT:
 			texture.region.position = light_region
@@ -33,11 +43,6 @@ func shine() -> void:
 		ap.play("light_shine")
 	elif element == Element.Alignment.DARK:
 		ap.play("dark_shine")
-
-
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	_check_for_required_parameters()
 
 
 ## Checks that all required parameters are given.
