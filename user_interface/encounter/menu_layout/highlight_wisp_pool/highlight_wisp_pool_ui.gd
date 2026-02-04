@@ -31,27 +31,25 @@ var _blank_elements: Dictionary[Element.Core, bool] = {
 }
 
 
+## Checks the provided element against the blank elements record to see if it
+## should be blank.
+func _blank_mask(element: Element.Core) -> int:
+	return BLANK_ELEMENT if _blank_elements[element] else element
+
+
 ## Sets the icons for the core elements and highlights.
 func _set_icons() -> void:
 	var light_elem_1: Element.Core = _alignments[LIGHT][0]
 	var light_elem_2: Element.Core = _alignments[LIGHT][1]
 	var dark_elem_1: Element.Core = _alignments[DARK][0]
 	var dark_elem_2: Element.Core = _alignments[DARK][1]
-	light_elem_1_icon.set_element(
-			BLANK_ELEMENT if _blank_elements[light_elem_1] else light_elem_1
-	)
+	light_elem_1_icon.set_element(_blank_mask(light_elem_1))
 	light_highlight_1.set_element(light_elem_1)
-	light_elem_2_icon.set_element(
-			BLANK_ELEMENT if _blank_elements[light_elem_2] else light_elem_2
-	)
+	light_elem_2_icon.set_element(_blank_mask(light_elem_2))
 	light_highlight_2.set_element(light_elem_2)
-	dark_elem_1_icon.set_element(
-			BLANK_ELEMENT if _blank_elements[dark_elem_1] else dark_elem_1
-	)
+	dark_elem_1_icon.set_element(_blank_mask(dark_elem_1))
 	dark_highlight_1.set_element(dark_elem_1)
-	dark_elem_2_icon.set_element(
-			BLANK_ELEMENT if _blank_elements[dark_elem_2] else dark_elem_2
-	)
+	dark_elem_2_icon.set_element(_blank_mask(dark_elem_2))
 	dark_highlight_2.set_element(dark_elem_2)
 
 
@@ -83,6 +81,14 @@ func _set_labels() -> void:
 	dark_elem_2_label.text = String.num_uint64(dark_elem_2_count)
 
 
+## Shines the highlight icons at set intervals.
+func _on_Timer_timeout() -> void:
+	light_highlight_1.change_element(_alignments[LIGHT][0], false)
+	light_highlight_2.change_element(_alignments[LIGHT][1], false)
+	dark_highlight_1.change_element(_alignments[DARK][0], false)
+	dark_highlight_2.change_element(_alignments[DARK][1], false)
+
+
 ## Changes the core element icons, highlights, and all labels to reflect the
 ## change in polarity.
 func _on_ElementalAlignment_alignment_changed() -> void:
@@ -93,19 +99,19 @@ func _on_ElementalAlignment_alignment_changed() -> void:
 	var dark_changed: bool = false
 	if light_elems[0] != _alignments[LIGHT][0]:
 		light_changed = true
-		light_elem_1_icon.change_element(light_elems[0])
+		light_elem_1_icon.change_element(_blank_mask(light_elems[0]))
 		light_highlight_1.change_element(light_elems[0])
 	if light_elems[1] != _alignments[LIGHT][1]:
 		light_changed = true
-		light_elem_2_icon.change_element(light_elems[1])
+		light_elem_2_icon.change_element(_blank_mask(light_elems[1]))
 		light_highlight_2.change_element(light_elems[1])
 	if dark_elems[0] != _alignments[DARK][0]:
 		dark_changed = true
-		dark_elem_1_icon.change_element(dark_elems[0])
+		dark_elem_1_icon.change_element(_blank_mask(dark_elems[0]))
 		dark_highlight_1.change_element(dark_elems[0])
 	if dark_elems[1] != _alignments[DARK][1]:
 		dark_changed = true
-		dark_elem_2_icon.change_element(dark_elems[1])
+		dark_elem_2_icon.change_element(_blank_mask(dark_elems[1]))
 		dark_highlight_2.change_element(dark_elems[1])
 	if light_changed:
 		light_icon.shine()
@@ -126,24 +132,16 @@ func _on_WispPool_active_count_changed(element: int) -> void:
 		dark_icon.shine()
 	elif _alignments[LIGHT][0] == element:
 		_blank_elements[element] = pool.active_element_count(element) == 0
-		light_elem_1_icon.change_element(
-				BLANK_ELEMENT if _blank_elements[element] else element
-		)
+		light_elem_1_icon.change_element(_blank_mask(element))
 	elif _alignments[LIGHT][1] == element:
 		_blank_elements[element] = pool.active_element_count(element) == 0
-		light_elem_2_icon.change_element(
-				BLANK_ELEMENT if _blank_elements[element] else element
-		)
+		light_elem_2_icon.change_element(_blank_mask(element))
 	elif _alignments[DARK][0] == element:
 		_blank_elements[element] = pool.active_element_count(element) == 0
-		dark_elem_1_icon.change_element(
-				BLANK_ELEMENT if _blank_elements[element] else element
-		)
+		dark_elem_1_icon.change_element(_blank_mask(element))
 	elif _alignments[DARK][1] == element:
 		_blank_elements[element] = pool.active_element_count(element) == 0
-		dark_elem_2_icon.change_element(
-				BLANK_ELEMENT if _blank_elements[element] else element
-		)
+		dark_elem_2_icon.change_element(_blank_mask(element))
 	else:
 		icon_shined = false
 	# Update the icon labels in the event where the UI element is not visible

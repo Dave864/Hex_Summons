@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cbwi1fc72lu56"]
+[gd_scene load_steps=19 format=3 uid="uid://cbwi1fc72lu56"]
 
 [ext_resource type="Texture2D" uid="uid://cth5uey3jng6x" path="res://art/ui/PlayerWispPool/Party Wisp Pool.png" id="1_jfe22"]
 [ext_resource type="Script" uid="uid://rspptncr83si" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/highlight_wisp_pool_ui.gd" id="2_j75u2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ba3xbkufepb4m" path="res://art/ui/PlayerWispPool/Party Wisp Pool Gems.png" id="5_7p8a4"]
 [ext_resource type="PackedScene" uid="uid://c8ncfadyxfqyc" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/PartyHighlightPool/CoreElementIcon.tscn" id="5_aycs1"]
 [ext_resource type="PackedScene" uid="uid://kcxvh115l3hf" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/PartyHighlightPool/HighlightElementIcon.tscn" id="6_ekm2o"]
+[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/PartyWispPool/AnimatedLabel.tscn" id="8_3fgrd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lh5d6"]
 resource_local_to_scene = true
@@ -58,7 +59,7 @@ resource_local_to_scene = true
 atlas = ExtResource("5_7p8a4")
 region = Rect2(0, 0, 15, 15)
 
-[node name="PartyHighlightPool" type="TextureRect" node_paths=PackedStringArray("light_highlight_1", "light_highlight_2", "dark_highlight_1", "dark_highlight_2", "timer", "light_icon", "light_elem_1_icon", "light_elem_2_icon", "dark_icon", "dark_elem_1_icon", "dark_elem_2_icon")]
+[node name="PartyHighlightPool" type="TextureRect" node_paths=PackedStringArray("light_highlight_1", "light_highlight_2", "dark_highlight_1", "dark_highlight_2", "timer", "light_label", "light_icon", "light_elem_1_label", "light_elem_1_icon", "light_elem_2_label", "light_elem_2_icon", "dark_label", "dark_icon", "dark_elem_1_label", "dark_elem_1_icon", "dark_elem_2_label", "dark_elem_2_icon")]
 anchors_preset = -1
 anchor_right = 0.091000006
 anchor_bottom = 0.156
@@ -74,11 +75,17 @@ light_highlight_2 = NodePath("LightHighlight2")
 dark_highlight_1 = NodePath("DarkHighlight1")
 dark_highlight_2 = NodePath("DarkHighlight2")
 timer = NodePath("VariableTimer")
+light_label = NodePath("LightLabel")
 light_icon = NodePath("LightIcon")
+light_elem_1_label = NodePath("LightLeftLabel")
 light_elem_1_icon = NodePath("LightLeftIcon")
+light_elem_2_label = NodePath("LightRightLabel")
 light_elem_2_icon = NodePath("LightRightIcon")
+dark_label = NodePath("DarkLabel")
 dark_icon = NodePath("DarkIcon")
+dark_elem_1_label = NodePath("DarkLeftLabel")
 dark_elem_1_icon = NodePath("DarkLeftIcon")
+dark_elem_2_label = NodePath("DarkRightLabel")
 dark_elem_2_icon = NodePath("DarkRightIcon")
 
 [node name="VariableTimer" type="Timer" parent="."]
@@ -223,6 +230,90 @@ offset_right = 19.0
 offset_bottom = 20.0
 texture = SubResource("AtlasTexture_e7wpn")
 element = 2
+
+[node name="LightLabel" parent="." instance=ExtResource("8_3fgrd")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -24.0
+offset_right = 3.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LightLeftLabel" parent="." instance=ExtResource("8_3fgrd")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -16.0
+offset_right = -8.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LightRightLabel" parent="." instance=ExtResource("8_3fgrd")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -16.0
+offset_right = 15.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DarkLabel" parent="." instance=ExtResource("8_3fgrd")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = 15.0
+offset_right = 3.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DarkLeftLabel" parent="." instance=ExtResource("8_3fgrd")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = 9.0
+offset_right = -8.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DarkRightLabel" parent="." instance=ExtResource("8_3fgrd")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = 9.0
+offset_right = 15.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="timeout" from="VariableTimer" to="." method="_on_Timer_timeout"]
 [connection signal="shine_ping" from="LightIcon" to="." method="_on_AlignmentElementIcon_shine_ping"]
