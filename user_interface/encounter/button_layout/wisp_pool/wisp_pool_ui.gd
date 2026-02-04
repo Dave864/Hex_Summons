@@ -3,33 +3,50 @@ extends Control
 ## Manages the labels and element icons of the wisp pool.
 
 
+## The enum value for light alignment.
 const LIGHT := Element.Alignment.LIGHT
+## The enum value for dark alignment.
 const DARK := Element.Alignment.DARK
 
 
+## The timer for triggering shine.
 @export var timer: VariableTimer = null
 @export_group("Light Polarity UI Nodes", "light_")
+## The text label for the light element count.
 @export var light_label: AnimatedLabel = null
+## The animated icon for light element.
 @export var light_icon: AlignmentElementIcon = null
 @export_subgroup("Left Element Nodes", "light_elem_1")
+## The text label for the first element aligned with light.
 @export var light_elem_1_label: AnimatedLabel = null
+## The animated icon for the first element aligned with light.
 @export var light_elem_1_icon: CoreElementIcon = null
 @export_subgroup("Right Element Nodes", "light_elem_2")
+## The text label for the second element aligned with light.
 @export var light_elem_2_label: AnimatedLabel = null
+## The animated icon for the second element aligned with light.
 @export var light_elem_2_icon: CoreElementIcon = null
 
 @export_group("Dark Polarity UI Elements", "dark_")
+## The text label for the dark element count.
 @export var dark_label: AnimatedLabel = null
+## The animated icon for dark element.
 @export var dark_icon: AlignmentElementIcon = null
 @export_subgroup("Left Element Nodes", "dark_elem_1")
+## The text label for the first element aligned with dark.
 @export var dark_elem_1_label: AnimatedLabel = null
+## The animated icon for the first element aligned with dark.
 @export var dark_elem_1_icon: CoreElementIcon = null
 @export_subgroup("Right Element Nodes", "dark_elem_2")
+## The text label for the second element aligned with dark.
 @export var dark_elem_2_label: AnimatedLabel = null
+## The animated icon for the second element aligned with dark.
 @export var dark_elem_2_icon: CoreElementIcon = null
 
+## The wisp pool being displayed by this UI element.
 var pool: WispPool = null
 
+## The alignments of core elements.
 @onready var _alignments: Dictionary[Element.Alignment, Array] = {
 	LIGHT: ElementalAlignment.get_light_elements().duplicate(),
 	DARK: ElementalAlignment.get_dark_elements().duplicate()
@@ -41,8 +58,8 @@ func _ready():
 			"alignment_changed",
 			Callable(self, "_on_ElementalAlignment_alignment_changed")
 	)
-	_set_icons()
 	_set_labels_on_ready()
+	_set_icons()
 
 
 ## Virtual function. Initializes the wisp pool reference.

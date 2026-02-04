@@ -11,15 +11,15 @@ signal element_ping(e)
 ## The element currently being displayed. Set as int to allow for -1 to be used.
 @export var element: int = Element.Core.EARTH:
 	set = set_element
-## The region of the texture for earth element icon.
+## The starting point of the texture region for the earth element icon.
 @export var earth_region := Vector2(0,0)
-## The region of the texture for fire element icon.
+## The starting point of the texture region for the fire element icon.
 @export var fire_region := Vector2(0,0)
-## The region of the texture for water element icon.
+## The starting point of the texture region for the water element icon.
 @export var water_region := Vector2(0,0)
-## The region of the texture for wind element icon.
+## The starting point of the texture region for the wind element icon.
 @export var wind_region := Vector2(0,0)
-## The region of the texture for a blank element icon.
+## The starting point of the texture region for the blank element icon.
 @export var blank_region := Vector2(0,0)
 
 ## Internal flag that indicates if the element ping should be emitted during
