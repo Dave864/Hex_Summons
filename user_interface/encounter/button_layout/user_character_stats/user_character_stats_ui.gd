@@ -4,22 +4,26 @@ extends Control
 ## usually player or summon.
 
 
-@export var portrait_size: Vector2 = Vector2(0.0, 0.0)
 @export var character_portrait: TextureRect = null
 @export var wisp_pool_ui: WispPoolUI = null
+@export var health_bar: TextureProgressBar = null
+@export var health_label: Label = null
+@export var name_label: Label = null
 
 var _default_portrait: Texture2D = load(Constants.DEFAULT_ICON_PATH)
+var _portrait_size: Vector2 = Vector2(0.0, 0.0)
 
-@onready var _health_bar: TextureProgressBar = $HealthBar
-@onready var _health_label: Label = $HealthNumberLabel
-@onready var _name_label: Label = $NameLabel
+
+func _ready() -> void:
+	if character_portrait != null:
+		_portrait_size = character_portrait.size
 
 
 ## Populate the display elements with the player character stats.
 func set_player_stats(player: PlayerCharacter) -> void:
 	wisp_pool_ui.set_wisp_pool(player.wisp_pool)
 	_set_character_stats(player)
-	_name_label.text = player.name
+	name_label.text = player.name
 	if (
 		not player.stats.is_connected(
 				"health_changed",
@@ -36,14 +40,14 @@ func set_player_stats(player: PlayerCharacter) -> void:
 func set_summon_stats(summon: Summon) -> void:
 	wisp_pool_ui.set_wisp_pool(summon.summon_wisp_pool)
 	_set_character_stats(summon)
-	_name_label.text = summon.get_active_summon_name()
+	name_label.text = summon.get_active_summon_name()
 
 
 ## Sets the hp values of the summary.
 func set_hp(cur_hp: int, max_hp: int) -> void:
-	_health_label.text = "{0}/{1}".format([cur_hp, max_hp])
-	_health_bar.max_value = max_hp
-	_health_bar.value = cur_hp
+	health_label.text = "{0}/{1}".format([cur_hp, max_hp])
+	health_bar.max_value = max_hp
+	health_bar.value = cur_hp
 
 
 ## Populate the display elements with generic character stats.
@@ -55,7 +59,7 @@ func _set_character_stats(character: Character) -> void:
 		_default_portrait if character.battle_portrait == null
 		else character.battle_portrait
 	)
-	character_portrait.size = portrait_size
+	character_portrait.size = _portrait_size
 
 
 ## Updates the hp values when a character's health is changed.

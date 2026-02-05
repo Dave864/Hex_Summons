@@ -8,13 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://osiqpd8jhoyd" path="res://art/icon.png" id="6_utb6v"]
 [ext_resource type="Shader" uid="uid://d1rqm2l1tcof8" path="res://user_interface/shaders/change_color.gdshader" id="7_min2y"]
 
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m3up4"]
 shader = ExtResource("7_min2y")
 shader_parameter/old_color = Color(0, 0.4509804, 1, 1)
 shader_parameter/new_color = Color(0, 0.14901961, 1, 1)
 
-[node name="ActiveCharacterStats" type="Control" node_paths=PackedStringArray("character_portrait", "wisp_pool_ui")]
+[node name="ActiveCharacterStats" type="Control" node_paths=PackedStringArray("character_portrait", "wisp_pool_ui", "health_bar", "health_label", "name_label")]
 layout_mode = 3
 anchor_right = 0.156
 anchor_bottom = 0.333
@@ -23,9 +22,11 @@ offset_bottom = 0.119995
 mouse_filter = 2
 theme = ExtResource("1_r58pi")
 script = ExtResource("2_mfgcf")
-portrait_size = Vector2(46, 46)
 character_portrait = NodePath("PlayerWispPool/PlayerPortrait")
 wisp_pool_ui = NodePath("PlayerWispPool")
+health_bar = NodePath("HealthBar")
+health_label = NodePath("HealthNumberLabel")
+name_label = NodePath("NameLabel")
 
 [node name="NameLabel" type="Label" parent="."]
 layout_mode = 0
