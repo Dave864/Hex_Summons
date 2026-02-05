@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://b8653jyeljph1"]
 
 [ext_resource type="PackedScene" uid="uid://bsdqilfcr4xqv" path="res://user_interface/encounter/button_layout/PlayerOptionButton/EndButton.tscn" id="1"]
-[ext_resource type="Script" uid="uid://dsv35awa3y33i" path="res://user_interface/encounter/button_layout/encounter_ui.gd" id="2"]
+[ext_resource type="Script" uid="uid://dsv35awa3y33i" path="res://user_interface/encounter/button_layout/encounter_ui_button_layout.gd" id="2"]
 [ext_resource type="Script" uid="uid://d5hvsefs34ls" path="res://user_interface/encounter/button_layout/sub_options.gd" id="3"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="4"]
 [ext_resource type="Script" uid="uid://ds7n6ekq64jsp" path="res://fsm/user_interface/encounter/encounter_ui_wait.gd" id="5"]
@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://bbb4rvu44d041" path="res://user_interface/encounter/button_layout/PlayerOptionButton/MovementButton.tscn" id="17"]
 [ext_resource type="PackedScene" uid="uid://5td8sfwtxdp6" path="res://user_interface/encounter/button_layout/wisp_pool/StandbyWispPool/StandbyWispPool.tscn" id="18"]
 
-[node name="EncounterUI" type="Control"]
+[node name="EncounterUIButtonLayout" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

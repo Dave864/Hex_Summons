@@ -1,4 +1,4 @@
-class_name EncounterUIMenu
+class_name EncounterUIMenuLayout
 extends Control
 ## Manages the UI elements of an Encounter scene. Uses a traditional menu layout.
 ##

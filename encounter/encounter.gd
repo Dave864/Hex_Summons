@@ -23,7 +23,7 @@ var _player_template: PackedScene = preload(
 ## Reference to the Selector node; used to highlight and select map tiles.
 @onready var selector: Selector = $Selector
 ## Reference to the UI elements for the encounter.
-@onready var ui: EncounterUI = $EncounterUI
+@onready var ui: EncounterUIButtonLayout = $EncounterUI
 ## Reference to the camera.
 @onready var camera: EncounterCamera = $EncounterCamera
 

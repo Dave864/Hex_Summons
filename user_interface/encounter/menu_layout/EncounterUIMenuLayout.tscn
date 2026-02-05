@@ -3,11 +3,11 @@
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_peedy"]
 [ext_resource type="PackedScene" uid="uid://d3i1mqeluj5hv" path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" id="1_vudnu"]
 [ext_resource type="PackedScene" uid="uid://d20ttalw3d47o" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/StandbyHighlightPool/StandbyHighlightPool.tscn" id="2_61asc"]
-[ext_resource type="Script" uid="uid://bqtoxpearphuo" path="res://user_interface/encounter/menu_layout/encounter_ui_menu.gd" id="2_wbux0"]
+[ext_resource type="Script" uid="uid://bqtoxpearphuo" path="res://user_interface/encounter/menu_layout/encounter_ui_menu_layout.gd" id="2_wbux0"]
 [ext_resource type="PackedScene" uid="uid://dp3b42qitf0at" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/PlayerOptionsMenu.tscn" id="3_75vv7"]
 [ext_resource type="PackedScene" uid="uid://dn4vmatmue5p6" path="res://user_interface/encounter/menu_layout/PartyCharacterStats/PartyCharacterStats.tscn" id="4_thx3u"]
 
-[node name="EncounterUI" type="Control"]
+[node name="EncounterUIMenuLayout" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

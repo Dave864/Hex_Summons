@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://x4o3gls28fh"]
 
 [ext_resource type="PackedScene" uid="uid://bh13wido3t2hc" path="res://hex_map/TestMap.tscn" id="1"]
-[ext_resource type="PackedScene" uid="uid://b8653jyeljph1" path="res://user_interface/encounter/button_layout/EncounterUIButton.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://b8653jyeljph1" path="res://user_interface/encounter/button_layout/EncounterUIButtonLayout.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://cnsy5crv75lm4" path="res://character/enemy_characters/TestEnemy2/TestEnemy2.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://cqtyo80p26xko" path="res://character/summons/Summon.tscn" id="5_31f15"]

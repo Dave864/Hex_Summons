@@ -1,4 +1,4 @@
-class_name EncounterUI
+class_name EncounterUIButtonLayout
 extends Control
 ## Manages the various UI elements of an Encounter scene. Uses a button focused
 ## layout.
@@ -207,7 +207,7 @@ func reset_all_options() -> void:
 
 
 ## Initializes the party character details in the UI.
-func track_party_members(players: Array[PlayerCharacter]) -> void:
+func track_party_members(players: Array[Character]) -> void:
 	var p_count: int = int(min(players.size(), MAX_PARTY_SIZE))
 	var height: int = (
 			FULL_PARTY_HEIGHT if p_count == MAX_PARTY_SIZE
@@ -216,7 +216,7 @@ func track_party_members(players: Array[PlayerCharacter]) -> void:
 	party_stats.set_deferred("size", Vector2(PARTY_WIDTH, height))
 	for i: int in p_count:
 		var player_stats: UserCharacterStatsUI = party_stats.get_child(i)
-		var player: PlayerCharacter = players[i]
+		var player: PlayerCharacter = players[i] as PlayerCharacter
 		_party_stat_map[player.get_instance_id()] = player_stats
 		player_stats.set_player_stats(player)
 		player_stats.show()

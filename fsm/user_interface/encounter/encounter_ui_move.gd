@@ -119,10 +119,10 @@ func _disconnect_signals() -> void:
 ## state, specifying TECHNIQUE as the option.
 func _technique_selected() -> void:
 	encounter_ui.technique_button.grab_focus()
-	_depress_other_options(EncounterUI.Options.TECHNIQUE)
+	_depress_other_options(EncounterUIButtonLayout.Options.TECHNIQUE)
 	state_machine.transition_to(
 			ACTION, 
-			{"option_flag": EncounterUI.Options.TECHNIQUE}
+			{"option_flag": EncounterUIButtonLayout.Options.TECHNIQUE}
 	)
 
 
@@ -130,10 +130,10 @@ func _technique_selected() -> void:
 ## state, specifying SPELL as the option.
 func _spell_selected() -> void:
 	encounter_ui.spell_button.grab_focus()
-	_depress_other_options(EncounterUI.Options.SPELL)
+	_depress_other_options(EncounterUIButtonLayout.Options.SPELL)
 	state_machine.transition_to(
 			ACTION, 
-			{"option_flag": EncounterUI.Options.SPELL}
+			{"option_flag": EncounterUIButtonLayout.Options.SPELL}
 	)
 
 
@@ -141,10 +141,10 @@ func _spell_selected() -> void:
 ## state, specifying SUMMON as the option.
 func _summon_selected() -> void:
 	encounter_ui.summon_button.call_deferred("grab_focus")
-	_depress_other_options(EncounterUI.Options.SUMMON)
+	_depress_other_options(EncounterUIButtonLayout.Options.SUMMON)
 	state_machine.transition_to(
 			ACTION, 
-			{"option_flag": EncounterUI.Options.SUMMON}
+			{"option_flag": EncounterUIButtonLayout.Options.SUMMON}
 	)
 
 
@@ -152,10 +152,10 @@ func _summon_selected() -> void:
 ## state, specifying ITEM as the option.
 func _item_selected() -> void:
 	encounter_ui.item_button.call_deferred("grab_focus")
-	_depress_other_options(EncounterUI.Options.ITEM)
+	_depress_other_options(EncounterUIButtonLayout.Options.ITEM)
 	state_machine.transition_to(
 			ACTION, 
-			{"option_flag": EncounterUI.Options.ITEM}
+			{"option_flag": EncounterUIButtonLayout.Options.ITEM}
 	)
 
 
@@ -169,16 +169,16 @@ func _end_selected() -> void:
 
 
 ## Sets the button_pressed state of other option buttons to false.
-func _depress_other_options(pressed_option: EncounterUI.Options) -> void:
-	var is_pressed: bool = pressed_option == EncounterUI.Options.TECHNIQUE
+func _depress_other_options(pressed_option: EncounterUIButtonLayout.Options) -> void:
+	var is_pressed: bool = pressed_option == EncounterUIButtonLayout.Options.TECHNIQUE
 	encounter_ui.technique_button.button_pressed = is_pressed
-	is_pressed = pressed_option == EncounterUI.Options.SPELL
+	is_pressed = pressed_option == EncounterUIButtonLayout.Options.SPELL
 	encounter_ui.spell_button.button_pressed = is_pressed
-	is_pressed = pressed_option == EncounterUI.Options.SUMMON
+	is_pressed = pressed_option == EncounterUIButtonLayout.Options.SUMMON
 	encounter_ui.summon_button.button_pressed = is_pressed
-	is_pressed = pressed_option == EncounterUI.Options.ITEM
+	is_pressed = pressed_option == EncounterUIButtonLayout.Options.ITEM
 	encounter_ui.item_button.button_pressed = is_pressed
-	is_pressed = pressed_option == EncounterUI.Options.MOVE
+	is_pressed = pressed_option == EncounterUIButtonLayout.Options.MOVE
 	encounter_ui.movement_button.button_pressed = is_pressed
 
 
