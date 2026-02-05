@@ -46,8 +46,7 @@ func set_summon_stats(summon: Summon) -> void:
 ## Sets the hp values of the summary.
 func set_hp(cur_hp: int, max_hp: int) -> void:
 	health_label.text = "{0}/{1}".format([cur_hp, max_hp])
-	health_bar.max_value = max_hp
-	health_bar.value = cur_hp
+	health_bar.value = float(cur_hp) / float(max_hp) * 100
 
 
 ## Populate the display elements with generic character stats.
