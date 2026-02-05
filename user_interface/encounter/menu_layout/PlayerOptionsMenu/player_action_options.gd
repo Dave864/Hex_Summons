@@ -40,6 +40,24 @@ func _ready() -> void:
 	action_display.hide()
 
 
+## Disables or enables the currently displayed options.
+func disable_active_options(disable: bool) -> void:
+	var active_options: Array[ActionOptionButton]
+	match _active_option:
+		Option.TECHNIQUE:
+			active_options = _technique_options
+		Option.SPELL:
+			active_options = _spell_options
+		Option.SUMMON:
+			active_options = _summon_options
+		Option.ITEM:
+			active_options = _item_options
+		_:
+			return
+	for option: ActionOptionButton in active_options:
+		option.disabled = disable
+
+
 ## Populates the action options menu with the listed techniques.
 func populate_technique_options(technique_actions: Array[Action]) -> void:
 	if technique_actions.size() == 0:

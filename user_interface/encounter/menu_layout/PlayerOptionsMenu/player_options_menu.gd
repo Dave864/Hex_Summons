@@ -25,6 +25,8 @@ enum Options {
 @onready var _summon_button: Button = $PlayerActions/VBoxContainer/Summon
 ## The button for items.
 @onready var _item_button: Button = $PlayerActions/VBoxContainer/Item
+## The button for wait.
+@onready var _wait_button: Button = $PlayerActions/VBoxContainer/Wait
 ## The container that holds the options for a selected action.
 @onready var _action_options: PlayerActionOptions = $ActionOptions
 
@@ -51,6 +53,17 @@ func display() -> void:
 ## Hides this menu.
 func dismiss() -> void:
 	hide()
+
+
+## Disables or enables the options and any displayed action options.
+func disable_menu(disable: bool) -> void:
+	_movement_button.disabled = disable
+	_technique_button.disabled = disable
+	_spell_button.disabled = disable
+	_summon_button.disabled = disable
+	_item_button.disabled = disable
+	_wait_button.disabled = disable
+	_action_options.disable_active_options(disable)
 
 
 ## Populates the action options menu with the listed techniques. Hides the
