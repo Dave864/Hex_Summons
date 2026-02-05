@@ -1,6 +1,7 @@
 class_name EncounterUI
 extends Control
-## Manages the various UI elements of an Encounter scene.
+## Manages the various UI elements of an Encounter scene. Uses a button focused
+## layout.
 ##
 ## EncounterUI handles the overall management of the various UI nodes used
 ## during an encounter. This scene also provides a convenient access point for
@@ -206,7 +207,7 @@ func reset_all_options() -> void:
 
 
 ## Initializes the party character details in the UI.
-func track_party_members(players: Array) -> void:
+func track_party_members(players: Array[PlayerCharacter]) -> void:
 	var p_count: int = int(min(players.size(), MAX_PARTY_SIZE))
 	var height: int = (
 			FULL_PARTY_HEIGHT if p_count == MAX_PARTY_SIZE
