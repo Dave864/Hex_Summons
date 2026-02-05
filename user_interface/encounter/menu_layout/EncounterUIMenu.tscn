@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cio2lxf2jspfo"]
+[gd_scene load_steps=7 format=3 uid="uid://cio2lxf2jspfo"]
 
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_peedy"]
 [ext_resource type="PackedScene" uid="uid://d3i1mqeluj5hv" path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" id="1_vudnu"]
 [ext_resource type="PackedScene" uid="uid://d20ttalw3d47o" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/StandbyHighlightPool/StandbyHighlightPool.tscn" id="2_61asc"]
+[ext_resource type="Script" uid="uid://bqtoxpearphuo" path="res://user_interface/encounter/menu_layout/encounter_ui_menu.gd" id="2_wbux0"]
 [ext_resource type="PackedScene" uid="uid://dp3b42qitf0at" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/PlayerOptionsMenu.tscn" id="3_75vv7"]
 [ext_resource type="PackedScene" uid="uid://dn4vmatmue5p6" path="res://user_interface/encounter/menu_layout/PartyCharacterStats/PartyCharacterStats.tscn" id="4_thx3u"]
 
@@ -14,6 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_peedy")
+script = ExtResource("2_wbux0")
 
 [node name="StandbyHighlightPool" parent="." instance=ExtResource("2_61asc")]
 layout_mode = 1
@@ -21,15 +23,15 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
-offset_top = 56.0
+offset_top = 296.0
 offset_right = -575.0
-offset_bottom = -243.0
+offset_bottom = -3.0
 
 [node name="InitiativeTracker" parent="." instance=ExtResource("1_vudnu")]
 layout_mode = 1
-offset_left = 8.0
+offset_left = 24.0
 offset_top = 8.0
-offset_right = -120.0
+offset_right = -104.0
 offset_bottom = 42.0
 
 [node name="PlayerOptionsMenu" parent="." instance=ExtResource("3_75vv7")]
@@ -38,9 +40,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
-offset_top = 128.0
+offset_top = 64.0
 offset_right = -472.0
-offset_bottom = -8.0
+offset_bottom = -72.0
 
 [node name="PartyStatsContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
