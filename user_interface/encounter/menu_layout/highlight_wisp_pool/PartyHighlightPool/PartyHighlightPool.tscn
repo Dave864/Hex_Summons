@@ -67,6 +67,7 @@ offset_right = -0.2400055
 offset_bottom = -0.15999985
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("1_jfe22")
 stretch_mode = 4
 script = ExtResource("2_j75u2")

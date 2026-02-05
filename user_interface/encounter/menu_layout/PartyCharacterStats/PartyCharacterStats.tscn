@@ -22,6 +22,9 @@ offset_right = -0.2800064
 offset_bottom = 0.11999512
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
 theme = ExtResource("1_pasbx")
 script = ExtResource("2_pasbx")
 character_portrait = NodePath("CharacterPortriat")
@@ -30,7 +33,8 @@ health_bar = NodePath("HealthBar")
 health_label = NodePath("HealthLabel")
 name_label = NodePath("Name Label")
 
-[node name="SelectedIndicator" type="Panel" parent="."]
+[node name="HighlightedIndicator" type="Panel" parent="."]
+custom_minimum_size = Vector2(66, 84)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,6 +42,7 @@ anchor_bottom = 1.0
 offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 layout_mode = 1
@@ -52,6 +57,7 @@ offset_right = 26.0
 offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 value = 50.0
 fill_mode = 7
 texture_under = SubResource("AtlasTexture_pasbx")

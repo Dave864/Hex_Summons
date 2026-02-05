@@ -51,6 +51,7 @@ offset_right = 0.040000916
 offset_bottom = 0.15999603
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_o1kwj")
 script = ExtResource("1_ky7gd")
 light_highlight_1 = NodePath("Sigil/HighlightUpperLeft")

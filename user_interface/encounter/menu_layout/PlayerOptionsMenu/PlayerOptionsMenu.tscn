@@ -7,24 +7,24 @@
 
 [node name="PlayerOptionsMenu" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.275
+anchor_bottom = 0.62200004
+offset_bottom = 0.07998657
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme = ExtResource("1_uo2p1")
 script = ExtResource("2_b51x4")
 
 [node name="PlayerActions" type="PanelContainer" parent="."]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = -224.0
-offset_right = 88.0
-offset_bottom = -72.0
-grow_vertical = 0
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 0.75000006
+offset_bottom = -1.5258789e-05
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PlayerActions"]
 layout_mode = 2
@@ -99,14 +99,13 @@ alignment = 0
 
 [node name="ActionOptions" type="PanelContainer" parent="." node_paths=PackedStringArray("action_display")]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 88.0
-offset_top = -224.0
-offset_right = 168.0
-offset_bottom = -72.0
-grow_vertical = 0
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.75000006
+offset_bottom = -1.5258789e-05
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("3_f0o6x")
 action_display = NodePath("../OptionData")
 
@@ -124,10 +123,11 @@ alignment = 1
 
 [node name="OptionData" parent="." instance=ExtResource("4_gmehl")]
 layout_mode = 1
-offset_left = 8.0
-offset_top = 288.0
-offset_right = 40.0
-offset_bottom = 279.91998
+anchor_top = 0.75000006
+anchor_right = 1.0
+anchor_bottom = 0.9990001
+offset_top = -1.5258789e-05
+offset_bottom = 0.015975952
 grow_horizontal = 1
 grow_vertical = 1
 
