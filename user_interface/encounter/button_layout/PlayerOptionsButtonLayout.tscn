@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://cnunas8fekg6v"]
+
+[ext_resource type="Script" uid="uid://s2ixe4laehao" path="res://user_interface/encounter/button_layout/player_options_button_layout.gd" id="1_a3qo5"]
+[ext_resource type="PackedScene" uid="uid://bbb4rvu44d041" path="res://user_interface/encounter/button_layout/PlayerOptionButton/MovementButton.tscn" id="2_xfmw5"]
+[ext_resource type="PackedScene" uid="uid://bbic645b0237g" path="res://user_interface/encounter/button_layout/PlayerOptionButton/TechniqueButton.tscn" id="3_th4ro"]
+[ext_resource type="PackedScene" uid="uid://5vv4y7a5a1ay" path="res://user_interface/encounter/button_layout/PlayerOptionButton/SpellButton.tscn" id="4_25mrh"]
+[ext_resource type="PackedScene" uid="uid://cuwbd4bjywig0" path="res://user_interface/encounter/button_layout/PlayerOptionButton/SummonButton.tscn" id="5_de7ec"]
+[ext_resource type="PackedScene" uid="uid://dtfgs8438te8w" path="res://user_interface/encounter/button_layout/PlayerOptionButton/ItemButton.tscn" id="6_1exu5"]
+[ext_resource type="PackedScene" uid="uid://bsdqilfcr4xqv" path="res://user_interface/encounter/button_layout/PlayerOptionButton/WaitButton.tscn" id="7_eb7in"]
+[ext_resource type="Script" uid="uid://d5hvsefs34ls" path="res://user_interface/encounter/button_layout/sub_options.gd" id="8_nqnxl"]
+
+[node name="PlayerOptionsButtonLayout" type="Control" node_paths=PackedStringArray("_movement_button", "_technique_button", "_spell_button", "_summon_button", "_item_button", "_wait_button")]
+layout_mode = 3
+anchor_right = 0.8
+anchor_bottom = 0.31100002
+offset_bottom = 0.039993286
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a3qo5")
+_movement_button = NodePath("Options/MovementButton")
+_technique_button = NodePath("Options/TechniqueButton")
+_spell_button = NodePath("Options/SpellButton")
+_summon_button = NodePath("Options/SummonButton")
+_item_button = NodePath("Options/ItemButton")
+_wait_button = NodePath("Options/WaitButton")
+
+[node name="Options" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.554
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.04800415
+
+[node name="MovementButton" parent="Options" instance=ExtResource("2_xfmw5")]
+layout_mode = 2
+
+[node name="TechniqueButton" parent="Options" instance=ExtResource("3_th4ro")]
+layout_mode = 2
+
+[node name="SpellButton" parent="Options" instance=ExtResource("4_25mrh")]
+layout_mode = 2
+
+[node name="SummonButton" parent="Options" instance=ExtResource("5_de7ec")]
+layout_mode = 2
+
+[node name="ItemButton" parent="Options" instance=ExtResource("6_1exu5")]
+layout_mode = 2
+
+[node name="WaitButton" parent="Options" instance=ExtResource("7_eb7in")]
+layout_mode = 2
+
+[node name="SubOptions" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+follow_focus = true
+draw_focus_border = true
+script = ExtResource("8_nqnxl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SubOptions"]
+layout_mode = 2
+
+[connection signal="toggled" from="Options/MovementButton" to="." method="_on_Movement_toggled"]
+[connection signal="toggled" from="Options/MovementButton" to="SubOptions" method="_on_Movement_toggled"]
+[connection signal="toggled" from="Options/TechniqueButton" to="." method="_on_Technique_toggled"]
+[connection signal="toggled" from="Options/TechniqueButton" to="SubOptions" method="_on_Technique_toggled"]
+[connection signal="toggled" from="Options/SpellButton" to="." method="_on_Spell_toggled"]
+[connection signal="toggled" from="Options/SpellButton" to="SubOptions" method="_on_Spell_toggled"]
+[connection signal="toggled" from="Options/SummonButton" to="." method="_on_Summon_toggled"]
+[connection signal="toggled" from="Options/SummonButton" to="SubOptions" method="_on_Summon_toggled"]
+[connection signal="toggled" from="Options/ItemButton" to="." method="_on_Item_toggled"]
+[connection signal="toggled" from="Options/ItemButton" to="SubOptions" method="_on_Item_toggled"]
+[connection signal="pressed" from="Options/WaitButton" to="." method="_on_Wait_pressed"]
+[connection signal="pressed" from="Options/WaitButton" to="SubOptions" method="_on_Wait_pressed"]
