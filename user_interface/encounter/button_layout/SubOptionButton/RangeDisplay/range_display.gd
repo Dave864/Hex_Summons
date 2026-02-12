@@ -59,12 +59,6 @@ func _ready() -> void:
 	_origin_inner_pts = _init_origin_vertices(outline_width)
 
 
-func _init() -> void:
-	_d_matrix = DisplayMatrix.new(row_count, col_count)
-	_origin_base_pts = _init_origin_vertices()
-	_origin_inner_pts = _init_origin_vertices(outline_width)
-
-
 func _draw() -> void:
 	for details: Array in _draw_order["empty"]:
 		_draw_hex_base(_get_color(details[1].fill), details[0])
