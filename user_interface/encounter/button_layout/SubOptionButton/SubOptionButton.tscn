@@ -1,16 +1,49 @@
-[gd_scene load_steps=2 format=3 uid="uid://6wcjlnpvl3ol"]
+[gd_scene load_steps=3 format=3 uid="uid://6wcjlnpvl3ol"]
 
 [ext_resource type="Script" uid="uid://dl34jxj0kevgn" path="res://user_interface/encounter/button_layout/SubOptionButton/sub_option_button.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://brswtgdm48yey" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/RangeDisplay.tscn" id="2_dchhl"]
 
-
-[node name="SubOptionButton" type="MarginContainer"]
-anchors_preset = -1
+[node name="SubOptionButton" type="Button"]
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.095
+anchor_bottom = 1.0
+offset_bottom = -304.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 script = ExtResource("1")
 
-[node name="Button" type="Button" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Test"
+
+[node name="RangeDisplay" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_dchhl")]
+custom_minimum_size = Vector2(70, 54)
+layout_mode = 2
+script = null
+
+[node name="InactiveFilter" type="Panel" parent="MarginContainer"]
+visible = false
+modulate = Color(1, 1, 1, 0.498039)
 layout_mode = 2
 
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[node name="Label" type="Label" parent="MarginContainer/InactiveFilter"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "wisp cost"
+vertical_alignment = 2
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

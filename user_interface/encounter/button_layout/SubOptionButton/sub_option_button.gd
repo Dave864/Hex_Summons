@@ -1,5 +1,5 @@
-extends MarginContainer
 class_name SubOptionButton
+extends Button
 ## Button that describes a possible sub-option for a given option.
 ##
 ## A base class used to describe the common parameters and functionality of
@@ -9,8 +9,20 @@ class_name SubOptionButton
 
 ## The details of the option described by this button.
 var _option_details: Action = null:
-	get = get_option_details,
-	set = set_option_details
+	get = get_option_details
+
+## The description for the action displayed.
+@onready var _content_label: Label = $MarginContainer/HBoxContainer/Label
+## The display for the action's range data.
+@onready var _range_display: RangeDisplay = $MarginContainer/HBoxContainer/RangeDisplay
+## Panel that obfuscates the details of the action to indicate that it is
+## unavailable as an option. Used in child classes.
+@warning_ignore("unused_private_class_variable")
+@onready var _inactive_filter: Panel = $MarginContainer/InactiveFilter
+## Label describing the cost requirements needed for the action to be available.
+## Set and used in child classes.
+@warning_ignore("unused_private_class_variable")
+@onready var _inactive_label: Label = $MarginContainer/InactiveFilter/Label
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -22,7 +34,8 @@ func _ready() -> void:
 ## action, a summon, or an item depending on the derived class.
 func set_option_details(a: Action) -> void:
 	_option_details = a
-	$Button.set_text(_option_details.name)
+	_range_display.update_action(_option_details)
+	_content_label.text = _option_details.name
 
 
 ## Get the details of the option described the button.
@@ -32,15 +45,12 @@ func get_option_details() -> Action:
 
 ## Sets the right focus neighbor for controller support.
 func set_focus_neighbor_right(neighbor: SubOptionButton) -> void:
-	$Button.set_focus_neighbor(SIDE_RIGHT, neighbor.get_button().get_path())
+	set_focus_neighbor(SIDE_RIGHT, neighbor.get_path())
+	focus_next = neighbor.get_path()
 	# Prevents the action buttons from being reached while sub options are open.
-	$Button.set_focus_neighbor(SIDE_BOTTOM, "")
-	neighbor.set_focus_neighbor(SIDE_LEFT, $Button.get_path())
-
-
-## Returns the "Button" node.
-func get_button() -> Node:
-	return $Button
+	set_focus_neighbor(SIDE_BOTTOM, "")
+	neighbor.set_focus_neighbor(SIDE_LEFT, get_path())
+	neighbor.focus_previous = get_path()
 
 
 ## Checks that all required parameters are set.
@@ -59,5 +69,5 @@ func _process_button_press() -> void:
 
 
 ## Catches the signal for when the button is pressed.
-func _on_Button_pressed() -> void:
+func _on_pressed() -> void:
 	_process_button_press()

@@ -3,37 +3,42 @@
 [ext_resource type="Script" uid="uid://b2p5rbaxojdvf" path="res://user_interface/encounter/button_layout/SubOptionButton/SummonButton/summon_button.gd" id="1_o1u3l"]
 [ext_resource type="PackedScene" uid="uid://brswtgdm48yey" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/RangeDisplay.tscn" id="2_74w5n"]
 
-[node name="SummonButton" type="MarginContainer"]
+[node name="SummonButton" type="Button"]
 anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 0.095
+anchor_bottom = 1.0
+offset_bottom = -304.0
 size_flags_horizontal = 4
 script = ExtResource("1_o1u3l")
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 2
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.96400005
+offset_bottom = 0.01599884
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 text = "Test"
 
-[node name="RangeDisplay" parent="HBoxContainer" instance=ExtResource("2_74w5n")]
+[node name="RangeDisplay" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_74w5n")]
 custom_minimum_size = Vector2(70, 54)
 layout_mode = 2
 hex_spacing = 1.0
 
-[node name="InactiveFilter" type="Panel" parent="."]
+[node name="InactiveFilter" type="Panel" parent="MarginContainer"]
 visible = false
 modulate = Color(1, 1, 1, 0.498039)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="InactiveFilter"]
+[node name="Label" type="Label" parent="MarginContainer/InactiveFilter"]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -41,4 +46,4 @@ text = "wisp cost"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

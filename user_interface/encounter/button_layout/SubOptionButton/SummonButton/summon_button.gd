@@ -23,7 +23,7 @@ func get_summon_name() -> String:
 func set_option_details(a: Action) -> void:
 	# Summon buttons display details for actions, so we cast to check.
 	_option_details = a
-	$HBoxContainer/RangeDisplay.update_action(_option_details)
+	_range_display.update_action(_option_details)
 
 
 ## Populates the UI elements of this node with details relevant to the specified
@@ -31,32 +31,32 @@ func set_option_details(a: Action) -> void:
 func set_summon_details(summon_name: String, summon_handler: Summon) -> void:
 	_summon_handler = summon_handler
 	_summon_name = summon_name
-	$HBoxContainer/Label.set_text(_summon_name)
+	_content_label.set_text(_summon_name)
 	var spawn_action: Action = _summon_handler.spawn_actions[_summon_name]
 	set_option_details(spawn_action)
 	var summon_details: SummonData = _summon_handler.available_summons[_summon_name]
 	if summon_details.wisp_pool_meets_requirements(WispController.standby_pool):
-		$InactiveFilter.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_inactive_filter.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_inactive_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	else:
-		$InactiveFilter.visible = true
-		$InactiveFilter.mouse_filter = Control.MOUSE_FILTER_STOP
-		$InactiveFilter/Label.text = _wisp_cost_text(summon_details)
-		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_STOP
+		_inactive_filter.visible = true
+		_inactive_filter.mouse_filter = Control.MOUSE_FILTER_STOP
+		_inactive_label.text = _wisp_cost_text(summon_details)
+		_inactive_label.mouse_filter = Control.MOUSE_FILTER_STOP
 
 
 ## Creates a string that describes the components of the WispCost for a summon.
 func _wisp_cost_text(summon_details: SummonData) -> String:
-	var text: String = "wisp cost\n"
+	var cost_text: String = "wisp cost\n"
 	var cost: Dictionary[Element.Type, int] = summon_details.cost_summary()
 	for element: Element.Type in cost:
-		text += "{0} -{2}-\n".format(
+		cost_text += "{0} -{2}-\n".format(
 				[
 					Element.Type.find_key(element),
 					cost[element]
 				]
 		)
-	return text
+	return cost_text
 
 
 ## Virtual function. The behavior that is to happen when the button is pressed.

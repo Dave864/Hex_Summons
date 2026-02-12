@@ -10,18 +10,18 @@ extends SubOptionButton
 func set_option_details(a: Action) -> void:
 	# Technique buttons display details for actions, so we cast to check.
 	_option_details = a
-	$HBoxContainer/Label.set_text(_option_details.name)
-	$HBoxContainer/RangeDisplay.update_action(_option_details)
+	_content_label.set_text(_option_details.name)
+	_range_display.update_action(_option_details)
 	
 	var cooldown: Cooldown = _option_details.get_node_or_null("Cooldown")
 	if cooldown != null and cooldown.is_active():
-		$InactiveFilter.visible = true
-		$InactiveFilter.mouse_filter = Control.MOUSE_FILTER_STOP
-		$InactiveFilter/Label.text = str(cooldown.get_countdown())
-		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_STOP
+		_inactive_filter.visible = true
+		_inactive_filter.mouse_filter = Control.MOUSE_FILTER_STOP
+		_inactive_label.text = str(cooldown.get_countdown())
+		_inactive_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	else:
-		$InactiveFilter.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		$InactiveFilter/Label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_inactive_filter.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_inactive_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 ## Virtual function. Evaluates the current state of the action to see if the
