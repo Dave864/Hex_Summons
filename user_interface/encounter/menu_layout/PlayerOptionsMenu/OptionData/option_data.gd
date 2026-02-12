@@ -65,6 +65,7 @@ func get_cooldown_text(cooldown: Cooldown) -> String:
 			]
 	)
 
+
 ## Creates a string that describes the wisp cost for an action.
 func get_wisp_cost_text(wc: WispCost) -> String:
 	var text: String = "wisp cost"

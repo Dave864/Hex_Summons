@@ -7,7 +7,7 @@ extends PanelContainer
 ## action is selected. Instead, the buttons are revealed or hidden as needed.
 
 
-## The options available to a player character.
+## The categories of options.
 enum Option {
 	TECHNIQUE, ## The character uses a technique action.
 	SPELL, ## The character uses a spell action.
@@ -70,6 +70,11 @@ func clear_technique_options() -> void:
 	_technique_options.clear()
 
 
+## Checks if there are techniques loaded.
+func has_techniques() -> bool:
+	return _technique_options.size() > 0
+
+
 ## Populates the action options menu with the listed spells.
 func populate_spell_options(spell_actions: Array[Action]) -> void:
 	if spell_actions.size() == 0:
@@ -80,6 +85,11 @@ func populate_spell_options(spell_actions: Array[Action]) -> void:
 ## Clears out the recorded spell options.
 func clear_spell_options() -> void:
 	_spell_options.clear()
+
+
+## Checks if there are spells loaded.
+func has_spells() -> bool:
+	return _spell_options.size() > 0
 
 
 ## Populates the action options menu with the listed summon spawn actions.
@@ -94,6 +104,11 @@ func clear_summon_options() -> void:
 	_summon_options.clear()
 
 
+## Checks if there are summons loaded.
+func has_summons() -> bool:
+	return _summon_options.size() > 0
+
+
 ## Populate the action options menu with the listed item actions.
 func populate_item_options(item_actions: Array[Action]) -> void:
 	if item_actions.size() == 0:
@@ -104,6 +119,11 @@ func populate_item_options(item_actions: Array[Action]) -> void:
 ## Clears out the recorded item options.
 func clear_item_options() -> void:
 	_item_options.clear()
+
+
+## Checks if there are items loaded.
+func has_items() -> bool:
+	return _item_options.size() > 0
 
 
 ## Clears out the recorded options for all action types.
@@ -231,13 +251,13 @@ func _display_buttons(
 	action_options: Array[ActionOptionButton],
 	make_visible: bool = true
 ) -> void:
-	if make_visible:
+	if make_visible and action_options.size() > 0:
 		action_options[0].call_deferred("grab_focus")
 	for option_button: ActionOptionButton in action_options:
 		option_button.visible = make_visible
 
 
-## Helper function for pressed button functions. Shows the action options menu
+## Helper function for toggled button functions. Shows the action options menu
 ## as well as the action display.
 func _show_menu() -> void:
 	action_display.show()
@@ -246,38 +266,50 @@ func _show_menu() -> void:
 
 
 ## Hides the currently displayed action options.
-func _on_Movement_pressed() -> void:
+func _on_Movement_toggled(_toggled_on: bool) -> void:
 	hide()
 	action_display.hide()
 	_hide_active_options()
 
 
-## Shows the options for techniques.
-func _on_Technique_pressed() -> void:
-	_show_menu()
-	_display_buttons(_technique_options)
-	_active_option = Option.TECHNIQUE
+## Toggles the options for techniques.
+func _on_Technique_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		_show_menu()
+		_display_buttons(_technique_options)
+		_active_option = Option.TECHNIQUE
+	else:
+		_on_Movement_toggled(true)
 
 
-## Shows the options for spells.
-func _on_Spell_pressed() -> void:
-	_show_menu()
-	_display_buttons(_spell_options)
-	_active_option = Option.SPELL
+## Toggles the options for spells.
+func _on_Spell_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		_show_menu()
+		_display_buttons(_spell_options)
+		_active_option = Option.SPELL
+	else:
+		_on_Movement_toggled(true)
 
 
-## Shows the options for summons.
-func _on_Summon_pressed() -> void:
-	_show_menu()
-	_display_buttons(_summon_options)
-	_active_option = Option.SUMMON
+## Toggles the options for summons.
+func _on_Summon_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		_show_menu()
+		_display_buttons(_summon_options)
+		_active_option = Option.SUMMON
+	else:
+		_on_Movement_toggled(true)
 
 
-## Shows the options for items.
-func _on_Item_pressed() -> void:
-	_show_menu()
-	_display_buttons(_item_options)
-	_active_option = Option.ITEM
+## Toggles the options for items.
+func _on_Item_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		_show_menu()
+		_display_buttons(_item_options)
+		_active_option = Option.ITEM
+	else:
+		_on_Movement_toggled(true)
 
 
 ## Hides this UI element, clearing out the saved action options.

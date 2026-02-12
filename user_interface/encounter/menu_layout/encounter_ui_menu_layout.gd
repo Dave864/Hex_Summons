@@ -21,7 +21,7 @@ var _summon_manager: Summon = null:
 ## The node that displays and manages the initiatve order.
 @onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
 ## Menu that displays the options available to a player character.
-@onready var _player_options_menu: PlayerOptionsMenu = $PlayerOptionsMenu
+@onready var _player_options_menu: PlayerOptionsMenuLayout = $PlayerOptionsMenuLayout
 ## Container holding all displays for player characters.
 @onready var _party_stats_container: VBoxContainer = $PartyStatsContainer
 
