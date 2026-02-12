@@ -4,13 +4,27 @@ extends MarginContainer
 ## Manages the label and icon settings of an OptionButton for encounters.
 
 
-@export var label: String: get = get_label, set = set_label
-@export var icon_normal: Texture2D = null: get = get_icon_normal, set = set_icon_normal
-@export var icon_pressed: Texture2D = null: get = get_icon_pressed, set = set_icon_pressed
-@export var icon_hover: Texture2D = null: get = get_icon_hover, set = set_icon_hover
-@export var icon_disabled: Texture2D = null: get = get_icon_disabled, set = set_icon_disabled
-@export var icon_focused: Texture2D = null: get = get_icon_focused, set = set_icon_focused
-@export var disabled: bool = false: get = get_disabled, set = set_area_disabled
+@export var label: String:
+	get = get_label,
+	set = set_label
+@export var icon_normal: Texture2D = null:
+	get = get_icon_normal,
+	set = set_icon_normal
+@export var icon_pressed: Texture2D = null:
+	get = get_icon_pressed,
+	set = set_icon_pressed
+@export var icon_hover: Texture2D = null:
+	get = get_icon_hover,
+	set = set_icon_hover
+@export var icon_disabled: Texture2D = null:
+	get = get_icon_disabled,
+	set = set_icon_disabled
+@export var icon_focused: Texture2D = null:
+	get = get_icon_focused,
+	set = set_icon_focused
+@export var disabled: bool = false:
+	get = get_disabled,
+	set = set_area_disabled
 
 var _is_highlighted: bool
 
