@@ -1,68 +1,35 @@
-class_name PlayerOptionsMenu
-extends Control
-## Displays the actions available to the current active player character.
+class_name PlayerOptionsMenuLayout
+extends PlayerOptionsUI
+## Displays the actions available to the current active player character in a
+## menu style layout.
 ##
 ## Handles the population of the actions menu.
 
 
-## The options available to a player character.
-enum Options {
-	MOVE, ## The character moves around the map.
-	TECHNIQUE, ## The character uses a technique action.
-	SPELL, ## The character uses a spell action.
-	SUMMON, ## The character manifests a summon, using their spawn action.
-	ITEM, ## The character uses an item, and the action associated with it.
-	WAIT, ## The character ends their turn.
-}
-
-## The button for movement.
-@onready var _movement_button: Button = $PlayerActions/VBoxContainer/Movement
-## The button for techniques.
-@onready var _technique_button: Button = $PlayerActions/VBoxContainer/Technique
-## The button for spells.
-@onready var _spell_button: Button = $PlayerActions/VBoxContainer/Spell
-## The button for summons.
-@onready var _summon_button: Button = $PlayerActions/VBoxContainer/Summon
-## The button for items.
-@onready var _item_button: Button = $PlayerActions/VBoxContainer/Item
-## The button for wait.
-@onready var _wait_button: Button = $PlayerActions/VBoxContainer/Wait
 ## The container that holds the options for a selected action.
 @onready var _action_options: PlayerActionOptions = $ActionOptions
 
 
-## Hides this menu from display.
-func _ready() -> void:
-	dismiss()
-
-
-## Handles button input.
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_selector_select"):
-		var option_button := get_viewport().gui_get_focus_owner() as Button
-		if option_button != null:
-			option_button.emit_signal("pressed")
-
-
-## Shows this menu, setting the control focus to the movement button.
-func display() -> void:
-	show()
-	_movement_button.call_deferred("grab_focus")
-
-
-## Hides this menu.
-func dismiss() -> void:
-	hide()
-
-
-## Disables or enables the options and any displayed action options.
+## Disables or enables the options and any displayed action options. Buttons
+## with no present options are always set to disabled.
 func disable_menu(disable: bool) -> void:
-	_movement_button.disabled = disable
-	_technique_button.disabled = disable
-	_spell_button.disabled = disable
-	_summon_button.disabled = disable
-	_item_button.disabled = disable
-	_wait_button.disabled = disable
+	super.disable_menu(disable)
+	_technique_button.disabled = (
+		true if not _action_options.has_techniques()
+		else disable
+	)
+	_spell_button.disabled = (
+		true if not _action_options.has_spells()
+		else disable
+	)
+	_summon_button.disabled = (
+		true if not _action_options.has_summons()
+		else disable
+	)
+	_item_button.disabled = (
+		true if not _action_options.has_items()
+		else disable
+	)
 	_action_options.disable_active_options(disable)
 
 
@@ -131,6 +98,8 @@ func clear_all_options() -> void:
 	_action_options.clear_all_options()
 
 
-## Hides this menu.
-func _on_Wait_pressed() -> void:
-	dismiss()
+## Focus neighbors do not need to be updated, as they are hidden when disabled.
+func _set_focus_neighbors_for_active_options(
+	_active_options: Array[BaseButton]
+) -> void:
+	pass

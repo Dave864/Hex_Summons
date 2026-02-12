@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://dp3b42qitf0at"]
 
-[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_uo2p1"]
-[ext_resource type="Script" uid="uid://b4pkwviamfe4m" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/player_options_menu.gd" id="2_b51x4"]
-[ext_resource type="Script" uid="uid://drfkxuuxn4m7t" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/player_action_options.gd" id="3_f0o6x"]
-[ext_resource type="PackedScene" uid="uid://cww308tl4jk5n" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/OptionData/OptionData.tscn" id="4_gmehl"]
+[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_m8drq"]
+[ext_resource type="Script" uid="uid://b4pkwviamfe4m" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/player_options_menu_layout.gd" id="2_slwd1"]
+[ext_resource type="Script" uid="uid://drfkxuuxn4m7t" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/player_action_options.gd" id="3_0cb23"]
+[ext_resource type="PackedScene" uid="uid://cww308tl4jk5n" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/OptionData/OptionData.tscn" id="4_imudb"]
 
-[node name="PlayerOptionsMenu" type="Control"]
+[node name="PlayerOptionsMenuLayout" type="Control" node_paths=PackedStringArray("_movement_button", "_technique_button", "_spell_button", "_summon_button", "_item_button", "_wait_button")]
 layout_mode = 3
 anchor_right = 0.275
 anchor_bottom = 0.62200004
@@ -13,8 +13,14 @@ offset_bottom = 0.07998657
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme = ExtResource("1_uo2p1")
-script = ExtResource("2_b51x4")
+theme = ExtResource("1_m8drq")
+script = ExtResource("2_slwd1")
+_movement_button = NodePath("PlayerActions/VBoxContainer/Movement")
+_technique_button = NodePath("PlayerActions/VBoxContainer/Technique")
+_spell_button = NodePath("PlayerActions/VBoxContainer/Spell")
+_summon_button = NodePath("PlayerActions/VBoxContainer/Summon")
+_item_button = NodePath("PlayerActions/VBoxContainer/Item")
+_wait_button = NodePath("PlayerActions/VBoxContainer/Wait")
 
 [node name="PlayerActions" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -37,6 +43,7 @@ focus_neighbor_top = NodePath("../Wait")
 focus_neighbor_bottom = NodePath("../Technique")
 focus_next = NodePath("../Technique")
 focus_previous = NodePath("../Wait")
+toggle_mode = true
 text = "MOVEMENT"
 flat = true
 alignment = 0
@@ -48,6 +55,7 @@ focus_neighbor_top = NodePath("../Movement")
 focus_neighbor_bottom = NodePath("../Spell")
 focus_next = NodePath("../Spell")
 focus_previous = NodePath("../Movement")
+toggle_mode = true
 text = "TECHNIQUE"
 flat = true
 alignment = 0
@@ -60,6 +68,7 @@ focus_neighbor_top = NodePath("../Technique")
 focus_neighbor_bottom = NodePath("../Summon")
 focus_next = NodePath("../Summon")
 focus_previous = NodePath("../Technique")
+toggle_mode = true
 text = "SPELL"
 flat = true
 alignment = 0
@@ -71,6 +80,7 @@ focus_neighbor_top = NodePath("../Spell")
 focus_neighbor_bottom = NodePath("../Item")
 focus_next = NodePath("../Item")
 focus_previous = NodePath("../Spell")
+toggle_mode = true
 text = "SUMMON"
 flat = true
 alignment = 0
@@ -82,6 +92,7 @@ focus_neighbor_top = NodePath("../Summon")
 focus_neighbor_bottom = NodePath("../Wait")
 focus_next = NodePath("../Wait")
 focus_previous = NodePath("../Summon")
+toggle_mode = true
 text = "ITEM"
 flat = true
 alignment = 0
@@ -106,7 +117,7 @@ anchor_bottom = 0.75000006
 offset_bottom = -1.5258789e-05
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_f0o6x")
+script = ExtResource("3_0cb23")
 action_display = NodePath("../OptionData")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ActionOptions"]
@@ -121,7 +132,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 6
 alignment = 1
 
-[node name="OptionData" parent="." instance=ExtResource("4_gmehl")]
+[node name="OptionData" parent="." instance=ExtResource("4_imudb")]
 layout_mode = 1
 anchor_top = 0.75000006
 anchor_right = 1.0
@@ -131,9 +142,15 @@ offset_bottom = 0.015975952
 grow_horizontal = 1
 grow_vertical = 1
 
-[connection signal="pressed" from="PlayerActions/VBoxContainer/Movement" to="ActionOptions" method="_on_Movement_pressed"]
-[connection signal="pressed" from="PlayerActions/VBoxContainer/Technique" to="ActionOptions" method="_on_Technique_pressed"]
-[connection signal="pressed" from="PlayerActions/VBoxContainer/Spell" to="ActionOptions" method="_on_Spell_pressed"]
-[connection signal="pressed" from="PlayerActions/VBoxContainer/Summon" to="ActionOptions" method="_on_Summon_pressed"]
-[connection signal="pressed" from="PlayerActions/VBoxContainer/Item" to="ActionOptions" method="_on_Item_pressed"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/Movement" to="." method="_on_Movement_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/Movement" to="ActionOptions" method="_on_Movement_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/Technique" to="." method="_on_Technique_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/Technique" to="ActionOptions" method="_on_Technique_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/Spell" to="." method="_on_Spell_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/Spell" to="ActionOptions" method="_on_Spell_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/Summon" to="." method="_on_Summon_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/Summon" to="ActionOptions" method="_on_Summon_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/Item" to="." method="_on_Item_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/Item" to="ActionOptions" method="_on_Item_toggled"]
+[connection signal="pressed" from="PlayerActions/VBoxContainer/Wait" to="." method="_on_Wait_pressed"]
 [connection signal="pressed" from="PlayerActions/VBoxContainer/Wait" to="ActionOptions" method="_on_Wait_pressed"]
