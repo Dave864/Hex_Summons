@@ -34,19 +34,42 @@ var _active_option: Option = Option.WAIT
 
 ## Hides this menu from display.
 func _ready() -> void:
-	dismiss()
+	#dismiss()
+	display()
 
 
 ## Handles button input.
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_selector_select"):
 		var option_button := get_viewport().gui_get_focus_owner() as BaseButton
-		if option_button == null:
-			return
 		if option_button.toggle_mode:
 			option_button.button_pressed = !option_button.button_pressed
 		else:
 			option_button.emit_signal("pressed")
+	if event.is_action_pressed("ui_encounter_movement"):
+		_movement_button.button_pressed = true
+	if (
+		not _technique_button.disabled
+		and event.is_action_pressed("ui_encounter_option_1")
+	):
+		_technique_button.button_pressed = not _technique_button.button_pressed
+	if (
+		not _spell_button.disabled
+		and event.is_action_pressed("ui_encounter_option_2")
+	):
+		_spell_button.button_pressed = not _spell_button.button_pressed
+	if (
+		not _summon_button.disabled
+		and event.is_action_pressed("ui_encounter_option_3")
+	):
+		_summon_button.button_pressed = not _summon_button.button_pressed
+	if (
+		not _item_button.disabled
+		and event.is_action_pressed("ui_encounter_option_4")
+	):
+		_item_button.button_pressed = not _item_button.button_pressed
+	if event.is_action_pressed("ui_encounter_player_end"):
+		_on_Wait_pressed()
 
 
 ## Shows this menu, setting the control focus to the movement button.
@@ -174,6 +197,7 @@ func _on_Technique_toggled(toggled_on: bool) -> void:
 	if not toggled_on:
 		_movement_button.button_pressed = _active_option == Option.TECHNIQUE
 		return
+	_technique_button.grab_focus()
 	var last_option: Option = _active_option
 	_active_option = Option.TECHNIQUE
 	if last_option != Option.TECHNIQUE:
@@ -186,6 +210,7 @@ func _on_Spell_toggled(toggled_on: bool) -> void:
 	if not toggled_on:
 		_movement_button.button_pressed = _active_option == Option.SPELL
 		return
+	_spell_button.grab_focus()
 	var last_option: Option = _active_option
 	_active_option = Option.SPELL
 	if last_option != Option.SPELL:
@@ -198,6 +223,7 @@ func _on_Summon_toggled(toggled_on: bool) -> void:
 	if not toggled_on:
 		_movement_button.button_pressed = _active_option == Option.SUMMON
 		return
+	_summon_button.grab_focus()
 	var last_option: Option = _active_option
 	_active_option = Option.SUMMON
 	if last_option != Option.SUMMON:
@@ -210,6 +236,7 @@ func _on_Item_toggled(toggled_on: bool) -> void:
 	if not toggled_on:
 		_movement_button.button_pressed = _active_option == Option.ITEM
 		return
+	_item_button.grab_focus()
 	var last_option: Option = _active_option
 	_active_option = Option.ITEM
 	if last_option != Option.ITEM:
@@ -218,5 +245,6 @@ func _on_Item_toggled(toggled_on: bool) -> void:
 
 ## Hides this menu when the "Wait" button has been pressed.
 func _on_Wait_pressed() -> void:
+	_wait_button.grab_focus()
 	_active_option = Option.WAIT
 	dismiss()
