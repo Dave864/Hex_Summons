@@ -25,11 +25,6 @@ var _option_details: Action = null:
 @onready var _inactive_label: Label = $MarginContainer/InactiveFilter/Label
 
 
-## Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	_check_for_required_parameters()
-
-
 ## Virtual function. Set the action details for the button. Can be either an
 ## action, a summon, or an item depending on the derived class.
 func set_option_details(a: Action) -> void:
@@ -51,15 +46,6 @@ func set_focus_neighbor_right(neighbor: SubOptionButton) -> void:
 	set_focus_neighbor(SIDE_BOTTOM, "")
 	neighbor.set_focus_neighbor(SIDE_LEFT, get_path())
 	neighbor.focus_previous = get_path()
-
-
-## Checks that all required parameters are set.
-func _check_for_required_parameters() -> void:
-	var button_node: Button = get_node_or_null("Button")
-	assert(
-			button_node != null,
-			"SubOptionButton %s does not have a Button node." % [name]
-	)
 
 
 ## Virtual function. The behavior that is to happen when the button is pressed.

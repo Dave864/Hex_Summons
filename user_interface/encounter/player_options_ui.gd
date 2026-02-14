@@ -34,8 +34,7 @@ var _active_option: Option = Option.WAIT
 
 ## Hides this menu from display.
 func _ready() -> void:
-	#dismiss()
-	display()
+	dismiss()
 
 
 ## Handles button input.
