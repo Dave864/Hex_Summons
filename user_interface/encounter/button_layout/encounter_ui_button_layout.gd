@@ -1,5 +1,5 @@
 class_name EncounterUIButtonLayout
-extends Control
+extends EncounterUI
 ## Manages the various UI elements of an Encounter scene. Uses a button focused
 ## layout.
 ##
@@ -30,7 +30,6 @@ enum Options {
 	NONE,
 }
 
-
 # TODO: Currently loading CharacterSummary scene to visualize the hp values
 # of enemy characters
 var _character_summary: PackedScene = preload(
@@ -39,32 +38,21 @@ var _character_summary: PackedScene = preload(
 )
 ## Flag that describes the options currently on display.
 var _current_selection: Options = Options.NONE
-## The character that the UI is displaying the details of, either a PlayerCharacter
-## or Summon.
-var _focused_character: Character = null
-## Holds references for all player characters in the party. Used for toggling
-## UI elements in PartyStats container.
-var _party_stat_map: Dictionary[int, UserCharacterStatsUI] = {}
-## Reference to the node that handles summons.
-var _summon: Summon = null:
-	set = set_summon
 
-@onready var initiative_tracker: InitiativeTracker = $InitiativeTracker
+## The display for the active player character.
 @onready var active_character_ui: UserCharacterStatsUI = $ActiveCharacterStats
 @onready var enemy_stats: VBoxContainer = $EnemyStats
-@onready var party_stats: VBoxContainer = $PartyStats
 @onready var options_menu: PlayerOptionsButtonLayout = $PlayerOptionsButtonLayout
-@onready var sub_options: SubOptions = $SubOptions
+
+
+## Sets the reference to the player options menu node.
+func _ready() -> void:
+	_player_options_menu = $PlayerOptionsButtonLayout
 
 
 ## Sets the selection flag.
 func set_current_selection(new_flag: Options) -> void:
 	_current_selection = new_flag
-
-
-## Get the current character the UI is focused on.
-func get_focused_character() -> Character:
-	return _focused_character
 
 
 ## Updates the active player being focused on.
@@ -74,11 +62,11 @@ func set_focused_character(new_player: PlayerCharacter) -> void:
 	# by the ActivePlayerStats node.
 	_party_stat_map[new_player.get_instance_id()].hide()
 	_focused_character = new_player
-	_summon.summoner = _focused_character
+	_summon_manager.summoner = _focused_character
 	options_menu.clear_all_options()
 	options_menu.populate_technique_options(_focused_character.get_techniques())
 	options_menu.populate_spell_options(_focused_character.get_spells())
-	options_menu.populate_summon_options(_summon)
+	options_menu.populate_summon_options(_summon_manager)
 	options_menu.populate_item_options([])
 	options_menu.set_focus_neighbors()
 	# Disconnect the health_changed signal from the previous focused player
@@ -94,82 +82,24 @@ func set_summon_as_focus() -> void:
 	_show_focused_character_in_party()
 	# Hide the party stats of the summoner as they will be represented
 	# by the ActivePlayerStats node.
-	_party_stat_map[_summon.summoner.get_instance_id()].hide()
-	_focused_character = _summon
+	_party_stat_map[_summon_manager.summoner.get_instance_id()].hide()
+	_focused_character = _summon_manager
 	options_menu.clear_all_options()
-	options_menu.populate_spell_options(_summon.turn_actions)
+	options_menu.populate_spell_options(_summon_manager.turn_actions)
 	options_menu.set_focus_neighbors()
 	# Disconnect the health_changed signal from the previous focused player
 	# to ensure that the ActivePlayerStats node is only affected by the changes
 	# applied to the health of the new focused player.
 	_disconnect_focus_player_health_changed()
-	active_character_ui.set_summon_stats(_summon)
+	active_character_ui.set_summon_stats(_summon_manager)
 	active_character_ui.show()
 
 
-## Set the Summon node reference.
-func set_summon(summon: Summon) -> void:
-	_summon = summon
-	initiative_tracker.set_summon_reference(_summon)
-	if _focused_character != null:
-		_summon.summoner = _focused_character
-
-
-## Get an action from the currently active sub-options selection.
-func get_sub_option_at_index(index: int) -> Action:
-	var a: Action
-	match _current_selection:
-		Options.TECHNIQUE:
-			a = sub_options.get_action_at_index(index)
-		Options.SPELL:
-			a = sub_options.get_action_at_index(index)
-		Options.SUMMON:
-			a = sub_options.get_action_at_index(index)
-		_:
-			a = null
-	return a
-
-
-## Sets the focus to the specified index for sub options.
-func grab_focus_for_sub_option_at_index(index: int) -> void:
-	sub_options.grab_focus_at_index(index)
-
-
-## Updates the disabled flag to true for all active user options.
-func set_active_options() -> void:
-	options_menu.disable_menu(false)
-
-
-## Hides the active player stats and reveals the relevant party summary for the
-## "active" character.
-func hide_active_stats() -> void:
-	active_character_ui.hide()
-	if _focused_character != null:
-		party_stats.size.y = (
-				FULL_PARTY_HEIGHT if _party_stat_map.size() == MAX_PARTY_SIZE
-				else PART_PARTY_HEIGHT
-		)
-		var character_id: int
-		if _focused_character == _summon and _summon.is_active():
-			character_id = _summon.summoner.get_instance_id()
-		else:
-			character_id = _focused_character.get_instance_id()
-		_party_stat_map[character_id].show()
-
-
-## Set all player options to disabled.
-func disable_all_options() -> void:
-	options_menu.disable_menu(true)
-
-
-## Reset all PlayerOptionButtons.
-func reset_all_options() -> void:
-	#technique_button.reset()
-	#spell_button.reset()
-	#summon_button.reset()
-	#item_button.reset()
-	#end_button.reset()
-	pass
+## Virutal function. Displays or hides the player options menu.
+func display_player_menu(display: bool) -> void:
+	super.display_player_menu(display)
+	if not display:
+		_hide_active_stats()
 
 
 ## Initializes the party character details in the UI.
@@ -179,9 +109,9 @@ func track_party_members(players: Array[Character]) -> void:
 			FULL_PARTY_HEIGHT if p_count == MAX_PARTY_SIZE
 			else PART_PARTY_HEIGHT
 	)
-	party_stats.set_deferred("size", Vector2(PARTY_WIDTH, height))
+	_party_stats_container.set_deferred("size", Vector2(PARTY_WIDTH, height))
 	for i: int in p_count:
-		var player_stats: UserCharacterStatsUI = party_stats.get_child(i)
+		var player_stats: UserCharacterStatsUI = _party_stats_container.get_child(i)
 		var player: PlayerCharacter = players[i] as PlayerCharacter
 		_party_stat_map[player.get_instance_id()] = player_stats
 		player_stats.set_player_stats(player)
@@ -207,19 +137,36 @@ func track_enemy(e: EnemyCharacter) -> void:
 	enemy_stats.add_child(e_label)
 
 
+## Hides the active player stats and reveals the relevant party summary for the
+## "active" character.
+func _hide_active_stats() -> void:
+	active_character_ui.hide()
+	if _focused_character != null:
+		_party_stats_container.size.y = (
+				FULL_PARTY_HEIGHT if _party_stat_map.size() == MAX_PARTY_SIZE
+				else PART_PARTY_HEIGHT
+		)
+		var character_id: int
+		if _focused_character == _summon_manager and _summon_manager.is_active():
+			character_id = _summon_manager.summoner.get_instance_id()
+		else:
+			character_id = _focused_character.get_instance_id()
+		_party_stat_map[character_id].show()
+
+
 ## Helper function for set_focused_character and set_summon_as_focus. Reveals the
 ## focused player's party stats UI node.
 func _show_focused_character_in_party() -> void:
 	# Not all members of the party are being displayed in the PartyStats
 	# container, so the partial height should be used to keep the UI display
 	# from being too spread out.
-	party_stats.size.y = PART_PARTY_HEIGHT
+	_party_stats_container.size.y = PART_PARTY_HEIGHT
 	# Reveal the party stats of focused character as their details in the
 	# ActivePlayerStats node will be overridden.
 	if _focused_character != null:
 		var character_id: int
-		if _focused_character == _summon and _summon.is_active():
-			character_id = _summon.summoner.get_instance_id()
+		if _focused_character == _summon_manager and _summon_manager.is_active():
+			character_id = _summon_manager.summoner.get_instance_id()
 		else:
 			character_id = _focused_character.get_instance_id()
 		_party_stat_map[character_id].show()
@@ -239,22 +186,3 @@ func _disconnect_focus_player_health_changed() -> void:
 				"health_changed",
 				Callable(active_character_ui, "_on_Character_hp_changed")
 		)
-
-
-## Updates the PartyCharacterStats node of the summoner to show the summon's
-## details.
-func _on_Summon_activated(summoner_id: int) -> void:
-	_party_stat_map[summoner_id].set_summon_stats(_summon)
-
-
-## Updates the PartyCharacterStats node of the summoner to revert back to
-## showing said character's details.
-func _on_Summon_deactivated() -> void:
-	# Summon is deactivated on start, before its reference in this node is set.
-	if _summon == null:
-		return
-	var summoner: PlayerCharacter = _summon.summoner
-	_party_stat_map[summoner.get_instance_id()].set_player_stats(summoner)
-	# This will allow for the party stats to be properly updated.
-	_focused_character = summoner
-	_summon.summoner = null
