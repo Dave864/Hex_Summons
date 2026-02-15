@@ -8,8 +8,7 @@ extends Button
 
 
 ## The details of the option described by this button.
-var _option_details: Action = null:
-	get = get_option_details
+var _option_details: Action = null
 
 ## The description for the action displayed.
 @onready var _content_label: Label = $MarginContainer/HBoxContainer/Label
