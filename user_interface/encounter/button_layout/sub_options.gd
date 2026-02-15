@@ -115,9 +115,9 @@ func has_spells() -> bool:
 func populate_summons(summon_handler: Summon) -> void:
 	for summon_name: String in summon_handler.available_summons:
 		var new_button: SummonButton = _summon_button.instantiate()
-		new_button.set_summon_details(summon_name, summon_handler)
 		_summon_options.append(new_button)
 		_sub_options_container.add_child(new_button)
+		new_button.set_summon_details(summon_name, summon_handler)
 	_set_neighbors(_summon_options)
 
 
@@ -215,9 +215,9 @@ func _populate_sub_options(
 ) -> void:
 	for option: Action in options:
 		var new_button: SubOptionButton = button.instantiate()
-		new_button.set_option_details(option)
 		option_buttons.append(new_button)
 		_sub_options_container.add_child(new_button)
+		new_button.set_option_details(option)
 	_set_neighbors(option_buttons)
 
 
@@ -227,23 +227,25 @@ func _display_buttons(
 	make_visible: bool = true
 ) -> void:
 	if make_visible and action_options.size() > 0:
-		action_options[0].call_deferred("grab_focus")
+		var first_option_button: SubOptionButton = action_options[0]
+		# Want to tell the selector to display the range for this action.
+		first_option_button.emit_signal("pressed")
+		first_option_button.call_deferred("grab_focus")
 	for option_button: SubOptionButton in action_options:
 		option_button.visible = make_visible
 
 
 ## Hides the buttons for the currently active option, setting the active option
-## to NONE.
+## to NONE. Hides all options if there is no active option set.
 func _hide_active_options() -> void:
-	match _active_option:
-		Option.TECHNIQUE:
-			_display_buttons(_technique_options, false)
-		Option.SPELL:
-			_display_buttons(_spell_options, false)
-		Option.SUMMON:
-			_display_buttons(_summon_options, false)
-		Option.ITEM:
-			_display_buttons(_item_options, false)
+	if _active_option == Option.NONE or _active_option == Option.TECHNIQUE:
+		_display_buttons(_technique_options, false)
+	if _active_option == Option.NONE or _active_option == Option.SPELL:
+		_display_buttons(_spell_options, false)
+	if _active_option == Option.NONE or _active_option == Option.SUMMON:
+		_display_buttons(_summon_options, false)
+	if _active_option == Option.NONE or _active_option == Option.ITEM:
+		_display_buttons(_item_options, false)
 	_active_option = Option.NONE
 
 
