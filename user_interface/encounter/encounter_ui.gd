@@ -41,26 +41,12 @@ func set_summon_as_focus() -> void:
 	_focused_character = _summon_manager
 
 
-## Set the Summon node reference.
+## Set the Summon node reference. Intened to be called once during encounter setup.
 func set_summon(summon: Summon) -> void:
-	if _summon_manager != null:
-		_summon_manager.disconnect(
-				"activated",
-				Callable(self, "_on_Summon_activated")
-		)
-		_summon_manager.disconnect(
-				"deactivated",
-				Callable(self, "_on_Summon_deactivated")
-		)
 	_summon_manager = summon
 	initiative_tracker.set_summon_reference(_summon_manager)
 	if _focused_character != null:
 		_summon_manager.summoner = _focused_character
-	_summon_manager.connect("activated", Callable(self, "_on_Summon_activated"))
-	_summon_manager.connect(
-			"deactivated",
-			Callable(self, "_on_Summon_deactivated")
-	)
 
 
 ## Virutal function. Displays or hides the player options menu.
