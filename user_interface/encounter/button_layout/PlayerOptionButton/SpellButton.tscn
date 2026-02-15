@@ -6,7 +6,6 @@
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="5"]
 [ext_resource type="Texture2D" uid="uid://b5m8cxed8tkkr" path="res://art/ui/PlayerOptionButton/Option Button Circle.png" id="6"]
 
-
 [sub_resource type="AtlasTexture" id="38"]
 atlas = ExtResource("6")
 region = Rect2(0, 0, 80, 50)
@@ -240,6 +239,8 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 34.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "SPELL"
 horizontal_alignment = 1
 vertical_alignment = 2
