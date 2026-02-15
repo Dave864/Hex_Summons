@@ -42,7 +42,7 @@ anchor_bottom = 1.0
 offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 layout_mode = 1
@@ -78,6 +78,7 @@ offset_right = 11.0
 offset_bottom = 11.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("2_oa5s8")
 expand_mode = 1
 
