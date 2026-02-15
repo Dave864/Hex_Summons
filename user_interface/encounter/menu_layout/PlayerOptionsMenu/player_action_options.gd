@@ -67,6 +67,8 @@ func populate_technique_options(technique_actions: Array[Action]) -> void:
 
 ## Clears out the recorded technique options.
 func clear_technique_options() -> void:
+	for i: int in _technique_options.size():
+		_technique_options[i].queue_free()
 	_technique_options.clear()
 
 
@@ -84,6 +86,8 @@ func populate_spell_options(spell_actions: Array[Action]) -> void:
 
 ## Clears out the recorded spell options.
 func clear_spell_options() -> void:
+	for i: int in _spell_options.size():
+		_spell_options[i].queue_free()
 	_spell_options.clear()
 
 
@@ -101,6 +105,8 @@ func populate_summon_options(summon_manager: Summon) -> void:
 
 ## Clears out the recorded summon options.
 func clear_summon_options() -> void:
+	for i: int in _summon_options.size():
+		_summon_options[i].queue_free()
 	_summon_options.clear()
 
 
@@ -118,6 +124,8 @@ func populate_item_options(item_actions: Array[Action]) -> void:
 
 ## Clears out the recorded item options.
 func clear_item_options() -> void:
+	for i: int in _item_options.size():
+		_item_options[i].queue_free()
 	_item_options.clear()
 
 
