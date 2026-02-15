@@ -11,6 +11,7 @@ extends EncounterUI
 ## Sets the reference to the player options menu node.
 func _ready() -> void:
 	_player_options_menu = $PlayerOptionsMenuLayout
+	standby_wisp_pool.set_wisp_pool(WispController.standby_pool)
 
 
 ## Updates the active player being focused on.

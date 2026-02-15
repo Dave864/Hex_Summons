@@ -8,6 +8,9 @@ extends Control
 ## said UI nodes. The common nodes are InitiativeTracker and StandbyPool.
 
 
+## The node that displays the state of the standby wisp pool.
+@export var standby_wisp_pool: WispPoolUI = null
+
 ## Holds references for all player characters in the party. Used for toggling
 ## UI elements in PartyStats container.
 var _party_stat_map: Dictionary[int, UserCharacterStatsUI] = {}
