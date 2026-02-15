@@ -1,8 +1,8 @@
 [gd_scene load_steps=15 format=3 uid="uid://x4o3gls28fh"]
 
 [ext_resource type="PackedScene" uid="uid://bh13wido3t2hc" path="res://hex_map/TestMap.tscn" id="1"]
-[ext_resource type="PackedScene" uid="uid://b8653jyeljph1" path="res://user_interface/encounter/button_layout/EncounterUIButtonLayout.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://cio2lxf2jspfo" path="res://user_interface/encounter/menu_layout/EncounterUIMenuLayout.tscn" id="4_a00se"]
 [ext_resource type="PackedScene" uid="uid://cnsy5crv75lm4" path="res://character/enemy_characters/TestEnemy2/TestEnemy2.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://cqtyo80p26xko" path="res://character/summons/Summon.tscn" id="5_31f15"]
 [ext_resource type="PackedScene" uid="uid://cru13p0crj0kc" path="res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn" id="7"]
@@ -15,13 +15,14 @@
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="13"]
 [ext_resource type="PackedScene" uid="uid://dxny3bidwcnmv" path="res://encounter/camera/EncounterCamera.tscn" id="14"]
 
-[node name="Encounter" type="Node" node_paths=PackedStringArray("hex_map")]
+[node name="Encounter" type="Node" node_paths=PackedStringArray("ui", "hex_map")]
 script = ExtResource("10")
+ui = NodePath("EncounterUIMenuLayout")
 hex_map = NodePath("TestMap")
 
 [node name="EncounterCamera" parent="." instance=ExtResource("14")]
 
-[node name="EncounterUI" parent="." instance=ExtResource("2")]
+[node name="EncounterUIMenuLayout" parent="." instance=ExtResource("4_a00se")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.84282833, -0.19124404, -0.50305676, 0.5381825, 0.29950044, 0.7878192, 0, -0.9347327, 0.35535166, 0, 6.48444, 0)
@@ -66,8 +67,6 @@ script = ExtResource("12")
 script = ExtResource("11")
 
 [connection signal="focus_moved_by_edge" from="EncounterCamera" to="Selector" method="_on_EncounterCamera_focus_moved_by_edge"]
-[connection signal="activated" from="Summon" to="EncounterUI" method="_on_Summon_activated"]
-[connection signal="deactivated" from="Summon" to="EncounterUI" method="_on_Summon_deactivated"]
 [connection signal="camera_focus_locked" from="Selector" to="EncounterCamera" method="_on_Selector_camera_focus_locked"]
 [connection signal="new_focus_point" from="Selector" to="EncounterCamera" method="_on_Selector_new_focus_point"]
 [connection signal="spawn_action_confirmed" from="Selector" to="Summon" method="_on_Selector_spawn_action_confirmed"]

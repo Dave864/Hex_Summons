@@ -3,6 +3,8 @@ extends Node
 ## Manages the events of an encounter.
 
 
+## Reference to the UI elements for the encounter.
+@export var ui: EncounterUI = null
 ## Reference to the encounter hex_map. This is to allow for differently named
 ## hex map scene to be used.
 @export var hex_map: HexMap = null
@@ -22,8 +24,6 @@ var _player_template: PackedScene = preload(
 @onready var summon: Summon = $Summon
 ## Reference to the Selector node; used to highlight and select map tiles.
 @onready var selector: Selector = $Selector
-## Reference to the UI elements for the encounter.
-@onready var ui: EncounterUI = $EncounterUI
 ## Reference to the camera.
 @onready var camera: EncounterCamera = $EncounterCamera
 
@@ -35,6 +35,7 @@ func _ready() -> void:
 	## out of scene.
 	_connect_map_to_selector()
 	
+	ui.show()
 	ui.set_summon(summon)
 	_load_players()
 	_load_enemies()
