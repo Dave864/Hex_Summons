@@ -16,6 +16,7 @@ anchor_bottom = 0.31100002
 offset_bottom = 0.039993286
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_a3qo5")
 _movement_button = NodePath("Options/MovementButton")
 _technique_button = NodePath("Options/TechniqueButton")
@@ -62,6 +63,8 @@ script = ExtResource("8_nqnxl")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SubOptions"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [connection signal="toggled" from="Options/MovementButton" to="." method="_on_Movement_toggled"]
 [connection signal="toggled" from="Options/MovementButton" to="SubOptions" method="_on_Movement_toggled"]

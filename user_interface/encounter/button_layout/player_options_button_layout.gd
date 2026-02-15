@@ -14,17 +14,18 @@ extends PlayerOptionsUI
 ## Disables or enables the options and any displayed action options. Buttons
 ## with no present options are always set to disabled.
 func disable_menu(disable: bool) -> void:
-	super.disable_menu(disable)
-	_technique_button.disabled = (
-		true if not _sub_options.has_techniques()
-		else disable
+	_movement_button.disable(disable)
+	_wait_button.disable(disable)
+	_technique_button.disable(
+			true if not _sub_options.has_techniques()
+			else disable
 	)
-	_spell_button.disabled = true if not _sub_options.has_spells() else disable
-	_summon_button.disabled = (
-		true if not _sub_options.has_summons()
-		else disable
+	_spell_button.disable(true if not _sub_options.has_spells() else disable)
+	_summon_button.disable(
+			true if not _sub_options.has_summons()
+			else disable
 	)
-	_item_button.disabled = true if not _sub_options.has_items() else disable
+	_item_button.disable(true if not _sub_options.has_items() else disable)
 	_sub_options.disable_active_options(disable)
 
 
@@ -48,7 +49,7 @@ func populate_spell_options(spell_actions: Array[Action]) -> void:
 	if spell_actions.size() == 0:
 		_spell_button.disable(true)
 		return
-	_sub_options.populate_techinques(spell_actions)
+	_sub_options.populate_spells(spell_actions)
 
 
 ## Clears out the recorded spell options.
@@ -63,7 +64,7 @@ func populate_summon_options(summon_manager: Summon) -> void:
 		_summon_button.disable(true)
 		return
 	_summon_button.disable(false)
-	_sub_options.populate_summon_options(summon_manager)
+	_sub_options.populate_summons(summon_manager)
 
 
 ## Clears out the recorded summon options.
