@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cio2lxf2jspfo"]
+[gd_scene load_steps=11 format=3 uid="uid://cio2lxf2jspfo"]
 
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_peedy"]
 [ext_resource type="PackedScene" uid="uid://d3i1mqeluj5hv" path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" id="1_vudnu"]
@@ -6,6 +6,10 @@
 [ext_resource type="Script" uid="uid://bqtoxpearphuo" path="res://user_interface/encounter/menu_layout/encounter_ui_menu_layout.gd" id="2_wbux0"]
 [ext_resource type="PackedScene" uid="uid://dp3b42qitf0at" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/PlayerOptionsMenuLayout.tscn" id="3_75vv7"]
 [ext_resource type="PackedScene" uid="uid://dn4vmatmue5p6" path="res://user_interface/encounter/menu_layout/PartyCharacterStats/PartyCharacterStats.tscn" id="4_thx3u"]
+[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="7_qwnjr"]
+[ext_resource type="Script" uid="uid://ds7n6ekq64jsp" path="res://fsm/user_interface/encounter/encounter_ui_wait.gd" id="8_myum3"]
+[ext_resource type="Script" uid="uid://bhh7a8inf0l3v" path="res://fsm/user_interface/encounter/encounter_ui_action.gd" id="9_icuix"]
+[ext_resource type="Script" uid="uid://bivg5gtassi7s" path="res://fsm/user_interface/encounter/encounter_ui_pause.gd" id="10_u8hkc"]
 
 [node name="EncounterUIMenuLayout" type="Control"]
 layout_mode = 3
@@ -69,3 +73,19 @@ layout_mode = 2
 
 [node name="PartyCharacterStats4" parent="PartyStatsContainer" instance=ExtResource("4_thx3u")]
 layout_mode = 2
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("7_qwnjr")
+initial_state = NodePath("Wait")
+metadata/_custom_type_script = "uid://dcm1t8lpe3xej"
+
+[node name="Wait" type="Node" parent="StateMachine"]
+script = ExtResource("8_myum3")
+
+[node name="Action" type="Node" parent="StateMachine"]
+script = ExtResource("9_icuix")
+
+[node name="Pause" type="Node" parent="StateMachine"]
+script = ExtResource("10_u8hkc")
+
+[connection signal="wait_selected" from="PlayerOptionsMenuLayout" to="StateMachine/Action" method="_on_PlayerOptionsUI_wait_selected"]
