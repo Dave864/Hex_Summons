@@ -2,84 +2,20 @@ class_name EncounterUIAction
 extends EncounterUIState
 ## The logic for what happens when an EncounterUI scene is in the `Action` state.
 ##
-## Populates the SubOptions node with buttons descrbing available choices.
-## Selecting the button for the currently active action will clear the
-## SubOptions node and allow for movement. Selecting a different button will
-## transition refresh the `Action` state using the features of the new option.
-
-
-## The current option menu that is open.
-var _option_flag: EncounterUIButtonLayout.Options
-## The current action highlighted from the chosen option.
-var _current_action: Action
-## The name of the summon the _current_action is the spawn action of. Empty
-## String means that the _current_action is not a spawn action.
-var _summon_name: String
+## Activates the player options menu. When a movement path has been created
 
 
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
-func enter(msg := {}) -> void:
-	_option_flag = msg["option_flag"]
-	_summon_name = ""
-	encounter_ui.set_current_selection(_option_flag)
-	encounter_ui.grab_focus_for_sub_option_at_index(0)
-	_current_action = encounter_ui.get_sub_option_at_index(0)
-	if _option_flag == EncounterUIButtonLayout.Options.SUMMON:
-		var summon_button := (
-			encounter_ui.sub_options.get_SubOptionButton_at_index(0) as SummonButton
-		)
-		_summon_name = summon_button.get_summon_name()
-		SignalBus.emit_spawn_action_selected(
-				_summon_name,
-				_current_action
-		)
-	else:
-		SignalBus.emit_character_action_selected(_current_action)
+func enter(_msg := {}) -> void:
+	encounter_ui.display_player_menu(true)
+	encounter_ui.disable_player_menu(false)
 	_connect_signals()
-
-
-## Virtual function. Receives events from the `_unhandled_input()` callback.
-func handle_input(event: InputEvent) -> void:
-	if (
-		InputController.source_is_keymouse()
-		and event.is_action_pressed("ui_selector_select")
-	):
-		if _option_flag == EncounterUIButtonLayout.Options.SUMMON:
-			SignalBus.emit_spawn_action_selected(_summon_name, _current_action)
-		else:
-			SignalBus.emit_character_action_selected(_current_action)
-	if event.is_action_pressed("ui_encounter_movement"):
-		_movement_selected()
-	if event.is_action_pressed("ui_encounter_player_end"):
-		_end_selected()
-	if (
-		not encounter_ui.technique_button.disabled
-		and event.is_action_pressed("ui_encounter_option_1")
-	):
-		_category_selected(EncounterUIButtonLayout.Options.TECHNIQUE)
-	if (
-		not encounter_ui.spell_button.disabled
-		and event.is_action_pressed("ui_encounter_option_2")
-	):
-		_category_selected(EncounterUIButtonLayout.Options.SPELL)
-	if (
-		not encounter_ui.item_button.disabled
-		and event.is_action_pressed("ui_encounter_option_3")
-	):
-		print("Item option selected")
-#		_category_selected(EncounterUI.Options.ITEM)
-	if (
-		not encounter_ui.summon_button.disabled
-		and event.is_action_pressed("ui_encounter_option_4")
-	):
-		_category_selected(EncounterUIButtonLayout.Options.SUMMON)
 
 
 ## Called by the state machine before changing the active state.
 ## Use this function to clean up the state.
 func exit() -> void:
-	encounter_ui.sub_options.clear_selection()
 	_disconnect_signals()
 
 
@@ -91,30 +27,6 @@ func _connect_signals() -> void:
 			"turn_ended",
 			Callable(self, "_on_Character_turn_ended")
 	)
-	encounter_ui.movement_button.connect(
-			"pressed",
-			Callable(self, "_on_MovementButton_pressed")
-	)
-	encounter_ui.technique_button.connect(
-			"pressed",
-			Callable(self, "_on_TechniqueButton_pressed")
-	)
-	encounter_ui.spell_button.connect(
-			"pressed",
-			Callable(self, "_on_SpellButton_pressed")
-	)
-	encounter_ui.summon_button.connect(
-			"pressed",
-			Callable(self, "_on_SummonButton_pressed")
-	)
-	encounter_ui.item_button.connect(
-			"pressed",
-			Callable(self, "_on_ItemButton_pressed")
-	)
-	encounter_ui.end_button.connect(
-			"pressed",
-			Callable(self, "_on_EndButton_pressed")
-	)
 	SignalBus.connect(
 			"character_action_selected",
 			Callable(self, "_on_SignalBus_character_action_selected")
@@ -126,6 +38,10 @@ func _connect_signals() -> void:
 	SignalBus.connect(
 			"character_action_executed",
 			Callable(self, "_on_SignalBus_character_action_executed")
+	)
+	SignalBus.connect(
+			"move_path_created",
+			Callable(self, "_on_SignalBus_move_path_created")
 	)
 
 
@@ -135,30 +51,6 @@ func _disconnect_signals() -> void:
 			"turn_ended",
 			Callable(self, "_on_Character_turn_ended")
 	)
-	encounter_ui.movement_button.disconnect(
-			"pressed",
-			Callable(self, "_on_MovementButton_pressed")
-	)
-	encounter_ui.technique_button.disconnect(
-			"pressed",
-			Callable(self, "_on_TechniqueButton_pressed")
-	)
-	encounter_ui.spell_button.disconnect(
-			"pressed",
-			Callable(self, "_on_SpellButton_pressed")
-	)
-	encounter_ui.summon_button.disconnect(
-			"pressed",
-			Callable(self, "_on_SummonButton_pressed")
-	)
-	encounter_ui.item_button.disconnect(
-			"pressed",
-			Callable(self, "_on_ItemButton_pressed")
-	)
-	encounter_ui.end_button.disconnect(
-			"pressed",
-			Callable(self, "_on_EndButton_pressed")
-	)
 	SignalBus.disconnect(
 			"character_action_selected",
 			Callable(self, "_on_SignalBus_character_action_selected")
@@ -171,103 +63,20 @@ func _disconnect_signals() -> void:
 			"character_action_executed",
 			Callable(self, "_on_SignalBus_character_action_executed")
 	)
+	SignalBus.disconnect(
+			"move_path_created",
+			Callable(self, "_on_SignalBus_move_path_created")
+	)
 
 
-## Runs logic for the end of player turn. Resets all option buttons and indicates
-## that the current player turn has ended.
-func _end_selected() -> void:
-	encounter_ui.end_button.call_deferred("grab_focus")
-	encounter_ui.reset_all_options()
+## Indicates that the current player turn has ended.
+func _on_PlayerOptionsUI_wait_selected() -> void:
 	encounter_ui.get_focused_character().emit_turn_ended()
-
-
-## Handles the behavior for when the movement button has been selected. The
-## current option menu closes and the state machine goes to the MOVE state.
-func _movement_selected() -> void:
-	_toggle_off_current_option()
-	_action_type_canceled()
-
-
-## Handles the behavior for when a option category has been selected. Closes
-## the current menu and triggers the loading of a new menu if applicable.
-func _category_selected(option: EncounterUIButtonLayout.Options) -> void:
-	_toggle_off_current_option()
-	if _option_flag == option:
-		_action_type_canceled()
-	else:
-		state_machine.transition_to(ACTION, {"option_flag": option})
-
-
-## Toggles off the currently active option.
-func _toggle_off_current_option() -> void:
-	match _option_flag:
-		EncounterUIButtonLayout.Options.TECHNIQUE:
-			encounter_ui.technique_button.button_pressed = false
-		EncounterUIButtonLayout.Options.SPELL:
-			encounter_ui.spell_button.button_pressed = false
-		EncounterUIButtonLayout.Options.SUMMON:
-			encounter_ui.summon_button.button_pressed = false
-		EncounterUIButtonLayout.Options.ITEM:
-			encounter_ui.item_button.button_pressed = false
-		_:
-			pass
-
-
-## Signal that an action type is no longer being looked at before transitioning
-## to the 'Move' state.
-func _action_type_canceled() -> void:
-	SignalBus.emit_character_action_type_canceled()
-	state_machine.transition_to(MOVE)
-
-
-## Catches the signal for when the button for movement is pressed.
-func _on_MovementButton_pressed() -> void:
-	_movement_selected()
-
-
-## Catches the signal for when the Technique button is pressed.
-func _on_TechniqueButton_pressed() -> void:
-	_category_selected(EncounterUIButtonLayout.Options.TECHNIQUE)
-
-
-## Catches the signal for when the Spell button is pressed.
-func _on_SpellButton_pressed() -> void:
-	_category_selected(EncounterUIButtonLayout.Options.SPELL)
-
-
-## Catches the signal for when the Summon button is pressed.
-func _on_SummonButton_pressed() -> void:
-	_category_selected(EncounterUIButtonLayout.Options.SUMMON)
-
-
-## Catches the signal for when the Item button is pressed.
-func _on_ItemButton_pressed() -> void:
-	print("Item option selected")
-#	_category_selected(EncounterUIButtonLayout.Options.ITEM)
-
-
-## Catches the signal for when the End button is pressed.
-func _on_EndButton_pressed() -> void:
-	_end_selected()
 
 
 ## Go to the WAIT state when the character turn has ended.
 func _on_Character_turn_ended() -> void:
 	state_machine.transition_to(WAIT)
-
-
-## Update the current action to match the selected action.
-func _on_SignalBus_character_action_selected(action_info: Action) -> void:
-	_current_action = action_info
-
-
-## Update the current action to match the selected spawn action.
-func _on_SignalBus_spawn_action_selected(
-	summon_name: String,
-	spawn_action: Action
-) -> void:
-	_summon_name = summon_name
-	_current_action = spawn_action
 
 
 ## Signal that a selected action has been executed. Hide the options UI elements.
@@ -276,8 +85,11 @@ func _on_SignalBus_character_action_executed(
 	_action: Action,
 	_targets: Array
 ) -> void:
-	encounter_ui.sub_options.deactivate()
-	encounter_ui.options.hide()
-	if _summon_name != "":
-		pass
-	#encounter_ui.active_player_stats.hide()
+	encounter_ui.display_player_menu(false)
+
+
+## Triggered when a move tile has been selected and a path created to said tile.
+func _on_SignalBus_move_path_created(_path: PackedVector3Array) -> void:
+	if not _state_is_active():
+		return
+	state_machine.transition_to(PAUSE)
