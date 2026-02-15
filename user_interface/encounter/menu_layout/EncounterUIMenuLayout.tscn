@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://bhh7a8inf0l3v" path="res://fsm/user_interface/encounter/encounter_ui_action.gd" id="9_icuix"]
 [ext_resource type="Script" uid="uid://bivg5gtassi7s" path="res://fsm/user_interface/encounter/encounter_ui_pause.gd" id="10_u8hkc"]
 
-[node name="EncounterUIMenuLayout" type="Control"]
+[node name="EncounterUIMenuLayout" type="Control" node_paths=PackedStringArray("standby_wisp_pool")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +21,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_peedy")
 script = ExtResource("2_wbux0")
+standby_wisp_pool = NodePath("StandbyHighlightPool")
 
 [node name="StandbyHighlightPool" parent="." instance=ExtResource("2_61asc")]
 layout_mode = 1
