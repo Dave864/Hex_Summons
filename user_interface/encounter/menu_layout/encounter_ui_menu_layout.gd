@@ -15,7 +15,6 @@ func _ready() -> void:
 
 ## Updates the active player being focused on.
 func set_focused_character(new_player: PlayerCharacter) -> void:
-	_set_highlight_for_focus_character(false)
 	_focused_character = new_player
 	_summon_manager.summoner = _focused_character
 	_set_highlight_for_focus_character(true)
@@ -32,13 +31,20 @@ func set_focused_character(new_player: PlayerCharacter) -> void:
 
 ## Updates the focused character to reflect the summon's details.
 func set_summon_as_focus() -> void:
-	_set_highlight_for_focus_character(false)
 	_focused_character = _summon_manager
 	_get_focus_display().set_summon_stats(_summon_manager)
 	_set_highlight_for_focus_character(true)
 	_player_options_menu.clear_all_options()
 	_player_options_menu.populate_spell_options(_summon_manager.turn_actions)
 	display_player_menu(true)
+
+
+## Virutal function. Displays or hides the player options menu.
+func display_player_menu(display: bool) -> void:
+	super.display_player_menu(display)
+	# When player menu hidden, highlighted chracter should be reset.
+	if not display:
+		_set_highlight_for_focus_character(false)
 
 
 ## Initializes the party character details in the UI.
@@ -72,4 +78,5 @@ func _get_focus_display() -> HighlightCharacterStatsUI:
 
 ## Updates the highlight for the UI details of the current focus character.
 func _set_highlight_for_focus_character(active: bool) -> void:
-	_get_focus_display().set_highlight(active)
+	if _focused_character != null:
+		_get_focus_display().set_highlight(active)

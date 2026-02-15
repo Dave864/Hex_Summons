@@ -252,6 +252,8 @@ func _display_buttons(
 	make_visible: bool = true
 ) -> void:
 	if make_visible and action_options.size() > 0:
+		# Want to tell the selector to display the range for this action.
+		action_options[0].emit_signal("pressed")
 		action_options[0].call_deferred("grab_focus")
 	for option_button: ActionOptionButton in action_options:
 		option_button.visible = make_visible

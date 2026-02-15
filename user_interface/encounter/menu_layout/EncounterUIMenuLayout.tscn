@@ -18,6 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme = ExtResource("1_peedy")
 script = ExtResource("2_wbux0")
 
@@ -63,15 +64,19 @@ grow_vertical = 2
 alignment = 2
 
 [node name="PartyCharacterStats1" parent="PartyStatsContainer" instance=ExtResource("4_thx3u")]
+visible = false
 layout_mode = 2
 
 [node name="PartyCharacterStats2" parent="PartyStatsContainer" instance=ExtResource("4_thx3u")]
+visible = false
 layout_mode = 2
 
 [node name="PartyCharacterStats3" parent="PartyStatsContainer" instance=ExtResource("4_thx3u")]
+visible = false
 layout_mode = 2
 
 [node name="PartyCharacterStats4" parent="PartyStatsContainer" instance=ExtResource("4_thx3u")]
+visible = false
 layout_mode = 2
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
