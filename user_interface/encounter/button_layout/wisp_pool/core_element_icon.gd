@@ -52,6 +52,8 @@ func set_element(new_element: int = -1) -> void:
 			texture.region.position = wind_region
 		_:
 			texture.region.position = blank_region
+			# Prevent the element from being set to -1.
+			return
 	element = new_element
 
 

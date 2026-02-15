@@ -75,6 +75,8 @@ func set_wisp_pool(new_pool: WispPool = null) -> void:
 				"active_count_changed",
 				Callable(self, "_on_WispPool_active_count_changed")
 		)
+	_set_labels()
+	_set_icons()
 
 
 ## Sets the icons for the core elements.
