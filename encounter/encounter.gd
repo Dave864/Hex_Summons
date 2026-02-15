@@ -23,7 +23,7 @@ var _player_template: PackedScene = preload(
 ## Reference to the Selector node; used to highlight and select map tiles.
 @onready var selector: Selector = $Selector
 ## Reference to the UI elements for the encounter.
-@onready var ui: EncounterUIButtonLayout = $EncounterUI
+@onready var ui: EncounterUI = $EncounterUI
 ## Reference to the camera.
 @onready var camera: EncounterCamera = $EncounterCamera
 
@@ -92,7 +92,10 @@ func _load_enemies() -> void:
 				enemies,
 				summon
 		)
-		ui.track_enemy(enemy)
+		# TODO: Currently, only a specific UI layout has the ability to show
+		# enemy stats.
+		if ui is EncounterUIButtonLayout:
+			ui.track_enemy(enemy)
 		hex_map.place_character_at_tile(
 				enemy,
 				hex_map.enemy_start_tiles[e_index]
