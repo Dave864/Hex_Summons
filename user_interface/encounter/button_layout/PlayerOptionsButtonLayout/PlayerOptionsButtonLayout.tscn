@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://cnunas8fekg6v"]
 
-[ext_resource type="Script" uid="uid://s2ixe4laehao" path="res://user_interface/encounter/button_layout/player_options_button_layout.gd" id="1_a3qo5"]
-[ext_resource type="PackedScene" uid="uid://bbb4rvu44d041" path="res://user_interface/encounter/button_layout/PlayerOptionButton/MovementButton.tscn" id="2_xfmw5"]
-[ext_resource type="PackedScene" uid="uid://bbic645b0237g" path="res://user_interface/encounter/button_layout/PlayerOptionButton/TechniqueButton.tscn" id="3_th4ro"]
-[ext_resource type="PackedScene" uid="uid://5vv4y7a5a1ay" path="res://user_interface/encounter/button_layout/PlayerOptionButton/SpellButton.tscn" id="4_25mrh"]
-[ext_resource type="PackedScene" uid="uid://cuwbd4bjywig0" path="res://user_interface/encounter/button_layout/PlayerOptionButton/SummonButton.tscn" id="5_de7ec"]
-[ext_resource type="PackedScene" uid="uid://dtfgs8438te8w" path="res://user_interface/encounter/button_layout/PlayerOptionButton/ItemButton.tscn" id="6_1exu5"]
-[ext_resource type="PackedScene" uid="uid://bsdqilfcr4xqv" path="res://user_interface/encounter/button_layout/PlayerOptionButton/WaitButton.tscn" id="7_eb7in"]
-[ext_resource type="Script" uid="uid://d5hvsefs34ls" path="res://user_interface/encounter/button_layout/sub_options.gd" id="8_nqnxl"]
+[ext_resource type="Script" uid="uid://s2ixe4laehao" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/player_options_button_layout.gd" id="1_a3qo5"]
+[ext_resource type="PackedScene" uid="uid://bbb4rvu44d041" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionButton/MovementButton.tscn" id="2_xfmw5"]
+[ext_resource type="PackedScene" uid="uid://bbic645b0237g" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionButton/TechniqueButton.tscn" id="3_th4ro"]
+[ext_resource type="PackedScene" uid="uid://5vv4y7a5a1ay" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionButton/SpellButton.tscn" id="4_25mrh"]
+[ext_resource type="PackedScene" uid="uid://cuwbd4bjywig0" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionButton/SummonButton.tscn" id="5_de7ec"]
+[ext_resource type="PackedScene" uid="uid://dtfgs8438te8w" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionButton/ItemButton.tscn" id="6_1exu5"]
+[ext_resource type="PackedScene" uid="uid://bsdqilfcr4xqv" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionButton/WaitButton.tscn" id="7_eb7in"]
+[ext_resource type="Script" uid="uid://d5hvsefs34ls" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/sub_options.gd" id="8_nqnxl"]
 
 [node name="PlayerOptionsButtonLayout" type="Control" node_paths=PackedStringArray("_movement_button", "_technique_button", "_spell_button", "_summon_button", "_item_button", "_wait_button")]
 layout_mode = 3

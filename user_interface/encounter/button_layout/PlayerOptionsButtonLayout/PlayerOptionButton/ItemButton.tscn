@@ -1,32 +1,40 @@
-[gd_scene load_steps=18 format=3 uid="uid://cuwbd4bjywig0"]
+[gd_scene load_steps=21 format=3 uid="uid://dtfgs8438te8w"]
 
 [ext_resource type="Texture2D" uid="uid://b5m8cxed8tkkr" path="res://art/ui/PlayerOptionButton/Option Button Circle.png" id="1"]
-[ext_resource type="Texture2D" uid="uid://bl1w1g6x0fgyq" path="res://art/ui/PlayerOptionButton/Summon Spritesheet.png" id="2"]
-[ext_resource type="Script" uid="uid://c1svvytw78av7" path="res://user_interface/encounter/button_layout/PlayerOptionButton/player_option_button.gd" id="4"]
+[ext_resource type="Texture2D" uid="uid://cind8xqj6xvl6" path="res://art/ui/PlayerOptionButton/Sigil Spritesheet.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://2dm28s0gmohg" path="res://art/ui/PlayerOptionButton/Item Spritesheet.png" id="3"]
+[ext_resource type="Script" uid="uid://c1svvytw78av7" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionButton/player_option_button.gd" id="4"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="5"]
 
 
-[sub_resource type="AtlasTexture" id="33"]
+[sub_resource type="AtlasTexture" id="40"]
 atlas = ExtResource("1")
 region = Rect2(0, 0, 80, 50)
 
-[sub_resource type="AtlasTexture" id="34"]
-atlas = ExtResource("1")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4qgl7"]
+load_path = "res://.godot/imported/Option Button Circle.png-754cccf5a92cb2ff082f842c1be97cc8.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xatqp"]
+atlas = SubResource("CompressedTexture2D_4qgl7")
 region = Rect2(0, 100, 80, 50)
 
-[sub_resource type="AtlasTexture" id="36"]
+[sub_resource type="AtlasTexture" id="43"]
 atlas = ExtResource("1")
 region = Rect2(0, 50, 80, 50)
 
-[sub_resource type="AtlasTexture" id="24"]
+[sub_resource type="AtlasTexture" id="23"]
 atlas = ExtResource("2")
+region = Rect2(0, 0, 34, 34)
+
+[sub_resource type="AtlasTexture" id="24"]
+atlas = ExtResource("3")
 region = Rect2(1, 1, 32, 32)
 
-[sub_resource type="AtlasTexture" id="40"]
+[sub_resource type="AtlasTexture" id="45"]
 atlas = ExtResource("1")
 region = Rect2(80, 100, 80, 50)
 
-[sub_resource type="Animation" id="41"]
+[sub_resource type="Animation" id="46"]
 length = 0.001
 step = 0.0833333
 tracks/0/type = "value"
@@ -42,7 +50,7 @@ tracks/0/keys = {
 "values": [Rect2(80, 100, 80, 50)]
 }
 
-[sub_resource type="Animation" id="42"]
+[sub_resource type="Animation" id="47"]
 resource_name = "focus"
 length = 0.166667
 step = 0.0833333
@@ -59,7 +67,7 @@ tracks/0/keys = {
 "values": [Rect2(0, 150, 80, 50), Rect2(80, 150, 80, 50), Rect2(160, 150, 80, 50)]
 }
 
-[sub_resource type="Animation" id="43"]
+[sub_resource type="Animation" id="48"]
 resource_name = "focus_selected"
 length = 0.166667
 step = 0.0833333
@@ -76,14 +84,14 @@ tracks/0/keys = {
 "values": [Rect2(0, 200, 80, 50), Rect2(80, 200, 80, 50), Rect2(160, 200, 80, 50)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_my8dj"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4qgl7"]
 _data = {
-&"RESET": SubResource("41"),
-&"focus": SubResource("42"),
-&"focus_selected": SubResource("43")
+&"RESET": SubResource("46"),
+&"focus": SubResource("47"),
+&"focus_selected": SubResource("48")
 }
 
-[sub_resource type="Animation" id="44"]
+[sub_resource type="Animation" id="49"]
 length = 0.001
 step = 0.0833333
 tracks/0/type = "value"
@@ -98,27 +106,52 @@ tracks/0/keys = {
 "update": 0,
 "values": [Rect2(1, 1, 32, 32)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sigil:texture:region")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 34, 34)]
+}
 
-[sub_resource type="Animation" id="45"]
+[sub_resource type="Animation" id="50"]
 resource_name = "selected_loop"
-length = 0.25
+length = 0.833333
+loop_mode = 1
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Icon:texture:region")
-tracks/0/interp = 0
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(1, 35, 32, 32), Rect2(35, 35, 32, 32), Rect2(69, 35, 32, 32), Rect2(103, 35, 32, 32)]
+"values": [Rect2(69, 1, 32, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sigil:texture:region")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 34, 34), Rect2(34, 0, 34, 34), Rect2(68, 0, 34, 34), Rect2(102, 0, 34, 34), Rect2(136, 0, 34, 34), Rect2(170, 0, 34, 34), Rect2(204, 0, 34, 34), Rect2(238, 0, 34, 34), Rect2(272, 0, 34, 34), Rect2(306, 0, 34, 34)]
 }
 
-[sub_resource type="Animation" id="46"]
+[sub_resource type="Animation" id="51"]
 resource_name = "selected_start"
-length = 0.25
+length = 0.166667
 step = 0.0833333
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -130,17 +163,29 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0833333, 0.166667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Rect2(1, 1, 32, 32), Rect2(35, 1, 32, 32), Rect2(69, 1, 32, 32)]
+"values": [Rect2(1, 1, 32, 32), Rect2(34, 1, 32, 32), Rect2(69, 1, 32, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sigil:texture:region")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 34, 34)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_pk7oc"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xatqp"]
 _data = {
-&"RESET": SubResource("44"),
-&"selected_loop": SubResource("45"),
-&"selected_start": SubResource("46")
+&"RESET": SubResource("49"),
+&"selected_loop": SubResource("50"),
+&"selected_start": SubResource("51")
 }
 
-[node name="SummonButton" type="TextureButton" node_paths=PackedStringArray("icon")]
+[node name="ItemButton" type="TextureButton" node_paths=PackedStringArray("sigil", "icon")]
 anchors_preset = -1
 anchor_right = 0.125
 anchor_bottom = 0.139
@@ -150,12 +195,25 @@ theme = ExtResource("5")
 theme_type_variation = &"OptionButton"
 toggle_mode = true
 action_mode = 0
-texture_normal = SubResource("33")
-texture_pressed = SubResource("34")
-texture_disabled = SubResource("36")
+texture_normal = SubResource("40")
+texture_pressed = SubResource("AtlasTexture_xatqp")
+texture_disabled = SubResource("43")
 stretch_mode = 5
 script = ExtResource("4")
+sigil = NodePath("Sigil")
 icon = NodePath("Icon")
+
+[node name="Sigil" type="TextureRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_top = 2.0
+offset_right = -23.0
+offset_bottom = -14.0
+mouse_filter = 2
+texture = SubResource("23")
+stretch_mode = 3
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 0
@@ -174,25 +232,26 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = SubResource("40")
+texture = SubResource("45")
+stretch_mode = 3
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 34.0
-text = "SUMMON"
+text = "ITEM"
 horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="APFocus" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_my8dj")
+&"": SubResource("AnimationLibrary_4qgl7")
 }
 
 [node name="APIcon" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_pk7oc")
+&"": SubResource("AnimationLibrary_xatqp")
 }
 
 [connection signal="focus_entered" from="." to="." method="_on_PlayerOptionButton_focus_entered"]
