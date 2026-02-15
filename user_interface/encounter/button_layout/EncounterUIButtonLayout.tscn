@@ -1,15 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://b8653jyeljph1"]
+[gd_scene load_steps=12 format=3 uid="uid://b8653jyeljph1"]
 
 [ext_resource type="Script" uid="uid://dsv35awa3y33i" path="res://user_interface/encounter/button_layout/encounter_ui_button_layout.gd" id="2"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://cnunas8fekg6v" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout.tscn" id="4_864f0"]
 [ext_resource type="Script" uid="uid://ds7n6ekq64jsp" path="res://fsm/user_interface/encounter/encounter_ui_wait.gd" id="5"]
-[ext_resource type="Script" uid="uid://cugbgxwfqqcsm" path="res://fsm/user_interface/encounter/encounter_ui_move.gd" id="6"]
 [ext_resource type="Script" uid="uid://bivg5gtassi7s" path="res://fsm/user_interface/encounter/encounter_ui_pause.gd" id="7"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="8"]
-[ext_resource type="Script" uid="uid://bi03nel8te0u4" path="res://fsm/user_interface/encounter/encounter_ui_action.gd" id="9"]
 [ext_resource type="PackedScene" uid="uid://d3i1mqeluj5hv" path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://cy3ef1wdf5tu" path="res://user_interface/encounter/button_layout/user_character_stats/ActiveCharacterStats.tscn" id="11"]
+[ext_resource type="Script" uid="uid://bhh7a8inf0l3v" path="res://fsm/user_interface/encounter/encounter_ui_action_update.gd" id="11_xj5a2"]
 [ext_resource type="PackedScene" uid="uid://by7j6btb8hhip" path="res://user_interface/encounter/button_layout/user_character_stats/PartyCharacterStats.tscn" id="12"]
 [ext_resource type="PackedScene" uid="uid://5td8sfwtxdp6" path="res://user_interface/encounter/button_layout/wisp_pool/StandbyWispPool/StandbyWispPool.tscn" id="18"]
 
@@ -109,11 +108,10 @@ initial_state = NodePath("Wait")
 [node name="Wait" type="Node" parent="StateMachine"]
 script = ExtResource("5")
 
-[node name="Move" type="Node" parent="StateMachine"]
-script = ExtResource("6")
-
 [node name="Pause" type="Node" parent="StateMachine"]
 script = ExtResource("7")
 
 [node name="Action" type="Node" parent="StateMachine"]
-script = ExtResource("9")
+script = ExtResource("11_xj5a2")
+
+[connection signal="wait_selected" from="PlayerOptionsButtonLayout" to="StateMachine/Action" method="_on_PlayerOptionsUI_wait_selected"]
