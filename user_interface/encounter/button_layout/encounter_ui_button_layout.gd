@@ -21,23 +21,12 @@ const PART_PARTY_HEIGHT: int = 168
 ## maximum party count.
 const FULL_PARTY_HEIGHT: int = 224
 
-enum Options {
-	MOVE,
-	TECHNIQUE,
-	SPELL,
-	SUMMON,
-	ITEM,
-	NONE,
-}
-
 # TODO: Currently loading CharacterSummary scene to visualize the hp values
 # of enemy characters
 var _character_summary: PackedScene = preload(
 	"res://user_interface/encounter/button_layout/test_labels/" \
 	+ "CharacterSummary/CharacterSummary.tscn"
 )
-## Flag that describes the options currently on display.
-var _current_selection: Options = Options.NONE
 
 ## The display for the active player character.
 @onready var active_character_ui: UserCharacterStatsUI = $ActiveCharacterStats
@@ -48,11 +37,6 @@ var _current_selection: Options = Options.NONE
 ## Sets the reference to the player options menu node.
 func _ready() -> void:
 	_player_options_menu = $PlayerOptionsButtonLayout
-
-
-## Sets the selection flag.
-func set_current_selection(new_flag: Options) -> void:
-	_current_selection = new_flag
 
 
 ## Updates the active player being focused on.
