@@ -67,7 +67,7 @@ func _set_labels() -> void:
 			dark_elems[0] as Element.Type
 	)
 	var dark_elem_2_count: int = pool.active_element_count(
-			dark_elems[2] as Element.Type
+			dark_elems[1] as Element.Type
 	)
 	_blank_elements[light_elems[0]] = light_elem_1_count == 0
 	_blank_elements[light_elems[1]] = light_elem_2_count == 0
