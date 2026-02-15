@@ -9,9 +9,7 @@ extends EncounterUIState
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	encounter_ui.sub_options.deactivate()
-	encounter_ui.options.hide()
-	encounter_ui.hide_active_stats()
+	encounter_ui.display_player_menu(false)
 	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
@@ -39,16 +37,16 @@ func _ready_connect_signals() -> void:
 
 
 ## Set the specified player as the character of focus in EncounterUI and moves
-## to the `MOVE` state.
+## to the `ACTION` state.
 func _on_SignalBus_player_turn_started(character: PlayerCharacter) -> void:
 	if not _state_is_active():
 		return
 	encounter_ui.set_focused_character(character)
-	state_machine.transition_to(MOVE)
+	state_machine.transition_to(ACTION)
 
 
 ## Set the active summon as the character of focus in EncounterUI and moves to
-## the `MOVE` state.
+## the `ACTION` state.
 func _on_SignalBus_summon_turn_started() -> void:
 	encounter_ui.set_summon_as_focus()
-	state_machine.transition_to(MOVE)
+	state_machine.transition_to(ACTION)

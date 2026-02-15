@@ -9,7 +9,7 @@ extends EncounterUIState
 ## The `msg` parameter is a dictionary with arbitrary data the state can use to 
 ## initialize itself.
 func enter(_msg := {}) -> void:
-	encounter_ui.disable_all_options()
+	encounter_ui.disable_player_menu(true)
 	
 	# This signal is used by other states and will be disconnected to avoid
 	# unintended behavior.
@@ -22,7 +22,7 @@ func enter(_msg := {}) -> void:
 ## Virtual function. Called by the state machine before changing the active 
 ## state. Use this function to clean up the state.
 func exit() -> void:
-	encounter_ui.set_active_options()
+	encounter_ui.disable_player_menu(false)
 	SignalBus.disconnect(
 			"selector_required",
 			Callable(self, "_on_SignalBus_selector_required")
@@ -30,8 +30,8 @@ func exit() -> void:
 
 
 ## Wait for the signal that the selector is required in order to go back to the
-## 'Move' state.
+## 'Action' state.
 func _on_SignalBus_selector_required(_start_index: int) -> void:
 	if not _state_is_active():
 		return
-	state_machine.transition_to(MOVE)
+	state_machine.transition_to(ACTION)

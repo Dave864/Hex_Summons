@@ -7,12 +7,11 @@ extends State
 
 # The states the Encounter UI can be in.
 const WAIT: String = "Wait"
-const MOVE: String = "Move"
 const PAUSE: String = "Pause"
 const ACTION: String = "Action"
 
 ## Typed reference to the EncounterUI node.
-var encounter_ui: EncounterUIButtonLayout
+var encounter_ui: EncounterUI
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,7 +21,7 @@ func _ready():
 	await owner.ready
 	# The `as` keyword casts the `owner` variable to the `EncounterUI` type.
 	# If the `owner` is not a `EncounterUI`, we'll get `null`.
-	encounter_ui = owner as EncounterUIButtonLayout
+	encounter_ui = owner as EncounterUI
 	# This check will tell us if we inadvertently assign a derived state script
 	# in a scene other than `EncounterUI.tscn`, which would be unintended. This can
 	# help prevent some bugs that are difficult to understand.
