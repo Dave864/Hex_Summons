@@ -5,6 +5,9 @@ extends Control
 ## active player character.
 
 
+## Indicates that the wait button has been selected.
+signal wait_selected()
+
 ## The categories of options.
 enum Option {
 	MOVE, ## The character moves around the map.
@@ -41,7 +44,9 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_selector_select"):
 		var option_button := get_viewport().gui_get_focus_owner() as BaseButton
-		if option_button.toggle_mode:
+		if option_button == _movement_button and _active_option == Option.MOVE:
+			SignalBus.emit_move_path_requested()
+		elif option_button.toggle_mode:
 			option_button.button_pressed = !option_button.button_pressed
 		else:
 			option_button.emit_signal("pressed")
@@ -78,10 +83,16 @@ func display() -> void:
 	_movement_button.button_pressed = true
 
 
-## Hides this menu.
+## Hides this menu, resetting all option buttons.
 func dismiss() -> void:
 	hide()
 	clear_all_options()
+	_movement_button.button_pressed = false
+	_technique_button.button_pressed = false
+	_spell_button.button_pressed = false
+	_summon_button.button_pressed = false
+	_item_button.button_pressed = false
+	_wait_button.button_pressed = false
 
 
 ## Disables or enables all the options and any displayed action options. Buttons
@@ -186,6 +197,7 @@ func _depress_option_button(option: Option) -> void:
 func _on_Movement_toggled(toggled_on: bool) -> void:
 	if toggled_on and _active_option != Option.MOVE:
 		_depress_option_button(_active_option)
+		SignalBus.emit_character_action_type_canceled()
 		_active_option = Option.MOVE
 		_movement_button.call_deferred("grab_focus")
 
@@ -246,4 +258,5 @@ func _on_Item_toggled(toggled_on: bool) -> void:
 func _on_Wait_pressed() -> void:
 	_wait_button.grab_focus()
 	_active_option = Option.WAIT
+	emit_signal("wait_selected")
 	dismiss()
