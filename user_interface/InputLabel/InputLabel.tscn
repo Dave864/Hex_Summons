@@ -1,17 +1,28 @@
-[gd_scene format=3 uid="uid://ckassm00rixmq"]
+[gd_scene load_steps=3 format=3 uid="uid://ckassm00rixmq"]
+
+[ext_resource type="Texture2D" uid="uid://dup6xawyouy0l" path="res://user_interface/InputLabel/input_icons/keyboard.tres" id="1_3px8f"]
+[ext_resource type="Script" uid="uid://bcj63bhaiegu3" path="res://user_interface/InputLabel/input_label.gd" id="2_vohd2"]
 
 [node name="InputLabel" type="TextureRect"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -616.0
-offset_bottom = -336.0
+offset_right = -606.0
+offset_bottom = -328.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("1_3px8f")
 expand_mode = 1
-stretch_mode = 5
+script = ExtResource("2_vohd2")
 
 [node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 64.0
-offset_bottom = 48.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.062000003
+anchor_right = 0.93700004
+anchor_bottom = 0.84400004
+offset_left = 0.015999913
+offset_right = 0.01599884
+offset_bottom = -0.0080013275
+horizontal_alignment = 1
+vertical_alignment = 1
