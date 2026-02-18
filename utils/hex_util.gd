@@ -173,7 +173,7 @@ static func dir_rotation(dir: HexDirection) -> float:
 	var true_dir: int = 6 if dir == HexDirection.UPPER_LEFT else dir
 	# Want to position rotation at midpoint of line. Testing revealed that the
 	# rotation needs to be negative in order to align with the direction.
-	return (2 * true_dir - 1) * PI / 6.0
+	return -(2 * true_dir - 1) * PI / 6.0
 
 
 ## Get the hexagonal direction relative to the defined top vertex. Used to
