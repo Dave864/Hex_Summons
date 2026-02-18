@@ -169,7 +169,8 @@ func _create_buttons_for_summon_options(summon_manager: Summon) -> void:
 	for summon_name: String in summon_manager.spawn_actions:
 		_create_summon_option_button(
 				summon_name,
-				summon_manager.spawn_actions[summon_name]
+				summon_manager.spawn_actions[summon_name],
+				summon_manager
 		)
 	_set_end_button_neighbors(_summon_options)
 
@@ -215,9 +216,14 @@ func _create_action_option_button(
 ## Creates a new button for the given summon option.
 func _create_summon_option_button(
 	summon_name: String,
-	spawn_action: Action
+	spawn_action: Action,
+	summon_manager: Summon
 ) -> void:
-	var option_button := SummonOptionButton.new(summon_name, spawn_action)
+	var option_button := SummonOptionButton.new(
+			summon_name, 
+			spawn_action,
+			summon_manager
+	)
 	option_button.connect(
 			"action_highlighted",
 			Callable(action_display, "_on_SummonOptionButton_action_highlighted")
