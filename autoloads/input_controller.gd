@@ -2,6 +2,9 @@ extends Node
 ## Manages swapping between input sources.
 
 
+## Indicates that the source for the input has changed.
+signal input_source_changed()
+
 enum Source {
 	KEYBOARD_AND_MOUSE,
 	GAMEPAD,
@@ -24,11 +27,6 @@ func source_is_gamepad() -> bool:
 ## Determines if the input source is from keyboard and mouse
 func source_is_keymouse() -> bool:
 	return _source == Source.KEYBOARD_AND_MOUSE
-
-
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
 
 ## Swaps between gamepad and mouse & keyboard input.
@@ -54,9 +52,11 @@ func _input(event: InputEvent) -> void:
 func _swap_to_mouse_keyboard() -> void:
 	MouseHandler.activate()
 	_source = Source.KEYBOARD_AND_MOUSE
+	emit_signal("input_source_changed")
 
 
 ## Hides the mouse cursor.
 func _swap_to_gamepad() -> void:
 	MouseHandler.deactivate()
 	_source = Source.GAMEPAD
+	emit_signal("input_source_changed")
