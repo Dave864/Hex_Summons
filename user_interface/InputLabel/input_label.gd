@@ -45,6 +45,8 @@ const CONTROLLER_KEYWORDS := {
 var _keyboard_icon: Texture = preload(
 		"res://user_interface/InputLabel/input_icons/keyboard.tres"
 )
+## Object for handling RegEx expressions.
+var _regex := RegEx.new()
 
 
 ## Connects to the InputController to enable detection of input change.
@@ -110,16 +112,17 @@ func _get_key_event_name() -> String:
 ## Sets the texture to the gamepad icon, matching it to either Xbox,
 ## PlayStation, or Switch.
 func _set_to_gamepad() -> void:
-	icon_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT
+	icon_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	key_label.text = ""
 	_reset_label_size()
-	_get_joypad_event_name()
-	_get_controller_icon_path()
+	var icon_path := _get_controller_icon_path()
+	var event_file := _get_joypad_event_file()
+	icon_texture.texture = load(icon_path + event_file)
 
 
 ## Gets the name of the first joypad input for the input event. Returns an
 ## empty string if no joypad input is assigned to the event.
-func _get_joypad_event_name() -> String:
+func _get_joypad_event_file() -> String:
 	var input_path: String = "input/{0}".format([input_event])
 	var input_events: Array = ProjectSettings.get_setting(input_path).events
 	for event: InputEvent in input_events:
@@ -133,14 +136,19 @@ func _get_joypad_event_name() -> String:
 ## Gets the name of the joypad button event, formatting it to be consistent with
 ## icon names (button_#).
 func _get_joypad_button_name(button_event: InputEventJoypadButton) -> String:
-	print(button_event.as_text())
-	return ""
+	var button_name := button_event.as_text()
+	_regex.compile("\\w*[button]\\h\\d")
+	button_name = _regex.search(button_name).get_string()
+	_regex.compile("\\h")
+	button_name = _regex.sub(button_name, "_", true) + ".tres"
+	return button_name.to_lower()
 
 
 ## Gets the name of the joypad motion event, formatting it to be consistent with
 ## icon names (axis_#_(+/-)).
 func _get_joypad_motion_name(motion_event: InputEventJoypadMotion) -> String:
 	print(motion_event.as_text())
+	_regex.compile("")
 	return ""
 
 

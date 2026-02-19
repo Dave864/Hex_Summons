@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ckassm00rixmq"]
 
-[ext_resource type="Texture2D" uid="uid://dup6xawyouy0l" path="res://user_interface/InputLabel/input_icons/keyboard.tres" id="1_3px8f"]
 [ext_resource type="Script" uid="uid://bcj63bhaiegu3" path="res://user_interface/InputLabel/input_label.gd" id="2_vohd2"]
+[ext_resource type="Texture2D" uid="uid://b7pl6166h56yr" path="res://user_interface/InputLabel/input_icons/xbox/button_7.tres" id="3_3umhj"]
 [ext_resource type="FontFile" uid="uid://bomd4sauyxdrx" path="res://fonts/pixel_10.fnt" id="3_rp6pb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vohd2"]
@@ -17,7 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_vohd2")
 input_source = 1
-input_event = "ui_encounter_option_1"
+input_event = "ui_encounter_movement"
 icon_texture = NodePath("KeyboardLabel/IconTexture")
 key_label = NodePath("KeyboardLabel")
 
@@ -49,6 +49,6 @@ offset_right = 0.051574707
 offset_bottom = -0.079071045
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_3px8f")
+texture = ExtResource("3_3umhj")
 expand_mode = 1
 stretch_mode = 4
