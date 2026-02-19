@@ -1,6 +1,6 @@
 @tool
 class_name InputLabel
-extends TextureRect
+extends Control
 ## Icon that displays an input button, either keyboard or gamepad, for a
 ## specific input event.
 ##
@@ -31,16 +31,15 @@ const XBOX_ICON_PATH := "res://user_interface/InputLabel/input_icons/xbox/"
 		if not is_node_ready():
 			return
 		_update_icon()
+## The texture for the input icon.
+@export var icon_texture: TextureRect = null
+## The label for keyboard input.
+@export var key_label: Label = null
 
 ## The base texture for keyboard inputs.
 var _keyboard_icon: Texture = preload(
 		"res://user_interface/InputLabel/input_icons/keyboard.tres"
 )
-
-## The label for keyboard input icon.
-@onready var _keyboard_label: Label = $KeyboardLabel
-## The original size dimensions of the icon.
-@onready var _original_size: Vector2 = size
 
 
 ## Connects to the InputController to enable detection of input change.
@@ -78,15 +77,18 @@ func _editor_update_icon() -> void:
 ## Sets the texture to the default Godot icon.
 func _set_to_default() -> void:
 	printerr("InputMap does not have event \"{0}\".".format([input_event]))
-	stretch_mode = TextureRect.STRETCH_SCALE
-	texture = load(Constants.DEFAULT_ICON_PATH)
+	icon_texture.stretch_mode = TextureRect.STRETCH_SCALE
+	icon_texture.texture = _keyboard_icon
+	key_label.text = ""
+	_reset_label_size()
 
 
 ## Sets the texture to the keyboard icon, updating size and label to match.
 func _set_to_keyboard() -> void:
-	stretch_mode = TextureRect.STRETCH_SCALE
-	texture = _keyboard_icon
-	_keyboard_label.text = _get_key_name()
+	_reset_label_size()
+	icon_texture.stretch_mode = TextureRect.STRETCH_SCALE
+	icon_texture.texture = _keyboard_icon
+	key_label.text = _get_key_name()
 
 
 ## Gets the name of the first key input for the input event. Returns an empty
@@ -103,9 +105,18 @@ func _get_key_name() -> String:
 ## Sets the texture to the gamepad icon, matching it to either Xbox,
 ## PlayStation, or Switch.
 func _set_to_gamepad() -> void:
-	stretch_mode = TextureRect.STRETCH_KEEP_ASPECT
-	size = _original_size
-	_keyboard_label.text = ""
+	icon_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT
+	key_label.text = ""
+	_reset_label_size()
+
+
+## Resets the key label size to the original size.
+func _reset_label_size() -> void:
+	key_label.set_deferred("size", key_label.get_minimum_size())
+	key_label.set_deferred("offset_left", 0.0)
+	key_label.set_deferred("offset_right", 0.0)
+	key_label.set_deferred("offset_top", 0.0)
+	key_label.set_deferred("offset_bottom", 0.0)
 
 
 ## Updates the icon display to match the new input source.
