@@ -13,8 +13,13 @@ const PLAYSTATION_ICON_PATH := (
 )
 ## Path to the icons for Nintendo Switch.
 const SWITCH_ICON_PATH := "res://user_interface/InputLabel/input_icons/switch/"
-## Path to the icons for Microsoft XBox.
+## Path to the icons for Microsoft XBox. This is used by default.
 const XBOX_ICON_PATH := "res://user_interface/InputLabel/input_icons/xbox/"
+## Keywords for specific controller types.
+const CONTROLLER_KEYWORDS := {
+	"PLAYSTATION" : ["PS", "PLAYSTATION"],
+	"SWITCH" : ["SWITCH"]
+}
 
 ## The source of input events. Only used for testing.
 @export var input_source: InputController.Source = InputController.Source.NONE:
@@ -88,12 +93,12 @@ func _set_to_keyboard() -> void:
 	_reset_label_size()
 	icon_texture.stretch_mode = TextureRect.STRETCH_SCALE
 	icon_texture.texture = _keyboard_icon
-	key_label.text = _get_key_name()
+	key_label.text = _get_key_event_name()
 
 
 ## Gets the name of the first key input for the input event. Returns an empty
 ## string if no key input is assigned to the event.
-func _get_key_name() -> String:
+func _get_key_event_name() -> String:
 	var input_path: String = "input/{0}".format([input_event])
 	var input_events: Array = ProjectSettings.get_setting(input_path).events
 	for event: InputEvent in input_events:
@@ -108,6 +113,47 @@ func _set_to_gamepad() -> void:
 	icon_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT
 	key_label.text = ""
 	_reset_label_size()
+	_get_joypad_event_name()
+	_get_controller_icon_path()
+
+
+## Gets the name of the first joypad input for the input event. Returns an
+## empty string if no joypad input is assigned to the event.
+func _get_joypad_event_name() -> String:
+	var input_path: String = "input/{0}".format([input_event])
+	var input_events: Array = ProjectSettings.get_setting(input_path).events
+	for event: InputEvent in input_events:
+		if event is InputEventJoypadButton:
+			return _get_joypad_button_name(event)
+		if event is InputEventJoypadMotion:
+			return _get_joypad_motion_name(event)
+	return ""
+
+
+## Gets the name of the joypad button event, formatting it to be consistent with
+## icon names (button_#).
+func _get_joypad_button_name(button_event: InputEventJoypadButton) -> String:
+	print(button_event.as_text())
+	return ""
+
+
+## Gets the name of the joypad motion event, formatting it to be consistent with
+## icon names (axis_#_(+/-)).
+func _get_joypad_motion_name(motion_event: InputEventJoypadMotion) -> String:
+	print(motion_event.as_text())
+	return ""
+
+
+## Determines which icons to use. Uses XBox icons by default.
+func _get_controller_icon_path() -> String:
+	var controller_name := Input.get_joy_name(0)
+	for keyword: String in CONTROLLER_KEYWORDS["PLAYSTATION"]:
+		if controller_name.containsn(keyword):
+			return PLAYSTATION_ICON_PATH
+	for keyword: String in CONTROLLER_KEYWORDS["SWITCH"]:
+		if controller_name.containsn(keyword):
+			return SWITCH_ICON_PATH
+	return XBOX_ICON_PATH
 
 
 ## Resets the key label size to the original size.
