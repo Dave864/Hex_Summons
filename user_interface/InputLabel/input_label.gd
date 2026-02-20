@@ -117,7 +117,10 @@ func _set_to_gamepad() -> void:
 	_reset_label_size()
 	var icon_path := _get_controller_icon_path()
 	var event_file := _get_joypad_event_file()
-	icon_texture.texture = load(icon_path + event_file)
+	if event_file == "":
+		icon_texture.texture = load(Constants.DEFAULT_ICON_PATH)
+	else:
+		icon_texture.texture = load(icon_path + event_file)
 
 
 ## Gets the name of the first joypad input for the input event. Returns an
@@ -134,10 +137,10 @@ func _get_joypad_event_file() -> String:
 
 
 ## Gets the name of the joypad button event, formatting it to be consistent with
-## icon names (button_#).
+## icon file names (button_#.tres).
 func _get_joypad_button_name(button_event: InputEventJoypadButton) -> String:
 	var button_name := button_event.as_text()
-	_regex.compile("\\w*[button]\\h\\d")
+	_regex.compile("Button\\h\\d")
 	button_name = _regex.search(button_name).get_string()
 	_regex.compile("\\h")
 	button_name = _regex.sub(button_name, "_", true) + ".tres"
@@ -145,11 +148,16 @@ func _get_joypad_button_name(button_event: InputEventJoypadButton) -> String:
 
 
 ## Gets the name of the joypad motion event, formatting it to be consistent with
-## icon names (axis_#_(+/-)).
+## icon file names (axis_#_(+/-).tres).
 func _get_joypad_motion_name(motion_event: InputEventJoypadMotion) -> String:
-	print(motion_event.as_text())
-	_regex.compile("")
-	return ""
+	var motion_name := motion_event.as_text()
+	_regex.compile("Axis\\h\\d|\\h.?1\\.00")
+	var results := _regex.search_all(motion_name)
+	motion_name = results[0].get_string()
+	motion_name += " +" if results[1].get_string().find("-") >= 0 else " -"
+	_regex.compile("\\h")
+	motion_name = _regex.sub(motion_name, "_", true) + ".tres"
+	return motion_name
 
 
 ## Determines which icons to use. Uses XBox icons by default.
