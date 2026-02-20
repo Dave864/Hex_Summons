@@ -140,7 +140,7 @@ func _get_joypad_event_file() -> String:
 ## icon file names (button_#.tres).
 func _get_joypad_button_name(button_event: InputEventJoypadButton) -> String:
 	var button_name := button_event.as_text()
-	_regex.compile("Button\\h\\d")
+	_regex.compile("Button\\h\\d+")
 	button_name = _regex.search(button_name).get_string()
 	_regex.compile("\\h")
 	button_name = _regex.sub(button_name, "_", true) + ".tres"
