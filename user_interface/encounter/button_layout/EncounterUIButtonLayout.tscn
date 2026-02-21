@@ -39,9 +39,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 128.0
-offset_top = 248.0
-offset_bottom = 0.0
+offset_left = 125.0
+offset_top = 230.0
+offset_right = -3.0
+offset_bottom = -18.0
 
 [node name="StandbyPool" parent="." instance=ExtResource("18")]
 layout_mode = 0

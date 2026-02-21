@@ -1,11 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://dtfgs8438te8w"]
+[gd_scene load_steps=22 format=3 uid="uid://dtfgs8438te8w"]
 
 [ext_resource type="Texture2D" uid="uid://b5m8cxed8tkkr" path="res://art/ui/PlayerOptionButton/Option Button Circle.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://cind8xqj6xvl6" path="res://art/ui/PlayerOptionButton/Sigil Spritesheet.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://2dm28s0gmohg" path="res://art/ui/PlayerOptionButton/Item Spritesheet.png" id="3"]
 [ext_resource type="Script" uid="uid://c1svvytw78av7" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionButton/player_option_button.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="4_bn302"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="5"]
-
 
 [sub_resource type="AtlasTexture" id="40"]
 atlas = ExtResource("1")
@@ -189,7 +189,7 @@ _data = {
 anchors_preset = -1
 anchor_right = 0.125
 anchor_bottom = 0.139
-offset_bottom = -0.0400047
+offset_bottom = -0.040000916
 size_flags_horizontal = 7
 theme = ExtResource("5")
 theme_type_variation = &"OptionButton"
@@ -202,6 +202,19 @@ stretch_mode = 5
 script = ExtResource("4")
 sigil = NodePath("Sigil")
 icon = NodePath("Icon")
+
+[node name="InputLabel" parent="." instance=ExtResource("4_bn302")]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = 25.0
+offset_right = 7.0
+offset_bottom = 42.0
+input_source = 0
+input_event = "ui_encounter_option_4"
 
 [node name="Sigil" type="TextureRect" parent="."]
 layout_mode = 0
@@ -232,14 +245,24 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = SubResource("45")
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="."]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 34.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 9.0
+offset_right = 40.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "ITEM"
 horizontal_alignment = 1
 vertical_alignment = 2

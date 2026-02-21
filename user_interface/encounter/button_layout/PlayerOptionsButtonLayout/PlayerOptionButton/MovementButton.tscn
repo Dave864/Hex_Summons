@@ -1,10 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://bbb4rvu44d041"]
+[gd_scene load_steps=19 format=3 uid="uid://bbb4rvu44d041"]
 
 [ext_resource type="Texture2D" uid="uid://civpfw1pa43qu" path="res://art/ui/PlayerOptionButton/Movement Spritesheet.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://m6vs4bib0ltv" path="res://art/ui/PlayerOptionButton/Option Button Hex.png" id="2"]
 [ext_resource type="Script" uid="uid://wl7hfisr2cgd" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionButton/movement_button.gd" id="3"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="5"]
-
+[ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="5_dff84"]
 
 [sub_resource type="AtlasTexture" id="32"]
 atlas = ExtResource("2")
@@ -181,15 +181,33 @@ stretch_mode = 3
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 34.0
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 9.0
+offset_right = 40.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "MOVEMENT"
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="InputLabel" parent="." instance=ExtResource("5_dff84")]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.50600004
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = 25.0
+offset_right = 8.519997
+offset_bottom = 42.0
+input_source = 0
+input_event = "ui_encounter_movement"
 
 [node name="APFocus" type="AnimationPlayer" parent="."]
 libraries = {

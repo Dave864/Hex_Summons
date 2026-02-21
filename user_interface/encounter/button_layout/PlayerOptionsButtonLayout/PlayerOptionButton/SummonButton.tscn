@@ -1,10 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://cuwbd4bjywig0"]
+[gd_scene load_steps=19 format=3 uid="uid://cuwbd4bjywig0"]
 
 [ext_resource type="Texture2D" uid="uid://b5m8cxed8tkkr" path="res://art/ui/PlayerOptionButton/Option Button Circle.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://bl1w1g6x0fgyq" path="res://art/ui/PlayerOptionButton/Summon Spritesheet.png" id="2"]
 [ext_resource type="Script" uid="uid://c1svvytw78av7" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionButton/player_option_button.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="4_rxkbd"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="5"]
-
 
 [sub_resource type="AtlasTexture" id="33"]
 atlas = ExtResource("1")
@@ -157,6 +157,19 @@ stretch_mode = 5
 script = ExtResource("4")
 icon = NodePath("Icon")
 
+[node name="InputLabel" parent="." instance=ExtResource("4_rxkbd")]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = 25.0
+offset_right = 9.0
+offset_bottom = 42.0
+input_source = 0
+input_event = "ui_encounter_option_3"
+
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 0
 anchor_right = 1.0
@@ -174,13 +187,21 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = SubResource("40")
 
 [node name="Label" type="Label" parent="."]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 34.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 9.0
+offset_right = 40.0
+offset_bottom = 25.0
 text = "SUMMON"
 horizontal_alignment = 1
 vertical_alignment = 2
