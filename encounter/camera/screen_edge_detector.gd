@@ -49,7 +49,7 @@ const DIST_STEP := 0.01
 
 ## Indicates that the mouse is within the edge area.
 var _in_edge := false
-## The direction from center to where the mouse is in.
+## The direction from center to where the mouse is in the edge area.
 var _direction := Vector2.ZERO
 ## The index position of a hex tile that is considered to be the top.
 var _top_hex_vertex: int = 0

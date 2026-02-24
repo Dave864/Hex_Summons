@@ -121,9 +121,6 @@ static func cube_line(start: Vector3, end: Vector3) -> Array[Vector3]:
 
 
 ## Determines the hexagonal direction of a given unit vector.
-## 0  /\  1
-## 5 |  | 2
-## 4  \/  3
 static func get_hex_direction(
 	dir_vec: Vector2,
 	top_vertex: int = 0
