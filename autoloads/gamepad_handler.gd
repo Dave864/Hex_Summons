@@ -62,7 +62,7 @@ func left_joystick_dir() -> Vector2:
 			"left_joystick_r",
 			"left_joystick_u",
 			"left_joystick_d"
-	)
+	).normalized()
 
 
 ## Get the direction of the right joystick input.
@@ -72,7 +72,7 @@ func right_joystick_dir() -> Vector2:
 			"right_joystick_r",
 			"right_joystick_u",
 			"right_joystick_d"
-	)
+	).normalized()
 
 
 ## Updates the timer for left pulse.
