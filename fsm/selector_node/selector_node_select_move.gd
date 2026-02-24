@@ -75,8 +75,8 @@ func _connect_character_turn_ended():
 	):
 		return
 	selector.active_character.connect(
-		"turn_ended",
-		Callable(self, "_on_Character_turn_ended")
+			"turn_ended",
+			Callable(self, "_on_Character_turn_ended")
 	)
 
 
@@ -140,6 +140,9 @@ func _update_selection(map_tile: MapTile) -> void:
 	if selector.tile_hovered != null:
 		selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	selector.tile_hovered = map_tile
+	
+	if InputController.source_is_gamepad():
+		selector.emit_new_focus_point(map_tile.get_character_position())
 
 	var highlight: int = map_tile.get_highlight_type()
 	if (
