@@ -8,7 +8,11 @@ signal left_joystick_pulsed(direction)
 signal right_joystick_pulsed(direction)
 
 ## The time it takes for holding a joystick direction to emit a "pulse".
-const PULSE_TIME: float = 0.3
+const PULSE_TIME: float = 0.35
+## The time it takes for holding a joystick direction to quickly emit a "pulse".
+const FAST_PULSE_TIME: float = 0.15
+## The number of pulses required before using fast pulse time.
+const FAST_TIME_PULSE_COUNT: int = 3
 
 ## Flag for left joystick hold.
 var _left_hold: bool = false
@@ -18,6 +22,10 @@ var _right_hold: bool = false
 var _left_joystick_time: float = 0.0
 ## Timer for right joystick pulse.
 var _right_joystick_time: float = 0.0
+## Counter for number of times left joystick has pulsed.
+var _left_pulse_count: int = 0
+## Counter for number of times right joystick has pulsed.
+var _right_pulse_count: int = 0
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -26,14 +34,20 @@ func _ready() -> void:
 	_right_hold = false
 
 
+## Catches joystick motion and starts the time for holds.
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventJoypadMotion:
-		_left_hold = left_joystick_dir() != Vector2.ZERO
-		_left_joystick_time = 0.0 if not _left_hold else _left_joystick_time
-		_right_hold = right_joystick_dir() != Vector2.ZERO
-		_right_joystick_time = 0.0 if not _right_hold else _right_joystick_time
+		_left_hold = not left_joystick_dir().is_zero_approx()
+		if not _left_hold:
+			_left_joystick_time = 0.0
+			_left_pulse_count = 0
+		_right_hold = not right_joystick_dir().is_zero_approx()
+		if not _right_hold:
+			_right_joystick_time = 0.0
+			_right_pulse_count = 0
 
 
+## Updates the pulse timer for left and right joystick.
 func _process(delta: float) -> void:
 	if _left_hold:
 		_handle_left_pulse(delta)
@@ -65,8 +79,15 @@ func right_joystick_dir() -> Vector2:
 func _handle_left_pulse(delta: float) -> void:
 	if is_zero_approx(_left_joystick_time):
 		emit_signal("left_joystick_pulsed", left_joystick_dir())
+		_left_pulse_count += 1
 	_left_joystick_time += delta
-	if _left_joystick_time > PULSE_TIME:
+	if (
+		(
+			_left_pulse_count > FAST_TIME_PULSE_COUNT
+			and _left_joystick_time > FAST_PULSE_TIME
+		)
+		or _left_joystick_time > PULSE_TIME
+	):
 		_left_joystick_time = 0.0
 
 
@@ -74,6 +95,13 @@ func _handle_left_pulse(delta: float) -> void:
 func _handle_right_pulse(delta: float) -> void:
 	if is_zero_approx(_right_joystick_time):
 		emit_signal("right_joystick_pulsed", right_joystick_dir())
+		_right_pulse_count += 1
 	_right_joystick_time += delta
-	if _right_joystick_time > PULSE_TIME:
+	if (
+		(
+			_right_pulse_count > FAST_TIME_PULSE_COUNT
+			and _right_joystick_time > FAST_PULSE_TIME
+		)
+		or _right_joystick_time > PULSE_TIME
+	):
 		_right_joystick_time = 0.0
