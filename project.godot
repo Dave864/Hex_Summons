@@ -12,7 +12,8 @@ config_version=5
 
 config/name="Hex_Summons"
 config/features=PackedStringArray("4.5")
-config/icon="res://art/icon.png"
+boot_splash/image="uid://brly4qxqqji5q"
+config/icon="uid://duyf5po1l5wec"
 
 [autoload]
 

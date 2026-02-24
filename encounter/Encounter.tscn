@@ -22,14 +22,14 @@ hex_map = NodePath("TestMap")
 
 [node name="EncounterCamera" parent="." instance=ExtResource("14")]
 
-[node name="EncounterUIMenuLayout" parent="." instance=ExtResource("4_a00se")]
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.84282833, -0.19124404, -0.50305676, 0.5381825, 0.29950044, 0.7878192, 0, -0.9347327, 0.35535166, 0, 6.48444, 0)
 light_energy = 2.0
 light_specular = 0.0
 directional_shadow_mode = 0
 sky_mode = 1
+
+[node name="EncounterUIMenuLayout" parent="." instance=ExtResource("4_a00se")]
 
 [node name="Summon" parent="." instance=ExtResource("5_31f15")]
 
