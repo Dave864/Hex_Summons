@@ -11,6 +11,8 @@ config_version=5
 [application]
 
 config/name="Hex_Summons"
+config/description="A tactics RPG with an emphasis on summoning."
+config/version="p0.09"
 config/features=PackedStringArray("4.5")
 boot_splash/image="uid://brly4qxqqji5q"
 config/icon="uid://duyf5po1l5wec"
