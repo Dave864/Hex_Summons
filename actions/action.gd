@@ -14,9 +14,6 @@ var source_stats: StatModifiers = null:
 		# action.
 		_effects_list.set_source_stats(source_stats)
 
-## Whether the effect is emitted from caster in a direction or emitted from a
-## chosen location.
-var _is_directional: bool = false
 ## The index of the tile the effect is emitted from.
 var _emission_map_index: int = -1
 ## The transform the effect is emitted from.
@@ -37,7 +34,6 @@ var _emission_direction: HexUtil.HexDirection
 func _ready() -> void:
 	_check_for_required_parameters()
 	_effects_list.set_action_potency(stats.potency)
-	_is_directional = stats.emit_from_caster
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
@@ -46,9 +42,15 @@ func get_effects() -> Array[ActionEffect]:
 	return _effects_list.get_effects()
 
 
-## Returns if the effect range is bound directionally or not.
-func get_is_directional() -> bool:
-	return _is_directional
+## Returns if the effect range is centered on the caster.
+func is_centered_on_caster() -> bool:
+	return stats.emit_from_caster
+
+
+## Returns if the effect range is bound directionally or not. A directionally
+## bound action is always centered on the caster.
+func is_directional() -> bool:
+	return stats.effect_range is DirectionalAreaRange
 
 
 ## Returns a set of targets this action effects.
@@ -80,8 +82,8 @@ func set_emission_pos(pos: Vector3) -> void:
 	_hit_box.transform = _emission_transform
 
 
-## Set the direction of the emission (0 - 5). Only updates the direction if
-## the action is emitted from center.
+## Set the direction of the emission. Only updates the direction if the action
+## is emitted from center.
 func set_emission_direction(dir: HexUtil.HexDirection) -> void:
 	if stats.emit_from_caster:
 		_emission_direction = dir

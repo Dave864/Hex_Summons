@@ -211,8 +211,12 @@ func _on_SignalBus_spawn_action_selected(summon: String, action: Action) -> void
 ## passing along an action and whether it's a spawn action or not.
 func _action_selected(action: Action, summon: String) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	var next_state: String = (
+		SELECT_DIRECTIONAL_ACTION if action.is_directional()
+		else SELECT_POSITIONAL_ACTION
+	)
 	state_machine.transition_to(
-			SELECT_ACTION,
+			next_state,
 			{"action": action, "summon": summon}
 	)
 

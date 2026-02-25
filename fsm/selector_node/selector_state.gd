@@ -6,11 +6,12 @@ extends State
 
 
 # The states the Selector can be in.
-const START: String = "Start"
-const SELECT_MOVE: String = "SelectMove"
-const SELECT_ACTION: String = "SelectAction"
-const PAUSE: String = "Pause"
-const WAIT: String = "Wait"
+const START := "Start"
+const SELECT_MOVE := "SelectMove"
+const SELECT_DIRECTIONAL_ACTION := "SelectDirectionalAction"
+const SELECT_POSITIONAL_ACTION := "SelectPositionalAction"
+const PAUSE := "Pause"
+const WAIT := "Wait"
 
 ## Typed reference to the Selector node.
 var selector: Selector

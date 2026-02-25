@@ -1,8 +1,9 @@
 class_name SelectorNodeSelectAction
 extends SelectorState
-## The logic for what happens when the Selector is in the 'SelectAction' state.
+## Base class for the logic for what happens when the Selector is in a state
+## intended to manage the selection of actions.
 ##
-## Goes to the 'SelectAction' state when a new action is chosen.
+## Goes to the relevant action type state when a new action is chosen.
 ## Goes to the 'SelectMove' state when the UI signals that the action type has
 ## been canceled. Goes to the 'Wait' state when the UI signals that the
 ## character turn has been terminated.
@@ -27,9 +28,13 @@ var _ranges_cache: Dictionary[int, Array] = {}
 var _targets_cache: Dictionary[int, Array] = {}
 
 ## Reference to the function that will update the tile highlights.
-@onready var _update_selection_ref: Callable = Callable(self, "_update_selection")
+@onready var _update_selection_ref: Callable = Callable(
+		self,
+		"_update_selection"
+)
 
 
+## Checks that all state data has been provided and places the selector.
 func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	assert(msg.has("action"), "Missing 'action' key data in SelectAction")
 	assert(
@@ -49,12 +54,6 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	_highlight_source_range()
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
-	if _action.stats.emit_from_caster:
-		selector.emit_camera_focus_locked()
-		_orient_to_closest_target()
-	else:
-		_place_closest_to_target()
-	selector.emit_new_focus_point(_action.get_emission_pos())
 
 
 ## Called by the state machine before changing the active state. Use this 
@@ -63,22 +62,6 @@ func exit() -> void:
 	selector.emit_camera_focus_unlocked()
 	selector.set_update_selection_func(Callable())
 	_disconnect_signals()
-
-
-## Handles input events.
-func handle_input(_event: InputEvent) -> void:
-	# Handles the instances where the mouse goes over an area without a map tile.
-	if InputController.source_is_keymouse():
-		if _action.stats.emit_from_caster:
-			_orient_emission_to_mouse()
-	elif InputController.source_is_gamepad():
-		var joy_dir: Vector2 = GamepadHandler.left_joystick_dir()
-		if _action.stats.emit_from_caster and not joy_dir.is_zero_approx():
-			var dir: int = HexUtil.get_hex_direction(
-					joy_dir,
-					selector.top_vertex
-			)
-			_resolve_joystick_for_cardinal(dir)
 
 
 ## Checks if the action being processed is the same as last time and if the
@@ -105,161 +88,8 @@ func _determine_range_changes(action: Action) -> void:
 
 ## Update the selection for a given tile.
 ## Passed to the Selector node to be called when the mouse hovers over the tile.
-func _update_selection(map_tile: MapTile) -> void:
-	assert(map_tile != null, "SelectAction given a null MapTile.")
-	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
-	# Actions with dead range need to display the character tile highlight, but
-	# not allow emission from character position.
-	if (
-		!map_tile.is_active()
-		or (
-			_action.stats.dead_range.get_reach() > 0
-			and map_tile.map_coordinate.get_tile_index() == _character_map_index
-		)
-	):
-		return
-	if _action.stats.emit_from_caster:
-		selector.tile_hovered = map_tile
-		# Orienting to mouse position is handled by handle_input.
-		if InputController.get_source() == InputController.Source.GAMEPAD:
-			_orient_emission_to_tile(map_tile)
-	elif _is_target_tile(map_tile):
-		selector.tile_hovered = map_tile
-		_action.set_emission_map_index(map_tile.map_coordinate.get_tile_index())
-		_action.set_emission_pos(map_tile.get_character_position())
-		_highlight_effect_range()
-	else:
-		_place_closest_to_tile(map_tile.map_coordinate.get_tile_index())
-
-
-## Orients the direction of an action cast from the character based on mouse
-## position.
-func _orient_emission_to_mouse() -> void:
-	_action.set_emission_map_index(_character_map_index)
-	_action.set_emission_pos(_character_pos)
-	var character_pt: Vector2 = Vector2(_character_pos.x, _character_pos.z)
-	var mouse_pt: Vector2 = Vector2(
-		MouseHandler.get_3d_position().x,
-		MouseHandler.get_3d_position().z
-	)
-	# Relative top not needed as mouse position translates to direct map
-	# coordinates.
-	var vector_to_mouse: Vector2 = (mouse_pt - character_pt).normalized()
-	var dir: int = HexUtil.get_hex_direction(vector_to_mouse)
-	var source_tile: MapTile = selector.hex_map.get_tile_at(_character_map_index)
-	var target_tile: MapTile = source_tile.get_adjacent_tile(dir)
-	if _is_target_tile(target_tile):
-		_action.set_emission_direction(dir)
-		_highlight_effect_range()
-
-
-## Orients the direction of an action cast from the character based on tile
-## position.
-func _orient_emission_to_tile(map_tile: MapTile) -> void:
-	_action.set_emission_map_index(_character_map_index)
-	_action.set_emission_pos(_character_pos)
-	var character_pt: Vector2 = Vector2(_character_pos.x, _character_pos.z)
-	var tile_pt: Vector2 = Vector2(map_tile.position.x, map_tile.position.z)
-	var vector_dir: Vector2 = (tile_pt - character_pt).normalized()
-	# Relative top not needed as we are using direct map coordinates.
-	var emission_dir: int = HexUtil.get_hex_direction(vector_dir)
-	_action.set_emission_direction(emission_dir)
-	# No need to fix orientation for radial effect ranges.
-	if _action.stats.effect_range is RadialAreaRange or _fix_orientation():
-		_highlight_effect_range()
-	else:
-		selector.hex_map.selection_tracker.clear_selector_highlights()
-
-
-## Orients the action emission to the closest valid target.
-func _orient_to_closest_target() -> void:
-	var target_distances: Array[Array] = _get_target_distances()
-	var target_index: int = target_distances[0][0].map_coordinate.get_tile_index()
-	var target_tile: MapTile = selector.hex_map.get_tile_at(target_index)
-	_orient_emission_to_tile(target_tile)
-
-
-## Adjusts the orientation of an effect emitted from caster to make sure it is
-## in a direction the character can reach. Returns if the direction was set.
-func _fix_orientation() -> bool:
-	var p_cube: Vector3 = HexUtil.index_to_cube(
-			_character_map_index,
-			selector.hex_map.get_x_count()
-	)
-	for i in 6:
-		var dir: int = posmod(_action.get_emission_direction() + i, 6)
-		var dir_cube: Vector3 = HexUtil.CUBE_DIRECTION_VECTORS[dir] + p_cube
-		var dir_index: int = HexUtil.cube_to_index(
-				dir_cube,
-				selector.hex_map.get_x_count()
-		)
-		if (
-			selector.hex_map.is_valid_cube(dir_cube)
-			and _source_d_map.has(dir_index)
-		):
-			_action.set_emission_direction(dir)
-			return true
-	return false
-
-
-## Places the effect emission so that the effect area highlights the closest
-## target. Emission is not placed if no valid tile could be found.
-func _place_closest_to_target() -> void:
-	var target_details: Array[Variant] = _get_target_distances()[0]
-	var target_index: int = target_details[0].map_coordinate.get_tile_index()
-	var character_index_details: DistanceData = (
-		_source_d_map.all_dist_at(_character_map_index)
-	)
-	# When processing a spawn action, all character indexes are removed from the
-	# source range. We don't need to ignore the index if it is not present.
-	var ignore_character_index: bool = (
-		_source_d_map.has(_character_map_index)
-		and _action.stats.dead_range.get_reach() > 0
-	)
-	if ignore_character_index:
-		_source_d_map.remove(_character_map_index)
-	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
-			target_index,
-			_source_d_map.tile_ids()
-	)
-	# Add back in character details if they were removed to preserve details.
-	if ignore_character_index:
-		_source_d_map.add(_character_map_index, character_index_details)
-	if closest_index < 0:
-		selector.hex_map.selection_tracker.clear_selector_highlights()
-		return
-	selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
-	_action.set_emission_map_index(closest_index)
-	_action.set_emission_pos(selector.tile_hovered.get_character_position())
-	_highlight_effect_range()
-
-
-## Places the effect emission so that it is on the source tile closest to the
-## specified tile. Emission is not placed if no valid source tile could be found.
-func _place_closest_to_tile(tile_index: int) -> void:
-	var character_index_details: DistanceData = (
-		_source_d_map.all_dist_at(_character_map_index)
-	)
-	var ignore_character_index: bool = _action.stats.dead_range.get_reach() > 0
-	# Remove character index when looking at dead range to prevent character
-	# position from being considered a valid placement spot.
-	if ignore_character_index:
-		_source_d_map.remove(_character_map_index)
-	var closest_index: int = selector.hex_map.range_finder.get_closest_in_area(
-			tile_index,
-			_source_d_map.tile_ids()
-	)
-	# Add back in character details if they were removed to preserve distance map.
-	if ignore_character_index:
-		_source_d_map.add(_character_map_index, character_index_details)
-	if closest_index < 0:
-		selector.hex_map.selection_tracker.clear_selector_highlights()
-		return
-	selector.tile_hovered = selector.hex_map.get_tile_at(closest_index)
-	_action.set_emission_map_index(closest_index)
-	_action.set_emission_pos(selector.tile_hovered.get_character_position())
-	selector.emit_new_focus_point(selector.tile_hovered.get_character_position())
-	_highlight_effect_range()
+func _update_selection(_map_tile: MapTile) -> void:
+	pass
 
 
 ## Gets an array of the targets sorted by distance from character. The closest
@@ -322,13 +152,13 @@ func _highlight_source_range() -> void:
 func _highlight_effect_range() -> void:
 	selector.hex_map.selection_tracker.clear_selector_highlights()
 	var effect_range: Array[int] = _get_effect_range()
-	_update_targets(effect_range)
+	_update_targets_cache(effect_range)
 	selector.hex_map.selection_tracker.select_effect_range(
 			effect_range,
 			_character_map_index,
 			_action.get_emission_map_index(),
 			_action.stats.effect_ignores_caster,
-			_action.get_is_directional()
+			_action.is_directional()
 	)
 
 
@@ -377,105 +207,48 @@ func _remove_characters_from_source_range() -> void:
 
 ## Gets the tile ids of all tiles within the effect range.
 func _get_effect_range() -> Array[int]:
-	var e_index: int = _action.get_emission_map_index()
-	var e_dir: int = _action.get_emission_direction()
-	if _action.stats.emit_from_caster and _ranges_cache.has(e_dir):
-		return _ranges_cache[e_dir]
-	elif _ranges_cache.has(e_index):
-		return _ranges_cache[e_index]
-	var effect_indexes: Array[int]
-	if _action.stats.effect_range is DirectionalAreaRange:
-		effect_indexes = _action.stats.effect_range.get_dir_area_indexes(
-				e_index,
-				e_dir,
-				selector.hex_map
-		)
-	else:
-		effect_indexes = _action.stats.effect_range.get_area_indexes(
-				e_index,
-				selector.hex_map
-		)
-	if _action.stats.effect_ignore_heights:
-		_update_effect_ranges(e_index, e_dir, effect_indexes)
-		return effect_indexes
-	var d_map: DistanceMap = selector.hex_map.range_finder.dist_maps.at(e_index)
-	var effect_d_map: DistanceMap = (
-			d_map.map_from_travel_dist(_action.stats.effect_range.get_reach())
-	)
-	var valid_effect_indexes: Array[int] = []
-	for index: int in effect_indexes:
-		if effect_d_map.has(index):
-			valid_effect_indexes.append(index)
-	_update_effect_ranges(e_index, e_dir, valid_effect_indexes)
-	return valid_effect_indexes
+	return []
 
 
 ## Gets the targets for the current emission area.
 func _get_targets() -> Array[Character]:
-	if _action.stats.emit_from_caster:
-		return _targets_cache[_action.get_emission_direction()]
-	else:
-		return _targets_cache[_action.get_emission_map_index()]
+	return []
 
 
-## Updates the _effect_ranges dictionary to store the listed effect indexes
-## under either the emission point or direction.
-func _update_effect_ranges(e_pt: int, e_dir: int, indexes: Array[int]) -> void:
-	if _action.stats.emit_from_caster:
-		_ranges_cache[e_dir] = indexes
-	else:
-		_ranges_cache[e_pt] = indexes
+## Update the targets cache to track targets within the effect range.
+func _update_targets_cache(_effect_range: Array[int]) -> void:
+	pass
 
 
-## Gets the characters that will be hit by the action.
-func _update_targets(effect_range: Array[int]) -> void:
-	var e_index: int = _action.get_emission_map_index()
-	var e_dir: int = _action.get_emission_direction()
-	if (
-		(_action.stats.emit_from_caster and _targets_cache.has(e_dir))
-		or _targets_cache.has(e_index)
-	):
-		return
+## Gets the character targets that are within the effect range.
+func _get_targets_in_effect_range(effect_range: Array[int]) -> Array[Character]:
 	var targets: Array[Character] = []
+	var target_enemy: bool = _action_targets.has(ActionEffect.Target.OPPONENTS)
+	var target_ally: bool = _action_targets.has(ActionEffect.Target.ALLIES)
+	var target_self: bool = _action_targets.has(ActionEffect.Target.SELF)
 	for index: int in effect_range:
 		var tile: MapTile = selector.hex_map.get_tile_at(index)
 		var c: Character = tile.occupant.get_current_occupant()
+		if c == null:
+			continue
 		if (
-			c != null
-			and (
-				(
-					c is EnemyCharacter 
-					and _action_targets.has(ActionEffect.Target.OPPONENTS)
-				) or (
-					c.map_coordinate.get_tile_index() == _character_map_index
-					and _action_targets.has(ActionEffect.Target.SELF)
-				) or _action_targets.has(ActionEffect.Target.ALLIES)
+			target_ally
+			or (target_enemy and c is EnemyCharacter)
+			or (
+				c.map_coordinate.get_tile_index() == _character_map_index
+				and target_self
 			)
 		):
 			targets.append(c)
-	if _action.stats.emit_from_caster:
-		_targets_cache[e_dir] = targets
-	else:
-		_targets_cache[e_index] = targets
+	return targets
 
 
 ## Determines if the selector is able to move to the adjacent tile in the
-## given direction (0 - 5) and does so if able.
+## given direction and does so if able.
 func _resolve_joystick_for_area(dir: HexUtil.HexDirection) -> void:
 	var adjacent_tile: MapTile = selector.tile_hovered.get_adjacent_tile(dir)
 	if adjacent_tile != null and _is_target_tile(adjacent_tile):
 		_update_selection(adjacent_tile)
-
-
-## Determines if the selector is able to move to the given direction (0 - 5)
-## and does so if able.
-func _resolve_joystick_for_cardinal(dir: HexUtil.HexDirection) -> void:
-	var character_tile: MapTile = selector.hex_map.get_tile_at(
-			_character_map_index
-	)
-	var direction_tile: MapTile = character_tile.get_adjacent_tile(dir)
-	if _is_target_tile(direction_tile):
-		_update_selection(direction_tile)
 
 
 ## Activates the targets and prompts the action to be executed.
@@ -505,6 +278,42 @@ func _reset() -> void:
 	_targets_cache.clear()
 	_summon_name = ""
 	_action = null
+
+
+## Executes the action if it has been confirmed, otherwise resetting the
+## "SelectAction" state with the new action, specifying if it is a spawn action
+## or not.
+func _action_selected(action: Action, summon_name: String) -> void:
+	if not _state_is_active():
+		return
+	elif (
+		action == _action
+		and summon_name == _summon_name
+		and not _get_targets().is_empty()
+		and _can_execute()
+	):
+		_execute_action()
+	else:
+		var next_state: String = (
+			SELECT_DIRECTIONAL_ACTION if action.is_directional()
+			else SELECT_POSITIONAL_ACTION
+		)
+		state_machine.transition_to(
+				next_state,
+				{"action": action, "summon": summon_name}
+		)
+
+
+## Checks that the current action is in a state to be used, i.e. whether the
+## action is off cooldown or there are enough wisps to use the action.
+func _can_execute() -> bool:
+	var cooldown: Cooldown = _action.get_node_or_null("Cooldown")
+	var wisp_cost: WispCost = _action.get_node_or_null("WispCost")
+	if cooldown != null:
+		return not cooldown.is_active()
+	if wisp_cost != null:
+		return wisp_cost.is_met()
+	return true
 
 
 ## Connect signals to this state.
@@ -577,38 +386,6 @@ func _on_SignalBus_spawn_action_selected(
 	_action_selected(spawn_action, summon)
 
 
-## Executes the action if it has been confirmed, otherwise resetting the
-## "SelectAction" state with the new action, specifying if it is a spawn action
-## or not.
-func _action_selected(action: Action, summon_name: String) -> void:
-	if not _state_is_active():
-		return
-	elif (
-		action == _action
-		and summon_name == _summon_name
-		and not _get_targets().is_empty()
-		and _can_execute()
-	):
-		_execute_action()
-	else:
-		state_machine.transition_to(
-				SELECT_ACTION,
-				{"action": action, "summon": summon_name}
-		)
-
-
-## Checks that the current action is in a state to be used, i.e. whether the
-## action is off cooldown or there are enough wisps to use the action.
-func _can_execute() -> bool:
-	var cooldown: Cooldown = _action.get_node_or_null("Cooldown")
-	var wisp_cost: WispCost = _action.get_node_or_null("WispCost")
-	if cooldown != null:
-		return not cooldown.is_active()
-	if wisp_cost != null:
-		return wisp_cost.is_met()
-	return true
-
-
 ## Go to the "SelectMove" state when the character action selection is canceled.
 func _on_SignalBus_character_action_type_canceled() -> void:
 	if not _state_is_active():
@@ -633,7 +410,7 @@ func _on_SignalBus_top_vertex_changed(_vertex: int) -> void:
 ## Resolves the left joystick pulse input. Pulses should only be used when the
 ## effect is not bound to the caster's position.
 func _on_GamepadHandler_left_joystick_pulsed(joy_dir: Vector2) -> void:
-	if _action.stats.emit_from_caster:
+	if _action.is_centered_on_caster():
 		return
 	# Relative top needed as joystick direction does not account for camera
 	# orientation.

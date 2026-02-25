@@ -73,7 +73,7 @@ func select_effect_range(
 		caster_index: int,
 		emission_index: int,
 		ignore_caster: bool,
-		effect_is_cardinal: bool
+		effect_is_directional: bool
 ) -> void:
 	var map_section: Array[MapTile] = _map_tiles.get_from_ids(tile_ids)
 	for tile: MapTile in map_section:
@@ -86,7 +86,7 @@ func select_effect_range(
 		elif occupant.get_type() == Character.Type.ENEMY:
 			tile.set_selector_type(HexHighlighter.Option.TARGET)
 		elif tile_index == caster_index and ignore_caster:
-			if effect_is_cardinal:
+			if effect_is_directional:
 				tile.set_selector_type(HexHighlighter.Option.NONE)
 			else:
 				tile.set_selector_type(HexHighlighter.Option.GRAY)
@@ -107,8 +107,3 @@ func clear_selector_highlights() -> void:
 	for i in _selectable_map_indexes:
 		_map_tiles.get_at(i).set_selector_type(HexHighlighter.Option.NONE)
 	_selectable_map_indexes.clear()
-
-
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
