@@ -20,6 +20,8 @@ var _emission_map_index: int = -1
 var _emission_transform: Transform3D = Transform3D.IDENTITY
 ## The direction the effect is emitted. Only updated if the action is directional.
 var _emission_direction: HexUtil.HexDirection
+## The target types that this action can affect.
+var _target_types: Dictionary[ActionEffect.Target, bool]
 
 ## The animation player for this node.
 @onready var ani_player: AnimationPlayer = $AnimationPlayer
@@ -34,12 +36,18 @@ var _emission_direction: HexUtil.HexDirection
 func _ready() -> void:
 	_check_for_required_parameters()
 	_effects_list.set_action_potency(stats.potency)
+	_set_target_types()
 	set_emission_direction(HexUtil.HexDirection.UPPER_LEFT)
 
 
 ## Returns the effects of this action.
 func get_effects() -> Array[ActionEffect]:
 	return _effects_list.get_effects()
+
+
+## Returns the set of target types for this action.
+func get_target_types() -> Dictionary[ActionEffect.Target, bool]:
+	return _target_types
 
 
 ## Returns if the effect range is centered on the caster.
@@ -51,14 +59,6 @@ func is_centered_on_caster() -> bool:
 ## bound action is always centered on the caster.
 func is_directional() -> bool:
 	return stats.effect_range is DirectionalAreaRange
-
-
-## Returns a set of targets this action effects.
-func get_targets() -> Dictionary[ActionEffect.Target, bool]:
-	var targets: Dictionary[ActionEffect.Target, bool] = {}
-	for effect: ActionEffect in _effects_list.get_effects():
-		targets[effect.target] = true
-	return targets
 
 
 ## Set the tile index the effect is emitted from.
@@ -120,6 +120,12 @@ func execute_action() -> bool:
 	_hit_box.deactivate()
 	ani_player.play("RESET")
 	return true
+
+
+## Sets the target types this action effects.
+func _set_target_types() -> void:
+	for effect: ActionEffect in _effects_list.get_effects():
+		_target_types[effect.target] = true
 
 
 ## Signals that the encounter camera should snap to the focus position. Used

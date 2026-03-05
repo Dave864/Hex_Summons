@@ -309,14 +309,14 @@ func _check_for_required_parameters() -> void:
 	)
 
 
-## Moves the focus point to the position indicated by the selector.
-func _on_Selector_new_focus_point(new_position: Vector3) -> void:
+## Moves the focus point to the position indicated by the selection tracker.
+func _on_SelectionTracker_new_focus_point(new_position: Vector3) -> void:
 	move_focus_linear(new_position)
 
 
-## Disables or enables the screen edge detection if the selector has locked or
-## unlocked the camera focus respectively.
-func _on_Selector_camera_focus_locked(is_locked: bool) -> void:
+## Disables or enables the screen edge detection if the selection tracker has
+## locked or unlocked the camera focus respectively.
+func _on_SelectionTracker_camera_focus_locked(is_locked: bool) -> void:
 	_focus_point_locked = is_locked
 	if _focus_point_locked:
 		disable_edge_detection()

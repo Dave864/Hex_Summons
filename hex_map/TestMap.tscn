@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bifjkm55y01x1" path="res://hex_map/scripts/hex_map.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://cg633481rl4ed" path="res://hex_map/MapTile/MapTile.tscn" id="4"]
 [ext_resource type="PlaneMesh" uid="uid://br278ydbqio75" path="res://hex_map/resources/hex_map_floor.tres" id="5"]
-[ext_resource type="Script" uid="uid://cyfb6co2ug8qv" path="res://hex_map/scripts/selection_tracker.gd" id="6"]
+[ext_resource type="Script" uid="uid://cyfb6co2ug8qv" path="res://hex_map/SelectionTracker/selection_tracker.gd" id="6"]
 
 [node name="TestMap" type="Node3D"]
 script = ExtResource("3")
@@ -18,7 +18,6 @@ mesh = ExtResource("5")
 
 [node name="SelectionTracker" type="Node" parent="."]
 script = ExtResource("6")
-map_tiles_reference = NodePath("../Tiles")
 
 [node name="RangeFinder" type="Node" parent="."]
 script = ExtResource("2")

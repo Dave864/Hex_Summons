@@ -80,8 +80,8 @@ func _on_PlayerCharacter_is_waiting() -> void:
 ## transition to either the PlayerTurn state, the SummonTurn state, or the
 ## EnemyTurn state depending on the next character.
 func _on_PlayerCharacter_turn_ended() -> void:
-	enc.hex_map.selection_tracker.clear_highlights()
-	enc.hex_map.selection_tracker.clear_selector_highlights()
+	enc.selection_tracker.clear_highlights()
+	enc.selection_tracker.clear_indicators()
 	if not _player_waiting:
 		await _active_char.is_waiting
 	var next_character: Character = enc.get_next_character()

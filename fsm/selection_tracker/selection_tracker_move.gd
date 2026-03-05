@@ -1,42 +1,41 @@
-class_name SelectorNodeSelectMove
-extends SelectorState
-## The logic for what happens when the Selector is in the 'SelectMove' state.
+class_name SelectionTrackerMove
+extends SelectionTrackerState
+## The logic for what happens when the SelectionTracker is in the 'Move' state.
 ##
-## When the input for selecting a tile is given, the Selector moves to the
-## 'Pause' state and a signal is emitted indicating which tile was selected.
+## When the input for selecting a tile is given, the SelectionTracker moves to
+## the 'Pause' state and a signal is emitted indicating which tile was selected.
 ## If an action option is selected in the UI, the Selector moves to the
-## 'SelectAction' state. If the character turn ends, go to the 'Wait' state.
+## appropriate action state ('PositionalAction' or 'DirectionalAction'). If the
+## character turn ends, go to the 'Wait' state.
 
 
 ## The starting index for the movement area.
 var _move_origin_index: int = -1
-## Tracks the travel and tile distances from the original character position
-## to the tiles within movement range.
-var _movement_ids: Array[int] = []
 
 ## Reference to the function that will update the tile highlights.
-@onready var _update_selection_ref: Callable = Callable(self, "_update_selection")
+@onready var _update_selection_ref: Callable = Callable(
+		self,
+		"_update_selection"
+)
 
 
 ## Reveal the selector shape and enable the ability to update tile highlights.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
-	var character_index: int = (
-		selector.active_character.map_coordinate.get_tile_index()
-	)
 	if _move_origin_index < 0:
-		_move_origin_index = character_index
-	var character_tile: MapTile = selector.hex_map.get_tile_at(character_index)
-	selector.emit_new_focus_point(character_tile.get_character_position())
-	_determine_movement_ids()
-	_highlight_movement_range(character_index)
-	selector.set_update_selection_func(_update_selection_ref)
+		_move_origin_index = s_tracker.player_index
+	var character_tile: MapTile = hex_map.get_tile_at(s_tracker.player_index)
+	s_tracker.emit_new_focus_point(character_tile.get_character_position())
+	s_tracker.highlight_player_movement(_move_origin_index)
+	var start_tile: MapTile = hex_map.get_tile_at(s_tracker.player_index)
+	_update_selection(start_tile)
+	s_tracker.set_selector_update(_update_selection_ref)
 	_connect_signals()
 
 
 ## Called by the state machine before changing the active state. Use this 
 ## function to clean up the state.
 func exit() -> void:
-	selector.set_update_selection_func(Callable())
+	s_tracker.set_selector_update(Callable())
 	_disconnect_signals()
 
 
@@ -69,12 +68,12 @@ func _connect_signals() -> void:
 ## clear out movement details when the turn is ended while in the SelectAction
 ## state.
 func _connect_character_turn_ended():
-	if selector.active_character.is_connected(
+	if s_tracker.focused_character.is_connected(
 			"turn_ended",
 			Callable(self, "_on_Character_turn_ended")
 	):
 		return
-	selector.active_character.connect(
+	s_tracker.focused_character.connect(
 			"turn_ended",
 			Callable(self, "_on_Character_turn_ended")
 	)
@@ -103,28 +102,6 @@ func _disconnect_signals() -> void:
 			"left_joystick_pulsed",
 			Callable(self, "_on_GamepadHandler_left_joystick_pulsed")
 	)
-
-
-## Gets the tile ids that are within a player's movement range. 
-func _determine_movement_ids() -> void:
-	# Reuse previously found ids if current player has not started a new
-	# turn. Ids get cleared when the player ends their turn.
-	if _movement_ids.size() > 0:
-		return
-	_movement_ids = selector.hex_map.range_finder.get_character_travesible_tiles(
-			selector.active_character,
-			selector.enemies_ref
-	)
-
-
-## Highlights the movement range for the active character.
-func _highlight_movement_range(player_index: int) -> void:
-	selector.hex_map.selection_tracker.highlight_player_movement(
-			_movement_ids,
-			_move_origin_index
-	)
-	var start_tile: MapTile = selector.hex_map.get_tile_at(player_index)
-	_update_selection(start_tile)
 
 
 ## Update the selector for a given tile. Also updates what the hovered tile is.
@@ -169,8 +146,7 @@ func _resolve_joystick_direction(direction: HexUtil.HexDirection) -> void:
 func _on_Character_turn_ended() -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	_move_origin_index = -1
-	_movement_ids.clear()
-	selector.active_character.disconnect(
+	s_tracker.focused_character.disconnect(
 			"turn_ended",
 			Callable(self, "_on_Character_turn_ended")
 	)
@@ -183,15 +159,15 @@ func _on_SignalBus_move_path_requested() -> void:
 	var target_tile: MapTile = selector.tile_hovered
 	if target_tile.get_selector_type() != HexHighlighter.Option.GRAY:
 		var path_data: PackedVector3Array = (
-			selector.hex_map.range_finder.get_character_point_path(
-					selector.active_character,
+			hex_map.range_finder.get_character_point_path(
+					s_tracker.focused_character,
 					target_tile.map_coordinate.get_tile_index(),
-					selector.enemies_ref,
-					_movement_ids
+					s_tracker.get_enemies_reference(),
+					s_tracker.get_movement_area_ids()
 			)
 		)
 		SignalBus.emit_move_path_created(path_data)
-		selector.emit_new_focus_point(target_tile.get_character_position())
+		s_tracker.emit_new_focus_point(target_tile.get_character_position())
 		state_machine.transition_to(PAUSE)
 
 
@@ -211,8 +187,8 @@ func _on_SignalBus_spawn_action_selected(summon: String, action: Action) -> void
 func _action_selected(action: Action, summon: String) -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	var next_state: String = (
-		SELECT_DIRECTIONAL_ACTION if action.is_directional()
-		else SELECT_POSITIONAL_ACTION
+		DIRECTIONAL_ACTION if action.is_directional()
+		else POSITIONAL_ACTION
 	)
 	state_machine.transition_to(
 			next_state,

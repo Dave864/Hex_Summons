@@ -1,31 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://c1ln2aeqn7ab2"]
+[gd_scene load_steps=2 format=3 uid="uid://c1ln2aeqn7ab2"]
 
 [ext_resource type="Script" uid="uid://b2pl6ff1ogcwn" path="res://selector_node/selector.gd" id="1"]
-[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
-[ext_resource type="Script" uid="uid://benfafebrex5y" path="res://fsm/selector_node/selector_node_select_move.gd" id="4"]
-[ext_resource type="Script" uid="uid://ba1dpwaeqqk7m" path="res://fsm/selector_node/selector_node_select_directional_action.gd" id="4_c3evo"]
-[ext_resource type="Script" uid="uid://csc104uw0e2sj" path="res://fsm/selector_node/selector_node_wait.gd" id="5"]
-[ext_resource type="Script" uid="uid://dehma5bphisi3" path="res://fsm/selector_node/selector_node_select_positional_action.gd" id="5_ihar4"]
-[ext_resource type="Script" uid="uid://gnsddwbhc82h" path="res://fsm/selector_node/selector_node_pause.gd" id="7"]
 
-[node name="Selector" type="Node"]
+[node name="Selector" type="Node3D"]
 script = ExtResource("1")
-
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("3")
-initial_state = NodePath("Wait")
-
-[node name="SelectMove" type="Node" parent="StateMachine"]
-script = ExtResource("4")
-
-[node name="SelectDirectionalAction" type="Node" parent="StateMachine"]
-script = ExtResource("4_c3evo")
-
-[node name="SelectPositionalAction" type="Node" parent="StateMachine"]
-script = ExtResource("5_ihar4")
-
-[node name="Wait" type="Node" parent="StateMachine"]
-script = ExtResource("5")
-
-[node name="Pause" type="Node" parent="StateMachine"]
-script = ExtResource("7")

@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://ddvk0q84qb3m"]
+
+[ext_resource type="Script" uid="uid://cyfb6co2ug8qv" path="res://hex_map/SelectionTracker/selection_tracker.gd" id="1_c3pme"]
+[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="2_14xsr"]
+[ext_resource type="Script" uid="uid://bx1htexjad2n7" path="res://fsm/selection_tracker/selection_tracker_wait.gd" id="3_63qsx"]
+[ext_resource type="Script" uid="uid://c5yio7ankf2nt" path="res://fsm/selection_tracker/selection_tracker_pause.gd" id="4_qbj8e"]
+[ext_resource type="Script" uid="uid://b4yyn75ft4nuk" path="res://fsm/selection_tracker/selection_tracker_move.gd" id="5_c5fpm"]
+[ext_resource type="Script" uid="uid://0sdrxsyng5sc" path="res://fsm/selection_tracker/selection_tracker_directional_action.gd" id="6_naanh"]
+[ext_resource type="Script" uid="uid://daec4tatweocn" path="res://fsm/selection_tracker/selection_tracker_positional_action.gd" id="7_sgvcq"]
+
+[node name="SelectionTracker" type="Node"]
+script = ExtResource("1_c3pme")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_14xsr")
+initial_state = NodePath("Wait")
+metadata/_custom_type_script = "uid://dcm1t8lpe3xej"
+
+[node name="Wait" type="Node" parent="StateMachine"]
+script = ExtResource("3_63qsx")
+
+[node name="Pause" type="Node" parent="StateMachine"]
+script = ExtResource("4_qbj8e")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("5_c5fpm")
+
+[node name="DirectionalAction" type="Node" parent="StateMachine"]
+script = ExtResource("6_naanh")
+
+[node name="PositionalAction" type="Node" parent="StateMachine"]
+script = ExtResource("7_sgvcq")

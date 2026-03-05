@@ -224,7 +224,7 @@ func _update_emission_index(index: int) -> void:
 
 ## Activates the specified summon and places it at the listed emission position
 ## of the spawn action.
-func _on_Selector_spawn_action_confirmed(
+func _on_SelectionTracker_spawn_action_confirmed(
 	summon_name: String,
 	emission_position: Vector3
 ) -> void:

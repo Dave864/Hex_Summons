@@ -1,28 +1,13 @@
 class_name Selector
-extends Node
-## Handles the selection of map tiles for player movement and actions.
+extends Node3D
+## Hovers over tiles that are being focused on, indicating that the tile is
+## in focus.
 
-
-## Indicates that the selector has confirmed the details of a spawn action for
-## a summon character.
-signal spawn_action_confirmed(name, emission_position)
-## Indicates that the encounter camera should focus on a new point.
-signal new_focus_point(new_position)
-## Indicates if the camera focus is locked to a point.
-signal camera_focus_locked(is_locked)
 
 ## The MapTile that was last passed over.
 var tile_hovered: MapTile = null
 ## Describes which hex vertex is the top with respect to the camera
 var top_vertex: int = 0
-## Reference to the active character (player or summon).
-var active_character: Character = null
-## Reference to the player characters in the current encounter.
-var players_ref: Array[Character] = []
-## Reference to the enemy characer in the current encounter.
-var enemies_ref: Array[Character] = []
-## Reference to the HexMap of the current encounter map.
-var hex_map: HexMap = null
 
 ## Reference to a function that will update the map tile highlights. Different
 ## states will use different logic for updating the highlights.
@@ -41,31 +26,6 @@ func _ready() -> void:
 ## Sets the _update_selection_func.
 func set_update_selection_func(new_func: Callable) -> void:
 	_update_selection_func = new_func
-
-
-## Emits the spawn_action_confirmed signal with the summon name and emission
-## position.
-func emit_spawn_action_confirmed(
-	summon_name: String,
-	emission_position: Vector3
-) -> void:
-	emit_signal("spawn_action_confirmed", summon_name, emission_position)
-
-
-## Emits the camera_reposition signal with the position the encounter camera
-## should point to.
-func emit_new_focus_point(new_position: Vector3) -> void:
-	emit_signal("new_focus_point", new_position)
-
-
-## Emits the camera_focus_locked signal, indicating that the focus is locked.
-func emit_camera_focus_locked() -> void:
-	emit_signal("camera_focus_locked", true)
-
-
-## Emits the camera_focus_locked signal, indicating that the focus is unlocked.
-func emit_camera_focus_unlocked() -> void:
-	emit_signal("camera_focus_locked", false)
 
 
 ## Gets the tile that the mouse last hovered over.

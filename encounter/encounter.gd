@@ -22,8 +22,9 @@ var _player_template: PackedScene = preload(
 
 ## Node that handles player character summons.
 @onready var summon: Summon = $Summon
-## Reference to the Selector node; used to highlight and select map tiles.
-@onready var selector: Selector = $Selector
+## Reference to the selection tracker node; used to highlight and select map
+## tiles.
+@onready var selection_tracker: SelectionTracker = $SelectionTracker
 ## Reference to the camera.
 @onready var camera: EncounterCamera = $EncounterCamera
 
@@ -106,14 +107,14 @@ func _load_enemies() -> void:
 
 ## Connects all map tile "mouse_hovered" signals to the selector.
 func _connect_map_to_selector() -> void:
-	selector.players_ref = players
-	selector.enemies_ref = enemies
-	selector.hex_map = hex_map
+	selection_tracker.set_players_reference(players)
+	selection_tracker.set_enemies_reference(enemies)
+	var selector_mouse_hovered_func := Callable(
+			selection_tracker.selector,
+			"_on_MapTile_mouse_hovered"
+	)
 	for mt: MapTile in hex_map.get_map_tiles():
-		mt.connect(
-				"mouse_hovered",
-				Callable(selector, "_on_MapTile_mouse_hovered")
-		)
+		mt.connect("mouse_hovered", selector_mouse_hovered_func)
 
 
 ## Check that all required parameters are set.
@@ -123,7 +124,7 @@ func _check_for_required_parameters() -> void:
 		"Encounter has not set a hex map."
 	)
 	assert(
-		selector != null,
-		ErrorUtil.missing_required_parameter(name, selector.name)
+		selection_tracker != null,
+		ErrorUtil.missing_required_parameter(name, selection_tracker.name)
 	)
 	assert(ui != null, ErrorUtil.missing_required_parameter(name, ui.name))

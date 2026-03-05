@@ -10,8 +10,6 @@ extends Node3D
 const TILES: String = "Tiles"
 ## Name of the node that is the mesh for the floor of the map.
 const FLOOR_MESH: String = "FloorMesh"
-## Name of the node that tracks the highlighted and selected tiles.
-const SELECTION_TRACKER: String = "SelectionTracker"
 ## Name of the node that holds logic for pathfinding and distance calculation.
 const RANGE_FINDER: String = "RangeFinder"
 ## The maximum number of player characters that can be present on the map.
@@ -22,7 +20,6 @@ const MAX_PLAYER_COUNT: int = 4
 ## The tile indexes that enemy characters can start at.
 @export var enemy_start_tiles: PackedInt32Array = []
 
-var selection_tracker: SelectionTracker = null
 var range_finder: RangeFinder = null
 var _floor_mesh: PlaneMesh = preload("res://hex_map/resources/hex_map_floor.tres")
 var _floor_mesh_node: MeshInstance3D = null
@@ -35,7 +32,6 @@ var _tiles_node: Tiles = null
 
 
 func _ready() -> void:
-	_create_selection_tracker()
 	_create_pathfinder()
 	_create_floor_mesh()
 	_create_tiles_node()
@@ -58,6 +54,11 @@ func get_z_count() -> int:
 func place_character_at_tile(character: Character, tile_index: int) -> void:
 	var pos: Vector3 = get_tile_at(tile_index).get_character_position()
 	character.position = pos
+
+
+## Retrieve the Tiles node that contains the map tiles.
+func get_tiles_node() -> Tiles:
+	return _tiles_node
 
 
 ## Retrieve the map tiles of this hex map.
@@ -98,17 +99,6 @@ func _create_floor_mesh() -> void:
 		_floor_mesh_node.position.y = -Constants.HEX_TILE_UNIT_HEIGHT
 	else:
 		_floor_mesh_node = get_node(FLOOR_MESH)
-
-
-## Create a selection tracker node if not already present.
-func _create_selection_tracker() -> void:
-	if get_node_or_null(SELECTION_TRACKER) == null:
-		selection_tracker = SelectionTracker.new()
-		selection_tracker.name = SELECTION_TRACKER
-		add_child(selection_tracker)
-		selection_tracker.set_owner(_root_node)
-	else:
-		selection_tracker = get_node(SELECTION_TRACKER)
 
 
 ## Create a pathfinder node if not already present.

@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://x4o3gls28fh"]
+[gd_scene load_steps=16 format=3 uid="uid://x4o3gls28fh"]
 
 [ext_resource type="PackedScene" uid="uid://bh13wido3t2hc" path="res://hex_map/TestMap.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://ddvk0q84qb3m" path="res://hex_map/SelectionTracker/SelectionTracker.tscn" id="2_a00se"]
 [ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://cio2lxf2jspfo" path="res://user_interface/encounter/menu_layout/EncounterUIMenuLayout.tscn" id="4_a00se"]
 [ext_resource type="PackedScene" uid="uid://cnsy5crv75lm4" path="res://character/enemy_characters/TestEnemy2/TestEnemy2.tscn" id="5"]
@@ -18,7 +19,7 @@
 [node name="Encounter" type="Node" node_paths=PackedStringArray("ui", "hex_map")]
 script = ExtResource("10")
 ui = NodePath("EncounterUIMenuLayout")
-hex_map = NodePath("TestMap")
+hex_map = NodePath("SelectionTracker/TestMap")
 
 [node name="EncounterCamera" parent="." instance=ExtResource("14")]
 
@@ -33,7 +34,13 @@ sky_mode = 1
 
 [node name="Summon" parent="." instance=ExtResource("5_31f15")]
 
-[node name="TestMap" parent="." instance=ExtResource("1")]
+[node name="SelectionTracker" parent="." node_paths=PackedStringArray("hex_map", "selector") instance=ExtResource("2_a00se")]
+hex_map = NodePath("TestMap")
+selector = NodePath("Selector")
+
+[node name="Selector" parent="SelectionTracker" instance=ExtResource("3")]
+
+[node name="TestMap" parent="SelectionTracker" instance=ExtResource("1")]
 
 [node name="Players" type="Node" parent="."]
 
@@ -44,8 +51,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.419558, 0.02359, 7.8271008
 
 [node name="TestEnemy2" parent="Enemies" instance=ExtResource("5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.892926, 4.76837e-07, 7.937133)
-
-[node name="Selector" parent="." instance=ExtResource("3")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("13")
@@ -66,7 +71,9 @@ script = ExtResource("12")
 [node name="End" type="Node" parent="StateMachine"]
 script = ExtResource("11")
 
-[connection signal="focus_moved_by_edge" from="EncounterCamera" to="Selector" method="_on_EncounterCamera_focus_moved_by_edge"]
-[connection signal="camera_focus_locked" from="Selector" to="EncounterCamera" method="_on_Selector_camera_focus_locked"]
-[connection signal="new_focus_point" from="Selector" to="EncounterCamera" method="_on_Selector_new_focus_point"]
-[connection signal="spawn_action_confirmed" from="Selector" to="Summon" method="_on_Selector_spawn_action_confirmed"]
+[connection signal="focus_moved_by_edge" from="EncounterCamera" to="SelectionTracker/Selector" method="_on_EncounterCamera_focus_moved_by_edge"]
+[connection signal="activated" from="Summon" to="EncounterUIMenuLayout" method="_on_Summon_activated"]
+[connection signal="deactivated" from="Summon" to="EncounterUIMenuLayout" method="_on_Summon_deactivated"]
+[connection signal="camera_focus_locked" from="SelectionTracker" to="EncounterCamera" method="_on_SelectionTracker_camera_focus_locked"]
+[connection signal="new_focus_point" from="SelectionTracker" to="EncounterCamera" method="_on_SelectionTracker_new_focus_point"]
+[connection signal="spawn_action_confirmed" from="SelectionTracker" to="Summon" method="_on_SelectionTracker_spawn_action_confirmed"]
