@@ -118,7 +118,7 @@ func _update_selection(map_tile: MapTile) -> void:
 	selector.tile_hovered = map_tile
 	
 	if InputController.source_is_gamepad():
-		selector.emit_new_focus_point(map_tile.get_character_position())
+		s_tracker.emit_new_focus_point(map_tile.get_character_position())
 
 	var highlight: int = map_tile.get_highlight_type()
 	if (

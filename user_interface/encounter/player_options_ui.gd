@@ -87,12 +87,12 @@ func display() -> void:
 func dismiss() -> void:
 	hide()
 	clear_all_options()
-	_movement_button.button_pressed = false
-	_technique_button.button_pressed = false
-	_spell_button.button_pressed = false
-	_summon_button.button_pressed = false
-	_item_button.button_pressed = false
-	_wait_button.button_pressed = false
+	_movement_button.set_pressed_no_signal(false)
+	_technique_button.set_pressed_no_signal(false)
+	_spell_button.set_pressed_no_signal(false)
+	_summon_button.set_pressed_no_signal(false)
+	_item_button.set_pressed_no_signal(false)
+	_wait_button.set_pressed_no_signal(false)
 
 
 ## Disables or enables all the options and any displayed action options. Buttons
