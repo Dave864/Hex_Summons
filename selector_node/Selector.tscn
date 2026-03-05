@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1ln2aeqn7ab2"]
+[gd_scene load_steps=3 format=3 uid="uid://c1ln2aeqn7ab2"]
 
 [ext_resource type="Script" uid="uid://b2pl6ff1ogcwn" path="res://selector_node/selector.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://osiqpd8jhoyd" path="res://art/icon.png" id="1_qbnn5"]
 
-[node name="Selector" type="Node3D"]
+[node name="Selector" type="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+texture = ExtResource("1_qbnn5")
 script = ExtResource("1")

@@ -5,7 +5,10 @@ extends Node3D
 
 
 ## The MapTile that was last passed over.
-var tile_hovered: MapTile = null
+var tile_hovered: MapTile = null:
+	set(value):
+		tile_hovered = value
+		position = tile_hovered.get_character_position()
 ## Describes which hex vertex is the top with respect to the camera
 var top_vertex: int = 0
 
