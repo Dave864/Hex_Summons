@@ -52,6 +52,8 @@ func _update_selection(map_tile: MapTile) -> void:
 		return
 	if _is_target_tile(map_tile):
 		selector.tile_hovered = map_tile
+		if InputController.source_is_gamepad():
+			s_tracker.emit_new_focus_point(map_tile.get_character_position())
 		action.set_emission_map_index(map_tile.map_coordinate.get_tile_index())
 		action.set_emission_pos(map_tile.get_character_position())
 		_highlight_effect_range()
