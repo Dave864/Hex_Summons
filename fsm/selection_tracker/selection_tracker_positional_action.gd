@@ -15,15 +15,14 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	super.enter(msg)
 	var action: Action = s_tracker.get_focus_action()
 	if action.is_centered_on_caster():
-		_update_hovered_tile(s_tracker.player_index)
+		_update_emission_tile(s_tracker.player_index)
 	else:
 		_place_closest_to_target()
 	s_tracker.emit_new_focus_point(action.get_emission_pos())
 
 
-## Updates the hovered tile tracked by the selector.
-func _update_hovered_tile(tile_index: int) -> void:
-	selector.tile_hovered = hex_map.get_tile_at(tile_index)
+## Updates the emission tile for the focused action.
+func _update_emission_tile(tile_index: int) -> void:
 	var action: Action = s_tracker.get_focus_action()
 	var character_pos: Vector3 = selector.tile_hovered.get_character_position()
 	action.set_emission_map_index(tile_index)
@@ -38,6 +37,7 @@ func _update_selection(map_tile: MapTile) -> void:
 	assert(map_tile != null, "SelectAction given a null MapTile.")
 	var action: Action = s_tracker.get_focus_action()
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
+	selector.tile_hovered = map_tile
 	# Actions centered on caster should not update the selection. Also, actions
 	# with dead range need to display the character tile highlight, but not
 	# allow emission from character position.
@@ -51,7 +51,6 @@ func _update_selection(map_tile: MapTile) -> void:
 	):
 		return
 	if _is_target_tile(map_tile):
-		selector.tile_hovered = map_tile
 		if InputController.source_is_gamepad():
 			s_tracker.emit_new_focus_point(map_tile.get_character_position())
 		action.set_emission_map_index(map_tile.map_coordinate.get_tile_index())
@@ -123,4 +122,4 @@ func _place_closest_to_tile(tile_index: int) -> void:
 	if closest_index < 0:
 		s_tracker.clear_indicators()
 		return
-	_update_hovered_tile(closest_index)
+	_update_emission_tile(closest_index)
