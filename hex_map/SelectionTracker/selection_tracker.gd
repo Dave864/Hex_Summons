@@ -71,12 +71,14 @@ func emit_new_focus_point(new_position: Vector3) -> void:
 	emit_signal("new_focus_point", new_position)
 
 
-## Emits the camera_focus_locked signal, indicating that the focus is locked.
+## Emits a false camera_focus_locked signal, indicating that the focus is locked
+## and thus unable to be moved using screen edge detection.
 func emit_camera_focus_locked() -> void:
 	emit_signal("camera_focus_locked", true)
 
 
-## Emits the camera_focus_locked signal, indicating that the focus is unlocked.
+## Emits a true camera_focus_locked signal, indicating that the focus is
+## unlocked and thus able to be moved using screen edge detection.
 func emit_camera_focus_unlocked() -> void:
 	emit_signal("camera_focus_locked", false)
 
@@ -168,10 +170,17 @@ func set_focus_action(new_action: Action, is_spawn_action: bool) -> void:
 
 ## Returns the targets that are hit by the focused action in its current state.
 func get_tracked_targets() -> Array[Character]:
+	var targets: Array[Character] = []
 	if _action.is_directional():
-		return _targets_cache[_action.get_emission_direction()]
+		var dir: HexUtil.HexDirection = _action.get_emission_direction()
+		if _targets_cache.has(dir):
+			targets = _targets_cache[dir]
+		return targets
 	else:
-		return _targets_cache[_action.get_emission_map_index()]
+		var index: int = _action.get_emission_map_index()
+		if _targets_cache.has(index):
+			targets = _targets_cache[index]
+		return targets
 
 
 ## Sets the update function for the selector.
