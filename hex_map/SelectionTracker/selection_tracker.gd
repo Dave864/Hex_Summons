@@ -199,7 +199,7 @@ func get_movement_area_ids() -> Array[int]:
 func highlight_player_movement(start_index: int = -1) -> void:
 	# Activate the selector at the character's current position.
 	var character_tile: MapTile = _map_tiles.get_at(player_index)
-	character_tile.set_selector_type(HexHighlighter.Option.MOVE)
+	character_tile.set_selector_type(HexHighlighter.Option.SELECT_MOVE)
 	
 	# Set the tile highlights.
 	for i: int in _movement_tile_ids:
@@ -207,18 +207,18 @@ func highlight_player_movement(start_index: int = -1) -> void:
 		var occupant: Character = tile.occupant.get_current_occupant()
 		if occupant == null:
 			if i == start_index:
-				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
+				tile.set_highlight_type(HexHighlighter.Option.ORIGIN_PLAYER)
 			else:
-				tile.set_highlight_type(HexHighlighter.Option.RANGE)
+				tile.set_highlight_type(HexHighlighter.Option.RANGE_MOVE)
 		elif occupant.get_type() == Character.Type.ENEMY:
-			tile.set_highlight_type(HexHighlighter.Option.NONE)
+			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_ENEMY)
 		elif occupant.get_instance_id() == focused_character.get_instance_id():
 			if start_index < 0 or start_index == player_index:
-				tile.set_highlight_type(HexHighlighter.Option.PLAYER)
+				tile.set_highlight_type(HexHighlighter.Option.ORIGIN_PLAYER)
 			else:
-				tile.set_highlight_type(HexHighlighter.Option.RANGE)
+				tile.set_highlight_type(HexHighlighter.Option.RANGE_MOVE)
 		else:
-			tile.set_highlight_type(HexHighlighter.Option.ALLY)
+			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_ALLY)
 		_highlighted_map_indexes.append(tile.map_coordinate.get_tile_index())
 
 
@@ -229,13 +229,13 @@ func highlight_action_source_area() -> void:
 		var tile: MapTile = _map_tiles.get_at(index)
 		var occupant: Character = tile.occupant.get_current_occupant()
 		if index == player_index:
-			tile.set_highlight_type(HexHighlighter.Option.PLAYER)
+			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_PLAYER)
 		elif occupant == null:
-			tile.set_highlight_type(HexHighlighter.Option.RANGE)
+			tile.set_highlight_type(HexHighlighter.Option.RANGE_SOURCE)
 		elif occupant.get_type() == Character.Type.ENEMY:
-			tile.set_highlight_type(HexHighlighter.Option.TARGET)
+			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_ENEMY)
 		else:
-			tile.set_highlight_type(HexHighlighter.Option.ALLY)
+			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_ALLY)
 		_highlighted_map_indexes.append(index)
 
 
@@ -359,18 +359,18 @@ func _indicate_effect_range(tile_ids: Array[int]) -> void:
 		var occupant: Character = tile.occupant.get_current_occupant()
 		var tile_index: int = tile.map_coordinate.get_tile_index()
 		if tile_index == _action.get_emission_map_index():
-			tile.set_selector_type(HexHighlighter.Option.EFFECT_ORIGIN)
+			tile.set_selector_type(HexHighlighter.Option.ORIGIN_EFFECT)
 		elif occupant == null:
-			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)
+			tile.set_selector_type(HexHighlighter.Option.RANGE_EFFECT)
 		elif occupant.get_type() == Character.Type.ENEMY:
-			tile.set_selector_type(HexHighlighter.Option.TARGET)
+			tile.set_selector_type(HexHighlighter.Option.TARGET_ENEMY)
 		elif tile_index == player_index and _action.stats.effect_ignores_caster:
 			if _action.is_directional():
 				tile.set_selector_type(HexHighlighter.Option.NONE)
 			else:
-				tile.set_selector_type(HexHighlighter.Option.GRAY)
+				tile.set_selector_type(HexHighlighter.Option.SELECT_GRAY)
 		else:
-			tile.set_selector_type(HexHighlighter.Option.EFFECT_RANGE)
+			tile.set_selector_type(HexHighlighter.Option.RANGE_EFFECT)
 		_selectable_map_indexes.append(tile_index)
 
 

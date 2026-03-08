@@ -60,7 +60,7 @@ func _update_selection(map_tile: MapTile) -> void:
 		selector.tile_hovered = map_tile
 		if InputController.source_is_gamepad():
 			s_tracker.emit_new_focus_point(map_tile.get_character_position())
-		map_tile.set_selector_type(HexHighlighter.Option.GRAY)
+		map_tile.set_selector_type(HexHighlighter.Option.SELECT_GRAY)
 
 
 ## Determines if the selector is able to move to the adjacent tile in the

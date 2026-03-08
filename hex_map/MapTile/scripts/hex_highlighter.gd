@@ -3,38 +3,55 @@ extends MeshInstance3D
 ## Hexagonal shape used to represent available options in a HexMap scene.
 
 
+## Specifies the highlight option for the highlighter.
 enum Option {
-	NONE,
-	PLAYER,
-	ALLY,
-	RANGE,
-	EFFECT_RANGE,
-	EFFECT_ORIGIN,
-	TARGET,
-	MOVE,
-	GRAY,
+	NONE, ## No highlight.
+	ORIGIN_PLAYER, ## The origin point for an active player character.
+	ORIGIN_ALLY, ## The origin point for an ally character.
+	ORIGIN_ENEMY, ## The origin point for an enemy character.
+	ORIGIN_EFFECT, ## The origin point for the effect range of an action.
+	RANGE_MOVE, ## An area tile for movement.
+	RANGE_SOURCE, ## An area tile for the source range of an action.
+	RANGE_EFFECT, ## An area tile for the effect range of an action.
+	TARGET_ALLY, ## A tile with an ally within an effect range.
+	TARGET_ENEMY, ## A tile with an enemy within an effect range.
+	SELECT_MOVE, ## The tile under consideration for movement.
+	SELECT_GRAY, ## An indication that a tile is highlighted.
 }
 
 ## The color for general displays of range.
-const COLOR_AREA_RANGE: Color = Color.BLUE
-## The color for the character in focus.
-const COLOR_CHARACTER_ORIGIN: Color = Color.AQUA
-## The color for highlighting ally characters.
-const COLOR_ALLY_ORIGIN: Color = Color.DODGER_BLUE
+const COLOR_AREA_RANGE := Color.BLUE
+## The color for the display of movement range.
+const COLOR_RANGE_MOVE := Color.BLUE
+## The color for the display of an action's source range.
+const COLOR_RANGE_SOURCE := Color.PURPLE
 ## The color for highlighting the effect range.
-const COLOR_EFFECT_RANGE: Color = Color.ORANGE
+const COLOR_RANGE_EFFECT := Color.ORANGE
+## The color for the position of the character in focus.
+const COLOR_ORIGIN_CHARACTER := Color.AQUA
+## The color for highlighting ally character positions.
+const COLOR_ORIGIN_ALLY := Color.DEEP_SKY_BLUE
+## The color for highlighting enemy character positions.
+const COLOR_ORIGIN_ENEMY := Color.RED
 ## The color for highlighting the origin point of an effect.
-const COLOR_EFFECT_ORIGIN: Color = Color.YELLOW
-## The color for highlighting a target.
-const COLOR_TARGET_SELECT: Color = Color.RED
+const COLOR_ORIGIN_EFFECT := Color.YELLOW
+## The color for highlighting an ally target.
+const COLOR_TARGET_ALLY := Color.GREEN
+## The color for highlighting an enemy target.
+const COLOR_TARGET_ENEMY := Color.RED
 ## The color for highlighting a selected movement tile.
-const COLOR_MOVE_SELECT: Color = Color.YELLOW
+const COLOR_SELECT_MOVE := Color.YELLOW
 ## Grey color.
-const COLOR_GRAY_SELECT: Color = Color.GRAY
+const COLOR_SELECT_GRAY := Color.GRAY
 
-var _hl_option: int: get = get_option, set = set_option
+## The current highlight option.
+var _hl_option: Option
+## The material used for the highlight.
+var highlight_material: Material:
+	get:
+		return mesh.surface_get_material(0)
 
-@onready var base_render_priority: int = mesh.surface_get_material(0).render_priority
+@onready var base_render_priority: int = highlight_material.render_priority
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -42,41 +59,53 @@ func _ready():
 	set_option(Option.NONE)
 
 
-## Sets the color based on the option. Hides the highlighter if the option is NONE.
-func set_option(hl_option: int) -> void:
-	mesh.surface_get_material(0).render_priority = base_render_priority
+## Sets the color based on the option. Hides the highlighter if the option is
+## NONE.
+func set_option(hl_option: Option) -> void:
+	highlight_material.render_priority = base_render_priority
 	match hl_option:
-		Option.PLAYER:
-			_set_highlighter_color(COLOR_CHARACTER_ORIGIN)
+		Option.ORIGIN_PLAYER:
+			_set_highlighter_color(COLOR_ORIGIN_CHARACTER)
 			show()
-		Option.ALLY:
-			_set_highlighter_color(COLOR_ALLY_ORIGIN)
+		Option.ORIGIN_ALLY:
+			_set_highlighter_color(COLOR_ORIGIN_ALLY)
 			show()
-		Option.RANGE:
+		Option.ORIGIN_ENEMY:
+			_set_highlighter_color(COLOR_ORIGIN_ENEMY)
+			show()
+		Option.RANGE_MOVE:
 			_set_highlighter_color(COLOR_AREA_RANGE)
 			show()
-		Option.EFFECT_ORIGIN:
-			_set_highlighter_color(COLOR_EFFECT_ORIGIN)
-			mesh.surface_get_material(0).render_priority = base_render_priority + 1
+		Option.ORIGIN_EFFECT:
+			_set_highlighter_color(COLOR_ORIGIN_EFFECT)
+			highlight_material.render_priority = base_render_priority + 1
 			show()
-		Option.EFFECT_RANGE:
-			_set_highlighter_color(COLOR_EFFECT_RANGE)
+		Option.RANGE_EFFECT:
+			_set_highlighter_color(COLOR_RANGE_EFFECT)
 			show()
-		Option.TARGET:
-			_set_highlighter_color(COLOR_TARGET_SELECT)
-			mesh.surface_get_material(0).render_priority = base_render_priority + 1
+		Option.RANGE_SOURCE:
+			_set_highlighter_color(COLOR_RANGE_SOURCE)
 			show()
-		Option.MOVE:
-			_set_highlighter_color(COLOR_MOVE_SELECT)
+		Option.TARGET_ALLY:
+			_set_highlighter_color(COLOR_TARGET_ALLY)
+			highlight_material.render_priority = base_render_priority + 1
 			show()
-		Option.GRAY:
-			_set_highlighter_color(COLOR_GRAY_SELECT)
+		Option.TARGET_ENEMY:
+			_set_highlighter_color(COLOR_TARGET_ENEMY)
+			highlight_material.render_priority = base_render_priority + 1
+			show()
+		Option.SELECT_MOVE:
+			_set_highlighter_color(COLOR_SELECT_MOVE)
+			show()
+		Option.SELECT_GRAY:
+			_set_highlighter_color(COLOR_SELECT_GRAY)
 			show()
 		_:
 			hide()
 
 
-func get_option() -> int:
+## Gets the option currently active.
+func get_option() -> Option:
 	return _hl_option
 
 

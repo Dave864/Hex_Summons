@@ -122,12 +122,12 @@ func _update_selection(map_tile: MapTile) -> void:
 
 	var highlight: int = map_tile.get_highlight_type()
 	if (
-		highlight == HexHighlighter.Option.RANGE
-		or highlight == HexHighlighter.Option.PLAYER
+		highlight == HexHighlighter.Option.RANGE_MOVE
+		or highlight == HexHighlighter.Option.ORIGIN_PLAYER
 	):
-		map_tile.set_selector_type(HexHighlighter.Option.MOVE)
+		map_tile.set_selector_type(HexHighlighter.Option.SELECT_MOVE)
 	else:
-		map_tile.set_selector_type(HexHighlighter.Option.GRAY)
+		map_tile.set_selector_type(HexHighlighter.Option.SELECT_GRAY)
 
 
 ## Determines if the selector is able to move to the adjacent tile in the
@@ -156,7 +156,7 @@ func _on_Character_turn_ended() -> void:
 ## Creates the movement path to the selected tile if said tile is valid.
 func _on_SignalBus_move_path_requested() -> void:
 	var target_tile: MapTile = selector.tile_hovered
-	if target_tile.get_selector_type() != HexHighlighter.Option.GRAY:
+	if target_tile.get_selector_type() != HexHighlighter.Option.SELECT_GRAY:
 		var path_data: PackedVector3Array = (
 			hex_map.range_finder.get_character_point_path(
 					s_tracker.focused_character,

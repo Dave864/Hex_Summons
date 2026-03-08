@@ -96,18 +96,17 @@ func _is_target_tile(map_tile: MapTile) -> bool:
 		s_tracker.get_focus_action().get_target_types()
 	)
 	match map_tile.get_highlight_type():
-		HexHighlighter.Option.RANGE:
+		HexHighlighter.Option.RANGE_SOURCE:
 			return true
-		HexHighlighter.Option.TARGET:
+		HexHighlighter.Option.ORIGIN_ENEMY:
 			return target_types.has(ActionEffect.Target.OPPONENTS)
-		HexHighlighter.Option.PLAYER:
+		HexHighlighter.Option.ORIGIN_PLAYER:
 			return (
-				(
-					target_types.has(ActionEffect.Target.SELF) 
-					and is_caster
-				)
-				or target_types.has(ActionEffect.Target.ALLIES)
+				target_types.has(ActionEffect.Target.SELF) 
+				and is_caster
 			)
+		HexHighlighter.Option.ORIGIN_ALLY:
+			return target_types.has(ActionEffect.Target.ALLIES)
 		_:
 			return false
 
