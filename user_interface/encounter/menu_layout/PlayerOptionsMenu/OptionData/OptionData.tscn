@@ -1,9 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://cww308tl4jk5n"]
 
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_iahou"]
-[ext_resource type="Script" uid="uid://bfo867j3rde8c" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/range_display.gd" id="2_jrdtc"]
+[ext_resource type="Script" uid="uid://bfo867j3rde8c" path="res://user_interface/encounter/RangeDisplay/range_display.gd" id="2_jrdtc"]
 [ext_resource type="Script" uid="uid://crvp40ygveqh4" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/OptionData/option_data.gd" id="2_mr07l"]
 [ext_resource type="FontFile" uid="uid://bomd4sauyxdrx" path="res://fonts/pixel_10.fnt" id="4_c8r3c"]
+
 
 [node name="OptionData" type="Panel"]
 anchors_preset = -1

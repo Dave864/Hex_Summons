@@ -265,13 +265,13 @@ func _get_color(detail_marker: DisplayMatrix.Detail) -> Color:
 	var c: Color
 	match detail_marker:
 		DisplayMatrix.Detail.CASTER:
-			c = Color.AQUA
+			c = HexHighlighter.COLOR_ORIGIN_CHARACTER
 		DisplayMatrix.Detail.SOURCE_RANGE:
-			c = Color.BLUE
+			c = HexHighlighter.COLOR_RANGE_SOURCE
 		DisplayMatrix.Detail.EFFECT_RANGE:
-			c = Color.ORANGE
+			c = HexHighlighter.COLOR_RANGE_EFFECT
 		DisplayMatrix.Detail.EFFECT_SOURCE:
-			c = Color.YELLOW
+			c = HexHighlighter.COLOR_ORIGIN_EFFECT
 		_:
 			c = Color.SLATE_GRAY
 	return c

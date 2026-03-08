@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://b024wqodavo7i"]
 
 [ext_resource type="Script" uid="uid://jqlg6d484xvk" path="res://user_interface/encounter/button_layout/SubOptionButton/SpellButton/spell_button.gd" id="1_opu2t"]
-[ext_resource type="PackedScene" uid="uid://brswtgdm48yey" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/RangeDisplay.tscn" id="2_d175n"]
+[ext_resource type="PackedScene" uid="uid://brswtgdm48yey" path="res://user_interface/encounter/RangeDisplay/RangeDisplay.tscn" id="2_d175n"]
+
 
 [node name="SpellButton" type="Button"]
 anchors_preset = 15

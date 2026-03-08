@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://brswtgdm48yey"]
 
-[ext_resource type="Script" uid="uid://bfo867j3rde8c" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/range_display.gd" id="5"]
+[ext_resource type="Script" uid="uid://bfo867j3rde8c" path="res://user_interface/encounter/RangeDisplay/range_display.gd" id="5"]
+
 
 [node name="RangeDisplay" type="Panel"]
 custom_minimum_size = Vector2(56, 48)

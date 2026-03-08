@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://t7dfdsdvqeqx"]
 
 [ext_resource type="Script" uid="uid://bhmjbe6apcnjx" path="res://user_interface/encounter/button_layout/SubOptionButton/TechniqueButton/technique_button.gd" id="1_8t5ev"]
-[ext_resource type="PackedScene" uid="uid://brswtgdm48yey" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/RangeDisplay.tscn" id="2_hkjod"]
+[ext_resource type="PackedScene" uid="uid://brswtgdm48yey" path="res://user_interface/encounter/RangeDisplay/RangeDisplay.tscn" id="2_hkjod"]
+
 
 [node name="TechniqueButton" type="Button"]
 anchors_preset = -1

@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://by2pq2uahlucv"]
 
 [ext_resource type="Script" uid="uid://b2p5rbaxojdvf" path="res://user_interface/encounter/button_layout/SubOptionButton/SummonButton/summon_button.gd" id="1_o1u3l"]
-[ext_resource type="PackedScene" uid="uid://brswtgdm48yey" path="res://user_interface/encounter/button_layout/SubOptionButton/RangeDisplay/RangeDisplay.tscn" id="2_74w5n"]
+[ext_resource type="PackedScene" uid="uid://brswtgdm48yey" path="res://user_interface/encounter/RangeDisplay/RangeDisplay.tscn" id="2_74w5n"]
+
 
 [node name="SummonButton" type="Button"]
 anchors_preset = 15
