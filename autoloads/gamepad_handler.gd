@@ -8,11 +8,11 @@ signal left_joystick_pulsed(direction)
 signal right_joystick_pulsed(direction)
 
 ## The time it takes for holding a joystick direction to emit a "pulse".
-const PULSE_TIME: float = 0.35
+const PULSE_TIME: float = 0.25
 ## The time it takes for holding a joystick direction to quickly emit a "pulse".
-const FAST_PULSE_TIME: float = 0.15
+const FAST_PULSE_TIME: float = 0.1
 ## The number of pulses required before using fast pulse time.
-const FAST_TIME_PULSE_COUNT: int = 3
+const FAST_TIME_PULSE_COUNT: int = 2
 
 ## Flag for left joystick hold.
 var _left_hold: bool = false

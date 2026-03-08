@@ -25,6 +25,7 @@ right_edge = 20.0
 
 [node name="MapTileTrackingPoint" parent="." instance=ExtResource("2_ykgfb")]
 transform = Transform3D(1, 0, 0, 0, 0.6087614, 0.7933533, 0, -0.7933533, 0.6087614, 0, 0, 0)
+speed = 13.5
 
 [node name="Camera3D" type="Camera3D" parent="MapTileTrackingPoint"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, -4.7683608e-07, 15)

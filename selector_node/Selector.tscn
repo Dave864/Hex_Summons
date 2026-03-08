@@ -11,3 +11,4 @@ render_priority = -1
 sprite_frames = ExtResource("1_qbnn5")
 autoplay = "default"
 script = ExtResource("1")
+y_offset = 0.05
