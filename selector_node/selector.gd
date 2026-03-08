@@ -4,11 +4,15 @@ extends Node3D
 ## in focus.
 
 
+## How far above the hovered tile the selector is placed.
+@export_range(0.01, 0.5, 0.01) var y_offset: float = 0.01
+
 ## The MapTile that was last passed over.
 var tile_hovered: MapTile = null:
 	set(value):
 		tile_hovered = value
 		position = tile_hovered.get_character_position()
+		position.y += y_offset
 ## Describes which hex vertex is the top with respect to the camera
 var top_vertex: int = 0
 
