@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Hex_Summons"
 config/description="A tactics RPG with an emphasis on summoning."
-config/version="p0.09"
+config/version="p0.10"
 config/features=PackedStringArray("4.5")
 boot_splash/image="uid://dhnd5cdby1o1j"
 config/icon="uid://yol1qr3x5hry"
@@ -36,6 +36,10 @@ window/size/resizable=false
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="viewport"
+
+[editor]
+
+movie_writer/movie_file="D:/Users/David Macpherson/Videos/Screen Recordings/HexSummonsRecording.avi"
 
 [global]
 

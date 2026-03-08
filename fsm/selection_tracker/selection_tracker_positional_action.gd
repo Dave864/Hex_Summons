@@ -44,13 +44,15 @@ func _update_selection(map_tile: MapTile) -> void:
 	action.set_emission_map_index(map_tile.map_coordinate.get_tile_index())
 	action.set_emission_pos(map_tile.get_character_position())
 	if _is_target_tile(map_tile):
+		# Turn off selector for previous tile to prevent stray active selectors
+		# when entering back into the source range.
+		if not _is_target_tile(selector.tile_hovered):
+			selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 		selector.tile_hovered = map_tile
 		if InputController.source_is_gamepad():
 			s_tracker.emit_new_focus_point(map_tile.get_character_position())
 		_highlight_effect_range()
 	else:
-		# Turn off previous selector indicators to indicate a new tile is being
-		# hovered over.
 		if _is_target_tile(selector.tile_hovered):
 			s_tracker.clear_indicators()
 		else:
