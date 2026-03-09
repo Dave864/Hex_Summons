@@ -13,7 +13,8 @@ const HIGHLIGHTER_Y_OFFSET = 0.01
 const SELECTOR_Y_OFFSET = 0.125
 
 ## The height of the tile.
-@export_range(0, 100) var height = 0: set = set_height
+@export_range(0, 100) var height = 0:
+	set = set_height
 
 ## The coordinate of this tile in a map.
 @onready var map_coordinate: MapCoordinate = $MapCoordinate
@@ -115,6 +116,6 @@ func _update_highlighter_positions() -> void:
 	$DebugLabel.position = Vector3(0.0, y_translate, 0.2)
 
 
-func _on_MapTile_mouse_entered():
+func _on_MapTile_mouse_entered() -> void:
 	if InputController.get_source() == InputController.Source.KEYBOARD_AND_MOUSE:
 		emit_signal("mouse_hovered", self)

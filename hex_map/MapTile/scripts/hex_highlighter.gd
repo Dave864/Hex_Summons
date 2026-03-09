@@ -44,14 +44,19 @@ const COLOR_SELECT_MOVE := Color.YELLOW
 ## Grey color.
 const COLOR_SELECT_GRAY := Color.GRAY
 
+## The map tile whose height will be used for determining render priority.
+@export var height_reference: MapTile = null
+
 ## The current highlight option.
 var _hl_option: Option
 ## The material used for the highlight.
-var highlight_material: Material:
+var _hightlight_material: Material:
 	get:
 		return mesh.surface_get_material(0)
-
-@onready var base_render_priority: int = highlight_material.render_priority
+## The baseline render priority for the highlight.
+@onready var _base_render_priority: int = (
+	_hightlight_material.render_priority + height_reference.height
+)
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -62,7 +67,7 @@ func _ready():
 ## Sets the color based on the option. Hides the highlighter if the option is
 ## NONE.
 func set_option(hl_option: Option) -> void:
-	highlight_material.render_priority = base_render_priority
+	_hightlight_material.render_priority = _base_render_priority
 	match hl_option:
 		Option.ORIGIN_PLAYER:
 			_set_highlighter_color(COLOR_ORIGIN_CHARACTER)
@@ -78,7 +83,7 @@ func set_option(hl_option: Option) -> void:
 			show()
 		Option.ORIGIN_EFFECT:
 			_set_highlighter_color(COLOR_ORIGIN_EFFECT)
-			highlight_material.render_priority = base_render_priority + 1
+			_hightlight_material.render_priority = _base_render_priority + 1
 			show()
 		Option.RANGE_EFFECT:
 			_set_highlighter_color(COLOR_RANGE_EFFECT)
@@ -88,11 +93,11 @@ func set_option(hl_option: Option) -> void:
 			show()
 		Option.TARGET_ALLY:
 			_set_highlighter_color(COLOR_TARGET_ALLY)
-			highlight_material.render_priority = base_render_priority + 1
+			_hightlight_material.render_priority = _base_render_priority + 1
 			show()
 		Option.TARGET_ENEMY:
 			_set_highlighter_color(COLOR_TARGET_ENEMY)
-			highlight_material.render_priority = base_render_priority + 1
+			_hightlight_material.render_priority = _base_render_priority + 1
 			show()
 		Option.SELECT_MOVE:
 			_set_highlighter_color(COLOR_SELECT_MOVE)
@@ -109,7 +114,8 @@ func get_option() -> Option:
 	return _hl_option
 
 
-## Sets the transparency value of the highlighter. Accepts a value between 0 and 1.0.
+## Sets the transparency value of the highlighter. Accepts a value between 0 and
+## 1.0.
 func set_highlighter_transparency(f: float) -> void:
 	var m: StandardMaterial3D = mesh.surface_get_material(0)
 	f = 0.0 if f < 0.0 else 1.0 if f > 1.0 else f
