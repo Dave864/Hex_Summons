@@ -21,6 +21,7 @@ var _move_origin_index: int = -1
 
 ## Reveal the selector shape and enable the ability to update tile highlights.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
+	selector.show()
 	if _move_origin_index < 0:
 		_move_origin_index = s_tracker.player_index
 	var character_tile: MapTile = hex_map.get_tile_at(s_tracker.player_index)

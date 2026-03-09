@@ -8,6 +8,7 @@ extends SelectionTrackerState
 
 ## Connect to the player_turn_started signal from the SignalBus.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
+	selector.hide()
 	s_tracker.focused_character = null
 
 
