@@ -15,6 +15,10 @@ const SELECTOR_Y_OFFSET = 0.125
 ## The height of the tile.
 @export_range(0, 100) var height = 0:
 	set = set_height
+## Highlighter that indicates a tile is being selected.
+@export var selector_highlighter: HexHighlighter = null
+## Highlighter that indicates a tile is being highlighted.
+@export var tile_highlighter: HexHighlighter = null
 
 ## The coordinate of this tile in a map.
 @onready var map_coordinate: MapCoordinate = $MapCoordinate
@@ -71,8 +75,8 @@ func get_all_adjacent() -> Array[MapTile]:
 ## Set the value of the highlight flag.
 func set_highlight_type(value: int) -> void:
 	_highlight_type = value
-	$TileHighlighter.set_option(_highlight_type)
-	$TileHighlighter.set_highlighter_transparency(Constants.OPACITY_FULL)
+	tile_highlighter.set_option(_highlight_type)
+	tile_highlighter.set_highlighter_transparency(Constants.OPACITY_FULL)
 
 
 ## Get the value of the highlight flag.
@@ -83,8 +87,17 @@ func get_highlight_type() -> int:
 ## Set the value of the selector flag.
 func set_selector_type(value: int) -> void:
 	_selector_type = value
-	$SelectorHighlighter.set_option(_selector_type)
-	$SelectorHighlighter.set_highlighter_transparency(Constants.OPACITY_FULL)
+	selector_highlighter.set_option(_selector_type)
+	if value != HexHighlighter.Option.NONE:
+		selector_highlighter.offset_render_priority(1)
+	selector_highlighter.set_highlighter_transparency(Constants.OPACITY_FULL)
+	if (
+		value != HexHighlighter.Option.NONE
+		and _highlight_type != HexHighlighter.Option.NONE
+	):
+		tile_highlighter.offset_render_priority(1)
+	else:
+		tile_highlighter.reset_render_priority()
 
 
 ## Get the values of the selector flag.
@@ -109,9 +122,9 @@ func _update_highlighter_positions() -> void:
 	var y_translate: float = (
 		HIGHLIGHTER_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
 	)
-	$TileHighlighter.position = Vector3(0.0, y_translate, 0.0)
+	tile_highlighter.position = Vector3(0.0, y_translate, 0.0)
 	y_translate = SELECTOR_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
-	$SelectorHighlighter.position = Vector3(0.0, y_translate, 0.0)
+	selector_highlighter.position = Vector3(0.0, y_translate, 0.0)
 	## TODO: remove label when finished with map logic implementation
 	$DebugLabel.position = Vector3(0.0, y_translate, 0.2)
 

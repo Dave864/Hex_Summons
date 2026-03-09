@@ -41,10 +41,12 @@ height = 0.001
 radial_segments = 6
 rings = 0
 
-[node name="MapTile" type="Area3D"]
+[node name="MapTile" type="Area3D" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter")]
 collision_layer = 2
 collision_mask = 12
 script = ExtResource("7")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = ExtResource("9")

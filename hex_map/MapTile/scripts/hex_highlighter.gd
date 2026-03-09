@@ -53,9 +53,11 @@ var _hl_option: Option
 var _hightlight_material: Material:
 	get:
 		return mesh.surface_get_material(0)
-## The baseline render priority for the highlight.
+## The baseline render priority for the highlight. Adds double the height of
+## the reference to allow for render priority adjustments to not impact
+## highlights at different elevations. 
 @onready var _base_render_priority: int = (
-	_hightlight_material.render_priority + height_reference.height
+	_hightlight_material.render_priority + (2 * height_reference.height)
 )
 
 
@@ -68,7 +70,8 @@ func _ready():
 ## NONE.
 func set_option(hl_option: Option) -> void:
 	_hightlight_material.render_priority = _base_render_priority
-	match hl_option:
+	_hl_option = hl_option
+	match _hl_option:
 		Option.ORIGIN_PLAYER:
 			_set_highlighter_color(COLOR_ORIGIN_CHARACTER)
 			show()
@@ -121,6 +124,17 @@ func set_highlighter_transparency(f: float) -> void:
 	f = 0.0 if f < 0.0 else 1.0 if f > 1.0 else f
 	m.albedo_color.a = f
 	mesh.surface_set_material(0, m)
+
+
+## Adjusts the render priority of the highlighter by the specified amount.
+func offset_render_priority(offset: int) -> void:
+	_hightlight_material.render_priority += offset
+
+
+## Resets the render priority to its value as determined by the highlight
+## option.
+func reset_render_priority() -> void:
+	set_option(_hl_option)
 
 
 ## Changes the color of the tile highlighter
