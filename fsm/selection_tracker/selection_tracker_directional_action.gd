@@ -95,6 +95,14 @@ func _orient_to_closest_target() -> void:
 	var target_index: int = target_distances[0][0].map_coordinate.get_tile_index()
 	var target_tile: MapTile = hex_map.get_tile_at(target_index)
 	_orient_emission_to_tile(target_tile)
+	# Place the selector at the closest point to keep it within player focus.
+	var action: Action = s_tracker.get_focus_action()
+	var emission_tile: MapTile = hex_map.get_tile_at(
+			action.get_emission_map_index()
+	)
+	selector.tile_hovered = emission_tile.get_adjacent_tile(
+			action.get_emission_direction()
+	)
 
 
 ## Adjusts the orientation of an effect emitted from caster to make sure it is
