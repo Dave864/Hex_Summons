@@ -9,8 +9,13 @@ signal mouse_hovered(map_tile)
 ## Indicates the tile height has been changed.
 signal height_changed(new_height)
 
-const HIGHLIGHTER_Y_OFFSET = 0.01
-const SELECTOR_Y_OFFSET = 0.125
+## How far above the top of the tile the highlighters are placed.
+const HIGHLIGHTER_Y_OFFSET := 0.01
+## How far above the top of the tile a selector highlighter is placed. 
+const SELECTOR_Y_OFFSET := 0.125
+## How big a tile highlighter is compared to the tile when both the selector and
+## tile highlighter are active.
+const OVERLAP_RATIO := 0.75
 
 ## The height of the tile.
 @export_range(0, 100) var height = 0:
@@ -91,13 +96,19 @@ func set_selector_type(value: int) -> void:
 	if value != HexHighlighter.Option.NONE:
 		selector_highlighter.offset_render_priority(1)
 	selector_highlighter.set_highlighter_transparency(Constants.OPACITY_FULL)
+	var highlighter_mesh: CylinderMesh = tile_highlighter.mesh
+	var tile_mesh: CylinderMesh = $TileShape.mesh
 	if (
 		value != HexHighlighter.Option.NONE
 		and _highlight_type != HexHighlighter.Option.NONE
 	):
 		tile_highlighter.offset_render_priority(1)
+		highlighter_mesh.top_radius = tile_mesh.top_radius * OVERLAP_RATIO
+		highlighter_mesh.bottom_radius = tile_mesh.bottom_radius * OVERLAP_RATIO
 	else:
 		tile_highlighter.reset_render_priority()
+		highlighter_mesh.top_radius = tile_mesh.top_radius
+		highlighter_mesh.bottom_radius = tile_mesh.bottom_radius
 
 
 ## Get the values of the selector flag.
@@ -110,8 +121,8 @@ func is_active() -> bool:
 	return visible
 
 
-## Return the translation that a character will be placed at when moving onto the
-## tile.
+## Return the translation that a character will be placed at when moving onto
+## the tile.
 func get_character_position() -> Vector3:
 	return map_coordinate.global_position
 
