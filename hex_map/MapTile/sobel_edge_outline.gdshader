@@ -1,4 +1,8 @@
-// Reference: https://godotshaders.com/shader/per-object-sobel-edge-detection-shader/
+/*
+* Draws a colored line along the edges of a mesh using a variant of the Sobel
+* algorithm.
+* Reference: https://godotshaders.com/shader/per-object-sobel-edge-detection-shader/
+*/
 shader_type spatial;
 render_mode unshaded;
 
