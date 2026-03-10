@@ -1,17 +1,25 @@
 class_name CharacterLabel
 extends Control
-## UI element that follows a character position that displays the character health
-## and next iniative.
+## UI element that follows a character position that displays the character
+## health and next iniative.
 
 
+## How far away vertically the label is placed from the character position .
 @export_range(-20.0, 20.0, 0.01) var y_offset: float = 0.0
+## The character type this label is for.
 @export var character_type: Character.Type = Character.Type.NONE
+## The position of the character in 3D space.
 @export var char_pos: Marker3D = null
 
+## The container that holds the relevant UI nodes.
 @onready var _data_container: HBoxContainer = $CanvasLayer/HBoxContainer
+## The label that lists the initiative count.
 @onready var _initiative_label: Label = $CanvasLayer/HBoxContainer/InitiativeLabel
+## The health bar displayed.
 @onready var _health_bar: ProgressBar = $CanvasLayer/HBoxContainer/PanelContainer/HealthBar
+## The camera that the label is seen by.
 @onready var _camera: Camera3D = get_viewport().get_camera_3d()
+## Half the length of the data container.
 @onready var _half_label_length: float = _data_container.size.x / 2.0
 
 

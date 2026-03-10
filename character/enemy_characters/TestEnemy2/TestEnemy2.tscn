@@ -39,7 +39,7 @@ battle_portrait = ExtResource("13")
 offset_right = 0.0
 offset_bottom = 0.0
 character_type = 0
-char_pos = NodePath("../MapCoordinate")
+char_pos = NodePath("../EncounterSprite/SpritePosition")
 
 [node name="MapCoordinate" type="Marker3D" parent="."]
 script = ExtResource("9")
@@ -57,6 +57,8 @@ texture_filter = 0
 texture = ExtResource("1")
 script = ExtResource("21")
 char_pos = NodePath("../MapCoordinate")
+
+[node name="SpritePosition" type="Marker3D" parent="EncounterSprite"]
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("10")

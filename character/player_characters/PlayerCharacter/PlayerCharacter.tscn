@@ -25,7 +25,7 @@ battle_portrait = ExtResource("2_mblau")
 offset_right = 0.0
 offset_bottom = 0.0
 character_type = 1
-char_pos = NodePath("../MapCoordinate")
+char_pos = NodePath("../EncounterSprite/SpritePosition")
 
 [node name="MapCoordinate" type="Marker3D" parent="."]
 script = ExtResource("9")
@@ -43,6 +43,8 @@ texture_filter = 0
 texture = ExtResource("1")
 script = ExtResource("12")
 char_pos = NodePath("../MapCoordinate")
+
+[node name="SpritePosition" type="Marker3D" parent="EncounterSprite"]
 
 [node name="EffectsTracker" parent="." instance=ExtResource("10")]
 

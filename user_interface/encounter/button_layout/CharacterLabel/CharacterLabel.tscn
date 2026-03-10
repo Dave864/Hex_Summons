@@ -3,7 +3,6 @@
 [ext_resource type="Theme" uid="uid://dhnuwcf6tcapi" path="res://user_interface/themes/ThemeNumberLabel.tres" id="1"]
 [ext_resource type="Script" uid="uid://dw5x2dj2p5xjb" path="res://user_interface/encounter/button_layout/CharacterLabel/character_label.gd" id="2"]
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4trm1"]
 bg_color = Color(1, 1, 1, 1)
 border_width_bottom = 1
@@ -25,7 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2")
-y_offset = -8.0
+y_offset = -15.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1

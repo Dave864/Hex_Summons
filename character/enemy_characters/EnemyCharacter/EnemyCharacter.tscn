@@ -17,7 +17,6 @@
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="13"]
 [ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="15"]
 
-
 [node name="EnemyCharacter" type="Area3D"]
 collision_layer = 8
 collision_mask = 2
@@ -27,9 +26,10 @@ script = ExtResource("2")
 offset_right = 0.0
 offset_bottom = 0.0
 character_type = 0
-char_pos = NodePath("../MapCoordinate")
+char_pos = NodePath("../EncounterSprite/SpritePosition")
 
 [node name="MapCoordinate" type="Marker3D" parent="."]
+gizmo_extents = 9.72
 script = ExtResource("10")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -45,6 +45,8 @@ texture_filter = 0
 texture = ExtResource("1")
 script = ExtResource("13")
 char_pos = NodePath("../MapCoordinate")
+
+[node name="SpritePosition" type="Marker3D" parent="EncounterSprite"]
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("15")
