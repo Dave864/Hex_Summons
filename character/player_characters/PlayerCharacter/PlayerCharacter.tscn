@@ -15,7 +15,6 @@
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="12"]
 [ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="13_wufaw"]
 
-
 [node name="PlayerCharacter" type="Area3D"]
 collision_layer = 4
 collision_mask = 2

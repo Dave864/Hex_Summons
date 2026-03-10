@@ -24,7 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://ctgoieguj4weo" path="res://actions/action_nodes/Lob/Lob.tscn" id="22"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="23"]
 
-
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.05
 height = 0.1

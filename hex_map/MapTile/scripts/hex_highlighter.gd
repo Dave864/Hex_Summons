@@ -69,7 +69,7 @@ func _ready():
 ## Sets the color based on the option. Hides the highlighter if the option is
 ## NONE.
 func set_option(hl_option: Option) -> void:
-	_hightlight_material.render_priority = _base_render_priority
+	_set_render_priority(_base_render_priority)
 	_hl_option = hl_option
 	match _hl_option:
 		Option.ORIGIN_PLAYER:
@@ -86,7 +86,7 @@ func set_option(hl_option: Option) -> void:
 			show()
 		Option.ORIGIN_EFFECT:
 			_set_highlighter_color(COLOR_ORIGIN_EFFECT)
-			_hightlight_material.render_priority = _base_render_priority + 1
+			_set_render_priority(_base_render_priority + 1)
 			show()
 		Option.RANGE_EFFECT:
 			_set_highlighter_color(COLOR_RANGE_EFFECT)
@@ -96,11 +96,11 @@ func set_option(hl_option: Option) -> void:
 			show()
 		Option.TARGET_ALLY:
 			_set_highlighter_color(COLOR_TARGET_ALLY)
-			_hightlight_material.render_priority = _base_render_priority + 1
+			_set_render_priority(_base_render_priority + 1)
 			show()
 		Option.TARGET_ENEMY:
 			_set_highlighter_color(COLOR_TARGET_ENEMY)
-			_hightlight_material.render_priority = _base_render_priority + 1
+			_set_render_priority(_base_render_priority + 1)
 			show()
 		Option.SELECT_MOVE:
 			_set_highlighter_color(COLOR_SELECT_MOVE)
@@ -120,15 +120,13 @@ func get_option() -> Option:
 ## Sets the transparency value of the highlighter. Accepts a value between 0 and
 ## 1.0.
 func set_highlighter_transparency(f: float) -> void:
-	var m: StandardMaterial3D = mesh.surface_get_material(0)
 	f = 0.0 if f < 0.0 else 1.0 if f > 1.0 else f
-	m.albedo_color.a = f
-	mesh.surface_set_material(0, m)
+	_hightlight_material.albedo_color.a = f
 
 
 ## Adjusts the render priority of the highlighter by the specified amount.
 func offset_render_priority(offset: int) -> void:
-	_hightlight_material.render_priority += offset
+	_set_render_priority(_hightlight_material.render_priority + offset)
 
 
 ## Resets the render priority to its value as determined by the highlight
@@ -139,6 +137,14 @@ func reset_render_priority() -> void:
 
 ## Changes the color of the tile highlighter
 func _set_highlighter_color(color: Color) -> void:
-	var m: StandardMaterial3D = mesh.surface_get_material(0)
-	m.albedo_color = color
-	mesh.surface_set_material(0, m)
+	_hightlight_material.albedo_color = color
+
+
+## Sets the render priority of the material and any nested materials. The
+## priorities are set to the same value.
+func _set_render_priority(priority: int) -> void:
+	_hightlight_material.render_priority = priority
+	var next_material: Material = _hightlight_material.next_pass
+	while next_material != null:
+		next_material.render_priority = priority
+		next_material = next_material.next_pass
