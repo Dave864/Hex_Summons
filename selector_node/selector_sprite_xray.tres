@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://cnse8wptyodwh"]
+
+[ext_resource type="Shader" uid="uid://itmkicmhc6ef" path="res://selector_node/sprite_draw.gdshader" id="1_nmhk8"]
+[ext_resource type="Texture2D" uid="uid://dqandgm8dyrf5" path="res://art/ui/selector.png" id="2_e77kd"]
+[ext_resource type="Shader" uid="uid://cacgdiqehkoa7" path="res://selector_node/sprite_xray.gdshader" id="3_1kxx2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rfxsj"]
+render_priority = -1
+shader = ExtResource("1_nmhk8")
+shader_parameter/albedo_texture = ExtResource("2_e77kd")
+
+[resource]
+render_priority = -2
+next_pass = SubResource("ShaderMaterial_rfxsj")
+shader = ExtResource("3_1kxx2")
+shader_parameter/sprite_texture = ExtResource("2_e77kd")
+shader_parameter/x_ray_color = Color(0, 0.4509804, 1, 1)
+shader_parameter/dither_intensity = 0.5000000074506
+shader_parameter/dither_pixel_size = 7.0

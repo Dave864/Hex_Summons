@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dpnnh445rjhhk"]
+
+[ext_resource type="Shader" uid="uid://itmkicmhc6ef" path="res://selector_node/sprite_draw.gdshader" id="1_pe10r"]
+[ext_resource type="Shader" uid="uid://cacgdiqehkoa7" path="res://selector_node/sprite_xray.gdshader" id="2_lejtq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rfxsj"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_pe10r")
+
+[resource]
+resource_local_to_scene = true
+render_priority = -1
+next_pass = SubResource("ShaderMaterial_rfxsj")
+shader = ExtResource("2_lejtq")
+shader_parameter/x_ray_color = Color(1, 1, 1, 1)
+shader_parameter/dither_intensity = 0.0
+shader_parameter/dither_pixel_size = 1.0

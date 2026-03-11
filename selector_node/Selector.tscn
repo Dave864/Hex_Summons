@@ -1,34 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://c1ln2aeqn7ab2"]
+[gd_scene load_steps=4 format=3 uid="uid://c1ln2aeqn7ab2"]
 
 [ext_resource type="Script" uid="uid://b2pl6ff1ogcwn" path="res://selector_node/selector.gd" id="1"]
-[ext_resource type="Shader" uid="uid://cacgdiqehkoa7" path="res://selector_node/sprite_x_ray.gdshader" id="1_fojna"]
+[ext_resource type="Material" uid="uid://cnse8wptyodwh" path="res://selector_node/selector_sprite_xray.tres" id="1_fojna"]
 [ext_resource type="SpriteFrames" uid="uid://b3eokt3sxlnh4" path="res://selector_node/selector_sprite_frames.tres" id="1_qbnn5"]
-[ext_resource type="Shader" uid="uid://itmkicmhc6ef" path="res://selector_node/sprite_draw.gdshader" id="1_vl2a8"]
-[ext_resource type="Texture2D" uid="uid://dqandgm8dyrf5" path="res://art/ui/selector.png" id="2_1ce3f"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rfxsj"]
-render_priority = -1
-shader = ExtResource("1_vl2a8")
-shader_parameter/albedo_texture = ExtResource("2_1ce3f")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ce3f"]
-render_priority = -2
-next_pass = SubResource("ShaderMaterial_rfxsj")
-shader = ExtResource("1_fojna")
-shader_parameter/sprite_texture = ExtResource("2_1ce3f")
-shader_parameter/x_ray_color = Color(0, 0.4509804, 1, 1)
-shader_parameter/dither_intensity = 0.5000000074506
-shader_parameter/dither_pixel_size = 7.0
 
 [node name="Selector" type="AnimatedSprite3D"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-material_override = SubResource("ShaderMaterial_1ce3f")
+material_override = ExtResource("1_fojna")
 cast_shadow = 0
 texture_filter = 0
 render_priority = -1
 sprite_frames = ExtResource("1_qbnn5")
 autoplay = "default"
-frame = 3
-frame_progress = 0.6919246
+frame = 1
+frame_progress = 0.56985
 script = ExtResource("1")
 y_offset = 0.05
