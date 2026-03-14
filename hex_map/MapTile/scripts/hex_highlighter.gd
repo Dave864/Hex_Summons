@@ -135,9 +135,11 @@ func reset_render_priority() -> void:
 	set_option(_hl_option)
 
 
-## Changes the color of the tile highlighter
+## Changes the color of the tile highlighter, keeping the original alpha value.
 func _set_highlighter_color(color: Color) -> void:
+	var alpha: float = _hightlight_material.albedo_color.a
 	_hightlight_material.albedo_color = color
+	_hightlight_material.albedo_color.a = alpha
 
 
 ## Sets the render priority of the material and any nested materials. The

@@ -15,13 +15,15 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_myv8q"]
 render_priority = -1
 shader = ExtResource("7_cr88n")
-shader_parameter/outline_color = Color(0.49803922, 0.49803922, 0.49803922, 1)
+shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/outline_threshold = 0.2
 shader_parameter/sobel_threshold = 0.08
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5mg5c"]
 next_pass = SubResource("ShaderMaterial_myv8q")
+shading_mode = 2
 diffuse_mode = 3
+specular_mode = 1
 albedo_texture = ExtResource("7_myv8q")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_myv8q"]
