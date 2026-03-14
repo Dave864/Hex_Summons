@@ -97,18 +97,17 @@ func set_selector_type(value: int) -> void:
 		selector_highlighter.offset_render_priority(1)
 	selector_highlighter.set_highlighter_transparency(Constants.OPACITY_FULL)
 	var highlighter_mesh: CylinderMesh = tile_highlighter.mesh
-	var tile_mesh: CylinderMesh = $TileShape.mesh
 	if (
 		value != HexHighlighter.Option.NONE
 		and _highlight_type != HexHighlighter.Option.NONE
 	):
 		tile_highlighter.offset_render_priority(1)
-		highlighter_mesh.top_radius = tile_mesh.top_radius * OVERLAP_RATIO
-		highlighter_mesh.bottom_radius = tile_mesh.bottom_radius * OVERLAP_RATIO
+		highlighter_mesh.top_radius = OVERLAP_RATIO
+		highlighter_mesh.bottom_radius = OVERLAP_RATIO
 	else:
 		tile_highlighter.reset_render_priority()
-		highlighter_mesh.top_radius = tile_mesh.top_radius
-		highlighter_mesh.bottom_radius = tile_mesh.bottom_radius
+		highlighter_mesh.top_radius = 1.0
+		highlighter_mesh.bottom_radius = 1.0
 
 
 ## Get the values of the selector flag.

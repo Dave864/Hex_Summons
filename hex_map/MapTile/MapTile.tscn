@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cg633481rl4ed"]
+[gd_scene load_steps=19 format=4 uid="uid://cg633481rl4ed"]
 
 [ext_resource type="Script" uid="uid://bx23fuvw0qnbb" path="res://hex_map/scripts/occupant.gd" id="1"]
 [ext_resource type="Script" uid="uid://dj7oaoibsxx4h" path="res://hex_map/MapTile/scripts/hex_highlighter.gd" id="2"]
@@ -7,9 +7,45 @@
 [ext_resource type="Script" uid="uid://ol1mo6vkbgfw" path="res://hex_map/MapTile/scripts/scaling_hex_mesh.gd" id="5"]
 [ext_resource type="Script" uid="uid://6ahwnnqrnsqp" path="res://hex_map/MapTile/scripts/MapTileDebugLabel.gd" id="6"]
 [ext_resource type="Script" uid="uid://fn76j8x64ebc" path="res://hex_map/MapTile/scripts/map_tile.gd" id="7"]
-[ext_resource type="CylinderMesh" uid="uid://bfmxst1fcnorm" path="res://hex_map/MapTile/hex_tile_shape.tres" id="7_yubl7"]
+[ext_resource type="Shader" uid="uid://nh3vsaw4y54g" path="res://hex_map/MapTile/sobel_edge_outline.gdshader" id="7_cr88n"]
+[ext_resource type="Texture2D" uid="uid://dkgtqkkaghm4j" path="res://art/hex_base_texture.png" id="7_myv8q"]
 [ext_resource type="Shape3D" uid="uid://c366eqoe2avhk" path="res://hex_map/MapTile/hex_tile_collision.tres" id="8"]
 [ext_resource type="Shape3D" uid="uid://bn2i5bxre6gvq" path="res://hex_map/MapTile/tile_top_collision.tres" id="9"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_myv8q"]
+render_priority = -1
+shader = ExtResource("7_cr88n")
+shader_parameter/outline_color = Color(0.49803922, 0.49803922, 0.49803922, 1)
+shader_parameter/outline_threshold = 0.2
+shader_parameter/sobel_threshold = 0.08
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5mg5c"]
+next_pass = SubResource("ShaderMaterial_myv8q")
+diffuse_mode = 3
+albedo_texture = ExtResource("7_myv8q")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_myv8q"]
+_surfaces = [{
+"aabb": AABB(-0.86602545, -0.25, -1, 1.7320509, 0.5, 2),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio+AAAAAKuqqj4AAAAAAAAAPwAAAACrqio/AAAAAFVVVT8AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj4AAAA/q6qqPgAAAD8AAAA/AAAAP6uqKj8AAAA/VVVVPwAAAD8AAIA/AAAAPwAAgD4AAEA/AACAPgAAgD/s2e4+AABgP+zZ7j4AACA/AACAPgAAAD+gMAk9AAAgP6AwCT0AAGA/AACAPgAAgD8="),
+"format": 34359742487,
+"index_count": 54,
+"index_data": PackedByteArray("AAABAAcAAQAIAAcAAQACAAgAAgAJAAgAAgADAAkAAwAKAAkAAwAEAAoABAALAAoABAAFAAsABQAMAAsABQAGAAwABgANAAwADgAQAA8ADgARABAADgASABEADgATABIADgAUABMADgAVABQA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 22,
+"vertex_data": PackedByteArray("AAAAAAAAgD4AAIA/2LNdPwAAgD7///8+17NdPwAAgD4BAAC/MjENJQAAgD4AAIC/2LNdvwAAgD78//++2LNdvwAAgD78//8+AAAAAAAAgD4AAIA/AAAAAAAAgL4AAIA/2LNdPwAAgL7///8+17NdPwAAgL4BAAC/MjENJQAAgL4AAIC/2LNdvwAAgL78//++2LNdvwAAgL78//8+AAAAAAAAgL4AAIA/AAAAAAAAgD4AAAAAAAAAAAAAgD4AAIA/2LNdPwAAgD7///8+17NdPwAAgD4BAAC/MjENJQAAgD4AAIC/2LNdvwAAgD78//++2LNdvwAAgD78//8+AAAAAAAAgD4AAIA//3//f////78l0f9///+S6P//2a4AAJLo/////wAA/78AANmuJVH/v9ku/3/Zrv+//3//f////7//f/9/////vyXR/3///5Lo///ZrgAAkuj/////AAD/vwAA2a4lUf+/2S7/f9mu/7//f/9/////vwCA//////+/AID//////78AgP//////vwCA//////+/AID//////78AgP//////vwCA//////+/AID//////78=")
+}, {
+"aabb": AABB(-0.86602545, -0.25, -1, 1.7320509, 0.5, 2),
+"attribute_data": PackedByteArray("uB6FPnE9Sj/sUTg/cT1KP7gehT5xPUo/7FE4P3E9Sj+4HoU+cT1KP+xROD9xPUo/uB6FPnE9Sj+4HoU+SOF6P+xROD9I4Xo/uB6FPkjhej/sUTg/SOF6P7gehT5I4Xo/7FE4P0jhej+4HoU+SOF6PwAAAD8Ursc+SOF6PxSuxz6kcD0/XI9CP7gehT5cj0I/CtejPBSuxz64HoU+CtcjPKRwPT8K1yM8SOF6PxSuxz4="),
+"format": 34359742487,
+"index_count": 54,
+"index_data": PackedByteArray("AAABAAcAAQAIAAcAAQACAAgAAgAJAAgAAgADAAkAAwAKAAkAAwAEAAoABAALAAoABAAFAAsABQAMAAsABQAGAAwABgANAAwADgAQAA8ADgARABAADgASABEADgATABIADgAUABMADgAVABQA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 22,
+"vertex_data": PackedByteArray("AAAAAAAAgD4AAIA/2LNdPwAAgD7///8+17NdPwAAgD4BAAC/MjENJQAAgD4AAIC/2LNdvwAAgD78//++2LNdvwAAgD78//8+AAAAAAAAgD4AAIA/AAAAAAAAgL4AAIA/2LNdPwAAgL7///8+17NdPwAAgL4BAAC/MjENJQAAgL4AAIC/2LNdvwAAgL78//++2LNdvwAAgL78//8+AAAAAAAAgL4AAIA/AAAAAAAAgD4AAAAAAAAAAAAAgD4AAIA/2LNdPwAAgD7///8+17NdPwAAgD4BAAC/MjENJQAAgD4AAIC/2LNdvwAAgD78//++2LNdvwAAgD78//8+AAAAAAAAgD4AAIA//3//f////78l0f9///+S6P//2a4AAJLo/////wAA/78AANmuJVH/v9ku/3/Zrv+//3//f////7//f/9/////vyXR/3///5Lo///ZrgAAkuj/////AAD/vwAA2a4lUf+/2S7/f9mu/7//f/9/////vwCA//////+/AID//////78AgP//////vwCA//////+/AID//////78AgP//////vwCA//////+/AID//////78=")
+}]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yubl7"]
 resource_local_to_scene = true
@@ -73,7 +109,8 @@ script = ExtResource("3")
 
 [node name="TileShape" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
-mesh = ExtResource("7_yubl7")
+material_override = SubResource("StandardMaterial3D_5mg5c")
+mesh = SubResource("ArrayMesh_myv8q")
 script = ExtResource("5")
 
 [node name="SelectorHighlighter" type="MeshInstance3D" parent="." node_paths=PackedStringArray("height_reference")]
