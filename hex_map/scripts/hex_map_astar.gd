@@ -292,7 +292,7 @@ func _travel_dist(start_index: int, end_index: int) -> float:
 	# Record height difference as units of tile unit height.
 	var height_diff: float = (
 			abs(start_pos.y - end_pos.y) \
-			/ Constants.HEX_TILE_UNIT_HEIGHT
+			/ HexUtil.HEX_TILE_UNIT_HEIGHT
 	)
 	# Height differences of 1 tile height are seen as the same height.
 	# Halve height difference to keep consistent with cube distance.

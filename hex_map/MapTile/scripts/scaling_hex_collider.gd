@@ -21,7 +21,7 @@ func _update_collision_shape_height(height: int) -> void:
 		return
 	var points: PackedVector3Array = shape.get_points()
 	for i in range(6):
-		var h: float = Constants.HEX_TILE_UNIT_HEIGHT * height
+		var h: float = HexUtil.HEX_TILE_UNIT_HEIGHT * height
 		points[i] = Vector3(points[i].x, h + _top_y_at_zero[i], points[i].z)
 	shape.set_points(points)
 

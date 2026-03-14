@@ -96,7 +96,7 @@ func _create_floor_mesh() -> void:
 		_floor_mesh_node.mesh.resource_local_to_scene = true
 		add_child(_floor_mesh_node)
 		_floor_mesh_node.set_owner(_root_node)
-		_floor_mesh_node.position.y = -Constants.HEX_TILE_UNIT_HEIGHT
+		_floor_mesh_node.position.y = -HexUtil.HEX_TILE_UNIT_HEIGHT
 	else:
 		_floor_mesh_node = get_node(FLOOR_MESH)
 

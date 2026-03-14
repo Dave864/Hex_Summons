@@ -52,7 +52,7 @@ func set_height(value: int) -> void:
 	var collision_shape: CollisionShape3D = get_node_or_null("CollisionShape3D")
 	if collision_shape == null:
 		return
-	var y_pos: float = height * Constants.HEX_TILE_UNIT_HEIGHT
+	var y_pos: float = height * HexUtil.HEX_TILE_UNIT_HEIGHT
 	collision_shape.position.y = y_pos
 	# Do not update height of map_coordinate if has yet to be set.
 	if map_coordinate != null:
@@ -102,12 +102,12 @@ func set_selector_type(value: int) -> void:
 		and _highlight_type != HexHighlighter.Option.NONE
 	):
 		tile_highlighter.offset_render_priority(1)
-		highlighter_mesh.top_radius = OVERLAP_RATIO
-		highlighter_mesh.bottom_radius = OVERLAP_RATIO
+		highlighter_mesh.top_radius = OVERLAP_RATIO * HexUtil.HEX_TILE_RADIUS
+		highlighter_mesh.bottom_radius = OVERLAP_RATIO * HexUtil.HEX_TILE_RADIUS
 	else:
 		tile_highlighter.reset_render_priority()
-		highlighter_mesh.top_radius = 1.0
-		highlighter_mesh.bottom_radius = 1.0
+		highlighter_mesh.top_radius = HexUtil.HEX_TILE_RADIUS
+		highlighter_mesh.bottom_radius = HexUtil.HEX_TILE_RADIUS
 
 
 ## Get the values of the selector flag.
@@ -130,10 +130,10 @@ func get_character_position() -> Vector3:
 ## the tile.
 func _update_highlighter_positions() -> void:
 	var y_translate: float = (
-		HIGHLIGHTER_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
+		HIGHLIGHTER_Y_OFFSET + (height * HexUtil.HEX_TILE_UNIT_HEIGHT)
 	)
 	tile_highlighter.position = Vector3(0.0, y_translate, 0.0)
-	y_translate = SELECTOR_Y_OFFSET + (height * Constants.HEX_TILE_UNIT_HEIGHT)
+	y_translate = SELECTOR_Y_OFFSET + (height * HexUtil.HEX_TILE_UNIT_HEIGHT)
 	selector_highlighter.position = Vector3(0.0, y_translate, 0.0)
 	## TODO: remove label when finished with map logic implementation
 	$DebugLabel.position = Vector3(0.0, y_translate, 0.2)

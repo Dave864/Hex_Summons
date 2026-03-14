@@ -30,6 +30,11 @@ const CUBE_DIRECTION_VECTORS: Dictionary[HexDirection, Vector3] = {
 ## the distance from the center of a hexagon to the midpoint of one of its edges.
 const HEX_EDGE_RATIO: float = sqrt(3.0) / 2.0
 
+## The radius of an encounter map hex tile.
+const HEX_TILE_RADIUS: float = 1.0
+## The length value of a unit of height for an encounter map hex tile.
+const HEX_TILE_UNIT_HEIGHT: float = 0.5
+
 # Defines the positions of a unit circle that correspond to the vertices of
 # a hexagon.
 #    0

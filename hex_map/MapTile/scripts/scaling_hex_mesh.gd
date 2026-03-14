@@ -34,7 +34,7 @@ var _hex_mesh: ArrayMesh:
 func _update_tile_shape_height(height: int) -> void:
 	# Move the shape so that the bottom is always at -0.25
 	mesh = _create_base_mesh(height)
-	var y_translate: float = (Constants.HEX_TILE_UNIT_HEIGHT / 2) * (height - 1)
+	var y_translate: float = (HexUtil.HEX_TILE_UNIT_HEIGHT / 2) * (height - 1)
 	set_position(Vector3(0.0, y_translate, 0.0))
 	print("HEIGHT: %d" % height)
 	_update_uvs()
@@ -62,9 +62,9 @@ func _update_uvs() -> void:
 ## Creates an array mesh for the hex tile of the specified height.
 func _create_base_mesh(height: int) -> ArrayMesh:
 	var cylinder_mesh := CylinderMesh.new()
-	cylinder_mesh.top_radius = 1.0
-	cylinder_mesh.bottom_radius = 1.0
-	cylinder_mesh.height = Constants.HEX_TILE_UNIT_HEIGHT * (1 + height)
+	cylinder_mesh.top_radius = HexUtil.HEX_TILE_RADIUS
+	cylinder_mesh.bottom_radius = HexUtil.HEX_TILE_RADIUS
+	cylinder_mesh.height = HexUtil.HEX_TILE_UNIT_HEIGHT * (1 + height)
 	cylinder_mesh.radial_segments = 6
 	cylinder_mesh.rings = height
 	cylinder_mesh.cap_bottom = false

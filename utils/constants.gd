@@ -11,9 +11,6 @@ const DEFAULT_ICON_PATH: String = "res://art/icon.png"
 ## to the pixel size of the viewport dimensions 640 x 360.
 const WORLD_PIXEL_SIZE: float = 0.0054
 
-## The length value of a unit of height for an encounter map hex tile.
-const HEX_TILE_UNIT_HEIGHT: float = 0.5
-
 ## The maximimum values for various character and attack stats.
 const MAX_STAT: int = 1000
 const MAX_MAP_DIST: int = 100
