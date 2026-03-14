@@ -4,13 +4,6 @@ extends Object
 ## throughout the game.
 
 
-## What the range finder is being used for.
-enum RangeTypes {
-	MOVE,
-	TECHNIQUE,
-	SPELL,
-}
-
 ## The path to a default icon.
 const DEFAULT_ICON_PATH: String = "res://art/icon.png"
 
@@ -20,11 +13,6 @@ const WORLD_PIXEL_SIZE: float = 0.0054
 
 ## The length value of a unit of height for an encounter map hex tile.
 const HEX_TILE_UNIT_HEIGHT: float = 0.5
-
-## The "radius" of a hexagon drawn for the purposes of illustrating an action's
-## area range and effect range. The radius is the distance from the center to
-## a vertex of a hexagon.
-const DISPLAY_HEX_RADIUS: float = 3.0
 
 ## The maximimum values for various character and attack stats.
 const MAX_STAT: int = 1000
