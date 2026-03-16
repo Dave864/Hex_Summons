@@ -3,7 +3,7 @@ extends EncounterCameraState
 ## The logic for what happens when an EncounterCamera scene is in the `Reset` state.
 ##
 ## The encounter camera is repositioned so that it is back at its starting orientation.
-## Goes to the 'Pan' state when repositioning is finished.
+## Goes to the 'Rotate' state when repositioning is finished.
 
 
 ## The original rotation of the encounter camera focus point.
