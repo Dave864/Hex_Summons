@@ -5,7 +5,11 @@ extends Object
 
 
 ## The path to a default icon.
-const DEFAULT_ICON_PATH: String = "res://art/icon.png"
+const DEFAULT_ICON_PATH := "res://art/icon.png"
+## The path to the mouse cursor icon for panning the encounter camera.
+const CURSOR_ICON_CAMERA_P := "res://art/ui/mouse_cursor/cursor_camera_pan.png"
+## The path to the mouse cursor icon for panning the rotating the camera.
+const CURSOR_ICON_CAMERA_R := "res://art/ui/mouse_cursor/cursor_camera_rot.png"
 
 ## This is the number that was found to best conform a fixed size sprite image
 ## to the pixel size of the viewport dimensions 640 x 360.

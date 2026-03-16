@@ -2,28 +2,28 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkgtqkkaghm4j"
-path="res://.godot/imported/hex_base_texture.png-5b5a0375f09e887ab4cd403d1abeddcd.ctex"
+uid="uid://bc7mg03kvr1u3"
+path="res://.godot/imported/cursor_default.png-04cf39f73b9d6c34f9458952f6f3aabf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/hex_base_texture.png"
-dest_files=["res://.godot/imported/hex_base_texture.png-5b5a0375f09e887ab4cd403d1abeddcd.ctex"]
+source_file="res://art/ui/mouse_cursor/cursor_default.png"
+dest_files=["res://.godot/imported/cursor_default.png-04cf39f73b9d6c34f9458952f6f3aabf.ctex"]
 
 [params]
 
-compress/mode=3
-compress/high_quality=true
+compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

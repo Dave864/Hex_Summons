@@ -13,16 +13,23 @@ var rotate_camera: bool = false
 var joystick_rotate: bool = false
 ## The value of the mouse motion.
 var mouse_motion: Vector2 = Vector2.ZERO
+## The cursor icon that represents rotating the camera.
+var _cursor_camera_rot_image: CompressedTexture2D = preload(
+		Constants.CURSOR_ICON_CAMERA_R
+)
 
 
 ## Virtual function. Receives events from the `_unhandled_input()` callback.
 func handle_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_camera_pan"):
 		rotate_camera = true
+		Input.set_custom_mouse_cursor(_cursor_camera_rot_image, Input.CURSOR_CROSS)
+		Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 		if not enc_camera.is_focus_point_locked():
 			enc_camera.disable_edge_detection()
 	if event.is_action_released("ui_camera_pan"):
 		rotate_camera = false
+		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 		if not enc_camera.is_focus_point_locked():
 			enc_camera.enable_edge_detection()
 		state_machine.transition_to(NORMALIZE)

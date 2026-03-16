@@ -53,6 +53,10 @@ var _in_edge := false
 var _direction := Vector2.ZERO
 ## The index position of a hex tile that is considered to be the top.
 var _top_hex_vertex: int = 0
+## The cursor icon that represents panning the camera.
+var _cursor_camera_image: CompressedTexture2D = preload(
+			Constants.CURSOR_ICON_CAMERA_P
+	)
 
 ## The center of the detection area.
 @onready var _center := Vector2(size.x / 2.0, size.y / 2.0)
@@ -76,6 +80,7 @@ var _top_hex_vertex: int = 0
 
 ## Connects the top_vertex_changed signal from SignalBus.
 func _ready() -> void:
+	_set_camera_cursor()
 	SignalBus.connect(
 			"top_vertex_changed",
 			Callable(self, "_on_SignalBus_top_vertex_changed")
@@ -91,6 +96,12 @@ func _process(_delta: float) -> void:
 	if InputController.source_is_keymouse() and _in_edge:
 		_direction = (MouseHandler.get_2d_position() - _center).normalized()
 		emit_signal("edge_hit")
+
+
+## Deactivates the edge detector when right clicking.
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_camera_pan"):
+		disable()
 
 
 ## Disables the ability to detect mouse movement.
@@ -179,9 +190,15 @@ func _adjust_right_positions() -> void:
 	_bottom_detector.size.x = size.x - right_edge - _bottom_detector.position.x
 
 
+## Sets the move cursor to reflect camera movement.
+func _set_camera_cursor() -> void:
+	Input.set_custom_mouse_cursor(_cursor_camera_image, Input.CURSOR_MOVE)
+
+
 ## Gets the direction from screen center to the mouse position.
 func _on_Detector_mouse_entered() -> void:
 	_in_edge = true
+	_set_camera_cursor()
 
 
 ## Stops tracking the mouse position.

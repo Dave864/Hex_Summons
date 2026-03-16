@@ -4,7 +4,7 @@ extends EncounterCameraState
 ## state.
 ##
 ## The encounter camera is moved around a rotation point to a target orientation.
-## Moves to the `Pan` state when finished.
+## Moves to the `Rotate` state when finished.
 
 
 ## The original rotation of the encounter camera focus point.
