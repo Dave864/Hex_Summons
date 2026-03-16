@@ -98,6 +98,12 @@ func _process(_delta: float) -> void:
 		emit_signal("edge_hit")
 
 
+## Deactivates the edge detector when right clicking.
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_camera_pan"):
+		disable()
+
+
 ## Disables the ability to detect mouse movement.
 func disable() -> void:
 	_top_detector.mouse_filter = Control.MOUSE_FILTER_IGNORE
