@@ -47,6 +47,10 @@ func _remove_side_segments(remove_count: int) -> void:
 
 ## Triggers an update to the shape height.
 func _on_HeightSource_height_changed(height: int) -> void:
+	# This function is called before the node is fully ready while part of the
+	# MapTile scene.
+	if not is_node_ready():
+		return
 	_hex_top_mesh.position.y = height * HexUtil.HEX_TILE_UNIT_HEIGHT
 	var segments_count: int = _side_segments.get_child_count()
 	if height == segments_count:
