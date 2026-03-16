@@ -53,6 +53,10 @@ var _in_edge := false
 var _direction := Vector2.ZERO
 ## The index position of a hex tile that is considered to be the top.
 var _top_hex_vertex: int = 0
+## The cursor icon that represents panning the camera.
+var _cursor_camera_image: CompressedTexture2D = preload(
+			Constants.CURSOR_ICON_CAMERA_P
+	)
 
 ## The center of the detection area.
 @onready var _center := Vector2(size.x / 2.0, size.y / 2.0)
@@ -182,15 +186,13 @@ func _adjust_right_positions() -> void:
 
 ## Sets the move cursor to reflect camera movement.
 func _set_camera_cursor() -> void:
-	var cursor_camera_image: CompressedTexture2D = load(
-			"res://art/ui/mouse_cursor/cursor_camera.png"
-	)
-	Input.set_custom_mouse_cursor(cursor_camera_image, Input.CURSOR_MOVE)
+	Input.set_custom_mouse_cursor(_cursor_camera_image, Input.CURSOR_MOVE)
 
 
 ## Gets the direction from screen center to the mouse position.
 func _on_Detector_mouse_entered() -> void:
 	_in_edge = true
+	_set_camera_cursor()
 
 
 ## Stops tracking the mouse position.
