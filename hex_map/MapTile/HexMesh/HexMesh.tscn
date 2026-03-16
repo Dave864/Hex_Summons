@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1qambhie8b5e"]
+
+[ext_resource type="Script" uid="uid://bkcdu8wwv0qt1" path="res://hex_map/MapTile/HexMesh/hex_mesh.gd" id="1_uxb1f"]
+[ext_resource type="PackedScene" uid="uid://brel5w0k1ecfe" path="res://hex_map/MapTile/HexMesh/HexTopMesh.tscn" id="2_ec2f7"]
+
+[node name="HexMesh" type="Node3D"]
+script = ExtResource("1_uxb1f")
+
+[node name="HexTopMesh" parent="." instance=ExtResource("2_ec2f7")]
