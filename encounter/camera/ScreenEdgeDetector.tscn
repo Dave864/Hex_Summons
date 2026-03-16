@@ -11,10 +11,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_gi2hs")
-top_edge = 40.0
-bottom_edge = 40.0
-left_edge = 40.0
-right_edge = 40.0
 
 [node name="DetectorTop" type="ReferenceRect" parent="."]
 layout_mode = 1
@@ -24,6 +20,7 @@ offset_left = 40.0
 offset_right = -40.0
 offset_bottom = 40.0
 grow_horizontal = 2
+mouse_default_cursor_shape = 13
 border_color = Color(0, 1, 0, 1)
 
 [node name="DetectorBottom" type="ReferenceRect" parent="."]
@@ -37,6 +34,7 @@ offset_top = -40.0
 offset_right = -40.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_default_cursor_shape = 13
 border_color = Color(0, 1, 0, 1)
 
 [node name="DetectorLeft" type="ReferenceRect" parent="."]
@@ -47,6 +45,7 @@ offset_top = 40.0
 offset_right = 40.0
 offset_bottom = -40.0
 grow_vertical = 2
+mouse_default_cursor_shape = 13
 border_color = Color(0, 1, 0, 1)
 
 [node name="DetectorRight" type="ReferenceRect" parent="."]
@@ -60,12 +59,14 @@ offset_top = 40.0
 offset_bottom = -40.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_default_cursor_shape = 13
 border_color = Color(0, 1, 0, 1)
 
 [node name="DetectorTopLeft" type="ReferenceRect" parent="."]
 layout_mode = 1
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_default_cursor_shape = 13
 
 [node name="DetectorTopRight" type="ReferenceRect" parent="."]
 layout_mode = 1
@@ -75,6 +76,7 @@ anchor_right = 1.0
 offset_left = -40.0
 offset_bottom = 40.0
 grow_horizontal = 0
+mouse_default_cursor_shape = 13
 
 [node name="DetectorBottomLeft" type="ReferenceRect" parent="."]
 layout_mode = 1
@@ -84,6 +86,7 @@ anchor_bottom = 1.0
 offset_top = -40.0
 offset_right = 40.0
 grow_vertical = 0
+mouse_default_cursor_shape = 13
 
 [node name="DetectorBottomRight" type="ReferenceRect" parent="."]
 layout_mode = 1
@@ -96,6 +99,7 @@ offset_left = -40.0
 offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_default_cursor_shape = 13
 
 [connection signal="mouse_entered" from="DetectorTop" to="." method="_on_Detector_mouse_entered"]
 [connection signal="mouse_exited" from="DetectorTop" to="." method="_on_Detector_mouse_exited"]

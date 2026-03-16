@@ -21,6 +21,8 @@ func move_to_adjacent_tile(
 	direction: HexUtil.HexDirection,
 	new_movement_type: TrackingPoint.MovementType
 ) -> void:
+	if _current_tile == null:
+		return
 	var adjacent_tile: MapTile = _current_tile.get_adjacent_tile(direction)
 	if adjacent_tile == null:
 		return

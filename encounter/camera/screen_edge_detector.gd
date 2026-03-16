@@ -76,6 +76,7 @@ var _top_hex_vertex: int = 0
 
 ## Connects the top_vertex_changed signal from SignalBus.
 func _ready() -> void:
+	_set_camera_cursor()
 	SignalBus.connect(
 			"top_vertex_changed",
 			Callable(self, "_on_SignalBus_top_vertex_changed")
@@ -177,6 +178,14 @@ func _adjust_right_positions() -> void:
 	_bottom_right_detector.position.x = new_pos
 	_top_detector.size.x = size.x - right_edge - _top_detector.position.x
 	_bottom_detector.size.x = size.x - right_edge - _bottom_detector.position.x
+
+
+## Sets the move cursor to reflect camera movement.
+func _set_camera_cursor() -> void:
+	var cursor_camera_image: CompressedTexture2D = load(
+			"res://art/ui/mouse_cursor/cursor_camera.png"
+	)
+	Input.set_custom_mouse_cursor(cursor_camera_image, Input.CURSOR_MOVE)
 
 
 ## Gets the direction from screen center to the mouse position.
