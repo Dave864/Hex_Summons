@@ -5,5 +5,8 @@
 
 [node name="HexMesh" type="Node3D"]
 script = ExtResource("1_uxb1f")
+h = 0
 
 [node name="HexTopMesh" parent="." instance=ExtResource("2_ec2f7")]
+
+[node name="SideSegments" type="Node3D" parent="."]

@@ -36,7 +36,6 @@ func _update_tile_shape_height(height: int) -> void:
 	mesh = _create_base_mesh(height)
 	var y_translate: float = (HexUtil.HEX_TILE_UNIT_HEIGHT / 2) * (height - 1)
 	set_position(Vector3(0.0, y_translate, 0.0))
-	print("HEIGHT: %d" % height)
 	_update_uvs()
 
 

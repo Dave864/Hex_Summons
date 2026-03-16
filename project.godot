@@ -36,8 +36,6 @@ window/size/resizable=false
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="viewport"
-mouse_cursor/custom_image="uid://bc7mg03kvr1u3"
-mouse_cursor/custom_image_hotspot=Vector2(3, 0)
 
 [editor]
 

@@ -19,8 +19,7 @@ specular_mode = 1
 albedo_texture = ExtResource("2_bv838")
 
 [node name="HexSideMesh" instance=ExtResource("1_bfvnj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 
 [node name="Cylinder" parent="." index="0"]
-transform = Transform3D(2.05, 0, 0, 0, 2.05, 0, 0, 0, 2.05, 0, 0, 0)
+transform = Transform3D(2.05, 0, 0, 0, 2.05, 0, 0, 0, 2.05, 0, -0.25, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_0x00c")
