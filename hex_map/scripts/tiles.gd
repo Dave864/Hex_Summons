@@ -9,13 +9,26 @@ extends Node3D
 
 const MAP_TILE = "MapTile"
 
+## The dimensions for the grid of tiles.
+@export_group("Grid Dimensions")
 ## The number of tiles along the X axis.
-@export_range(1, 50) var x_count: int = 2: get = get_x_count, set = set_x_count
+@export_range(1, 50) var x_count: int = 2:
+	get = get_x_count,
+	set = set_x_count
 ## The number of tiles along the Z axis.
-@export_range(1, 50) var z_count: int = 3: get = get_z_count, set = set_z_count
-## Indicates that the map tiles are to be regenerated. Workaround for creating
-## an Inspector plugin. Should NEVER be set outside of Inspector.
-@export var regenerate: bool = false: set = _regenerate_grid
+@export_range(1, 50) var z_count: int = 3:
+	get = get_z_count,
+	set = set_z_count
+## The parameters for map tiles.
+@export_group("Tile Details")
+## The base height that all the tiles should be set to by default.
+@export_range(0, 20) var default_height: int = 0
+## The border color for tiles.
+@export_color_no_alpha var border_color: Color = Color.WHITE
+## The textures used for map tiles.
+@export var map_textures: Array[Texture2D] = []
+## Button that resets the tiles, in height and texture.
+@export_tool_button("Reset Tiles") var reset_button = _reset_tiles
 
 var _grid_start: Vector3 = _calculate_grid_start()
 var _map_tile: PackedScene = preload("res://hex_map/MapTile/MapTile.tscn")
@@ -96,17 +109,14 @@ func is_valid_cube(cube: Vector3) -> bool:
 	)
 
 
-## Removes all tiles from the tiles node and regenerates the map.
-## NEVER call this in other scripts. 
-func _regenerate_grid(r: bool) -> void:
-	if Engine.is_editor_hint() and r:
-		# Delete the tiles of the current map
-		var map_tiles = get_children()
-		for tile in map_tiles:
-			_delete_tile(tile)
-		_generate_grid()
-		_set_coordinates()
-		_determine_adjacencies()
+## Goes through all created tiles and resets their heights and assigned textures.
+func _reset_tiles() -> void:
+	for tile: MapTile in get_all():
+		tile.height = default_height
+		if map_textures.size() == 0:
+			pass
+		else:
+			pass
 
 
 ## Creates the intial instance of the grid map.
@@ -149,6 +159,7 @@ func _instantiate_tile(offset: Vector3) -> void:
 	add_child(tile)
 	tile.set_owner(_root_node)
 	tile.translate_object_local(offset + _grid_start)
+	tile.height = default_height
 
 
 ## Assign the index values of each map tile and their corresponding cube coordinates.

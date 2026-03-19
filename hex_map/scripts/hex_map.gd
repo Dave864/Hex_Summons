@@ -25,8 +25,6 @@ var _floor_mesh: PlaneMesh = preload("res://hex_map/resources/hex_map_floor.tres
 var _floor_mesh_node: MeshInstance3D = null
 var _tiles_node: Tiles = null
 
-## The collection of all map tiles stored in the Tiles node.
-@onready var _map_tiles: Array[MapTile] = []: get = get_map_tiles
 ## Reference to the scene tree root.
 @onready var _root_node: Node = get_tree().edited_scene_root
 
@@ -35,8 +33,6 @@ func _ready() -> void:
 	_create_pathfinder()
 	_create_floor_mesh()
 	_create_tiles_node()
-	for tile: MapTile in _tiles_node.get_children():
-		_map_tiles.append(tile)
 	_check_for_required_parameters()
 
 
@@ -63,12 +59,12 @@ func get_tiles_node() -> Tiles:
 
 ## Retrieve the map tiles of this hex map.
 func get_map_tiles() -> Array[MapTile]:
-	return _map_tiles
+	return _tiles_node.get_all()
 
 
 ## Get the map tile at the specific index.
 func get_tile_at(index: int) -> MapTile:
-	return _map_tiles[index]
+	return _tiles_node.get_at(index)
 
 
 ## Checks if the given cube coordinates are within the bounds of the map.
@@ -125,7 +121,7 @@ func _check_for_required_parameters() -> void:
 	)
 	for tile_index in player_start_tiles:
 		assert(
-				tile_index < tile_count,
+				tile_index < tile_count and tile_index >= 0,
 				"Not all player starting options are within map bounds."
 		)
 		assert(
@@ -134,7 +130,7 @@ func _check_for_required_parameters() -> void:
 		)
 	for tile_index in enemy_start_tiles:
 		assert(
-				tile_index < tile_count,
+				tile_index < tile_count and tile_index >= 0,
 				"Not all enemy starting options are within map bounds."
 		)
 		assert(
