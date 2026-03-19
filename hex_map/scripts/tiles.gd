@@ -24,7 +24,8 @@ const MAP_TILE = "MapTile"
 ## The base height that all the tiles should be set to by default.
 @export_range(0, 20) var default_height: int = 0
 ## The border color for tiles.
-@export_color_no_alpha var border_color: Color = Color.WHITE
+@export_color_no_alpha var border_color: Color = Color.WHITE:
+	set = _set_border_color
 ## The textures used for map tiles.
 @export var map_textures: Array[Texture2D] = []
 ## Button that resets all tiles to have the same height and texture.
@@ -125,7 +126,7 @@ func _set_border_color(new_color: Color) -> void:
 	if not Engine.is_editor_hint():
 		return
 	for tile: MapTile in get_all():
-		pass
+		tile.tile_mesh.set_border_color(new_color)
 
 
 ## Creates the intial instance of the grid map.

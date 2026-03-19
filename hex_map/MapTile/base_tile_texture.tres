@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://nh3vsaw4y54g" path="res://hex_map/MapTile/sobel_edge_outline.gdshader" id="2_dliqb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_myv8q"]
+resource_local_to_scene = true
 render_priority = -1
 shader = ExtResource("2_dliqb")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
@@ -11,6 +12,7 @@ shader_parameter/outline_threshold = 0.2
 shader_parameter/sobel_threshold = 0.08
 
 [resource]
+resource_local_to_scene = true
 next_pass = SubResource("ShaderMaterial_myv8q")
 diffuse_mode = 3
 albedo_texture = ExtResource("1_rs1m1")
