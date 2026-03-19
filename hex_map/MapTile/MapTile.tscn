@@ -21,6 +21,7 @@ shader_parameter/sobel_threshold = 0.08
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5mg5c"]
 next_pass = SubResource("ShaderMaterial_myv8q")
+diffuse_mode = 3
 albedo_texture = ExtResource("7_myv8q")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_myv8q"]
@@ -30,6 +31,7 @@ _surfaces = [{
 "format": 34359742487,
 "index_count": 48,
 "index_data": PackedByteArray("AAABAAMAAQACAAMABAAFAAcABQAGAAcACAAJAAsACQAKAAsADAANAA8ADQAOAA8AEAARABMAEQASABMAFAAVABcAFQAWABcAGAAdABkAHQAaABkAGgAdABwAGwAaABwA"),
+"material": SubResource("StandardMaterial3D_5mg5c"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 30,
@@ -97,7 +99,6 @@ script = ExtResource("1")
 script = ExtResource("3")
 
 [node name="ScalingHexMesh" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_5mg5c")
 mesh = SubResource("ArrayMesh_myv8q")
 script = ExtResource("9_8iqyy")
 metadata/_custom_type_script = "uid://ol1mo6vkbgfw"

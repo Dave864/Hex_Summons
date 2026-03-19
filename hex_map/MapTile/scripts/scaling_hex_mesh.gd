@@ -112,4 +112,8 @@ func _create_top_cap(
 
 ## Triggers an update to the shape height.
 func _on_HeightSource_height_changed(height: int) -> void:
+	var original_material: Material = null
+	if mesh != null:
+		original_material = mesh.surface_get_material(0)
 	_update_mesh(height)
+	mesh.surface_set_material(0, original_material)
