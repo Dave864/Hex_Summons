@@ -1,7 +1,12 @@
 @tool
 class_name ScalingHexMesh
 extends MeshInstance3D
-## Enables a MeshInstance3D to be adjustable by outside factors.
+## A MeshInstance3D that creates a mesh for a hexagonal tile that scales in height
+## by discreet values.
+##
+## The height is a multiple of the HexUtil.HEX_TILE_UNIT_HEIGHT. The radius is
+## set to HexUtil.HEX_TILE_RADIUS. The UVs of the vertices are set to match the
+## texture at path: res://art/hex_base_texture.png.
 
 
 ## The UV coordinates for the top vertices of the mesh.
@@ -21,42 +26,6 @@ const UV_SIDE: PackedVector2Array = [
 	Vector2(0.26, 0.98), # bottom left
 	Vector2(0.72, 0.79), # top right
 ]
-
-## The reference texture for map tiles.
-var _default_texture: Texture2D = preload(Constants.MAP_TEXTURE_REF)
-
-
-## Updates the texture of the tile. Sets the texture to the reference texture if
-## given a null texture.
-func set_texture(new_texture: Texture2D) -> void:
-	if mesh == null:
-		printerr("Mesh not created for ScalingHexMesh")
-		return
-	var material: StandardMaterial3D = mesh.surface_get_material(0)
-	if material == null:
-		printerr("Material not set for ScalingHexMesh")
-		return
-	material.albedo_texture = (
-		_default_texture if new_texture == null
-		else new_texture
-	)
-
-
-## Sets the border color for the tile. The border is rendered as a shader
-## material in the next pass of the mesh material.
-func set_border_color(new_color: Color) -> void:
-	if mesh == null:
-		printerr("Mesh not created for ScalingHexMesh")
-		return
-	var material: StandardMaterial3D = mesh.surface_get_material(0)
-	if material == null:
-		printerr("Material not set for ScalingHexMesh")
-		return
-	var sobel_outline: ShaderMaterial = material.next_pass
-	if sobel_outline == null:
-		printerr("ShaderMaterial not set in next pass for ScalingHexMesh.")
-		return
-	sobel_outline.set_shader_parameter("outline_color", new_color)
 
 
 ## Creates an array mesh for the hex tile.

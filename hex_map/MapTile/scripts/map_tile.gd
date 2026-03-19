@@ -24,6 +24,8 @@ const OVERLAP_RATIO := 0.75
 @export var selector_highlighter: HexHighlighter = null
 ## Highlighter that indicates a tile is being highlighted.
 @export var tile_highlighter: HexHighlighter = null
+## The mesh of the map til.
+@export var tile_mesh: MapTileMesh = null
 
 ## The coordinate of this tile in a map.
 @onready var map_coordinate: MapCoordinate = $MapCoordinate
