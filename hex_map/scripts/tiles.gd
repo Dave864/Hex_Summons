@@ -27,7 +27,7 @@ const MAP_TILE = "MapTile"
 @export_color_no_alpha var border_color: Color = Color.WHITE
 ## The textures used for map tiles.
 @export var map_textures: Array[Texture2D] = []
-## Button that resets the tiles, in height and texture.
+## Button that resets all tiles to have the same height and texture.
 @export_tool_button("Reset Tiles") var reset_button = _reset_tiles
 
 var _grid_start: Vector3 = _calculate_grid_start()
@@ -117,6 +117,15 @@ func _reset_tiles() -> void:
 			pass
 		else:
 			pass
+
+
+## Sets the border colors for all present tiles.
+func _set_border_color(new_color: Color) -> void:
+	border_color = new_color
+	if not Engine.is_editor_hint():
+		return
+	for tile: MapTile in get_all():
+		pass
 
 
 ## Creates the intial instance of the grid map.
