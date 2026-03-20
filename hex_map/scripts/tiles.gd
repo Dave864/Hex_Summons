@@ -4,10 +4,13 @@ extends Node3D
 ## A container for map tiles.
 ##
 ## Generates an array of map tiles with z rows and x columns. Positions each
-## tile and sets up the connections between them.
+## tile and sets up the connections between them. Also provides ways to define
+## a default height, and the textures the tiles can use.
 
 
-const MAP_TILE = "MapTile"
+const MAP_TILE := "MapTile"
+## The maximum amount of different textures the tiles can have.
+const MAX_TEXTURE_COUNT := 50
 
 ## The dimensions for the grid of tiles.
 @export_group("Grid Dimensions")
@@ -21,13 +24,19 @@ const MAP_TILE = "MapTile"
 	set = set_z_count
 ## The parameters for map tiles.
 @export_group("Tile Details")
-## The base height that all the tiles should be set to by default.
-@export_range(0, 20) var default_height: int = 0
 ## The border color for tiles.
 @export_color_no_alpha var border_color: Color = Color.WHITE:
-	set = _set_border_color
+	set = set_border_color
 ## The textures used for map tiles.
-@export var map_textures: Array[Texture2D] = []
+@export var map_textures: Array[Texture2D] = []:
+	set = set_map_textures
+## The default values for when creating new tiles.
+@export_subgroup("Defaults")
+## The base height that all the tiles should be set to by default.
+@export_range(0, 20) var default_height: int = 0
+## The index of the texture that all tiles should be set to by default.
+@export_range(-1, MAX_TEXTURE_COUNT) var default_texture_index: int = 0:
+	set = set_default_texture_index
 ## Button that resets all tiles to have the same height and texture.
 @export_tool_button("Reset Tiles") var reset_button = _reset_tiles
 
@@ -110,23 +119,41 @@ func is_valid_cube(cube: Vector3) -> bool:
 	)
 
 
-## Goes through all created tiles and resets their heights and assigned textures.
-func _reset_tiles() -> void:
-	for tile: MapTile in get_all():
-		tile.height = default_height
-		if map_textures.size() == 0:
-			pass
-		else:
-			pass
-
-
 ## Sets the border colors for all present tiles.
-func _set_border_color(new_color: Color) -> void:
+func set_border_color(new_color: Color) -> void:
 	border_color = new_color
 	if not Engine.is_editor_hint():
 		return
 	for tile: MapTile in get_all():
 		tile.tile_mesh.set_border_color(new_color)
+
+
+## Updates the textures that the map tiles can use.
+func set_map_textures(new_textures: Array[Texture2D]) -> void:
+	if new_textures.size() > MAX_TEXTURE_COUNT:
+		printerr("Attempting to define more than %d textures!" % MAX_TEXTURE_COUNT)
+		return
+	map_textures = new_textures
+	for tile: MapTile in get_all():
+		tile.set_texture_options(map_textures)
+
+
+## Updates the default texture index for the tiles.
+func set_default_texture_index(new_index: int) -> void:
+	default_texture_index = new_index
+	if new_index > map_textures.size() - 1:
+		default_texture_index = map_textures.size() - 1
+		push_warning(
+				"There are no textures at index {0}. Setting the default to {1}" \
+				.format([new_index, default_texture_index])
+		)
+
+
+## Goes through all created tiles and resets their heights and assigned textures.
+func _reset_tiles() -> void:
+	for tile: MapTile in get_all():
+		tile.height = default_height
+		tile.texture_index = default_texture_index
 
 
 ## Creates the intial instance of the grid map.
@@ -170,6 +197,8 @@ func _instantiate_tile(offset: Vector3) -> void:
 	tile.set_owner(_root_node)
 	tile.translate_object_local(offset + _grid_start)
 	tile.height = default_height
+	tile.set_texture_options(map_textures)
+	tile.texture_index = default_texture_index
 
 
 ## Assign the index values of each map tile and their corresponding cube coordinates.

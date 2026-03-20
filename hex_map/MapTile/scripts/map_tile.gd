@@ -17,14 +17,21 @@ const SELECTOR_Y_OFFSET := 0.125
 ## tile highlighter are active.
 const OVERLAP_RATIO := 0.75
 
+## Configurable details of the hex tile.
+@export_group("Details")
 ## The height of the tile.
 @export_range(0, 100) var height = 0:
 	set = set_height
+## The texture the tile is using.
+@export_range(-1, Tiles.MAX_TEXTURE_COUNT - 1) var texture_index = -1:
+	set = set_texture_index
+## The meshes used by this tile.
+@export_group("Meshes")
 ## Highlighter that indicates a tile is being selected.
 @export var selector_highlighter: HexHighlighter = null
 ## Highlighter that indicates a tile is being highlighted.
 @export var tile_highlighter: HexHighlighter = null
-## The mesh of the map til.
+## The mesh of the map tile.
 @export var tile_mesh: MapTileMesh = null
 
 ## The coordinate of this tile in a map.
@@ -41,6 +48,8 @@ var _adjacent_tiles: Array[MapTile] = [null, null, null, null, null, null]
 var _highlight_type: int = HexHighlighter.Option.NONE
 ## Flag that indicates the selector of the tile.
 var _selector_type: int = HexHighlighter.Option.NONE
+## The textures available for this tile to use.
+var _texture_options: Array[Texture2D] = []
 
 
 func _ready() -> void:
@@ -61,6 +70,30 @@ func set_height(value: int) -> void:
 		map_coordinate.position.y = y_pos
 	emit_signal("height_changed", value)
 	_update_highlighter_positions()
+
+
+## Updates the textures available for the map tile to use.
+func set_texture_options(options: Array[Texture2D]) -> void:
+	_texture_options = options
+	texture_index = texture_index
+
+
+## Updates the texture that the map tile shape uses based on the defined index.
+func set_texture_index(index: int) -> void:
+	texture_index = index
+	if tile_mesh == null:
+		return
+	if texture_index + 1 > _texture_options.size():
+		texture_index = _texture_options.size() - 1
+		push_warning(
+				"No texture exists at index {0}. Setting to index {1}" \
+				.format([index, texture_index])
+		)
+	var new_texture : Texture2D = (
+		null if texture_index < 0
+		else _texture_options[texture_index]
+	)
+	tile_mesh.set_texture(new_texture)
 
 
 ## Gets the adjacent tile of the specified direction.

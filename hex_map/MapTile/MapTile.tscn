@@ -66,6 +66,7 @@ cap_bottom = false
 collision_layer = 2
 collision_mask = 12
 script = ExtResource("7")
+texture_index = 0
 selector_highlighter = NodePath("SelectorHighlighter")
 tile_highlighter = NodePath("TileHighlighter")
 tile_mesh = NodePath("MapTileMesh")
