@@ -39,6 +39,10 @@ const MAX_TEXTURE_COUNT := 50
 	set = set_default_texture_index
 ## Button that resets all tiles to have the same height and texture.
 @export_tool_button("Reset Tiles") var reset_button = _reset_tiles
+## Flag that indicates that the heights should be updated when resetting tiles.
+@export var update_heights: bool = true
+## Flag that indicates that the textures should be updated when resetting tiles.
+@export var update_textures: bool = true
 
 var _grid_start: Vector3 = _calculate_grid_start()
 var _map_tile: PackedScene = preload("res://hex_map/MapTile/MapTile.tscn")
@@ -122,7 +126,7 @@ func is_valid_cube(cube: Vector3) -> bool:
 ## Sets the border colors for all present tiles.
 func set_border_color(new_color: Color) -> void:
 	border_color = new_color
-	if not Engine.is_editor_hint():
+	if not is_node_ready():
 		return
 	for tile: MapTile in get_all():
 		tile.tile_mesh.set_border_color(new_color)
@@ -134,6 +138,8 @@ func set_map_textures(new_textures: Array[Texture2D]) -> void:
 		printerr("Attempting to define more than %d textures!" % MAX_TEXTURE_COUNT)
 		return
 	map_textures = new_textures
+	if not is_node_ready():
+		return
 	for tile: MapTile in get_all():
 		tile.set_texture_options(map_textures)
 
@@ -152,8 +158,10 @@ func set_default_texture_index(new_index: int) -> void:
 ## Goes through all created tiles and resets their heights and assigned textures.
 func _reset_tiles() -> void:
 	for tile: MapTile in get_all():
-		tile.height = default_height
-		tile.texture_index = default_texture_index
+		if update_heights:
+			tile.height = default_height
+		if update_textures:
+			tile.texture_index = default_texture_index
 
 
 ## Creates the intial instance of the grid map.
@@ -163,6 +171,8 @@ func _initial_grid_generation() -> void:
 		_generate_grid()
 	_set_coordinates()
 	_determine_adjacencies()
+	set_map_textures(map_textures)
+	set_border_color(border_color)
 
 
 ## Generates the hex grid map basd off of x_count and z_count.

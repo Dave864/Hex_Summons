@@ -17,14 +17,6 @@ const SELECTOR_Y_OFFSET := 0.125
 ## tile highlighter are active.
 const OVERLAP_RATIO := 0.75
 
-## Configurable details of the hex tile.
-@export_group("Details")
-## The height of the tile.
-@export_range(0, 100) var height = 0:
-	set = set_height
-## The texture the tile is using.
-@export_range(-1, Tiles.MAX_TEXTURE_COUNT - 1) var texture_index = -1:
-	set = set_texture_index
 ## The meshes used by this tile.
 @export_group("Meshes")
 ## Highlighter that indicates a tile is being selected.
@@ -33,6 +25,14 @@ const OVERLAP_RATIO := 0.75
 @export var tile_highlighter: HexHighlighter = null
 ## The mesh of the map tile.
 @export var tile_mesh: MapTileMesh = null
+## Configurable details of the hex tile.
+@export_group("Details")
+## The height of the tile.
+@export_range(0, 100) var height = 0:
+	set = set_height
+## The texture the tile is using.
+@export_range(-1, Tiles.MAX_TEXTURE_COUNT - 1) var texture_index = -1:
+	set = set_texture_index
 
 ## The coordinate of this tile in a map.
 @onready var map_coordinate: MapCoordinate = $MapCoordinate
@@ -49,7 +49,7 @@ var _highlight_type: int = HexHighlighter.Option.NONE
 ## Flag that indicates the selector of the tile.
 var _selector_type: int = HexHighlighter.Option.NONE
 ## The textures available for this tile to use.
-var _texture_options: Array[Texture2D] = []
+var _texture_options: Array[Texture2D]
 
 
 func _ready() -> void:
@@ -75,13 +75,18 @@ func set_height(value: int) -> void:
 ## Updates the textures available for the map tile to use.
 func set_texture_options(options: Array[Texture2D]) -> void:
 	_texture_options = options
+	if not is_node_ready():
+		return
 	texture_index = texture_index
 
 
 ## Updates the texture that the map tile shape uses based on the defined index.
 func set_texture_index(index: int) -> void:
 	texture_index = index
+	if not is_node_ready():
+		return
 	if tile_mesh == null:
+		printerr("No tile mesh has been assigned.")
 		return
 	if texture_index + 1 > _texture_options.size():
 		texture_index = _texture_options.size() - 1
