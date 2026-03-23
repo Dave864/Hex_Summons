@@ -11,20 +11,20 @@ extends MeshInstance3D
 
 ## The UV coordinates for the top vertices of the mesh.
 const UV_TOP: PackedVector2Array = [
-	Vector2(0.98, 0.39),
-	Vector2(0.74, 0.01),
-	Vector2(0.26, 0.01),
-	Vector2(0.02, 0.39),
-	Vector2(0.26, 0.76),
-	Vector2(0.74, 0.76),
+	Vector2(0.995, 0.383), # right
+	Vector2(0.74, 0.006), # top right
+	Vector2(0.247, 0.006), # top left
+	Vector2(0.006, 0.383), # left
+	Vector2(0.247, 0.76), # bottom left
+	Vector2(0.74, 0.76), # bottom right
 ]
 ## The UV coordinates for the side of the mesh. Each side segment uses the same
 ## texture (or is at least supposed to).
 const UV_SIDE: PackedVector2Array = [
-	Vector2(0.26, 0.79), # top left
-	Vector2(0.72, 0.98), # bottom right
-	Vector2(0.26, 0.98), # bottom left
-	Vector2(0.72, 0.79), # top right
+	Vector2(0.259, 0.791), # top left
+	Vector2(0.736, 0.995), # bottom right
+	Vector2(0.259, 0.995), # bottom left
+	Vector2(0.736, 0.791), # top right
 ]
 
 

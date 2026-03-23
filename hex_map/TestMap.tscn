@@ -5,21 +5,18 @@
 [ext_resource type="Script" uid="uid://bifjkm55y01x1" path="res://hex_map/scripts/hex_map.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://cg633481rl4ed" path="res://hex_map/MapTile/MapTile.tscn" id="4"]
 [ext_resource type="PlaneMesh" uid="uid://br278ydbqio75" path="res://hex_map/resources/hex_map_floor.tres" id="5"]
-[ext_resource type="Script" uid="uid://cyfb6co2ug8qv" path="res://hex_map/SelectionTracker/selection_tracker.gd" id="6"]
-[ext_resource type="Texture2D" uid="uid://bln5rjj8y56ti" path="res://art/icon_bright.png" id="6_wpchw"]
-[ext_resource type="Texture2D" uid="uid://coe1tqldl67ll" path="res://art/icon_dark.png" id="7_gkah3"]
+[ext_resource type="Texture2D" uid="uid://dd5o5igclh1oc" path="res://art/tile_textures/grass_texture.png" id="6_gkah3"]
+[ext_resource type="Texture2D" uid="uid://nulkxoth1tm1" path="res://art/tile_textures/dirt_texture.png" id="7_v4p7q"]
+[ext_resource type="Texture2D" uid="uid://bmgh8cyu64one" path="res://art/tile_textures/stone_dirt_texture.png" id="8_nfmjj"]
 
 [node name="TestMap" type="Node3D"]
 script = ExtResource("3")
-player_start_tiles = [12, 16, 13, 26]
-enemy_start_tiles = [72, 76]
+player_start_tiles = [11, 16, 2, 3]
+enemy_start_tiles = [83, 86]
 
 [node name="FloorMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh = ExtResource("5")
-
-[node name="SelectionTracker" type="Node" parent="."]
-script = ExtResource("6")
 
 [node name="RangeFinder" type="Node" parent="."]
 script = ExtResource("2")
@@ -29,8 +26,7 @@ map_tiles_reference = NodePath("../Tiles")
 script = ExtResource("1")
 x_count = 10
 z_count = 9
-border_color = Color(0, 1, 1, 1)
-map_textures = Array[Texture2D]([ExtResource("6_wpchw"), ExtResource("7_gkah3")])
+map_textures = Array[Texture2D]([ExtResource("6_gkah3"), ExtResource("7_v4p7q"), ExtResource("8_nfmjj")])
 default_texture_index = 1
 update_heights = false
 
@@ -60,11 +56,11 @@ texture_index = 1
 
 [node name="MapTile6" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, -6)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile7" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, -6)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile8" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, -6)
@@ -76,11 +72,11 @@ height = 3
 
 [node name="MapTile10" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36122, 0, -4.5)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile11" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62916, 0, -4.5)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile12" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, -4.5)
@@ -120,7 +116,7 @@ height = 1
 
 [node name="MapTile21" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, -3)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile22" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, -3)
@@ -164,7 +160,7 @@ texture_index = 1
 
 [node name="MapTile32" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, -1.5)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile33" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, -1.5)
@@ -184,7 +180,7 @@ texture_index = 1
 
 [node name="MapTile37" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76314, 0, -1.5)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile38" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49519, 0, -1.5)
@@ -224,7 +220,7 @@ height = 1
 
 [node name="MapTile47" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, 0)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile48" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, 0)
@@ -244,7 +240,7 @@ texture_index = 1
 
 [node name="MapTile52" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, 1.5)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile53" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, 1.5)
@@ -324,7 +320,7 @@ height = 1
 
 [node name="MapTile72" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, 4.5)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile73" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, 4.5)
@@ -336,11 +332,11 @@ height = 2
 
 [node name="MapTile75" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, 4.5)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile76" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, 4.5)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile77" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76314, 0, 4.5)
@@ -368,7 +364,7 @@ texture_index = 1
 
 [node name="MapTile83" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 6)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile84" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 6)
@@ -380,7 +376,7 @@ texture_index = 1
 
 [node name="MapTile86" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 6)
-texture_index = 1
+texture_index = 2
 
 [node name="MapTile87" parent="Tiles" instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, 6)

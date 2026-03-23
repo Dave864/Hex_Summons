@@ -2,21 +2,22 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkgtqkkaghm4j"
-path="res://.godot/imported/hex_base_texture.png-5b5a0375f09e887ab4cd403d1abeddcd.ctex"
+uid="uid://nulkxoth1tm1"
+path.s3tc="res://.godot/imported/dirt_texture.png-8d0cbc1f8eb6735a402be1534075d909.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://art/hex_base_texture.png"
-dest_files=["res://.godot/imported/hex_base_texture.png-5b5a0375f09e887ab4cd403d1abeddcd.ctex"]
+source_file="res://art/tile_textures/dirt_texture.png"
+dest_files=["res://.godot/imported/dirt_texture.png-8d0cbc1f8eb6735a402be1534075d909.s3tc.ctex"]
 
 [params]
 
-compress/mode=3
-compress/high_quality=true
+compress/mode=2
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

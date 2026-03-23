@@ -7,7 +7,7 @@ extends Object
 ## The path to a default icon.
 const DEFAULT_ICON_PATH := "res://art/icon.png"
 ## The path to the map tile texture reference.
-const MAP_TEXTURE_REF := "res://art/hex_base_texture.png"
+const MAP_TEXTURE_REF := "res://art/tile_textures/hex_base_texture.png"
 ## The path to the mouse cursor icon for panning the encounter camera.
 const CURSOR_ICON_CAMERA_P := "res://art/ui/mouse_cursor/cursor_camera_pan.png"
 ## The path to the mouse cursor icon for panning the rotating the camera.
