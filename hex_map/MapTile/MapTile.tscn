@@ -33,7 +33,7 @@ cap_bottom = false
 resource_local_to_scene = true
 _surfaces = [{
 "aabb": AABB(-0.86602545, -0.5, -1, 1.7320509, 0.5, 2),
-"attribute_data": PackedByteArray("7FE4P0jhej/sUTg/cT1KP7gehT5xPUo/uB6FPkjhej/sUTg/SOF6P+xROD9xPUo/uB6FPnE9Sj+4HoU+SOF6P+xROD9I4Xo/7FE4P3E9Sj+4HoU+cT1KP7gehT5I4Xo/7FE4P0jhej/sUTg/cT1KP7gehT5xPUo/uB6FPkjhej/sUTg/SOF6P+xROD9xPUo/uB6FPnE9Sj+4HoU+SOF6P+xROD9I4Xo/7FE4P3E9Sj+4HoU+cT1KP7gehT5I4Xo/SOF6PxSuxz6kcD0/CtcjPLgehT4K1yM8CtejPBSuxz64HoU+XI9CP6RwPT9cj0I/"),
+"attribute_data": PackedByteArray("f2o8P1K4fj9/ajw/+n5KP6abhD76fko/ppuEPlK4fj9/ajw/Urh+P39qPD/6fko/ppuEPvp+Sj+mm4Q+Urh+P39qPD9SuH4/f2o8P/p+Sj+mm4Q++n5KP6abhD5SuH4/f2o8P1K4fj9/ajw/+n5KP6abhD76fko/ppuEPlK4fj9/ajw/Urh+P39qPD/6fko/ppuEPvp+Sj+mm4Q+Urh+P39qPD9SuH4/f2o8P/p+Sj+mm4Q++n5KP6abhD5SuH4/Urh+P5MYxD6kcD0/ppvEO5HtfD6mm8Q7ppvEO5MYxD6R7Xw+XI9CP6RwPT9cj0I/"),
 "format": 34359742487,
 "index_count": 48,
 "index_data": PackedByteArray("AAABAAMAAQACAAMABAAFAAcABQAGAAcACAAJAAsACQAKAAsADAANAA8ADQAOAA8AEAARABMAEQASABMAFAAVABcAFQAWABcAGAAdABkAHQAaABkAGgAdABwAGwAaABwA"),
@@ -66,10 +66,10 @@ cap_bottom = false
 collision_layer = 2
 collision_mask = 12
 script = ExtResource("7")
-texture_index = 0
 selector_highlighter = NodePath("SelectorHighlighter")
 tile_highlighter = NodePath("TileHighlighter")
 tile_mesh = NodePath("MapTileMesh")
+texture_index = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = ExtResource("9")
