@@ -1,7 +1,7 @@
 [gd_scene load_steps=31 format=3 uid="uid://d3i1mqeluj5hv"]
 
-[ext_resource type="Script" uid="uid://dmopj8h81nvdc" path="res://user_interface/encounter/InitiativeTracker/race_type_initiative.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://3fxn0walrbhe" path="res://user_interface/encounter/InitiativeTracker/InitiativeSlot.tscn" id="2"]
+[ext_resource type="Script" uid="uid://bift00408ti8f" path="res://user_interface/encounter/InitiativeTracker/order_type_initiative.gd" id="2_v2kbp"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="3"]
 [ext_resource type="Texture2D" uid="uid://c7jbdsahx5x83" path="res://art/ui/Init.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://brvrgnwi2ctlg" path="res://art/ui/ThemeBlueSigil/panel.png" id="5"]
@@ -456,7 +456,7 @@ offset_bottom = 38.0
 grow_horizontal = 2
 mouse_filter = 2
 theme = ExtResource("3")
-script = ExtResource("1")
+script = ExtResource("2_v2kbp")
 
 [node name="Active" type="Panel" parent="."]
 layout_mode = 0

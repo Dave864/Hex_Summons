@@ -13,6 +13,8 @@ extends InitiativeTracker
 ## The maximimum number of consecutive rounds a character can go without a turn.
 @export_range(2, 10) var pity_round_count: int = 2
 
+## The current turn in the round.
+var _current_turn: int = 0
 ## Tracks the character and number of rounds said character has gone without
 ## taking a turn. The character instance id is used as the key.
 var _c_pity_tracker: Dictionary[int, NoTurnTracker] = {}

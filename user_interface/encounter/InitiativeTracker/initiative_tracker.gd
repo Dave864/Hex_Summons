@@ -7,8 +7,6 @@ extends Control
 
 ## The collection of InitiativeSlot objects.
 var init_slots: Array[InitiativeSlot]
-## The current turn in the round.
-var _current_turn: int = 0
 ## Reference to the summon character.
 var _summon: Summon = null
 
