@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cqtyo80p26xko"]
+[gd_scene load_steps=20 format=3 uid="uid://cqtyo80p26xko"]
 
 [ext_resource type="Script" uid="uid://d3i6jxieb653y" path="res://character/summons/summon.gd" id="1_4f0v8"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="1_fa40w"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="2_fa11t"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="2_uxi0t"]
 [ext_resource type="Texture2D" uid="uid://c0jyk14j103hn" path="res://art/icon_green.png" id="2_x1ayg"]
+[ext_resource type="Shader" uid="uid://dtt3a1dq31nnw" path="res://character/material/sprite_billboard_draw.gdshader" id="4_ebi3a"]
+[ext_resource type="Shader" uid="uid://lh7xfgxfcqta" path="res://character/material/sprite_billboard_xray.gdshader" id="4_x1ayg"]
 [ext_resource type="Script" uid="uid://dtcij6mogsbf4" path="res://character/scripts/character_stats/summon_stat_modifiers.gd" id="7_gm0pc"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="7_ihyy3"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="8_8b1as"]
@@ -15,6 +17,20 @@
 [ext_resource type="Script" uid="uid://b1bn5jkpyyh51" path="res://fsm/user_character/summon_character/summon_character_wait.gd" id="10_tll31"]
 [ext_resource type="Script" uid="uid://cuk41txbrftic" path="res://fsm/user_character/user_character_move.gd" id="11_7jwav"]
 [ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="12_405cv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofn2l"]
+render_priority = 0
+shader = ExtResource("4_ebi3a")
+shader_parameter/sprite_texture = ExtResource("2_x1ayg")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ebi3a"]
+render_priority = -1
+next_pass = SubResource("ShaderMaterial_ofn2l")
+shader = ExtResource("4_x1ayg")
+shader_parameter/sprite_texture = ExtResource("2_x1ayg")
+shader_parameter/x_ray_color = Color(0, 1, 1, 1)
+shader_parameter/dither_intensity = 0.5000000074506
+shader_parameter/dither_pixel_size = 1.0
 
 [node name="Summon" type="Area3D"]
 collision_layer = 4
@@ -28,6 +44,7 @@ char_pos = NodePath("../EncounterSprite/SpritePosition")
 
 [node name="EncounterSprite" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+material_override = SubResource("ShaderMaterial_ebi3a")
 pixel_size = 0.0054
 billboard = 1
 fixed_size = true
