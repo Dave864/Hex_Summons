@@ -42,6 +42,8 @@ func _ready() -> void:
 
 ## Handles button input.
 func _unhandled_input(event: InputEvent) -> void:
+	if not visible:
+		return
 	if event.is_action_pressed("ui_selector_select"):
 		var option_button := get_viewport().gui_get_focus_owner() as BaseButton
 		if option_button == _movement_button and _active_option == Option.MOVE:
