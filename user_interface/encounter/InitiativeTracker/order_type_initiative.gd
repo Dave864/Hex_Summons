@@ -81,23 +81,35 @@ func _reset_initiative() -> void:
 func _get_character_order() -> Array[Character]:
 	var char_order: Array[Character] = []
 	char_order.resize(init_slots.size())
-	char_order[0] = get_current_character()
+	char_order[0] = _summon_check(get_current_character())
 	var order_index: int = 1
 	for character: Character in _init_order:
 		if character == get_current_character():
 			continue
 		elif not _character_tracker[character.get_instance_id()]:
-			char_order[order_index] = character
+			char_order[order_index] = _summon_check(character)
 			order_index += 1
 			if order_index >= char_order.size():
 				return char_order
 	while order_index < char_order.size():
 		for character: Character in _init_order:
-			char_order[order_index] = character
+			char_order[order_index] = _summon_check(character)
 			order_index += 1
 			if order_index >= char_order.size():
 				break
 	return char_order
+
+
+## Checks if the summon should be used in place of the character, returning the
+## character that should be used.
+func _summon_check(character: Character) -> Character:
+	if (
+		_summon.is_active() 
+		and _summon.summoner.get_instance_id() == character.get_instance_id()
+	):
+		return _summon
+	else:
+		return character
 
 
 ## Determines the initiative order starting from the current round.
