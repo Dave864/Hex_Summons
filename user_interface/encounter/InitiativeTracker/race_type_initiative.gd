@@ -1,9 +1,9 @@
 class_name RaceTypeInitiative
 extends InitiativeTracker
 ## Displays the current characters in initiative as well as the current active
-## character.
+## character. Uses a race track method for tracking initiative.
 ##
-## Initiative works by comparing the agility stat of all characters,
+## Race track initiative works by comparing the agility stat of all characters,
 ## and uses that to determine how far each one "travels" in a round. The highest
 ## agility determines the distance needed to travel in order for a character to
 ## take their turn. The number of rounds tracked is equal to the number of
@@ -20,6 +20,8 @@ var _c_pity_tracker: Dictionary[int, NoTurnTracker] = {}
 ## initiative slot UI elements. The keys are the rounds, starting at round 0.
 ## Each round stores an Array which contains the character initiative details.
 var _init_order: Dictionary[int, RoundDetails] = {}
+## The maximum number of turns that can take place in a round.
+var _round_turns: int = 0
 ## The "distance" a character must travel in a round to take their turn.
 var _round_pace: int = 0
 
@@ -32,19 +34,6 @@ func _ready() -> void:
 	super._ready()
 	for i: int in init_slots.size():
 		_init_order[i] = RoundDetails.new()
-
-
-## Updates the summon character reference.
-func set_summon_reference(new_summon: Summon) -> void:
-	if _summon != null:
-		_summon.disconnect("activated", Callable(self, "_on_Summon_activated"))
-		_summon.disconnect(
-				"deactivated",
-				Callable(self, "_on_Summon_deactivated")
-		)
-	_summon = new_summon
-	_summon.connect("activated", Callable(self, "_on_Summon_activated"))
-	_summon.connect("deactivated", Callable(self, "_on_Summon_deactivated"))
 
 
 ## Populates the initiative tracker with character details.
@@ -115,9 +104,11 @@ func _get_next_init_step() -> int:
 	return -1
 
 
-## Helper for _update_display. Populates the char_order array with the characters
-## that will go next from the current round initiative.
-func _populate_display_data(char_order: Array) -> void:
+## Helper for _update_display. Determines the order that characters will be
+## displayed in the initiative tracker.
+func _get_character_order() -> Array[Character]:
+	var char_order: Array[Character] = []
+	char_order.resize(init_slots.size())
 	var init_step: int = _current_turn
 	var c_index: int = 0
 	for round_number: int in _max_rounds:
@@ -135,9 +126,10 @@ func _populate_display_data(char_order: Array) -> void:
 				char_order[c_index] = _c_pity_tracker[c_id].character
 			c_index += 1
 			if c_index >= char_order.size():
-				return
+				return char_order
 		# Start looking at first turn in next round.
 		init_step = 0
+	return char_order
 
 
 ## Determines the initiative order starting from the current round.

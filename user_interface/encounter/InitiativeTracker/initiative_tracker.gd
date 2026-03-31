@@ -9,11 +9,10 @@ extends Control
 var init_slots: Array[InitiativeSlot]
 ## The current turn in the round.
 var _current_turn: int = 0
-## The maximum number of turns that can take place in a round.
-var _round_turns: int = 0
 ## Reference to the summon character.
 var _summon: Summon = null
 
+## The animation player for the initiative tracker.
 @onready var ap: AnimationPlayer = $AnimationPlayer
 
 
@@ -75,9 +74,7 @@ func current_init_labels() -> void:
 
 ## Updates the display to reflect the current initiative.
 func _update_display() -> void:
-	var char_order: Array[Character] = []
-	char_order.resize(init_slots.size())
-	_populate_display_data(char_order)
+	var char_order: Array[Character] = _get_character_order()
 	var earliest_init: Dictionary[int, int] = {}
 	for character: Character in char_order:
 		earliest_init[character.get_instance_id()] = -1
@@ -89,23 +86,13 @@ func _update_display() -> void:
 			character.character_label.set_initiative_label(i)
 
 
-## Helper for _update_display. Populates the char_order array with the characters
-## that will go next from the current round initiative.
-@abstract func _populate_display_data(char_order: Array) -> void
+## Helper for _update_display. Determines the order that characters will be
+## displayed in the initiative tracker.
+@abstract func _get_character_order() -> Array[Character]
 
 
 ## Determines the initiative order starting from the current round.
 @abstract func _calculate_full_initiative() -> void
-
-
-## Helper for _calculate_inititative. Determines the initiative data for
-## round zero.
-@abstract func _calculate_round_zero_initiative() -> void
-
-
-## Helper for _calculate_inititative. Determines the initiative data for a given
-## round.
-@abstract func _calculate_round_initiative(round_number: int) -> void
 
 
 ## Removes the character from the initiative tracker.
