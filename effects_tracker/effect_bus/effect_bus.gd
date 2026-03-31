@@ -60,7 +60,7 @@ func progress_duration(turn_step: int = 1) -> void:
 func process_immediate_effects(char_stats: CharacterStatModifiers) -> int:
 	var change_amt: int = 0
 	for id: int in _effect_bus.keys():
-		var effect: ActionEffect = _effect_bus[id].effect
+		var effect: ActionEffectSnapshot = _effect_bus[id].effect
 		if effect.turn_duration == 0:
 			change_amt += effect.effect_on_target(char_stats)
 			_effect_bus.erase(id)
@@ -90,12 +90,12 @@ func size() -> int:
 ## Describes the specific details stored in a single entry in the bus.
 class EntryData:
 	## Reference to the ActionEffect node.
-	var effect: ActionEffect = null
+	var effect: ActionEffectSnapshot = null
 	## The number of turns the effect has been active for.
 	var turn_active_count: int = 0
 	
 	
 	## Creates a new instance of EntryData, tracking the given ActionEffect.
 	func _init(new_effect: ActionEffect) -> void:
-		effect = new_effect
+		effect = ActionEffectSnapshot.new(new_effect)
 		turn_active_count = 0
