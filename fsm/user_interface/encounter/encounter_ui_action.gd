@@ -2,7 +2,8 @@ class_name EncounterUIAction
 extends EncounterUIState
 ## The logic for what happens when an EncounterUI scene is in the `Action` state.
 ##
-## Activates the player options menu. When a movement path has been created
+## Activates the player options menu. When a movement path has been created, goes
+## to the `Pause` state.
 
 
 ## Called by the state machine upon changing the active state. The `msg` parameter

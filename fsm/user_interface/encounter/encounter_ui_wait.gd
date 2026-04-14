@@ -2,7 +2,7 @@ class_name EncounterUIWait
 extends EncounterUIState
 ## The logic for what happens when an EncounterUI scene is in the `Wait` state.
 ##
-## Hides the options and suboptions menus. Goes to the 'Move' state when a player
+## Hides the options and suboptions menus. Goes to the 'Action' state when a player
 ## or summon turn starts.
 
 

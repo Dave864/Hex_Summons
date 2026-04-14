@@ -10,9 +10,6 @@ extends EncounterUIState
 ## initialize itself.
 func enter(_msg := {}) -> void:
 	encounter_ui.disable_player_menu(true)
-	
-	# This signal is used by other states and will be disconnected to avoid
-	# unintended behavior.
 	SignalBus.connect(
 			"selector_required",
 			Callable(self, "_on_SignalBus_selector_required")
