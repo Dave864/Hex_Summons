@@ -55,6 +55,10 @@ var _map_tiles: Tiles:
 	get:
 		return hex_map.get_tiles_node()
 
+## The position of the sprite used to show where a player character will be
+## placed when the turn is concluded.
+@onready var _ghost_position: Marker3D = $GhostPosition
+
 
 ## Emits the spawn_action_confirmed signal with the summon name and emission
 ## position.
@@ -110,7 +114,9 @@ func set_focused_character(new_focus: Character) -> void:
 		return
 	_movement_tile_ids.clear()
 	if focused_character == null:
+		$GhostPosition/GhostSprite.texture = null
 		return
+	$GhostPosition/GhostSprite.texture = focused_character.character_sprite.texture
 	_movement_tile_ids = hex_map.range_finder.get_character_travesible_tiles(
 			focused_character,
 			_enemy_characters
@@ -138,8 +144,8 @@ func set_focus_action(new_action: Action, is_spawn_action: bool) -> void:
 	_targets_cache.clear()
 	if source_d_map != null:
 		source_d_map.free()
-	# Return early if action is set to null as we do not need to create a
-	# distance map for the source range in this instance.
+	# We do not need to create a distance map for the source range in this
+	# instance.
 	if _action == null:
 		return
 	var d_map: DistanceMap = hex_map.range_finder.dist_maps.at(player_index)
@@ -339,6 +345,16 @@ func clear_indicators() -> void:
 	for i in _selectable_map_indexes:
 		_map_tiles.get_at(i).set_selector_type(HexHighlighter.Option.NONE)
 	_selectable_map_indexes.clear()
+
+
+## Shows or hides the ghost sprite.
+func show_ghost_sprite(reveal: bool) -> void:
+	_ghost_position.visible = reveal
+
+
+## Places the ghost sprite at the specified position.
+func place_ghost_sprite(new_position: Vector3) -> void:
+	_ghost_position.position = new_position
 
 
 ## Removes tile indices that contain a character from the current source range.

@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ddvk0q84qb3m"]
+[gd_scene load_steps=9 format=3 uid="uid://ddvk0q84qb3m"]
 
 [ext_resource type="Script" uid="uid://cyfb6co2ug8qv" path="res://hex_map/SelectionTracker/selection_tracker.gd" id="1_c3pme"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="2_14xsr"]
+[ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="2_qbj8e"]
 [ext_resource type="Script" uid="uid://bx1htexjad2n7" path="res://fsm/selection_tracker/selection_tracker_wait.gd" id="3_63qsx"]
 [ext_resource type="Script" uid="uid://c5yio7ankf2nt" path="res://fsm/selection_tracker/selection_tracker_pause.gd" id="4_qbj8e"]
 [ext_resource type="Script" uid="uid://b4yyn75ft4nuk" path="res://fsm/selection_tracker/selection_tracker_move.gd" id="5_c5fpm"]
@@ -10,6 +11,17 @@
 
 [node name="SelectionTracker" type="Node"]
 script = ExtResource("1_c3pme")
+
+[node name="GhostPosition" type="Marker3D" parent="."]
+
+[node name="GhostSprite" type="Sprite3D" parent="GhostPosition" node_paths=PackedStringArray("char_pos")]
+modulate = Color(1, 1, 1, 0.5019608)
+pixel_size = 0.0054
+billboard = 1
+fixed_size = true
+script = ExtResource("2_qbj8e")
+char_pos = NodePath("..")
+metadata/_custom_type_script = "uid://70b5is4mqv54"
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_14xsr")
