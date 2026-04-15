@@ -15,7 +15,7 @@ script = ExtResource("1_c3pme")
 [node name="GhostPosition" type="Marker3D" parent="."]
 
 [node name="GhostSprite" type="Sprite3D" parent="GhostPosition" node_paths=PackedStringArray("char_pos")]
-modulate = Color(1, 1, 1, 0.5019608)
+modulate = Color(0.49803922, 0.49803922, 0.49803922, 0.5019608)
 pixel_size = 0.0054
 billboard = 1
 fixed_size = true

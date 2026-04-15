@@ -9,11 +9,6 @@ extends SelectionTrackerState
 ## character turn has been terminated.
 
 
-## The name of the summon that uses the action on spawn. If empty, the action is
-## not used as a spawn action.
-var _summon_name: String = ""
-
-
 ## Reference to the function that will update the tile highlights.
 @onready var _update_selection_ref: Callable = Callable(
 		self,
@@ -36,8 +31,8 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 			msg["summon"] is String,
 			"Data at 'summon' key is not of type String in SelectAction."
 	)
-	_summon_name = msg["summon"]
-	s_tracker.set_focus_action(msg["action"], _summon_name != "")
+	s_tracker.set_active_summon(msg["summon"])
+	s_tracker.set_focus_action(msg["action"])
 	_highlight_source_range()
 	selector.set_update_selection_func(_update_selection_ref)
 	_connect_signals()
@@ -165,11 +160,8 @@ func _execute_action() -> void:
 	s_tracker.clear_highlights()
 	s_tracker.clear_indicators()
 	var action: Action = s_tracker.get_focus_action()
-	if _summon_name != "":
-		s_tracker.emit_spawn_action_confirmed(
-				_summon_name,
-				action.get_emission_pos()
-		)
+	if s_tracker.get_active_summon() != "":
+		s_tracker.emit_spawn_action_confirmed()
 	SignalBus.emit_character_action_executed(
 			s_tracker.focused_character,
 			action,
@@ -182,11 +174,11 @@ func _execute_action() -> void:
 ## Clears out the caches and resets recorded details.
 func _reset() -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
-	_summon_name = ""
-	s_tracker.set_focus_action(null, false)
+	s_tracker.set_active_summon("")
+	s_tracker.set_focus_action(null)
 
 
-## Executes the action if it has been confirmed, otherwise resetting the
+## Queues the action if it has been confirmed, otherwise resetting the
 ## "SelectAction" state with the new action, specifying if it is a spawn action
 ## or not.
 func _action_selected(action: Action, summon_name: String) -> void:
@@ -194,7 +186,7 @@ func _action_selected(action: Action, summon_name: String) -> void:
 		return
 	elif (
 		action == s_tracker.get_focus_action()
-		and summon_name == _summon_name
+		and summon_name == s_tracker.get_active_summon()
 		and not s_tracker.get_tracked_targets().is_empty()
 		and _can_execute()
 	):

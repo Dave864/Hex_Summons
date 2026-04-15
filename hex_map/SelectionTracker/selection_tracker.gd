@@ -38,6 +38,8 @@ var _player_characters: Array[Character] = []
 var _enemy_characters: Array[Character] = []
 ## The action whose ranges are being displayed.
 var _action: Action = null
+## The name of the currently active summon.
+var _summon: String = ""
 ## Caches the tile ids of action effect areas at different emission points.
 var _ranges_cache: Dictionary[int, Array] = {}
 ## Caches the characters the action will hit when cast at different emission
@@ -62,11 +64,8 @@ var _map_tiles: Tiles:
 
 ## Emits the spawn_action_confirmed signal with the summon name and emission
 ## position.
-func emit_spawn_action_confirmed(
-	summon_name: String,
-	emission_position: Vector3
-) -> void:
-	emit_signal("spawn_action_confirmed", summon_name, emission_position)
+func emit_spawn_action_confirmed() -> void:
+	emit_signal("spawn_action_confirmed", _summon, _action.get_emission_pos())
 
 
 ## Emits the camera_reposition signal with the position the encounter camera
@@ -131,7 +130,7 @@ func get_focus_action() -> Action:
 ## Updates the action whose ranges are to be displayed. Creates a distance
 ## map of the action's source range, accounting for dead range. Clears out the
 ## ranges and targets cache.
-func set_focus_action(new_action: Action, is_spawn_action: bool) -> void:
+func set_focus_action(new_action: Action) -> void:
 	var update_ranges: bool = _action != new_action
 	if update_ranges:
 		_action = new_action
@@ -170,8 +169,18 @@ func set_focus_action(new_action: Action, is_spawn_action: bool) -> void:
 			)
 		):
 			source_d_map.remove(index)
-	if is_spawn_action:
+	if _summon != "":
 		_remove_characters_from_source_range()
+
+
+## Gets the name of the active summon.
+func get_active_summon() -> String:
+	return _summon
+
+
+## Updates the name of the active summon.
+func set_active_summon(summon_name: String) -> void:
+	_summon = summon_name
 
 
 ## Returns the targets that are hit by the focused action in its current state.
