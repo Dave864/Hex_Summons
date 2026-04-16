@@ -9,6 +9,7 @@ extends SelectionTrackerState
 ## Connect to the player_turn_started signal from the SignalBus.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	selector.hide()
+	s_tracker.show_ghost_sprite(false)
 	s_tracker.focused_character = null
 
 
@@ -29,6 +30,10 @@ func _ready_connect_signals() -> void:
 ## to the `SelectMove` state.
 func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
 	s_tracker.focused_character = player
+	var start_position: Vector3 = (
+		hex_map.get_tile_at(s_tracker.player_index).get_character_position()
+	)
+	s_tracker.place_ghost_sprite(start_position)
 	state_machine.transition_to(MOVE)
 
 

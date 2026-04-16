@@ -38,6 +38,8 @@ var _player_characters: Array[Character] = []
 var _enemy_characters: Array[Character] = []
 ## The action whose ranges are being displayed.
 var _action: Action = null
+## The points of the movement path for the currently selected destination.
+var _move_path: PackedVector3Array = []
 ## The name of the currently active summon.
 var _summon: String = ""
 ## Caches the tile ids of action effect areas at different emission points.
@@ -112,10 +114,12 @@ func set_focused_character(new_focus: Character) -> void:
 	if _enemy_characters.size() == 0:
 		return
 	_movement_tile_ids.clear()
+	var ghost_sprite: EncounterSprite = $GhostPosition/GhostSprite
 	if focused_character == null:
-		$GhostPosition/GhostSprite.texture = null
+		ghost_sprite.texture = null
 		return
-	$GhostPosition/GhostSprite.texture = focused_character.character_sprite.texture
+	ghost_sprite.texture = focused_character.character_sprite.texture
+	ghost_sprite.set_y_offset(focused_character.character_sprite.get_y_offset())
 	_movement_tile_ids = hex_map.range_finder.get_character_travesible_tiles(
 			focused_character,
 			_enemy_characters
@@ -171,6 +175,16 @@ func set_focus_action(new_action: Action) -> void:
 			source_d_map.remove(index)
 	if _summon != "":
 		_remove_characters_from_source_range()
+
+
+## Gets the currently recorded movement path.
+func get_movement_path() -> PackedVector3Array:
+	return _move_path
+
+
+## Updates the recorded movement path.
+func set_movement_path(new_path: PackedVector3Array) -> void:
+	_move_path = new_path
 
 
 ## Gets the name of the active summon.
@@ -356,8 +370,14 @@ func clear_indicators() -> void:
 	_selectable_map_indexes.clear()
 
 
-## Shows or hides the ghost sprite.
+## Shows or hides the ghost sprite. If set to reveal, the ghost sprite will be
+## hidden if it is placed at the same point as the current focused character.
 func show_ghost_sprite(reveal: bool) -> void:
+	if reveal and focused_character != null:
+		var character_pos: Vector3 = (
+			hex_map.get_tile_at(player_index).get_character_position()
+		)
+		reveal = !character_pos.is_equal_approx(_ghost_position.position)
 	_ghost_position.visible = reveal
 
 

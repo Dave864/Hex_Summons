@@ -22,6 +22,7 @@ var _move_origin_index: int = -1
 ## Reveal the selector shape and enable the ability to update tile highlights.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	selector.show()
+	s_tracker.show_ghost_sprite(true)
 	if _move_origin_index < 0:
 		_move_origin_index = s_tracker.player_index
 	var character_tile: MapTile = hex_map.get_tile_at(s_tracker.player_index)
@@ -166,6 +167,9 @@ func _on_SignalBus_move_path_requested() -> void:
 					s_tracker.get_movement_area_ids()
 			)
 		)
+		s_tracker.set_movement_path(path_data)
+		s_tracker.place_ghost_sprite(target_tile.get_character_position())
+		s_tracker.show_ghost_sprite(true)
 		SignalBus.emit_move_path_created(path_data)
 		s_tracker.emit_new_focus_point(target_tile.get_character_position())
 		state_machine.transition_to(PAUSE)
