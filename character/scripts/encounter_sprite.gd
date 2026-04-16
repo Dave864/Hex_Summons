@@ -40,6 +40,16 @@ func _process(_delta):
 	global_position = world_pos
 
 
+## Gets the y-offset of the sprite.
+func get_y_offset() -> float:
+	return _y_offset
+
+
+## Updates the y-offset of the sprite.
+func set_y_offset(new_offset: float) -> void:
+	_y_offset = new_offset
+
+
 func _check_for_required_parameters() -> void:
 	assert(
 			char_pos != null,

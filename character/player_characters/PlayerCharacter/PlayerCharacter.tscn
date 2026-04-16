@@ -53,7 +53,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 shape = ExtResource("6_htock")
 
 [node name="EncounterSprite" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.55, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.55, 0)
 material_override = SubResource("ShaderMaterial_botec")
 pixel_size = 0.0054
 billboard = 1
