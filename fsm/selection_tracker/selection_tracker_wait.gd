@@ -34,6 +34,7 @@ func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
 		hex_map.get_tile_at(s_tracker.player_index).get_character_position()
 	)
 	s_tracker.place_ghost_sprite(start_position)
+	s_tracker.target_index = s_tracker.player_index
 	state_machine.transition_to(MOVE)
 
 

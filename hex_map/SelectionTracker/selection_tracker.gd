@@ -29,6 +29,11 @@ var player_index: int:
 		if focused_character == null:
 			return -1
 		return focused_character.map_coordinate.get_tile_index()
+## The index currently selected for movement. Returns player index if less
+## than 0.
+var target_index: int = -1:
+	get:
+		return target_index if target_index >= 0 else player_index
 ## Stores the distance map of the source range.
 var source_d_map: DistanceMap = null
 
