@@ -12,10 +12,11 @@ config_version=5
 
 config/name="Hex_Summons"
 config/description="A tactics RPG with an emphasis on summoning."
-config/version="p0.10"
+config/version="p0.11"
 config/features=PackedStringArray("4.5")
-boot_splash/image="uid://dhnd5cdby1o1j"
-config/icon="uid://yol1qr3x5hry"
+boot_splash/bg_color=Color(1, 0.49803922, 0.7137255, 1)
+boot_splash/image="uid://dt4m5q7n5uihc"
+config/icon="uid://yq8a4poshlxe"
 
 [autoload]
 
