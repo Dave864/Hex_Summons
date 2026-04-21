@@ -159,6 +159,7 @@ func _resolve_joystick_for_area(dir: HexUtil.HexDirection) -> void:
 func _execute_action() -> void:
 	s_tracker.clear_highlights()
 	s_tracker.clear_indicators()
+	selector.hide()
 	var action: Action = s_tracker.get_focus_action()
 	if s_tracker.get_active_summon() != "":
 		s_tracker.emit_spawn_action_confirmed()
