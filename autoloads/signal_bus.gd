@@ -18,14 +18,14 @@ signal spawn_action_selected(summon, action)
 signal character_action_executed(character, action, targets)
 ## Indicates that a selected option has been canceled.
 signal character_action_type_canceled()
+## Indicates that a player character has finished moving.
+signal character_movement_finished()
 # Enemy character related signals.
 ## Indicates an enemy character has started their turn.
 signal enemy_turn_started(character)
 # Encounter selection signals
 ## Indicates that the selector node needs to be active.
 signal selector_required(start_index)
-## Indicates that the selector is disabled, or paused.
-signal selector_paused()
 ## Indicates that the selector node needs to display details for an action.
 signal action_selector_required(action)
 ## Indicates that a move path needs to be created.
@@ -83,6 +83,11 @@ func emit_character_action_type_canceled() -> void:
 	emit_signal("character_action_type_canceled")
 
 
+## Inidicates that a player character has finished moving.
+func emit_character_movement_finished() -> void:
+	emit_signal("character_movement_finished")
+
+
 ## Indicates that the enemy character has started their turn.
 func emit_enemy_turn_started(ec: EnemyCharacter) -> void:
 	emit_signal("enemy_turn_started", ec)
@@ -91,11 +96,6 @@ func emit_enemy_turn_started(ec: EnemyCharacter) -> void:
 ## Indicates that the selector should be reactivated at the given index.
 func emit_selector_required(start_index: int) -> void:
 	emit_signal("selector_required", start_index)
-
-
-## Indicates that the selector is disabled, or paused.
-func emit_selector_paused() -> void:
-	emit_signal("selector_paused")
 
 
 ## Indicates that the selector is required to display the details for an action.

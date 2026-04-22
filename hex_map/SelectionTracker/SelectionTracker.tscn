@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="2_14xsr"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="2_qbj8e"]
 [ext_resource type="Script" uid="uid://bx1htexjad2n7" path="res://fsm/selection_tracker/selection_tracker_wait.gd" id="3_63qsx"]
-[ext_resource type="Script" uid="uid://c5yio7ankf2nt" path="res://fsm/selection_tracker/selection_tracker_pause.gd" id="4_qbj8e"]
+[ext_resource type="Script" uid="uid://c5yio7ankf2nt" path="res://fsm/selection_tracker/selection_tracker_process.gd" id="4_qbj8e"]
 [ext_resource type="Script" uid="uid://b4yyn75ft4nuk" path="res://fsm/selection_tracker/selection_tracker_move.gd" id="5_c5fpm"]
 [ext_resource type="Script" uid="uid://0sdrxsyng5sc" path="res://fsm/selection_tracker/selection_tracker_directional_action.gd" id="6_naanh"]
 [ext_resource type="Script" uid="uid://daec4tatweocn" path="res://fsm/selection_tracker/selection_tracker_positional_action.gd" id="7_sgvcq"]
@@ -31,7 +31,7 @@ metadata/_custom_type_script = "uid://dcm1t8lpe3xej"
 [node name="Wait" type="Node" parent="StateMachine"]
 script = ExtResource("3_63qsx")
 
-[node name="Pause" type="Node" parent="StateMachine"]
+[node name="Process" type="Node" parent="StateMachine"]
 script = ExtResource("4_qbj8e")
 
 [node name="Move" type="Node" parent="StateMachine"]

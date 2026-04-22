@@ -6,8 +6,8 @@ extends SelectionTrackerAction
 ##
 ## Goes to 'SelectPositionalaction' or 'SelectDirectional' action if a different
 ## corresponding action is selected. Goes to the 'SelectMove' state when the UI
-## signals that the action type has been canceled. Goes to the 'Wait' state when
-## the UI signals that the character turn has ended.
+## signals that the action type has been canceled. Goes to the 'Process' state
+## when the UI signals that the character turn has been finalized.
 
 
 ## Checks that all state data has been provided and places the selector.

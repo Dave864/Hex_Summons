@@ -10,7 +10,7 @@ const START := "Start"
 const MOVE := "Move"
 const DIRECTIONAL_ACTION := "DirectionalAction"
 const POSITIONAL_ACTION := "PositionalAction"
-const PAUSE := "Pause"
+const PROCESS := "Process"
 const WAIT := "Wait"
 
 ## Typed reference to the SelectionTracker node.

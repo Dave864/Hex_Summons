@@ -2,8 +2,8 @@ class_name EncounterUIAction
 extends EncounterUIState
 ## The logic for what happens when an EncounterUI scene is in the `Action` state.
 ##
-## Activates the player options menu. When a movement path has been created, goes
-## to the `Pause` state.
+## Activates the player options menu. Goes to the `Wait` state when the turn has
+## been finalized.
 
 
 ## Called by the state machine upon changing the active state. The `msg` parameter
@@ -24,9 +24,9 @@ func exit() -> void:
 ## These signals are used by other states and will be disconnected to avoid
 ## unintended behavior.
 func _connect_signals() -> void:
-	encounter_ui.get_focused_character().connect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
+	SignalBus.connect(
+			"player_turn_finalized",
+			Callable(self, "_on_SignalBus_player_turn_finalized")
 	)
 	SignalBus.connect(
 			"character_action_selected",
@@ -39,18 +39,14 @@ func _connect_signals() -> void:
 	SignalBus.connect(
 			"character_action_executed",
 			Callable(self, "_on_SignalBus_character_action_executed")
-	)
-	SignalBus.connect(
-			"move_path_created",
-			Callable(self, "_on_SignalBus_move_path_created")
 	)
 
 
 ## Disconnect the signals connected to this state.
 func _disconnect_signals() -> void:
-	encounter_ui.get_focused_character().disconnect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
+	SignalBus.disconnect(
+			"player_turn_finalized",
+			Callable(self, "_on_SignalBus_player_turn_finalized")
 	)
 	SignalBus.disconnect(
 			"character_action_selected",
@@ -64,19 +60,15 @@ func _disconnect_signals() -> void:
 			"character_action_executed",
 			Callable(self, "_on_SignalBus_character_action_executed")
 	)
-	SignalBus.disconnect(
-			"move_path_created",
-			Callable(self, "_on_SignalBus_move_path_created")
-	)
 
 
-## Indicates that the current player turn has ended.
+## Indicates that the current player turn has been finalized.
 func _on_PlayerOptionsUI_wait_selected() -> void:
-	encounter_ui.get_focused_character().emit_turn_ended()
+	SignalBus.emit_player_turn_finalized()
 
 
-## Go to the WAIT state when the character turn has ended.
-func _on_Character_turn_ended() -> void:
+## Go to the WAIT state when the character turn has been finalized.
+func _on_SignalBus_player_turn_finalized() -> void:
 	state_machine.transition_to(WAIT)
 
 
@@ -87,10 +79,3 @@ func _on_SignalBus_character_action_executed(
 	_targets: Array
 ) -> void:
 	encounter_ui.display_player_menu(false)
-
-
-## Triggered when a move tile has been selected and a path created to said tile.
-func _on_SignalBus_move_path_created(_path: PackedVector3Array) -> void:
-	if not _state_is_active():
-		return
-	state_machine.transition_to(PAUSE)

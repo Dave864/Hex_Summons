@@ -5,8 +5,8 @@ extends SelectionTrackerState
 ##
 ## Goes to the relevant action type state when a new action is chosen.
 ## Goes to the 'Move' state when the UI signals that the action type has
-## been canceled. Goes to the 'Wait' state when the UI signals that the
-## character turn has been terminated.
+## been canceled. Goes to the 'Process' state when the player turn has been
+## finalized.
 
 
 ## Reference to the function that will update the tile highlights.
@@ -155,23 +155,6 @@ func _resolve_joystick_for_area(dir: HexUtil.HexDirection) -> void:
 		_update_selection(adjacent_tile)
 
 
-## Activates the targets and prompts the action to be executed.
-func _execute_action() -> void:
-	s_tracker.clear_highlights()
-	s_tracker.clear_indicators()
-	selector.hide()
-	var action: Action = s_tracker.get_focus_action()
-	if s_tracker.get_active_summon() != "":
-		s_tracker.emit_spawn_action_confirmed()
-	SignalBus.emit_character_action_executed(
-			s_tracker.focused_character,
-			action,
-			s_tracker.get_tracked_targets()
-	)
-	_reset()
-	state_machine.transition_to(PAUSE)
-
-
 ## Clears out the caches and resets recorded details.
 func _reset() -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
@@ -191,7 +174,7 @@ func _action_selected(action: Action, summon_name: String) -> void:
 		and not s_tracker.get_tracked_targets().is_empty()
 		and _can_execute()
 	):
-		_execute_action()
+		SignalBus.emit_player_turn_finalized()
 	else:
 		var next_state: String = (
 			DIRECTIONAL_ACTION if action.is_directional()
@@ -223,6 +206,10 @@ func _connect_signals() -> void:
 			Callable(self, "_on_Character_turn_ended")
 	)
 	SignalBus.connect(
+			"player_turn_finalized",
+			Callable(self, "_on_SignalBus_player_turn_finalized")
+	)
+	SignalBus.connect(
 			"character_action_selected",
 			Callable(self, "_on_SignalBus_character_action_selected")
 	)
@@ -249,6 +236,10 @@ func _disconnect_signals() -> void:
 	s_tracker.focused_character.disconnect(
 			"turn_ended",
 			Callable(self, "_on_Character_turn_ended")
+	)
+	SignalBus.disconnect(
+			"player_turn_finalized",
+			Callable(self, "_on_SignalBus_player_turn_finalized")
 	)
 	SignalBus.disconnect(
 			"character_action_selected",
@@ -297,6 +288,11 @@ func _on_SignalBus_character_action_type_canceled() -> void:
 func _on_Character_turn_ended() -> void:
 	_reset()
 	state_machine.transition_to(WAIT)
+
+
+## Go to the "PROCESS" state when the turn has been finalized.
+func _on_SignalBus_player_turn_finalized() -> void:
+	state_machine.transition_to(PROCESS)
 
 
 ## Update the mouse tracker when the camera changes orientation.

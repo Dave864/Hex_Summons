@@ -2,11 +2,10 @@ class_name SelectionTrackerMove
 extends SelectionTrackerState
 ## The logic for what happens when the SelectionTracker is in the 'Move' state.
 ##
-## When the input for selecting a tile is given, the SelectionTracker moves to
-## the 'Pause' state and a signal is emitted indicating which tile was selected.
+## When the input for selecting a tile is given, the movement path is recorded.
 ## If an action option is selected in the UI, the Selector moves to the
 ## appropriate action state ('PositionalAction' or 'DirectionalAction'). If the
-## character turn ends, go to the 'Wait' state.
+## turn is finalized, go to the 'Process' state.
 
 
 ## The starting index for the movement area.
@@ -43,6 +42,10 @@ func exit() -> void:
 ## Connect signals to this state.
 func _connect_signals() -> void:
 	_connect_character_turn_ended()
+	SignalBus.connect(
+			"player_turn_finalized",
+			Callable(self, "_on_SignalBus_player_turn_finalized")
+	)
 	SignalBus.connect(
 			"move_path_requested",
 			Callable(self, "_on_SignalBus_move_path_requested")
@@ -83,6 +86,10 @@ func _connect_character_turn_ended():
 ## Disconnect signals from this state that are reused by other states in this
 ## state machine.
 func _disconnect_signals() -> void:
+	SignalBus.disconnect(
+			"player_turn_finalized",
+			Callable(self, "_on_SignalBus_player_turn_finalized")
+	)
 	SignalBus.disconnect(
 			"move_path_requested",
 			Callable(self, "_on_SignalBus_move_path_requested")
@@ -154,6 +161,11 @@ func _on_Character_turn_ended() -> void:
 		state_machine.transition_to(WAIT)
 
 
+## Go to the "PROCESS" state when the turn has been finalized.
+func _on_SignalBus_player_turn_finalized() -> void:
+	state_machine.transition_to(PROCESS)
+
+
 ## Creates the movement path to the selected tile if said tile is valid.
 func _on_SignalBus_move_path_requested() -> void:
 	var target_tile: MapTile = selector.tile_hovered
@@ -169,9 +181,7 @@ func _on_SignalBus_move_path_requested() -> void:
 		s_tracker.set_movement_path(path_data)
 		s_tracker.move_target_index = target_tile.map_coordinate.get_tile_index()
 		s_tracker.show_ghost_sprite(true)
-		#SignalBus.emit_move_path_created(path_data)
 		s_tracker.emit_new_focus_point(target_tile.get_character_position())
-		#state_machine.transition_to(PAUSE)
 
 
 ## Go to the "SelectAction" state when the UI signals that an action was selected.
