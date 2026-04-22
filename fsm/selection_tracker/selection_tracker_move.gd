@@ -25,10 +25,10 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	s_tracker.show_ghost_sprite(true)
 	if _move_origin_index < 0:
 		_move_origin_index = s_tracker.player_index
-	var character_tile: MapTile = hex_map.get_tile_at(s_tracker.target_index)
+	var character_tile: MapTile = hex_map.get_tile_at(s_tracker.move_target_index)
 	s_tracker.emit_new_focus_point(character_tile.get_character_position())
 	s_tracker.highlight_player_movement(_move_origin_index)
-	_update_selection(hex_map.get_tile_at(s_tracker.target_index))
+	_update_selection(hex_map.get_tile_at(s_tracker.move_target_index))
 	s_tracker.set_selector_update(_update_selection_ref)
 	_connect_signals()
 
@@ -168,7 +168,7 @@ func _on_SignalBus_move_path_requested() -> void:
 		)
 		s_tracker.set_movement_path(path_data)
 		s_tracker.place_ghost_sprite(target_tile.get_character_position())
-		s_tracker.target_index = target_tile.map_coordinate.get_tile_index()
+		s_tracker.move_target_index = target_tile.map_coordinate.get_tile_index()
 		s_tracker.show_ghost_sprite(true)
 		SignalBus.emit_move_path_created(path_data)
 		s_tracker.emit_new_focus_point(target_tile.get_character_position())

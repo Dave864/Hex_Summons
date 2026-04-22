@@ -31,9 +31,9 @@ var player_index: int:
 		return focused_character.map_coordinate.get_tile_index()
 ## The index currently selected for movement. Returns player index if less
 ## than 0.
-var target_index: int = -1:
+var move_target_index: int = -1:
 	get:
-		return target_index if target_index >= 0 else player_index
+		return move_target_index if move_target_index >= 0 else player_index
 ## Stores the distance map of the source range.
 var source_d_map: DistanceMap = null
 
@@ -146,7 +146,7 @@ func set_focus_action(new_action: Action) -> void:
 	# Checks if the focus character has moved to a different spot if a distance
 	# map for the source range has been previously made. If the character has
 	# not moved, we can reuse the previous cache values and distance map.
-	elif source_d_map != null and source_d_map.origin == player_index:
+	elif source_d_map != null and source_d_map.origin == move_target_index:
 		return
 	_ranges_cache.clear()
 	_targets_cache.clear()
@@ -156,7 +156,7 @@ func set_focus_action(new_action: Action) -> void:
 	# instance.
 	if _action == null:
 		return
-	var d_map: DistanceMap = hex_map.range_finder.dist_maps.at(player_index)
+	var d_map: DistanceMap = hex_map.range_finder.dist_maps.at(move_target_index)
 	var source_reach: int = _action.stats.source_range.get_reach()
 	source_d_map = (
 			d_map.map_from_tile_dist(source_reach)
@@ -164,13 +164,13 @@ func set_focus_action(new_action: Action) -> void:
 			else d_map.map_from_travel_dist(source_reach)
 	)
 	var dead_indexes: Array[int] = _action.stats.dead_range.get_area_indexes(
-			player_index,
+			move_target_index,
 			hex_map
 	)
 	var dead_reach: int = _action.stats.dead_range.get_reach()
 	for index in dead_indexes:
 		if (
-			index != player_index 
+			index != move_target_index 
 			and source_d_map.has(index)
 			and (
 				_action.stats.source_ignore_heights or
@@ -232,7 +232,7 @@ func get_movement_area_ids() -> Array[int]:
 ## character position to determine where to set the character highlight.
 func highlight_player_movement(start_index: int = -1) -> void:
 	# Activate the selector at the character's current position.
-	var character_tile: MapTile = _map_tiles.get_at(player_index)
+	var character_tile: MapTile = _map_tiles.get_at(move_target_index)
 	character_tile.set_selector_type(HexHighlighter.Option.SELECT_MOVE)
 	
 	# Set the tile highlights.
@@ -247,7 +247,7 @@ func highlight_player_movement(start_index: int = -1) -> void:
 		elif occupant.get_type() == Character.Type.ENEMY:
 			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_ENEMY)
 		elif occupant.get_instance_id() == focused_character.get_instance_id():
-			if start_index < 0 or start_index == player_index:
+			if start_index < 0 or start_index == move_target_index:
 				tile.set_highlight_type(HexHighlighter.Option.ORIGIN_PLAYER)
 			else:
 				tile.set_highlight_type(HexHighlighter.Option.RANGE_MOVE)
@@ -262,7 +262,7 @@ func highlight_action_source_area() -> void:
 	for index: int in source_d_map.tile_ids():
 		var tile: MapTile = _map_tiles.get_at(index)
 		var occupant: Character = tile.occupant.get_current_occupant()
-		if index == player_index:
+		if index == move_target_index:
 			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_PLAYER)
 		elif occupant == null:
 			tile.set_highlight_type(HexHighlighter.Option.RANGE_SOURCE)
@@ -445,7 +445,7 @@ func _track_targets(key: int, effect_ids: Array[int]) -> void:
 			target_ally
 			or (target_enemy and c is EnemyCharacter)
 			or (
-				c.map_coordinate.get_tile_index() == player_index
+				c.map_coordinate.get_tile_index() == move_target_index
 				and target_self
 			)
 		):
