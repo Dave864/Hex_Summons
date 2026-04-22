@@ -169,9 +169,9 @@ func _on_SignalBus_move_path_requested() -> void:
 		s_tracker.set_movement_path(path_data)
 		s_tracker.move_target_index = target_tile.map_coordinate.get_tile_index()
 		s_tracker.show_ghost_sprite(true)
-		SignalBus.emit_move_path_created(path_data)
+		#SignalBus.emit_move_path_created(path_data)
 		s_tracker.emit_new_focus_point(target_tile.get_character_position())
-		state_machine.transition_to(PAUSE)
+		#state_machine.transition_to(PAUSE)
 
 
 ## Go to the "SelectAction" state when the UI signals that an action was selected.
