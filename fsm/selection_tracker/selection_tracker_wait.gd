@@ -37,4 +37,5 @@ func _on_SignalBus_player_turn_started(player: PlayerCharacter) -> void:
 ## Move to the `SelectMove` state. The active character should have already
 ## been set by the Encounter FSM.
 func _on_SignalBus_summon_turn_started() -> void:
+	s_tracker.move_target_index = s_tracker.player_index
 	state_machine.transition_to(MOVE)

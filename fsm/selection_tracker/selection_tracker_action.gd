@@ -70,7 +70,7 @@ func _get_target_distances() -> Array[Array]:
 	var target_distances: Array[Array] = []
 	for option: Character in potential_targets:
 		var dist: float = hex_map.range_finder.travel_distance(
-				s_tracker.player_index,
+				s_tracker.move_target_index,
 				option.map_coordinate.get_tile_index()
 		)
 		target_distances.append([option, dist])
@@ -85,7 +85,7 @@ func _is_target_tile(map_tile: MapTile) -> bool:
 	if map_tile == null:
 		return false
 	var is_caster: bool = (
-		map_tile.map_coordinate.get_tile_index() == s_tracker.player_index
+		map_tile.map_coordinate.get_tile_index() == s_tracker.move_target_index
 	)
 	var target_types: Dictionary[ActionEffect.Target, bool] = (
 		s_tracker.get_focus_action().get_target_types()

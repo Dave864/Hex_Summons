@@ -159,6 +159,8 @@ func set_focus_action(new_action: Action) -> void:
 	# instance.
 	if _action == null:
 		return
+	_action.set_emission_map_index(move_target_index)
+	_action.set_emission_pos(get_move_target_position())
 	var d_map: DistanceMap = hex_map.range_finder.dist_maps.at(move_target_index)
 	var source_reach: int = _action.stats.source_range.get_reach()
 	source_d_map = (

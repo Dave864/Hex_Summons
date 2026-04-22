@@ -4,7 +4,7 @@ extends SelectionTrackerAction
 ## 'SelectDirectionalAction' state. Handles the selection display of ranges
 ## that are emitted from the caster's position in a specific direction.
 ##
-## Goes to 'SelectPositionalaction' or 'SelectDirectional' action if a different
+## Goes to 'SelectPositionalAction' or 'SelectDirectionalAction' if a different
 ## corresponding action is selected. Goes to the 'SelectMove' state when the UI
 ## signals that the action type has been canceled. Goes to the 'Wait' state when
 ## the UI signals that the character turn has ended.
@@ -49,11 +49,7 @@ func _update_selection(map_tile: MapTile) -> void:
 ## position.
 func _orient_emission_to_mouse() -> void:
 	var action: Action = s_tracker.get_focus_action()
-	var focus_character: Character = s_tracker.focused_character
-	var focus_index: int = focus_character.map_coordinate.get_tile_index()
-	var focus_pos: Vector3 = focus_character.position
-	action.set_emission_map_index(focus_index)
-	action.set_emission_pos(focus_pos)
+	var focus_pos: Vector3 = s_tracker.get_move_target_position()
 	var character_pt := Vector2(focus_pos.x, focus_pos.z)
 	var mouse_pt := Vector2(
 		MouseHandler.get_3d_position().x,
@@ -63,7 +59,7 @@ func _orient_emission_to_mouse() -> void:
 	# coordinates.
 	var vector_to_mouse: Vector2 = (mouse_pt - character_pt).normalized()
 	var dir: int = HexUtil.get_hex_direction(vector_to_mouse)
-	var source_tile: MapTile = hex_map.get_tile_at(focus_index)
+	var source_tile: MapTile = hex_map.get_tile_at(s_tracker.move_target_index)
 	var target_tile: MapTile = source_tile.get_adjacent_tile(dir)
 	if _is_target_tile(target_tile):
 		action.set_emission_direction(dir)
@@ -74,9 +70,7 @@ func _orient_emission_to_mouse() -> void:
 ## position.
 func _orient_emission_to_tile(map_tile: MapTile) -> void:
 	var action: Action = s_tracker.get_focus_action()
-	var character_pos: Vector3 = s_tracker.focused_character.position
-	action.set_emission_map_index(s_tracker.player_index)
-	action.set_emission_pos(character_pos)
+	var character_pos: Vector3 = s_tracker.get_move_target_position()
 	var character_pt: Vector2 = Vector2(character_pos.x, character_pos.z)
 	var tile_pt: Vector2 = Vector2(map_tile.position.x, map_tile.position.z)
 	var vector_dir: Vector2 = (tile_pt - character_pt).normalized()
@@ -97,9 +91,7 @@ func _orient_to_closest_target() -> void:
 	_orient_emission_to_tile(target_tile)
 	# Place the selector at the closest point to keep it within player focus.
 	var action: Action = s_tracker.get_focus_action()
-	var emission_tile: MapTile = hex_map.get_tile_at(
-			action.get_emission_map_index()
-	)
+	var emission_tile: MapTile = hex_map.get_tile_at(s_tracker.move_target_index)
 	selector.tile_hovered = emission_tile.get_adjacent_tile(
 			action.get_emission_direction()
 	)
@@ -109,7 +101,7 @@ func _orient_to_closest_target() -> void:
 ## in a direction the character can reach. Returns if the direction was set.
 func _fix_orientation() -> bool:
 	var cube_coord: Vector3 = HexUtil.index_to_cube(
-			s_tracker.player_index,
+			s_tracker.move_target_index,
 			hex_map.get_x_count()
 	)
 	var action: Action = s_tracker.get_focus_action()
@@ -134,7 +126,7 @@ func _fix_orientation() -> bool:
 ## so if able.
 func _resolve_joystick_for_direction(dir: HexUtil.HexDirection) -> void:
 	var character_tile: MapTile = hex_map.get_tile_at(
-			s_tracker.player_index
+			s_tracker.move_target_index
 	)
 	var direction_tile: MapTile = character_tile.get_adjacent_tile(dir)
 	if _is_target_tile(direction_tile):

@@ -16,8 +16,8 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	var action: Action = s_tracker.get_focus_action()
 	if action.is_centered_on_caster():
 		s_tracker.emit_camera_focus_locked()
-		selector.tile_hovered = hex_map.get_tile_at(s_tracker.player_index)
-		_update_emission_tile(s_tracker.player_index)
+		selector.tile_hovered = hex_map.get_tile_at(s_tracker.move_target_index)
+		_update_emission_tile(s_tracker.move_target_index)
 	else:
 		_place_closest_to_target()
 
@@ -78,16 +78,16 @@ func _place_closest_to_target() -> void:
 	var target_details: Array[Variant] = _get_target_distances()[0]
 	var target_index: int = target_details[0].map_coordinate.get_tile_index()
 	var character_index_details: DistanceData = (
-		s_tracker.source_d_map.all_dist_at(s_tracker.player_index)
+		s_tracker.source_d_map.all_dist_at(s_tracker.move_target_index)
 	)
 	# When processing a spawn action, all character indexes are removed from the
 	# source range. We don't need to ignore the index if it is not present.
 	var ignore_character_index: bool = (
-		s_tracker.source_d_map.has(s_tracker.player_index)
+		s_tracker.source_d_map.has(s_tracker.move_target_index)
 		and action.stats.dead_range.get_reach() > 0
 	)
 	if ignore_character_index:
-		s_tracker.source_d_map.remove(s_tracker.player_index)
+		s_tracker.source_d_map.remove(s_tracker.move_target_index)
 	var closest_index: int = hex_map.range_finder.get_closest_in_area(
 			target_index,
 			s_tracker.source_d_map.tile_ids()
@@ -95,7 +95,7 @@ func _place_closest_to_target() -> void:
 	# Add back in character details if they were removed to preserve details.
 	if ignore_character_index:
 		s_tracker.source_d_map.add(
-				s_tracker.player_index,
+				s_tracker.move_target_index,
 				character_index_details
 		)
 	if closest_index < 0:
@@ -115,14 +115,14 @@ func _place_closest_to_target() -> void:
 ## specified tile. Emission is not placed if no valid source tile could be found.
 func _place_closest_to_tile(tile_index: int) -> void:
 	var character_index_details: DistanceData = (
-		s_tracker.source_d_map.all_dist_at(s_tracker.player_index)
+		s_tracker.source_d_map.all_dist_at(s_tracker.move_target_index)
 	)
 	var action: Action = s_tracker.get_focus_action()
 	var ignore_character_index: bool = action.stats.dead_range.get_reach() > 0
 	# Remove character index when looking at dead range to prevent character
 	# position from being considered a valid placement spot.
 	if ignore_character_index:
-		s_tracker.source_d_map.remove(s_tracker.player_index)
+		s_tracker.source_d_map.remove(s_tracker.move_target_index)
 	var closest_index: int = hex_map.range_finder.get_closest_in_area(
 			tile_index,
 			s_tracker.source_d_map.tile_ids()
@@ -131,7 +131,7 @@ func _place_closest_to_tile(tile_index: int) -> void:
 	# map.
 	if ignore_character_index:
 		s_tracker.source_d_map.add(
-				s_tracker.player_index,
+				s_tracker.move_target_index,
 				character_index_details
 		)
 	if closest_index < 0:
