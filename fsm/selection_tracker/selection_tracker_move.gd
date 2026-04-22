@@ -167,7 +167,6 @@ func _on_SignalBus_move_path_requested() -> void:
 			)
 		)
 		s_tracker.set_movement_path(path_data)
-		s_tracker.place_ghost_sprite(target_tile.get_character_position())
 		s_tracker.move_target_index = target_tile.map_coordinate.get_tile_index()
 		s_tracker.show_ghost_sprite(true)
 		SignalBus.emit_move_path_created(path_data)

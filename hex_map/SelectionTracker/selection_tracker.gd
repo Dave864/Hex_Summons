@@ -32,6 +32,9 @@ var player_index: int:
 ## The index currently selected for movement. Returns player index if less
 ## than 0.
 var move_target_index: int = -1:
+	set(value):
+		move_target_index = value
+		_place_ghost_sprite()
 	get:
 		return move_target_index if move_target_index >= 0 else player_index
 ## Stores the distance map of the source range.
@@ -386,9 +389,18 @@ func show_ghost_sprite(reveal: bool) -> void:
 	_ghost_position.visible = reveal
 
 
-## Places the ghost sprite at the specified position.
-func place_ghost_sprite(new_position: Vector3) -> void:
-	_ghost_position.position = new_position
+## Returns the position of the movement target index (i.e. where the ghost
+## sprite is placed).
+func get_move_target_position() -> Vector3:
+	return _ghost_position.position
+
+
+## Places the ghost sprite at the position of the movement target.
+func _place_ghost_sprite() -> void:
+	if hex_map == null or move_target_index < 0:
+		return
+	var target_tile: MapTile = hex_map.get_tile_at(move_target_index)
+	_ghost_position.position = target_tile.get_character_position()
 
 
 ## Removes tile indices that contain a character from the current source range.
