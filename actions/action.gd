@@ -61,14 +61,14 @@ func is_directional() -> bool:
 	return stats.effect_range is DirectionalAreaRange
 
 
-## Set the tile index the effect is emitted from.
-func set_emission_map_index(index: int) -> void:
-	_emission_map_index = index
-
-
 ## Return the index of the map tile the emission point is at.
 func get_emission_map_index() -> int:
 	return _emission_map_index
+
+
+## Set the tile index the effect is emitted from.
+func set_emission_map_index(index: int) -> void:
+	_emission_map_index = index
 
 
 ## Returns the origin point of the emission transform.
@@ -80,6 +80,11 @@ func get_emission_pos() -> Vector3:
 func set_emission_pos(pos: Vector3) -> void:
 	_emission_transform.origin = pos
 	_hit_box.transform = _emission_transform
+
+
+## Get the direction of the emission.
+func get_emission_direction() -> HexUtil.HexDirection:
+	return _emission_direction
 
 
 ## Set the direction of the emission. Only updates the direction if the action
@@ -94,11 +99,6 @@ func set_emission_direction(dir: HexUtil.HexDirection) -> void:
 	else:
 		_emission_transform.basis = Basis.IDENTITY
 	_hit_box.transform = _emission_transform
-
-
-## Get the direction of the emission.
-func get_emission_direction() -> HexUtil.HexDirection:
-	return _emission_direction
 
 
 ## Get the hit box area of this action.
