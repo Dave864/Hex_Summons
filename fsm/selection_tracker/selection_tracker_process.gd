@@ -20,12 +20,18 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	)
 	s_tracker.clear_highlights()
 	s_tracker.clear_indicators()
+	s_tracker.show_ghost_sprite(false)
 	selector.hide()
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	var movement_path: PackedVector3Array = s_tracker.get_movement_path()
 	if movement_path.size() == 0:
 		_on_SignalBus_character_movement_finished()
 	else:
+		SignalBus.emit_position_camera_focus(
+				s_tracker.focused_character.position,
+				TrackingPoint.MovementType.DECAYING
+		)
+		await SignalBus.camera_target_reached
 		SignalBus.emit_move_path_created(movement_path)
 
 

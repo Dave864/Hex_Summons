@@ -35,7 +35,12 @@ func update(delta: float) -> void:
 	# This is to prevent the character from being moved to an undesired location
 	# after the movement_ended signal has been caught.
 	if _movement_active:
+		SignalBus.emit_position_camera_focus(
+				character.position,
+				TrackingPoint.MovementType.SNAP
+		)
 		character.position = character.hm_move_path.get_current_pos()
+		
 
 
 ## Called by the state machine before changing the active state.
