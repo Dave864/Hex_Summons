@@ -1,5 +1,5 @@
 @tool
-class_name MoveStepSprite
+class_name MovePathSprite
 extends Sprite3D
 ## A Sprite3D that shows the movement path for a single tile.
 ##

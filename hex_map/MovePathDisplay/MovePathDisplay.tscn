@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://t4lokbvdc1w1"]
 
 [ext_resource type="Texture2D" uid="uid://c74h4kwj4q00t" path="res://hex_map/MovePathDisplay/path_end.atlastex" id="1_1df3w"]
-[ext_resource type="Script" uid="uid://b140s3p2sr5su" path="res://hex_map/MovePathDisplay/move_step_sprite.gd" id="2_xaf3y"]
+[ext_resource type="Script" uid="uid://b140s3p2sr5su" path="res://hex_map/MovePathDisplay/move_path_sprite.gd" id="2_xaf3y"]
 
 [node name="MovePathDisplay" type="Node3D"]
 
-[node name="EndStepSprite" type="Sprite3D" parent="."]
+[node name="EndPathSprite" type="Sprite3D" parent="."]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 0, 0, 0)
-modulate = Color(1, 1, 1, 0.5019608)
+modulate = Color(1, 1, 1, 0.5)
 pixel_size = 0.0227
 axis = 1
 texture_filter = 2
