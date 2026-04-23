@@ -355,7 +355,6 @@ func _update_distance_map() -> void:
 	_hm_astar.set_all_disabled()
 
 	dist_maps.d_maps = d_maps
-	#var err: int = ResourceSaver.save(dist_maps, dist_maps.resource_path)
 	if not _save_distance_map():
 		printerr("Failed to save distance maps")
 
