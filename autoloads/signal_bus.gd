@@ -24,8 +24,8 @@ signal character_movement_finished()
 ## Indicates an enemy character has started their turn.
 signal enemy_turn_started(character)
 # Encounter selection signals
-## Indicates that the selector node needs to be active.
-signal selector_required(start_index)
+## Indicates that the encounter camera has finished moving.
+signal camera_target_reached()
 ## Indicates that the selector node needs to display details for an action.
 signal action_selector_required(action)
 ## Indicates that a move path needs to be created.
@@ -93,14 +93,14 @@ func emit_enemy_turn_started(ec: EnemyCharacter) -> void:
 	emit_signal("enemy_turn_started", ec)
 
 
-## Indicates that the selector should be reactivated at the given index.
-func emit_selector_required(start_index: int) -> void:
-	emit_signal("selector_required", start_index)
-
-
 ## Indicates that the selector is required to display the details for an action.
 func emit_action_selector_required(action: Action) -> void:
 	emit_signal("action_selector_required", action)
+
+
+## Indicates that the encounter camera has reached its movement destination.
+func emit_camera_target_reached() -> void:
+	emit_signal("camera_target_reached")
 
 
 ## Indicates that a move path needs to be made.

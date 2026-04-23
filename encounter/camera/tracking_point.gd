@@ -25,20 +25,18 @@ const SPEED_STEP := 0.1
 
 ## How the point should move towards the destination.
 @export var movement_type := MovementType.LINEAR
+## The movement speed of the point.
+@export_range(MIN_SPEED, MAX_SPEED, SPEED_STEP, "exp") var speed: float = 10.0
+## The rate at which speed decays when using decaying movement.
+@export_range(0.01, .99, 0.01) var decay_rate: float = 0.1
 ## The maximum distance away from the destintation the point can be before
 ## stopping a decaying move pattern.
 @export_range(0.0001, 0.01, 0.0001, "exp") var decay_cutoff: float = 0.001
-## The movement speed of the point.
-@export_range(MIN_SPEED, MAX_SPEED, SPEED_STEP, "exp") var speed: float = 10.0
 
 ## Flag that indicates if the destination has been reached.
 var _destination_reached: bool = true
 ## The distance to the destination.
 var _distance_to_destination: float = 0.0
-## The rate at which speed decays when using DECAYING movement.
-var _decay_rate: float:
-	get:
-		return (speed - MIN_SPEED + SPEED_STEP) / (MAX_SPEED - MIN_SPEED)
 
 ## The starting point for any movement step.
 @onready var _start_point: Vector3 = self.position
@@ -99,7 +97,7 @@ func _linear_movement(delta: float) -> void:
 
 ## The logic for handling decaying movement.
 func _decaying_movement() -> void:
-	position = position.lerp(_destination, _decay_rate)
+	position = position.lerp(_destination, decay_rate)
 	var distance: float = position.distance_squared_to(_destination)
 	if distance <= decay_cutoff:
 		_destination_reached = true
