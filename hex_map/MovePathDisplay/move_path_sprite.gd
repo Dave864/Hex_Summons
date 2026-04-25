@@ -16,7 +16,7 @@ const BEND_TEXTURE := preload("res://hex_map/MovePathDisplay/path_bend.atlastex"
 ## The texture for a corner path.
 const CORNER_TEXTURE := preload("res://hex_map/MovePathDisplay/path_corner.atlastex")
 ## The size of the pixel for the sprite.
-const PIXEL_SIZE := 0.0227
+const PIXEL_SIZE := 0.0228
 ## The alpha level (transparency) of the sprite.
 const ALPHA_VALUE := 0.5
 

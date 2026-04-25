@@ -6,6 +6,9 @@ extends Node
 ## path's direction.
 
 
+## Defines how far above the set path the sprites will be placed.
+@export_range(0.0, 0.1, 0.001) var y_offset: float = 0.0
+
 ## The sprite that will be used for the end of the path.
 @onready var _end_sprite: MovePathSprite = $EndPathSprite
 ## Container tracking the rest of the path sprites.
@@ -18,13 +21,15 @@ func create_display(move_path: PackedVector3Array) -> void:
 	hide()
 	_add_missing_sprites(move_path)
 	for i in range(move_path.size() - 1, 0, -1):
+		var sprite_position: Vector3 = move_path[i]
+		sprite_position.y += y_offset
 		var current_point := Vector2(move_path[i].x, move_path[i].z)
 		var prior_point := Vector2(move_path[i - 1].x, move_path[i - 1].z)
 		var entry_direction := current_point.direction_to(prior_point)
 		var entry_hex_direction := HexUtil.get_hex_direction(entry_direction)
 		if i == move_path.size() - 1:
 			_end_sprite.set_move_entry_direction(entry_hex_direction)
-			_end_sprite.position = move_path[i]
+			_end_sprite.position = sprite_position
 			_end_sprite.show()
 		else:
 			var sprite := _path_sprites.get_child(i) as MovePathSprite
@@ -32,7 +37,7 @@ func create_display(move_path: PackedVector3Array) -> void:
 			var next_point := Vector2(move_path[i + 1].x, move_path[i + 1].z)
 			var exit_direction := next_point.direction_to(current_point)
 			_set_path_type(sprite, entry_direction, exit_direction)
-			sprite.position = move_path[i]
+			sprite.position = sprite_position
 			sprite.show()
 
 
