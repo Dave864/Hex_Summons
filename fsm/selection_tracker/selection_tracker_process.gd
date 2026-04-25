@@ -21,6 +21,7 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	s_tracker.clear_highlights()
 	s_tracker.clear_indicators()
 	s_tracker.show_ghost_sprite(false)
+	s_tracker.move_path_display.hide()
 	selector.hide()
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	var movement_path: PackedVector3Array = s_tracker.get_movement_path()

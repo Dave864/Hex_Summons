@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://ddvk0q84qb3m"]
+[gd_scene load_steps=10 format=3 uid="uid://ddvk0q84qb3m"]
 
 [ext_resource type="Script" uid="uid://cyfb6co2ug8qv" path="res://hex_map/SelectionTracker/selection_tracker.gd" id="1_c3pme"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="2_14xsr"]
+[ext_resource type="PackedScene" uid="uid://t4lokbvdc1w1" path="res://hex_map/MovePathDisplay/MovePathDisplay.tscn" id="2_c5fpm"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="2_qbj8e"]
 [ext_resource type="Script" uid="uid://bx1htexjad2n7" path="res://fsm/selection_tracker/selection_tracker_wait.gd" id="3_63qsx"]
 [ext_resource type="Script" uid="uid://c5yio7ankf2nt" path="res://fsm/selection_tracker/selection_tracker_process.gd" id="4_qbj8e"]
@@ -11,6 +12,8 @@
 
 [node name="SelectionTracker" type="Node"]
 script = ExtResource("1_c3pme")
+
+[node name="MovePathDisplay" parent="." instance=ExtResource("2_c5fpm")]
 
 [node name="GhostPosition" type="Marker3D" parent="."]
 

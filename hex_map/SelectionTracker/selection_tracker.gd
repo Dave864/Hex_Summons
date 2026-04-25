@@ -67,6 +67,9 @@ var _map_tiles: Tiles:
 	get:
 		return hex_map.get_tiles_node()
 
+## The display for the currently set movement path.
+@onready var move_path_display: MovePathDisplay = $MovePathDisplay
+
 ## The position of the sprite used to show where a player character will be
 ## placed when the turn is concluded.
 @onready var _ghost_position: Marker3D = $GhostPosition
@@ -195,6 +198,7 @@ func get_movement_path() -> PackedVector3Array:
 ## Updates the recorded movement path.
 func set_movement_path(new_path: PackedVector3Array) -> void:
 	_move_path = new_path
+	move_path_display.create_display(new_path)
 
 
 ## Gets the name of the active summon.

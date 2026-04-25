@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://t4lokbvdc1w1"]
+[gd_scene load_steps=4 format=3 uid="uid://t4lokbvdc1w1"]
 
 [ext_resource type="Texture2D" uid="uid://c74h4kwj4q00t" path="res://hex_map/MovePathDisplay/path_end.atlastex" id="1_1df3w"]
+[ext_resource type="Script" uid="uid://bo3sp2qblsiwk" path="res://hex_map/MovePathDisplay/move_path_display.gd" id="1_qlf6m"]
 [ext_resource type="Script" uid="uid://b140s3p2sr5su" path="res://hex_map/MovePathDisplay/move_path_sprite.gd" id="2_xaf3y"]
 
-[node name="MovePathDisplay" type="Node3D"]
+[node name="MovePathDisplay" type="Node"]
+script = ExtResource("1_qlf6m")
 
 [node name="EndPathSprite" type="Sprite3D" parent="."]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 0, 0, 0)
@@ -14,3 +16,5 @@ texture_filter = 2
 texture = ExtResource("1_1df3w")
 script = ExtResource("2_xaf3y")
 metadata/_custom_type_script = "uid://b140s3p2sr5su"
+
+[node name="PathSprites" type="Node" parent="."]
