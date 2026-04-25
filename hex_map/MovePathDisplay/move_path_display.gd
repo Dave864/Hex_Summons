@@ -25,8 +25,10 @@ func create_display(move_path: PackedVector3Array) -> void:
 		sprite_position.y += y_offset
 		var current_point := Vector2(move_path[i].x, move_path[i].z)
 		var prior_point := Vector2(move_path[i - 1].x, move_path[i - 1].z)
-		var entry_direction := current_point.direction_to(prior_point)
-		var entry_hex_direction := HexUtil.get_hex_direction(entry_direction)
+		var entry_direction := prior_point.direction_to(current_point)
+		# The edge direction the path enters from is opposite the travel
+		# direction.
+		var entry_hex_direction := HexUtil.get_hex_direction(-entry_direction)
 		if i == move_path.size() - 1:
 			_end_sprite.set_move_entry_direction(entry_hex_direction)
 			_end_sprite.position = sprite_position
@@ -35,7 +37,7 @@ func create_display(move_path: PackedVector3Array) -> void:
 			var sprite := _path_sprites.get_child(i) as MovePathSprite
 			sprite.set_move_entry_direction(entry_hex_direction)
 			var next_point := Vector2(move_path[i + 1].x, move_path[i + 1].z)
-			var exit_direction := next_point.direction_to(current_point)
+			var exit_direction := current_point.direction_to(next_point)
 			_set_path_type(sprite, entry_direction, exit_direction)
 			sprite.position = sprite_position
 			sprite.show()
@@ -68,9 +70,11 @@ func _set_path_type(
 	entry_direction: Vector2,
 	exit_direction: Vector2
 ) -> void:
-	var path_type: MovePathSprite.PathType = MovePathSprite.PathType.STRAIGHT
-	#if entry_direction.is_equal_approx(exit_direction):
-		#path_type = MovePathSprite.PathType.STRAIGHT
+	var path_type: MovePathSprite.PathType
+	if entry_direction.is_equal_approx(exit_direction):
+		path_type = MovePathSprite.PathType.STRAIGHT
+	else:
+		path_type = MovePathSprite.PathType.BEND_LEFT
 	#else:
 		#printerr("Movement path goes back on itself.")
 		#path_type = MovePathSprite.PathType.STRAIGHT

@@ -18,7 +18,7 @@ const CORNER_TEXTURE := preload("res://hex_map/MovePathDisplay/path_corner.atlas
 ## The size of the pixel for the sprite.
 const PIXEL_SIZE := 0.0228
 ## The alpha level (transparency) of the sprite.
-const ALPHA_VALUE := 0.5
+const ALPHA_VALUE := 0.3
 
 ## The type of path the sprite shows.
 enum PathType {
@@ -77,11 +77,11 @@ func _set_path_texture() -> void:
 			texture = STRAIGHT_TEXTURE
 		PathType.BEND_LEFT:
 			texture = BEND_TEXTURE
-			flip_h = true
 		PathType.BEND_RIGHT:
 			texture = BEND_TEXTURE
+			flip_h = true
 		PathType.CORNER_LEFT:
 			texture = CORNER_TEXTURE
-			flip_h = true
 		PathType.CORNER_RIGHT:
 			texture = CORNER_TEXTURE
+			flip_h = true
