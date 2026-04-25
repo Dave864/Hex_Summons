@@ -9,6 +9,9 @@ extends SelectionTrackerState
 ## finalized.
 
 
+## Flag that indicates if an action was selected when the player turn is finalized.
+var _action_confirmed: bool = false
+
 ## Reference to the function that will update the tile highlights.
 @onready var _update_selection_ref: Callable = Callable(
 		self,
@@ -31,6 +34,7 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 			msg["summon"] is String,
 			"Data at 'summon' key is not of type String in SelectAction."
 	)
+	_action_confirmed = false
 	s_tracker.set_active_summon(msg["summon"])
 	s_tracker.set_focus_action(msg["action"])
 	_highlight_source_range()
@@ -174,6 +178,7 @@ func _action_selected(action: Action, summon_name: String) -> void:
 		and not s_tracker.get_tracked_targets().is_empty()
 		and _can_execute()
 	):
+		_action_confirmed = true
 		SignalBus.emit_player_turn_finalized()
 	else:
 		var next_state: String = (
@@ -292,6 +297,9 @@ func _on_Character_turn_ended() -> void:
 
 ## Go to the "PROCESS" state when the turn has been finalized.
 func _on_SignalBus_player_turn_finalized() -> void:
+	if not _action_confirmed:
+		s_tracker.set_focus_action(null)
+		s_tracker.set_active_summon("")
 	state_machine.transition_to(PROCESS)
 
 
