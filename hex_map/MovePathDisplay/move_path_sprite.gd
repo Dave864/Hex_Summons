@@ -13,15 +13,21 @@ const END_TEXTURE := preload("res://hex_map/MovePathDisplay/path_end.atlastex")
 const STRAIGHT_TEXTURE := preload("res://hex_map/MovePathDisplay/path_straight.atlastex")
 ## The texture for a bent path.
 const BEND_TEXTURE := preload("res://hex_map/MovePathDisplay/path_bend.atlastex")
+## The texture for a corner path.
+const CORNER_TEXTURE := preload("res://hex_map/MovePathDisplay/path_corner.atlastex")
 ## The size of the pixel for the sprite.
 const PIXEL_SIZE := 0.0227
+## The alpha level (transparency) of the sprite.
+const ALPHA_VALUE := 0.5
 
 ## The type of path the sprite shows.
 enum PathType {
 	END, ## An arrow pointing to the movement destination.
 	STRAIGHT, ## A straight path.
-	LEFT_BEND, ## A path that bends left at 2 * pi / 3 radians.
-	RIGHT_BEND, ## A path that bends right at 2 * pi / 3 radians.
+	BEND_LEFT, ## A path that bends left at 2 * pi / 3 radians.
+	BEND_RIGHT, ## A path that bends right at 2 * pi / 3 radians.
+	CORNER_LEFT, ## A path that bends left at pi / 3 radians.
+	CORNER_RIGHT, ## A path that bends right at pi / 3 radians.
 }
 
 ## The type of path the sprite shows.
@@ -32,13 +38,16 @@ enum PathType {
 
 
 ## Creates a new sprite for the specified path.
-func _init(type: PathType = PathType.END) -> void:
+func _init(
+	type: PathType = PathType.END,
+	entry_direction: HexUtil.HexDirection = HexUtil.HexDirection.UPPER_LEFT
+) -> void:
 	path = type
 	pixel_size = PIXEL_SIZE
 	axis = Vector3.Axis.AXIS_Y
-	modulate.a = 0.5
+	modulate.a = ALPHA_VALUE
 	texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
-	set_move_entry_direction(HexUtil.HexDirection.UPPER_LEFT)
+	set_move_entry_direction(entry_direction)
 
 
 ## Updates the orientation of the sprite to match the movement entry direction.
@@ -60,13 +69,19 @@ func set_move_entry_direction(entry_direction: HexUtil.HexDirection) -> void:
 
 ## Sets the texture based on the path type.
 func _set_path_texture() -> void:
+	flip_h = false
 	match path:
 		PathType.END:
 			texture = END_TEXTURE
 		PathType.STRAIGHT:
 			texture = STRAIGHT_TEXTURE
-		PathType.LEFT_BEND:
+		PathType.BEND_LEFT:
 			texture = BEND_TEXTURE
 			flip_h = true
-		PathType.RIGHT_BEND:
+		PathType.BEND_RIGHT:
 			texture = BEND_TEXTURE
+		PathType.CORNER_LEFT:
+			texture = CORNER_TEXTURE
+			flip_h = true
+		PathType.CORNER_RIGHT:
+			texture = CORNER_TEXTURE
