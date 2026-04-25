@@ -25,7 +25,7 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	selector.hide()
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
 	var movement_path: PackedVector3Array = s_tracker.get_movement_path()
-	if movement_path.size() == 0:
+	if movement_path.size() <= 1:
 		_on_SignalBus_character_movement_finished()
 	else:
 		SignalBus.emit_position_camera_focus(
