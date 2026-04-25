@@ -40,19 +40,20 @@ enum PathType {
 ## Creates a new sprite for the specified path.
 func _init(
 	type: PathType = PathType.END,
-	entry_direction: HexUtil.HexDirection = HexUtil.HexDirection.UPPER_LEFT
+	entry_edge: HexUtil.HexDirection = HexUtil.HexDirection.UPPER_LEFT
 ) -> void:
 	path = type
 	pixel_size = PIXEL_SIZE
 	axis = Vector3.Axis.AXIS_Y
 	modulate.a = ALPHA_VALUE
 	texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
-	set_move_entry_direction(entry_direction)
+	set_move_entry_edge(entry_edge)
 
 
-## Updates the orientation of the sprite to match the movement entry direction.
-func set_move_entry_direction(entry_direction: HexUtil.HexDirection) -> void:
-	match entry_direction:
+## Updates the orientation of the sprite to match the hex edge the path enters
+## from.
+func set_move_entry_edge(entry_edge: HexUtil.HexDirection) -> void:
+	match entry_edge:
 		HexUtil.HexDirection.UPPER_LEFT:
 			rotation.y = PI / 6.0
 		HexUtil.HexDirection.UPPER_RIGHT:

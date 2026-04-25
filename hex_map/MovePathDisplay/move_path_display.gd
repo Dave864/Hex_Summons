@@ -30,12 +30,12 @@ func create_display(move_path: PackedVector3Array) -> void:
 		# direction.
 		var entry_hex_direction := HexUtil.get_hex_direction(-entry_direction)
 		if i == move_path.size() - 1:
-			_end_sprite.set_move_entry_direction(entry_hex_direction)
+			_end_sprite.set_move_entry_edge(entry_hex_direction)
 			_end_sprite.position = sprite_position
 			_end_sprite.show()
 		else:
 			var sprite := _path_sprites.get_child(i) as MovePathSprite
-			sprite.set_move_entry_direction(entry_hex_direction)
+			sprite.set_move_entry_edge(entry_hex_direction)
 			var next_point := Vector2(move_path[i + 1].x, move_path[i + 1].z)
 			var exit_direction := current_point.direction_to(next_point)
 			_set_path_type(sprite, entry_direction, exit_direction)
