@@ -58,6 +58,7 @@ pixel_size = 0.0054
 billboard = 1
 fixed_size = true
 texture_filter = 0
+render_priority = 1
 texture = ExtResource("1")
 script = ExtResource("23")
 char_pos = NodePath("../MapCoordinate")

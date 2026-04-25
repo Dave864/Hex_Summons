@@ -1,8 +1,8 @@
 [gd_scene load_steps=20 format=3 uid="uid://dtkpxtbsdtqpx"]
 
-[ext_resource type="Texture2D" path="res://character/player_characters/PlayerCharacter/PlayerBattleSprite.atlastex" id="1"]
+[ext_resource type="Texture2D" uid="uid://cuvtjed75aa0y" path="res://character/player_characters/PlayerCharacter/PlayerBattleSprite.atlastex" id="1"]
 [ext_resource type="Script" uid="uid://rqmmsouogt6p" path="res://character/player_characters/player_character.gd" id="2"]
-[ext_resource type="Texture2D" path="res://character/player_characters/PlayerCharacter/PlayerBattlePortrait.atlastex" id="2_mblau"]
+[ext_resource type="Texture2D" uid="uid://cvemm176qyol0" path="res://character/player_characters/PlayerCharacter/PlayerBattlePortrait.atlastex" id="2_mblau"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
 [ext_resource type="Shader" uid="uid://dtt3a1dq31nnw" path="res://character/material/sprite_billboard_draw.gdshader" id="6_8fhg1"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="6_htock"]
@@ -19,13 +19,13 @@
 [ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="13_wufaw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_01h8p"]
-render_priority = 0
+render_priority = 1
 shader = ExtResource("6_8fhg1")
 shader_parameter/sprite_texture = ExtResource("7_r45d7")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_botec"]
 resource_local_to_scene = true
-render_priority = -1
+render_priority = 0
 next_pass = SubResource("ShaderMaterial_01h8p")
 shader = ExtResource("8_7oaip")
 shader_parameter/sprite_texture = ExtResource("7_r45d7")
@@ -59,6 +59,7 @@ pixel_size = 0.0054
 billboard = 1
 fixed_size = true
 texture_filter = 0
+render_priority = 1
 texture = ExtResource("1")
 script = ExtResource("12")
 char_pos = NodePath("../MapCoordinate")

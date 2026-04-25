@@ -17,8 +17,10 @@ const BEND_TEXTURE := preload("res://hex_map/MovePathDisplay/path_bend.atlastex"
 const CORNER_TEXTURE := preload("res://hex_map/MovePathDisplay/path_corner.atlastex")
 ## The size of the pixel for the sprite.
 const PIXEL_SIZE := 0.0228
+## The modulate color of the sprite.
+const MOD_COLOR := HexHighlighter.COLOR_ORIGIN_CHARACTER
 ## The alpha level (transparency) of the sprite.
-const ALPHA_VALUE := 0.3
+const ALPHA_VALUE := 0.4
 
 ## The type of path the sprite shows.
 enum PathType {
@@ -37,16 +39,18 @@ enum PathType {
 		_set_path_texture()
 
 
+## Sets the parameters of the sprite.
+func ready() -> void:
+	_set_parameters()
+
+
 ## Creates a new sprite for the specified path.
 func _init(
 	type: PathType = PathType.END,
 	entry_edge: HexUtil.HexDirection = HexUtil.HexDirection.UPPER_LEFT
 ) -> void:
 	path = type
-	pixel_size = PIXEL_SIZE
-	axis = Vector3.Axis.AXIS_Y
-	modulate.a = ALPHA_VALUE
-	texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
+	_set_parameters()
 	set_move_entry_edge(entry_edge)
 
 
@@ -86,3 +90,13 @@ func _set_path_texture() -> void:
 		PathType.CORNER_RIGHT:
 			texture = CORNER_TEXTURE
 			flip_h = true
+
+
+## Sets various parameters of the sprite to match constants.
+func _set_parameters() -> void:
+	pixel_size = PIXEL_SIZE
+	axis = Vector3.Axis.AXIS_Y
+	modulate = MOD_COLOR
+	modulate.a = ALPHA_VALUE
+	render_priority = -1
+	texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS

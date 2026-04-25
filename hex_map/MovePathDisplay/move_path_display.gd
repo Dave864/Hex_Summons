@@ -71,13 +71,24 @@ func _set_path_type(
 	exit_direction: Vector2
 ) -> void:
 	var path_type: MovePathSprite.PathType
-	if entry_direction.is_equal_approx(exit_direction):
+	var dir_dot: float = entry_direction.dot(exit_direction)
+	var turn_left: bool = entry_direction.angle_to(exit_direction) < 0.0
+	if is_equal_approx(dir_dot, 1):
 		path_type = MovePathSprite.PathType.STRAIGHT
+	elif is_equal_approx(dir_dot, -1):
+		printerr("Movement path goes back on itself.")
+		print(entry_direction.angle_to(exit_direction))
+		path_type = MovePathSprite.PathType.STRAIGHT
+	elif dir_dot < 0.0:
+		path_type = (
+			MovePathSprite.PathType.CORNER_LEFT if turn_left
+			else MovePathSprite.PathType.CORNER_RIGHT
+		)
 	else:
-		path_type = MovePathSprite.PathType.BEND_LEFT
-	#else:
-		#printerr("Movement path goes back on itself.")
-		#path_type = MovePathSprite.PathType.STRAIGHT
+		path_type = (
+			MovePathSprite.PathType.BEND_LEFT if turn_left
+			else MovePathSprite.PathType.BEND_RIGHT
+		)
 	sprite.path = path_type
 
 

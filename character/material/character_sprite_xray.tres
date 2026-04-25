@@ -6,13 +6,13 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_01h8p"]
 resource_local_to_scene = true
-render_priority = 0
+render_priority = 1
 shader = ExtResource("1_bknq1")
 shader_parameter/sprite_texture = ExtResource("2_01h8p")
 
 [resource]
 resource_local_to_scene = true
-render_priority = -1
+render_priority = 0
 next_pass = SubResource("ShaderMaterial_01h8p")
 shader = ExtResource("2_bknq1")
 shader_parameter/sprite_texture = ExtResource("2_01h8p")
