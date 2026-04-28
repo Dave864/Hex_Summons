@@ -8,8 +8,6 @@ extends Node3D
 
 ## Name of the node that stores the map tiles.
 const TILES: String = "Tiles"
-## Name of the node that is the mesh for the floor of the map.
-const FLOOR_MESH: String = "FloorMesh"
 ## Name of the node that holds logic for pathfinding and distance calculation.
 const RANGE_FINDER: String = "RangeFinder"
 ## The maximum number of player characters that can be present on the map.
@@ -21,8 +19,6 @@ const MAX_PLAYER_COUNT: int = 4
 @export var enemy_start_tiles: PackedInt32Array = []
 
 var range_finder: RangeFinder = null
-var _floor_mesh: PlaneMesh = preload("res://hex_map/resources/hex_map_floor.tres")
-var _floor_mesh_node: MeshInstance3D = null
 var _tiles_node: Tiles = null
 
 ## Reference to the scene tree root.
@@ -31,7 +27,6 @@ var _tiles_node: Tiles = null
 
 func _ready() -> void:
 	_create_pathfinder()
-	_create_floor_mesh()
 	_create_tiles_node()
 	_check_for_required_parameters()
 
@@ -81,20 +76,6 @@ func _create_tiles_node() -> void:
 		_tiles_node.set_owner(_root_node)
 	else:
 		_tiles_node = get_node(TILES)
-
-
-## Create a floor mesh node and position it if not already present.
-func _create_floor_mesh() -> void:
-	if get_node_or_null(FLOOR_MESH) == null:
-		_floor_mesh_node = MeshInstance3D.new()
-		_floor_mesh_node.name = FLOOR_MESH
-		_floor_mesh_node.set_mesh(_floor_mesh)
-		_floor_mesh_node.mesh.resource_local_to_scene = true
-		add_child(_floor_mesh_node)
-		_floor_mesh_node.set_owner(_root_node)
-		_floor_mesh_node.position.y = -HexUtil.HEX_TILE_UNIT_HEIGHT
-	else:
-		_floor_mesh_node = get_node(FLOOR_MESH)
 
 
 ## Create a pathfinder node if not already present.
