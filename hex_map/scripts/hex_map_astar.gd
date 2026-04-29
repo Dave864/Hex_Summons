@@ -66,8 +66,11 @@ func get_distance_map(
 					not id_distances.has(next_id)
 					or travel_dist < id_distances.travel_dist_at(next_id)
 				)
-				and (reach < 0 or tile_dist <= reach)
-				and (use_tile or travel_dist <= reach)
+				and (
+					reach < 0 
+					or (use_tile and tile_dist <= reach)
+					or travel_dist <= reach
+				)
 			):
 				id_distances.add(
 						next_id,
