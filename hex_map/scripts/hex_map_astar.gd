@@ -188,7 +188,7 @@ func set_area_disabled(tile_ids: Array[int], disabled: bool = true) -> void:
 
 ## Sets the disabled flag for all connections in the astar map.
 func set_all_disabled(disabled: bool = true) -> void:
-	for id in get_point_count():
+	for id: int in get_point_ids():
 		set_point_disabled(id, disabled)
 
 
@@ -209,8 +209,12 @@ func _connect_tiles(map_tiles: Array[MapTile]) -> void:
 	for tile: MapTile in map_tiles:
 		if !tile.is_active():
 			continue
-		for neighbor in tile.get_all_adjacent():
-			if neighbor == null or not neighbor.is_active():
+		for neighbor: MapTile in tile.get_all_adjacent():
+			if (
+				neighbor == null 
+				or not neighbor.is_active()
+				or not has_point(neighbor.map_coordinate.get_tile_index())
+			):
 				continue
 			connect_points(
 					tile.map_coordinate.get_tile_index(),
