@@ -10,6 +10,8 @@ extends SelectionTrackerState
 
 ## The starting index for the movement area.
 var _move_origin_index: int = -1
+## The pathbuilder for the path.
+var _pathbuilder: MovePathBuilder = MovePathBuilder.new()
 
 ## Reference to the function that will update the tile highlights.
 @onready var _update_selection_ref: Callable = Callable(
@@ -27,6 +29,13 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	var character_tile: MapTile = hex_map.get_tile_at(s_tracker.move_target_index)
 	s_tracker.emit_new_focus_point(character_tile.get_character_position())
 	s_tracker.highlight_player_movement(_move_origin_index)
+	_pathbuilder.update_move_area_details(
+			_move_origin_index,
+			s_tracker.focused_character.stats.get_movement_range(),
+			hex_map.get_tiles_from_ids(s_tracker.get_movement_area_ids()),
+			hex_map.get_x_count()
+			
+	)
 	_update_selection(hex_map.get_tile_at(s_tracker.move_target_index))
 	s_tracker.set_selector_update(_update_selection_ref)
 	_connect_signals()
@@ -170,16 +179,18 @@ func _on_SignalBus_player_turn_finalized() -> void:
 func _on_SignalBus_move_path_requested() -> void:
 	var target_tile: MapTile = selector.tile_hovered
 	if target_tile.get_selector_type() != HexHighlighter.Option.SELECT_GRAY:
-		var path_data: PackedVector3Array = (
-			hex_map.range_finder.get_character_point_path(
-					s_tracker.focused_character,
-					target_tile.map_coordinate.get_tile_index(),
-					s_tracker.get_enemies_reference(),
-					s_tracker.get_movement_area_ids()
-			)
-		)
-		s_tracker.set_movement_path(path_data)
-		s_tracker.move_target_index = target_tile.map_coordinate.get_tile_index()
+		var target_index := target_tile.map_coordinate.get_tile_index()
+		#var path_data: PackedVector3Array = (
+			#hex_map.range_finder.get_character_point_path(
+					#s_tracker.focused_character,
+					#target_index,
+					#s_tracker.get_enemies_reference(),
+					#s_tracker.get_movement_area_ids()
+			#)
+		#)
+		_pathbuilder.create_path_to_id(target_index)
+		s_tracker.set_movement_path(_pathbuilder.get_point_path())
+		s_tracker.move_target_index = target_index
 		s_tracker.show_ghost_sprite(true)
 		s_tracker.emit_new_focus_point(target_tile.get_character_position())
 

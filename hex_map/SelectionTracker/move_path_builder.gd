@@ -20,6 +20,8 @@ var _move_area_astar: HexMapAStar
 var _current_id_path: PackedInt64Array
 ## The index of the end of the path.
 var _path_end_index: int
+## The distance traveled by the current path.
+var _current_distance: float
 
 
 ## Initializes the object.
@@ -29,6 +31,7 @@ func _init() -> void:
 	_move_area_astar = null
 	_current_id_path = []
 	_path_end_index = 0
+	_current_distance = 0.0
 
 
 ## Updates the details for the movement area.
@@ -44,6 +47,7 @@ func update_move_area_details(
 	_current_id_path.resize(_move_range + 1)
 	_current_id_path.fill(-1)
 	_path_end_index = 0
+	_current_distance = 0.0
 	_update_move_area(new_move_area, grid_x_count)
 
 
@@ -68,26 +72,28 @@ func create_path_to_id(destination_id: int) -> void:
 	if destination_id < 0:
 		printerr("Destination is not valid.")
 		return
+	if _path_end_index == 0:
+		_create_path_from_origin(destination_id)
+		return
 	var path_index := _current_id_path.find(destination_id)
-	if path_index > 0:
+	if path_index >= 0:
 		_update_path_end(path_index)
 		return
-	var start_id: int = (
-		_move_origin if _path_end_index == 0
-		else _current_id_path[_path_end_index]
-	)
-	var new_path_segment := _move_area_astar.get_id_path(start_id, destination_id)
-	if new_path_segment.size() == 0:
-		printerr("Destination is not within movement area.")
-		return
-	_add_segment_to_current_path(new_path_segment)
+	#var start_id: int = (
+		#_move_origin if _path_end_index == 0
+		#else _current_id_path[_path_end_index]
+	#)
+	#var new_path_segment := _move_area_astar.get_id_path(start_id, destination_id)
+	#if new_path_segment.size() == 0:
+		#printerr("Destination is not within movement area.")
+		#return
+	#_add_segment_to_current_path(new_path_segment)
 
 
 ## Creates a new pathfinder object for the given movement area.
 func _update_move_area(new_move_area: Array[MapTile], grid_x_count: int) -> void:
-	if _move_area_astar != null:
-		_move_area_astar.free()
 	_move_area_astar = HexMapAStar.new(new_move_area, grid_x_count)
+	# All tiles disabled by default.
 	_move_area_astar.set_all_disabled(false)
 
 
@@ -96,9 +102,11 @@ func _update_move_area(new_move_area: Array[MapTile], grid_x_count: int) -> void
 func _update_path_end(new_path_end: int) -> void:
 	if new_path_end < _path_end_index:
 		for i: int in range(new_path_end + 1, _current_id_path.size()):
-			_move_area_astar.set_point_disabled(_current_id_path[i], false)
 			_current_id_path[i] = -1
 	_path_end_index = new_path_end
+	_current_distance = _move_area_astar.travel_distance_for_id_path(
+			_current_id_path.slice(0, _path_end_index + 1)
+	)
 
 
 ## Sets the current path to be from move origin to destination.
@@ -109,6 +117,8 @@ func _create_path_from_origin(destination_id: int) -> void:
 	)
 	for i: int in _current_id_path.size():
 		_current_id_path[i] = path[i] if i < path.size() else -1
+	_path_end_index = path.size() - 1
+	_current_distance = _move_area_astar.travel_distance_for_id_path(path)
 
 
 ## Adds a new path segment to the end of the current path. The current path is
