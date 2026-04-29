@@ -157,16 +157,35 @@ func get_closest_point_path(
 ## Determines the travel distance from the start to the end.
 func travel_distance(start_index: int, end_index: int) -> float:
 	var path: PackedInt64Array = get_id_path(start_index, end_index)
-	var dist: float = 0.0
-	for i in range(1, path.size()):
-		dist += _compute_cost(path[i - 1], path[i])
-	return dist
+	return travel_distance_for_id_path(path)
 
 
 ## Determines the tile distance from the start to the end.
 func tile_distance(start_index: int, end_index: int) -> float:
+	var path: PackedInt64Array = get_id_path(start_index, end_index)
+	return tile_distance_for_id_path(path)
+
+
+## Determines the travel distance for a given point path. Returns -1.0 if any
+## point on the path is not within the AStar point map.
+func travel_distance_for_id_path(path: PackedInt64Array) -> float:
+	if path.size() > 0 and not has_point(path[0]):
+		printerr("Not all points in path recorded by HexMapAStar")
+		return -1.0
+	var dist: float = 0.0
+	for i: int in range(1, path.size()):
+		if not has_point(path[i]):
+			printerr("Not all points in path recorded by HexMapAStar")
+			return -1.0
+		dist += _compute_cost(path[i - 1], path[i])
+	return dist
+
+
+## Determines the tile distance for a given point path. Returns -1.0 if any
+## point on the path is not within the AStar point map.
+func tile_distance_for_id_path(path: PackedInt64Array) -> float:
 	set_cost_to_tile()
-	var dist: float = travel_distance(start_index, end_index)
+	var dist: float = travel_distance_for_id_path(path)
 	set_cost_to_travel()
 	return dist
 
