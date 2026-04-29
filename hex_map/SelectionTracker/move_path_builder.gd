@@ -88,6 +88,7 @@ func _update_move_area(new_move_area: Array[MapTile], grid_x_count: int) -> void
 	if _move_area_astar != null:
 		_move_area_astar.free()
 	_move_area_astar = HexMapAStar.new(new_move_area, grid_x_count)
+	_move_area_astar.set_all_disabled(false)
 
 
 ## Updates the recorded end of the path, removing old path ids if the new path
