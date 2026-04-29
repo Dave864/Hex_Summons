@@ -47,11 +47,6 @@ func place_character_at_tile(character: Character, tile_index: int) -> void:
 	character.position = pos
 
 
-## Retrieve the Tiles node that contains the map tiles.
-func get_tiles_node() -> Tiles:
-	return _tiles_node
-
-
 ## Retrieve the map tiles of this hex map.
 func get_map_tiles() -> Array[MapTile]:
 	return _tiles_node.get_all()
@@ -60,6 +55,11 @@ func get_map_tiles() -> Array[MapTile]:
 ## Get the map tile at the specific index.
 func get_tile_at(index: int) -> MapTile:
 	return _tiles_node.get_at(index)
+
+
+## Gets the map tiles of the specified ids.
+func get_tiles_from_ids(tile_ids: Array[int]) -> Array[MapTile]:
+	return _tiles_node.get_from_ids(tile_ids)
 
 
 ## Checks if the given cube coordinates are within the bounds of the map.

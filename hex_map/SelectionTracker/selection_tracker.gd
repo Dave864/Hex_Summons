@@ -62,10 +62,6 @@ var _highlighted_map_indexes: Array[int] = []
 ## The indexes of the tiles in the hex map that have their selector markers
 ## active.
 var _selectable_map_indexes: Array[int] = []
-## Reference to the Tiles node of the hex_map.
-var _map_tiles: Tiles:
-	get:
-		return hex_map.get_tiles_node()
 
 ## The display for the currently set movement path.
 @onready var move_path_display: MovePathDisplay = $MovePathDisplay
@@ -241,12 +237,12 @@ func get_movement_area_ids() -> Array[int]:
 ## character position to determine where to set the character highlight.
 func highlight_player_movement(start_index: int = -1) -> void:
 	# Activate the selector at the character's current position.
-	var character_tile: MapTile = _map_tiles.get_at(move_target_index)
+	var character_tile: MapTile = hex_map.get_tile_at(move_target_index)
 	character_tile.set_selector_type(HexHighlighter.Option.SELECT_MOVE)
 	
 	# Set the tile highlights.
 	for i: int in _movement_tile_ids:
-		var tile: MapTile = _map_tiles.get_at(i)
+		var tile: MapTile = hex_map.get_tile_at(i)
 		var occupant: Character = tile.occupant.get_current_occupant()
 		if occupant == null:
 			if i == start_index:
@@ -269,7 +265,7 @@ func highlight_player_movement(start_index: int = -1) -> void:
 ## focused action.
 func highlight_action_source_area() -> void:
 	for index: int in source_d_map.tile_ids():
-		var tile: MapTile = _map_tiles.get_at(index)
+		var tile: MapTile = hex_map.get_tile_at(index)
 		var occupant: Character = tile.occupant.get_current_occupant()
 		if index == move_target_index:
 			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_PLAYER)
@@ -373,14 +369,14 @@ func indicate_directional_effect_range() -> void:
 ## Clear the higlights from all tiles.
 func clear_highlights() -> void:
 	for i in _highlighted_map_indexes:
-		_map_tiles.get_at(i).set_highlight_type(HexHighlighter.Option.NONE)
+		hex_map.get_tile_at(i).set_highlight_type(HexHighlighter.Option.NONE)
 	_highlighted_map_indexes.clear()
 
 
 ## Clear selector highlights from all tiles.
 func clear_indicators() -> void:
 	for i in _selectable_map_indexes:
-		_map_tiles.get_at(i).set_selector_type(HexHighlighter.Option.NONE)
+		hex_map.get_tile_at(i).set_selector_type(HexHighlighter.Option.NONE)
 	_selectable_map_indexes.clear()
 
 
@@ -422,7 +418,7 @@ func _remove_characters_from_source_range() -> void:
 ## Activate the selector for the specified tiles to represent the effect area
 ## of an action.
 func _indicate_effect_range(tile_ids: Array[int]) -> void:
-	var map_section: Array[MapTile] = _map_tiles.get_from_ids(tile_ids)
+	var map_section: Array[MapTile] = hex_map.get_tiles_from_ids(tile_ids)
 	for tile: MapTile in map_section:
 		var occupant: Character = tile.occupant.get_current_occupant()
 		var tile_index: int = tile.map_coordinate.get_tile_index()
