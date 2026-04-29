@@ -12,11 +12,12 @@
 [ext_resource type="Shader" uid="uid://lh7xfgxfcqta" path="res://character/material/sprite_billboard_xray.gdshader" id="8_7oaip"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="9"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="10"]
-[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/button_layout/CharacterLabel/CharacterLabel.tscn" id="11"]
+[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="11"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="11_8fhg1"]
 [ext_resource type="Script" uid="uid://cuk41txbrftic" path="res://fsm/user_character/user_character_move.gd" id="11_mblau"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="12"]
 [ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="13_wufaw"]
+
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_01h8p"]
 render_priority = 1

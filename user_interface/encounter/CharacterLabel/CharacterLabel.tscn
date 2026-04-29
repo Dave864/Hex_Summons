@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c7wswkqcskjh8"]
 
 [ext_resource type="Theme" uid="uid://dhnuwcf6tcapi" path="res://user_interface/themes/ThemeNumberLabel.tres" id="1"]
-[ext_resource type="Script" uid="uid://dw5x2dj2p5xjb" path="res://user_interface/encounter/button_layout/CharacterLabel/character_label.gd" id="2"]
+[ext_resource type="Script" uid="uid://dw5x2dj2p5xjb" path="res://user_interface/encounter/CharacterLabel/character_label.gd" id="2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4trm1"]
 bg_color = Color(1, 1, 1, 1)
@@ -45,6 +45,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HBoxContainer/PanelContainer"]
 custom_minimum_size = Vector2(0, 6)
