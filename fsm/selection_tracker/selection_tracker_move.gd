@@ -180,14 +180,6 @@ func _on_SignalBus_move_path_requested() -> void:
 	var target_tile: MapTile = selector.tile_hovered
 	if target_tile.get_selector_type() != HexHighlighter.Option.SELECT_GRAY:
 		var target_index := target_tile.map_coordinate.get_tile_index()
-		#var path_data: PackedVector3Array = (
-			#hex_map.range_finder.get_character_point_path(
-					#s_tracker.focused_character,
-					#target_index,
-					#s_tracker.get_enemies_reference(),
-					#s_tracker.get_movement_area_ids()
-			#)
-		#)
 		_pathbuilder.create_path_to_id(target_index)
 		s_tracker.set_movement_path(_pathbuilder.get_point_path())
 		s_tracker.move_target_index = target_index
