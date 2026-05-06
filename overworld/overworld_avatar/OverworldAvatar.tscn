@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3jwh6akuilwn"]
+
+[ext_resource type="Texture2D" uid="uid://cdlt7x03ektf1" path="res://art/CharacterPlaceholders3D.png" id="1_dkuw1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rphjw"]
+atlas = ExtResource("1_dkuw1")
+region = Rect2(0, 17, 31, 32)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bwl26"]
+
+[node name="OverworldAvatar" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 2
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.05
+billboard = 1
+texture = SubResource("AtlasTexture_rphjw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_bwl26")
