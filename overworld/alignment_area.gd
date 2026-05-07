@@ -38,19 +38,19 @@ extends Area3D
 ## Updates the element of the alignment slot of the reference element. The
 ## alignment and slot values are the alignment slot that should be ignored.
 func _update_alignment(
-	referece_element: Element.Core,
+	reference_element: Element.Core,
 	new_element: Element.Core,
 	alignment_ignore: Element.Alignment,
 	slot_ignore: int
 ) -> void:
 	if (
 		not is_node_ready()
-		or referece_element == new_element
+		or reference_element == new_element
 		or _all_core_present()
 	):
 		return
 	if (
-		light_element_1 == referece_element
+		light_element_1 == reference_element
 		and (
 			alignment_ignore != Element.Alignment.LIGHT
 			or slot_ignore != 1
@@ -58,7 +58,7 @@ func _update_alignment(
 	):
 		light_element_1 = new_element
 	elif (
-		light_element_2 == referece_element
+		light_element_2 == reference_element
 		and (
 			alignment_ignore != Element.Alignment.LIGHT
 			or slot_ignore != 2
@@ -66,7 +66,7 @@ func _update_alignment(
 	):
 		light_element_2 = new_element
 	elif (
-		dark_element_1 == referece_element
+		dark_element_1 == reference_element
 		and (
 			alignment_ignore != Element.Alignment.DARK
 			or slot_ignore != 1
@@ -74,7 +74,7 @@ func _update_alignment(
 	):
 		dark_element_1 = new_element
 	elif (
-		dark_element_2 == referece_element
+		dark_element_2 == reference_element
 		and (
 			alignment_ignore != Element.Alignment.DARK
 			or slot_ignore != 2
@@ -97,4 +97,9 @@ func _all_core_present() -> bool:
 
 ## Updates the elemental alignment.
 func _on_AlignmentArea_body_entered(_avatar: Node3D) -> void:
-	ElementalAlignment.set_elements_to_light(light_element_1, light_element_2)
+	ElementalAlignment.set_element_alignments(
+			light_element_1,
+			light_element_2,
+			dark_element_1,
+			dark_element_2
+	)

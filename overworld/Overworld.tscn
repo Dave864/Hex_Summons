@@ -1,5 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=25 format=3 uid="uid://tq4e5nhs80jw"]
 
+[ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/overworld/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="Script" uid="uid://dy10bnw0ny85c" path="res://overworld/alignment_area.gd" id="1_abwte"]
 [ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="1_q45au"]
 
@@ -62,12 +63,17 @@ size = Vector3(70, 5, 1)
 size = Vector3(15, 5, 45)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wc37g"]
-size = Vector3(100, 5, 60)
+size = Vector3(100, 5, 55)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8t104"]
-size = Vector3(100, 5, 60)
+size = Vector3(100, 5, 25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_327yu"]
+size = Vector3(75, 5, 20)
 
 [node name="Overworld" type="Node"]
+
+[node name="ElementAlignmentUI" parent="." instance=ExtResource("1_36ygl")]
 
 [node name="Terrain" type="Node3D" parent="."]
 
@@ -170,10 +176,14 @@ shape = SubResource("BoxShape3D_uyahc")
 [node name="AlignmentAreas" type="Node3D" parent="."]
 
 [node name="GrassZone" type="Area3D" parent="AlignmentAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28.409119)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.49847)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_abwte")
+light_element_1 = 0
+light_element_2 = 2
+dark_element_1 = 1
+dark_element_2 = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/GrassZone"]
 shape = SubResource("BoxShape3D_wc37g")
@@ -181,13 +191,33 @@ debug_color = Color(1, 0, 1, 0.5019608)
 debug_fill = false
 
 [node name="SandZone" type="Area3D" parent="AlignmentAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 27.892473)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.430677)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_abwte")
+light_element_1 = 0
+light_element_2 = 1
+dark_element_1 = 2
+dark_element_2 = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/SandZone"]
 shape = SubResource("BoxShape3D_8t104")
+debug_color = Color(1, 0, 1, 0.5019608)
+debug_fill = false
+
+[node name="BeachZone" type="Area3D" parent="AlignmentAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 33.265285)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_abwte")
+light_element_1 = 0
+light_element_2 = 2
+dark_element_1 = 1
+dark_element_2 = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/BeachZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.2922935)
+shape = SubResource("BoxShape3D_327yu")
 debug_color = Color(1, 0, 1, 0.5019608)
 debug_fill = false
 
@@ -201,4 +231,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.715, 0, -17.119)
 transform = Transform3D(1, 0, 0, 0, 0.71856356, 0.6954614, 0, -0.6954614, 0.71856356, 0.1927185, 7.7139225, 8.189605)
 
 [connection signal="body_entered" from="AlignmentAreas/GrassZone" to="AlignmentAreas/GrassZone" method="_on_AlignmentArea_body_entered"]
-[connection signal="body_entered" from="AlignmentAreas/SandZone" to="AlignmentAreas/GrassZone" method="_on_AlignmentArea_body_entered"]
+[connection signal="body_entered" from="AlignmentAreas/SandZone" to="AlignmentAreas/SandZone" method="_on_AlignmentArea_body_entered"]
+[connection signal="body_entered" from="AlignmentAreas/BeachZone" to="AlignmentAreas/BeachZone" method="_on_AlignmentArea_body_entered"]
