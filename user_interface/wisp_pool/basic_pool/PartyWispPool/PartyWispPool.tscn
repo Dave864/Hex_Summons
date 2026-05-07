@@ -1,26 +1,25 @@
 [gd_scene load_steps=15 format=3 uid="uid://ckrj8wx5k0slu"]
 
 [ext_resource type="Texture2D" uid="uid://da8impbpdpj78" path="res://art/ui/PartyWispPool/Wisp Pool Small Base.png" id="1"]
-[ext_resource type="Script" uid="uid://dtb85y8tre5kg" path="res://user_interface/encounter/button_layout/wisp_pool/PlayerWispPool/player_wisp_pool_ui.gd" id="2"]
+[ext_resource type="Script" uid="uid://dtb85y8tre5kg" path="res://user_interface/wisp_pool/basic_pool/PlayerWispPool/player_wisp_pool_ui.gd" id="2"]
 [ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="3"]
-[ext_resource type="PackedScene" uid="uid://cu8ls0tyba6bj" path="res://user_interface/encounter/button_layout/wisp_pool/AnimatedLabel/AnimatedLabel10px.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/PartyWispPool/PolarElementIcon.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://cu8ls0tyba6bj" path="res://user_interface/wisp_pool/animated_label/AnimatedLabel10px.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://user_interface/wisp_pool/basic_pool/PartyWispPool/PolarElementIcon.tscn" id="5"]
 [ext_resource type="Texture2D" uid="uid://f5t1jiw26l2r" path="res://art/ui/PartyWispPool/Polar Gem S.png" id="6"]
+[ext_resource type="PackedScene" uid="uid://r02sjly1kfef" path="res://user_interface/wisp_pool/basic_pool/PartyWispPool/CoreElementIcon.tscn" id="6_d3m0y"]
 [ext_resource type="Texture2D" uid="uid://ss4f1b7etv3f" path="res://art/ui/PartyWispPool/Core Gem S.png" id="7"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/PartyWispPool/CoreElementIcon.tscn" id="8"]
-
 
 [sub_resource type="AtlasTexture" id="1"]
 resource_local_to_scene = true
 atlas = ExtResource("6")
 region = Rect2(1, 1, 14, 10)
 
-[sub_resource type="AtlasTexture" id="3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6shfa"]
 resource_local_to_scene = true
 atlas = ExtResource("7")
 region = Rect2(1, 1, 11, 11)
 
-[sub_resource type="AtlasTexture" id="4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3m0y"]
 resource_local_to_scene = true
 atlas = ExtResource("7")
 region = Rect2(1, 1, 11, 11)
@@ -30,12 +29,12 @@ resource_local_to_scene = true
 atlas = ExtResource("6")
 region = Rect2(1, 1, 14, 10)
 
-[sub_resource type="AtlasTexture" id="5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjyvd"]
 resource_local_to_scene = true
 atlas = ExtResource("7")
 region = Rect2(1, 1, 11, 11)
 
-[sub_resource type="AtlasTexture" id="6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7ydq"]
 resource_local_to_scene = true
 atlas = ExtResource("7")
 region = Rect2(1, 1, 11, 11)
@@ -53,15 +52,15 @@ timer = NodePath("VariableTimer")
 light_label = NodePath("LightCount")
 light_icon = NodePath("LightIcon")
 light_elem_1_label = NodePath("LightElem1Count")
-light_elem_1_icon = NodePath("LightCore1Icon")
+light_elem_1_icon = NodePath("LightElem1Icon")
 light_elem_2_label = NodePath("LightElem2Count")
-light_elem_2_icon = NodePath("LightCore2Icon")
+light_elem_2_icon = NodePath("LightElem2Icon")
 dark_label = NodePath("DarkCount")
 dark_icon = NodePath("DarkIcon")
 dark_elem_1_label = NodePath("DarkElem1Count")
-dark_elem_1_icon = NodePath("DarkCore1Icon")
+dark_elem_1_icon = NodePath("DarkElem1Icon")
 dark_elem_2_label = NodePath("DarkElem2Count")
-dark_elem_2_icon = NodePath("DarkCore2Icon")
+dark_elem_2_icon = NodePath("DarkElem2Icon")
 
 [node name="VariableTimer" type="Timer" parent="."]
 script = ExtResource("3")
@@ -80,8 +79,9 @@ offset_right = 7.0
 offset_bottom = -12.0
 texture = SubResource("1")
 
-[node name="LightCore1Icon" parent="." instance=ExtResource("8")]
-layout_mode = 0
+[node name="LightElem1Icon" parent="." instance=ExtResource("6_d3m0y")]
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -90,11 +90,14 @@ offset_left = -16.0
 offset_top = -16.0
 offset_right = -5.0
 offset_bottom = -5.0
-texture = SubResource("3")
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_6shfa")
 element = 1
 
-[node name="LightCore2Icon" parent="." instance=ExtResource("8")]
-layout_mode = 0
+[node name="LightElem2Icon" parent="." instance=ExtResource("6_d3m0y")]
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -103,7 +106,9 @@ offset_left = 5.0
 offset_top = -16.0
 offset_right = 16.0
 offset_bottom = -5.0
-texture = SubResource("4")
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_d3m0y")
 element = 3
 
 [node name="DarkIcon" parent="." instance=ExtResource("5")]
@@ -119,8 +124,9 @@ offset_bottom = 22.0
 texture = SubResource("2")
 element = 5
 
-[node name="DarkCore1Icon" parent="." instance=ExtResource("8")]
-layout_mode = 0
+[node name="DarkElem1Icon" parent="." instance=ExtResource("6_d3m0y")]
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -129,10 +135,13 @@ offset_left = -16.0
 offset_top = 5.0
 offset_right = -5.0
 offset_bottom = 16.0
-texture = SubResource("5")
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_mjyvd")
 
-[node name="DarkCore2Icon" parent="." instance=ExtResource("8")]
-layout_mode = 0
+[node name="DarkElem2Icon" parent="." instance=ExtResource("6_d3m0y")]
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -141,11 +150,14 @@ offset_left = 5.0
 offset_top = 5.0
 offset_right = 16.0
 offset_bottom = 16.0
-texture = SubResource("6")
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_q7ydq")
 element = 2
 
 [node name="LightCount" parent="." instance=ExtResource("4")]
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -154,10 +166,10 @@ offset_left = -2.0
 offset_top = -20.0
 offset_right = 3.0
 offset_bottom = -13.0
-theme_override_font_sizes/font_size = 10
 
 [node name="LightElem1Count" parent="." instance=ExtResource("4")]
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -166,10 +178,10 @@ offset_left = -13.0
 offset_top = -14.0
 offset_right = -8.0
 offset_bottom = -7.0
-theme_override_font_sizes/font_size = 10
 
 [node name="LightElem2Count" parent="." instance=ExtResource("4")]
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -178,10 +190,10 @@ offset_left = 8.0
 offset_top = -14.0
 offset_right = 13.0
 offset_bottom = -7.0
-theme_override_font_sizes/font_size = 10
 
 [node name="DarkCount" parent="." instance=ExtResource("4")]
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -190,10 +202,10 @@ offset_left = -2.0
 offset_top = 13.0
 offset_right = 3.0
 offset_bottom = 20.0
-theme_override_font_sizes/font_size = 10
 
 [node name="DarkElem1Count" parent="." instance=ExtResource("4")]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -202,10 +214,12 @@ offset_left = -13.0
 offset_top = 7.0
 offset_right = -8.0
 offset_bottom = 14.0
-theme_override_font_sizes/font_size = 10
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="DarkElem2Count" parent="." instance=ExtResource("4")]
 layout_mode = 0
+anchors_preset = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -214,12 +228,11 @@ offset_left = 8.0
 offset_top = 7.0
 offset_right = 13.0
 offset_bottom = 14.0
-theme_override_font_sizes/font_size = 10
 
 [connection signal="timeout" from="VariableTimer" to="." method="_on_Timer_timeout"]
 [connection signal="shine_ping" from="LightIcon" to="." method="_on_PolarElementIcon_shine_ping"]
-[connection signal="element_ping" from="LightCore1Icon" to="." method="_on_CoreElementIcon_element_ping"]
-[connection signal="element_ping" from="LightCore2Icon" to="." method="_on_CoreElementIcon_element_ping"]
+[connection signal="element_ping" from="LightElem1Icon" to="." method="_on_CoreElementIcon_element_ping"]
+[connection signal="element_ping" from="LightElem2Icon" to="." method="_on_CoreElementIcon_element_ping"]
 [connection signal="shine_ping" from="DarkIcon" to="." method="_on_PolarElementIcon_shine_ping"]
-[connection signal="element_ping" from="DarkCore1Icon" to="." method="_on_CoreElementIcon_element_ping"]
-[connection signal="element_ping" from="DarkCore2Icon" to="." method="_on_CoreElementIcon_element_ping"]
+[connection signal="element_ping" from="DarkElem1Icon" to="." method="_on_CoreElementIcon_element_ping"]
+[connection signal="element_ping" from="DarkElem2Icon" to="." method="_on_CoreElementIcon_element_ping"]

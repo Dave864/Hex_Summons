@@ -1,13 +1,14 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource type="Texture2D" uid="uid://bf6hd711vjxom" path="res://art/ui/PlayerWispPool/Core Gem L.png" id="1"]
-[ext_resource type="Script" uid="uid://cwffiqfhuskoq" path="res://user_interface/encounter/button_layout/wisp_pool/core_element_icon.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://4ifp0h7gjo1o" path="res://art/ui/SummonWispPool/Summon Core Gem.png" id="1"]
+[ext_resource type="Script" uid="uid://cwffiqfhuskoq" path="res://user_interface/wisp_pool/basic_pool/core_element_icon.gd" id="2"]
+
 
 
 [sub_resource type="AtlasTexture" id=1]
 resource_local_to_scene = true
 atlas = ExtResource( 1 )
-region = Rect2( 1, 1, 22, 22 )
+region = Rect2( 1, 1, 8, 8 )
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -21,7 +22,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array( 0 ),
 "transitions": PackedFloat32Array( 1 ),
 "update": 0,
-"values": [ Rect2( 1, 1, 22, 22 ) ]
+"values": [ Rect2( 1, 1, 8, 8 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -38,7 +39,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
 "transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Rect2( 1, 73, 22, 22 ), Rect2( 25, 73, 22, 22 ), Rect2( 49, 73, 22, 22 ), Rect2( 73, 73, 22, 22 ), Rect2( 97, 73, 22, 22 ) ]
+"values": [ Rect2( 1, 31, 8, 8 ), Rect2( 11, 31, 8, 8 ), Rect2( 21, 31, 8, 8 ), Rect2( 31, 31, 8, 8 ), Rect2( 41, 31, 8, 8 ) ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -69,7 +70,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
 "transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Rect2( 1, 49, 22, 22 ), Rect2( 25, 49, 22, 22 ), Rect2( 49, 49, 22, 22 ), Rect2( 73, 49, 22, 22 ), Rect2( 97, 49, 22, 22 ) ]
+"values": [ Rect2( 1, 21, 8, 8 ), Rect2( 11, 21, 8, 8 ), Rect2( 21, 21, 8, 8 ), Rect2( 31, 21, 8, 8 ), Rect2( 41, 21, 8, 8 ) ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -86,7 +87,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
 "transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Rect2( 1, 25, 22, 22 ), Rect2( 25, 25, 22, 22 ), Rect2( 49, 25, 22, 22 ), Rect2( 73, 25, 22, 22 ), Rect2( 97, 25, 22, 22 ) ]
+"values": [ Rect2( 1, 11, 8, 8 ), Rect2( 11, 11, 8, 8 ), Rect2( 21, 11, 8, 8 ), Rect2( 31, 11, 8, 8 ), Rect2( 41, 11, 8, 8 ) ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -117,7 +118,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
 "transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Rect2( 1, 1, 22, 22 ), Rect2( 25, 1, 22, 22 ), Rect2( 49, 1, 22, 22 ), Rect2( 73, 1, 22, 22 ), Rect2( 97, 1, 22, 22 ) ]
+"values": [ Rect2( 1, 1, 8, 8 ), Rect2( 11, 1, 8, 8 ), Rect2( 21, 1, 8, 8 ), Rect2( 31, 1, 8, 8 ), Rect2( 41, 1, 8, 8 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -134,7 +135,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
 "transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Rect2( 1, 121, 22, 22 ), Rect2( 25, 121, 22, 22 ), Rect2( 49, 121, 22, 22 ), Rect2( 73, 121, 22, 22 ), Rect2( 97, 121, 22, 22 ) ]
+"values": [ Rect2( 1, 51, 8, 8 ), Rect2( 11, 51, 8, 8 ), Rect2( 21, 51, 8, 8 ), Rect2( 31, 51, 8, 8 ), Rect2( 41, 51, 8, 8 ) ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -165,7 +166,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
 "transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Rect2( 1, 97, 22, 22 ), Rect2( 25, 97, 22, 22 ), Rect2( 49, 97, 22, 22 ), Rect2( 73, 97, 22, 22 ), Rect2( 97, 97, 22, 22 ) ]
+"values": [ Rect2( 1, 41, 8, 8 ), Rect2( 11, 41, 8, 8 ), Rect2( 21, 41, 8, 8 ), Rect2( 31, 41, 8, 8 ), Rect2( 41, 41, 8, 8 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -182,7 +183,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
 "transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Rect2( 1, 169, 22, 22 ), Rect2( 25, 169, 22, 22 ), Rect2( 49, 169, 22, 22 ), Rect2( 73, 169, 22, 22 ), Rect2( 97, 169, 22, 22 ) ]
+"values": [ Rect2( 1, 71, 8, 8 ), Rect2( 11, 71, 8, 8 ), Rect2( 21, 71, 8, 8 ), Rect2( 31, 71, 8, 8 ), Rect2( 41, 71, 8, 8 ) ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -213,22 +214,22 @@ tracks/0/keys = {
 "times": PackedFloat32Array( 0, 0.0833333, 0.166667, 0.25, 0.333333 ),
 "transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Rect2( 1, 145, 22, 22 ), Rect2( 25, 145, 22, 22 ), Rect2( 49, 145, 22, 22 ), Rect2( 73, 145, 22, 22 ), Rect2( 97, 145, 22, 22 ) ]
+"values": [ Rect2( 1, 61, 8, 8 ), Rect2( 11, 61, 8, 8 ), Rect2( 21, 61, 8, 8 ), Rect2( 31, 61, 8, 8 ), Rect2( 41, 61, 8, 8 ) ]
 }
 
 [node name="CoreElementIcon" type="TextureRect"]
-anchor_right = 0.034
-anchor_bottom = 0.061
-offset_right = 0.239998
-offset_bottom = 0.039999
+anchor_right = 0.012
+anchor_bottom = 0.022
+offset_right = 0.32
+offset_bottom = 0.0799994
 mouse_filter = 2
 texture = SubResource( 1 )
 stretch_mode = 4
 script = ExtResource( 2 )
-earth_region = Vector2( 1, 73 )
-fire_region = Vector2( 1, 25 )
-water_region = Vector2( 1, 121 )
-wind_region = Vector2( 1, 169 )
+earth_region = Vector2( 1, 31 )
+fire_region = Vector2( 1, 11 )
+water_region = Vector2( 1, 51 )
+wind_region = Vector2( 1, 71 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 3 )

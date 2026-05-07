@@ -1,7 +1,8 @@
 [gd_scene load_steps=14 format=3 uid="uid://bva02osf072uo"]
 
 [ext_resource type="Texture2D" uid="uid://yhx0hs8vj4kj" path="res://art/ui/SummonWispPool/Highlight Summon Pool Gems.png" id="1_qox43"]
-[ext_resource type="Script" uid="uid://cwffiqfhuskoq" path="res://user_interface/encounter/button_layout/wisp_pool/core_element_icon.gd" id="2_jjucx"]
+[ext_resource type="Script" uid="uid://cwffiqfhuskoq" path="res://user_interface/wisp_pool/basic_pool/core_element_icon.gd" id="2_jjucx"]
+
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k686t"]
 atlas = ExtResource("1_qox43")

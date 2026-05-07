@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="2_a05bc"]
 [ext_resource type="PackedScene" uid="uid://deu4qxm7qqsmy" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/StandbyHighlightPool/AlignmentElementIcon.tscn" id="3_pni28"]
 [ext_resource type="Texture2D" uid="uid://yhx0hs8vj4kj" path="res://art/ui/SummonWispPool/Highlight Summon Pool Gems.png" id="4_o1kwj"]
-[ext_resource type="PackedScene" uid="uid://rtt7n4wkubha" path="res://user_interface/encounter/button_layout/wisp_pool/AnimatedLabel/BouncingLabel12px.tscn" id="4_v6sa2"]
+[ext_resource type="PackedScene" uid="uid://rtt7n4wkubha" path="res://user_interface/wisp_pool/animated_label/BouncingLabel12px.tscn" id="4_v6sa2"]
 [ext_resource type="PackedScene" uid="uid://6rjvlxio83i7" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/StandbyHighlightPool/CoreElementIcon.tscn" id="8_yjaa4"]
 [ext_resource type="PackedScene" uid="uid://damicoisi4cg" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/StandbyHighlightPool/HighlightLowerLeft.tscn" id="9_duv2o"]
 [ext_resource type="PackedScene" uid="uid://cy6fyjfx6rf60" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/StandbyHighlightPool/HighlightLowerRight.tscn" id="10_67dua"]

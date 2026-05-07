@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c88f8kajb1jvu"]
+[gd_scene load_steps=7 format=3 uid="uid://cu8ls0tyba6bj"]
 
-[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_kunad"]
-[ext_resource type="Script" uid="uid://e30e7x6u7sw0" path="res://user_interface/encounter/button_layout/wisp_pool/AnimatedLabel/animated_label.gd" id="2_rke5f"]
+[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1"]
+[ext_resource type="Script" uid="uid://e30e7x6u7sw0" path="res://user_interface/wisp_pool/animated_label/animated_label.gd" id="2"]
+[ext_resource type="FontFile" uid="uid://bomd4sauyxdrx" path="res://fonts/pixel_10.fnt" id="3"]
+
 
 [sub_resource type="Animation" id="2"]
 length = 0.001
@@ -35,22 +37,25 @@ tracks/0/keys = {
 "values": [0, -1]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ytrkl"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ke2b5"]
 _data = {
 &"RESET": SubResource("2"),
 &"change": SubResource("1")
 }
 
-[node name="HidingLabel12px" type="Label"]
+[node name="AnimatedLabel10Px" type="Label"]
 anchors_preset = -1
-anchor_right = 0.009
-anchor_bottom = 0.022
-offset_right = 0.24
-theme = ExtResource("1_kunad")
+anchor_right = 0.008
+anchor_bottom = 0.019
+offset_right = -0.12
+offset_bottom = 0.159999
+theme = ExtResource("1")
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 10
 text = "0"
-script = ExtResource("2_rke5f")
+script = ExtResource("2")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_ytrkl")
+&"": SubResource("AnimationLibrary_ke2b5")
 }

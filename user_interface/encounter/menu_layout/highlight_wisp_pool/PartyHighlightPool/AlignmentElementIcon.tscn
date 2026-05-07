@@ -1,7 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://dwsaruqrrcvp6"]
 
 [ext_resource type="Texture2D" uid="uid://ba3xbkufepb4m" path="res://art/ui/PlayerWispPool/Party Wisp Pool Gems.png" id="1_0l6bb"]
-[ext_resource type="Script" uid="uid://b7cfu4tj51jnl" path="res://user_interface/encounter/button_layout/wisp_pool/alignment_element_icon.gd" id="1_0npl6"]
+[ext_resource type="Script" uid="uid://b7cfu4tj51jnl" path="res://user_interface/wisp_pool/basic_pool/alignment_element_icon.gd" id="1_0npl6"]
+
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sauxo"]
 resource_local_to_scene = true

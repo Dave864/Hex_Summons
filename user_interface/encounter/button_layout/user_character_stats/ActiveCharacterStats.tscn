@@ -4,9 +4,10 @@
 [ext_resource type="Script" uid="uid://blseqgdfu5205" path="res://user_interface/encounter/button_layout/user_character_stats/user_character_stats_ui.gd" id="2_mfgcf"]
 [ext_resource type="Texture2D" uid="uid://30s2sfbgvhje" path="res://art/ui/ThemeBlueSigil/HealthBorder.png" id="3_3lefj"]
 [ext_resource type="Texture2D" uid="uid://c5b60fk50dtu8" path="res://art/ui/ThemeBlueSigil/HealthBar.png" id="4_eu6bm"]
-[ext_resource type="PackedScene" uid="uid://lr3lmar6lskp" path="res://user_interface/encounter/button_layout/wisp_pool/PlayerWispPool/PlayerWispPool.tscn" id="5_nw30w"]
+[ext_resource type="PackedScene" uid="uid://lr3lmar6lskp" path="res://user_interface/wisp_pool/basic_pool/PlayerWispPool/PlayerWispPool.tscn" id="5_nw30w"]
 [ext_resource type="Texture2D" uid="uid://osiqpd8jhoyd" path="res://art/icon.png" id="6_utb6v"]
 [ext_resource type="Shader" uid="uid://d1rqm2l1tcof8" path="res://user_interface/shaders/change_color.gdshader" id="7_min2y"]
+
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m3up4"]
 shader = ExtResource("7_min2y")

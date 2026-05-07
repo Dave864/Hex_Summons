@@ -1,12 +1,12 @@
 [gd_scene load_steps=15 format=3 uid="uid://cw2m8e3jgpop4"]
 
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_803mo"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/StandbyWispPool/CoreElementIcon.tscn" id="2_1voa5"]
+[ext_resource type="PackedScene" path="res://user_interface/wisp_pool/basic_pool/StandbyWispPool/CoreElementIcon.tscn" id="2_1voa5"]
 [ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="2_wq6nn"]
 [ext_resource type="Texture2D" uid="uid://dxp0u41501dbm" path="res://art/ui/SummonWispPool/Summon Pool Base.png" id="2_xqtk2"]
 [ext_resource type="Script" uid="uid://detaiphy1sxpd" path="res://user_interface/wisp_pool/element_alignment_ui.gd" id="2_yf6bw"]
 [ext_resource type="Texture2D" uid="uid://4ifp0h7gjo1o" path="res://art/ui/SummonWispPool/Summon Core Gem.png" id="3_dosa3"]
-[ext_resource type="PackedScene" path="res://user_interface/encounter/button_layout/wisp_pool/StandbyWispPool/PolarElementIcon.tscn" id="3_wq6nn"]
+[ext_resource type="PackedScene" path="res://user_interface/wisp_pool/basic_pool/StandbyWispPool/PolarElementIcon.tscn" id="3_wq6nn"]
 [ext_resource type="Texture2D" uid="uid://bdexmdc4xsna3" path="res://art/ui/SummonWispPool/Summon Polar Gem.png" id="4_yf6bw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yng6o"]

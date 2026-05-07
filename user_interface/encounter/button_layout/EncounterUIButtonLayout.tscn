@@ -10,7 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://cy3ef1wdf5tu" path="res://user_interface/encounter/button_layout/user_character_stats/ActiveCharacterStats.tscn" id="11"]
 [ext_resource type="Script" uid="uid://bhh7a8inf0l3v" path="res://fsm/user_interface/encounter/encounter_ui_action.gd" id="11_xj5a2"]
 [ext_resource type="PackedScene" uid="uid://by7j6btb8hhip" path="res://user_interface/encounter/button_layout/user_character_stats/PartyCharacterStats.tscn" id="12"]
-[ext_resource type="PackedScene" uid="uid://5td8sfwtxdp6" path="res://user_interface/encounter/button_layout/wisp_pool/StandbyWispPool/StandbyWispPool.tscn" id="18"]
+[ext_resource type="PackedScene" uid="uid://5td8sfwtxdp6" path="res://user_interface/wisp_pool/basic_pool/StandbyWispPool/StandbyWispPool.tscn" id="18"]
+
 
 [node name="EncounterUIButtonLayout" type="Control" node_paths=PackedStringArray("standby_wisp_pool")]
 layout_mode = 3

@@ -1,7 +1,8 @@
 [gd_scene load_steps=16 format=3 uid="uid://6rjvlxio83i7"]
 
-[ext_resource type="Script" uid="uid://cwffiqfhuskoq" path="res://user_interface/encounter/button_layout/wisp_pool/core_element_icon.gd" id="1_cwpm2"]
+[ext_resource type="Script" uid="uid://cwffiqfhuskoq" path="res://user_interface/wisp_pool/basic_pool/core_element_icon.gd" id="1_cwpm2"]
 [ext_resource type="Texture2D" uid="uid://yhx0hs8vj4kj" path="res://art/ui/SummonWispPool/Highlight Summon Pool Gems.png" id="1_dpjsf"]
+
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l8f86"]
 resource_local_to_scene = true
