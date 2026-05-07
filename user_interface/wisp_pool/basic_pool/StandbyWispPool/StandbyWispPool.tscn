@@ -40,7 +40,7 @@ resource_local_to_scene = true
 atlas = ExtResource("9_s4coi")
 region = Rect2(1, 1, 8, 8)
 
-[node name="StandbyPool" type="Panel" node_paths=PackedStringArray("timer", "light_label", "light_icon", "light_elem_1_label", "light_elem_1_icon", "light_elem_2_label", "light_elem_2_icon", "dark_label", "dark_icon", "dark_elem_1_label", "dark_elem_1_icon", "dark_elem_2_label", "dark_elem_2_icon")]
+[node name="StandbyPool" type="Panel" node_paths=PackedStringArray("light_label", "light_elem_1_label", "light_elem_2_label", "dark_label", "dark_elem_1_label", "dark_elem_2_label", "timer", "light_alignment_icon", "light_elem_1_icon", "light_elem_2_icon", "dark_alignment_icon", "dark_elem_1_icon", "dark_elem_2_icon")]
 custom_minimum_size = Vector2(60, 60)
 anchors_preset = -1
 anchor_right = 0.094
@@ -50,18 +50,18 @@ offset_bottom = -0.119999
 mouse_filter = 2
 theme = ExtResource("1_qx3ua")
 script = ExtResource("2_17iyr")
-timer = NodePath("VariableTimer")
 light_label = NodePath("LightCount")
-light_icon = NodePath("SigilBase/LightIcon")
 light_elem_1_label = NodePath("LightElemCount1")
-light_elem_1_icon = NodePath("SigilBase/LightCore1Icon")
 light_elem_2_label = NodePath("LightElemCount2")
-light_elem_2_icon = NodePath("SigilBase/LightCore2Icon")
 dark_label = NodePath("DarkCount")
-dark_icon = NodePath("SigilBase/DarkIcon")
 dark_elem_1_label = NodePath("DarkElemCount1")
-dark_elem_1_icon = NodePath("SigilBase/DarkCore1Icon")
 dark_elem_2_label = NodePath("DarkElemCount2")
+timer = NodePath("VariableTimer")
+light_alignment_icon = NodePath("SigilBase/LightIcon")
+light_elem_1_icon = NodePath("SigilBase/LightCore1Icon")
+light_elem_2_icon = NodePath("SigilBase/LightCore2Icon")
+dark_alignment_icon = NodePath("SigilBase/DarkIcon")
+dark_elem_1_icon = NodePath("SigilBase/DarkCore1Icon")
 dark_elem_2_icon = NodePath("SigilBase/DarkCore2Icon")
 
 [node name="VariableTimer" type="Timer" parent="."]
@@ -212,9 +212,9 @@ texture = SubResource("6")
 element = 2
 
 [connection signal="timeout" from="VariableTimer" to="." method="_on_Timer_timeout"]
-[connection signal="shine_ping" from="SigilBase/LightIcon" to="." method="_on_PolarElementIcon_shine_ping"]
+[connection signal="shine_ping" from="SigilBase/LightIcon" to="." method="_on_AlignmentElementIcon_shine_ping"]
 [connection signal="element_ping" from="SigilBase/LightCore1Icon" to="." method="_on_CoreElementIcon_element_ping"]
 [connection signal="element_ping" from="SigilBase/LightCore2Icon" to="." method="_on_CoreElementIcon_element_ping"]
-[connection signal="shine_ping" from="SigilBase/DarkIcon" to="." method="_on_PolarElementIcon_shine_ping"]
+[connection signal="shine_ping" from="SigilBase/DarkIcon" to="." method="_on_AlignmentElementIcon_shine_ping"]
 [connection signal="element_ping" from="SigilBase/DarkCore1Icon" to="." method="_on_CoreElementIcon_element_ping"]
 [connection signal="element_ping" from="SigilBase/DarkCore2Icon" to="." method="_on_CoreElementIcon_element_ping"]

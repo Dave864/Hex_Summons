@@ -59,7 +59,7 @@ resource_local_to_scene = true
 atlas = ExtResource("5_7p8a4")
 region = Rect2(0, 0, 15, 15)
 
-[node name="PartyHighlightPool" type="TextureRect" node_paths=PackedStringArray("light_highlight_1", "light_highlight_2", "dark_highlight_1", "dark_highlight_2", "timer", "light_label", "light_icon", "light_elem_1_label", "light_elem_1_icon", "light_elem_2_label", "light_elem_2_icon", "dark_label", "dark_icon", "dark_elem_1_label", "dark_elem_1_icon", "dark_elem_2_label", "dark_elem_2_icon")]
+[node name="PartyHighlightPool" type="TextureRect" node_paths=PackedStringArray("light_highlight_1", "light_highlight_2", "dark_highlight_1", "dark_highlight_2", "light_label", "light_elem_1_label", "light_elem_2_label", "dark_label", "dark_elem_1_label", "dark_elem_2_label", "timer", "light_alignment_icon", "light_elem_1_icon", "light_elem_2_icon", "dark_alignment_icon", "dark_elem_1_icon", "dark_elem_2_icon")]
 anchors_preset = -1
 anchor_right = 0.091000006
 anchor_bottom = 0.156
@@ -75,18 +75,18 @@ light_highlight_1 = NodePath("LightHighlight1")
 light_highlight_2 = NodePath("LightHighlight2")
 dark_highlight_1 = NodePath("DarkHighlight1")
 dark_highlight_2 = NodePath("DarkHighlight2")
-timer = NodePath("VariableTimer")
 light_label = NodePath("LightLabel")
-light_icon = NodePath("LightIcon")
 light_elem_1_label = NodePath("LightLeftLabel")
-light_elem_1_icon = NodePath("LightLeftIcon")
 light_elem_2_label = NodePath("LightRightLabel")
-light_elem_2_icon = NodePath("LightRightIcon")
 dark_label = NodePath("DarkLabel")
-dark_icon = NodePath("DarkIcon")
 dark_elem_1_label = NodePath("DarkLeftLabel")
-dark_elem_1_icon = NodePath("DarkLeftIcon")
 dark_elem_2_label = NodePath("DarkRightLabel")
+timer = NodePath("VariableTimer")
+light_alignment_icon = NodePath("LightIcon")
+light_elem_1_icon = NodePath("LightLeftIcon")
+light_elem_2_icon = NodePath("LightRightIcon")
+dark_alignment_icon = NodePath("DarkIcon")
+dark_elem_1_icon = NodePath("DarkLeftIcon")
 dark_elem_2_icon = NodePath("DarkRightIcon")
 
 [node name="VariableTimer" type="Timer" parent="."]

@@ -114,9 +114,9 @@ func _on_ElementalAlignment_alignment_changed() -> void:
 		dark_elem_2_icon.change_element(_blank_mask(dark_elems[1]))
 		dark_highlight_2.change_element(dark_elems[1])
 	if light_changed:
-		light_icon.shine()
+		light_alignment_icon.shine()
 	if dark_changed:
-		dark_icon.shine()
+		dark_alignment_icon.shine()
 	_alignments[LIGHT] = light_elems.duplicate()
 	_alignments[DARK] = dark_elems.duplicate()
 	timer.reset()
@@ -127,9 +127,9 @@ func _on_ElementalAlignment_alignment_changed() -> void:
 func _on_WispPool_active_count_changed(element: int) -> void:
 	var icon_shined: bool = true
 	if element == Element.Type.LIGHT:
-		light_icon.shine()
+		light_alignment_icon.shine()
 	elif element == Element.Type.DARK:
-		dark_icon.shine()
+		dark_alignment_icon.shine()
 	elif _alignments[LIGHT][0] == element:
 		_blank_elements[element] = pool.active_element_count(element) == 0
 		light_elem_1_icon.change_element(_blank_mask(element))
