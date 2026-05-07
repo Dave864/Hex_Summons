@@ -1,6 +1,6 @@
 class_name WispPoolUI
 extends Control
-## Manages the labels and element icons of the wisp pool.
+## Manages the labels and element icons of a wisp pool.
 
 
 ## The enum value for light alignment.

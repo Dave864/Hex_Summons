@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://tq4e5nhs80jw"]
 
-[ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/overworld/ElementAlignmentUI.tscn" id="1_36ygl"]
+[ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="Script" uid="uid://dy10bnw0ny85c" path="res://overworld/alignment_area.gd" id="1_abwte"]
 [ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="1_q45au"]
 
