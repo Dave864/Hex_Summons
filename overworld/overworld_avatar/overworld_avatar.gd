@@ -4,7 +4,7 @@ extends CharacterBody3D
 
 
 ## The speed the avatar moves at.
-const SPEED = 5.0
+const SPEED = 7.0
 
 
 ## Processes the physics of moving around.
