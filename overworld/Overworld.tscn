@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=23 format=3 uid="uid://tq4e5nhs80jw"]
 
+[ext_resource type="Script" uid="uid://dy10bnw0ny85c" path="res://overworld/alignment_area.gd" id="1_abwte"]
 [ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="1_q45au"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q45au"]
@@ -7,7 +8,9 @@ albedo_color = Color(0, 0.22352941, 1, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7kfuj"]
 material = SubResource("StandardMaterial3D_q45au")
-size = Vector2(200, 200)
+size = Vector2(500, 500)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_q45au"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_35tns"]
 albedo_color = Color(0.05490196, 0.67058825, 0.07450981, 1)
@@ -16,17 +19,11 @@ albedo_color = Color(0.05490196, 0.67058825, 0.07450981, 1)
 material = SubResource("StandardMaterial3D_35tns")
 size = Vector3(90, 1, 45)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_abwte"]
-size = Vector3(90, 1, 45)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q1spi"]
 albedo_color = Color(0.94502157, 0.8389817, 0.60048676, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_abwte"]
 material = SubResource("StandardMaterial3D_q1spi")
-size = Vector3(65, 1, 50)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_q45au"]
 size = Vector3(65, 1, 50)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_abwte"]
@@ -49,60 +46,159 @@ size = Vector3(25, 15, 30)
 [sub_resource type="BoxShape3D" id="BoxShape3D_35tns"]
 size = Vector3(25, 15, 30)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_q45au"]
+size = Vector3(1, 5, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_abwte"]
+size = Vector3(1, 5, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q1spi"]
+size = Vector3(100, 5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g3yfq"]
+size = Vector3(70, 5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uyahc"]
+size = Vector3(15, 5, 45)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wc37g"]
+size = Vector3(100, 5, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8t104"]
+size = Vector3(100, 5, 60)
+
 [node name="Overworld" type="Node"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_7kfuj")
+[node name="Terrain" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+[node name="Ocean" type="MeshInstance3D" parent="Terrain"]
+mesh = SubResource("PlaneMesh_7kfuj")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain/Ocean"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Ocean/StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_q45au")
+
+[node name="GrassFloor" type="MeshInstance3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -23.404139)
 mesh = SubResource("BoxMesh_q45au")
+skeleton = NodePath("../Ocean")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D/MeshInstance3D"]
-collision_layer = 2
-collision_mask = 12
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/MeshInstance3D/StaticBody3D"]
-shape = SubResource("BoxShape3D_abwte")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
+[node name="SandFloor" type="MeshInstance3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 17.383)
 mesh = SubResource("BoxMesh_abwte")
+skeleton = NodePath("../Ocean")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D/MeshInstance3D2"]
-collision_layer = 2
-collision_mask = 12
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/MeshInstance3D2/StaticBody3D"]
-shape = SubResource("BoxShape3D_q45au")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D"]
+[node name="LongMountain" type="MeshInstance3D" parent="Terrain"]
 transform = Transform3D(0.8988093, 0, 0.43833977, 0, 1, 0, -0.43833977, 0, 0.8988093, -5.6645765, 8.016806, -19.9268)
 mesh = SubResource("PrismMesh_36ygl")
+skeleton = NodePath("../Ocean")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D/MeshInstance3D3"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain/LongMountain"]
 collision_layer = 2
 collision_mask = 12
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/MeshInstance3D3/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/LongMountain/StaticBody3D"]
 shape = SubResource("BoxShape3D_36ygl")
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="MeshInstance3D"]
+[node name="ShortMountain" type="MeshInstance3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7524834, 7.458891, 16.899286)
 mesh = SubResource("PrismMesh_35tns")
+skeleton = NodePath("../Ocean")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D/MeshInstance3D4"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain/ShortMountain"]
 collision_layer = 2
 collision_mask = 12
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/MeshInstance3D4/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/ShortMountain/StaticBody3D"]
 shape = SubResource("BoxShape3D_35tns")
+
+[node name="Boundaries" type="Node3D" parent="Terrain"]
+
+[node name="StaticBody3D1" type="StaticBody3D" parent="Terrain/Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.173985, 0, -23.518896)
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D1"]
+shape = SubResource("BoxShape3D_q45au")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Terrain/Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.265755, 0, -23.067085)
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D2"]
+shape = SubResource("BoxShape3D_abwte")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Terrain/Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.697567, 3.8146973e-06, -46.163113)
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D3"]
+shape = SubResource("BoxShape3D_q1spi")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Terrain/Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.410963, 3.8146973e-06, 42.519905)
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D4"]
+shape = SubResource("BoxShape3D_g3yfq")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="Terrain/Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.78007, 3.8146973e-06, 21.456263)
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D5"]
+shape = SubResource("BoxShape3D_uyahc")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="Terrain/Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.919697, 3.8146973e-06, 21.456263)
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D6"]
+shape = SubResource("BoxShape3D_uyahc")
+
+[node name="AlignmentAreas" type="Node3D" parent="."]
+
+[node name="GrassZone" type="Area3D" parent="AlignmentAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28.409119)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_abwte")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/GrassZone"]
+shape = SubResource("BoxShape3D_wc37g")
+debug_color = Color(1, 0, 1, 0.5019608)
+debug_fill = false
+
+[node name="SandZone" type="Area3D" parent="AlignmentAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 27.892473)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_abwte")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/SandZone"]
+shape = SubResource("BoxShape3D_8t104")
+debug_color = Color(1, 0, 1, 0.5019608)
+debug_fill = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.6537509, 0.7567098, 0, -0.7567098, 0.6537509, 0, 25.214062, 0)
 
 [node name="OverworldAvatar" parent="." instance=ExtResource("1_q45au")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.714905, 1.3202119, -17.1193)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.715, 0, -17.119)
 
 [node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
-transform = Transform3D(1, 0, 0, 0, 0.71271205, 0.7014568, 0, -0.7014568, 0.71271205, 0.1927185, 5.563508, 4.413251)
+transform = Transform3D(1, 0, 0, 0, 0.71856356, 0.6954614, 0, -0.6954614, 0.71856356, 0.1927185, 7.7139225, 8.189605)
+
+[connection signal="body_entered" from="AlignmentAreas/GrassZone" to="AlignmentAreas/GrassZone" method="_on_AlignmentArea_body_entered"]
+[connection signal="body_entered" from="AlignmentAreas/SandZone" to="AlignmentAreas/GrassZone" method="_on_AlignmentArea_body_entered"]
