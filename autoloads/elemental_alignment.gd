@@ -117,6 +117,26 @@ func set_elements_to_dark(element_1: int, element_2: int) -> void:
 	emit_signal("alignment_changed")
 
 
+## Updates the elements to have the specified alignments.
+func set_element_alignments(
+	light_1: Element.Core,
+	light_2: Element.Core,
+	dark_1: Element.Core,
+	dark_2: Element.Core
+) -> void:
+	var element_set: Dictionary[Element.Core, bool] = {}
+	for element: Element.Core in [light_1, light_2, dark_1, dark_2]:
+		if element_set.has(element):
+			printerr("Attempted to set element duplicates to alignments.")
+			return
+		element_set[element] = true
+	_light_elements[0] = light_1
+	_light_elements[1] = light_2
+	_dark_elements[0] = dark_1
+	_dark_elements[1] = dark_2
+	emit_signal("alignment_changed")
+
+
 ## Get the elements of the Light alignment.
 func get_light_elements() -> Array[Element.Core]:
 	return _light_elements
@@ -160,22 +180,20 @@ func _set_elements_to_alignment(
 	):
 		if element_1_details[1] != element_2_details[1]:
 			_swap_alignments_at_index(element_1_details[1])
+		elif element_1_details[1] == 0:
+			shift_alignments_ccw()
 		else:
-			if element_1_details[1] == 0:
-				shift_alignments_ccw()
-			else:
-				shift_alignments_cw()
+			shift_alignments_cw()
 	elif (
 		element_1_details[0] == target_alignment
 		and element_2_details[0] == inverse_alignment
 	):
 		if element_1_details[1] != element_2_details[1]:
 			_swap_alignments_at_index(element_2_details[1])
+		elif element_2_details[1] == 0:
+			shift_alignments_cw()
 		else:
-			if element_2_details[1] == 0:
-				shift_alignments_cw()
-			else:
-				shift_alignments_ccw()
+			shift_alignments_ccw()
 	if target_alignment == LIGHT:
 		_light_elements[0] = element_1
 		_light_elements[1] = element_2
@@ -204,7 +222,7 @@ func _swap_alignments_at_index(index: int) -> void:
 
 ## Checks if a given value corresponds to an elemental type.
 func _is_valid_core_element(element: int) -> bool:
-	return element in Element.Core.keys()
+	return element in Element.Core.values()
 
 
 ## Sets Fire and Wind to Light. Sets Earth and Water to Dark.
