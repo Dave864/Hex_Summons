@@ -1,10 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://dn4vmatmue5p6"]
 
-[ext_resource type="PackedScene" uid="uid://cbwi1fc72lu56" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/PartyHighlightPool/PartyHighlightPool.tscn" id="1_cfe8s"]
+[ext_resource type="PackedScene" uid="uid://cbwi1fc72lu56" path="res://user_interface/wisp_pool/highlight_pool/PartyHighlightPool/PartyHighlightPool.tscn" id="1_cfe8s"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_pasbx"]
 [ext_resource type="Texture2D" uid="uid://c3y13epn52d47" path="res://art/ui/PlayerWispPool/Party Health Bar.png" id="2_7hvc1"]
 [ext_resource type="Texture2D" uid="uid://osiqpd8jhoyd" path="res://art/icon.png" id="2_oa5s8"]
 [ext_resource type="Script" uid="uid://d27mym5gtfvpr" path="res://user_interface/encounter/menu_layout/PartyCharacterStats/highlight_character_stats_ui.gd" id="2_pasbx"]
+
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pasbx"]
 atlas = ExtResource("2_7hvc1")

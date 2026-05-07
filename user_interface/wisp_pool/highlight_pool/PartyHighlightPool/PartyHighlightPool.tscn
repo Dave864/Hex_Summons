@@ -1,12 +1,12 @@
 [gd_scene load_steps=19 format=3 uid="uid://cbwi1fc72lu56"]
 
 [ext_resource type="Texture2D" uid="uid://cth5uey3jng6x" path="res://art/ui/PlayerWispPool/Party Wisp Pool.png" id="1_jfe22"]
-[ext_resource type="Script" uid="uid://rspptncr83si" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/highlight_wisp_pool_ui.gd" id="2_j75u2"]
+[ext_resource type="Script" uid="uid://rspptncr83si" path="res://user_interface/wisp_pool/highlight_pool/highlight_wisp_pool_ui.gd" id="2_j75u2"]
 [ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="3_c0fad"]
-[ext_resource type="PackedScene" uid="uid://dwsaruqrrcvp6" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/PartyHighlightPool/AlignmentElementIcon.tscn" id="4_winia"]
+[ext_resource type="PackedScene" uid="uid://dwsaruqrrcvp6" path="res://user_interface/wisp_pool/highlight_pool/PartyHighlightPool/AlignmentElementIcon.tscn" id="4_winia"]
 [ext_resource type="Texture2D" uid="uid://ba3xbkufepb4m" path="res://art/ui/PlayerWispPool/Party Wisp Pool Gems.png" id="5_7p8a4"]
-[ext_resource type="PackedScene" uid="uid://c8ncfadyxfqyc" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/PartyHighlightPool/CoreElementIcon.tscn" id="5_aycs1"]
-[ext_resource type="PackedScene" uid="uid://kcxvh115l3hf" path="res://user_interface/encounter/menu_layout/highlight_wisp_pool/PartyHighlightPool/HighlightElementIcon.tscn" id="6_ekm2o"]
+[ext_resource type="PackedScene" uid="uid://c8ncfadyxfqyc" path="res://user_interface/wisp_pool/highlight_pool/PartyHighlightPool/CoreElementIcon.tscn" id="5_aycs1"]
+[ext_resource type="PackedScene" uid="uid://kcxvh115l3hf" path="res://user_interface/wisp_pool/highlight_pool/PartyHighlightPool/HighlightElementIcon.tscn" id="6_ekm2o"]
 [ext_resource type="PackedScene" uid="uid://cu8ls0tyba6bj" path="res://user_interface/wisp_pool/animated_label/AnimatedLabel10px.tscn" id="8_3fgrd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lh5d6"]
