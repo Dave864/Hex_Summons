@@ -177,8 +177,8 @@ shape = SubResource("BoxShape3D_uyahc")
 
 [node name="GrassZone" type="Area3D" parent="AlignmentAreas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.49847)
-collision_layer = 2
-collision_mask = 4
+collision_layer = 6
+collision_mask = 6
 script = ExtResource("1_abwte")
 light_element_1 = 0
 light_element_2 = 2
@@ -187,13 +187,13 @@ dark_element_2 = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/GrassZone"]
 shape = SubResource("BoxShape3D_wc37g")
-debug_color = Color(1, 0, 1, 0.5019608)
+debug_color = Color(1, 0, 1, 1)
 debug_fill = false
 
 [node name="SandZone" type="Area3D" parent="AlignmentAreas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.430677)
-collision_layer = 2
-collision_mask = 4
+collision_layer = 6
+collision_mask = 6
 script = ExtResource("1_abwte")
 light_element_1 = 0
 light_element_2 = 1
@@ -202,13 +202,13 @@ dark_element_2 = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/SandZone"]
 shape = SubResource("BoxShape3D_8t104")
-debug_color = Color(1, 0, 1, 0.5019608)
+debug_color = Color(1, 0, 1, 1)
 debug_fill = false
 
 [node name="BeachZone" type="Area3D" parent="AlignmentAreas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 33.265285)
-collision_layer = 2
-collision_mask = 4
+collision_layer = 6
+collision_mask = 6
 script = ExtResource("1_abwte")
 light_element_1 = 0
 light_element_2 = 2
@@ -218,7 +218,7 @@ dark_element_2 = 3
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/BeachZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.2922935)
 shape = SubResource("BoxShape3D_327yu")
-debug_color = Color(1, 0, 1, 0.5019608)
+debug_color = Color(1, 0, 1, 1)
 debug_fill = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

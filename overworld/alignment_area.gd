@@ -7,6 +7,14 @@ extends Area3D
 ## to match the alignment of the area.
 
 
+## The collision layer that colliders default to when created.
+const DEFAULT_LAYER := 1
+## The collision layer for map objects.
+const MAP_LAYER := 3 
+## The collision layer for player characters.
+const PLAYER_LAYER := 2
+
+
 @export_group("Light Alignment", "light")
 ## The first element aligned with light.
 @export var light_element_1 : Element.Core = Element.Core.FIRE:
@@ -33,6 +41,30 @@ extends Area3D
 		var old_value := dark_element_2
 		dark_element_2 = value
 		_update_alignment(value, old_value, Element.Alignment.DARK, 2)
+
+
+## Creates a new CollisionShape if none is present.
+func _ready() -> void:
+	var body_entered_callable := Callable(self, "_on_AlignmentArea_body_entered")
+	if not is_connected("body_entered", body_entered_callable):
+		connect("body_entered", body_entered_callable)
+	if get_shape_owners().size() == 0:
+		var collision_shape := CollisionShape3D.new()
+		add_child(collision_shape)
+		if Engine.is_editor_hint():
+			collision_shape.set_owner(get_tree().edited_scene_root)
+		collision_shape.name = "CollisionShape3D"
+		collision_shape.debug_color = Color.MAGENTA
+		collision_shape.debug_fill = false
+		collision_shape.shape = BoxShape3D.new()
+
+
+## Creates a new instance of AlignmentArea.
+func _init() -> void:
+	set_collision_layer_value(DEFAULT_LAYER, false)
+	set_collision_layer_value(MAP_LAYER, true)
+	set_collision_mask_value(DEFAULT_LAYER, false)
+	set_collision_mask_value(PLAYER_LAYER, true)
 
 
 ## Updates the element of the alignment slot of the reference element. The
