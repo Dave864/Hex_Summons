@@ -67,7 +67,7 @@ size = Vector3(15, 5, 45)
 size = Vector3(95, 5, 46)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8t104"]
-size = Vector3(70, 5, 27)
+size = Vector3(70, 5, 25)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_327yu"]
 size = Vector3(70, 5, 13)
@@ -180,6 +180,7 @@ dark_element_1 = 1
 metadata/_custom_type_script = "uid://crnlh08xvaccx"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/StableSandArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0054436)
 shape = SubResource("BoxShape3D_8t104")
 debug_color = Color(1, 0, 1, 1)
 debug_fill = false

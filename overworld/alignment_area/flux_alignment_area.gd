@@ -79,6 +79,7 @@ func _on_AlignmentArea_body_entered(player_avatar: OverworldAvatar) -> void:
 				flux_timer - timer_margin,
 				flux_timer + timer_margin
 		)
+		_randomize_alignment()
 	else:
 		printerr("Another OverworldAvatar is already in the area {}.".format([name]))
 
