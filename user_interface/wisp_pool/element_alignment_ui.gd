@@ -42,7 +42,7 @@ func _ready():
 ## Sets the icons for the core elements.
 func _set_icons() -> void:
 	light_elem_1_icon.set_element(light_elem_1_icon.element)
-	light_elem_2_icon.set_element(light_elem_1_icon.element)
+	light_elem_2_icon.set_element(light_elem_2_icon.element)
 	dark_elem_1_icon.set_element(dark_elem_1_icon.element)
 	dark_elem_2_icon.set_element(dark_elem_2_icon.element)
 

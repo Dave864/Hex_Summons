@@ -41,7 +41,7 @@ func swap_elements(element_1: Element.Core, element_2: Element.Core) -> void:
 		_light_elements if element_2_details[0] == LIGHT else _dark_elements
 	)
 	element_1_alignment[element_1_details[1]] = element_2
-	element_2_alignment[element_1_details[1]] = element_1
+	element_2_alignment[element_2_details[1]] = element_1
 	emit_signal("alignment_changed")
 
 

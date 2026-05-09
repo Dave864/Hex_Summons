@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=26 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
-[ext_resource type="Script" uid="uid://dy10bnw0ny85c" path="res://overworld/alignment_area.gd" id="1_abwte"]
 [ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="1_q45au"]
+[ext_resource type="Script" uid="uid://crnlh08xvaccx" path="res://overworld/alignment_area/stable_alignment_area.gd" id="2_36ygl"]
+[ext_resource type="Script" uid="uid://7gcajgi7sxds" path="res://overworld/alignment_area/flux_alignment_area.gd" id="3_35tns"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q45au"]
 albedo_color = Color(0, 0.22352941, 1, 1)
@@ -63,13 +64,13 @@ size = Vector3(70, 5, 1)
 size = Vector3(15, 5, 45)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wc37g"]
-size = Vector3(100, 5, 55)
+size = Vector3(95, 5, 46)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8t104"]
-size = Vector3(100, 5, 25)
+size = Vector3(70, 5, 27)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_327yu"]
-size = Vector3(75, 5, 20)
+size = Vector3(70, 5, 13)
 
 [node name="Overworld" type="Node"]
 
@@ -153,48 +154,46 @@ shape = SubResource("BoxShape3D_uyahc")
 
 [node name="AlignmentAreas" type="Node3D" parent="."]
 
-[node name="GrassZone" type="Area3D" parent="AlignmentAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.49847)
-collision_layer = 6
-collision_mask = 6
-script = ExtResource("1_abwte")
+[node name="StableGrassArea" type="Area3D" parent="AlignmentAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -23.371277)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("2_36ygl")
 light_element_1 = 0
 light_element_2 = 2
 dark_element_1 = 1
 dark_element_2 = 3
+metadata/_custom_type_script = "uid://crnlh08xvaccx"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/GrassZone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/StableGrassArea"]
 shape = SubResource("BoxShape3D_wc37g")
 debug_color = Color(1, 0, 1, 1)
 debug_fill = false
 
-[node name="SandZone" type="Area3D" parent="AlignmentAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.430677)
-collision_layer = 6
-collision_mask = 6
-script = ExtResource("1_abwte")
+[node name="StableSandArea" type="Area3D" parent="AlignmentAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16.131218)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("2_36ygl")
 light_element_1 = 0
-light_element_2 = 1
-dark_element_1 = 2
-dark_element_2 = 3
+dark_element_1 = 1
+metadata/_custom_type_script = "uid://crnlh08xvaccx"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/SandZone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/StableSandArea"]
 shape = SubResource("BoxShape3D_8t104")
 debug_color = Color(1, 0, 1, 1)
 debug_fill = false
 
-[node name="BeachZone" type="Area3D" parent="AlignmentAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 33.265285)
-collision_layer = 6
-collision_mask = 6
-script = ExtResource("1_abwte")
-light_element_1 = 0
-light_element_2 = 2
-dark_element_1 = 1
-dark_element_2 = 3
+[node name="FluxSandArea" type="Area3D" parent="AlignmentAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 37.046726)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("3_35tns")
+flux_timer = 2.0
+timer_margin = 1.0
+metadata/_custom_type_script = "uid://7gcajgi7sxds"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/BeachZone"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.2922935)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/FluxSandArea"]
 shape = SubResource("BoxShape3D_327yu")
 debug_color = Color(1, 0, 1, 1)
 debug_fill = false
@@ -203,11 +202,7 @@ debug_fill = false
 transform = Transform3D(1, 0, 0, 0, 0.6537509, 0.7567098, 0, -0.7567098, 0.6537509, 0, 25.214062, 0)
 
 [node name="OverworldAvatar" parent="." instance=ExtResource("1_q45au")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.715, 0, -17.119)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.369606, -5.722046e-06, -20.645737)
 
 [node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
 transform = Transform3D(1, 0, 0, 0, 0.71856356, 0.6954614, 0, -0.6954614, 0.71856356, 0.1927185, 7.7139225, 8.189605)
-
-[connection signal="body_entered" from="AlignmentAreas/GrassZone" to="AlignmentAreas/GrassZone" method="_on_AlignmentArea_body_entered"]
-[connection signal="body_entered" from="AlignmentAreas/SandZone" to="AlignmentAreas/SandZone" method="_on_AlignmentArea_body_entered"]
-[connection signal="body_entered" from="AlignmentAreas/BeachZone" to="AlignmentAreas/BeachZone" method="_on_AlignmentArea_body_entered"]
