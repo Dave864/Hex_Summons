@@ -123,54 +123,32 @@ collision_mask = 12
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/ShortMountain/StaticBody3D"]
 shape = SubResource("BoxShape3D_35tns")
 
-[node name="Boundaries" type="Node3D" parent="Terrain"]
-
-[node name="StaticBody3D1" type="StaticBody3D" parent="Terrain/Boundaries"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.173985, 0, -23.518896)
+[node name="Boundaries" type="StaticBody3D" parent="Terrain"]
 collision_layer = 2
-collision_mask = 12
+collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D1"]
+[node name="CollisionShape3D1" type="CollisionShape3D" parent="Terrain/Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.173985, 0, -23.518896)
 shape = SubResource("BoxShape3D_q45au")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="Terrain/Boundaries"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Terrain/Boundaries"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.265755, 0, -23.067085)
-collision_layer = 2
-collision_mask = 12
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D2"]
 shape = SubResource("BoxShape3D_abwte")
 
-[node name="StaticBody3D3" type="StaticBody3D" parent="Terrain/Boundaries"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Terrain/Boundaries"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.697567, 3.8146973e-06, -46.163113)
-collision_layer = 2
-collision_mask = 12
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D3"]
 shape = SubResource("BoxShape3D_q1spi")
 
-[node name="StaticBody3D4" type="StaticBody3D" parent="Terrain/Boundaries"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Terrain/Boundaries"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.410963, 3.8146973e-06, 42.519905)
-collision_layer = 2
-collision_mask = 12
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D4"]
 shape = SubResource("BoxShape3D_g3yfq")
 
-[node name="StaticBody3D5" type="StaticBody3D" parent="Terrain/Boundaries"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Terrain/Boundaries"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.78007, 3.8146973e-06, 21.456263)
-collision_layer = 2
-collision_mask = 12
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D5"]
 shape = SubResource("BoxShape3D_uyahc")
 
-[node name="StaticBody3D6" type="StaticBody3D" parent="Terrain/Boundaries"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Terrain/Boundaries"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.919697, 3.8146973e-06, 21.456263)
-collision_layer = 2
-collision_mask = 12
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Boundaries/StaticBody3D6"]
 shape = SubResource("BoxShape3D_uyahc")
 
 [node name="AlignmentAreas" type="Node3D" parent="."]
