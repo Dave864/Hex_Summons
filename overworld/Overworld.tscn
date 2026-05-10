@@ -203,7 +203,7 @@ debug_fill = false
 transform = Transform3D(1, 0, 0, 0, 0.6537509, 0.7567098, 0, -0.7567098, 0.6537509, 0, 25.214062, 0)
 
 [node name="OverworldAvatar" parent="." instance=ExtResource("1_q45au")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.369606, -5.722046e-06, -20.645737)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.652378, -1.9073486e-06, -12.144756)
 
 [node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
 transform = Transform3D(1, 0, 0, 0, 0.71856356, 0.6954614, 0, -0.6954614, 0.71856356, 0.1927185, 7.7139225, 8.189605)
