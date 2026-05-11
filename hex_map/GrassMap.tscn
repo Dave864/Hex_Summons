@@ -1,0 +1,81 @@
+[gd_scene load_steps=7 format=3 uid="uid://bhiq3kkuslgmx"]
+
+[ext_resource type="Script" uid="uid://bifjkm55y01x1" path="res://hex_map/scripts/hex_map.gd" id="1_wascu"]
+[ext_resource type="Script" uid="uid://c36u7jqkdm14" path="res://hex_map/scripts/range_finder.gd" id="2_827fi"]
+[ext_resource type="Script" uid="uid://bcd08sdl2f7b6" path="res://hex_map/scripts/tiles.gd" id="3_yvx21"]
+[ext_resource type="PackedScene" uid="uid://cg633481rl4ed" path="res://hex_map/MapTile/MapTile.tscn" id="4_0wshy"]
+[ext_resource type="Texture2D" uid="uid://dd5o5igclh1oc" path="res://art/tile_textures/grass_texture.png" id="4_yvx21"]
+[ext_resource type="Texture2D" uid="uid://nulkxoth1tm1" path="res://art/tile_textures/dirt_texture.png" id="5_0wshy"]
+
+[node name="GrassMap" type="Node3D"]
+script = ExtResource("1_wascu")
+
+[node name="RangeFinder" type="Node" parent="."]
+script = ExtResource("2_827fi")
+map_tiles_reference = NodePath("../Tiles")
+
+[node name="Tiles" type="Node3D" parent="."]
+script = ExtResource("3_yvx21")
+x_count = 4
+z_count = 5
+map_textures = Array[Texture2D]([ExtResource("4_yvx21"), ExtResource("5_0wshy")])
+
+[node name="MapTile0" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0310893, 0, -3)
+
+[node name="MapTile1" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2990382, 0, -3)
+
+[node name="MapTile2" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43301255, 0, -3)
+
+[node name="MapTile3" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1650634, 0, -3)
+
+[node name="MapTile4" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1650639, 0, -1.5)
+
+[node name="MapTile5" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43301278, 0, -1.5)
+
+[node name="MapTile6" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2990377, 0, -1.5)
+
+[node name="MapTile7" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0310888, 0, -1.5)
+
+[node name="MapTile8" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0310893, 0, 0)
+
+[node name="MapTile9" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2990382, 0, 0)
+
+[node name="MapTile10" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43301255, 0, 0)
+
+[node name="MapTile11" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1650634, 0, 0)
+
+[node name="MapTile12" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1650634, 0, 1.5)
+
+[node name="MapTile13" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43301272, 0, 1.5)
+
+[node name="MapTile14" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2990379, 0, 1.5)
+
+[node name="MapTile15" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0310888, 0, 1.5)
+
+[node name="MapTile16" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0310888, 0, 3)
+
+[node name="MapTile17" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.299038, 0, 3)
+
+[node name="MapTile18" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43301272, 0, 3)
+
+[node name="MapTile19" parent="Tiles" instance=ExtResource("4_0wshy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1650634, 0, 3)
