@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://bnhxoo3xofoxd"]
 
-[ext_resource type="Texture2D" uid="uid://nulkxoth1tm1" path="res://art/tile_textures/dirt_texture.png" id="1_rs1m1"]
+[ext_resource type="Texture2D" uid="uid://dkgtqkkaghm4j" path="res://art/tile_textures/hex_base_texture.png" id="1_rs1m1"]
 [ext_resource type="Shader" uid="uid://nh3vsaw4y54g" path="res://hex_map/MapTile/sobel_edge_outline.gdshader" id="2_dliqb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_myv8q"]
