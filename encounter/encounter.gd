@@ -71,7 +71,7 @@ func _load_players() -> void:
 		player.stats.max_cur_health()
 		hex_map.place_character_at_tile(
 				player,
-				hex_map.player_start_tiles[p_index]
+				hex_map.player_start_tiles_values[p_index]
 		)
 		p_index += 1
 	ui.track_party_members(players)
@@ -100,7 +100,7 @@ func _load_enemies() -> void:
 			ui.track_enemy(enemy)
 		hex_map.place_character_at_tile(
 				enemy,
-				hex_map.enemy_start_tiles[e_index]
+				hex_map.enemy_start_tiles_values[e_index]
 		)
 		e_index += 1
 
