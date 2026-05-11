@@ -1,0 +1,245 @@
+[gd_scene load_steps=9 format=3 uid="uid://nudypgg740cf"]
+
+[ext_resource type="Script" uid="uid://bifjkm55y01x1" path="res://hex_map/scripts/hex_map.gd" id="1_0by1b"]
+[ext_resource type="Script" uid="uid://c36u7jqkdm14" path="res://hex_map/scripts/range_finder.gd" id="2_uqh63"]
+[ext_resource type="Script" uid="uid://bcd08sdl2f7b6" path="res://hex_map/scripts/tiles.gd" id="3_pxbui"]
+[ext_resource type="PackedScene" uid="uid://cg633481rl4ed" path="res://hex_map/MapTile/MapTile.tscn" id="4_j73ri"]
+[ext_resource type="Texture2D" uid="uid://dsfrs0ckjicrf" path="res://art/tile_textures/stone_texture.png" id="4_nk83e"]
+[ext_resource type="Texture2D" uid="uid://bmgh8cyu64one" path="res://art/tile_textures/stone_dirt_texture.png" id="5_4fse2"]
+[ext_resource type="Script" uid="uid://fn76j8x64ebc" path="res://hex_map/MapTile/scripts/map_tile.gd" id="5_nk83e"]
+[ext_resource type="Texture2D" uid="uid://nulkxoth1tm1" path="res://art/tile_textures/dirt_texture.png" id="6_qfo14"]
+
+[node name="RockMapSmall" type="Node3D"]
+script = ExtResource("1_0by1b")
+player_start_tiles_values = PackedInt32Array(21, 22, 23, 25, 26, 27, 28)
+enemy_start_tiles_values = PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17)
+
+[node name="RangeFinder" type="Node" parent="."]
+script = ExtResource("2_uqh63")
+map_tiles_reference = NodePath("../Tiles")
+
+[node name="Tiles" type="Node3D" parent="."]
+script = ExtResource("3_pxbui")
+x_count = 5
+z_count = 6
+map_textures = Array[Texture2D]([ExtResource("4_nk83e"), ExtResource("5_4fse2"), ExtResource("6_qfo14")])
+default_height = 2
+
+[node name="MapTile0" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8971148, 0, -3.75)
+height = 1
+
+[node name="MapTile1" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1650636, 0, -3.75)
+height = 2
+
+[node name="MapTile2" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43301284, 0, -3.75)
+height = 1
+
+[node name="MapTile3" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2990379, 0, -3.75)
+height = 2
+
+[node name="MapTile4" type="Area3D" parent="Tiles" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh") instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0310888, 0, -3.75)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("5_nk83e")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
+tile_mesh = NodePath("MapTileMesh")
+height = 2
+texture_index = 0
+
+[node name="MapTile5" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0310893, 0, -2.25)
+texture_index = 2
+
+[node name="MapTile6" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2990382, 0, -2.25)
+texture_index = 2
+
+[node name="MapTile7" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4330123, 0, -2.25)
+height = 1
+texture_index = 1
+
+[node name="MapTile8" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1650634, 0, -2.25)
+height = 2
+
+[node name="MapTile9" type="Area3D" parent="Tiles" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh") instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8971143, 0, -2.25)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("5_nk83e")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
+tile_mesh = NodePath("MapTileMesh")
+height = 1
+texture_index = 0
+
+[node name="MapTile10" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8971148, 0, -0.75)
+height = 1
+texture_index = 1
+
+[node name="MapTile11" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1650636, 0, -0.75)
+height = 2
+
+[node name="MapTile12" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43301284, 0, -0.75)
+height = 2
+
+[node name="MapTile13" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2990379, 0, -0.75)
+height = 1
+texture_index = 1
+
+[node name="MapTile14" type="Area3D" parent="Tiles" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh") instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0310888, 0, -0.75)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("5_nk83e")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
+tile_mesh = NodePath("MapTileMesh")
+height = 1
+texture_index = 0
+
+[node name="MapTile15" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0310888, 0, 0.75)
+height = 1
+
+[node name="MapTile16" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2990382, 0, 0.75)
+height = 2
+
+[node name="MapTile17" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43301255, 0, 0.75)
+height = 1
+texture_index = 1
+
+[node name="MapTile18" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1650634, 0, 0.75)
+height = 2
+
+[node name="MapTile19" type="Area3D" parent="Tiles" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh") instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8971143, 0, 0.75)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("5_nk83e")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
+tile_mesh = NodePath("MapTileMesh")
+height = 1
+texture_index = 1
+
+[node name="MapTile20" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8971143, 0, 2.25)
+height = 1
+
+[node name="MapTile21" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1650634, 0, 2.25)
+height = 2
+
+[node name="MapTile22" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4330126, 0, 2.25)
+height = 2
+
+[node name="MapTile23" parent="Tiles" instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2990379, 0, 2.25)
+height = 2
+
+[node name="MapTile24" type="Area3D" parent="Tiles" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh") instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0310888, 0, 2.25)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("5_nk83e")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
+tile_mesh = NodePath("MapTileMesh")
+texture_index = 2
+
+[node name="MapTile25" type="Area3D" parent="Tiles" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh") instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0310888, 0, 3.75)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("5_nk83e")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
+tile_mesh = NodePath("MapTileMesh")
+height = 2
+texture_index = 0
+
+[node name="MapTile26" type="Area3D" parent="Tiles" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh") instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2990382, 0, 3.75)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("5_nk83e")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
+tile_mesh = NodePath("MapTileMesh")
+height = 2
+texture_index = 1
+
+[node name="MapTile27" type="Area3D" parent="Tiles" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh") instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4330125, 0, 3.75)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("5_nk83e")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
+tile_mesh = NodePath("MapTileMesh")
+height = 2
+texture_index = 0
+
+[node name="MapTile28" type="Area3D" parent="Tiles" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh") instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1650634, 0, 3.75)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("5_nk83e")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
+tile_mesh = NodePath("MapTileMesh")
+height = 2
+texture_index = 0
+
+[node name="MapTile29" type="Area3D" parent="Tiles" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh") instance=ExtResource("4_j73ri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8971143, 0, 3.75)
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("5_nk83e")
+selector_highlighter = NodePath("SelectorHighlighter")
+tile_highlighter = NodePath("TileHighlighter")
+tile_mesh = NodePath("MapTileMesh")
+height = 1
+texture_index = 1
+
+[connection signal="area_entered" from="Tiles/MapTile3" to="Tiles/MapTile3/Occupant" method="_on_MapTile_area_entered"]
+[connection signal="area_exited" from="Tiles/MapTile3" to="Tiles/MapTile3/Occupant" method="_on_MapTile_area_exited"]
+[connection signal="height_changed" from="Tiles/MapTile3" to="Tiles/MapTile3/MouseBlocker/ScalingHexCollider" method="_on_HeightSource_height_changed"]
+[connection signal="height_changed" from="Tiles/MapTile3" to="Tiles/MapTile3/MapTileMesh" method="_on_HeightSource_height_changed"]
+[connection signal="mouse_entered" from="Tiles/MapTile3" to="Tiles/MapTile3" method="_on_MapTile_mouse_entered"]
+[connection signal="area_entered" from="Tiles/MapTile8" to="Tiles/MapTile8/Occupant" method="_on_MapTile_area_entered"]
+[connection signal="area_exited" from="Tiles/MapTile8" to="Tiles/MapTile8/Occupant" method="_on_MapTile_area_exited"]
+[connection signal="height_changed" from="Tiles/MapTile8" to="Tiles/MapTile8/MouseBlocker/ScalingHexCollider" method="_on_HeightSource_height_changed"]
+[connection signal="height_changed" from="Tiles/MapTile8" to="Tiles/MapTile8/MapTileMesh" method="_on_HeightSource_height_changed"]
+[connection signal="mouse_entered" from="Tiles/MapTile8" to="Tiles/MapTile8" method="_on_MapTile_mouse_entered"]
+[connection signal="area_entered" from="Tiles/MapTile13" to="Tiles/MapTile13/Occupant" method="_on_MapTile_area_entered"]
+[connection signal="area_exited" from="Tiles/MapTile13" to="Tiles/MapTile13/Occupant" method="_on_MapTile_area_exited"]
+[connection signal="height_changed" from="Tiles/MapTile13" to="Tiles/MapTile13/MouseBlocker/ScalingHexCollider" method="_on_HeightSource_height_changed"]
+[connection signal="height_changed" from="Tiles/MapTile13" to="Tiles/MapTile13/MapTileMesh" method="_on_HeightSource_height_changed"]
+[connection signal="mouse_entered" from="Tiles/MapTile13" to="Tiles/MapTile13" method="_on_MapTile_mouse_entered"]
+[connection signal="area_entered" from="Tiles/MapTile18" to="Tiles/MapTile18/Occupant" method="_on_MapTile_area_entered"]
+[connection signal="area_exited" from="Tiles/MapTile18" to="Tiles/MapTile18/Occupant" method="_on_MapTile_area_exited"]
+[connection signal="height_changed" from="Tiles/MapTile18" to="Tiles/MapTile18/MouseBlocker/ScalingHexCollider" method="_on_HeightSource_height_changed"]
+[connection signal="height_changed" from="Tiles/MapTile18" to="Tiles/MapTile18/MapTileMesh" method="_on_HeightSource_height_changed"]
+[connection signal="mouse_entered" from="Tiles/MapTile18" to="Tiles/MapTile18" method="_on_MapTile_mouse_entered"]
+[connection signal="area_entered" from="Tiles/MapTile23" to="Tiles/MapTile23/Occupant" method="_on_MapTile_area_entered"]
+[connection signal="area_exited" from="Tiles/MapTile23" to="Tiles/MapTile23/Occupant" method="_on_MapTile_area_exited"]
+[connection signal="height_changed" from="Tiles/MapTile23" to="Tiles/MapTile23/MouseBlocker/ScalingHexCollider" method="_on_HeightSource_height_changed"]
+[connection signal="height_changed" from="Tiles/MapTile23" to="Tiles/MapTile23/MapTileMesh" method="_on_HeightSource_height_changed"]
+[connection signal="mouse_entered" from="Tiles/MapTile23" to="Tiles/MapTile23" method="_on_MapTile_mouse_entered"]
