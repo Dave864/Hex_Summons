@@ -49,6 +49,7 @@ func _update_mesh(height: int):
 	
 	var array_mesh := ArrayMesh.new()
 	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
+	array_mesh.resource_local_to_scene = true
 	mesh = array_mesh
 
 

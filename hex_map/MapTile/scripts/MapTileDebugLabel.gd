@@ -8,6 +8,12 @@ extends Label3D
 @export var coordinate_ref: NodePath = NodePath("")
 
 
+## Reveals or hides the display depending on if the game is running in the
+## editor or not.
+func _ready() -> void:
+	visible = Engine.is_editor_hint()
+
+
 func update_label_display(height: int) -> void:
 	var format: String = "[%d:%d]\n%s  \n    %s\n%s  "
 	var coord: MapCoordinate = get_node(coordinate_ref)
