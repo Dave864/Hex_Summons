@@ -1,3 +1,4 @@
+@tool
 class_name HexMap
 extends Node3D
 ## A representation of the overall battlemap.
@@ -12,11 +13,27 @@ const TILES: String = "Tiles"
 const RANGE_FINDER: String = "RangeFinder"
 ## The maximum number of player characters that can be present on the map.
 const MAX_PLAYER_COUNT: int = 4
+## The regex pattern used to isolate acceptable tokens for the tiles inputs.
+const TILE_INPUT_REGEX: String = "\\d+\\s*\\-\\s*\\d+|\\d+"
 
+@export_group("Player Start Tiles", "player_start_tiles")
+## Allows for the specification of tile indices for player start tiles using
+## plain text.
+@export var player_start_tiles_input: String = ""
+## Triggers the processing of the player tiles input, resetting the input in the
+## process.
+@export_tool_button("Process Input") var player_start_tiles_process = _process_player_tiles_input
 ## The tile indexes that player characters can start at.
-@export var player_start_tiles: PackedInt32Array = [0, 1, 2, 3]
+@export var player_start_tiles_values: PackedInt32Array = [0, 1, 2, 3]
+@export_group("Enemy Start Tiles", "enemy_start_tiles")
+## Allows for the specification of tile indices for enemy start tiles using
+## plain text.
+@export var enemy_start_tiles_input: String = ""
+## Triggers the processing of the player tiles input, resetting the input in the
+## process.
+@export_tool_button("Process Input") var enemy_start_tiles_process = _process_enemy_tiles_input
 ## The tile indexes that enemy characters can start at.
-@export var enemy_start_tiles: PackedInt32Array = []
+@export var enemy_start_tiles_values: PackedInt32Array = []
 
 var range_finder: RangeFinder = null
 var _tiles_node: Tiles = null
@@ -67,6 +84,44 @@ func is_valid_cube(cube: Vector3) -> bool:
 	return _tiles_node.is_valid_cube(cube)
 
 
+## Populates player_start_tiles_values with indices defined by the input string.
+func _process_player_tiles_input() -> void:
+	for i: int in _translate_index_regex(player_start_tiles_input):
+		if not player_start_tiles_values.has(i):
+			player_start_tiles_values.append(i)
+	player_start_tiles_values.sort()
+	player_start_tiles_input = ""
+	if Engine.is_editor_hint():
+		notify_property_list_changed()
+
+
+## Populates enemy_start_tiles_values with indices defined by the input string.
+func _process_enemy_tiles_input() -> void:
+	for i: int in _translate_index_regex(enemy_start_tiles_input):
+		if not enemy_start_tiles_values.has(i):
+			enemy_start_tiles_values.append(i)
+	enemy_start_tiles_values.sort()
+	enemy_start_tiles_input = ""
+	if Engine.is_editor_hint():
+		notify_property_list_changed()
+
+
+## Takes the provided input and extracts a list of tile indices.
+func _translate_index_regex(input: String) -> Array[int]:
+	var indices: Array[int] = []
+	var regex := RegEx.new()
+	regex.compile(TILE_INPUT_REGEX)
+	var results := regex.search_all(input)
+	for result_part: RegExMatch in results:
+		var split := result_part.get_string().split("-", false)
+		if split.size() == 1:
+			indices.append(split[0].to_int())
+		elif split.size() > 1:
+			for i: int in range(split[0].to_int(), split[1].to_int() + 1):
+				indices.append(i)
+	return indices
+
+
 ## Creates a Tiles node if not already present.
 func _create_tiles_node() -> void:
 	if get_node_or_null(TILES) == null:
@@ -91,30 +146,32 @@ func _create_pathfinder() -> void:
 
 ## Check that all required parameters are set and/or valid.
 func _check_for_required_parameters() -> void:
+	if Engine.is_editor_hint():
+		return
 	var tile_count: int = get_z_count() * get_x_count()
 	assert(
-			player_start_tiles.size() >= MAX_PLAYER_COUNT,
+			player_start_tiles_values.size() >= MAX_PLAYER_COUNT,
 			"Not enough tiles specified for player starting options."
 	)
 	assert(
-			enemy_start_tiles.size() > 0,
+			enemy_start_tiles_values.size() > 0,
 			"No tiles specified for enemy starting options."
 	)
-	for tile_index in player_start_tiles:
+	for tile_index in player_start_tiles_values:
 		assert(
 				tile_index < tile_count and tile_index >= 0,
 				"Not all player starting options are within map bounds."
 		)
 		assert(
-				not enemy_start_tiles.has(tile_index),
+				not enemy_start_tiles_values.has(tile_index),
 				"Some player starting options are also enemy starting options."
 		)
-	for tile_index in enemy_start_tiles:
+	for tile_index in enemy_start_tiles_values:
 		assert(
 				tile_index < tile_count and tile_index >= 0,
 				"Not all enemy starting options are within map bounds."
 		)
 		assert(
-				not player_start_tiles.has(tile_index),
+				not player_start_tiles_values.has(tile_index),
 				"Some enemy starting options are also player starting options."
 		)

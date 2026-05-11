@@ -372,7 +372,7 @@ func _save_distance_map() -> bool:
 func _load_distance_map() -> bool:
 	var file_path: String = DISTANCE_MAP_PATH_FORMAT.format([get_parent().name])
 	if not FileAccess.file_exists(file_path):
-		printerr("File for HexMapDistances data does not exist.")
+		push_warning("File for HexMapDistances data does not exist.")
 		return false
 	dist_maps = ResourceLoader.load(file_path) as HexMapDistances
 	return dist_maps != null

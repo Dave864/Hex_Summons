@@ -10,8 +10,8 @@
 
 [node name="TestMap" type="Node3D"]
 script = ExtResource("3")
-player_start_tiles = [11, 16, 2, 3]
-enemy_start_tiles = [72, 76]
+player_start_tiles_values = PackedInt32Array(11, 16, 2, 3)
+enemy_start_tiles_values = PackedInt32Array(72, 76)
 
 [node name="RangeFinder" type="Node" parent="."]
 script = ExtResource("2")

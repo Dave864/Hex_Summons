@@ -7,8 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://dd5o5igclh1oc" path="res://art/tile_textures/grass_texture.png" id="4_yvx21"]
 [ext_resource type="Texture2D" uid="uid://nulkxoth1tm1" path="res://art/tile_textures/dirt_texture.png" id="5_0wshy"]
 
-[node name="GrassMap" type="Node3D"]
+[node name="GrassMapSmall" type="Node3D"]
 script = ExtResource("1_wascu")
+player_start_tiles_values = PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7)
+enemy_start_tiles_values = PackedInt32Array(8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)
 
 [node name="RangeFinder" type="Node" parent="."]
 script = ExtResource("2_827fi")
