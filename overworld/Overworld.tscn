@@ -5,14 +5,14 @@
 [ext_resource type="Script" uid="uid://crnlh08xvaccx" path="res://overworld/alignment_area/stable_alignment_area.gd" id="2_36ygl"]
 [ext_resource type="Script" uid="uid://7gcajgi7sxds" path="res://overworld/alignment_area/flux_alignment_area.gd" id="3_35tns"]
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_q45au"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q45au"]
 albedo_color = Color(0, 0.22352941, 1, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7kfuj"]
 material = SubResource("StandardMaterial3D_q45au")
 size = Vector2(500, 500)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_q45au"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_35tns"]
 albedo_color = Color(0.05490196, 0.67058825, 0.07450981, 1)
@@ -78,17 +78,17 @@ size = Vector3(70, 5, 13)
 
 [node name="Terrain" type="Node3D" parent="."]
 
-[node name="Ocean" type="MeshInstance3D" parent="Terrain"]
-mesh = SubResource("PlaneMesh_7kfuj")
-skeleton = NodePath("../..")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Terrain/Ocean"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+[node name="Floor" type="StaticBody3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 2
 collision_mask = 12
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Ocean/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Floor"]
 shape = SubResource("WorldBoundaryShape3D_q45au")
+
+[node name="Ocean" type="MeshInstance3D" parent="Terrain"]
+mesh = SubResource("PlaneMesh_7kfuj")
+skeleton = NodePath("../..")
 
 [node name="GrassFloor" type="MeshInstance3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -23.404139)

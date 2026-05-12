@@ -8,6 +8,7 @@ atlas = ExtResource("1_dkuw1")
 region = Rect2(0, 17, 31, 32)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bwl26"]
+radius = 0.6
 
 [node name="OverworldAvatar" type="CharacterBody3D"]
 collision_layer = 4
@@ -15,8 +16,9 @@ collision_mask = 2
 script = ExtResource("1_rphjw")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-pixel_size = 0.05
+pixel_size = 0.0625
 billboard = 1
+texture_filter = 0
 texture = SubResource("AtlasTexture_rphjw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
