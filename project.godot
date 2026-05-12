@@ -28,6 +28,7 @@ ElementalAlignment="*res://autoloads/elemental_alignment.gd"
 PartyController="*res://autoloads/party_controller.gd"
 WispTracker="*res://autoloads/wisp_tracker.gd"
 WispController="*res://autoloads/wisp_controller.gd"
+EncounterController="*res://autoloads/encounter_controller.gd"
 
 [display]
 
