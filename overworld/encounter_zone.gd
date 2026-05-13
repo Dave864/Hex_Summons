@@ -41,11 +41,6 @@ func _init() -> void:
 	set_collision_mask_value(Constants.PLAYER_LAYER, true)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
 ## Catches when the player avatar enters the zone.
 func _on_EncounterZone_body_entered(avatar: OverworldAvatar) -> void:
 	pass

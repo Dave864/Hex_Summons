@@ -15,8 +15,6 @@ var _timer_value: float = 0.0
 var _timer_duration: float = 0.0
 ## The player avatar within this area.
 var _avatar: OverworldAvatar = null
-## The position the avatar was last observed at.
-var _last_position := Vector3.ZERO
 
 
 # Called when the node enters the scene tree for the first time.
@@ -33,11 +31,10 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if _avatar == null:
 		return
-	_timer_duration += _last_position.distance_squared_to(_avatar.position)
+	_timer_duration += EncounterController.get_last_squared_distance()
 	if _timer_duration > _timer_value:
 		_randomize_alignment()
 		_timer_duration = 0.0
-	_last_position = _avatar.position
 
 
 ## Updates the elemental alignment by randomly modifying the current alignment.
@@ -73,7 +70,6 @@ func _randomize_alignment() -> void:
 func _on_AlignmentArea_body_entered(player_avatar: OverworldAvatar) -> void:
 	if _avatar == null:
 		_avatar = player_avatar
-		_last_position = _avatar.position
 		_timer_duration = 0.0
 		_timer_value = randf_range(
 				flux_timer - timer_margin,
