@@ -13,6 +13,9 @@ extends Area3D
 ## Files paths to the possible map selections for this zone.
 @export_dir var maps : Array[String]
 
+## Thread that runs the ecosystem simulation for this zone.
+var _sim_thread: Thread
+
 
 ## Creates a new CollisionShape if none is present.
 func _ready() -> void:
@@ -31,6 +34,8 @@ func _ready() -> void:
 		collision_shape.debug_color = Color.YELLOW
 		collision_shape.debug_fill = false
 		collision_shape.shape = BoxShape3D.new()
+	_sim_thread = Thread.new()
+	_sim_thread.start(Callable(self, "_simulate_ecosystem"))
 
 
 ## Establishes the collision layers of a newly created zone.
@@ -41,11 +46,21 @@ func _init() -> void:
 	set_collision_mask_value(Constants.PLAYER_LAYER, true)
 
 
+## Disposes of thread resources.
+func _exit_tree() -> void:
+	_sim_thread.wait_to_finish()
+
+
+## Simulates the ecosystem of the enemies to determine the population levels.
+func _simulate_ecosystem() -> void:
+	pass
+
+
 ## Catches when the player avatar enters the zone.
-func _on_EncounterZone_body_entered(avatar: OverworldAvatar) -> void:
+func _on_EncounterZone_body_entered(_avatar: OverworldAvatar) -> void:
 	pass
 
 
 ## Catches when the player avatar exits the zone.
-func _on_EncounterZone_body_exited(avatar: OverworldAvatar) -> void:
+func _on_EncounterZone_body_exited(_avatar: OverworldAvatar) -> void:
 	pass
