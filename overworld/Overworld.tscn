@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=29 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="1_q45au"]
 [ext_resource type="Script" uid="uid://crnlh08xvaccx" path="res://overworld/alignment_area/stable_alignment_area.gd" id="2_36ygl"]
 [ext_resource type="Script" uid="uid://7gcajgi7sxds" path="res://overworld/alignment_area/flux_alignment_area.gd" id="3_35tns"]
+[ext_resource type="Script" uid="uid://ca7jxmn65fbji" path="res://overworld/encounter_zone.gd" id="4_q1spi"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_q45au"]
 
@@ -71,6 +72,12 @@ size = Vector3(70, 5, 25)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_327yu"]
 size = Vector3(70, 5, 13)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_naebm"]
+size = Vector3(95, 5, 53)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
+size = Vector3(67, 5, 45)
 
 [node name="Overworld" type="Node"]
 
@@ -197,6 +204,30 @@ metadata/_custom_type_script = "uid://7gcajgi7sxds"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/FluxSandArea"]
 shape = SubResource("BoxShape3D_327yu")
 debug_color = Color(1, 0, 1, 1)
+debug_fill = false
+
+[node name="EncounterZones" type="Node3D" parent="."]
+
+[node name="GrassZone" type="Area3D" parent="EncounterZones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2974558, 0, -20.681183)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("4_q1spi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterZones/GrassZone"]
+shape = SubResource("BoxShape3D_naebm")
+debug_color = Color(1, 1, 0, 1)
+debug_fill = false
+
+[node name="SandZone" type="Area3D" parent="EncounterZones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.667734)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("4_q1spi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterZones/SandZone"]
+shape = SubResource("BoxShape3D_taamv")
+debug_color = Color(1, 1, 0, 1)
 debug_fill = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
