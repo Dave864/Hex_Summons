@@ -8,14 +8,6 @@ extends Area3D
 ## to match the alignment of the area.
 
 
-## The collision layer that colliders default to when created.
-const DEFAULT_LAYER := 1
-## The collision layer for map objects.
-const MAP_LAYER := 2
-## The collision layer for player characters.
-const PLAYER_LAYER := 3
-
-
 ## The first element aligned with light.
 var _light_1_current := Element.Core.FIRE
 ## The second element aligned with light.
@@ -44,10 +36,10 @@ func _ready() -> void:
 
 ## Creates a new instance of AlignmentArea.
 func _init() -> void:
-	set_collision_layer_value(DEFAULT_LAYER, false)
-	set_collision_layer_value(MAP_LAYER, true)
-	set_collision_mask_value(DEFAULT_LAYER, false)
-	set_collision_mask_value(PLAYER_LAYER, true)
+	set_collision_layer_value(Constants.DEFAULT_LAYER, false)
+	set_collision_layer_value(Constants.MAP_LAYER, true)
+	set_collision_mask_value(Constants.DEFAULT_LAYER, false)
+	set_collision_mask_value(Constants.PLAYER_LAYER, true)
 
 
 ## Updates the elemental alignment.

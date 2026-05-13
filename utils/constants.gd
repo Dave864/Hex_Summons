@@ -34,3 +34,10 @@ const OPACITY_THREE_QUARTER: float = 0.75
 const OPACITY_HALF: float = 0.5
 const OPACITY_QUARTER: float = 0.25
 const OPACITY_NONE: float = 0.0
+
+## The collision layer that colliders default to when created.
+const DEFAULT_LAYER := 1
+## The collision layer for map objects.
+const MAP_LAYER := 2
+## The collision layer for player characters.
+const PLAYER_LAYER := 3
