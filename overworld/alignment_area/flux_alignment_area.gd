@@ -31,7 +31,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if _avatar == null:
 		return
-	_timer_duration += EncounterController.get_last_squared_distance()
+	_timer_duration += SceneController.get_last_squared_distance()
 	if _timer_duration > _timer_value:
 		_randomize_alignment()
 		_timer_duration = 0.0

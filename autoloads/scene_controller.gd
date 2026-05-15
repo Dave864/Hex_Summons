@@ -1,10 +1,11 @@
 extends Node
-## Global node that manages the details of transitioning between an encounter
-## and other scenes.
+## Global node that manages the details of transitioning between scenes.
 
 
 ## The path to the Encounter scene.
 const ENCOUNTER_SCENE_PATH := "res://encounter/Encounter.tscn"
+## The path to the Overworld scene.
+const OVERWORLD_SCENE_PATH := "res://overworld/Overworld.tscn"
 
 ## The last tracked position of the OverworldAvatar.
 var prior_avatar_position: Vector3 = Vector3.INF
@@ -39,7 +40,8 @@ func get_last_squared_distance() -> float:
 	return _last_frame_distance
 
 
-## Triggers a scene change to the Encounter scene, passing along
+## Triggers a scene change to the Encounter scene, passing along the map and
+## enemy details.
 func change_scene_to_encounter(
 	map_path: String,
 	enemy_paths: Array[String]
