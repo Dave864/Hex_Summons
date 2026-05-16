@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bbcgtftl285ft" path="res://user_interface/LoadingScreen/loading_screen.gd" id="1_oca0a"]
 
 [node name="LoadingScreen" type="CanvasLayer" node_paths=PackedStringArray("progress_bar")]
+layer = 2
 script = ExtResource("1_oca0a")
 progress_bar = NodePath("ProgressBar")
 

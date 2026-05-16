@@ -10,14 +10,14 @@ const OVERWORLD_SCENE_PATH := "res://overworld/Overworld.tscn"
 ## The last tracked position of the OverworldAvatar.
 var prior_avatar_position: Vector3 = Vector3.INF
 
-## The sceen currently active.
-var _current_scene: Node = null
 ## Pre loaded loading screen.
 var _loading_screen: PackedScene = preload(
 		"res://user_interface/LoadingScreen/LoadingScreen.tscn"
 )
+### Reference to the current scene.
+#var current_scene: Node = null
 ## The path to the scene currently being loaded.
-var _load_scene_path: String = ""
+var load_scene_path: String = ""
 ## Reference to the OverworldAvatar.
 var _overworld_avatar: OverworldAvatar = null
 ## The squared distance the tracked avatar traveled in the last frame.
@@ -30,7 +30,7 @@ var _encounter_enemy_paths: Array[String] = []
 
 ## Obtains the current active scene.
 func _ready() -> void:
-	_current_scene = get_tree().current_scene
+	pass
 
 
 ## Updates the last tracked position for the currently tracked OverworldAvatar.
@@ -74,38 +74,7 @@ func change_to_scene(scene_path: String) -> void:
 	_load_scene.call_deferred(scene_path)
 
 
-## Obtains the progress of any currently active scene switch as a value from 0
-## to 1.0.
-func get_load_percentage() -> float:
-	if _load_scene_path == "":
-		return 0.0
-	else:
-		var progress: Array[float] = []
-		ResourceLoader.load_threaded_get_status(_load_scene_path, progress)
-		return progress[0]
-
-
-## Loads the selected scene.
+## Triggers the load screen to be created.
 func _load_scene(scene_path: String) -> void:
-	_load_scene_path = scene_path
-	var loading_screen: LoadingScreen = _loading_screen.instantiate()
-	get_tree().root.add_child(loading_screen)
-	_current_scene.queue_free()
-	ResourceLoader.load_threaded_request(scene_path)
-	while true:
-		match ResourceLoader.load_threaded_get_status(scene_path):
-			ResourceLoader.THREAD_LOAD_FAILED:
-				printerr("Scene at path {} failed to load.".format([scene_path]))
-				return
-			ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
-				printerr("Scene at path {} is invalid.".format([scene_path]))
-				return
-			ResourceLoader.THREAD_LOAD_LOADED:
-				break
-			_:
-				pass
-	var new_scene := ResourceLoader.load_threaded_get(scene_path)
-	_current_scene = new_scene.instantiate()
-	get_tree().root.add_child(_current_scene)
-	loading_screen.queue_free()
-	_load_scene_path = ""
+	load_scene_path = scene_path
+	get_tree().change_scene_to_packed(_loading_screen)
