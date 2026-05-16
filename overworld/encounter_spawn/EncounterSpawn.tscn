@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnypq6lgx2yet"]
+
+[ext_resource type="Texture2D" uid="uid://cdlt7x03ektf1" path="res://art/CharacterPlaceholders3D.png" id="1_wkyhm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsewy"]
+atlas = ExtResource("1_wkyhm")
+region = Rect2(0, 66, 32, 32)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1vheu"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rsewy"]
+radius = 0.8
+
+[node name="EncounterSpawn" type="CharacterBody3D"]
+collision_layer = 8
+collision_mask = 2
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.0625
+billboard = 1
+texture_filter = 0
+texture = SubResource("AtlasTexture_rsewy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_1vheu")
+
+[node name="HitBox" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+shape = SubResource("CylinderShape3D_rsewy")

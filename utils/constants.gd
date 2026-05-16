@@ -41,3 +41,5 @@ const DEFAULT_LAYER := 1
 const MAP_LAYER := 2
 ## The collision layer for player characters.
 const PLAYER_LAYER := 3
+## The collision layer for enemy characters.
+const ENEMY_LAYER := 4
