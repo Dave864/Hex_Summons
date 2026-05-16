@@ -14,8 +14,6 @@ var prior_avatar_position: Vector3 = Vector3.INF
 var _loading_screen: PackedScene = preload(
 		"res://user_interface/LoadingScreen/LoadingScreen.tscn"
 )
-### Reference to the current scene.
-#var current_scene: Node = null
 ## The path to the scene currently being loaded.
 var load_scene_path: String = ""
 ## Reference to the OverworldAvatar.
