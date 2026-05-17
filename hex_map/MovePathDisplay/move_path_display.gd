@@ -15,6 +15,11 @@ extends Node
 @onready var _path_sprites: Node = $PathSprites
 
 
+## Hides the path display at start.
+func _ready() -> void:
+	hide()
+
+
 ## Creates and shows the display for the given path.
 func create_display(move_path: PackedVector3Array) -> void:
 	# To mitigate visual issues that come with updating the sprites.
