@@ -70,7 +70,7 @@ func get_spells() -> Array[Action]:
 
 
 ## Returns the type of the character, PLAYER.
-func get_type() -> int:
+func get_type() -> Type:
 	return Type.PLAYER
 
 

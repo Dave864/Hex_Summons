@@ -51,7 +51,7 @@ func emit_turn_ended() -> void:
 
 
 ## Virtual function. Returns the character type.
-func get_type() -> int:
+func get_type() -> Type:
 	return Type.NONE
 
 

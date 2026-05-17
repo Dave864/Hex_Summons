@@ -73,6 +73,11 @@ func _ready() -> void:
 	dismiss_summon()
 
 
+## Returns the type of the character, SUMMON.
+func get_type() -> Type:
+	return Type.SUMMON
+
+
 ## Checks if there is an active summon that has been loaded. An active summon
 ## always has a summoner specified.
 func is_active() -> bool:
