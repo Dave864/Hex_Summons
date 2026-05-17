@@ -233,10 +233,8 @@ func get_movement_area_ids() -> Array[int]:
 
 
 ## Highlight the specified tiles as movement for the given character.
-## Setting start_index to -1 indicates that we want to use the current
-## character position to determine where to set the character highlight.
-func highlight_player_movement(start_index: int = -1) -> void:
-	# Activate the selector at the character's current position.
+func highlight_player_movement() -> void:
+	# Activate the selector at the current move target.
 	var character_tile: MapTile = hex_map.get_tile_at(move_target_index)
 	character_tile.set_selector_type(HexHighlighter.Option.SELECT_MOVE)
 	
@@ -245,17 +243,11 @@ func highlight_player_movement(start_index: int = -1) -> void:
 		var tile: MapTile = hex_map.get_tile_at(i)
 		var occupant: Character = tile.occupant.get_current_occupant()
 		if occupant == null:
-			if i == start_index:
-				tile.set_highlight_type(HexHighlighter.Option.ORIGIN_PLAYER)
-			else:
-				tile.set_highlight_type(HexHighlighter.Option.RANGE_MOVE)
+			tile.set_highlight_type(HexHighlighter.Option.RANGE_MOVE)
 		elif occupant.get_type() == Character.Type.ENEMY:
 			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_ENEMY)
 		elif occupant.get_instance_id() == focused_character.get_instance_id():
-			if start_index < 0 or start_index == move_target_index:
-				tile.set_highlight_type(HexHighlighter.Option.ORIGIN_PLAYER)
-			else:
-				tile.set_highlight_type(HexHighlighter.Option.RANGE_MOVE)
+			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_PLAYER)
 		else:
 			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_ALLY)
 		_highlighted_map_indexes.append(tile.map_coordinate.get_tile_index())
