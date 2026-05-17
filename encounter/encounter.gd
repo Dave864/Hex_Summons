@@ -105,6 +105,9 @@ func _load_enemies() -> void:
 			hex_map.enemy_start_tiles_values,
 			enemy_load_paths.size()
 	)
+	if start_positions.size() == 0:
+		printerr("Not enough start positions for enemies.")
+		return
 	for path: String in enemy_load_paths:
 		var enemy: EnemyCharacter = load(path).instantiate()
 		$Enemies.add_child(enemy)
