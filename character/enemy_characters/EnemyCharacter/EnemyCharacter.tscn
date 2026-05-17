@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://br0t2h6awodf8"]
+[gd_scene load_steps=21 format=3 uid="uid://br0t2h6awodf8"]
 
 [ext_resource type="Texture2D" uid="uid://chk7nky8s2815" path="res://character/enemy_characters/EnemyCharacter/EnemyBattleSprite.atlastex" id="1"]
 [ext_resource type="Script" uid="uid://blllus8v7ujpt" path="res://character/enemy_characters/enemy_character.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://du6ycpr7t0big" path="res://character/enemy_characters/EnemyCharacter/EnemyBattlePortrait.atlastex" id="2_aji04"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
 [ext_resource type="Script" uid="uid://cof1wrll2np4x" path="res://fsm/enemy_character/enemy_character_move.gd" id="4"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="4_06hyf"]
@@ -10,19 +11,21 @@
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="6"]
 [ext_resource type="Script" uid="uid://dp6jkaqsiu5vq" path="res://fsm/enemy_character/enemy_character_think.gd" id="7"]
 [ext_resource type="Script" uid="uid://cdrf5m57oe7j7" path="res://fsm/enemy_character/enemy_character_action.gd" id="8"]
-[ext_resource type="Resource" path="res://character/enemy_characters/EnemyCharacter/stat_data/stat_values.tres" id="9"]
+[ext_resource type="Resource" uid="uid://beb544ylrc5ns" path="res://character/enemy_characters/EnemyCharacter/stat_data/stat_values.tres" id="9"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="10"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="10_kfcv6"]
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="11"]
 [ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="12"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="13"]
+[ext_resource type="PackedScene" uid="uid://c4shujk0dhck0" path="res://actions/action_nodes/Empty/Empty.tscn" id="13_q7821"]
+[ext_resource type="Script" uid="uid://bdkgr4241wqcj" path="res://character_ai/action_behavior.gd" id="14_aji04"]
 [ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="15"]
-
 
 [node name="EnemyCharacter" type="Area3D"]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("2")
+battle_portrait = ExtResource("2_aji04")
 
 [node name="CharacterLabel" parent="." node_paths=PackedStringArray("char_pos") instance=ExtResource("11")]
 offset_right = 0.0
@@ -39,7 +42,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 shape = ExtResource("4_06hyf")
 
 [node name="EncounterSprite" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.9, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.55, 0)
 material_override = ExtResource("5_iuq0q")
 pixel_size = 0.0054
 billboard = 1
@@ -73,7 +76,13 @@ actions_ref = NodePath("../Actions")
 
 [node name="Actions" type="Node" parent="."]
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="Empty" parent="Actions" instance=ExtResource("13_q7821")]
+
+[node name="ActionBehavior" type="Node" parent="Actions/Empty"]
+script = ExtResource("14_aji04")
+metadata/_custom_type_script = "uid://bdkgr4241wqcj"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3")
 initial_state = NodePath("Wait")
 
