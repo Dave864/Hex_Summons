@@ -286,6 +286,7 @@ func _on_SignalBus_spawn_action_selected(
 func _on_SignalBus_character_action_type_canceled() -> void:
 	if not _state_is_active():
 		return
+	_reset()
 	state_machine.transition_to(MOVE)
 
 
