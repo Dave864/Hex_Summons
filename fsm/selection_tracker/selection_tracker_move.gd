@@ -35,6 +35,10 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 			hex_map.get_tiles_from_ids(s_tracker.get_movement_area_ids()),
 			hex_map.get_x_count()
 	)
+	# Set an initial movement path in case no path is requested before the turn
+	# is finalized.
+	if s_tracker.get_movement_path().size() == 0:
+		s_tracker.set_movement_path(_pathbuilder.get_point_path())
 	_update_selection(hex_map.get_tile_at(s_tracker.move_target_index))
 	s_tracker.set_selector_update(_update_selection_ref)
 	_connect_signals()
@@ -160,6 +164,8 @@ func _resolve_joystick_direction(direction: HexUtil.HexDirection) -> void:
 ## ended.
 func _on_Character_turn_ended() -> void:
 	selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+	# Clear out movement path to reset it.
+	s_tracker.set_movement_path([])
 	_move_origin_index = -1
 	s_tracker.focused_character.disconnect(
 			"turn_ended",

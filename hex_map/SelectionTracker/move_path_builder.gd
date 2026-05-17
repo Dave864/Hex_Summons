@@ -46,6 +46,8 @@ func update_move_area_details(
 	_current_id_path.clear()
 	_current_id_path.resize(_move_range + 1)
 	_current_id_path.fill(-1)
+	# Path will always starts at move origin, even when no path is created.
+	_current_id_path[0] = _move_origin
 	_path_end_index = 0
 	_current_distance = 0.0
 	_update_move_area(new_move_area, grid_x_count)
