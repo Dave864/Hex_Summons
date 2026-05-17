@@ -53,7 +53,12 @@ func update_move_area_details(
 
 ## Returns the path as an array of tile ids.
 func get_id_path() -> PackedInt64Array:
-	return _current_id_path
+	var id_path: PackedInt64Array = []
+	for i: int in _current_id_path:
+		if _current_id_path[i] < 0:
+			break
+		id_path.append(_current_id_path[i])
+	return id_path
 
 
 ## Returns the path as an array of points (Vector3).
