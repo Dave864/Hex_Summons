@@ -15,11 +15,11 @@ signal new_focus_point(new_position)
 ## Indicates if the camera focus is locked to a point.
 signal camera_focus_locked(is_locked)
 
-## The encounter map the tracker will highlight.
-@export var hex_map: HexMap = null
 ## The selector node that marks a focused tile.
 @export var selector: Selector = null
 
+## The encounter map the tracker will highlight.
+var hex_map: HexMap = null
 ## The active character, usually a PlayerCharacter or Summon.
 var focused_character: Character = null:
 	set = set_focused_character
