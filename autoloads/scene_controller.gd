@@ -23,7 +23,7 @@ var _last_frame_distance: float = 0.0
 ## The path to the map to use for the next encounter.
 var _encounter_map_path: String = ""
 ## The paths to the enemies to use for the next encounter.
-var _encounter_enemy_paths: Array[String] = []
+var _encounter_enemy_paths: PackedStringArray = []
 
 
 ## Obtains the current active scene.
@@ -51,11 +51,21 @@ func get_last_squared_distance() -> float:
 	return _last_frame_distance
 
 
+## Returns the path to the currently set encounter map.
+func get_encounter_map_path() -> String:
+	return _encounter_map_path
+
+
+## Returns the paths to the currently set encounter enemies.
+func get_encounter_enemy_paths() -> PackedStringArray:
+	return _encounter_enemy_paths
+
+
 ## Triggers a scene change to the Encounter scene, passing along the map and
 ## enemy details.
 func change_scene_to_encounter(
 	map_path: String,
-	enemy_paths: Array[String]
+	enemy_paths: PackedStringArray
 ) -> void:
 	_encounter_map_path = map_path
 	_encounter_enemy_paths = enemy_paths

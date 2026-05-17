@@ -22,7 +22,7 @@ var _overworld_avatar: OverworldAvatar = null
 ## The path to the map of the encounter.
 var _encounter_map_path: String = ""
 ## The list of paths to the enemies that will be in the encounter.
-var _enemies_path_list : Array[String] = []
+var _enemies_path_list : PackedStringArray = []
 
 
 ## Initializes the signal connections.
@@ -34,7 +34,7 @@ func _ready() -> void:
 func _init(
 	overworld_avatar: OverworldAvatar,
 	encounter_map_path: String,
-	enemies_path_list: Array[String]
+	enemies_path_list: PackedStringArray
 ) -> void:
 	_overworld_avatar = overworld_avatar
 	_encounter_map_path = encounter_map_path
