@@ -34,7 +34,6 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 			s_tracker.focused_character.stats.get_movement_range(),
 			hex_map.get_tiles_from_ids(s_tracker.get_movement_area_ids()),
 			hex_map.get_x_count()
-			
 	)
 	_update_selection(hex_map.get_tile_at(s_tracker.move_target_index))
 	s_tracker.set_selector_update(_update_selection_ref)

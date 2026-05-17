@@ -16,9 +16,13 @@ const WAIT := "Wait"
 ## Typed reference to the SelectionTracker node.
 var s_tracker: SelectionTracker
 ## Typed reference to the Selector node.
-var selector: Selector
+var selector: Selector:
+	get:
+		return s_tracker.selector
 ## Typed reference to the HexMap.
-var hex_map: HexMap
+var hex_map: HexMap:
+	get:
+		return s_tracker.hex_map
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -30,8 +34,6 @@ func _ready() -> void:
 	# The `as` keyword casts the `owner` variable to the `Selector` type.
 	# If the `owner` is not a `SelectionTracker`, we'll get `null`.
 	s_tracker = owner as SelectionTracker
-	selector = s_tracker.selector
-	hex_map = s_tracker.hex_map
 	# This check will tell us if we inadvertently assign a derived state script
 	# in a scene other than `Selector.tscn`, which would be unintended. This can
 	# help prevent some bugs that are difficult to understand.
