@@ -213,6 +213,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2974558, 0, -20.681183)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("4_q1spi")
+maps = Array[String](["res://hex_map", "res://hex_map"])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterZones/GrassZone"]
 shape = SubResource("BoxShape3D_naebm")
@@ -224,6 +225,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.667734)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("4_q1spi")
+maps = Array[String](["res://hex_map", "res://hex_map"])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterZones/SandZone"]
 shape = SubResource("BoxShape3D_taamv")
