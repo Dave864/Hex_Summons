@@ -20,16 +20,16 @@ func get_effects() -> Array[ActionEffect]:
 	return _effects
 
 
-## Activates the collision shape.
+## Activates the collision shape on the next frame.
 func activate() -> void:
 	monitorable = true
-	_c_shape.disabled = false
+	_c_shape.set_deferred("disabled", false)
 
 
-## Deactivates the collision shape.
+## Deactivates the collision shape on the next frame.
 func deactivate() -> void:
 	monitorable = false
-	_c_shape.disabled = true
+	_c_shape.set_deferred("disabled", true)
 
 
 ## Called when the node enters the scene tree for the first time.

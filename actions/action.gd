@@ -115,9 +115,11 @@ func reset_emittor_position() -> void:
 func execute_action() -> bool:
 	_hit_box.transform = _emission_transform
 	_hit_box.activate()
-	ani_player.play("execute")
+	# Defer call to next frame so that hit box is active when animation starts.
+	ani_player.play.call_deferred("execute")
 	await ani_player.animation_finished
 	_hit_box.deactivate()
+	# Defer call to next frame so that hit box is inactive when animation is reset.
 	ani_player.play("RESET")
 	return true
 
