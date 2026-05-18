@@ -5,14 +5,10 @@ extends CharacterBody3D
 ## colliding with the OverworldAvatar.
 
 
-## The default sprite used for the spawner.
-const DEFAULT_SPRITE_PATH := (
-	"res://character/enemy_characters/EnemyCharacter/EnemyBattleSprite.atlastex"
-)
-## The pixel size for the sprite.
-const SPRITE_PIXEL_SIZE := 0.0625
 ## The radius of the spawner hitbox.
 const HITBOX_RADIUS := 0.8
+## The maximum value for dither intensity.
+const MAX_DITHER_INTENSITY := 1.0
 
 ## The speed the spawner moves at.
 var speed = 5.0
@@ -60,13 +56,8 @@ func despawn() -> void:
 
 ## Creates the sprite for the node.
 func _create_sprite() -> void:
-	var sprite := Sprite3D.new()
+	var sprite := EncounterSpawnSprite.new()
 	add_child(sprite)
-	sprite.name = "Sprite3D"
-	sprite.texture = load(DEFAULT_SPRITE_PATH)
-	sprite.pixel_size = SPRITE_PIXEL_SIZE
-	sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 
 
 ## Creates the collision shape used for interacting with the world.
