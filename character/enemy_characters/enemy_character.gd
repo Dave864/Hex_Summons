@@ -44,12 +44,6 @@ func emit_enemy_actions_required() -> void:
 	emit_signal("enemy_actions_required")
 
 
-## Virtual function. Updates emission points for all actions of the chracter.
-func _update_emission_index(_index: int) -> void:
-	for action: Action in _actions:
-		action.set_emission_map_index(_index)
-
-
 ## Initializes the action effects.
 func _initialize_actions() -> void:
 	for a: Action in _actions:

@@ -120,11 +120,3 @@ func _update_sprites(player_name: String) -> void:
 	var new_battle: Texture2D = load(BATTLE_PATH_FORMAT.format([player_name]))
 	battle_portrait = new_portrait if new_portrait != null else _default_portait
 	character_sprite.texture = new_battle if new_battle != null else _default_battle
-
-
-## Virtual function. Updates emission points for all actions of the chracter.
-func _update_emission_index(_index: int) -> void:
-	for technique in _techniques:
-		technique.set_emission_map_index(_index)
-	for spell in _spells:
-		spell.set_emission_map_index(_index)

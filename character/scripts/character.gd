@@ -81,14 +81,8 @@ func _connect_to_character_label() -> void:
 	character_label.set_cur_health(stats.get_stat(Stat.Type.CUR_HEALTH))
 
 
-## Virtual function. Updates emission points for all actions of the chracter.
-func _update_emission_index(_index: int) -> void:
-	pass
-
-
 ## Update the character's position index when passing over a MapTile.
 func _on_Character_area_entered(map_tile: Area3D) -> void:
-	_update_emission_index(map_tile.map_coordinate.get_tile_index())
 	map_coordinate.set_tile_index(map_tile.map_coordinate.get_tile_index())
 	map_coordinate.set_cube_coord(map_tile.map_coordinate.get_cube_coord())
 	if !_start_set:

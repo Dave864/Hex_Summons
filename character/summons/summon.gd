@@ -221,12 +221,6 @@ func _create_action_node(action_name: String) -> Action:
 	return action_node
 
 
-## Virtual function. Updates emission points for all turn actions of the chracter.
-func _update_emission_index(index: int) -> void:
-	for action in turn_actions:
-		action.set_emission_map_index(index)
-
-
 ## Activates the specified summon and places it at the listed emission position
 ## of the spawn action.
 func _on_SelectionTracker_spawn_action_confirmed(
