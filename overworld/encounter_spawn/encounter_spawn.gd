@@ -48,9 +48,19 @@ func _physics_process(delta: float) -> void:
 	_behavior_pattern(delta)
 
 
+## Causes the sprite to appear.
+func spawn() -> void:
+	var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
+	sprite.spawn_transition()
+	await sprite.transition_finished
+
+
 ## Removes the spawner from play.
 func despawn() -> void:
 	$HitBox.disconnect("body_entered", Callable(self, "_on_HitBox_body_entered"))
+	var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
+	sprite.despawn_transition()
+	await sprite.transition_finished
 	queue_free()
 
 

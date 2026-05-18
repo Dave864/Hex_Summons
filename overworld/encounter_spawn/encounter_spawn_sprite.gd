@@ -43,7 +43,7 @@ var _current_time := 0.0
 
 ## Creates a new sprite using the given texture.
 func _init(sprite_texture: Texture = null) -> void:
-	name = "Sprite3D"
+	name = "EncouterSpawnSprite"
 	if sprite_texture == null:
 		texture = load(DEFAULT_SPRITE_PATH)
 	else:
@@ -82,7 +82,7 @@ func spawn_transition() -> void:
 
 ## Triggers a despawn transition, going from fully opaque (minimum dithering
 ## intensity) to fully transparent (maximum dithering intensity).
-func despawn_animation() -> void:
+func despawn_transition() -> void:
 	material_override.set_shader_parameter("dither_intensity", MIN_DITHER)
 	_transition_state = TransitionState.DESPAWN
 	_current_time = 0.0
