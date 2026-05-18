@@ -244,9 +244,8 @@ func move_focus_decay(new_focus_point: Vector3) -> void:
 ## Move the focus point using its current speed settings.
 func move_focus(new_focus_point: Vector3) -> void:
 	_focus_pt.update_destination(new_focus_point)
-	if _focus_pt.is_moving():
-		await _focus_pt.new_point_reached
-		SignalBus.emit_camera_target_reached()
+	await _focus_pt.new_point_reached
+	SignalBus.emit_camera_target_reached()
 
 
 ## Calculates the midpoint between the vertical bounds.

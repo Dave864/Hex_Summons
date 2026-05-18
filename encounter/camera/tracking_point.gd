@@ -68,7 +68,7 @@ func is_moving() -> bool:
 func update_destination(new_destination: Vector3) -> void:
 	_destination = new_destination
 	_distance_to_destination = position.distance_squared_to(_destination)
-	_destination_reached = new_destination.is_equal_approx(position)
+	_destination_reached = false
 	_start_point = position
 
 
