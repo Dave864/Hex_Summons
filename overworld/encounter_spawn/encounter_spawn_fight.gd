@@ -4,7 +4,7 @@ extends EncounterSpawn
 
 
 ## The distance the spawner will chase before stopping.
-var max_chase_distace: float = 2.5:
+var max_chase_distace: float = 2.0:
 	get:
 		return pow(max_chase_distace, 2.0)
 

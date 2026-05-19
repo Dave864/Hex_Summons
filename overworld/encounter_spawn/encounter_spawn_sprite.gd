@@ -29,7 +29,7 @@ const MAX_DITHER := 1.0
 ## The minimum dither intensity (sprite is fully opaque).
 const MIN_DITHER := 0.0
 ## The time (seconds) it takes for the sprite to fully transition in "transparency".
-const TRANSITION_TIME := 1.0
+const TRANSITION_TIME := 0.5
 
 ## The shader used for spawning and despawning.
 var _dither_shader: Shader = preload(
