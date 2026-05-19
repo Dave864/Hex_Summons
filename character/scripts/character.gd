@@ -12,6 +12,8 @@ signal start_set()
 signal is_waiting()
 ## Indicates that this character's turn has ended.
 signal turn_ended()
+## Indicates that this character has been defeated.
+signal defeated(character)
 
 ## Describes character type.
 enum Type {
@@ -77,6 +79,10 @@ func _connect_to_character_label() -> void:
 			"health_changed",
 			Callable(character_label, "_on_CharacterStatModifiers_health_changed")
 	)
+	stats.connect(
+			"health_changed",
+			Callable(self, "_on_CharacterStatModifiers_health_changed")
+	)
 	character_label.set_max_health(stats.get_stat(Stat.Type.MAX_HEALTH))
 	character_label.set_cur_health(stats.get_stat(Stat.Type.CUR_HEALTH))
 
@@ -88,3 +94,12 @@ func _on_Character_area_entered(map_tile: Area3D) -> void:
 	if !_start_set:
 		_start_set = true
 		emit_signal("start_set")
+
+
+## Checks if the character has been defeated based on the health change.
+func _on_CharacterStatModifiers_health_changed(
+	new_value: int,
+	_old_value: int
+) -> void:
+	if new_value == 0:
+		emit_signal("defeated", self)

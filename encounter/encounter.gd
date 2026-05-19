@@ -85,6 +85,7 @@ func _load_players() -> void:
 	)
 	for data: Dictionary[String, Variant] in party_data.values():
 		var player: PlayerCharacter = _player_template.instantiate()
+		player.connect("defeated", Callable(self, "_on_Character_defeated"))
 		$Players.add_child(player)
 		player.update_player_details(data)
 		players.append(player)
@@ -115,6 +116,7 @@ func _load_enemies() -> void:
 	
 	var e_index: int = 0
 	for enemy: EnemyCharacter in enemies:
+		enemy.connect("defeated", Callable(self, "_on_Character_defeated"))
 		var ai_node: CharacterAI = enemy.get_node("CharacterAI")
 		ai_node.connect_encounter_details(
 				hex_map,
@@ -168,3 +170,14 @@ func _check_for_required_parameters() -> void:
 		ErrorUtil.missing_required_parameter(name, selection_tracker.name)
 	)
 	assert(ui != null, ErrorUtil.missing_required_parameter(name, ui.name))
+
+
+## Updates the relevant list of characters to account for the defeated character.
+func _on_Character_defeated(character: Character) -> void:
+	var type: Character.Type = character.get_type()
+	if type == Character.Type.ENEMY:
+		enemies.erase(character)
+		character.queue_free() 
+	else:
+		# TODO: Need to add logic to disable the player character
+		pass

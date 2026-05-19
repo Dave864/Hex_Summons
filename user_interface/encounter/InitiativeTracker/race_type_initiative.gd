@@ -43,12 +43,11 @@ func populate_initiative(characters: Array[Character]) -> void:
 	_round_turns = characters.size()
 	for c: Character in characters:
 		_c_pity_tracker[c.get_instance_id()] = NoTurnTracker.new(c)
-		ErrorUtil.connect_signal(
-				c.stats,
+		c.stats.connect(
 				"agility_changed",
-				self,
-				"_on_CharacterStatModifiers_agility_changed"
+				Callable(self, "_on_CharacterStatModifiers_agility_changed")
 		)
+		c.stats.connect("defeated", Callable(self, "_on_Character_defeated"))
 	_determine_round_pace()
 	_calculate_full_initiative()
 	_update_display()

@@ -106,8 +106,8 @@ func _remove_character(c: Character) -> void:
 @abstract func _on_CharacterStatModifiers_agility_changed(new_agility: int) -> void
 
 
-## Removes the character from the initiative track when their hp drops tp zero.
-func _on_Character_zero_health(c: Character) -> void:
+## Removes the character from the initiative track when they are defeated.
+func _on_Character_defeated(c: Character) -> void:
 	_remove_character(c)
 	_calculate_full_initiative()
 	_update_display()

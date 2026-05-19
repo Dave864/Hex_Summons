@@ -23,11 +23,12 @@ var _summoner_data: Dictionary[String, Variant] = {
 var _decay_rate: float = 2.0
 
 
-# Initializes the object.
+## Initializes the object.
 func _init(observer_id: int, chars: Array[Character], summon: Summon) -> void:
 	_observer_id = observer_id
 	for c: Character in chars:
 		_threat_values[c.get_instance_id()] = ThreatData.new()
+		c.connect("defeated", Callable(self, "_on_Character_defeated"))
 	SignalBus.connect(
 			"health_changed",
 			Callable(self, "_on_SignalBus_health_changed")
@@ -47,12 +48,12 @@ func add_threat(c: Character) -> void:
 		_threat_values[c.get_instance_id()] = ThreatData.new()
 
 
-# Removes the specified character from the threat tracker.
+## Removes the specified character from the threat tracker.
 func remove_threat(c: Character) -> void:
 	_threat_values.erase(c.get_instance_id())
 
 
-# Decreases the threat rate of all characters that have not acted.
+## Decreases the threat rate of all characters that have not acted.
 func decay_threat() -> void:
 	for c_id: int in _threat_values.keys():
 		if _threat_values[c_id].active:
@@ -64,14 +65,14 @@ func decay_threat() -> void:
 			)
 
 
-# Resets the active state of all characters.
+## Resets the active state of all characters.
 func reset_active() -> void:
 	for c_id in _threat_values.keys():
 		_threat_values[c_id].active = false
 
 
-# Updates the threat value based on the amount of damage or healing a character
-# does. Overhealing and overkilling are not mitigated.
+## Updates the threat value based on the amount of damage or healing a character
+## does. Overhealing and overkilling are not mitigated.
 func _on_SignalBus_health_changed(
 	caster_id: int,
 	target_id: int,
@@ -102,6 +103,11 @@ func _on_Summon_deactivated() -> void:
 	if _summoner_data["id"] == INVALID_ID:
 		return
 	_threat_values[_summoner_data["id"]].value = _summoner_data["old_value"]
+
+
+## Removes the defeated character from the threat tracker.
+func _on_Character_defeated(character: Character) -> void:
+	_threat_values.erase(character.get_instance_id())
 
 
 ## The data associated with threat level.
