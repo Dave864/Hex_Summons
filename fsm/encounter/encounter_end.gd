@@ -9,4 +9,4 @@ extends EncounterState
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	get_tree().quit()
+	SceneController.change_scene_to_overworld()

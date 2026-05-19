@@ -45,6 +45,12 @@ func _ready_connect_signals() -> void:
 	)
 
 
+## Checks if the encounter has reached its end.
+func _check_for_end() -> void:
+	if enc.enemies.size() == 0:
+		state_machine.transition_to(END)
+
+
 ## Marks the player as waiting.
 func _on_SummonCharacter_is_waiting() -> void:
 	_summon_waiting = true
@@ -58,6 +64,7 @@ func _on_Summon_turn_ended() -> void:
 	enc.selection_tracker.clear_indicators()
 	if not _summon_waiting:
 		await enc.summon.is_waiting
+	_check_for_end()
 	var next_character: Character = enc.get_next_character()
 	enc.progress_initiative()
 	if next_character is PlayerCharacter:

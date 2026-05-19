@@ -25,12 +25,6 @@ func enter(_msg := {}) -> void:
 	SignalBus.emit_enemy_turn_started(_active_char)
 
 
-## Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	if enc.enemies.size() == 0:
-		state_machine.transition_to(END)
-
-
 ## Called by the state machine before changing the active state.
 ## Use this function to clean up the state.
 func exit() -> void:
@@ -56,10 +50,17 @@ func _disconnect_signals() -> void:
 	)
 
 
+## Checks if the encounter has reached its end.
+func _check_for_end() -> void:
+	if enc.enemies.size() == 0:
+		state_machine.transition_to(END)
+
+
 ## Update the initiative tracker and transition to either the PlayerTurn state,
 ## the SummonTurn state, or the EnemyTurn state depending on the next character.
 func _on_EnemyCharacter_turn_ended() -> void:
 	await _active_char.is_waiting
+	_check_for_end()
 	var next_character: Character = enc.get_next_character()
 	enc.progress_initiative()
 	if next_character is PlayerCharacter:
