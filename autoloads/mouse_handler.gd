@@ -8,7 +8,25 @@ var _drop_plane: Plane = Plane.PLANE_XZ
 ## Keeps track of the mouse position.
 var _last_position: Vector2 = Vector2.ZERO
 
+## The camera for the current scene.
 @onready var _camera: Camera3D = get_tree().root.get_camera_3d()
+
+
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	get_tree().connect(
+			"scene_changed",
+			Callable(self, "_on_SceneTree_scene_changed")
+	)
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	update_mouse_tracker_2d(get_viewport().get_mouse_position())
+	_scale_to_window()
+
+
+## Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta) -> void:
+	_3d_position = _screen_point_to_ray()
 
 
 ## Gets the mouse position in a 3D world.
@@ -42,22 +60,9 @@ func deactivate() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	update_mouse_tracker_2d(get_viewport().get_mouse_position())
-	_scale_to_window()
-
-
-## Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta) -> void:
-	_3d_position = _screen_point_to_ray()
-
-
 ## Determine the world position of the mouse.
 func _screen_point_to_ray() -> Vector3:
-	if _camera == null:
+	if _camera == null or not _camera.is_inside_tree():
 		return Vector3.ZERO
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var ray_origin: Vector3 = _camera.project_ray_origin(mouse_pos)
@@ -72,3 +77,8 @@ func _screen_point_to_ray() -> Vector3:
 ## Scales the viewport size to match the window.
 func _scale_to_window() -> void:
 	size = get_window().size
+
+
+## Updates the camera reference when the scene changes.
+func _on_SceneTree_scene_changed() -> void:
+	_camera = get_tree().root.get_camera_3d()
