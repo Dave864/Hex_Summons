@@ -94,13 +94,10 @@ func _on_CharacterStatModifiers_health_changed(
 	new_value: int,
 	_old_value: int
 ) -> void:
-	# Need to set both max and current in order for bar to update visually.
-	set_max_health(int(_health_bar.max_value))
 	set_cur_health(new_value)
 
 
-## Updates the max  health value of the label.
+## Updates the max health value of the label.
 func _on_CharacterStatModifiers_max_health_changed(new_value: int) -> void:
-	# Need to set both max and current in order for bar to update visually.
 	set_max_health(new_value)
 	set_cur_health(int(_health_bar.value))
