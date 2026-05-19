@@ -39,3 +39,5 @@ collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
 shape = SubResource("CylinderShape3D_rsewy")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

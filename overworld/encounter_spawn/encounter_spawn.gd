@@ -11,7 +11,7 @@ const HITBOX_RADIUS := 0.8
 const MAX_DITHER_INTENSITY := 1.0
 
 ## The speed the spawner moves at.
-var speed = 5.0
+var speed = 8.0
 
 ## The overworld avatar the spawner reacts to.
 var _overworld_avatar: OverworldAvatar = null
@@ -19,11 +19,12 @@ var _overworld_avatar: OverworldAvatar = null
 var _encounter_map_path: String = ""
 ## The list of paths to the enemies that will be in the encounter.
 var _enemies_path_list : PackedStringArray = []
-
-
-## Initializes the signal connections.
-func _ready() -> void:
-	$HitBox.connect("body_entered", Callable(self, "_on_HitBox_body_entered"))
+## The position of the spawner in the last frame.
+var _prior_position := Vector3.ZERO
+## Flag that indicates if the spawner is active.
+var _active: bool = false
+## The navigation agent for this spawner.
+var _nav_agent: NavigationAgent3D = null
 
 
 ## Initializes the node.
@@ -38,26 +39,30 @@ func _init(
 	_create_sprite()
 	_create_physics_shape()
 	_create_hitbox()
+	_nav_agent = NavigationAgent3D.new()
+	add_child(_nav_agent)
+	_nav_agent.name = "NavAgent"
 
 
 ## Moves the spawner based on the set behavior.
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
 	_behavior_pattern(delta)
 
 
 ## Causes the sprite to appear.
-func spawn() -> void:
+func spawn() -> bool:
 	var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
+	_prior_position = position
+	_active = true
 	sprite.spawn_transition()
 	await sprite.transition_finished
+	return true
 
 
 ## Removes the spawner from play.
 func despawn() -> void:
-	$HitBox.disconnect("body_entered", Callable(self, "_on_HitBox_body_entered"))
+	#$HitBox.disconnect("body_entered", Callable(self, "_on_HitBox_body_entered"))
+	_active = false
 	var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
 	sprite.despawn_transition()
 	await sprite.transition_finished
@@ -97,6 +102,7 @@ func _create_hitbox() -> void:
 	var shape_dimensions := CylinderShape3D.new()
 	shape_dimensions.radius = HITBOX_RADIUS
 	hitbox_shape.shape = shape_dimensions
+	hitbox.connect("body_entered", Callable(self, "_on_HitBox_body_entered"))
 
 
 ## The pattern the spawner follows. Uses the delta value for any behavior that
@@ -105,15 +111,9 @@ func _create_hitbox() -> void:
 
 
 ## Moves the spawner in the given direction.
-func _move_spawner(input_dir: Vector3) -> void:
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.z)).normalized()
-	if direction:
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
-	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
-		velocity.z = move_toward(velocity.z, 0, speed)
-
+func _move_spawner() -> void:
+	var destination := _nav_agent.get_next_path_position() - global_position
+	velocity = destination.normalized() * speed
 	move_and_slide()
 
 

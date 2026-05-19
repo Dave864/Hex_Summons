@@ -1,12 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=30 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="1_q45au"]
 [ext_resource type="Script" uid="uid://crnlh08xvaccx" path="res://overworld/alignment_area/stable_alignment_area.gd" id="2_36ygl"]
 [ext_resource type="Script" uid="uid://7gcajgi7sxds" path="res://overworld/alignment_area/flux_alignment_area.gd" id="3_35tns"]
 [ext_resource type="Script" uid="uid://ca7jxmn65fbji" path="res://overworld/encounter_zone.gd" id="4_q1spi"]
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_q45au"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q45au"]
 albedo_color = Color(0, 0.22352941, 1, 1)
@@ -15,39 +13,7 @@ albedo_color = Color(0, 0.22352941, 1, 1)
 material = SubResource("StandardMaterial3D_q45au")
 size = Vector2(500, 500)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_35tns"]
-albedo_color = Color(0.05490196, 0.67058825, 0.07450981, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_q45au"]
-material = SubResource("StandardMaterial3D_35tns")
-size = Vector3(90, 1, 45)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q1spi"]
-albedo_color = Color(0.94502157, 0.8389817, 0.60048676, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_abwte"]
-material = SubResource("StandardMaterial3D_q1spi")
-size = Vector3(65, 1, 50)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_abwte"]
-albedo_color = Color(0.42352942, 0.2509804, 0, 1)
-
-[sub_resource type="PrismMesh" id="PrismMesh_36ygl"]
-material = SubResource("StandardMaterial3D_abwte")
-size = Vector3(30, 15, 60)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_36ygl"]
-size = Vector3(30, 15, 60)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36ygl"]
-albedo_color = Color(0.42193806, 0.251783, 1.4439226e-07, 1)
-
-[sub_resource type="PrismMesh" id="PrismMesh_35tns"]
-material = SubResource("StandardMaterial3D_36ygl")
-size = Vector3(25, 15, 30)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_35tns"]
-size = Vector3(25, 15, 30)
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_q45au"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q45au"]
 size = Vector3(1, 5, 50)
@@ -63,6 +29,44 @@ size = Vector3(70, 5, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uyahc"]
 size = Vector3(15, 5, 45)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_q1spi"]
+vertices = PackedVector3Array(-6, 15.99, 13.033825, 20.5, 15.99, 0.28382492, -5.5, 15.99, -52.966175, -31.75, 15.99, -40.216175, -32.75, 0.99, -40.966175, -23.75, 0.99, -45.466175, -44.5, 0.99, -45.466175, -33, 0.99, -39.966175, -44.5, 0.99, -1.2161751, -32.5, 0.99, -1.2161751, -16.75, 0.99, -6.716175, -4, 0.99, -45.466175, -20.25, 0.99, -45.466175, -29.75, 0.99, -40.716175, -7.25, 0.99, 5.783825, -6.75, 0.99, 0.7838249, 18.25, 0.99, 0.7838249, 21.5, 0.99, -0.46617508, 21.5, 0.99, 0.28382492, 32, 0.99, 0.28382492, 32.25, 0.99, -1.2161751, 44.5, 0.99, -45.466175, -0.5, 0.99, -45.466175, 44.5, 0.99, -1.2161751, -32, 0.99, -0.7161751, -14.25, 0.99, -1.7161751, -5.5, 0.99, 41.783825, -5.25, 0.99, 32.033825, -7, 0.99, 31.783825, -32, 0.99, 41.783825, -7, 0.99, 13.033825, 21.25, 0.99, 1.2838249, 19.25, 0.99, 2.033825, 19.25, 0.99, 30.283825, 32, 0.99, 30.533825, -4, 0.99, 2.033825, -4, 0.99, 11.783825, 15.75, 0.99, 2.283825, -6, 15.24, 14.283825, -6, 15.24, 31.033825, 18.25, 15.24, 31.033825, 18.25, 15.24, 2.533825, -4, 0.99, 13.283825, -4, 0.99, 30.783825, 16, 0.99, 30.783825, 16, 0.99, 3.783825, 19, 0.99, 32.033825, 17.5, 0.99, 32.033825, 17.75, 0.99, 41.783825, 32, 0.99, 41.783825)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(6, 5, 4), PackedInt32Array(7, 6, 4), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 7), PackedInt32Array(7, 8, 6), PackedInt32Array(12, 11, 13), PackedInt32Array(13, 11, 15), PackedInt32Array(13, 15, 14), PackedInt32Array(11, 16, 15), PackedInt32Array(18, 17, 19), PackedInt32Array(19, 17, 20), PackedInt32Array(20, 17, 21), PackedInt32Array(21, 17, 22), PackedInt32Array(21, 23, 20), PackedInt32Array(9, 10, 24), PackedInt32Array(24, 10, 25), PackedInt32Array(27, 26, 28), PackedInt32Array(28, 26, 29), PackedInt32Array(25, 30, 24), PackedInt32Array(24, 30, 28), PackedInt32Array(24, 28, 29), PackedInt32Array(31, 18, 19), PackedInt32Array(31, 19, 32), PackedInt32Array(32, 19, 33), PackedInt32Array(33, 19, 34), PackedInt32Array(37, 36, 35), PackedInt32Array(39, 38, 40), PackedInt32Array(40, 38, 41), PackedInt32Array(43, 42, 44), PackedInt32Array(44, 42, 45), PackedInt32Array(48, 47, 46), PackedInt32Array(46, 33, 48), PackedInt32Array(48, 33, 34), PackedInt32Array(48, 34, 49), PackedInt32Array(27, 47, 26), PackedInt32Array(26, 47, 48)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_35tns"]
+albedo_color = Color(0.05490196, 0.67058825, 0.07450981, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q45au"]
+material = SubResource("StandardMaterial3D_35tns")
+size = Vector3(90, 1, 45)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q1spi"]
+albedo_color = Color(0.94502157, 0.8389817, 0.60048676, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_abwte"]
+material = SubResource("StandardMaterial3D_q1spi")
+size = Vector3(65, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36ygl"]
+albedo_color = Color(0.42193806, 0.251783, 1.4439226e-07, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_35tns"]
+material = SubResource("StandardMaterial3D_36ygl")
+size = Vector3(25, 15, 30)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_35tns"]
+size = Vector3(25, 15, 30)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_abwte"]
+albedo_color = Color(0.42352942, 0.2509804, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_36ygl"]
+material = SubResource("StandardMaterial3D_abwte")
+size = Vector3(30, 15, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_36ygl"]
+size = Vector3(30, 15, 60)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wc37g"]
 size = Vector3(95, 5, 46)
@@ -85,6 +89,10 @@ size = Vector3(67, 5, 45)
 
 [node name="Terrain" type="Node3D" parent="."]
 
+[node name="Ocean" type="MeshInstance3D" parent="Terrain"]
+mesh = SubResource("PlaneMesh_7kfuj")
+skeleton = NodePath("../..")
+
 [node name="Floor" type="StaticBody3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 2
@@ -92,44 +100,6 @@ collision_mask = 12
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/Floor"]
 shape = SubResource("WorldBoundaryShape3D_q45au")
-
-[node name="Ocean" type="MeshInstance3D" parent="Terrain"]
-mesh = SubResource("PlaneMesh_7kfuj")
-skeleton = NodePath("../..")
-
-[node name="GrassFloor" type="MeshInstance3D" parent="Terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -23.404139)
-mesh = SubResource("BoxMesh_q45au")
-skeleton = NodePath("../Ocean")
-
-[node name="SandFloor" type="MeshInstance3D" parent="Terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 17.383)
-mesh = SubResource("BoxMesh_abwte")
-skeleton = NodePath("../Ocean")
-
-[node name="LongMountain" type="MeshInstance3D" parent="Terrain"]
-transform = Transform3D(0.8988093, 0, 0.43833977, 0, 1, 0, -0.43833977, 0, 0.8988093, -5.6645765, 8.016806, -19.9268)
-mesh = SubResource("PrismMesh_36ygl")
-skeleton = NodePath("../Ocean")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Terrain/LongMountain"]
-collision_layer = 2
-collision_mask = 12
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/LongMountain/StaticBody3D"]
-shape = SubResource("BoxShape3D_36ygl")
-
-[node name="ShortMountain" type="MeshInstance3D" parent="Terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.093918, 7.458891, 16.402899)
-mesh = SubResource("PrismMesh_35tns")
-skeleton = NodePath("../Ocean")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Terrain/ShortMountain"]
-collision_layer = 2
-collision_mask = 12
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/ShortMountain/StaticBody3D"]
-shape = SubResource("BoxShape3D_35tns")
 
 [node name="Boundaries" type="StaticBody3D" parent="Terrain"]
 collision_layer = 2
@@ -158,6 +128,45 @@ shape = SubResource("BoxShape3D_uyahc")
 [node name="CollisionShape3D6" type="CollisionShape3D" parent="Terrain/Boundaries"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.919697, 3.8146973e-06, 21.456263)
 shape = SubResource("BoxShape3D_uyahc")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Terrain"]
+navigation_mesh = SubResource("NavigationMesh_q1spi")
+
+[node name="GrassFloor" type="MeshInstance3D" parent="Terrain/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -23.404139)
+mesh = SubResource("BoxMesh_q45au")
+skeleton = NodePath("../../Ocean")
+
+[node name="SandFloor" type="MeshInstance3D" parent="Terrain/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 17.383)
+mesh = SubResource("BoxMesh_abwte")
+skeleton = NodePath("../../Ocean")
+
+[node name="ShortMountain" type="MeshInstance3D" parent="Terrain/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.093918, 7.458891, 16.402899)
+mesh = SubResource("PrismMesh_35tns")
+skeleton = NodePath("../../Ocean")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain/NavigationRegion3D/ShortMountain"]
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/NavigationRegion3D/ShortMountain/StaticBody3D"]
+shape = SubResource("BoxShape3D_35tns")
+
+[node name="LongMountain" type="MeshInstance3D" parent="Terrain/NavigationRegion3D"]
+transform = Transform3D(0.8988093, 0, 0.43833977, 0, 1, 0, -0.43833977, 0, 0.8988093, -5.6645765, 8.016806, -19.9268)
+mesh = SubResource("PrismMesh_36ygl")
+skeleton = NodePath("../../Ocean")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Terrain/NavigationRegion3D/LongMountain"]
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/NavigationRegion3D/LongMountain/StaticBody3D"]
+shape = SubResource("BoxShape3D_36ygl")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="Terrain/NavigationRegion3D/LongMountain/StaticBody3D"]
 
 [node name="AlignmentAreas" type="Node3D" parent="."]
 
@@ -213,7 +222,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2974558, 0, -20.681183)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("4_q1spi")
-maps = Array[String](["res://hex_map", "res://hex_map"])
+enemies = Array[String](["res://character/enemy_characters/TestEnemy2/TestEnemy2.tscn"])
+maps = Array[String](["res://hex_map/GrassMapSmall.tscn", "res://hex_map/GrassMapLarge.tscn"])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterZones/GrassZone"]
 shape = SubResource("BoxShape3D_naebm")
@@ -225,7 +235,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.667734)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("4_q1spi")
-maps = Array[String](["res://hex_map", "res://hex_map"])
+enemies = Array[String](["res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn"])
+maps = Array[String](["res://hex_map/RockMapSmall.tscn", "res://hex_map/RockMapLarge.tscn"])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterZones/SandZone"]
 shape = SubResource("BoxShape3D_taamv")
