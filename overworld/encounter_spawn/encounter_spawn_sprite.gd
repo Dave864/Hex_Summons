@@ -43,7 +43,7 @@ var _current_time := 0.0
 
 ## Creates a new sprite using the given texture.
 func _init(sprite_texture: Texture = null) -> void:
-	name = "EncouterSpawnSprite"
+	name = "EncounterSpawnSprite"
 	if sprite_texture == null:
 		texture = load(DEFAULT_SPRITE_PATH)
 	else:
@@ -64,7 +64,7 @@ func _process(delta: float) -> void:
 			MIN_DITHER,
 			MAX_DITHER
 	)
-	if _transition_state == TransitionState.DESPAWN:
+	if _transition_state == TransitionState.SPAWN:
 		intensity = MAX_DITHER - intensity
 	material_override.set_shader_parameter("dither_intensity", intensity)
 	if _current_time >= TRANSITION_TIME:
