@@ -13,6 +13,15 @@ extends Area3D
 ## Files paths to the possible map selections for this zone.
 @export_dir var maps : Array[String]
 
+## Reference to the overworld avatar.
+var _overworld_avatar: OverworldAvatar = null
+## The distance the avatar must travel before an EncounterSpawner is made.
+var _spawn_distance := 0.0:
+	get:
+		return pow(_spawn_distance, 2.0)
+## The distance traveled by the avatar.
+var _travel_distance := 0.0
+
 
 ## Creates a new CollisionShape if none is present.
 func _ready() -> void:
@@ -43,7 +52,10 @@ func _init() -> void:
 
 ## Update the ecosystem based on how far the avatar has traveled.
 func _physics_process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
 	_simulate_ecosystem()
+	_process_spawning()
 
 
 ## Simulates the ecosystem of the enemies to determine the population levels.
@@ -51,11 +63,37 @@ func _simulate_ecosystem() -> void:
 	pass
 
 
+## Handles the spawning of encounter spawners.
+func _process_spawning() -> void:
+	if _overworld_avatar == null:
+		return
+	_travel_distance += SceneController.get_last_squared_distance()
+	if _travel_distance >= _spawn_distance:
+		_spawn_distance = randf_range(1.0, 3.0)
+		_travel_distance = 0.0
+		var spawner := EncounterSpawnFight.new(
+				_overworld_avatar,
+				maps[0],
+				enemies
+		)
+		var spawn_position := Vector3(
+			randf_range(-1.0, 1.0),
+			0.0,
+			randf_range(-1.0, 1.0)
+		).normalized()
+		spawn_position *= randf_range(0.25, 0.5)
+		spawner.position = spawn_position + _overworld_avatar.position
+		add_child(spawner)
+		await spawner.spawn()
+
+
 ## Catches when the player avatar enters the zone.
-func _on_EncounterZone_body_entered(_avatar: OverworldAvatar) -> void:
-	pass
+func _on_EncounterZone_body_entered(avatar: OverworldAvatar) -> void:
+	_overworld_avatar = avatar
+	_spawn_distance = randf_range(1.0, 3.0)
+	_travel_distance = 0.0
 
 
 ## Catches when the player avatar exits the zone.
 func _on_EncounterZone_body_exited(_avatar: OverworldAvatar) -> void:
-	pass
+	_overworld_avatar = null
