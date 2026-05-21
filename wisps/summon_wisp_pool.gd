@@ -42,6 +42,18 @@ func add_wisps(wisp_names: Array[String], element: Element.Type) -> void:
 		emit_signal("active_count_changed", element)
 
 
+## Removes wisps from whatever element pool they are in. If any provided names
+## are not in any pool, nothing happens for that name.
+func remove_wisps(wisp_names: PackedStringArray) -> void:
+	for wisp: String in wisp_names:
+		for element: Element.Core in pool.keys():
+			var element_wisps: PackedStringArray = pool[element]
+			if element_wisps.has(wisp):
+				_active_count[element] -= 1
+				emit_signal("active_count_changed", element)
+				element_wisps.erase(wisp)
+
+
 ## Gets the keys for the wisps that are used to pay for the specified element.
 ## These wisps are also removed from this pool. Returns an empty array if no
 ## wisps are available for the given element.
