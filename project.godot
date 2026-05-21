@@ -321,6 +321,7 @@ player_move_d={
 [layer_names]
 
 3d_physics/layer_1="selector"
+3d_navigation/layer_1="default"
 3d_physics/layer_2="map"
 3d_physics/layer_3="player"
 3d_physics/layer_4="enemy"

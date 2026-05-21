@@ -12,6 +12,19 @@ extends Area3D
 @export_dir var enemies : Array[String]
 ## Files paths to the possible map selections for this zone.
 @export_dir var maps : Array[String]
+@export_group("Spawn Distance Range", "spawn_distance")
+## The minimum distance that must be traveled before an EncounterSpawner appears.
+@export_range(1.0, 10.0, 0.01) var spawn_distance_min := 1.0:
+	set(value):
+		spawn_distance_min = value
+		if spawn_distance_max < spawn_distance_min:
+			spawn_distance_max = value
+## The maximum distance that can be traveled before an EncounterSpawner appears.
+@export_range(1.0, 10.0, 0.01) var spawn_distance_max := 3.0:
+	set(value):
+		spawn_distance_max = value
+		if spawn_distance_min > spawn_distance_max:
+			spawn_distance_min = value
 
 ## Reference to the overworld avatar.
 var _overworld_avatar: OverworldAvatar = null
@@ -69,22 +82,28 @@ func _process_spawning() -> void:
 		return
 	_travel_distance += SceneController.get_last_squared_distance()
 	if _travel_distance >= _spawn_distance:
-		_spawn_distance = randf_range(1.0, 3.0)
+		_spawn_distance = randf_range(spawn_distance_min, spawn_distance_max)
 		_travel_distance = 0.0
 		var spawner := EncounterSpawnFight.new(
 				_overworld_avatar,
 				maps[0],
 				enemies
 		)
-		var spawn_position := Vector3(
-			randf_range(-1.0, 1.0),
-			0.0,
-			randf_range(-1.0, 1.0)
-		).normalized()
-		spawn_position *= randf_range(0.25, 0.5)
-		spawner.position = spawn_position + _overworld_avatar.position
+		spawner.position = _determine_spawn_position()
 		add_child(spawner)
 		await spawner.spawn()
+
+
+## Determines where an encounter spawner should be placed relative to the
+## overworld avatar.
+func _determine_spawn_position() -> Vector3:
+	var spawn_position := Vector3(
+		randf_range(-1.0, 1.0),
+		0.0,
+		randf_range(-1.0, 1.0)
+	).normalized()
+	spawn_position *= randf_range(0.25, 0.5)
+	return spawn_position + _overworld_avatar.position
 
 
 ## Catches when the player avatar enters the zone.
