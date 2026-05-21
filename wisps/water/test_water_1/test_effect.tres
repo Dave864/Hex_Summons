@@ -1,7 +1,8 @@
 [gd_resource type="Resource" script_class="WispEffect" load_steps=3 format=3 uid="uid://bra5ou6sdi3sr"]
 
 [ext_resource type="Script" uid="uid://4bfh87rmg8k0" path="res://wisps/wisp_effect.gd" id="1"]
-[ext_resource type="Resource" path="res://wisps/earth/test_earth_1/flat_increase.tres" id="2"]
+[ext_resource type="Resource" uid="uid://kpa0mbpu1t5f" path="res://wisps/earth/test_earth_1/test_effect.tres" id="2"]
+
 
 [resource]
 script = ExtResource("1")

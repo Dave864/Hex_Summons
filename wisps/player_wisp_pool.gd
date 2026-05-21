@@ -237,4 +237,5 @@ func _get_element_tracker(element: int) -> Dictionary[String, bool]:
 			return water
 		Element.Core.WIND:
 			return wind
-	return {}
+		_:
+			return {}
