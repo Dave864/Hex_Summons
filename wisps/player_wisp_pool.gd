@@ -23,12 +23,10 @@ func _ready():
 func _init(new_player_name: String = "") -> void:
 	player_name = new_player_name
 	name = "{0}WispPool".format([player_name])
-	var bonded_wisps: Dictionary[Element.Core, Array] = (
+	var bonded_wisps: Dictionary[Element.Core, PackedStringArray] = (
 		WispTracker.get_bonded_wisps(player_name)
 	)
-	# Unable to set contents type for element_wisps as Godot v4.5 does not allow
-	# for nested type collections. Setting contents type here results in an error.
-	for element_wisps: Array in bonded_wisps.values():
+	for element_wisps: PackedStringArray in bonded_wisps.values():
 		for wisp: String in element_wisps:
 			add_new_wisp(wisp)
 	_set_active_count()
@@ -102,63 +100,38 @@ func set_active(wisp: String) -> void:
 ## Gets the keys for the wisps that are used to pay for the specified element.
 ## Deactivates the wisps that are spent. Returns an empty array if no wisps
 ## are available for the given element.
-func pay_for_element(element: Element.Type, count: int) -> Array[String]:
+func pay_for_element(element: Element.Type, count: int) -> PackedStringArray:
+	var wisps : PackedStringArray = []
 	match element:
 		Element.Type.EARTH:
-			var wisps: Array[String] = _deactivate_active_count(
-					earth,
-					element,
-					count
-			)
-			if wisps.size() > 0:
-				return wisps
+			wisps = _deactivate_active_count(earth, element, count)
 		Element.Type.FIRE:
-			var wisps: Array[String] = _deactivate_active_count(
-					fire,
-					element,
-					count
-			)
-			if wisps.size() > 0:
-				return wisps
+			wisps = _deactivate_active_count(fire, element, count)
 		Element.Type.WATER:
-			var wisps: Array[String] = _deactivate_active_count(
-					water,
-					element,
-					count
-			)
-			if wisps.size() > 0:
-				return wisps
+			wisps = _deactivate_active_count(water, element, count)
 		Element.Type.WIND:
-			var wisps: Array[String] = _deactivate_active_count(
-					wind,
-					element,
-					count
-			)
-			if wisps.size() > 0:
-				return wisps
+			wisps = _deactivate_active_count(wind, element, count)
 		Element.Type.LIGHT:
 			var elems: Array[Element.Core] = (
 				ElementalAlignment.get_light_elements()
 			)
-			var wisps: Array[String] = _deactivate_polar_active(
+			wisps = _deactivate_polar_active(
 					elems[0] as Element.Type,
 					elems[1] as Element.Type,
 					count
 			)
 			emit_signal("active_count_changed", element)
-			return wisps
 		Element.Type.DARK:
 			var elems: Array[Element.Core] = (
 				ElementalAlignment.get_dark_elements()
 			)
-			var wisps: Array[String] = _deactivate_polar_active(
+			wisps = _deactivate_polar_active(
 					elems[0] as Element.Type,
 					elems[1] as Element.Type,
 					count
 			)
 			emit_signal("active_count_changed", element)
-			return wisps
-	return []
+	return wisps
 
 
 ## Gets the active count for each element pool.
@@ -185,9 +158,9 @@ func _deactivate_active_count(
 	wisps: Dictionary[String, bool],
 	element: Element.Type,
 	count: int
-) -> Array[String]:
+) -> PackedStringArray:
 	var count_tracker: int = 0
-	var deactivated_wisps: Array[String] = []
+	var deactivated_wisps: PackedStringArray = []
 	for wisp: String in wisps.keys():
 		if count_tracker < count and wisps[wisp]:
 			wisps[wisp] = false
@@ -206,16 +179,16 @@ func _deactivate_polar_active(
 	elem_1: Element.Type,
 	elem_2: Element.Type,
 	count: int
-) -> Array[String]:
-	var wisps: Array[String] = []
+) -> PackedStringArray:
+	var wisps: PackedStringArray = []
 	if _active_count[elem_1] == 0 or _active_count[elem_2] == 0:
 		return wisps
-	var elem_1_wisps: Array[String] = _deactivate_active_count(
+	var elem_1_wisps: PackedStringArray = _deactivate_active_count(
 			_get_element_tracker(elem_1),
 			elem_1,
 			count
 	)
-	var elem_2_wisps: Array[String] = _deactivate_active_count(
+	var elem_2_wisps: PackedStringArray = _deactivate_active_count(
 			_get_element_tracker(elem_2),
 			elem_2,
 			count
