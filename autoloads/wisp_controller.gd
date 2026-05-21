@@ -51,12 +51,12 @@ func pay_cost_for_summon(
 ## moved wisps will always have been bonded to the player. The wisps that are
 ## moved are otherwise randomly chosen.
 func recall_for_player(player_pool: PlayerWispPool, recall_count: int) -> void:
-	var bonded_wisps: Dictionary[Element.Core, Array] = (
+	var bonded_wisps: Dictionary[Element.Core, PackedStringArray] = (
 		WispTracker.get_bonded_wisps(player_pool.player_name)
 	)
 	var standby_pool_wisps: Array[String] = []
 	for wisps in bonded_wisps.values():
-		for wisp in wisps:
+		for wisp: String in wisps:
 			if WispTracker.is_standby_set(wisp):
 				standby_pool_wisps.append(wisp)
 	standby_pool_wisps.shuffle()
@@ -64,8 +64,9 @@ func recall_for_player(player_pool: PlayerWispPool, recall_count: int) -> void:
 	if not WispTracker.set_state_to_player(random_wisps):
 		printerr("failed to recall all requested wisps.")
 		return
-	for wisp in random_wisps:
-			player_pool.set_active(wisp)
+	standby_pool.remove_wisps(random_wisps)
+	for wisp: String in random_wisps:
+		player_pool.set_active(wisp)
 
 
 ## Pays the cost from the active summon wisp pool, transferring the spent wisps
@@ -85,6 +86,29 @@ func pay_cost_from_active_summon(
 		for wisp: String in wisps_for_element:
 			var host: String = WispTracker.get_bonded_player(wisp)
 			var player_pool: PlayerWispPool = (
-				PartyController.party_details[host][PartyController.WISP_POOL]
+				PartyController.party_details[host].wisp_pool
 			)
 			player_pool.set_active(wisp)
+
+
+## Moves all wisps in standby and summon pools back to the player wisp pools.
+func recall_all_to_players(summon_pool: SummonWispPool) -> void:
+	var party_details := PartyController.get_active_party_data().values()
+	var wisps_in_standby: PackedStringArray = []
+	var wisps_in_summon: PackedStringArray = []
+	for player: PartyController.PlayerDetails in party_details:
+		var bonded_wisps: Dictionary[Element.Core, PackedStringArray] = (
+				WispTracker.get_bonded_wisps(player.name)
+		)
+		for wisp_names: PackedStringArray in bonded_wisps.values():
+			for wisp: String in wisp_names:
+				if WispTracker.is_standby_set(wisp):
+					wisps_in_standby.append(wisp)
+				elif WispTracker.is_summon_set(wisp):
+					wisps_in_summon.append(wisp)
+				else:
+					continue
+				player.wisp_pool.set_active(wisp)
+			WispTracker.set_state_to_player(wisp_names)
+	standby_pool.remove_wisps(wisps_in_standby)
+	summon_pool.remove_wisps(wisps_in_summon)
