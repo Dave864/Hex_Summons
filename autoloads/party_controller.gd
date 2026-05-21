@@ -16,7 +16,7 @@ const WISP_POOL: String = "wisp_pool"
 @onready var base_player_node: PackedScene = preload(
 		"res://character/player_characters/PlayerCharacter/PlayerCharacter.tscn"
 )
-@onready var party_details: Dictionary[String, Dictionary] = {
+@onready var party_details: Dictionary[String, PlayerDetails] = {
 	"Player1": _initialize_details("Player1", "TestMeleeClass", true),
 	"Player2": _initialize_details("Player2", "TestRangeClass", true),
 	"Player3": _initialize_details("Player3", "TestClass", false),
@@ -45,8 +45,8 @@ func get_active_player_names() -> Array[String]:
 
 
 ## Gets details of all characters that are currently in the party.
-func get_active_party_data() -> Dictionary[String, Dictionary]:
-	var party: Dictionary[String, Dictionary] = {}
+func get_active_party_data() -> Dictionary[String, PlayerDetails]:
+	var party: Dictionary[String, PlayerDetails] = {}
 	for player: String in get_active_player_names():
 		party[player] = party_details[player]
 	return party
@@ -86,14 +86,34 @@ func _initialize_details(
 	player_name: String,
 	p_class: String,
 	in_party: bool
-) -> Dictionary[String, Variant]:
+) -> PlayerDetails:
 	var class_path: String = CLASS_DATA_PATH.format([p_class])
 	var class_data: PlayerClassData = load(class_path)
-	return {
-		NAME: player_name,
-		CLASS: class_data,
-		IN_PARTY: in_party,
-		# Will be set in the _ready function as waiting for WispTracker to be
-		# ready in this function causes the data to not populate.
-		WISP_POOL: null
-	}
+	# WispPool Will be set in the _ready function as waiting for WispTracker to
+	# be ready in this function causes the data to not populate.
+	return PlayerDetails.new(player_name, class_data, in_party, null)
+
+
+## Describes the details of a specific player character.
+class PlayerDetails:
+	## The character's name.
+	var name: String
+	## The details of their current class.
+	var class_data: PlayerClassData
+	## Whether this character is in the party or not.
+	var in_party: bool
+	## The pool of wisps this player has.
+	var wisp_pool: PlayerWispPool
+	
+	
+	## Initializes this class object with the specified data.
+	func _init(
+		new_name: String,
+		new_class: PlayerClassData,
+		party_status: bool,
+		initial_pool: PlayerWispPool
+	) -> void:
+		name = new_name
+		class_data = new_class
+		in_party = party_status
+		wisp_pool = initial_pool

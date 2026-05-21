@@ -76,14 +76,14 @@ func _load_map() -> void:
 ## Initializes player characters present in the encounter.
 func _load_players() -> void:
 	var p_index: int = 0
-	var party_data: Dictionary[String, Dictionary] = (
+	var party_data: Dictionary[String, PartyController.PlayerDetails] = (
 		PartyController.get_active_party_data()
 	)
 	var start_positions := _get_start_indices(
 			hex_map.player_start_tiles_values,
 			party_data.size()
 	)
-	for data: Dictionary[String, Variant] in party_data.values():
+	for data: PartyController.PlayerDetails in party_data.values():
 		var player: PlayerCharacter = _player_template.instantiate()
 		player.connect("defeated", Callable(self, "_on_Character_defeated"))
 		$Players.add_child(player)

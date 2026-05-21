@@ -52,11 +52,11 @@ func _ready() -> void:
 
 
 ## Updates the character this node represents using data from the PartyController.
-func update_player_details(player_details: Dictionary[String, Variant]) -> void:
-	name = player_details[PartyController.NAME]
-	wisp_pool = player_details[PartyController.WISP_POOL]
+func update_player_details(player_details: PartyController.PlayerDetails) -> void:
+	name = player_details.name
+	wisp_pool = player_details.wisp_pool
 	_update_sprites(name)
-	_assign_class(player_details[PartyController.CLASS])
+	_assign_class(player_details.class_data)
 
 
 ## Get the techniques associated with the character
