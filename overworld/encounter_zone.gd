@@ -12,7 +12,8 @@ extends Area3D
 @export_dir var enemies : Array[String]
 ## Files paths to the possible map selections for this zone.
 @export_dir var maps : Array[String]
-@export_group("Spawn Distance Range", "spawn_distance")
+@export_group("Encounter Spawn Distances", "spawn")
+@export_subgroup("Distance Range", "spawn_distance")
 ## The minimum distance that must be traveled before an EncounterSpawner appears.
 @export_range(1.0, 10.0, 0.01) var spawn_distance_min := 1.0:
 	set(value):
@@ -25,6 +26,21 @@ extends Area3D
 		spawn_distance_max = value
 		if spawn_distance_min > spawn_distance_max:
 			spawn_distance_min = value
+@export_subgroup("Position Range", "spawn_position")
+## The minimum distance away from the overworld avatar an EncounterSpawner can
+## be placed
+@export_range(0.01, 3.0, 0.01) var spawn_position_min := 0.25:
+	set(value):
+		spawn_position_min = value
+		if spawn_position_max < spawn_position_min:
+			spawn_position_max = value
+## The maximum distance away from the overworld avatar an EncounterSpawner can
+## be placed
+@export_range(0.01, 3.0, 0.01) var spawn_position_max := 0.5:
+	set(value):
+		spawn_position_max = value
+		if spawn_position_max < spawn_position_min:
+			spawn_position_min = value
 
 ## Reference to the overworld avatar.
 var _overworld_avatar: OverworldAvatar = null
@@ -102,14 +118,14 @@ func _determine_spawn_position() -> Vector3:
 		0.0,
 		randf_range(-1.0, 1.0)
 	).normalized()
-	spawn_position *= randf_range(0.25, 0.5)
+	spawn_position *= randf_range(spawn_position_min, spawn_position_max)
 	return spawn_position + _overworld_avatar.position
 
 
 ## Catches when the player avatar enters the zone.
 func _on_EncounterZone_body_entered(avatar: OverworldAvatar) -> void:
 	_overworld_avatar = avatar
-	_spawn_distance = randf_range(1.0, 3.0)
+	_spawn_distance = randf_range(spawn_distance_min, spawn_distance_max)
 	_travel_distance = 0.0
 
 
