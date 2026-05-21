@@ -18,7 +18,7 @@ func _ready() -> void:
 ## the standby pool.
 func pay_cost_from_player(player_pool: PlayerWispPool, cost: WispCost) -> void:
 	for element: Element.Type in cost.cost_summary.keys():
-		var spent_wisps: Array[String] = player_pool.pay_for_element(
+		var spent_wisps: PackedStringArray = player_pool.pay_for_element(
 				element,
 				cost.cost_summary[element]
 		)
@@ -36,7 +36,7 @@ func pay_cost_for_summon(
 	summon_cost: WispCost
 ) -> void:
 	for element: Element.Type in summon_cost.cost_summary.keys():
-		var wisps_for_element: Array[String] = standby_pool.pay_for_element(
+		var wisps_for_element: PackedStringArray = standby_pool.pay_for_element(
 				element,
 				summon_cost.cost_summary[element]
 		)
