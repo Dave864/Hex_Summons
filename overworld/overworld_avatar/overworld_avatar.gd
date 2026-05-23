@@ -7,13 +7,6 @@ extends CharacterBody3D
 const SPEED = 7.0
 
 
-## Places the avatar at the last recorded position in the SceneController.
-func _ready() -> void:
-	if SceneController.prior_avatar_position.is_finite():
-		position = SceneController.prior_avatar_position
-	SceneController.set_avatar_reference(self)
-
-
 ## Processes the physics of moving around.
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -36,8 +29,3 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
-
-
-## Removes the avatar reference from the SceneController.
-func _exit_tree() -> void:
-	SceneController.set_avatar_reference(null)

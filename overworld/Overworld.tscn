@@ -1,6 +1,7 @@
-[gd_scene load_steps=30 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=31 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
+[ext_resource type="Script" uid="uid://b63wynnx1khli" path="res://overworld/overworld.gd" id="1_g3yfq"]
 [ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="1_q45au"]
 [ext_resource type="Script" uid="uid://crnlh08xvaccx" path="res://overworld/alignment_area/stable_alignment_area.gd" id="2_36ygl"]
 [ext_resource type="Script" uid="uid://7gcajgi7sxds" path="res://overworld/alignment_area/flux_alignment_area.gd" id="3_35tns"]
@@ -83,7 +84,9 @@ size = Vector3(95, 5, 53)
 [sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
 size = Vector3(67, 5, 45)
 
-[node name="Overworld" type="Node"]
+[node name="Overworld" type="Node" node_paths=PackedStringArray("player_avatar")]
+script = ExtResource("1_g3yfq")
+player_avatar = NodePath("OverworldAvatar")
 
 [node name="ElementAlignmentUI" parent="." instance=ExtResource("1_36ygl")]
 
