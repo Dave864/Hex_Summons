@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="1_q45au"]
 [ext_resource type="Script" uid="uid://crnlh08xvaccx" path="res://overworld/alignment_area/stable_alignment_area.gd" id="2_36ygl"]
 [ext_resource type="Script" uid="uid://7gcajgi7sxds" path="res://overworld/alignment_area/flux_alignment_area.gd" id="3_35tns"]
-[ext_resource type="Script" uid="uid://ca7jxmn65fbji" path="res://overworld/encounter_zone.gd" id="4_q1spi"]
+[ext_resource type="Script" uid="uid://ca7jxmn65fbji" path="res://overworld/encounter_zone/terrain_zone.gd" id="4_q1spi"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q45au"]
 albedo_color = Color(0, 0.22352941, 1, 1)
@@ -220,31 +220,33 @@ debug_fill = false
 
 [node name="EncounterZones" type="Node3D" parent="."]
 
-[node name="GrassZone" type="Area3D" parent="EncounterZones"]
+[node name="TerrainZoneGrass" type="Area3D" parent="EncounterZones"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2974558, 0, -20.681183)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("4_q1spi")
-enemies = Array[String](["res://character/enemy_characters/TestEnemy2/TestEnemy2.tscn"])
 maps = Array[String](["res://hex_map/GrassMapSmall.tscn", "res://hex_map/GrassMapLarge.tscn"])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterZones/GrassZone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterZones/TerrainZoneGrass"]
 shape = SubResource("BoxShape3D_naebm")
 debug_color = Color(1, 1, 0, 1)
 debug_fill = false
 
-[node name="SandZone" type="Area3D" parent="EncounterZones"]
+[node name="SpawnAreas" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
+
+[node name="TerrainZoneSand" type="Area3D" parent="EncounterZones"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.667734)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("4_q1spi")
-enemies = Array[String](["res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn"])
 maps = Array[String](["res://hex_map/RockMapSmall.tscn", "res://hex_map/RockMapLarge.tscn"])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterZones/SandZone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterZones/TerrainZoneSand"]
 shape = SubResource("BoxShape3D_taamv")
 debug_color = Color(1, 1, 0, 1)
 debug_fill = false
+
+[node name="SpawnAreas" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.6537509, 0.7567098, 0, -0.7567098, 0.6537509, 0, 25.214062, 0)

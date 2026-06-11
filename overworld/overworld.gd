@@ -2,7 +2,7 @@ class_name Overworld
 extends Node
 ## The area that the player traverses when traveling between points of note.
 ##
-## Contains terrain meshes and EncounterZones. Handles the placing of the avatar
+## Contains terrain meshes and TerrainZones. Handles the placing of the avatar
 ## for the player character when transitioning to this scene.
 
 

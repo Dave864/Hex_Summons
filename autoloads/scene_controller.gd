@@ -33,17 +33,24 @@ func _ready() -> void:
 
 ## Updates the last tracked position for the currently tracked OverworldAvatar.
 func _physics_process(_delta: float) -> void:
-	if _overworld_avatar == null:
-		return
-	_last_frame_distance = prior_avatar_position.distance_squared_to(
-			_overworld_avatar.position
-	)
-	prior_avatar_position = _overworld_avatar.position
+	if _overworld_avatar != null:
+		_last_frame_distance = prior_avatar_position.distance_squared_to(
+				_overworld_avatar.position
+		)
+		prior_avatar_position = _overworld_avatar.position
+
+
+## Gets the reference to the OverworldAvatar.
+func get_avatar_reference() -> OverworldAvatar:
+	return _overworld_avatar
 
 
 ## Sets the reference to the OverworldAvatar.
 func set_avatar_reference(avatar_reference: OverworldAvatar) -> void:
 	_overworld_avatar = avatar_reference
+	# Reset distance data if avatar reference is set to null.
+	if _overworld_avatar == null:
+		_last_frame_distance = -1.0
 
 
 ## Gets the distance traveled by the avatar in the last frame.

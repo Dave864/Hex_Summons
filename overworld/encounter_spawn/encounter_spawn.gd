@@ -5,6 +5,10 @@ extends CharacterBody3D
 ## colliding with the OverworldAvatar.
 
 
+## Indicates that this node is going to be despawned. Passes along the instance
+## id of this node.
+signal despawned(id)
+
 ## The radius of the spawner hitbox.
 const HITBOX_RADIUS := 0.8
 ## The maximum value for dither intensity.
@@ -62,6 +66,7 @@ func spawn() -> bool:
 ## Removes the spawner from play.
 func despawn() -> void:
 	#$HitBox.disconnect("body_entered", Callable(self, "_on_HitBox_body_entered"))
+	emit_signal("despawned", get_instance_id())
 	_active = false
 	var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
 	sprite.despawn_transition()
