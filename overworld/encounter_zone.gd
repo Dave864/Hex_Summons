@@ -8,6 +8,10 @@ extends Area3D
 ## ones will be included in an encounter.
 
 
+## The name of the node that records the spawn areas assigned to this zone.
+const SPAWN_AREAS_NAME := "SpawnAreas"
+
+
 ## File paths to the possible enemy selections for this zone.
 @export_dir var enemies : Array[String]
 ## Files paths to the possible map selections for this zone.
@@ -69,6 +73,12 @@ func _ready() -> void:
 		collision_shape.debug_color = Color.YELLOW
 		collision_shape.debug_fill = false
 		collision_shape.shape = BoxShape3D.new()
+	if not has_node(SPAWN_AREAS_NAME):
+		var spawn_areas := Node3D.new()
+		add_child(spawn_areas)
+		if Engine.is_editor_hint():
+			spawn_areas.set_owner(get_tree().edited_scene_root)
+		spawn_areas.name = SPAWN_AREAS_NAME
 
 
 ## Establishes the collision layers of a newly created zone.
