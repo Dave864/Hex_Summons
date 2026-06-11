@@ -52,6 +52,7 @@ func _ready() -> void:
 		_y_cast.name = Y_RAYCAST_NAME
 		_y_cast.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
 		_y_cast.set_collision_mask_value(Constants.MAP_LAYER, true)
+	_instance_debug_mesh()
 
 
 ## Update the ecosystem based on how far the avatar has traveled.
@@ -66,6 +67,10 @@ func _physics_process(_delta: float) -> void:
 ## Updates the terrain zone this spawn area is in.
 func set_terrain_zone(new_zone: TerrainZone) -> void:
 	_terrain_zone = new_zone
+
+
+## Creates a mesh used to visualize the range of this SpawnArea.
+@abstract func _instance_debug_mesh() -> void
 
 
 ## Determines where an EncounterSpawner should be placed.
