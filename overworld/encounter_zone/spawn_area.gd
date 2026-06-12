@@ -9,6 +9,8 @@ extends Marker3D
 const Y_RAYCAST_NAME := "Y_RAYCAST"
 ## The length of the raycast.
 const Y_RAYCAST_LENGTH := 10.0
+## Name of the mesh used for debugging.
+const DEBUG_MESH_NAME := "DebugMesh"
 
 ## File paths to the possible enemy selections for this zone.
 @export_dir var enemies : Array[String]
@@ -40,6 +42,8 @@ var _y_cast: RayCast3D = null
 var _terrain_zone: TerrainZone = null
 ## The currently active EncounterSpawn nodes.
 var _active_spawners: Array[int] = []
+## The mesh used to visualize the covered area.
+var _debug_mesh: MeshInstance3D = null
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -49,6 +53,8 @@ func _ready() -> void:
 	else:
 		_y_cast = RayCast3D.new()
 		add_child(_y_cast)
+		if Engine.is_editor_hint():
+			_y_cast.set_owner(get_tree().edited_scene_root)
 		_y_cast.name = Y_RAYCAST_NAME
 		_y_cast.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
 		_y_cast.set_collision_mask_value(Constants.MAP_LAYER, true)
@@ -70,7 +76,23 @@ func set_terrain_zone(new_zone: TerrainZone) -> void:
 
 
 ## Creates a mesh used to visualize the range of this SpawnArea.
-@abstract func _instance_debug_mesh() -> void
+func _instance_debug_mesh() -> void:
+	if has_node(DEBUG_MESH_NAME):
+		_debug_mesh = get_node(DEBUG_MESH_NAME) as MeshInstance3D
+	else:
+		_debug_mesh = MeshInstance3D.new()
+		add_child(_debug_mesh)
+		_debug_mesh.name = DEBUG_MESH_NAME
+		if Engine.is_editor_hint():
+			_y_cast.set_owner(get_tree().edited_scene_root)
+	if Engine.is_editor_hint():
+		_update_debug_mesh()
+	else:
+		_debug_mesh.hide()
+
+
+## Updates the debug mesh to match the current dimensions.
+@abstract func _update_debug_mesh() -> void
 
 
 ## Determines where an EncounterSpawner should be placed.
@@ -97,7 +119,7 @@ func _determine_y_position(xz_position: Vector2) -> float:
 	return 0.0
 
 
-## Updates the population counts of the various enemy types.
+## TODO: Updates the population counts of the various enemy types.
 func _simulate_environment() -> void:
 	pass
 
