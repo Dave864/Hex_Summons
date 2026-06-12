@@ -6,14 +6,14 @@ extends Marker3D
 
 
 ## Name of the raycast node for detecting where to place an EncounterSpawn.
-const Y_RAYCAST_NAME := "Y_RAYCAST"
+const Y_RAYCAST_NAME := "Y_RayCast"
 ## The length of the raycast.
 const Y_RAYCAST_LENGTH := 10.0
 ## Name of the mesh used for debugging.
 const DEBUG_MESH_NAME := "DebugMesh"
 
 ## File paths to the possible enemy selections for this zone.
-@export_dir var enemies : Array[String]
+@export_dir var enemies : PackedStringArray
 ## The number of EncounterSpawn nodes that can be active at once.
 @export_range(1, 50) var spawn_limit := 1
 @export_group("Encounter Spawn Distance Range", "spawn_distance")
@@ -59,6 +59,7 @@ func _ready() -> void:
 		_y_cast.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
 		_y_cast.set_collision_mask_value(Constants.MAP_LAYER, true)
 	_instance_debug_mesh()
+	_update_spawn_distance()
 
 
 ## Update the ecosystem based on how far the avatar has traveled.
@@ -84,7 +85,7 @@ func _instance_debug_mesh() -> void:
 		add_child(_debug_mesh)
 		_debug_mesh.name = DEBUG_MESH_NAME
 		if Engine.is_editor_hint():
-			_y_cast.set_owner(get_tree().edited_scene_root)
+			_debug_mesh.set_owner(get_tree().edited_scene_root)
 	if Engine.is_editor_hint():
 		_update_debug_mesh()
 	else:
@@ -129,22 +130,28 @@ func _process_spawning() -> void:
 	if _terrain_zone == null:
 		printerr("No TerrainZone has been assigned.")
 		return
+	_travel_distance += SceneController.get_last_squared_distance()
 	if _travel_distance >= _spawn_distance:
-		_spawn_distance = randf_range(spawn_distance_min, spawn_distance_max)
+		_update_spawn_distance()
 		_travel_distance = 0.0
 		var spawner := EncounterSpawnFight.new(
 				SceneController.get_avatar_reference(),
 				_terrain_zone.select_random_map_path(),
 				enemies
 		)
-		spawner.global_position = _determine_spawn_global_position()
 		add_child(spawner)
+		spawner.global_position = _determine_spawn_global_position()
 		_active_spawners.append(spawner.get_instance_id())
 		spawner.connect(
 				"despawned",
 				Callable(self, "_on_EncounterSpawn_despawned")
 		)
 		await spawner.spawn()
+
+
+## Resets the spawn distance to a new random value.
+func _update_spawn_distance() -> void:
+	_spawn_distance = randf_range(spawn_distance_min, spawn_distance_max)
 
 
 ## Removes the despawned EncounterSpawn node from the tracker.

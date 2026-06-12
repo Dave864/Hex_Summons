@@ -56,7 +56,7 @@ func _physics_process(delta: float) -> void:
 ## Causes the sprite to appear.
 func spawn() -> bool:
 	var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
-	_prior_position = position
+	_prior_position = global_position
 	sprite.spawn_transition()
 	await sprite.transition_finished
 	_active = true

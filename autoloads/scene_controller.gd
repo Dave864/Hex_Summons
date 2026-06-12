@@ -48,9 +48,9 @@ func get_avatar_reference() -> OverworldAvatar:
 ## Sets the reference to the OverworldAvatar.
 func set_avatar_reference(avatar_reference: OverworldAvatar) -> void:
 	_overworld_avatar = avatar_reference
-	# Reset distance data if avatar reference is set to null.
-	if _overworld_avatar == null:
-		_last_frame_distance = -1.0
+	_last_frame_distance = 0.0
+	if not prior_avatar_position.is_finite() and _overworld_avatar != null:
+		prior_avatar_position = _overworld_avatar.position
 
 
 ## Gets the distance traveled by the avatar in the last frame.

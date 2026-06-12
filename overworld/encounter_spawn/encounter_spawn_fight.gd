@@ -23,7 +23,7 @@ func _behavior_pattern(_delta: float) -> void:
 
 ## Updates the chase distance traveled.
 func _update_chase_details() -> void:
-	_current_distance += position.distance_squared_to(_prior_position)
-	_prior_position = position
+	_current_distance += global_position.distance_squared_to(_prior_position)
+	_prior_position = global_position
 	if _current_distance >= max_chase_distace:
 		despawn()
