@@ -11,8 +11,6 @@ signal despawned(id)
 
 ## The radius of the spawner hitbox.
 const HITBOX_RADIUS := 0.8
-## The maximum value for dither intensity.
-const MAX_DITHER_INTENSITY := 1.0
 
 ## The speed the spawner moves at.
 var speed = 8.0
@@ -54,18 +52,16 @@ func _physics_process(delta: float) -> void:
 
 
 ## Causes the sprite to appear.
-func spawn() -> bool:
+func spawn() -> void:
 	var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
 	_prior_position = global_position
 	sprite.spawn_transition()
 	await sprite.transition_finished
 	_active = true
-	return true
 
 
 ## Removes the spawner from play.
 func despawn() -> void:
-	#$HitBox.disconnect("body_entered", Callable(self, "_on_HitBox_body_entered"))
 	emit_signal("despawned", get_instance_id())
 	_active = false
 	var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
@@ -124,6 +120,8 @@ func _move_spawner() -> void:
 
 ## Triggers a switch to the Encounter scene when the OverworldAvatar is hit.
 func _on_HitBox_body_entered(_avatar: OverworldAvatar) -> void:
+	if not _active:
+		return
 	SceneController.change_scene_to_encounter(
 			_encounter_map_path,
 			_enemies_path_list
