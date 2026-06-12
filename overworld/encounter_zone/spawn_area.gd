@@ -9,6 +9,9 @@ extends Marker3D
 const Y_RAYCAST_NAME := "Y_RayCast"
 ## The length of the raycast.
 const Y_RAYCAST_LENGTH := 10.0
+## How far above the raycast collision point to place an EncounterSpawn so that
+## it is resting on the ground.
+const Y_OFFSET := 1.0
 ## Name of the mesh used for debugging.
 const DEBUG_MESH_NAME := "DebugMesh"
 
@@ -112,11 +115,11 @@ func _determine_y_position(xz_position: Vector2) -> float:
 	# Check up
 	_y_cast.target_position.y = Y_RAYCAST_LENGTH
 	if _y_cast.is_colliding():
-		return _y_cast.get_collision_point().y
+		return _y_cast.get_collision_point().y + Y_OFFSET
 	# Check down
 	_y_cast.target_position.y = -Y_RAYCAST_LENGTH
 	if _y_cast.is_colliding():
-		return _y_cast.get_collision_point().y
+		return _y_cast.get_collision_point().y + Y_OFFSET
 	return 0.0
 
 
@@ -146,7 +149,7 @@ func _process_spawning() -> void:
 				"despawned",
 				Callable(self, "_on_EncounterSpawn_despawned")
 		)
-		await spawner.spawn()
+		spawner.spawn()
 
 
 ## Resets the spawn distance to a new random value.
