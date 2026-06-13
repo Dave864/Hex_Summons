@@ -5,7 +5,7 @@
 * https://godotshaders.com/shader/dithering-screen-door-transparency/
 */
 shader_type spatial;
-render_mode unshaded, cull_disabled, depth_test_disabled;
+render_mode unshaded, cull_disabled;
 
 uniform sampler2D sprite_texture: source_color, filter_nearest, repeat_disable;
 uniform float dither_intensity: hint_range(0.0, 1.0, 0.05) = 0.0;

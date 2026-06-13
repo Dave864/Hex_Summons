@@ -244,7 +244,7 @@ debug_fill = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.628136, 0.6, -11.575184)
 script = ExtResource("6_uyahc")
 radius = 7.19
-enemies = Array[String](["res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn"])
+enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
 spawn_distance_max = 2.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
@@ -258,7 +258,7 @@ mesh = SubResource("ImmediateMesh_uyahc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.344772, 0.6, 7.674761)
 script = ExtResource("6_uyahc")
 radius = 9.44
-enemies = Array[String](["res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn"])
+enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
 spawn_limit = 2
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
