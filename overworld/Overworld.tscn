@@ -243,30 +243,40 @@ debug_fill = false
 [node name="CircleSpawnArea" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.628136, 0.6, -11.575184)
 script = ExtResource("6_uyahc")
-radius = 7.19
+radius = 6.21
 enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
 spawn_distance_max = 2.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
-[node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
-collision_mask = 2
-
 [node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
 mesh = SubResource("ImmediateMesh_uyahc")
+
+[node name="Y_RayCast_Up" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
+target_position = Vector3(0, 10, 0)
+collision_mask = 2
+
+[node name="Y_RayCast_Down" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
+target_position = Vector3(0, -10, 0)
+collision_mask = 2
 
 [node name="CircleSpawnArea2" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.344772, 0.6, 7.674761)
 script = ExtResource("6_uyahc")
-radius = 9.44
+radius = 10.77
 enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
 spawn_limit = 2
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
-[node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
-collision_mask = 2
-
 [node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
 mesh = SubResource("ImmediateMesh_wc37g")
+
+[node name="Y_RayCast_Up" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
+target_position = Vector3(0, 10, 0)
+collision_mask = 2
+
+[node name="Y_RayCast_Down" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
+target_position = Vector3(0, -10, 0)
+collision_mask = 2
 
 [node name="TerrainZoneSand" type="Area3D" parent="EncounterZones"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.667734)
@@ -286,7 +296,7 @@ debug_fill = false
 transform = Transform3D(1, 0, 0, 0, 0.6537509, 0.7567098, 0, -0.7567098, 0.6537509, 0, 25.214062, 0)
 
 [node name="OverworldAvatar" parent="." instance=ExtResource("1_q45au")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.652, 1.4188309, -12.145)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.652, 0, -12.145)
 
 [node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
 transform = Transform3D(1, 0, 0, 0, 0.6480137, 0.76162875, 0, -0.76162875, 0.6480137, 0.1927185, 13.6978035, 10.777912)

@@ -5,13 +5,12 @@ extends Marker3D
 ## Base class that defines an area where EncounterSpawn nodes can be created.
 
 
-## Name of the raycast node for detecting where to place an EncounterSpawn.
-const Y_RAYCAST_NAME := "Y_RayCast"
+## Name the up raycast node for detecting where to place an EncounterSpawn.
+const Y_RAYCAST_UP_NAME := "Y_RayCast_Up"
+## Name the down raycast node for detecting where to place an EncounterSpawn.
+const Y_RAYCAST_DOWN_NAME := "Y_RayCast_Down"
 ## The length of the raycast.
 const Y_RAYCAST_LENGTH := 10.0
-## How far above the raycast collision point to place an EncounterSpawn so that
-## it is resting on the ground.
-const Y_OFFSET := 1.0
 ## Name of the mesh used for debugging.
 const DEBUG_MESH_NAME := "DebugMesh"
 
@@ -39,8 +38,12 @@ var _spawn_distance := 0.0:
 		return pow(_spawn_distance, 2.0)
 ## The distance traveled by the avatar.
 var _travel_distance := 0.0
-## Raycast used to determine where on the y-axis to place the EncounterSpawn node.
-var _y_cast: RayCast3D = null
+## Up raycast used to determine where on the y-axis to place the EncounterSpawn
+## node.
+var _y_cast_up: RayCast3D = null
+## Down raycast used to determine where on the y-axis to place the
+## EncounterSpawn node.
+var _y_cast_down: RayCast3D = null
 ## The terrain zone this spawn area is part of.
 var _terrain_zone: TerrainZone = null
 ## The currently active EncounterSpawn nodes.
@@ -51,16 +54,16 @@ var _debug_mesh: MeshInstance3D = null
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if has_node(Y_RAYCAST_NAME):
-		_y_cast = get_node(Y_RAYCAST_NAME)
-	else:
-		_y_cast = RayCast3D.new()
-		add_child(_y_cast)
-		if Engine.is_editor_hint():
-			_y_cast.set_owner(get_tree().edited_scene_root)
-		_y_cast.name = Y_RAYCAST_NAME
-		_y_cast.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
-		_y_cast.set_collision_mask_value(Constants.MAP_LAYER, true)
+	_instance_y_raycast(
+			_y_cast_up,
+			Y_RAYCAST_UP_NAME,
+			Vector3(0.0, Y_RAYCAST_LENGTH, 0.0)
+	)
+	_instance_y_raycast(
+			_y_cast_down,
+			Y_RAYCAST_DOWN_NAME,
+			Vector3(0.0, -Y_RAYCAST_LENGTH, 0.0)
+	)
 	_instance_debug_mesh()
 	_update_spawn_distance()
 
@@ -77,6 +80,26 @@ func _physics_process(_delta: float) -> void:
 ## Updates the terrain zone this spawn area is in.
 func set_terrain_zone(new_zone: TerrainZone) -> void:
 	_terrain_zone = new_zone
+
+
+## Creates raycast node for detecting where on the y-axis to place an
+## EncounterSpawn.
+func _instance_y_raycast(
+	raycast_node: RayCast3D,
+	raycast_name: String,
+	target_position: Vector3
+) -> void:
+	if has_node(raycast_name):
+		raycast_node = get_node(raycast_name) as RayCast3D
+	else:
+		raycast_node = RayCast3D.new()
+		add_child(raycast_node)
+		if Engine.is_editor_hint():
+			raycast_node.set_owner(get_tree().edited_scene_root)
+		raycast_node.name = raycast_name
+		raycast_node.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
+		raycast_node.set_collision_mask_value(Constants.MAP_LAYER, true)
+		raycast_node.target_position = target_position
 
 
 ## Creates a mesh used to visualize the range of this SpawnArea.
@@ -111,15 +134,17 @@ func _determine_spawn_global_position() -> Vector3:
 
 ## Determines the y position for EncounterSpawn based on the xz posiiton.
 func _determine_y_position(xz_position: Vector2) -> float:
-	_y_cast.position = Vector3(xz_position.x, 0.0, xz_position.y)
+	var global_start_position := Vector3(xz_position.x, 0.0, xz_position.y)
+	_y_cast_up.global_position = global_start_position
+	_y_cast_down.global_position = global_start_position
 	# Check up
-	_y_cast.target_position.y = Y_RAYCAST_LENGTH
-	if _y_cast.is_colliding():
-		return _y_cast.get_collision_point().y + Y_OFFSET
+	if _y_cast_up.is_colliding():
+		print("ray hit UP")
+		return _y_cast_up.get_collision_point().y
 	# Check down
-	_y_cast.target_position.y = -Y_RAYCAST_LENGTH
-	if _y_cast.is_colliding():
-		return _y_cast.get_collision_point().y + Y_OFFSET
+	if _y_cast_down.is_colliding():
+		print("ray hit DOWN")
+		return _y_cast_down.get_collision_point().y
 	return 0.0
 
 
