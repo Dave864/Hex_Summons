@@ -1,5 +1,5 @@
 @tool
-class_name CircleSpawnArea
+class_name SpawnAreaCircle
 extends SpawnArea
 ## Defines a circular area where EncounterSpawn may be instanced.
 
