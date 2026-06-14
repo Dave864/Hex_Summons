@@ -2,7 +2,9 @@
 @abstract
 class_name SpawnArea
 extends Marker3D
-## Base class that defines an area where EncounterSpawn nodes can be created.
+## Base class that defines an area where EncounterSpawn nodes can be created. This
+## area must be placed fully above the ground otherwise EncounterSpawn will not be
+## placed properly.
 
 
 ## Name of the raycast node for detecting where to place an EncounterSpawn.
@@ -123,6 +125,7 @@ func _determine_y_position(xz_position: Vector2) -> float:
 	)
 	if _y_cast.is_colliding():
 		return _y_cast.get_collision_point().y
+	printerr("Ground not found.")
 	return 0.0
 
 

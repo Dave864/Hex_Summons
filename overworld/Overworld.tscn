@@ -251,6 +251,10 @@ metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 [node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
 mesh = SubResource("ImmediateMesh_uyahc")
 
+[node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
+target_position = Vector3(0, -10, 0)
+collision_mask = 2
+
 [node name="CircleSpawnArea2" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.345, 0.6, 7.675)
 script = ExtResource("6_uyahc")
@@ -261,6 +265,10 @@ metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
 [node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
 mesh = SubResource("ImmediateMesh_wc37g")
+
+[node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
+target_position = Vector3(0, -10, 0)
+collision_mask = 2
 
 [node name="TerrainZoneSand" type="Area3D" parent="EncounterZones"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.667734)
