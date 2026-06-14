@@ -31,6 +31,7 @@ func _update_debug_mesh() -> void:
 		circle_mesh.surface_add_vertex(vertex_2 * radius)
 	circle_mesh.surface_end()
 	_debug_mesh.mesh = circle_mesh
+	_debug_mesh.set_surface_override_material(0, _debug_mesh_material())
 
 
 ## Gets a random position in the defined spawn area plane.

@@ -109,6 +109,15 @@ func _instance_debug_mesh() -> void:
 @abstract func _update_debug_mesh() -> void
 
 
+## Creates a material for the debug mesh.
+func _debug_mesh_material() -> StandardMaterial3D:
+	var material := StandardMaterial3D.new()
+	# The material is unshaded to allow it to be visible regardless of shadows.
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.albedo_color = Color.RED
+	return material
+
+
 ## Determines where an EncounterSpawner should be placed.
 func _determine_spawn_global_position() -> Vector3:
 	var area_pos := _random_area_position()
