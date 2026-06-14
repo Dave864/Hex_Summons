@@ -5,10 +5,8 @@ extends Marker3D
 ## Base class that defines an area where EncounterSpawn nodes can be created.
 
 
-## Name the up raycast node for detecting where to place an EncounterSpawn.
-const Y_RAYCAST_UP_NAME := "Y_RayCast_Up"
-## Name the down raycast node for detecting where to place an EncounterSpawn.
-const Y_RAYCAST_DOWN_NAME := "Y_RayCast_Down"
+## Name of the raycast node for detecting where to place an EncounterSpawn.
+const Y_RAYCAST_NAME := "Y_RayCast"
 ## The length of the raycast.
 const Y_RAYCAST_LENGTH := 10.0
 ## Name of the mesh used for debugging.
@@ -38,12 +36,9 @@ var _spawn_distance := 0.0:
 		return pow(_spawn_distance, 2.0)
 ## The distance traveled by the avatar.
 var _travel_distance := 0.0
-## Up raycast used to determine where on the y-axis to place the EncounterSpawn
+## Raycast used to determine where on the y-axis to place the EncounterSpawn
 ## node.
-var _y_cast_up: RayCast3D = null
-## Down raycast used to determine where on the y-axis to place the
-## EncounterSpawn node.
-var _y_cast_down: RayCast3D = null
+var _y_cast: RayCast3D = null
 ## The terrain zone this spawn area is part of.
 var _terrain_zone: TerrainZone = null
 ## The currently active EncounterSpawn nodes.
@@ -54,14 +49,7 @@ var _debug_mesh: MeshInstance3D = null
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_y_cast_up = _instance_y_raycast(
-			Y_RAYCAST_UP_NAME,
-			Vector3(0.0, Y_RAYCAST_LENGTH, 0.0)
-	)
-	_y_cast_down = _instance_y_raycast(
-			Y_RAYCAST_DOWN_NAME,
-			Vector3(0.0, -Y_RAYCAST_LENGTH, 0.0)
-	)
+	_instance_y_raycast()
 	_instance_debug_mesh()
 	_update_spawn_distance()
 
@@ -82,23 +70,18 @@ func set_terrain_zone(new_zone: TerrainZone) -> void:
 
 ## Creates raycast node for detecting where on the y-axis to place an
 ## EncounterSpawn.
-func _instance_y_raycast(
-	raycast_name: String,
-	target_position: Vector3
-) -> RayCast3D:
-	var raycast_node: RayCast3D
-	if has_node(raycast_name):
-		raycast_node = get_node(raycast_name) as RayCast3D
+func _instance_y_raycast() -> void:
+	if has_node(Y_RAYCAST_NAME):
+		_y_cast = get_node(Y_RAYCAST_NAME) as RayCast3D
 	else:
-		raycast_node = RayCast3D.new()
-		add_child(raycast_node)
+		_y_cast = RayCast3D.new()
+		add_child(_y_cast)
 		if Engine.is_editor_hint():
-			raycast_node.set_owner(get_tree().edited_scene_root)
-		raycast_node.name = raycast_name
-		raycast_node.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
-		raycast_node.set_collision_mask_value(Constants.MAP_LAYER, true)
-		raycast_node.target_position = target_position
-	return raycast_node
+			_y_cast.set_owner(get_tree().edited_scene_root)
+		_y_cast.name = Y_RAYCAST_NAME
+		_y_cast.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
+		_y_cast.set_collision_mask_value(Constants.MAP_LAYER, true)
+		_y_cast.target_position = Vector3(0.0, -Y_RAYCAST_LENGTH, 0.0)
 
 
 ## Creates a mesh used to visualize the range of this SpawnArea.
@@ -133,17 +116,13 @@ func _determine_spawn_global_position() -> Vector3:
 
 ## Determines the y position for EncounterSpawn based on the xz posiiton.
 func _determine_y_position(xz_position: Vector2) -> float:
-	var global_start_position := Vector3(
+	_y_cast.global_position = Vector3(
 		xz_position.x,
 		global_position.y,
 		xz_position.y
 	)
-	_y_cast_up.global_position = global_start_position
-	_y_cast_down.global_position = global_start_position
-	if _y_cast_up.is_colliding():
-		return _y_cast_up.get_collision_point().y
-	if _y_cast_down.is_colliding():
-		return _y_cast_down.get_collision_point().y
+	if _y_cast.is_colliding():
+		return _y_cast.get_collision_point().y
 	return 0.0
 
 
