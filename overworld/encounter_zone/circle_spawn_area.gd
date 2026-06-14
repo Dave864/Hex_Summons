@@ -39,3 +39,8 @@ func _determine_xz_position() -> Vector2:
 	var random_dist := randf_range(0.0, radius)
 	var xz_pos := Vector2.from_angle(random_angle).normalized() * random_dist
 	return xz_pos + Vector2(global_position.x, global_position.z)
+
+
+## Determines the global y position the raycast should be placed at.
+func _determine_raycast_y_pos() -> float:
+	return global_position.y

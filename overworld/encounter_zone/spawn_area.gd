@@ -18,24 +18,24 @@ const DEBUG_MESH_NAME := "DebugMesh"
 @export_dir var enemies : PackedStringArray
 ## The number of EncounterSpawn nodes that can be active at once.
 @export_range(1, 50) var spawn_limit := 1
-@export_group("Encounter Spawn Distance Range", "spawn_distance")
+@export_group("Encounter Spawn Distance Trigger", "distance_trigger")
 ## The minimum distance that must be traveled before an EncounterSpawner appears.
-@export_range(1.0, 10.0, 0.01) var spawn_distance_min := 1.0:
+@export_range(0.01, 10.0, 0.01) var distance_trigger_min := 1.0:
 	set(value):
-		spawn_distance_min = value
-		if spawn_distance_max < spawn_distance_min:
-			spawn_distance_max = value
+		distance_trigger_min = value
+		if distance_trigger_max < distance_trigger_min:
+			distance_trigger_max = value
 ## The maximum distance that can be traveled before an EncounterSpawner appears.
-@export_range(1.0, 10.0, 0.01) var spawn_distance_max := 3.0:
+@export_range(0.01, 10.0, 0.01) var distance_trigger_max := 3.0:
 	set(value):
-		spawn_distance_max = value
-		if spawn_distance_min > spawn_distance_max:
-			spawn_distance_min = value
+		distance_trigger_max = value
+		if distance_trigger_min > distance_trigger_max:
+			distance_trigger_min = value
 
 ## The distance the avatar must travel before an EncounterSpawn node is made.
-var _spawn_distance := 0.0:
+var _distance_trigger := 0.0:
 	get:
-		return pow(_spawn_distance, 2.0)
+		return pow(_distance_trigger, 2.0)
 ## The distance traveled by the avatar.
 var _travel_distance := 0.0
 ## Raycast used to determine where on the y-axis to place the EncounterSpawn
@@ -84,6 +84,9 @@ func _instance_y_raycast() -> void:
 		_y_cast.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
 		_y_cast.set_collision_mask_value(Constants.MAP_LAYER, true)
 		_y_cast.target_position = Vector3(0.0, -Y_RAYCAST_LENGTH, 0.0)
+	# Rotate raycast so that it is always pointing down regardless of the
+	# rotation of this SpawnArea.
+	_y_cast.global_rotation = Vector3.ZERO
 
 
 ## Creates a mesh used to visualize the range of this SpawnArea.
@@ -112,21 +115,25 @@ func _determine_spawn_global_position() -> Vector3:
 	return Vector3(xz_pos.x, _determine_y_position(xz_pos), xz_pos.y)
 
 
-## Determines the xz position got EncounterSpawn.
+## Determines the global xz position got EncounterSpawn.
 @abstract func _determine_xz_position() -> Vector2
 
 
-## Determines the y position for EncounterSpawn based on the xz posiiton.
+## Determines the global y position for EncounterSpawn based on the xz posiiton.
 func _determine_y_position(xz_position: Vector2) -> float:
 	_y_cast.global_position = Vector3(
 		xz_position.x,
-		global_position.y,
+		_determine_raycast_y_pos(),
 		xz_position.y
 	)
 	if _y_cast.is_colliding():
 		return _y_cast.get_collision_point().y
 	printerr("Ground not found.")
 	return 0.0
+
+
+## Determines the global y position the raycast should be placed at.
+@abstract func _determine_raycast_y_pos() -> float
 
 
 ## TODO: Updates the population counts of the various enemy types.
@@ -140,7 +147,7 @@ func _process_spawning() -> void:
 		printerr("No TerrainZone has been assigned.")
 		return
 	_travel_distance += SceneController.get_last_squared_distance()
-	if _travel_distance >= _spawn_distance:
+	if _travel_distance >= _distance_trigger:
 		_update_spawn_distance()
 		_travel_distance = 0.0
 		var spawner := EncounterSpawnFight.new(
@@ -160,7 +167,7 @@ func _process_spawning() -> void:
 
 ## Resets the spawn distance to a new random value.
 func _update_spawn_distance() -> void:
-	_spawn_distance = randf_range(spawn_distance_min, spawn_distance_max)
+	_distance_trigger = randf_range(distance_trigger_min, distance_trigger_max)
 
 
 ## Removes the despawned EncounterSpawn node from the tracker.

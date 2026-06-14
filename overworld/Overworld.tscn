@@ -241,11 +241,10 @@ debug_fill = false
 [node name="SpawnAreas" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
 
 [node name="CircleSpawnArea" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.628, 0.6, -11.575)
+transform = Transform3D(0.99999976, 0, 0, 0, 0.9999997, 0, 0, 0, 0.99999976, -36.628, 0.6, -11.575)
 script = ExtResource("6_uyahc")
 radius = 6.21
 enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
-spawn_distance_max = 2.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
 [node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
