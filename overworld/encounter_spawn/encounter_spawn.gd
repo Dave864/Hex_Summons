@@ -110,6 +110,7 @@ func _create_hitbox() -> void:
 	shape_dimensions.radius = HITBOX_RADIUS
 	hitbox_shape.shape = shape_dimensions
 	hitbox.connect("body_entered", Callable(self, "_on_HitBox_body_entered"))
+	hitbox.connect("area_entered", Callable(self, "_on_HitBox_area_entered"))
 
 
 ## The pattern the spawner follows. Uses the delta value for any behavior that
@@ -132,3 +133,11 @@ func _on_HitBox_body_entered(_avatar: OverworldAvatar) -> void:
 			_encounter_map_path,
 			_enemies_path_list
 	)
+
+
+## Updates the map to use when entering a new TerrainZone.
+func _on_HitBox_area_entered(terrain_zone: Area3D) -> void:
+	if not _active or not terrain_zone is TerrainZone:
+		return
+	terrain_zone = terrain_zone as TerrainZone
+	_encounter_map_path = terrain_zone.select_random_map_path()
