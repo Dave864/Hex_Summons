@@ -11,6 +11,9 @@ signal despawned(id)
 
 ## The radius of the spawner hitbox.
 const HITBOX_RADIUS := 0.8
+## The amount to offset the y positions of the child nodes by so that the anchor
+## of this node is at the bottom.
+const ANCHOR_OFFSET := 1.0
 
 ## The speed the spawner moves at.
 var speed = 8.0
@@ -74,6 +77,7 @@ func despawn() -> void:
 func _create_sprite() -> void:
 	var sprite := EncounterSpawnSprite.new()
 	add_child(sprite)
+	sprite.position.y = ANCHOR_OFFSET
 
 
 ## Creates the collision shape used for interacting with the world.
@@ -86,6 +90,7 @@ func _create_physics_shape() -> void:
 	set_collision_mask_value(Constants.DEFAULT_LAYER, false)
 	set_collision_mask_value(Constants.MAP_LAYER, true)
 	physics_shape.shape = CapsuleShape3D.new()
+	physics_shape.position.y = ANCHOR_OFFSET
 
 
 ## Creates the hit box used to detect when the spawner has hit the player.
@@ -97,6 +102,7 @@ func _create_hitbox() -> void:
 	hitbox.set_collision_layer_value(Constants.ENEMY_LAYER, true)
 	hitbox.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
 	hitbox.set_collision_mask_value(Constants.PLAYER_LAYER, true)
+	hitbox.position.y = ANCHOR_OFFSET
 	var hitbox_shape := CollisionShape3D.new()
 	hitbox.add_child(hitbox_shape)
 	hitbox_shape.name = "CollisionShape3D"
