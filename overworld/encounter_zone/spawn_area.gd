@@ -111,29 +111,29 @@ func _instance_debug_mesh() -> void:
 
 ## Determines where an EncounterSpawner should be placed.
 func _determine_spawn_global_position() -> Vector3:
-	var xz_pos := _determine_xz_position()
-	return Vector3(xz_pos.x, _determine_y_position(xz_pos), xz_pos.y)
+	var area_pos := _random_area_position()
+	# Make the area position reference be the center of SpawnArea instead of
+	# origin.
+	area_pos += global_position
+	# Apply global Euler rotation to match the area position to SpawnArea's
+	# orientation.
+	area_pos = area_pos.rotated(Vector3.UP, deg_to_rad(global_rotation.y))
+	area_pos = area_pos.rotated(Vector3.RIGHT, deg_to_rad(global_rotation.x))
+	area_pos = area_pos.rotated(Vector3.BACK, deg_to_rad(global_rotation.z))
+	return Vector3(area_pos.x, _determine_y_position(area_pos), area_pos.z)
 
 
-## Determines the global xz position got EncounterSpawn.
-@abstract func _determine_xz_position() -> Vector2
+## Gets a random position in the defined spawn area plane.
+@abstract func _random_area_position() -> Vector3
 
 
-## Determines the global y position for EncounterSpawn based on the xz posiiton.
-func _determine_y_position(xz_position: Vector2) -> float:
-	_y_cast.global_position = Vector3(
-		xz_position.x,
-		_determine_raycast_y_pos(),
-		xz_position.y
-	)
+## Determines the global y position for EncounterSpawn.
+func _determine_y_position(raycast_position: Vector3) -> float:
+	_y_cast.global_position = raycast_position
 	if _y_cast.is_colliding():
 		return _y_cast.get_collision_point().y
 	printerr("Ground not found.")
 	return 0.0
-
-
-## Determines the global y position the raycast should be placed at.
-@abstract func _determine_raycast_y_pos() -> float
 
 
 ## TODO: Updates the population counts of the various enemy types.

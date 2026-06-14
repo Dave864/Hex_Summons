@@ -241,7 +241,7 @@ debug_fill = false
 [node name="SpawnAreas" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
 
 [node name="CircleSpawnArea" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas"]
-transform = Transform3D(0.99999976, 0, 0, 0, 0.9999997, 0, 0, 0, 0.99999976, -36.628, 0.6, -11.575)
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 0.9999998, -36.628, 0.6, -11.575)
 script = ExtResource("6_uyahc")
 radius = 6.21
 enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
@@ -251,6 +251,7 @@ metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 mesh = SubResource("ImmediateMesh_uyahc")
 
 [node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
+transform = Transform3D(1, 0, 0, 0, 1.0000002, 0, 0, 0, 0.99999994, 0, 0, 0)
 target_position = Vector3(0, -10, 0)
 collision_mask = 2
 

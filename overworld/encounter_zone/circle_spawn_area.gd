@@ -33,14 +33,9 @@ func _update_debug_mesh() -> void:
 	_debug_mesh.mesh = circle_mesh
 
 
-## Gets random xz coordinates from within the defined spawn area.
-func _determine_xz_position() -> Vector2:
+## Gets a random position in the defined spawn area plane.
+func _random_area_position() -> Vector3:
 	var random_angle := randf_range(0.0, TAU)
 	var random_dist := randf_range(0.0, radius)
 	var xz_pos := Vector2.from_angle(random_angle).normalized() * random_dist
-	return xz_pos + Vector2(global_position.x, global_position.z)
-
-
-## Determines the global y position the raycast should be placed at.
-func _determine_raycast_y_pos() -> float:
-	return global_position.y
+	return Vector3(xz_pos.x, 0.0, xz_pos.y)
