@@ -259,7 +259,22 @@ shape = SubResource("BoxShape3D_naebm")
 debug_color = Color(1, 1, 0, 1)
 debug_fill = false
 
-[node name="InterestPoints" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
+[node name="TravelPoints" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
+
+[node name="Marker3D" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/TravelPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.84709, 0.6, -15.46928)
+
+[node name="Marker3D2" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/TravelPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.552, 0.6, 4.206)
+
+[node name="Marker3D3" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/TravelPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.292, 0.6, 5.992)
+
+[node name="Marker3D4" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/TravelPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.013, 0.6, -14.943)
+
+[node name="Marker3D5" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/TravelPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.315, 0.6, -13.299)
 
 [node name="SpawnAreas" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
 
@@ -307,7 +322,22 @@ shape = SubResource("BoxShape3D_taamv")
 debug_color = Color(1, 1, 0, 1)
 debug_fill = false
 
-[node name="InterestPoints" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
+[node name="TravelPoints" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
+
+[node name="Marker3D" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.855, 0.6, -6.165)
+
+[node name="Marker3D2" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.36, 0.6, 14.3242855)
+
+[node name="Marker3D3" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.072, 0.6, 14.049)
+
+[node name="Marker3D4" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.903, 0.6, 13.730646)
+
+[node name="Marker3D5" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.809, 0.6, -7.4918194)
 
 [node name="SpawnAreas" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
 

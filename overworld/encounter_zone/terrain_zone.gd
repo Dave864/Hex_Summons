@@ -5,17 +5,17 @@ extends Area3D
 ## this area.
 
 
-## The name of the node that tracks the points of interest used to determine
+## The name of the node that tracks the travel points used to determine
 ## where an EncounterSpawn can travel to.
-const INTEREST_POINTS_NAME := "InterestPoints"
+const TRAVEL_POINTS_NAME := "TravelPoints"
 ## The name of the node that records the spawn areas assigned to this zone.
 const SPAWN_AREAS_NAME := "SpawnAreas"
 
 ## Files paths to the possible map selections for this zone.
 @export_dir var maps : Array[String]
 
-## The currently tracked points of interest.
-var points_of_interest : PackedVector3Array
+## The currently tracked travel points.
+var travel_points : PackedVector3Array
 
 ## The scene tree root.
 var _scene_root : Node:
@@ -26,8 +26,8 @@ var _scene_root : Node:
 ## Creates a new CollisionShape if none is present.
 func _ready() -> void:
 	_ready_collision_shape()
-	_ready_node3d(INTEREST_POINTS_NAME)
-	_get_points_of_interest()
+	_ready_node3d(TRAVEL_POINTS_NAME)
+	_get_travel_points()
 	_ready_node3d(SPAWN_AREAS_NAME)
 	_set_terrain_for_spawn_areas()
 
@@ -64,11 +64,11 @@ func _ready_node3d(node_name: String) -> void:
 		node.name = node_name
 
 
-## Gets the positions for the assinged points of interest.
-func _get_points_of_interest() -> void:
-	for point: Node in get_node(INTEREST_POINTS_NAME).get_children():
+## Gets the positions for the assinged travel points.
+func _get_travel_points() -> void:
+	for point: Node in get_node(TRAVEL_POINTS_NAME).get_children():
 		if point is Marker3D:
-			points_of_interest.append(point.global_position)
+			travel_points.append(point.global_position)
 
 
 ## Goes through all assigned SpawnAreas and sets their terrain zone.
