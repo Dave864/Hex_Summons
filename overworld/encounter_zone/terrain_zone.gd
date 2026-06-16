@@ -26,9 +26,9 @@ var _scene_root : Node:
 ## Creates a new CollisionShape if none is present.
 func _ready() -> void:
 	_ready_collision_shape()
-	_ready_node(INTEREST_POINTS_NAME)
+	_ready_node3d(INTEREST_POINTS_NAME)
 	_get_points_of_interest()
-	_ready_node(SPAWN_AREAS_NAME)
+	_ready_node3d(SPAWN_AREAS_NAME)
 	_set_terrain_for_spawn_areas()
 
 
@@ -54,10 +54,10 @@ func _ready_collision_shape() -> void:
 		collision_shape.shape = BoxShape3D.new()
 
 
-## Creates a Node of the specified name if it is not already present.
-func _ready_node(node_name: String) -> void:
+## Creates a Node3D of the specified name if it is not already present.
+func _ready_node3d(node_name: String) -> void:
 	if not has_node(node_name):
-		var node := Node.new()
+		var node := Node3D.new()
 		add_child(node)
 		if Engine.is_editor_hint():
 			node.set_owner(_scene_root)
@@ -77,7 +77,7 @@ func _set_terrain_for_spawn_areas() -> void:
 	# nodes.
 	if Engine.is_editor_hint():
 		return
-	var areas_container: Node = get_node(SPAWN_AREAS_NAME)
+	var areas_container: Node3D = get_node(SPAWN_AREAS_NAME)
 	for area: Node in areas_container.get_children():
 		if area is SpawnArea:
 			area.set_terrain_zone(self)

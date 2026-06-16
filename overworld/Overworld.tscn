@@ -259,12 +259,12 @@ shape = SubResource("BoxShape3D_naebm")
 debug_color = Color(1, 1, 0, 1)
 debug_fill = false
 
-[node name="InterestPoints" type="Node" parent="EncounterZones/TerrainZoneGrass"]
+[node name="InterestPoints" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
 
-[node name="SpawnAreas" type="Node" parent="EncounterZones/TerrainZoneGrass"]
+[node name="SpawnAreas" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
 
 [node name="CircleSpawnArea" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas"]
-transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 0.9999998, -36.628, 0.6, -11.575)
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 0.9999998, -36.7013, 0.6, -11.437256)
 script = ExtResource("6_uyahc")
 radius = 6.21
 enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
@@ -280,7 +280,7 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="CircleSpawnArea2" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.345, 0.6, 7.675)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.84867, 0.6, 6.7512493)
 script = ExtResource("6_uyahc")
 radius = 10.77
 enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
@@ -307,12 +307,12 @@ shape = SubResource("BoxShape3D_taamv")
 debug_color = Color(1, 1, 0, 1)
 debug_fill = false
 
-[node name="InterestPoints" type="Node" parent="EncounterZones/TerrainZoneSand"]
+[node name="InterestPoints" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
 
-[node name="SpawnAreas" type="Node" parent="EncounterZones/TerrainZoneSand"]
+[node name="SpawnAreas" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
 
 [node name="SpawnAreaRect" type="Marker3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.450367, 0.6, -2.7956276)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.450367, 0.6, -4.104273)
 script = ExtResource("7_wc37g")
 is_square = true
 length = 20.49
@@ -332,7 +332,7 @@ mesh = SubResource("ImmediateMesh_taamv")
 surface_material_override/0 = SubResource("StandardMaterial3D_iro46")
 
 [node name="SpawnAreaRect2" type="Marker3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.423811, 0.6, -4.577467)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.423811, 0.6, -5.1863155)
 script = ExtResource("7_wc37g")
 length = 11.68
 height = 27.24
