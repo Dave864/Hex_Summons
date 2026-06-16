@@ -41,6 +41,34 @@ func _init() -> void:
 	set_collision_mask_value(Constants.ENEMY_LAYER, true)
 
 
+## Gets a random travel point.
+func get_random_travel_point() -> Vector3:
+	var selection_index := randi() % travel_points.size()
+	return travel_points[selection_index]
+
+
+## Gets a random travel point that is within a given range of a reference
+## point. Returns the closest point if no travel points are within range.
+func get_random_travel_point_in_range(
+	reference: Vector3,
+	range_limit: float
+) -> Vector3:
+	var valid_points: PackedVector3Array = []
+	var shortest_distance := INF
+	var closest_point := Vector3.INF
+	for point: Vector3 in travel_points:
+		var distance_squared := point.distance_squared_to(reference)
+		if distance_squared < shortest_distance:
+			shortest_distance = distance_squared
+			closest_point = point
+		if distance_squared <= pow(range_limit, 2.0):
+			valid_points.append(point)
+	if valid_points.size() > 0:
+		var selection_index := randi() % valid_points.size()
+		closest_point = valid_points[selection_index]
+	return closest_point
+
+
 ## Creates a new collision shape if none is already present.
 func _ready_collision_shape() -> void:
 	if get_shape_owners().size() == 0:
