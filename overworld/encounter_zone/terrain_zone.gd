@@ -53,20 +53,38 @@ func get_random_travel_point_in_range(
 	reference: Vector3,
 	range_limit: float
 ) -> Vector3:
-	var valid_points: PackedVector3Array = []
-	var shortest_distance := INF
-	var closest_point := Vector3.INF
-	for point: Vector3 in travel_points:
-		var distance_squared := point.distance_squared_to(reference)
-		if distance_squared < shortest_distance:
-			shortest_distance = distance_squared
-			closest_point = point
-		if distance_squared <= pow(range_limit, 2.0):
-			valid_points.append(point)
-	if valid_points.size() > 0:
-		var selection_index := randi() % valid_points.size()
-		closest_point = valid_points[selection_index]
-	return closest_point
+	var lambda_1 = func is_smaller(dist_sq: float, shortest: float) -> bool:
+		return dist_sq < shortest
+	var lambda_2 = func is_in_range(dist_sq: float, limit: float) -> bool:
+		return dist_sq <= pow(limit, 2.0)
+	return _get_random_travel_point_helper(
+			reference,
+			range_limit,
+			INF,
+			lambda_1,
+			lambda_2
+	)
+
+
+## Gets a random travel point that fall outside a given range of a reference
+## point. Can specify whether to default to the closest or farthest point if
+## all points are within range.
+func get_random_travel_point_beyond_range(
+	reference: Vector3,
+	range_limit: float,
+	default_farthest: bool = true
+) -> Vector3:
+	var lambda_1 := func compare(dist_sq: float, value: float) -> bool:
+		return value < dist_sq if default_farthest else value > dist_sq
+	var lambda_2 := func outside_of_range(dist_sq: float, limit: float) -> bool:
+		return dist_sq > pow(limit, 2.0)
+	return _get_random_travel_point_helper(
+			reference,
+			range_limit,
+			0.0 if default_farthest else INF,
+			lambda_1,
+			lambda_2
+	)
 
 
 ## Creates a new collision shape if none is already present.
@@ -97,6 +115,32 @@ func _get_travel_points() -> void:
 	for point: Node in get_node(TRAVEL_POINTS_NAME).get_children():
 		if point is Marker3D:
 			travel_points.append(point.global_position)
+
+
+## Helper for functions that get a random travel point based off some range
+## relative to a reference point. Gets a random travel point using the specified
+## comparison operations.
+func _get_random_travel_point_helper(
+	reference: Vector3,
+	range_limit: float,
+	starting_comparison: float,
+	default_comparator: Callable,
+	update_comparator: Callable
+) -> Vector3:
+	var valid_points: PackedVector3Array = []
+	var comparison_distance := starting_comparison
+	var selected: Vector3
+	for point: Vector3 in travel_points:
+		var distance_squared := point.distance_squared_to(reference)
+		if default_comparator.call(comparison_distance, distance_squared):
+			comparison_distance = distance_squared
+			selected = point
+		if update_comparator.call(distance_squared, range_limit):
+			valid_points.append(point)
+	if valid_points.size() > 0:
+		var i := randi() % valid_points.size()
+		selected = valid_points[i]
+	return selected
 
 
 ## Goes through all assigned SpawnAreas and sets their terrain zone.
