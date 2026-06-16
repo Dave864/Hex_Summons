@@ -38,6 +38,7 @@ func _init() -> void:
 	set_collision_layer_value(Constants.MAP_LAYER, true)
 	set_collision_mask_value(Constants.DEFAULT_LAYER, false)
 	set_collision_mask_value(Constants.PLAYER_LAYER, true)
+	set_collision_mask_value(Constants.ENEMY_LAYER, true)
 
 
 ## Creates a new collision shape if none is already present.

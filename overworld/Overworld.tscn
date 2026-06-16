@@ -250,7 +250,7 @@ debug_fill = false
 [node name="TerrainZoneGrass" type="Area3D" parent="EncounterZones"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2974558, 0, -20.681183)
 collision_layer = 2
-collision_mask = 4
+collision_mask = 12
 script = ExtResource("4_q1spi")
 maps = Array[String](["res://hex_map/GrassMapSmall.tscn", "res://hex_map/GrassMapLarge.tscn"])
 
@@ -298,7 +298,7 @@ collision_mask = 2
 [node name="TerrainZoneSand" type="Area3D" parent="EncounterZones"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.667734)
 collision_layer = 2
-collision_mask = 4
+collision_mask = 12
 script = ExtResource("4_q1spi")
 maps = Array[String](["res://hex_map/RockMapSmall.tscn", "res://hex_map/RockMapLarge.tscn"])
 
