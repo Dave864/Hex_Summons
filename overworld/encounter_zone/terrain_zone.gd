@@ -132,7 +132,7 @@ func _get_random_travel_point_helper(
 	var selected: Vector3
 	for point: Vector3 in travel_points:
 		var distance_squared := point.distance_squared_to(reference)
-		if default_comparator.call(comparison_distance, distance_squared):
+		if default_comparator.call(distance_squared, comparison_distance):
 			comparison_distance = distance_squared
 			selected = point
 		if update_comparator.call(distance_squared, range_limit):
