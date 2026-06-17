@@ -7,6 +7,6 @@ extends EncounterSpawn
 const DEFAULT_SPRITE_PATH := ""
 
 
-## Creates the state machine that will simulate the spawner behavior.
-func _create_state_machine() -> void:
+## Adds the type specific states to the state machine.
+func _add_states_to_state_machine(_state_machine: StateMachine) -> void:
 	pass
