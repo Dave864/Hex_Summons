@@ -165,13 +165,13 @@ func _process_spawning() -> void:
 				_terrain_zone.select_random_map_path(),
 				enemies
 		)
+		add_child(spawner)
 		spawner.global_position = _determine_spawn_global_position()
 		_active_spawners.append(spawner.get_instance_id())
 		spawner.connect(
 				"despawned",
 				Callable(self, "_on_EncounterSpawn_despawned")
 		)
-		add_child(spawner)
 
 
 ## Resets the spawn distance trigger to a new random value.

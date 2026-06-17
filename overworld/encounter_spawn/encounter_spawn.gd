@@ -14,13 +14,19 @@ const HITBOX_RADIUS := 0.8
 ## The amount to offset the y positions of the child nodes by so that the anchor
 ## of this node is at the bottom.
 const ANCHOR_OFFSET := 1.0
+## The name of the navigation agent.
+const NAV_AGENT_NAME := "NavAgent"
 
 ## The speed the spawner moves at.
 var speed = 8.0
 ## The sprite used.
 var sprite: EncounterSpawnSprite:
 	get():
-		return $EncounterSpawnSprite
+		return get_node(EncounterSpawnSprite.DEFAULT_NAME)
+## The navigation agent for this spawner.
+var nav_agent: NavigationAgent3D:
+	get():
+		return get_node(NAV_AGENT_NAME)
 
 ## The overworld avatar the spawner reacts to.
 var _overworld_avatar: OverworldAvatar = null
@@ -30,8 +36,6 @@ var _encounter_map_path: String = ""
 var _enemies_path_list : PackedStringArray = []
 ## Flag that indicates if the spawner is active.
 var _active: bool = false
-## The navigation agent for this spawner.
-var _nav_agent: NavigationAgent3D = null
 
 
 ## Initializes the node.
@@ -46,9 +50,9 @@ func _init(
 	_create_sprite()
 	_create_physics_shape()
 	_create_hitbox()
-	_nav_agent = NavigationAgent3D.new()
-	add_child(_nav_agent)
-	_nav_agent.name = "NavAgent"
+	var new_nav_agent := NavigationAgent3D.new()
+	add_child(new_nav_agent)
+	new_nav_agent.name = NAV_AGENT_NAME
 
 
 ## Emits the "despawned" signal.
@@ -106,7 +110,7 @@ func _create_hitbox() -> void:
 
 ## Moves the spawner in the given direction.
 func _move_spawner() -> void:
-	var destination := _nav_agent.get_next_path_position() - global_position
+	var destination := nav_agent.get_next_path_position() - global_position
 	velocity = destination.normalized() * speed
 	move_and_slide()
 

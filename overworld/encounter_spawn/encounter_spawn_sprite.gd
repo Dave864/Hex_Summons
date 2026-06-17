@@ -18,6 +18,8 @@ enum TransitionState {
 	NONE
 }
 
+## The default name used when instancing this node.
+const DEFAULT_NAME := "EncounterSpawnSprite"
 ## The default sprite used for the spawner.
 const DEFAULT_SPRITE_PATH := (
 	"res://character/enemy_characters/EnemyCharacter/EnemyBattleSprite.atlastex"
@@ -43,7 +45,7 @@ var _current_time := 0.0
 
 ## Creates a new sprite using the given texture.
 func _init(sprite_texture: Texture = null) -> void:
-	name = "EncounterSpawnSprite"
+	name = DEFAULT_NAME
 	if sprite_texture == null:
 		texture = load(DEFAULT_SPRITE_PATH)
 	else:
