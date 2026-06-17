@@ -17,6 +17,10 @@ const ANCHOR_OFFSET := 1.0
 
 ## The speed the spawner moves at.
 var speed = 8.0
+## The sprite used.
+var sprite: EncounterSpawnSprite:
+	get():
+		return $EncounterSpawnSprite
 
 ## The overworld avatar the spawner reacts to.
 var _overworld_avatar: OverworldAvatar = null
@@ -56,7 +60,6 @@ func _physics_process(delta: float) -> void:
 
 ## Causes the sprite to appear.
 func spawn() -> void:
-	var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
 	_prior_position = global_position
 	sprite.spawn_transition()
 	await sprite.transition_finished
@@ -67,7 +70,6 @@ func spawn() -> void:
 func despawn() -> void:
 	emit_signal("despawned", get_instance_id())
 	_active = false
-	var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
 	sprite.despawn_transition()
 	await sprite.transition_finished
 	queue_free()
@@ -75,8 +77,7 @@ func despawn() -> void:
 
 ## Creates the sprite for the node.
 func _create_sprite() -> void:
-	var sprite := EncounterSpawnSprite.new()
-	add_child(sprite)
+	add_child(EncounterSpawnSprite.new())
 	sprite.position.y = ANCHOR_OFFSET
 
 
