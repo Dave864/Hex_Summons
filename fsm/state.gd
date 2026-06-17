@@ -4,8 +4,8 @@ extends Node
 ## Virtual base class for all states.
 
 
-## Reference to the state machine, to call its `transition_to()` method directly.
-## The state machine node will set it.
+## Reference to the state machine, to call its `transition_to()` method
+## directly. The state machine node will set it.
 var state_machine: StateMachine = null
 
 
