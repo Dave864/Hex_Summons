@@ -60,19 +60,12 @@ func _physics_process(delta: float) -> void:
 
 ## Causes the sprite to appear.
 func spawn() -> void:
-	_prior_position = global_position
-	sprite.spawn_transition()
-	await sprite.transition_finished
-	_active = true
+	pass
 
 
 ## Removes the spawner from play.
 func despawn() -> void:
-	emit_signal("despawned", get_instance_id())
-	_active = false
-	sprite.despawn_transition()
-	await sprite.transition_finished
-	queue_free()
+	pass
 
 
 ## Creates the sprite for the node.
@@ -112,6 +105,10 @@ func _create_hitbox() -> void:
 	hitbox_shape.shape = shape_dimensions
 	hitbox.connect("body_entered", Callable(self, "_on_HitBox_body_entered"))
 	hitbox.connect("area_entered", Callable(self, "_on_HitBox_area_entered"))
+
+
+## Creates the state machine that will simulate the spawner behavior.
+@abstract func _create_state_machine() -> void
 
 
 ## The pattern the spawner follows. Uses the delta value for any behavior that

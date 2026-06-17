@@ -54,8 +54,24 @@ func _init(sprite_texture: Texture = null) -> void:
 	_create_sprite_material()
 
 
+## Readies the sprite for a spawn transition, going from fully transparent
+## (maximum dithering intensity) to fully opaque (minimum dithering intensity).
+func ready_spawn_transition() -> void:
+	material_override.set_shader_parameter("dither_intensity", MAX_DITHER)
+	_transition_state = TransitionState.SPAWN
+	_current_time = 0.0
+
+
+## Readies the sprite for a despawn transition, going from fully opaque (minimum
+## dithering intensity) to fully transparent (maximum dithering intensity).
+func ready_despawn_transition() -> void:
+	material_override.set_shader_parameter("dither_intensity", MIN_DITHER)
+	_transition_state = TransitionState.DESPAWN
+	_current_time = 0.0
+
+
 ## Handles the processing of dither transitions.
-func _process(delta: float) -> void:
+func progress_transition(delta: float) -> void:
 	if _transition_state == TransitionState.NONE:
 		return
 	_current_time += delta
@@ -70,22 +86,6 @@ func _process(delta: float) -> void:
 	if _current_time >= TRANSITION_TIME:
 		_transition_state = TransitionState.NONE
 		emit_signal("transition_finished")
-
-
-## Triggers a spawn transition, going from fully transparent (maximum dithering
-## intensity) to fully opaque (minimum dithering intensity).
-func spawn_transition() -> void:
-	material_override.set_shader_parameter("dither_intensity", MAX_DITHER)
-	_transition_state = TransitionState.SPAWN
-	_current_time = 0.0
-
-
-## Triggers a despawn transition, going from fully opaque (minimum dithering
-## intensity) to fully transparent (maximum dithering intensity).
-func despawn_transition() -> void:
-	material_override.set_shader_parameter("dither_intensity", MIN_DITHER)
-	_transition_state = TransitionState.DESPAWN
-	_current_time = 0.0
 
 
 ## Adds a shader to the sprite. Initially sets the dither intensity to full to
