@@ -28,8 +28,6 @@ var _overworld_avatar: OverworldAvatar = null
 var _encounter_map_path: String = ""
 ## The list of paths to the enemies that will be in the encounter.
 var _enemies_path_list : PackedStringArray = []
-## The position of the spawner in the last frame.
-var _prior_position := Vector3.ZERO
 ## Flag that indicates if the spawner is active.
 var _active: bool = false
 ## The navigation agent for this spawner.
@@ -53,18 +51,13 @@ func _init(
 	_nav_agent.name = "NavAgent"
 
 
-## Moves the spawner based on the set behavior.
-func _physics_process(delta: float) -> void:
-	_behavior_pattern(delta)
+## Emits the "despawned" signal.
+func emit_despawned() -> void:
+	emit_signal("despawned", get_instance_id())
 
 
 ## Causes the sprite to appear.
 func spawn() -> void:
-	pass
-
-
-## Removes the spawner from play.
-func despawn() -> void:
 	pass
 
 
@@ -109,11 +102,6 @@ func _create_hitbox() -> void:
 
 ## Creates the state machine that will simulate the spawner behavior.
 @abstract func _create_state_machine() -> void
-
-
-## The pattern the spawner follows. Uses the delta value for any behavior that
-## depends on changes over time.
-@abstract func _behavior_pattern(_delta: float) -> void
 
 
 ## Moves the spawner in the given direction.

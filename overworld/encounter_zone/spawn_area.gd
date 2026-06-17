@@ -53,7 +53,7 @@ var _debug_mesh: MeshInstance3D = null
 func _ready() -> void:
 	_instance_y_raycast()
 	_instance_debug_mesh()
-	_update_spawn_distance()
+	_update_distance_trigger()
 
 
 ## Update the ecosystem based on how far the avatar has traveled.
@@ -157,25 +157,25 @@ func _process_spawning() -> void:
 		return
 	_travel_distance += SceneController.get_last_squared_distance()
 	if _travel_distance >= _distance_trigger:
-		_update_spawn_distance()
+		_update_distance_trigger()
 		_travel_distance = 0.0
-		var spawner := EncounterSpawnFight.new(
+		# TODO: Update to choose relevant spawner type.
+		var spawner := EncounterSpawnMonster.new(
 				SceneController.get_avatar_reference(),
 				_terrain_zone.select_random_map_path(),
 				enemies
 		)
-		add_child(spawner)
 		spawner.global_position = _determine_spawn_global_position()
 		_active_spawners.append(spawner.get_instance_id())
 		spawner.connect(
 				"despawned",
 				Callable(self, "_on_EncounterSpawn_despawned")
 		)
-		spawner.spawn()
+		add_child(spawner)
 
 
-## Resets the spawn distance to a new random value.
-func _update_spawn_distance() -> void:
+## Resets the spawn distance trigger to a new random value.
+func _update_distance_trigger() -> void:
 	_distance_trigger = randf_range(distance_trigger_min, distance_trigger_max)
 
 
