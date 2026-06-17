@@ -56,9 +56,9 @@ func emit_despawned() -> void:
 	emit_signal("despawned", get_instance_id())
 
 
-## Causes the sprite to appear.
-func spawn() -> void:
-	pass
+## Sets the active state of the spawner.
+func set_active(value: bool) -> void:
+	_active = value
 
 
 ## Creates the sprite for the node.
