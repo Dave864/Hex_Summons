@@ -104,21 +104,6 @@ func _create_hitbox() -> void:
 	hitbox.connect("area_entered", Callable(self, "_on_HitBox_area_entered"))
 
 
-## Creates the state machine that will simulate the spawner behavior.
-func _create_state_machine() -> void:
-	var state_machine := StateMachine.new()
-	state_machine.name = "StateMachine"
-	var spawn_state := EncounterSpawnSpawn.new()
-	spawn_state.name = EncounterSpawnState.SPAWN
-	state_machine.add_child(spawn_state)
-	_add_states_to_state_machine(state_machine)
-	add_child(state_machine)
-
-
-## Adds the type specific states to the state machine.
-@abstract func _add_states_to_state_machine(state_machine: StateMachine) -> void
-
-
 ## Moves the spawner in the given direction.
 func _move_spawner() -> void:
 	var destination := nav_agent.get_next_path_position() - global_position
