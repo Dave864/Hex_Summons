@@ -12,7 +12,7 @@ signal despawned(id)
 enum Type {
 	MONSTER,
 	PREDATOR,
-	PREY
+	PREY,
 }
 
 ## The type of character this encounter spawn is.
@@ -21,8 +21,8 @@ enum Type {
 ## The speed the spawner moves at.
 var speed := 8.0
 ## How close something must get before it is detected.
-var alert_range := 5.0:
-	set = _set_alert_range
+var alert_radius := 5.0:
+	set = _set_alert_radius
 ## The terrain zone the spawner starts in.
 var start_terrain_zone: TerrainZone = null
 ## The area the spawner starts in.
@@ -37,6 +37,8 @@ var _active: bool = false
 
 ## Timer for various state events.
 @onready var timer: Timer = $Timer
+## The collision area for detecting if something is approaching.
+@onready var alert_range: Area3D = $AlertRange
 ## The sprite used.
 @onready var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
 ## The navigation agent for this spawner.
@@ -72,13 +74,13 @@ func set_active(value: bool) -> void:
 
 
 ## Updates the radius of the AlertRange collision detection.
-func _set_alert_range(new_range: float) -> void:
-	alert_range = new_range
+func _set_alert_radius(new_radius: float) -> void:
+	alert_radius = new_radius
 	if not is_node_ready():
 		return
-	var alert_shape: CollisionShape3D = $AlertRange.get_node("CollisionShape3D")
+	var alert_shape: CollisionShape3D = alert_range.get_node("CollisionShape3D")
 	var alert_sphere := alert_shape.shape as SphereShape3D
-	alert_sphere.radius = alert_range
+	alert_sphere.radius = alert_radius
 
 
 ## Moves the spawner in the given direction.
@@ -89,13 +91,17 @@ func _move_spawner() -> void:
 
 
 ## Triggers a switch to the Encounter scene when the OverworldAvatar is hit.
-func _on_HitBox_body_entered(_body: Node3D) -> void:
-	if not _active or not _body is OverworldAvatar:
+func _on_HitBox_body_entered(body: Node3D) -> void:
+	if not _active:
 		return
-	SceneController.change_scene_to_encounter(
-			_encounter_map_path,
-			_enemies_path_list
-	)
+	if body is EncounterSpawn:
+		if body.type != type:
+			emit_despawned()
+	if body is OverworldAvatar:
+		SceneController.change_scene_to_encounter(
+				_encounter_map_path,
+				_enemies_path_list
+		)
 
 
 ## Updates the map to use when entering a new TerrainZone.
