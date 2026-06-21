@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://bnypq6lgx2yet"]
 
-[ext_resource type="Script" uid="uid://b7ygwdibfun66" path="res://overworld/encounter_spawn/encounter_spawn_monster.gd" id="1_qkw8f"]
 [ext_resource type="Shader" uid="uid://d3jbkjw03cw0d" path="res://overworld/encounter_spawn/billboard_dither_transparency.gdshader" id="1_rxih6"]
+[ext_resource type="Script" uid="uid://c8nw7puv2xa0p" path="res://overworld/encounter_spawn/encounter_spawn.gd" id="1_ycrvi"]
 [ext_resource type="Texture2D" uid="uid://cdlt7x03ektf1" path="res://art/CharacterPlaceholders3D.png" id="2_occcr"]
 [ext_resource type="Script" uid="uid://dy57w3lavtlvm" path="res://overworld/encounter_spawn/encounter_spawn_sprite.gd" id="4_oclmi"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="5_ycrvi"]
@@ -29,7 +29,7 @@ radius = 5.0
 [node name="EncounterSpawnMonster" type="CharacterBody3D"]
 collision_layer = 8
 collision_mask = 2
-script = ExtResource("1_qkw8f")
+script = ExtResource("1_ycrvi")
 
 [node name="EncounterSpawnSprite" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -61,6 +61,8 @@ shape = SubResource("SphereShape3D_ycrvi")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
+[node name="Timer" type="Timer" parent="."]
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_ycrvi")
 initial_state = NodePath("Spawn")
@@ -69,3 +71,6 @@ metadata/_custom_type_script = "uid://dcm1t8lpe3xej"
 [node name="Spawn" type="Node" parent="StateMachine"]
 script = ExtResource("6_j3dwb")
 metadata/_custom_type_script = "uid://ckoxac0uocn4h"
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_HitBox_area_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_HitBox_body_entered"]

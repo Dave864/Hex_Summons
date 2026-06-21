@@ -35,4 +35,4 @@ func exit() -> void:
 ## Move to the `Alert` state when EncounterSpawn sprite completes the transition.
 func _on_EncounterSpawnSprite_transition_finished() -> void:
 	enc_spawn.set_active(true)
-	state_machine.transition_to(IDLE, {})
+	#state_machine.transition_to(IDLE, {})

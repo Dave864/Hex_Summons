@@ -1,4 +1,3 @@
-@abstract
 class_name EncounterSpawn
 extends CharacterBody3D
 ## Represents an enemy character that will trigger a random encounter when
@@ -9,50 +8,57 @@ extends CharacterBody3D
 ## id of this node.
 signal despawned(id)
 
-## The radius of the spawner hitbox.
-const HITBOX_RADIUS := 0.8
-## The amount to offset the y positions of the child nodes by so that the anchor
-## of this node is at the bottom.
-const ANCHOR_OFFSET := 1.0
-## The name of the navigation agent.
-const NAV_AGENT_NAME := "NavAgent"
+## The different character options.
+enum Type {
+	MONSTER,
+	PREDATOR,
+	PREY
+}
+
+## The type of character this encounter spawn is.
+@export var type := Type.MONSTER
 
 ## The speed the spawner moves at.
-var speed = 8.0
-## The sprite used.
-var sprite: EncounterSpawnSprite:
-	get():
-		return get_node(EncounterSpawnSprite.DEFAULT_NAME)
-## The navigation agent for this spawner.
-var nav_agent: NavigationAgent3D:
-	get():
-		return get_node(NAV_AGENT_NAME)
+var speed := 8.0
+## How close something must get before it is detected.
+var alert_range := 5.0:
+	set = _set_alert_range
+## The terrain zone the spawner starts in.
+var start_terrain_zone: TerrainZone = null
+## The area the spawner starts in.
+var spawn_area: SpawnArea = null
 
-## The overworld avatar the spawner reacts to.
-var _overworld_avatar: OverworldAvatar = null
 ## The path to the map of the encounter.
 var _encounter_map_path: String = ""
 ## The list of paths to the enemies that will be in the encounter.
-var _enemies_path_list : PackedStringArray = []
+var _enemies_path_list: PackedStringArray = []
 ## Flag that indicates if the spawner is active.
 var _active: bool = false
 
+## Timer for various state events.
+@onready var timer: Timer = $Timer
+## The sprite used.
+@onready var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
+## The navigation agent for this spawner.
+@onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 
-## Initializes the node.
-func _init(
-	overworld_avatar: OverworldAvatar,
-	encounter_map_path: String,
-	enemies_path_list: PackedStringArray
+
+## Sets the details used for populating the encounter.
+func set_encounter_details(
+	map_path: String,
+	character_paths: PackedStringArray
 ) -> void:
-	_overworld_avatar = overworld_avatar
-	_encounter_map_path = encounter_map_path
-	_enemies_path_list = enemies_path_list
-	_create_sprite()
-	_create_physics_shape()
-	_create_hitbox()
-	var new_nav_agent := NavigationAgent3D.new()
-	add_child(new_nav_agent)
-	new_nav_agent.name = NAV_AGENT_NAME
+	_encounter_map_path = map_path
+	_enemies_path_list = character_paths
+
+
+## Sets the area details.
+func set_area_details(
+	new_terrain_zone: TerrainZone,
+	new_area: SpawnArea
+) -> void:
+	start_terrain_zone = new_terrain_zone
+	spawn_area = new_area
 
 
 ## Emits the "despawned" signal.
@@ -65,43 +71,14 @@ func set_active(value: bool) -> void:
 	_active = value
 
 
-## Creates the sprite for the node.
-func _create_sprite() -> void:
-	add_child(EncounterSpawnSprite.new())
-	sprite.position.y = ANCHOR_OFFSET
-
-
-## Creates the collision shape used for interacting with the world.
-func _create_physics_shape() -> void:
-	var physics_shape := CollisionShape3D.new()
-	add_child(physics_shape)
-	physics_shape.name = "CollisionShape3D"
-	set_collision_layer_value(Constants.DEFAULT_LAYER, false)
-	set_collision_layer_value(Constants.ENEMY_LAYER, true)
-	set_collision_mask_value(Constants.DEFAULT_LAYER, false)
-	set_collision_mask_value(Constants.MAP_LAYER, true)
-	physics_shape.shape = CapsuleShape3D.new()
-	physics_shape.position.y = ANCHOR_OFFSET
-
-
-## Creates the hit box used to detect when the spawner has hit the player.
-func _create_hitbox() -> void:
-	var hitbox := Area3D.new()
-	add_child(hitbox)
-	hitbox.name = "HitBox"
-	hitbox.set_collision_layer_value(Constants.DEFAULT_LAYER, false)
-	hitbox.set_collision_layer_value(Constants.ENEMY_LAYER, true)
-	hitbox.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
-	hitbox.set_collision_mask_value(Constants.PLAYER_LAYER, true)
-	hitbox.position.y = ANCHOR_OFFSET
-	var hitbox_shape := CollisionShape3D.new()
-	hitbox.add_child(hitbox_shape)
-	hitbox_shape.name = "CollisionShape3D"
-	var shape_dimensions := CylinderShape3D.new()
-	shape_dimensions.radius = HITBOX_RADIUS
-	hitbox_shape.shape = shape_dimensions
-	hitbox.connect("body_entered", Callable(self, "_on_HitBox_body_entered"))
-	hitbox.connect("area_entered", Callable(self, "_on_HitBox_area_entered"))
+## Updates the radius of the AlertRange collision detection.
+func _set_alert_range(new_range: float) -> void:
+	alert_range = new_range
+	if not is_node_ready():
+		return
+	var alert_shape: CollisionShape3D = $AlertRange.get_node("CollisionShape3D")
+	var alert_sphere := alert_shape.shape as SphereShape3D
+	alert_sphere.radius = alert_range
 
 
 ## Moves the spawner in the given direction.
@@ -112,8 +89,8 @@ func _move_spawner() -> void:
 
 
 ## Triggers a switch to the Encounter scene when the OverworldAvatar is hit.
-func _on_HitBox_body_entered(_avatar: OverworldAvatar) -> void:
-	if not _active:
+func _on_HitBox_body_entered(_body: Node3D) -> void:
+	if not _active or not _body is OverworldAvatar:
 		return
 	SceneController.change_scene_to_encounter(
 			_encounter_map_path,

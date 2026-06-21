@@ -48,6 +48,13 @@ var _active_spawners: Array[int] = []
 ## The mesh used to visualize the covered area.
 var _debug_mesh: MeshInstance3D = null
 
+## The spawner that represents a monster.
+@onready var _monster_spawn: PackedScene = preload(
+		"res://overworld/encounter_spawn/EncounterSpawnMonster.tscn"
+)
+## The spawner that represents a predator.
+## The spawner that represents a prey creature.
+
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -159,9 +166,9 @@ func _process_spawning() -> void:
 	if _travel_distance >= _distance_trigger:
 		_update_distance_trigger()
 		_travel_distance = 0.0
-		# TODO: Update to choose relevant spawner type.
-		var spawner := EncounterSpawnMonster.new(
-				SceneController.get_avatar_reference(),
+		var spawner: EncounterSpawn = _monster_spawn.instantiate()
+		spawner.set_area_details(_terrain_zone, self)
+		spawner.set_encounter_details(
 				_terrain_zone.select_random_map_path(),
 				enemies
 		)
