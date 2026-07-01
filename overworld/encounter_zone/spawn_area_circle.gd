@@ -37,6 +37,7 @@ func _update_debug_mesh() -> void:
 ## Gets a random position in the defined spawn area plane.
 func _random_area_position() -> Vector3:
 	var random_angle := randf_range(0.0, TAU)
-	var random_dist := randf_range(0.0, radius)
+	# Ensure uniform disturbution across the enitre area.
+	var random_dist := sqrt(randf_range(0.0, 1.0) * pow(radius, 2.0))
 	var xz_pos := Vector2.from_angle(random_angle).normalized() * random_dist
 	return Vector3(xz_pos.x, 0.0, xz_pos.y)

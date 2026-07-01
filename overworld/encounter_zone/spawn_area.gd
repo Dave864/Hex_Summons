@@ -128,14 +128,14 @@ func _debug_mesh_material() -> StandardMaterial3D:
 ## Determines where an EncounterSpawner should be placed.
 func _determine_spawn_global_position() -> Vector3:
 	var area_pos := _random_area_position()
-	# Make the area position reference be the center of SpawnArea instead of
-	# origin.
-	area_pos += global_position
 	# Apply global Euler rotation to match the area position to SpawnArea's
 	# orientation.
 	area_pos = area_pos.rotated(Vector3.UP, deg_to_rad(global_rotation.y))
 	area_pos = area_pos.rotated(Vector3.RIGHT, deg_to_rad(global_rotation.x))
 	area_pos = area_pos.rotated(Vector3.BACK, deg_to_rad(global_rotation.z))
+	# Make the area position reference be the center of SpawnArea instead of
+	# origin.
+	area_pos += global_position
 	return Vector3(area_pos.x, _determine_y_position(area_pos), area_pos.z)
 
 
