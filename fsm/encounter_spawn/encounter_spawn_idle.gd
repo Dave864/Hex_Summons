@@ -23,7 +23,10 @@ var _current_pattern := BehaviorPattern.UNDECIDED
 ## The `msg` parameter is a dictionary with arbitrary data the state can use to
 ## initialize itself.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
-	_current_pattern = randi() % 2 as BehaviorPattern
+	_current_pattern = (
+			BehaviorPattern.ROAM if enc_spawn.roam_area != null
+			else BehaviorPattern.TRAVEL
+	)
 
 
 ## Virtual function. Corresponds to the `_process()` callback.
