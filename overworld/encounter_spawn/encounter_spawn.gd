@@ -18,8 +18,10 @@ enum Type {
 ## The type of character this encounter spawn is.
 @export var type := Type.MONSTER
 
-## The speed the spawner moves at.
-var speed := 8.0
+## The speed the spawner moves at while idling.
+var idle_speed := 4.0
+## The speed the spawner moves at when reacting.
+var reaction_speed := 8.0
 ## How close something must get before it is detected.
 var alert_radius := 5.0:
 	set = _set_alert_radius
@@ -45,6 +47,12 @@ var _active: bool = false
 @onready var sprite: EncounterSpawnSprite = $EncounterSpawnSprite
 ## The navigation agent for this spawner.
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
+
+
+## Removes the RoamArea from the scene tree and queues it for deletion.
+func _exit_tree() -> void:
+	if roam_area != null:
+		roam_area.queue_free()
 
 
 ## Sets the details used for populating the encounter.
@@ -75,6 +83,13 @@ func set_active(value: bool) -> void:
 	_active = value
 
 
+## Moves the spawner in the given direction.
+func move_spawner(speed: float) -> void:
+	var destination := nav_agent.get_next_path_position() - global_position
+	velocity = destination.normalized() * speed
+	move_and_slide()
+
+
 ## Updates the radius of the AlertRange collision detection.
 func _set_alert_radius(new_radius: float) -> void:
 	alert_radius = new_radius
@@ -83,13 +98,6 @@ func _set_alert_radius(new_radius: float) -> void:
 	var alert_shape: CollisionShape3D = alert_range.get_node("CollisionShape3D")
 	var alert_sphere := alert_shape.shape as SphereShape3D
 	alert_sphere.radius = alert_radius
-
-
-## Moves the spawner in the given direction.
-func _move_spawner() -> void:
-	var destination := nav_agent.get_next_path_position() - global_position
-	velocity = destination.normalized() * speed
-	move_and_slide()
 
 
 ## Triggers a switch to the Encounter scene when the OverworldAvatar is hit.

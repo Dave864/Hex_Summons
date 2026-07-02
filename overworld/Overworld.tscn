@@ -283,6 +283,7 @@ transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 0.9999998, -36.7
 script = ExtResource("6_uyahc")
 radius = 6.21
 enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
+roam_chance = 1.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
 [node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
@@ -300,6 +301,7 @@ script = ExtResource("6_uyahc")
 radius = 10.77
 enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
 spawn_limit = 2
+roam_chance = 1.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
 [node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
@@ -349,6 +351,7 @@ length = 20.49
 height = 20.49
 enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
 spawn_limit = 2
+roam_chance = 1.0
 distance_trigger_min = 0.5
 distance_trigger_max = 2.0
 metadata/_custom_type_script = "uid://whcd1sb6tx51"
@@ -368,6 +371,7 @@ length = 11.68
 height = 27.24
 enemies = PackedStringArray("res://character/enemy_characters/TestEnemy1/TestEnemy1.tscn")
 spawn_limit = 2
+roam_chance = 1.0
 distance_trigger_min = 2.0
 metadata/_custom_type_script = "uid://whcd1sb6tx51"
 

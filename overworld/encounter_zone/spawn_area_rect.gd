@@ -66,8 +66,4 @@ func _define_roam_area(spawner: EncounterSpawn) -> void:
 			_half_height if _half_height < _half_length
 			else _half_length
 	)
-	spawner.roam_area = RoamArea.new(
-			area_radius,
-			area_radius / 2.0,
-			global_rotation
-	)
+	spawner.roam_area = RoamArea.new(area_radius, area_radius / 2.0)

@@ -22,28 +22,27 @@ var _points_pool: PackedVector3Array
 var _next_index: int
 
 
-## Defines a new roam area.
-func _init(
-	new_radius: float,
-	new_minimum: float,
-	global_orientation: Vector3
-) -> void:
-	radius = new_radius
-	min_distance = new_minimum
-	global_rotation = global_orientation
-	_y_cast = RayCast3D.new()
-	add_child(_y_cast)
-	_y_cast.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
-	_y_cast.set_collision_mask_value(Constants.MAP_LAYER, true)
+## Set up the initial points pool when entering the scene tree.
+func _ready() -> void:
 	# Rotate raycast so that it is always pointing down regardless of the
 	# rotation of this RoamArea.
 	_y_cast.global_rotation = Vector3.ZERO
-	_y_cast.target_position = Vector3(0.0, -Y_RAYCAST_LENGTH, 0.0)
-	_points_pool.resize(POINT_QUEUE_LIMIT)
 	# Negative index indicates that the pool has not been set yet.
 	_next_index = -1
 	_update_points_pool()
 	_next_index = 0
+
+
+## Defines a new roam area.
+func _init(new_radius: float, new_minimum: float) -> void:
+	radius = new_radius
+	min_distance = new_minimum
+	_y_cast = RayCast3D.new()
+	add_child(_y_cast)
+	_y_cast.set_collision_mask_value(Constants.DEFAULT_LAYER, false)
+	_y_cast.set_collision_mask_value(Constants.MAP_LAYER, true)
+	_y_cast.target_position = Vector3(0.0, -Y_RAYCAST_LENGTH, 0.0)
+	_points_pool.resize(POINT_QUEUE_LIMIT)
 
 
 ## Gets the next point to roam to.

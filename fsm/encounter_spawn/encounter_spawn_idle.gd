@@ -27,6 +27,8 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 			BehaviorPattern.ROAM if enc_spawn.roam_area != null
 			else BehaviorPattern.TRAVEL
 	)
+	if _current_pattern == BehaviorPattern.ROAM:
+		enc_spawn.nav_agent.target_position = enc_spawn.roam_area.get_next_point()
 
 
 ## Virtual function. Corresponds to the `_process()` callback.
@@ -38,7 +40,7 @@ func update(_delta: float) -> void:
 func physics_update(_delta: float) -> void:
 	match _current_pattern:
 		BehaviorPattern.ROAM:
-			pass
+			_roam_behavior()
 		BehaviorPattern.TRAVEL:
 			pass
 		_:
@@ -60,13 +62,24 @@ func _ready_connect_signals() -> void:
 	)
 
 
+## Handles the roaming behavior, moving the spawner from point to point.
+func _roam_behavior() -> void:
+	if enc_spawn.nav_agent.is_target_reached():
+		enc_spawn.nav_agent.target_position = enc_spawn.roam_area.get_next_point()
+		enc_spawn.timer.start(randf_range(0.2, 2.0))
+	if not enc_spawn.timer.is_stopped():
+		return
+	enc_spawn.move_spawner(enc_spawn.idle_speed)
+
+
 ## Triggers a transition to the `Alert` state when a relevant body enters the
 ## alert area.
 func _on_AlertRange_body_entered(body: Node3D) -> void:
 	if not _state_is_active():
 		return
 	if body is OverworldAvatar:
-		state_machine.transition_to(ALERT, {"AlertFocus": body})
+		#state_machine.transition_to(ALERT, {"AlertFocus": body})
+		pass
 	if body is EncounterSpawn:
 		_process_encounter_spawn(body)
 

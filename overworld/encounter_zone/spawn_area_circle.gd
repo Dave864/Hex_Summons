@@ -45,8 +45,4 @@ func _random_area_position(roam_offset: float) -> Vector3:
 
 ## Define a roam area for an EncounterSpawn.
 func _define_roam_area(spawner: EncounterSpawn) -> void:
-	spawner.roam_area = RoamArea.new(
-			radius / 2.0,
-			radius / 4.0,
-			global_rotation
-	)
+	spawner.roam_area = RoamArea.new(radius / 2.0, radius / 4.0)

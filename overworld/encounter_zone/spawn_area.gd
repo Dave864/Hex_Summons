@@ -178,7 +178,11 @@ func _process_spawning() -> void:
 		if randf() <= roam_chance:
 			_define_roam_area(spawner)
 			roam_offset = spawner.roam_area.radius
-		add_child(spawner)
+			add_child(spawner.roam_area)
+			spawner.roam_area.global_rotation = global_rotation
+			spawner.roam_area.add_child(spawner)
+		else:
+			add_child(spawner)
 		spawner.global_position = _determine_spawn_global_position(roam_offset)
 		_active_spawners.append(spawner.get_instance_id())
 		spawner.connect(
