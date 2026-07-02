@@ -52,9 +52,22 @@ func _update_debug_mesh() -> void:
 
 
 ## Gets a random position in the defined spawn area plane.
-func _random_area_position() -> Vector3:
+func _random_area_position(roam_offset: float) -> Vector3:
 	return Vector3(
-		randf_range(-_half_length, _half_length),
+		randf_range(roam_offset - _half_length, _half_length - roam_offset),
 		0.0,
-		randf_range(-_half_height, _half_height)
+		randf_range(roam_offset - _half_height, _half_height - roam_offset)
+	)
+
+
+## Define a roam area for an EncounterSpawn.
+func _define_roam_area(spawner: EncounterSpawn) -> void:
+	var area_radius := (
+			_half_height if _half_height < _half_length
+			else _half_length
+	)
+	spawner.roam_area = RoamArea.new(
+			area_radius,
+			area_radius / 2.0,
+			global_rotation
 	)

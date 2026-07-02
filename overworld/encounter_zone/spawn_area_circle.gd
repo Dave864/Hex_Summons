@@ -35,9 +35,18 @@ func _update_debug_mesh() -> void:
 
 
 ## Gets a random position in the defined spawn area plane.
-func _random_area_position() -> Vector3:
+func _random_area_position(roam_offset: float) -> Vector3:
 	var random_angle := randf_range(0.0, TAU)
 	# Ensure uniform disturbution across the enitre area.
-	var random_dist := sqrt(randf_range(0.0, 1.0) * pow(radius, 2.0))
+	var random_dist := sqrt(randf() * pow(radius - roam_offset, 2.0))
 	var xz_pos := Vector2.from_angle(random_angle).normalized() * random_dist
 	return Vector3(xz_pos.x, 0.0, xz_pos.y)
+
+
+## Define a roam area for an EncounterSpawn.
+func _define_roam_area(spawner: EncounterSpawn) -> void:
+	spawner.roam_area = RoamArea.new(
+			radius / 2.0,
+			radius / 4.0,
+			global_rotation
+	)

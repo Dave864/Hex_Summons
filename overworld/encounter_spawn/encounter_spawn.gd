@@ -27,6 +27,8 @@ var alert_radius := 5.0:
 var start_terrain_zone: TerrainZone = null
 ## The area the spawner starts in.
 var spawn_area: SpawnArea = null
+## The area the spawner wanders around in.
+var roam_area: RoamArea = null
 
 ## The path to the map of the encounter.
 var _encounter_map_path: String = ""

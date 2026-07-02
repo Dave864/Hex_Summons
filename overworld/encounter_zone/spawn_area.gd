@@ -18,6 +18,8 @@ const DEBUG_MESH_NAME := "DebugMesh"
 @export_dir var enemies : PackedStringArray
 ## The number of EncounterSpawn nodes that can be active at once.
 @export_range(1, 50) var spawn_limit := 1
+## The likelihood that an EncounterSpawn will roam as opposed to travel.
+@export_range(0.0, 1.0, 0.01) var roam_chance := 0.5
 @export_group("Encounter Spawn Distance Trigger", "distance_trigger")
 ## The minimum distance that must be traveled before an EncounterSpawner appears.
 @export_range(0.01, 10.0, 0.01) var distance_trigger_min := 1.0:
@@ -126,8 +128,8 @@ func _debug_mesh_material() -> StandardMaterial3D:
 
 
 ## Determines where an EncounterSpawner should be placed.
-func _determine_spawn_global_position() -> Vector3:
-	var area_pos := _random_area_position()
+func _determine_spawn_global_position(roam_offset: float) -> Vector3:
+	var area_pos := _random_area_position(roam_offset)
 	# Apply global Euler rotation to match the area position to SpawnArea's
 	# orientation.
 	area_pos = area_pos.rotated(Vector3.UP, deg_to_rad(global_rotation.y))
@@ -140,7 +142,7 @@ func _determine_spawn_global_position() -> Vector3:
 
 
 ## Gets a random position in the defined spawn area plane.
-@abstract func _random_area_position() -> Vector3
+@abstract func _random_area_position(roam_offset: float) -> Vector3
 
 
 ## Determines the global y position for EncounterSpawn.
@@ -172,13 +174,21 @@ func _process_spawning() -> void:
 				_terrain_zone.select_random_map_path(),
 				enemies
 		)
+		var roam_offset: float = 0.0
+		if randf() <= roam_chance:
+			_define_roam_area(spawner)
+			roam_offset = spawner.roam_area.radius
 		add_child(spawner)
-		spawner.global_position = _determine_spawn_global_position()
+		spawner.global_position = _determine_spawn_global_position(roam_offset)
 		_active_spawners.append(spawner.get_instance_id())
 		spawner.connect(
 				"despawned",
 				Callable(self, "_on_EncounterSpawn_despawned")
 		)
+
+
+## Define a roam area for an EncounterSpawn.
+@abstract func _define_roam_area(spawner: EncounterSpawn) -> void
 
 
 ## Resets the spawn distance trigger to a new random value.
