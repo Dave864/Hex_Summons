@@ -40,6 +40,9 @@ func _init(
 	_y_cast.global_rotation = Vector3.ZERO
 	_y_cast.target_position = Vector3(0.0, -Y_RAYCAST_LENGTH, 0.0)
 	_points_pool.resize(POINT_QUEUE_LIMIT)
+	# Negative index indicates that the pool has not been set yet.
+	_next_index = -1
+	_update_points_pool()
 	_next_index = 0
 
 
@@ -47,19 +50,25 @@ func _init(
 func get_next_point() -> Vector3:
 	var next_point := _points_pool[_next_index]
 	_next_index = _next_index + 1 if _next_index < POINT_QUEUE_LIMIT - 1 else 0
+	if _next_index == 0:
+		_update_points_pool()
 	return next_point
+
+
+## Updates the points pool.
+func _update_points_pool() -> void:
+	_points_pool[0] = _determine_point(
+			_next_index if _next_index < 0 else POINT_QUEUE_LIMIT - 1
+	)
+	for i: int in range(1, POINT_QUEUE_LIMIT):
+		_points_pool[i] = _determine_point(i - 1)
 
 
 ## Gets a random point defined by the roam area.
 func _determine_point(previous_point_index: int) -> Vector3:
 	var ray_origin := Vector3.ZERO
 	if previous_point_index < 0 or previous_point_index >= POINT_QUEUE_LIMIT:
-		var angle := randf_range(0.0, TAU)
-		# Ensure uniform distribution across the circle area.
-		var distance := sqrt(randf_range(0.0, 1.0) * pow(radius, 2.0))
-		var xz_pos := Vector2.from_angle(angle).normalized() * distance
-		ray_origin.x = xz_pos.x
-		ray_origin.z = xz_pos.y
+		ray_origin = _cast_origin_in_area()
 	else:
 		var prior_point := _points_pool[previous_point_index]
 		ray_origin = _cast_origin_from_previous(prior_point)
@@ -74,10 +83,31 @@ func _determine_point(previous_point_index: int) -> Vector3:
 	return _cast_map_point(ray_origin)
 
 
+## Gets a random ray cast origin from anywhere whithin the roam area.
+func _cast_origin_in_area() -> Vector3:
+	var angle := randf_range(0.0, TAU)
+	# Ensure uniform distribution across the circle area.
+	var distance := sqrt(randf() * pow(radius, 2.0))
+	var xz_pos := Vector2.from_angle(angle).normalized() * distance
+	return Vector3(xz_pos.x, 0.0, xz_pos.y)
+
+
 ## Gets a random ray cast origin that is at least a minimum distance away from
 ## the last roam point.
 func _cast_origin_from_previous(prior_point: Vector3) -> Vector3:
-	return Vector3.ZERO
+	var ray_origin := Vector3.ZERO
+	# Set position reference to be at origin so that the random point
+	# calculations are easier.
+	prior_point -= global_position
+	# Raycast origin is calculated within the xz plane, so prior point is placed
+	# within said plane so calculations are consistent. 
+	prior_point.y = 0.0
+	# TODO: Find range of valid angles to use.
+	# TODO: Pick random angle and find valid radius values.
+	# TODO: Pick random radius from valid values
+	# TODO: Using origin in area while I get help with logic for this method. Use
+	# ray_origin once logic is determined.
+	return _cast_origin_in_area()
 
 
 ## Cast a ray from the origin to determine the point to use as a roam target.
@@ -88,8 +118,3 @@ func _cast_map_point(origin: Vector3) -> Vector3:
 		return _y_cast.get_collision_point()
 	printerr("RoamArea {0} could not find overworld map.".format([get_instance_id()]))
 	return origin
-
-
-## 
-func _determine_points() -> void:
-	pass
