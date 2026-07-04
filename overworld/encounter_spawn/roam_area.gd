@@ -101,12 +101,17 @@ func _cast_origin_from_previous(prior_point: Vector3) -> Vector3:
 	# Raycast origin is calculated within the xz plane, so prior point is placed
 	# within said plane so calculations are consistent. 
 	prior_point.y = 0.0
+	# Only look at a few points to prevent stalling.
+	for i: int in 5:
+		ray_origin = _cast_origin_in_area()
+		if ray_origin.distance_squared_to(prior_point) > pow(min_distance, 2.0):
+			return ray_origin
 	# TODO: Find range of valid angles to use.
 	# TODO: Pick random angle and find valid radius values.
 	# TODO: Pick random radius from valid values
 	# TODO: Using origin in area while I get help with logic for this method. Use
 	# ray_origin once logic is determined.
-	return _cast_origin_in_area()
+	return ray_origin
 
 
 ## Cast a ray from the origin to determine the point to use as a roam target.
