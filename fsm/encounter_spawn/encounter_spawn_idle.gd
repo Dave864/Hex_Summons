@@ -17,6 +17,10 @@ enum BehaviorPattern {
 
 ## The pattern followed by EncounterSpawn.
 var _current_pattern := BehaviorPattern.UNDECIDED
+## The total squared distance traveled by EncounterSpawn in this state.
+var _travel_squared_distance := -1.0
+## The position of EncounterSpawn in the last frame.
+var _last_frame_position := Vector3.ZERO
 
 
 ## Virtual function. Called by the state machine upon changing the active state.
@@ -27,6 +31,9 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 			BehaviorPattern.ROAM if enc_spawn.roam_area != null
 			else BehaviorPattern.TRAVEL
 	)
+	_last_frame_position = enc_spawn.position
+	if _travel_squared_distance < 0.0:
+		_travel_squared_distance = 0.0
 	if _current_pattern == BehaviorPattern.ROAM:
 		enc_spawn.nav_agent.target_position = enc_spawn.roam_area.get_next_point()
 
@@ -45,6 +52,8 @@ func physics_update(_delta: float) -> void:
 			pass
 		_:
 			return
+	if _travel_squared_distance > pow(enc_spawn.idle_despawn_distance, 2.0):
+		state_machine.transition_to(DESPAWN)
 
 
 ## Virtual function. Called by the state machine before changing the active
@@ -70,6 +79,10 @@ func _roam_behavior() -> void:
 	if not enc_spawn.timer.is_stopped():
 		return
 	enc_spawn.move_spawner(enc_spawn.idle_speed)
+	_travel_squared_distance += enc_spawn.position.distance_squared_to(
+			_last_frame_position
+	)
+	_last_frame_position = enc_spawn.position
 
 
 ## Triggers a transition to the `Alert` state when a relevant body enters the

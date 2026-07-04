@@ -22,6 +22,10 @@ enum Type {
 var idle_speed := 4.0
 ## The speed the spawner moves at when reacting.
 var reaction_speed := 8.0
+## The distance the spawner can travel while in idle before despawining.
+var idle_despawn_distance := 1.5
+## The distance the spawner can travel while in reaction before despawning.
+var reaction_despawn_distance := 2.0
 ## How close something must get before it is detected.
 var alert_radius := 5.0:
 	set = _set_alert_radius
