@@ -35,6 +35,18 @@ func _ready() -> void:
 
 ## Defines a new roam area.
 func _init(new_radius: float, new_minimum: float) -> void:
+	assert(
+			new_radius > 0.0,
+			"RoamArea radius is not a positive value."
+	)
+	assert(
+			new_minimum > 0.0,
+			"RoamArea min_distance is not a positive value."
+	)
+	assert(
+			new_minimum < new_radius,
+			"RoamArea radius not greater than min_distance"
+	)
 	radius = new_radius
 	min_distance = new_minimum
 	_y_cast = RayCast3D.new()
@@ -93,26 +105,83 @@ func _cast_origin_in_area() -> Vector3:
 
 ## Gets a random ray cast origin that is at least a minimum distance away from
 ## the last roam point.
-func _cast_origin_from_previous(prior_point: Vector3) -> Vector3:
-	var ray_origin := Vector3.ZERO
+func _cast_origin_from_previous(prior_roam_point: Vector3) -> Vector3:
 	# Set position reference to be at origin so that the random point
 	# calculations are easier.
-	prior_point -= global_position
-	# Raycast origin is calculated within the xz plane, so prior point is placed
-	# within said plane so calculations are consistent. 
-	prior_point.y = 0.0
-	# Only look at a few points to prevent stalling.
-	for i: int in 10:
-		ray_origin = _cast_origin_in_area()
-		if ray_origin.distance_squared_to(prior_point) > pow(min_distance, 2.0):
-			return ray_origin
-	# TODO: Find range of valid angles to use.
-	# TODO: Pick random angle and find valid radius values.
-	# TODO: Pick random radius from valid values
-	# TODO: Using origin in area while I get help with logic for this method. Use
-	# ray_origin once logic is determined.
-	print("RoamArea stall count exceeded!")
-	return ray_origin
+	prior_roam_point -= global_position
+	var prior_pos := Vector2(prior_roam_point.x, prior_roam_point.z)
+	# prior_point.y = 0.0
+	#var ray_origin := Vector3.ZERO
+	## Only look at a few points to prevent stalling.
+	#for i: int in 10:
+		#ray_origin = _cast_origin_in_area()
+		#if ray_origin.distance_squared_to(prior_point) > pow(min_distance, 2.0):
+			#return ray_origin
+	var ray_vector := _get_random_direction(prior_pos)
+	var xz_pos := _get_random_point_on_ray(prior_pos, ray_vector)
+	return Vector3(xz_pos.x, 0.0, xz_pos.y)
+	#return ray_origin
+
+
+## Gets a random direction vector based on a specified exclusion zone center.
+## The returned vector will be a direction where the boundary of the zone falls
+## within the boundaries of RoamArea.
+## Reference: https://www.johndcook.com/blog/2023/08/27/intersect-circles/
+func _get_random_direction(exclusion_center: Vector2) -> Vector2:
+	# Roam area centered at origin.
+	var d := exclusion_center.length()
+	# Rename relevant parameters for conciseness.
+	var r0 := radius
+	var r1 := min_distance
+	# Exclusion zone does not overlap boundaries of RoamArea or is centered at 
+	# RoamArea, so any direction is valid.
+	if is_zero_approx(d) or d < abs(r0 - r1) or d > r0 + r1:
+		return Vector2.from_angle(randf() * TAU).normalized()
+	var u := exclusion_center.normalized()
+	var x_vec := (pow(d, 2.0) - pow(r1, 2.0) + pow(r0, 2.0)) * u / (2 * d)
+	var u_perp := Vector2(u.y, -u.x)
+	var a_half := (
+		sqrt(
+				(-d + r1 - r0)
+				* (-d - r1 + r0)
+				* (-d + r1 + r0)
+				* (d + r0 + r1)
+		) / d * 0.5
+	)
+	var intersect_1 := x_vec + u_perp * a_half
+	var intersect_2 := x_vec - u_perp * a_half
+	var v1 := intersect_1 - exclusion_center
+	var v2 := intersect_2 - exclusion_center
+	var angle := v1.angle_to(v2)
+	return v1.rotated(randf() * angle).normalized()
+
+
+## Gets a random position along a ray cast in a given direction. The returned
+## position will always be within the bounds of the RoamArea, and at least
+## min_distance away from the starting point of the ray.
+## Reference: https://www.scratchapixel.com/lessons/3d-basic-rendering/
+## minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html
+func _get_random_point_on_ray(
+	ray_start: Vector2,
+	ray_direction: Vector2
+) -> Vector2:
+	var a := ray_direction.dot(ray_direction)
+	var b := 2.0 * ray_direction.dot(ray_start)
+	var c := ray_start.dot(ray_start) - pow(radius, 2.0)
+	var discriminent := pow(b, 2.0) - 4.0 * a * c
+	var max_dist: float
+	if discriminent < 0.0:
+		printerr("Cannot find random point in RoamArea.")
+		return Vector2.ZERO
+	elif is_zero_approx(discriminent):
+		max_dist = -b / (2.0 * a)
+	else:
+		var s := 1.0 if b > 0 else -1.0
+		var q := (b + s * sqrt(discriminent)) / -2.0
+		var x0 := q / a
+		var x1 := c / q
+		max_dist = x0 if x0 > 0 else x1
+	return ray_direction * randf_range(min_distance, max_dist) + ray_start
 
 
 ## Cast a ray from the origin to determine the point to use as a roam target.
@@ -121,5 +190,8 @@ func _cast_map_point(origin: Vector3) -> Vector3:
 	_y_cast.force_raycast_update()
 	if _y_cast.is_colliding():
 		return _y_cast.get_collision_point()
-	printerr("RoamArea {0} could not find overworld map.".format([get_instance_id()]))
+	printerr(
+			"RoamArea {0} could not find overworld map."
+			.format([get_instance_id()])
+	)
 	return origin
