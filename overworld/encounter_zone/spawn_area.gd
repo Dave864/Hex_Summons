@@ -17,7 +17,7 @@ const DEBUG_MESH_NAME := "DebugMesh"
 ## File paths to the possible enemy selections for this zone.
 @export_dir var enemies : PackedStringArray
 ## The number of EncounterSpawn nodes that can be active at once.
-@export_range(1, 50) var spawn_limit := 1
+@export_range(0, 50) var spawn_limit := 1
 ## The likelihood that an EncounterSpawn will roam as opposed to travel.
 @export_range(0.0, 1.0, 0.01) var roam_chance := 0.5
 @export_group("Encounter Spawn Distance Trigger", "distance_trigger")
@@ -179,11 +179,13 @@ func _process_spawning() -> void:
 			_define_roam_area(spawner)
 			roam_offset = spawner.roam_area.radius
 			add_child(spawner.roam_area)
+			spawner.roam_area.position = _random_area_position(roam_offset)
 			spawner.roam_area.global_rotation = global_rotation
 			spawner.roam_area.add_child(spawner)
+			spawner.global_position = spawner.roam_area.get_next_point()
 		else:
 			add_child(spawner)
-		spawner.global_position = _determine_spawn_global_position(roam_offset)
+			spawner.global_position = _determine_spawn_global_position(roam_offset)
 		_active_spawners.append(spawner.get_instance_id())
 		spawner.connect(
 				"despawned",
