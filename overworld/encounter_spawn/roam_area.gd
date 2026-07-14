@@ -80,7 +80,11 @@ func _update_points_pool() -> void:
 ## Gets a random point defined by the roam area.
 func _determine_point(prior_index: int) -> Vector3:
 	var ray_origin := Vector3.ZERO
-	if prior_index < 0 or prior_index >= POINT_QUEUE_LIMIT:
+	if (
+		is_zero_approx(min_distance)
+		or prior_index < 0
+		or prior_index >= POINT_QUEUE_LIMIT
+	):
 		ray_origin = _cast_origin_in_area()
 	else:
 		var prior_point := _points_pool[prior_index]
@@ -96,7 +100,7 @@ func _determine_point(prior_index: int) -> Vector3:
 	return _cast_map_point(ray_origin)
 
 
-## Gets a random ray cast origin from anywhere whithin the roam area.
+## Gets a random ray cast origin from anywhere within the roam area.
 func _cast_origin_in_area() -> Vector3:
 	var angle := randf_range(0.0, TAU)
 	# Ensure uniform distribution across the circle area.
@@ -115,17 +119,6 @@ func _cast_origin_from_previous(last_roam_point: Vector3) -> Vector3:
 	var ray_vector := _get_random_direction(prior_pos)
 	var xz_pos := _get_random_point_on_ray(prior_pos, ray_vector)
 	return Vector3(xz_pos.x, 0.0, xz_pos.y)
-	#last_roam_point.y = 0.0
-	#var ray_origin := Vector3.ZERO
-	## Only look at a few points to prevent stalling.
-	#for i: int in 10:
-		#ray_origin = _cast_origin_in_area()
-		#if (
-			#ray_origin.distance_squared_to(last_roam_point)
-			#> pow(min_distance, 2.0)
-		#):
-			#return ray_origin
-	#return ray_origin
 
 
 ## Gets a random direction vector based on a specified exclusion zone center.
