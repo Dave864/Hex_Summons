@@ -9,7 +9,7 @@ export_presets.cfg
 !.github/dist/export_presets.cfg
 
 # Project specific ignores
-test_scripts/
+test_stuff/
 
 # Imported translations (automatically generated from CSV files)
 *.translation
