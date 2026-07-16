@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://dpnnh445rjhhk"]
 
 [ext_resource type="Shader" uid="uid://dtt3a1dq31nnw" path="res://character/material/sprite_billboard_draw.gdshader" id="1_bknq1"]
-[ext_resource type="Texture2D" uid="uid://cdlt7x03ektf1" path="res://art/placeholders/CharacterPlaceholders3D.png" id="2_01h8p"]
+[ext_resource type="Texture2D" uid="uid://b501mxykcdbeq" path="res://art/placeholders/Monster3D.png" id="2_01h8p"]
 [ext_resource type="Shader" uid="uid://lh7xfgxfcqta" path="res://character/material/sprite_billboard_xray.gdshader" id="2_bknq1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_01h8p"]

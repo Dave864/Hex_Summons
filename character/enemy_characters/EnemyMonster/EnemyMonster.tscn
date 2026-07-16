@@ -1,0 +1,102 @@
+[gd_scene load_steps=20 format=3 uid="uid://bg2g2mkov5cf2"]
+
+[ext_resource type="Script" uid="uid://blllus8v7ujpt" path="res://character/enemy_characters/enemy_character.gd" id="1_b7d6d"]
+[ext_resource type="Texture2D" uid="uid://t0wliblibuny" path="res://character/enemy_characters/EnemyMonster/EnemyBattlePortrait.atlastex" id="2_sxd2r"]
+[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="3_4d3bl"]
+[ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="4_nivs6"]
+[ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="5_eggpn"]
+[ext_resource type="Material" uid="uid://dpnnh445rjhhk" path="res://character/material/character_sprite_xray.tres" id="6_ma047"]
+[ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="8_mkr6x"]
+[ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="9_b4h44"]
+[ext_resource type="Resource" uid="uid://b6hfw5jn1qlql" path="res://character/enemy_characters/EnemyMonster/stat_data/stat_values.tres" id="10_aw5yp"]
+[ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="11_e3rg1"]
+[ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="12_4r5tw"]
+[ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="13_cjg68"]
+[ext_resource type="PackedScene" uid="uid://c4shujk0dhck0" path="res://actions/action_nodes/Empty/Empty.tscn" id="14_qbi5o"]
+[ext_resource type="Script" uid="uid://bdkgr4241wqcj" path="res://character_ai/action_behavior.gd" id="15_3a0wp"]
+[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="16_onq73"]
+[ext_resource type="Script" uid="uid://cof1wrll2np4x" path="res://fsm/enemy_character/enemy_character_move.gd" id="17_re8ws"]
+[ext_resource type="Script" uid="uid://bjdo0sq45ance" path="res://fsm/enemy_character/enemy_character_wait.gd" id="18_14a72"]
+[ext_resource type="Script" uid="uid://dp6jkaqsiu5vq" path="res://fsm/enemy_character/enemy_character_think.gd" id="19_i723k"]
+[ext_resource type="Script" uid="uid://cdrf5m57oe7j7" path="res://fsm/enemy_character/enemy_character_action.gd" id="20_8l6bf"]
+
+[node name="EnemyMonster" type="Area3D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_b7d6d")
+battle_portrait = ExtResource("2_sxd2r")
+
+[node name="CharacterLabel" parent="." node_paths=PackedStringArray("char_pos") instance=ExtResource("3_4d3bl")]
+offset_right = 0.0
+offset_bottom = 0.0
+character_type = 0
+char_pos = NodePath("../EncounterSprite/SpritePosition")
+
+[node name="MapCoordinate" type="Marker3D" parent="."]
+gizmo_extents = 9.72
+script = ExtResource("4_nivs6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = ExtResource("5_eggpn")
+
+[node name="EncounterSprite" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.55, 0)
+material_override = ExtResource("6_ma047")
+pixel_size = 0.0054
+billboard = 1
+fixed_size = true
+texture_filter = 0
+render_priority = 1
+script = ExtResource("8_mkr6x")
+char_pos = NodePath("../MapCoordinate")
+
+[node name="SpritePosition" type="Marker3D" parent="EncounterSprite"]
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("9_b4h44")
+base_stat_values = ExtResource("10_aw5yp")
+
+[node name="EffectsTracker" parent="." instance=ExtResource("11_e3rg1")]
+
+[node name="HitBox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 16
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+shape = ExtResource("12_4r5tw")
+
+[node name="CharacterAI" type="Node" parent="."]
+script = ExtResource("13_cjg68")
+actions_ref = NodePath("../Actions")
+
+[node name="Actions" type="Node" parent="."]
+
+[node name="Empty" parent="Actions" instance=ExtResource("14_qbi5o")]
+
+[node name="ActionBehavior" type="Node" parent="Actions/Empty"]
+script = ExtResource("15_3a0wp")
+metadata/_custom_type_script = "uid://bdkgr4241wqcj"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("16_onq73")
+initial_state = NodePath("Wait")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("17_re8ws")
+
+[node name="Wait" type="Node" parent="StateMachine"]
+script = ExtResource("18_14a72")
+
+[node name="Think" type="Node" parent="StateMachine" node_paths=PackedStringArray("ai_node")]
+script = ExtResource("19_i723k")
+ai_node = NodePath("../../CharacterAI")
+
+[node name="Action" type="Node" parent="StateMachine"]
+script = ExtResource("20_8l6bf")
+
+[connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
+[connection signal="turn_ended" from="." to="EffectsTracker" method="_on_Character_turn_ended"]
+[connection signal="area_entered" from="HitBox" to="EffectsTracker" method="_on_HitBox_area_entered"]
