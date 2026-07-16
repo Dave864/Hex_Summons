@@ -8,6 +8,7 @@ extends EncounterSpawnIdle
 
 ## The behavior for determining what should happen when another EncounterSpawn
 ## is detected.
-func _process_encounter_spawn(_spawn: EncounterSpawn) -> void:
-	return
-	#state_machine.transition_to(ALERT, {"AlertFocus": spawn})
+func _process_encounter_spawn(spawn: EncounterSpawn) -> void:
+	if spawn.type == EncounterSpawn.Type.MONSTER:
+		return
+	state_machine.transition_to(ALERT, {"AlertFocus": spawn})

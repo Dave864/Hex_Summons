@@ -91,8 +91,7 @@ func _on_AlertRange_body_entered(body: Node3D) -> void:
 	if not _state_is_active():
 		return
 	if body is OverworldAvatar:
-		#state_machine.transition_to(ALERT, {"AlertFocus": body})
-		pass
+		state_machine.transition_to(ALERT, {"AlertFocus": body})
 	if body is EncounterSpawn:
 		_process_encounter_spawn(body)
 
