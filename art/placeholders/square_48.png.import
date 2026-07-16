@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6qclxhqtej44"
-path.s3tc="res://.godot/imported/square_64.png-37ac11772f16e5e96a9e7b03c38cf9a8.s3tc.ctex"
+uid="uid://c6fhgxae2gu3h"
+path.s3tc="res://.godot/imported/square_48.png-c3c6f9c4734952be4417266c6cac7a81.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://art/square_64.png"
-dest_files=["res://.godot/imported/square_64.png-37ac11772f16e5e96a9e7b03c38cf9a8.s3tc.ctex"]
+source_file="res://art/placeholders/square_48.png"
+dest_files=["res://.godot/imported/square_48.png-c3c6f9c4734952be4417266c6cac7a81.s3tc.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdlt7x03ektf1"
-path.bptc="res://.godot/imported/CharacterPlaceholders3D.png-9fc7203a1db58ee9fbd687305d3a6fae.bptc.ctex"
+path.bptc="res://.godot/imported/CharacterPlaceholders3D.png-22e1d0aeceab63aa544c338a94ae9f3e.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://art/CharacterPlaceholders3D.png"
-dest_files=["res://.godot/imported/CharacterPlaceholders3D.png-9fc7203a1db58ee9fbd687305d3a6fae.bptc.ctex"]
+source_file="res://art/placeholders/CharacterPlaceholders3D.png"
+dest_files=["res://.godot/imported/CharacterPlaceholders3D.png-22e1d0aeceab63aa544c338a94ae9f3e.bptc.ctex"]
 
 [params]
 

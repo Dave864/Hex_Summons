@@ -7,7 +7,7 @@
 [ext_resource type="Shader" uid="uid://dtt3a1dq31nnw" path="res://character/material/sprite_billboard_draw.gdshader" id="6_8fhg1"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="6_htock"]
 [ext_resource type="Script" uid="uid://cwd6nlnrmkb70" path="res://fsm/user_character/player_character/player_character_wait.gd" id="7"]
-[ext_resource type="Texture2D" uid="uid://cdlt7x03ektf1" path="res://art/CharacterPlaceholders3D.png" id="7_r45d7"]
+[ext_resource type="Texture2D" uid="uid://cdlt7x03ektf1" path="res://art/placeholders/CharacterPlaceholders3D.png" id="7_r45d7"]
 [ext_resource type="Script" uid="uid://bccbuxlvavdd6" path="res://fsm/user_character/player_character/player_character_action.gd" id="8"]
 [ext_resource type="Shader" uid="uid://lh7xfgxfcqta" path="res://character/material/sprite_billboard_xray.gdshader" id="8_7oaip"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="9"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://cuk41txbrftic" path="res://fsm/user_character/user_character_move.gd" id="11_mblau"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="12"]
 [ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="13_wufaw"]
+
 
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_01h8p"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://d3jbkjw03cw0d" path="res://overworld/encounter_spawn/billboard_dither_transparency.gdshader" id="1_rxih6"]
 [ext_resource type="Script" uid="uid://c8nw7puv2xa0p" path="res://overworld/encounter_spawn/encounter_spawn.gd" id="1_ycrvi"]
-[ext_resource type="Texture2D" uid="uid://cdlt7x03ektf1" path="res://art/CharacterPlaceholders3D.png" id="2_occcr"]
+[ext_resource type="Texture2D" uid="uid://cdlt7x03ektf1" path="res://art/placeholders/CharacterPlaceholders3D.png" id="2_occcr"]
 [ext_resource type="Script" uid="uid://dy57w3lavtlvm" path="res://overworld/encounter_spawn/encounter_spawn_sprite.gd" id="4_oclmi"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="5_ycrvi"]
 [ext_resource type="Script" uid="uid://ckoxac0uocn4h" path="res://fsm/encounter_spawn/encounter_spawn_spawn.gd" id="6_j3dwb"]
