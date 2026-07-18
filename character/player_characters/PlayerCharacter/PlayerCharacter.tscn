@@ -1,15 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://dtkpxtbsdtqpx"]
+[gd_scene load_steps=14 format=3 uid="uid://dtkpxtbsdtqpx"]
 
-[ext_resource type="Texture2D" uid="uid://cuvtjed75aa0y" path="res://character/player_characters/PlayerCharacter/PlayerBattleSprite.atlastex" id="1"]
 [ext_resource type="Script" uid="uid://rqmmsouogt6p" path="res://character/player_characters/player_character.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://cvemm176qyol0" path="res://character/player_characters/PlayerCharacter/PlayerBattlePortrait.atlastex" id="2_mblau"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
-[ext_resource type="Shader" uid="uid://dtt3a1dq31nnw" path="res://character/material/sprite_billboard_draw.gdshader" id="6_8fhg1"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="6_htock"]
 [ext_resource type="Script" uid="uid://cwd6nlnrmkb70" path="res://fsm/user_character/player_character/player_character_wait.gd" id="7"]
-[ext_resource type="Texture2D" uid="uid://cdlt7x03ektf1" path="res://art/placeholders/CharacterPlaceholders3D.png" id="7_r45d7"]
 [ext_resource type="Script" uid="uid://bccbuxlvavdd6" path="res://fsm/user_character/player_character/player_character_action.gd" id="8"]
-[ext_resource type="Shader" uid="uid://lh7xfgxfcqta" path="res://character/material/sprite_billboard_xray.gdshader" id="8_7oaip"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="9"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="11"]
@@ -17,23 +13,6 @@
 [ext_resource type="Script" uid="uid://cuk41txbrftic" path="res://fsm/user_character/user_character_move.gd" id="11_mblau"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="12"]
 [ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="13_wufaw"]
-
-
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_01h8p"]
-render_priority = 1
-shader = ExtResource("6_8fhg1")
-shader_parameter/sprite_texture = ExtResource("7_r45d7")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_botec"]
-resource_local_to_scene = true
-render_priority = 0
-next_pass = SubResource("ShaderMaterial_01h8p")
-shader = ExtResource("8_7oaip")
-shader_parameter/sprite_texture = ExtResource("7_r45d7")
-shader_parameter/x_ray_color = Color(0, 1, 1, 1)
-shader_parameter/dither_intensity = 0.5000000074506
-shader_parameter/dither_pixel_size = 1.0
 
 [node name="PlayerCharacter" type="Area3D"]
 collision_layer = 4
@@ -56,13 +35,11 @@ shape = ExtResource("6_htock")
 
 [node name="EncounterSprite" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.55, 0)
-material_override = SubResource("ShaderMaterial_botec")
 pixel_size = 0.0054
 billboard = 1
 fixed_size = true
 texture_filter = 0
 render_priority = 1
-texture = ExtResource("1")
 script = ExtResource("12")
 char_pos = NodePath("../MapCoordinate")
 
