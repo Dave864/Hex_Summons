@@ -76,17 +76,17 @@ func _determine_orientation() -> void:
 	var right_facing := camera_dir.angle_to(facing_direction) >= 0.0
 	if dot >= 0.75:
 		_orientation = DisplayOrientation.BACK
-	elif dot < 0.75 and dot > 0.25:
+	elif dot < 0.75 and dot >= 0.25:
 		_orientation = (
 				DisplayOrientation.BACK_RIGHT if right_facing
 				else DisplayOrientation.BACK_LEFT
 		)
-	elif dot <= 0.25 and dot >= -0.25:
+	elif dot < 0.25 and dot > -0.25:
 		_orientation = (
 				DisplayOrientation.RIGHT if right_facing
 				else DisplayOrientation.LEFT
 		)
-	elif dot < -0.25 and dot > -0.75:
+	elif dot <= -0.25 and dot > -0.75:
 		_orientation = (
 				DisplayOrientation.FRONT_RIGHT if right_facing
 				else DisplayOrientation.FRONT_LEFT
