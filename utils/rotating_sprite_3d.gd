@@ -97,9 +97,13 @@ func _determine_orientation() -> void:
 
 ## Changes the active animation to match the current orientation.
 func _match_animation_to_orientation() -> void:
+	var animation_name := _animation_group + "_" + _orientation_string()
+	if not sprite_frames.has_animation(animation_name):
+		play("default")
+		return
 	var current_frame := frame
 	var current_progress := frame_progress
-	animation = _animation_group + "_" + _orientation_string()
+	play(animation_name)
 	set_frame_and_progress(current_frame, current_progress)
 
 

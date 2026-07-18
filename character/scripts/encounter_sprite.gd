@@ -26,7 +26,8 @@ func _ready():
 
 ## Called every frame. Adjusts the sprite position so that it is aligned with
 ## the pixel coordinates.
-func _process(_delta):
+func _process(delta):
+	super._process(delta)
 	visible = not _camera.is_position_behind(global_transform.origin)
 	if not visible:
 		return
