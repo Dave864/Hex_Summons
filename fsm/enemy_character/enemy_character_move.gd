@@ -19,6 +19,7 @@ var _command_chain: Array[Array] = []
 func enter(_msg := {}) -> void:
 	_command_chain = _msg["command_chain"]
 	ec.hm_move_path.create_segmented_bezier_path(_command_chain.pop_back()[1])
+	ec.character_sprite.play_movement()
 	_movement_active = true
 
 

@@ -15,6 +15,7 @@ var _weight: float = 0.0
 ## Set the starting point for the path.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	character.hm_move_path.create_segmented_bezier_path(_msg["travel_path"])
+	character.character_sprite.play_movement()
 	_movement_active = true
 	
 	character.connect(
