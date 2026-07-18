@@ -40,6 +40,9 @@ func update(delta: float) -> void:
 				TrackingPoint.MovementType.SNAP
 		)
 		character.position = character.hm_move_path.get_current_pos()
+		character.character_sprite.facing_direction = (
+				character.hm_move_path.get_current_direction()
+		)
 		
 
 

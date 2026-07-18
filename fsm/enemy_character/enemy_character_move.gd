@@ -35,6 +35,9 @@ func update(delta: float) -> void:
 	# after the movement_ended signal has been caught.
 	if _movement_active:
 		ec.position = ec.hm_move_path.get_current_pos()
+		ec.character_sprite.facing_direction = (
+				ec.hm_move_path.get_current_direction()
+		)
 
 
 ## Called by the state machine before changing the active state.
