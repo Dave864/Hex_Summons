@@ -22,7 +22,7 @@ enum TransitionState {
 const DEFAULT_NAME := "EncounterSpawnSprite"
 ## The default sprite used for the spawner.
 const DEFAULT_SPRITE_PATH := (
-	"res://character/enemy_characters/EnemyCharacter/EnemyBattleSprite.atlastex"
+	"res://art/icon.png"
 )
 ## The pixel size for the sprite.
 const SPRITE_PIXEL_SIZE := 0.0625
