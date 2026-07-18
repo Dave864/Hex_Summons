@@ -6,6 +6,7 @@ extends EnemyCharacterState
 
 
 func enter(_msg := {}) -> void:
+	ec.character_sprite.play_idle()
 	ec.emit_is_waiting()
 
 

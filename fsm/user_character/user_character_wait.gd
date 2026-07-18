@@ -9,4 +9,5 @@ extends UserCharacterState
 ## Called by the state machine when entering the active state. Indicates that
 ## the character is waiting.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
+	character.character_sprite.play_idle()
 	character.emit_is_waiting()
