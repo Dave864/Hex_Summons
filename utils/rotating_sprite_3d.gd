@@ -86,7 +86,7 @@ func _determine_orientation() -> void:
 				DisplayOrientation.RIGHT if right_facing
 				else DisplayOrientation.LEFT
 		)
-	elif dot < -0.25 and dot > 0.75:
+	elif dot < -0.25 and dot > -0.75:
 		_orientation = (
 				DisplayOrientation.FRONT_RIGHT if right_facing
 				else DisplayOrientation.FRONT_LEFT
