@@ -108,7 +108,8 @@ func set_cost_for_spawn_action(summon_name: String) -> void:
 ## position.
 func load_summon(summon_name: String, spawn_position: Vector3) -> void:
 	summoner.character_label.hide_all()
-	stats.summon_data = available_summons[summon_name]
+	var summon_data := available_summons[summon_name]
+	stats.summon_data = summon_data
 	_current_spawn_action = spawn_actions[summon_name]
 	WispController.pay_cost_for_summon(
 			summon_wisp_pool,
@@ -124,6 +125,7 @@ func load_summon(summon_name: String, spawn_position: Vector3) -> void:
 	)
 	position = spawn_position
 	_load_actions()
+	_update_sprite(summon_data.sprite_sheet, summon_data.sprite_frames)
 	_active = true
 
 
@@ -212,6 +214,18 @@ func _load_actions() -> void:
 		wisp_cost.wisp_pool = summon_wisp_pool
 		action_node.add_child(wisp_cost)
 		turn_actions[i] = action_node
+
+
+## Updates the sprite texture to match the current summon.
+func _update_sprite(
+	sprite_sheet: Texture2D,
+	sprite_frames: SpriteFrames
+) -> void:
+	var first_pass: ShaderMaterial = character_sprite.material_override
+	first_pass.set_shader_parameter("sprite_texture", sprite_sheet)
+	var next_pass: ShaderMaterial = first_pass.next_pass
+	next_pass.set_shader_parameter("sprite_texture", sprite_sheet)
+	character_sprite.sprite_frames = sprite_frames
 
 
 ## Creates a new instance of an action node of the given name.

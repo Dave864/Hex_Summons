@@ -21,7 +21,8 @@ const MAX_WISP: int = 4
 @export var name: String = ""
 @export_group("Images")
 @export var portrait: Texture2D = null
-@export var battle_sprite: Texture2D = null
+@export var sprite_sheet: Texture2D = null
+@export var sprite_frames: SpriteFrames = null
 @export_group("Summoner Stat Multipliers")
 @export_range(0, 10) var movement: int = 1
 @export_range(DEFAULT, MAX, STEP) var attack: float = DEFAULT

@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="SummonData" load_steps=8 format=3 uid="uid://ijtj4dporvgv"]
+[gd_resource type="Resource" script_class="SummonData" load_steps=9 format=3 uid="uid://ijtj4dporvgv"]
 
 [ext_resource type="Texture2D" uid="uid://ca4o3rwxh5u51" path="res://art/placeholders/Summon.png" id="1_xumr8"]
 [ext_resource type="Script" uid="uid://dkcxv3uxhnxgj" path="res://character/summons/summon_data.gd" id="1_yidd1"]
 [ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/action_stats/spell_stats.gd" id="2_wfegn"]
 [ext_resource type="Resource" uid="uid://wqwavjb6eivw" path="res://actions/action_nodes/SuperNova/action_stats.tres" id="2_yqd0y"]
 [ext_resource type="Resource" uid="uid://03j8tehoyanp" path="res://character/summons/summon_data/TestEarth/actions_data/blast_data.tres" id="4_8ldr8"]
+[ext_resource type="SpriteFrames" uid="uid://cswxjgjyj6t4j" path="res://character/summons/summon_data/TestEarth/sprite_frames.tres" id="4_612n6"]
 [ext_resource type="Resource" uid="uid://b4665rpambgu3" path="res://character/summons/summon_data/TestEarth/actions_data/sweep_data.tres" id="5_3pknq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_612n6"]
@@ -15,6 +16,8 @@ region = Rect2(67, 20, 22, 22)
 script = ExtResource("1_yidd1")
 name = "TestEarth"
 portrait = SubResource("AtlasTexture_612n6")
+sprite_sheet = ExtResource("1_xumr8")
+sprite_frames = ExtResource("4_612n6")
 movement = 4
 attack = 4.0
 defense = 4.0

@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="SummonData" load_steps=8 format=3 uid="uid://bucl831rabxgb"]
+[gd_resource type="Resource" script_class="SummonData" load_steps=9 format=3 uid="uid://bucl831rabxgb"]
 
 [ext_resource type="Script" uid="uid://dkcxv3uxhnxgj" path="res://character/summons/summon_data.gd" id="1_sheyr"]
 [ext_resource type="Texture2D" uid="uid://ca4o3rwxh5u51" path="res://art/placeholders/Summon.png" id="1_y72hh"]
 [ext_resource type="Resource" uid="uid://wqwavjb6eivw" path="res://actions/action_nodes/SuperNova/action_stats.tres" id="2_1er12"]
 [ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/action_stats/spell_stats.gd" id="2_wewqp"]
 [ext_resource type="Resource" uid="uid://dp2mlpnt7qfxt" path="res://character/summons/summon_data/TestFire/actions_data/beam_data.tres" id="4_6enet"]
+[ext_resource type="SpriteFrames" uid="uid://bxckgxf4wx8v" path="res://character/summons/summon_data/TestFire/sprite_frames.tres" id="4_vo2rn"]
 [ext_resource type="Resource" uid="uid://bkfn73ekp37uo" path="res://character/summons/summon_data/TestFire/actions_data/nova_data.tres" id="5_xlgu7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vo2rn"]
@@ -15,6 +16,8 @@ region = Rect2(67, 20, 22, 22)
 script = ExtResource("1_sheyr")
 name = "TestFire"
 portrait = SubResource("AtlasTexture_vo2rn")
+sprite_sheet = ExtResource("1_y72hh")
+sprite_frames = ExtResource("4_vo2rn")
 movement = 6
 attack = 2.0
 defense = 2.0

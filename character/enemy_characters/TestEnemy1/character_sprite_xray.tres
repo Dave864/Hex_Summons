@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bxyn3f1aumpaf"]
+
+[ext_resource type="Shader" uid="uid://dtt3a1dq31nnw" path="res://character/material/sprite_billboard_draw.gdshader" id="1_p8ghm"]
+[ext_resource type="Texture2D" uid="uid://boi6frtqt31dn" path="res://art/placeholders/Predator3D.png" id="2_j0225"]
+[ext_resource type="Shader" uid="uid://lh7xfgxfcqta" path="res://character/material/sprite_billboard_xray.gdshader" id="3_vfu2o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_01h8p"]
+resource_local_to_scene = true
+render_priority = 1
+shader = ExtResource("1_p8ghm")
+shader_parameter/sprite_texture = ExtResource("2_j0225")
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_01h8p")
+shader = ExtResource("3_vfu2o")
+shader_parameter/sprite_texture = ExtResource("2_j0225")
+shader_parameter/x_ray_color = Color(0, 1, 1, 1)
+shader_parameter/dither_intensity = 0.5000000074506
+shader_parameter/dither_pixel_size = 1.0

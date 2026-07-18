@@ -1,12 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://d3qnxq51kos48"]
+[gd_scene load_steps=21 format=3 uid="uid://d3qnxq51kos48"]
 
 [ext_resource type="Script" uid="uid://blllus8v7ujpt" path="res://character/enemy_characters/enemy_character.gd" id="1_k4p81"]
 [ext_resource type="Texture2D" uid="uid://545fr03l1npy" path="res://character/enemy_characters/EnemyPredator/EnemyBattlePortrait.atlastex" id="2_471oo"]
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="3_s5v0e"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="4_1v2nn"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="5_fib5o"]
-[ext_resource type="Material" uid="uid://dpnnh445rjhhk" path="res://character/material/character_sprite_xray.tres" id="6_rs3ee"]
+[ext_resource type="Material" uid="uid://cip84teek1ghc" path="res://character/enemy_characters/EnemyPredator/character_sprite_xray.tres" id="6_471oo"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="7_6ms5p"]
+[ext_resource type="SpriteFrames" uid="uid://bhwytkt20uwrq" path="res://character/enemy_characters/EnemyPredator/sprite_frames.tres" id="7_471oo"]
 [ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="8_lekt3"]
 [ext_resource type="Resource" uid="uid://yurouhrcra8s" path="res://character/enemy_characters/EnemyPredator/stat_data/stat_values.tres" id="9_ws0ef"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="10_2vgyi"]
@@ -40,16 +41,18 @@ script = ExtResource("4_1v2nn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 shape = ExtResource("5_fib5o")
 
-[node name="EncounterSprite" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
+[node name="EncounterSprite" type="AnimatedSprite3D" parent="." node_paths=PackedStringArray("char_pos")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.55, 0)
-material_override = ExtResource("6_rs3ee")
+material_override = ExtResource("6_471oo")
 pixel_size = 0.0054
 billboard = 1
 fixed_size = true
 texture_filter = 0
 render_priority = 1
+sprite_frames = ExtResource("7_471oo")
 script = ExtResource("7_6ms5p")
 char_pos = NodePath("../MapCoordinate")
+metadata/_custom_type_script = "uid://70b5is4mqv54"
 
 [node name="SpritePosition" type="Marker3D" parent="EncounterSprite"]
 

@@ -1,7 +1,7 @@
 class_name EncounterSprite
-extends Sprite3D
-## Sprite3D node that constantly adjusts its position based on camera position so
-## that the sprite image is aligned with the pixel grid.
+extends RotatingSprite3D
+## RotatinfSprite3D node that constantly adjusts its position based on camera
+## position so that the sprite image is aligned with the pixel grid.
 
 
 ## The reference point for where the character the sprite represents actually is.
@@ -12,7 +12,6 @@ var _global_pos: Vector3 = Vector3.ZERO
 var _ray_origin: Vector3 = Vector3.ZERO
 var _ray_normal: Vector3 = Vector3.ZERO
 
-@onready var _camera: Camera3D = get_viewport().get_camera_3d()
 @onready var _y_offset: float = position.y
 
 
