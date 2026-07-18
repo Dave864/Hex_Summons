@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=110 format=3 uid="uid://ck2pd3asogb2e"]
+[gd_resource type="Theme" load_steps=114 format=3 uid="uid://ck2pd3asogb2e"]
 
 [ext_resource type="FontFile" uid="uid://b07iw1ao2yuak" path="res://fonts/pixel_12.fnt" id="1"]
 [ext_resource type="Texture2D" uid="uid://b0qvcougcbxum" path="res://art/ui/ThemeBlueSigil/Progress.png" id="2"]
@@ -103,6 +103,14 @@ region = Rect2(16, 16, 16, 16)
 
 [sub_resource type="StyleBoxEmpty" id="75"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fa1qj"]
+atlas = ExtResource("11")
+region = Rect2(0, 13, 35, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpgw3"]
+atlas = ExtResource("11")
+region = Rect2(35, 13, 35, 13)
+
 [sub_resource type="AtlasTexture" id="110"]
 atlas = ExtResource("11")
 region = Rect2(0, 0, 35, 13)
@@ -119,7 +127,15 @@ region = Rect2(0, 13, 35, 13)
 atlas = ExtResource("11")
 region = Rect2(35, 13, 35, 13)
 
-[sub_resource type="StyleBoxEmpty" id="80"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5dxb4"]
+atlas = ExtResource("11")
+region = Rect2(0, 0, 35, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blgvq"]
+atlas = ExtResource("11")
+region = Rect2(35, 0, 35, 13)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5dxb4"]
 
 [sub_resource type="StyleBoxEmpty" id="81"]
 
@@ -728,11 +744,15 @@ CheckButton/colors/font_color_disabled = Color(0.498039, 0.498039, 0.498039, 1)
 CheckButton/colors/font_color_hover = Color(0, 1, 1, 1)
 CheckButton/colors/font_color_hover_pressed = Color(0, 1, 1, 1)
 CheckButton/colors/font_color_pressed = Color(1, 0.666667, 0.152941, 1)
+CheckButton/icons/checked = SubResource("AtlasTexture_fa1qj")
+CheckButton/icons/checked_disabled = SubResource("AtlasTexture_mpgw3")
 CheckButton/icons/off = SubResource("110")
 CheckButton/icons/off_disabled = SubResource("111")
 CheckButton/icons/on = SubResource("112")
 CheckButton/icons/on_disabled = SubResource("113")
-CheckButton/styles/disabled = SubResource("80")
+CheckButton/icons/unchecked = SubResource("AtlasTexture_5dxb4")
+CheckButton/icons/unchecked_disabled = SubResource("AtlasTexture_blgvq")
+CheckButton/styles/disabled = SubResource("StyleBoxEmpty_5dxb4")
 CheckButton/styles/focus = SubResource("81")
 CheckButton/styles/hover = SubResource("82")
 CheckButton/styles/hover_pressed = SubResource("83")
