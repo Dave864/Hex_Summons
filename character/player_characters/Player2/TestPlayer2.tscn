@@ -1,6 +1,5 @@
-[gd_scene load_steps=17 format=3 uid="uid://b2h616qmoi52n"]
+[gd_scene load_steps=16 format=3 uid="uid://b2h616qmoi52n"]
 
-[ext_resource type="Texture2D" path="res://character/player_characters/Player2/BattleSprite.atlastex" id="1"]
 [ext_resource type="Script" uid="uid://rqmmsouogt6p" path="res://character/player_characters/player_character.gd" id="2"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://cgvtv4dsocdqr" path="res://character/player_classes/TestRangeClass/TestRangeClass.tscn" id="6"]
@@ -10,12 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="11"]
 [ext_resource type="Script" uid="uid://cuk41txbrftic" path="res://fsm/user_character/user_character_move.gd" id="11_jvfqn"]
-[ext_resource type="Texture2D" path="res://character/player_characters/Player2/BattlePortrait.atlastex" id="12"]
+[ext_resource type="Texture2D" uid="uid://bochto66bfdqa" path="res://character/player_characters/Player2/BattlePortrait.atlastex" id="12"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="13"]
 [ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="13_dgwq2"]
 [ext_resource type="Script" uid="uid://bv7t5hn7xo5ve" path="res://wisps/player_wisp_pool.gd" id="14"]
-
-
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.05
@@ -46,14 +43,14 @@ script = ExtResource("9")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("1")
 
-[node name="EncounterSprite" type="Sprite3D" parent="."]
+[node name="EncounterSprite" type="Sprite3D" parent="." node_paths=PackedStringArray("char_pos")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.55, 0)
 pixel_size = 0.0054
 billboard = 1
 fixed_size = true
 texture_filter = 0
-texture = ExtResource("1")
 script = ExtResource("13")
+char_pos = NodePath("../MapCoordinate")
 
 [node name="Class" parent="." instance=ExtResource("6")]
 
