@@ -62,6 +62,12 @@ func get_z_count() -> int:
 func place_character_at_tile(character: Character, tile_index: int) -> void:
 	var pos: Vector3 = get_tile_at(tile_index).get_character_position()
 	character.position = pos
+	# Set initial facing direction to point to origin.
+	var hex_dir := HexUtil.get_hex_direction(
+			Vector2(-pos.x, -pos.z).normalized()
+	)
+	var facing_direction := Vector2.UP.rotated(HexUtil.dir_rotation(hex_dir))
+	character.character_sprite.facing_direction = facing_direction.normalized()
 
 
 ## Retrieve the map tiles of this hex map.
