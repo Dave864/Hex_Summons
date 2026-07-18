@@ -33,7 +33,7 @@ battle_portrait = ExtResource("12")
 offset_right = 0.0
 offset_bottom = 0.0
 character_type = 1
-char_pos = NodePath("../MapCoordinate")
+char_pos = NodePath("../EncounterSprite/SpritePosition")
 
 [node name="PlayerWispPool" type="Node" parent="."]
 script = ExtResource("14")
@@ -56,6 +56,8 @@ sprite_frames = ExtResource("6_6fm1q")
 script = ExtResource("13")
 char_pos = NodePath("../MapCoordinate")
 metadata/_custom_type_script = "uid://70b5is4mqv54"
+
+[node name="SpritePosition" type="Marker3D" parent="EncounterSprite"]
 
 [node name="Class" parent="." instance=ExtResource("6")]
 
