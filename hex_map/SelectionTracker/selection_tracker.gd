@@ -123,9 +123,9 @@ func set_focused_character(new_focus: Character) -> void:
 	_movement_tile_ids.clear()
 	var ghost_sprite: EncounterSprite = $GhostPosition/GhostSprite
 	if focused_character == null:
-		ghost_sprite.texture = null
+		ghost_sprite.sprite_frames = SpriteFrames.new()
 		return
-	ghost_sprite.texture = focused_character.character_sprite.texture
+	ghost_sprite.sprite_frames = focused_character.character_sprite.sprite_frames
 	ghost_sprite.set_y_offset(focused_character.character_sprite.get_y_offset())
 	_movement_tile_ids = hex_map.range_finder.get_character_travesible_tiles(
 			focused_character,

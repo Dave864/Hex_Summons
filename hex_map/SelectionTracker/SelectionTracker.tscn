@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ddvk0q84qb3m"]
+[gd_scene load_steps=11 format=3 uid="uid://ddvk0q84qb3m"]
 
 [ext_resource type="Script" uid="uid://cyfb6co2ug8qv" path="res://hex_map/SelectionTracker/selection_tracker.gd" id="1_c3pme"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="2_14xsr"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://0sdrxsyng5sc" path="res://fsm/selection_tracker/selection_tracker_directional_action.gd" id="6_naanh"]
 [ext_resource type="Script" uid="uid://daec4tatweocn" path="res://fsm/selection_tracker/selection_tracker_positional_action.gd" id="7_sgvcq"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_c5fpm"]
+
 [node name="SelectionTracker" type="Node"]
 script = ExtResource("1_c3pme")
 
@@ -17,12 +19,13 @@ script = ExtResource("1_c3pme")
 
 [node name="GhostPosition" type="Marker3D" parent="."]
 
-[node name="GhostSprite" type="Sprite3D" parent="GhostPosition" node_paths=PackedStringArray("char_pos")]
+[node name="GhostSprite" type="AnimatedSprite3D" parent="GhostPosition" node_paths=PackedStringArray("char_pos")]
 modulate = Color(1, 1, 1, 0.5019608)
 pixel_size = 0.0054
 billboard = 1
 fixed_size = true
 render_priority = 1
+sprite_frames = SubResource("SpriteFrames_c5fpm")
 script = ExtResource("2_qbj8e")
 char_pos = NodePath("..")
 metadata/_custom_type_script = "uid://70b5is4mqv54"
