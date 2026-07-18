@@ -1,6 +1,6 @@
 class_name EncounterSprite
 extends RotatingSprite3D
-## RotatinfSprite3D node that constantly adjusts its position based on camera
+## RotatingSprite3D node that constantly adjusts its position based on camera
 ## position so that the sprite image is aligned with the pixel grid.
 
 
@@ -17,10 +17,11 @@ var _ray_normal: Vector3 = Vector3.ZERO
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
+	super._ready()
 	_check_for_required_parameters()
 	pixel_size = Constants.WORLD_PIXEL_SIZE
 	fixed_size = true
-	billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	play_idle()
 
 
 ## Called every frame. Adjusts the sprite position so that it is aligned with
