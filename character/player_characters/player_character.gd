@@ -12,22 +12,11 @@ const DEFAULT_PORTRAIT_PATH: String = (
 		"res://character/player_characters/PlayerCharacter/" + \
 		"PlayerBattlePortrait.atlastex"
 )
-## The path to the battle sprite for player characters.
-const DEFAULT_BATTLE_PATH: String = (
-		"res://character/player_characters/PlayerCharacter/" +\
-		"PlayerBattleSprite.atlastex"
-)
 ## Formatted string used to create the file path for the portrait of a player
 ## character.
 const PORTRAIT_PATH_FORMAT: String = (
 		"res://character/player_characters/{0}/" + \
 		"BattlePortrait.atlastex"
-)
-## Formatted string used to create the file path for the battle sprite of a
-## player character.
-const BATTLE_PATH_FORMAT: String = (
-		"res://character/player_characters/{0}/" + \
-		"BattleSprite.atlastex"
 )
 
 ## The player character's wisp pool.
@@ -41,14 +30,11 @@ var _spells: Array[Action]
 
 ## The default portrait for a player character.
 @onready var _default_portait: Texture2D = preload(DEFAULT_PORTRAIT_PATH)
-## The default battle sprite for a player character.
-@onready var _default_battle: Texture2D = preload(DEFAULT_BATTLE_PATH)
 
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	battle_portrait = _default_portait
-	character_sprite.texture = _default_battle
 
 
 ## Updates the character this node represents using data from the PartyController.
@@ -117,6 +103,4 @@ func _initialize_actions() -> void:
 ## Updates the sprites to the ones for the given player.
 func _update_sprites(player_name: String) -> void:
 	var new_portrait: Texture2D = load(PORTRAIT_PATH_FORMAT.format([player_name]))
-	var new_battle: Texture2D = load(BATTLE_PATH_FORMAT.format([player_name]))
 	battle_portrait = new_portrait if new_portrait != null else _default_portait
-	character_sprite.texture = new_battle if new_battle != null else _default_battle
