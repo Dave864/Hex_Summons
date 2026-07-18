@@ -18,7 +18,6 @@
 [ext_resource type="Script" uid="uid://cuk41txbrftic" path="res://fsm/user_character/user_character_move.gd" id="11_7jwav"]
 [ext_resource type="Script" uid="uid://ci5c4y0r1wn1e" path="res://fsm/user_character/user_character_standby.gd" id="12_405cv"]
 
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ofn2l"]
 render_priority = 0
 shader = ExtResource("4_ebi3a")
