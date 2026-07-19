@@ -56,11 +56,6 @@ func get_current_direction() -> Vector2:
 	return _path_directions[_direction_segment].direction
 
 
-## Creates a path curve using the provided array of map tile coordinates.
-func create_path(_step_coordinates: PackedVector3Array) -> void:
-	pass
-
-
 ## Creates a straight-line path from the starting coordinate to the ending
 ## coordinate.
 func create_line_path(step_coordinates: PackedVector3Array) -> void:
@@ -189,6 +184,7 @@ func _assert_path_present(path: PackedVector3Array) -> void:
 
 class DirectionSegment:
 ## Describes the travel direction for a given segment of path.
+	
 	
 	## The direction for the segment.
 	var direction: Vector2

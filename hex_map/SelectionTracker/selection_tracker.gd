@@ -69,6 +69,8 @@ var _selectable_map_indexes: Array[int] = []
 ## The position of the sprite used to show where a player character will be
 ## placed when the turn is concluded.
 @onready var _ghost_position: Marker3D = $GhostPosition
+## The sprite used to indicate where the character will move to.
+@onready var _ghost_sprite: EncounterSprite = $GhostPosition/GhostSprite
 
 
 ## Emits the spawn_action_confirmed signal with the summon name and emission
@@ -121,16 +123,16 @@ func set_focused_character(new_focus: Character) -> void:
 	if _enemy_characters.size() == 0:
 		return
 	_movement_tile_ids.clear()
-	var ghost_sprite: EncounterSprite = $GhostPosition/GhostSprite
 	if focused_character == null:
-		ghost_sprite.sprite_frames = SpriteFrames.new()
+		_ghost_sprite.sprite_frames = SpriteFrames.new()
 		return
-	ghost_sprite.sprite_frames = focused_character.character_sprite.sprite_frames
-	ghost_sprite.set_y_offset(focused_character.character_sprite.get_y_offset())
+	_ghost_sprite.sprite_frames = focused_character.character_sprite.sprite_frames
+	_ghost_sprite.set_y_offset(focused_character.character_sprite.get_y_offset())
 	_movement_tile_ids = hex_map.range_finder.get_character_travesible_tiles(
 			focused_character,
 			_enemy_characters
 	)
+	_ghost_sprite.play_movement()
 
 
 ## Returns the action that is being focused on.
@@ -195,6 +197,13 @@ func get_movement_path() -> PackedVector3Array:
 func set_movement_path(new_path: PackedVector3Array) -> void:
 	_move_path = new_path
 	move_path_display.create_display(new_path)
+	if new_path.size() >= 2:
+		var final_direction := new_path[-2].direction_to(new_path[-1])
+		var orientation := Vector2(
+			final_direction.x,
+			final_direction.z
+		).normalized()
+		_ghost_sprite.facing_direction = orientation
 
 
 ## Gets the name of the active summon.
@@ -381,6 +390,11 @@ func show_ghost_sprite(reveal: bool) -> void:
 		)
 		reveal = !character_pos.is_equal_approx(_ghost_position.position)
 	_ghost_position.visible = reveal
+
+
+## Rotates the ghost sprite to face the specified direction.
+func orient_ghost_sprite(direction: Vector2) -> void:
+	_ghost_sprite.facing_direction = direction
 
 
 ## Returns the position of the movement target index (i.e. where the ghost
