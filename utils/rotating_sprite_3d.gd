@@ -49,6 +49,11 @@ func _process(_delta: float) -> void:
 	_match_animation_to_orientation()
 
 
+## Updates the facing direction to match the given hex direction.
+func face_hex_direction(direction: HexUtil.HexDirection) -> void:
+	facing_direction = Vector2.UP.rotated(-HexUtil.dir_rotation(direction))
+
+
 ## Sets the animation to "idle".
 func play_idle() -> void:
 	_play_animation("idle")

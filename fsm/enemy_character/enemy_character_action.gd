@@ -21,6 +21,7 @@ func enter(msg := {}) -> void:
 	var action_details: Array[Variant] = _command_chain.pop_back()
 	var action: Action = action_details[1]
 	var targets: Array[Character] = action_details[3]
+	_orient_to_emission(action)
 	_change_target_state(targets, true)
 	await action.execute_action()
 	_change_target_state(targets, false)
@@ -37,6 +38,19 @@ func update(_delta: float) -> void:
 ## Resets the interpolation weight an next_point_index.
 func exit() -> void:
 	pass
+
+
+## Orients the enemy character to face the emission point or direction of the
+## action.
+func _orient_to_emission(action: Action) -> void:
+	var hex_dir: HexUtil.HexDirection
+	if action.is_directional():
+		hex_dir = action.get_emission_direction()
+	else:
+		var dir := ec.position.direction_to(action.get_emission_pos())
+		var dir_xz := Vector2(dir.x, dir.z).normalized()
+		hex_dir = HexUtil.get_hex_direction(dir_xz)
+	ec.character_sprite.face_hex_direction(hex_dir)
 
 
 ## Checks the command chain to determine what state to go to next.

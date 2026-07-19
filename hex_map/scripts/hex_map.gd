@@ -66,8 +66,7 @@ func place_character_at_tile(character: Character, tile_index: int) -> void:
 	var hex_dir := HexUtil.get_hex_direction(
 			Vector2(direction_to_origin.x, direction_to_origin.z).normalized()
 	)
-	var facing_direction := Vector2.UP.rotated(-HexUtil.dir_rotation(hex_dir))
-	character.character_sprite.facing_direction = facing_direction.normalized()
+	character.character_sprite.face_hex_direction(hex_dir)
 
 
 ## Retrieve the map tiles of this hex map.
