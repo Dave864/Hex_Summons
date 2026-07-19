@@ -88,8 +88,10 @@ func create_path_to_id(destination_id: int) -> void:
 		return
 	var start_id: int = _current_id_path[_path_end_index]
 	var new_path_segment := _move_area_astar.get_id_path(start_id, destination_id)
+	# The prior path is blocking the new path from being made, so we should
+	# make a new path from origin.
 	if new_path_segment.size() == 0:
-		printerr("New path segment could not be created.")
+		_create_path_from_origin(destination_id)
 		return
 	_add_segment_to_current_path(new_path_segment)
 
