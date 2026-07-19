@@ -1,11 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://d3jwh6akuilwn"]
 
-[ext_resource type="Texture2D" uid="uid://cdlt7x03ektf1" path="res://art/placeholders/CharacterPlaceholders3D.png" id="1_dkuw1"]
 [ext_resource type="Script" uid="uid://cqmg5j4kolqc7" path="res://overworld/overworld_avatar/overworld_avatar.gd" id="1_rphjw"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rphjw"]
-atlas = ExtResource("1_dkuw1")
-region = Rect2(0, 17, 31, 32)
+[ext_resource type="SpriteFrames" uid="uid://dbaaxve5s3g2p" path="res://overworld/overworld_avatar/sprite_frames.tres" id="2_b2l28"]
+[ext_resource type="Script" uid="uid://byskru7lp6ore" path="res://utils/rotating_sprite_3d.gd" id="2_rphjw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bwl26"]
 radius = 0.6
@@ -15,12 +12,14 @@ collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_rphjw")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="RotatingSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 pixel_size = 0.0625
 billboard = 1
 texture_filter = 0
-texture = SubResource("AtlasTexture_rphjw")
+sprite_frames = ExtResource("2_b2l28")
+script = ExtResource("2_rphjw")
+metadata/_custom_type_script = "uid://byskru7lp6ore"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
