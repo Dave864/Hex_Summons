@@ -28,6 +28,7 @@ render_priority = 1
 sprite_frames = SubResource("SpriteFrames_c5fpm")
 script = ExtResource("2_qbj8e")
 char_pos = NodePath("..")
+bind_to_hex = true
 metadata/_custom_type_script = "uid://70b5is4mqv54"
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]

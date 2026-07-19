@@ -16,6 +16,9 @@ enum DisplayOrientation {
 	FRONT_LEFT,
 }
 
+## Indicates if the rotating sprite should align to hexagonal directions.
+@export var bind_to_hex: bool = false
+
 ## The direction the sprite is facing.
 var facing_direction := Vector2.RIGHT:
 	set(value):
@@ -74,6 +77,14 @@ func _determine_orientation() -> void:
 	).normalized()
 	var dot := camera_dir.dot(facing_direction)
 	var right_facing := camera_dir.angle_to(facing_direction) >= 0.0
+	if bind_to_hex:
+		_hex_orientation(dot, right_facing)
+	else:
+		_default_orientation(dot, right_facing)
+
+
+## Gets the orientation relative to standard directions.
+func _default_orientation(dot: float, right_facing: bool) -> void:
 	if dot >= 0.75:
 		_orientation = DisplayOrientation.BACK
 	elif dot < 0.75 and dot >= 0.25:
@@ -87,6 +98,29 @@ func _determine_orientation() -> void:
 				else DisplayOrientation.LEFT
 		)
 	elif dot <= -0.25 and dot > -0.75:
+		_orientation = (
+				DisplayOrientation.FRONT_RIGHT if right_facing
+				else DisplayOrientation.FRONT_LEFT
+		)
+	else:
+		_orientation = DisplayOrientation.FRONT
+
+
+## Gets the orientation relative to a hexagon.
+func _hex_orientation(dot: float, right_facing: bool) -> void:
+	if dot >= 0.9:
+		_orientation = DisplayOrientation.BACK
+	elif dot < 0.9 and dot >= 0.5:
+		_orientation = (
+				DisplayOrientation.BACK_RIGHT if right_facing
+				else DisplayOrientation.BACK_LEFT
+		)
+	elif dot < 0.5 and dot > -0.5:
+		_orientation = (
+				DisplayOrientation.RIGHT if right_facing
+				else DisplayOrientation.LEFT
+		)
+	elif dot <= -0.5 and dot > -0.9:
 		_orientation = (
 				DisplayOrientation.FRONT_RIGHT if right_facing
 				else DisplayOrientation.FRONT_LEFT

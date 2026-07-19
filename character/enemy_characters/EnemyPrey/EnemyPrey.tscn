@@ -52,6 +52,7 @@ render_priority = 1
 sprite_frames = ExtResource("7_55dr5")
 script = ExtResource("7_qbo74")
 char_pos = NodePath("../MapCoordinate")
+bind_to_hex = true
 metadata/_custom_type_script = "uid://70b5is4mqv54"
 
 [node name="SpritePosition" type="Marker3D" parent="EncounterSprite"]
