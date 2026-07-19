@@ -15,21 +15,11 @@ var _action: Action = null
 var _target_index: int = -1
 ## The index the enemy will end their movement on.
 var _move_end_index: int = -1
-## Runs the AI logic in a separate thread.
-var _ai_thread: Thread
 
 
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-#	# Run AI logic in separate thread to hopefully allow logic to run across
-#	# multiple frames if needed.
-#	_ai_thread = Thread.new()
-#	_ai_thread.start(_ai_node, "update_distance_map")
-#	_ai_thread.wait_to_finish()
-#	_ai_thread = Thread.new()
-#	_ai_thread.start(_ai_node, "determine_action_chain")
-#	var action_chain: Array[Array] = _ai_thread.wait_to_finish()
 	ai_node.update_distance_map()
 	var action_chain: Array[Array] = ai_node.determine_action_chain()
 	
