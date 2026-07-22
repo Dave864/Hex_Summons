@@ -272,6 +272,7 @@ Button/styles/pressed_mirrored = SubResource("StyleBoxTexture_wutq6")
 Label/font_sizes/font_size = 12
 Label/fonts/font = ExtResource("1_fs2ww")
 Panel/styles/panel = SubResource("StyleBoxTexture_wol4a")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_wol4a")
 PopupMenu/colors/font_color = Color(1, 1, 1, 1)
 PopupMenu/colors/font_hover_color = Color(0, 0, 0.627451, 1)
 PopupMenu/font_sizes/font_separator_size = 12
