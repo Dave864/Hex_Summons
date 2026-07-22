@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=65 format=3 uid="uid://c3h3cfs57rjy8"]
+[gd_resource type="Theme" load_steps=66 format=3 uid="uid://c3h3cfs57rjy8"]
 
 [ext_resource type="FontFile" uid="uid://b07iw1ao2yuak" path="res://fonts/pixel_12.fnt" id="1_fs2ww"]
 [ext_resource type="Texture2D" uid="uid://1kxerb3fyqow" path="res://art/ui/GlyphTheme.png" id="2_vtpyv"]
@@ -269,6 +269,10 @@ texture_margin_right = 5.0
 texture_margin_bottom = 2.0
 region_rect = Rect2(68, 69, 8, 6)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4ndd"]
+atlas = ExtResource("2_vtpyv")
+region = Rect2(124, 33, 7, 8)
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wol4a"]
 content_margin_left = 6.0
 content_margin_top = 7.0
@@ -469,6 +473,7 @@ MenuBar/styles/hover = SubResource("StyleBoxTexture_qufgf")
 MenuBar/styles/hover_pressed = SubResource("StyleBoxTexture_oa643")
 MenuBar/styles/normal = SubResource("StyleBoxTexture_5od42")
 MenuBar/styles/pressed = SubResource("StyleBoxTexture_7dg0c")
+OptionButton/icons/arrow = SubResource("AtlasTexture_m4ndd")
 Panel/styles/panel = SubResource("StyleBoxTexture_wol4a")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_wol4a")
 PopupMenu/colors/font_color = Color(1, 1, 1, 1)
