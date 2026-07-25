@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=56 format=3 uid="uid://c3h3cfs57rjy8"]
+[gd_resource type="Theme" load_steps=111 format=3 uid="uid://c3h3cfs57rjy8"]
 
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="1_fs2ww"]
 
@@ -48,7 +48,7 @@ texture_margin_left = 14.0
 texture_margin_top = 14.0
 texture_margin_right = 14.0
 texture_margin_bottom = 14.0
-region_rect = Rect2(7, 115, 28, 28)
+region_rect = Rect2(8, 116, 28, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fs2ww"]
 atlas = ExtResource("1_fs2ww")
@@ -116,6 +116,122 @@ region = Rect2(35, 188, 24, 13)
 atlas = ExtResource("1_fs2ww")
 region = Rect2(35, 154, 24, 13)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvcxm"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(2, 45, 13, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsc7n"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(2, 53, 13, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lx4bu"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(2, 61, 13, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3agf"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(14, 45, 13, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f821n"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(14, 53, 13, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4kjh"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(14, 61, 13, 7)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6acwa"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 4.0
+texture_margin_right = 6.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(28, 44, 12, 8)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xreih"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 4.0
+texture_margin_right = 6.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(28, 53, 12, 8)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_81odp"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 4.0
+texture_margin_right = 6.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(28, 62, 12, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fs2ww"]
+bg_color = Color(1, 1, 1, 1)
+border_width_top = 3
+border_width_bottom = 3
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtpyv"]
+bg_color = Color(1, 1, 1, 1)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5od42"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 12.0
+texture_margin_top = 3.0
+texture_margin_right = 12.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(58, 4, 26, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_axhi7"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(18, 70, 5, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3yvc"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(6, 70, 5, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ii14a"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(12, 70, 5, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_imesk"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(28, 76, 4, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wol4a"]
+bg_color = Color(1, 1, 1, 1)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.7490196, 0.7490196, 0.7490196, 1)
+corner_radius_top_left = 5
+corner_radius_bottom_left = 5
+expand_margin_top = 4.0
+expand_margin_bottom = 4.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5mt7"]
+bg_color = Color(0.5019608, 1, 1, 1)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.19607843, 0.78039217, 1, 1)
+corner_radius_top_left = 5
+corner_radius_bottom_left = 5
+expand_margin_top = 4.0
+expand_margin_bottom = 4.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_fs2ww"]
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_hudyr"]
 atlas = ExtResource("1_fs2ww")
 region = Rect2(114, 65, 9, 9)
@@ -167,11 +283,11 @@ region = Rect2(114, 76, 9, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ub1x"]
 atlas = ExtResource("1_fs2ww")
-region = Rect2(56, 35, 11, 11)
+region = Rect2(57, 36, 11, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2d5oc"]
 atlas = ExtResource("1_fs2ww")
-region = Rect2(43, 35, 11, 11)
+region = Rect2(44, 35, 11, 11)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ndeeh"]
 texture = ExtResource("1_fs2ww")
@@ -198,7 +314,7 @@ texture_margin_left = 8.0
 texture_margin_top = 3.0
 texture_margin_right = 4.0
 texture_margin_bottom = 2.0
-region_rect = Rect2(58, 12, 13, 6)
+region_rect = Rect2(59, 13, 13, 6)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5srnm"]
 texture = ExtResource("1_fs2ww")
@@ -207,14 +323,6 @@ texture_margin_top = 4.0
 texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 region_rect = Rect2(89, 2, 10, 10)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5od42"]
-texture = ExtResource("1_fs2ww")
-texture_margin_left = 12.0
-texture_margin_top = 3.0
-texture_margin_right = 12.0
-texture_margin_bottom = 2.0
-region_rect = Rect2(58, 4, 26, 6)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0ub1x"]
 texture = ExtResource("1_fs2ww")
@@ -304,6 +412,243 @@ texture_margin_right = 6.0
 texture_margin_bottom = 5.0
 region_rect = Rect2(125, 164, 13, 12)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_as32f"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(130, 105, 7, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7yy64"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(130, 94, 7, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3a5t"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(28, 71, 4, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3e7xl"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(144, 105, 7, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2uout"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(144, 94, 7, 10)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2d5oc"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 5.0
+texture_margin_top = 4.0
+texture_margin_right = 5.0
+texture_margin_bottom = 8.0
+expand_margin_bottom = 6.0
+region_rect = Rect2(95, 68, 11, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hudyr"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 5.0
+texture_margin_top = 4.0
+texture_margin_right = 5.0
+texture_margin_bottom = 8.0
+expand_margin_bottom = 6.0
+region_rect = Rect2(83, 68, 11, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qq1wu"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 5.0
+texture_margin_top = 4.0
+texture_margin_right = 5.0
+texture_margin_bottom = 8.0
+expand_margin_bottom = 6.0
+region_rect = Rect2(59, 68, 11, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ywwie"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 5.0
+texture_margin_top = 4.0
+texture_margin_right = 5.0
+texture_margin_bottom = 8.0
+expand_margin_bottom = 6.0
+region_rect = Rect2(71, 68, 11, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m4ndd"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 5.0
+texture_margin_top = 4.0
+texture_margin_right = 5.0
+texture_margin_bottom = 8.0
+expand_margin_bottom = 6.0
+region_rect = Rect2(47, 68, 11, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2gry"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(53, 49, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8483"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(57, 36, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkdav"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(44, 36, 11, 11)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lsc7n"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(112, 91, 13, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lx4bu"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(96, 106, 13, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n3agf"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(112, 106, 13, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d3a5t"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+region_rect = Rect2(88, 13, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dvcxm"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(89, 2, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1mfc"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(6, 2, 7, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8cce"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(14, 2, 7, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_du8pp"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(22, 2, 7, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0crj"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(6, 14, 7, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwaew"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(14, 14, 7, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1snlc"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(22, 14, 7, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_as32f"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 4.0
+texture_margin_top = 6.0
+texture_margin_right = 4.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(5, 28, 8, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7yy64"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 4.0
+texture_margin_top = 6.0
+texture_margin_right = 4.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(14, 28, 8, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3e7xl"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 4.0
+texture_margin_top = 6.0
+texture_margin_right = 4.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(23, 28, 8, 12)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qufgf"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_right = 3
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h71au"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_right = 3
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2uout"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 3.0
+texture_margin_top = 12.0
+texture_margin_right = 2.0
+texture_margin_bottom = 12.0
+region_rect = Rect2(50, 5, 6, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3y5i8"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(31, 5, 11, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71qck"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(31, 17, 11, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0yj0d"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(31, 11, 11, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsapy"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(37, 25, 5, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oa643"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.7490196, 0.7490196, 0.7490196, 1)
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5srnm"]
+bg_color = Color(0.5019608, 1, 1, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.19607843, 0.78039217, 1, 1)
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_vtpyv"]
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+vertical = true
+
 [resource]
 Button/styles/disabled = SubResource("StyleBoxTexture_fs2ww")
 Button/styles/disabled_mirrored = SubResource("StyleBoxTexture_fs2ww")
@@ -344,6 +689,26 @@ CheckButton/styles/hover = SubResource("StyleBoxEmpty_oa643")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_oa643")
 CheckButton/styles/normal = SubResource("StyleBoxEmpty_oa643")
 CheckButton/styles/pressed = SubResource("StyleBoxEmpty_oa643")
+HScrollBar/icons/decrement = SubResource("AtlasTexture_dvcxm")
+HScrollBar/icons/decrement_highlight = SubResource("AtlasTexture_lsc7n")
+HScrollBar/icons/decrement_pressed = SubResource("AtlasTexture_lx4bu")
+HScrollBar/icons/increment = SubResource("AtlasTexture_n3agf")
+HScrollBar/icons/increment_highlight = SubResource("AtlasTexture_f821n")
+HScrollBar/icons/increment_pressed = SubResource("AtlasTexture_c4kjh")
+HScrollBar/styles/grabber = SubResource("StyleBoxTexture_6acwa")
+HScrollBar/styles/grabber_highlight = SubResource("StyleBoxTexture_xreih")
+HScrollBar/styles/grabber_pressed = SubResource("StyleBoxTexture_81odp")
+HScrollBar/styles/scroll = SubResource("StyleBoxFlat_fs2ww")
+HScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_vtpyv")
+HSeparator/styles/separator = SubResource("StyleBoxTexture_5od42")
+HSlider/icons/grabber = SubResource("AtlasTexture_axhi7")
+HSlider/icons/grabber_disabled = SubResource("AtlasTexture_f3yvc")
+HSlider/icons/grabber_highlight = SubResource("AtlasTexture_ii14a")
+HSlider/icons/tick = SubResource("AtlasTexture_imesk")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_wol4a")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_g5mt7")
+HSlider/styles/slider = SubResource("StyleBoxLine_fs2ww")
+LineEdit/colors/selection_color = Color(0.19607843, 0.78039217, 1, 1)
 LineEdit/icons/clear = SubResource("AtlasTexture_hudyr")
 LineEdit/styles/focus = SubResource("StyleBoxTexture_7lwdo")
 LineEdit/styles/normal = SubResource("StyleBoxTexture_0kjok")
@@ -389,6 +754,52 @@ SpinBox/styles/down_background_hovered = SubResource("StyleBoxTexture_8nom0")
 SpinBox/styles/down_background_pressed = SubResource("StyleBoxTexture_4jtry")
 SpinBox/styles/up_background_hovered = SubResource("StyleBoxTexture_yl2ls")
 SpinBox/styles/up_background_pressed = SubResource("StyleBoxTexture_y2c8d")
+TabContainer/constants/side_margin = 12
+TabContainer/constants/tab_separation = 2
+TabContainer/icons/decrement = SubResource("AtlasTexture_as32f")
+TabContainer/icons/decrement_highlight = SubResource("AtlasTexture_7yy64")
+TabContainer/icons/drop_mark = SubResource("AtlasTexture_d3a5t")
+TabContainer/icons/increment = SubResource("AtlasTexture_3e7xl")
+TabContainer/icons/increment_highlight = SubResource("AtlasTexture_2uout")
+TabContainer/styles/panel = SubResource("StyleBoxTexture_vtpyv")
+TabContainer/styles/tab_disabled = SubResource("StyleBoxTexture_2d5oc")
+TabContainer/styles/tab_focus = SubResource("StyleBoxTexture_hudyr")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxTexture_qq1wu")
+TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_ywwie")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_m4ndd")
+TextEdit/colors/selection_color = Color(0.19607843, 0.78039217, 1, 1)
 TextEdit/styles/focus = SubResource("StyleBoxTexture_7lwdo")
 TextEdit/styles/normal = SubResource("StyleBoxTexture_0kjok")
 TextEdit/styles/read_only = SubResource("StyleBoxTexture_23kip")
+Tree/icons/arrow = SubResource("AtlasTexture_s2gry")
+Tree/icons/arrow_collapsed = SubResource("AtlasTexture_k8483")
+Tree/icons/arrow_collapsed_mirrored = SubResource("AtlasTexture_fkdav")
+Tree/icons/checked = SubResource("AtlasTexture_fs2ww")
+Tree/icons/checked_disabled = SubResource("AtlasTexture_vtpyv")
+Tree/icons/select_arrow = SubResource("AtlasTexture_s2gry")
+Tree/icons/unchecked = SubResource("AtlasTexture_oa643")
+Tree/icons/unchecked_disabled = SubResource("AtlasTexture_5srnm")
+Tree/styles/custom_button = SubResource("StyleBoxTexture_lsc7n")
+Tree/styles/custom_button_hover = SubResource("StyleBoxTexture_lx4bu")
+Tree/styles/custom_button_pressed = SubResource("StyleBoxTexture_n3agf")
+Tree/styles/focus = SubResource("StyleBoxTexture_d3a5t")
+Tree/styles/panel = SubResource("StyleBoxTexture_dvcxm")
+VScrollBar/icons/decrement = SubResource("AtlasTexture_w1mfc")
+VScrollBar/icons/decrement_highlight = SubResource("AtlasTexture_u8cce")
+VScrollBar/icons/decrement_pressed = SubResource("AtlasTexture_du8pp")
+VScrollBar/icons/increment = SubResource("AtlasTexture_j0crj")
+VScrollBar/icons/increment_highlight = SubResource("AtlasTexture_iwaew")
+VScrollBar/icons/increment_pressed = SubResource("AtlasTexture_1snlc")
+VScrollBar/styles/grabber = SubResource("StyleBoxTexture_as32f")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxTexture_7yy64")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxTexture_3e7xl")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_qufgf")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_h71au")
+VSeparator/styles/separator = SubResource("StyleBoxTexture_2uout")
+VSlider/icons/grabber = SubResource("AtlasTexture_3y5i8")
+VSlider/icons/grabber_disabled = SubResource("AtlasTexture_71qck")
+VSlider/icons/grabber_highlight = SubResource("AtlasTexture_0yj0d")
+VSlider/icons/tick = SubResource("AtlasTexture_hsapy")
+VSlider/styles/grabber_area = SubResource("StyleBoxFlat_oa643")
+VSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_5srnm")
+VSlider/styles/slider = SubResource("StyleBoxLine_vtpyv")
