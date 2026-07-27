@@ -53,6 +53,11 @@ var _active: bool = false
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 
 
+## Sets the initial orientation to a random value.
+func _ready() -> void:
+	sprite.face_random_direction()
+
+
 ## Removes the RoamArea from the scene tree and queues it for deletion.
 func _exit_tree() -> void:
 	if roam_area != null:

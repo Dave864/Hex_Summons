@@ -54,6 +54,11 @@ func face_hex_direction(direction: HexUtil.HexDirection) -> void:
 	facing_direction = Vector2.UP.rotated(-HexUtil.dir_rotation(direction))
 
 
+## Updates the facing direction to a random one.
+func face_random_direction() -> void:
+	facing_direction = Vector2.UP.rotated(randf() * TAU)
+
+
 ## Sets the animation to "idle".
 func play_idle() -> void:
 	_play_animation("idle")
