@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=125 format=3 uid="uid://c3h3cfs57rjy8"]
+[gd_resource type="Theme" load_steps=126 format=3 uid="uid://c3h3cfs57rjy8"]
 
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="1_fs2ww"]
+[ext_resource type="FontFile" uid="uid://c2yixxn80qihi" path="res://fonts/pixelith.ttf" id="1_vtpyv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yl2ls"]
 atlas = ExtResource("1_fs2ww")
@@ -396,7 +397,7 @@ texture_margin_left = 8.0
 texture_margin_top = 3.0
 texture_margin_right = 4.0
 texture_margin_bottom = 2.0
-region_rect = Rect2(59, 13, 13, 6)
+region_rect = Rect2(58, 12, 13, 6)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0ub1x"]
 texture = ExtResource("1_fs2ww")
@@ -744,9 +745,12 @@ grow_end = 0.0
 vertical = true
 
 [resource]
+AcceptDialog/font_sizes/title_font_size = 14
+AcceptDialog/fonts/title_font = ExtResource("1_vtpyv")
 AcceptDialog/icons/close = SubResource("AtlasTexture_yl2ls")
 AcceptDialog/icons/close_pressed = SubResource("AtlasTexture_y2c8d")
 AcceptDialog/styles/panel = SubResource("StyleBoxTexture_5srnm")
+Button/fonts/font = ExtResource("1_vtpyv")
 Button/styles/disabled = SubResource("StyleBoxTexture_fs2ww")
 Button/styles/disabled_mirrored = SubResource("StyleBoxTexture_fs2ww")
 Button/styles/focus = SubResource("StyleBoxTexture_wol4a")
@@ -817,17 +821,26 @@ ItemList/styles/hovered_selected_focus = SubResource("StyleBoxTexture_imesk")
 ItemList/styles/panel = SubResource("StyleBoxTexture_5srnm")
 ItemList/styles/selected = SubResource("StyleBoxFlat_5od42")
 ItemList/styles/selected_focus = SubResource("StyleBoxFlat_u8cce")
+Label/constants/line_spacing = 5
+Label/constants/paragraph_spacing = 2
+Label/fonts/font = ExtResource("1_vtpyv")
 LineEdit/colors/selection_color = Color(0.19607843, 0.78039217, 1, 1)
+LineEdit/fonts/font = ExtResource("1_vtpyv")
 LineEdit/icons/clear = SubResource("AtlasTexture_hudyr")
 LineEdit/styles/focus = SubResource("StyleBoxTexture_7lwdo")
 LineEdit/styles/normal = SubResource("StyleBoxTexture_0kjok")
 LineEdit/styles/read_only = SubResource("StyleBoxTexture_23kip")
 OptionButton/constants/arrow_margin = 8
+OptionButton/fonts/font = ExtResource("1_vtpyv")
 OptionButton/icons/arrow = SubResource("AtlasTexture_7lwdo")
 Panel/styles/panel = SubResource("StyleBoxTexture_vtpyv")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_vtpyv")
 PopupMenu/constants/item_end_padding = 5
 PopupMenu/constants/item_start_padding = 5
+PopupMenu/font_sizes/font_separator_size = 14
+PopupMenu/fonts/font = ExtResource("1_vtpyv")
+PopupMenu/fonts/font_separator = ExtResource("1_vtpyv")
+PopupMenu/fonts/title_font = ExtResource("1_vtpyv")
 PopupMenu/icons/checked = SubResource("AtlasTexture_fs2ww")
 PopupMenu/icons/checked_disabled = SubResource("AtlasTexture_vtpyv")
 PopupMenu/icons/close = SubResource("AtlasTexture_yl2ls")
@@ -845,9 +858,11 @@ PopupMenu/styles/labeled_separator_left = SubResource("StyleBoxTexture_7dg0c")
 PopupMenu/styles/labeled_separator_right = SubResource("StyleBoxTexture_wutq6")
 PopupMenu/styles/panel = SubResource("StyleBoxTexture_5srnm")
 PopupMenu/styles/separator = SubResource("StyleBoxTexture_5od42")
+PopupPanel/fonts/title_font = ExtResource("1_vtpyv")
 PopupPanel/icons/close = SubResource("AtlasTexture_yl2ls")
 PopupPanel/icons/close_pressed = SubResource("AtlasTexture_y2c8d")
 PopupPanel/styles/panel = SubResource("StyleBoxTexture_0ub1x")
+ProgressBar/fonts/font = ExtResource("1_vtpyv")
 ProgressBar/styles/background = SubResource("StyleBoxTexture_b0u2j")
 ProgressBar/styles/fill = SubResource("StyleBoxTexture_2nfbh")
 SpinBox/constants/field_and_buttons_separation = 4
@@ -865,6 +880,7 @@ SpinBox/styles/up_background_hovered = SubResource("StyleBoxTexture_yl2ls")
 SpinBox/styles/up_background_pressed = SubResource("StyleBoxTexture_y2c8d")
 TabContainer/constants/side_margin = 12
 TabContainer/constants/tab_separation = 2
+TabContainer/fonts/font = ExtResource("1_vtpyv")
 TabContainer/icons/decrement = SubResource("AtlasTexture_as32f")
 TabContainer/icons/decrement_highlight = SubResource("AtlasTexture_7yy64")
 TabContainer/icons/drop_mark = SubResource("AtlasTexture_d3a5t")
@@ -879,12 +895,14 @@ TabContainer/styles/tab_hovered = SubResource("StyleBoxTexture_qq1wu")
 TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_ywwie")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_m4ndd")
 TextEdit/colors/selection_color = Color(0.19607843, 0.78039217, 1, 1)
+TextEdit/fonts/font = ExtResource("1_vtpyv")
 TextEdit/styles/focus = SubResource("StyleBoxTexture_7lwdo")
 TextEdit/styles/normal = SubResource("StyleBoxTexture_0kjok")
 TextEdit/styles/read_only = SubResource("StyleBoxTexture_23kip")
 Tree/constants/inner_item_margin_left = 5
 Tree/constants/inner_item_margin_right = 5
 Tree/constants/item_margin = 16
+Tree/fonts/font = ExtResource("1_vtpyv")
 Tree/icons/arrow = SubResource("AtlasTexture_s2gry")
 Tree/icons/arrow_collapsed = SubResource("AtlasTexture_k8483")
 Tree/icons/arrow_collapsed_mirrored = SubResource("AtlasTexture_fkdav")
@@ -931,5 +949,6 @@ VSlider/icons/tick = SubResource("AtlasTexture_hsapy")
 VSlider/styles/grabber_area = SubResource("StyleBoxFlat_oa643")
 VSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_5srnm")
 VSlider/styles/slider = SubResource("StyleBoxLine_vtpyv")
+Window/fonts/title_font = ExtResource("1_vtpyv")
 Window/icons/close = SubResource("AtlasTexture_yl2ls")
 Window/icons/close_pressed = SubResource("AtlasTexture_y2c8d")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://cw2m8e3jgpop4"]
 
-[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_803mo"]
+[ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_lbfxs"]
 [ext_resource type="PackedScene" path="res://user_interface/wisp_pool/basic_pool/StandbyWispPool/CoreElementIcon.tscn" id="2_1voa5"]
 [ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="2_wq6nn"]
 [ext_resource type="Texture2D" uid="uid://dxp0u41501dbm" path="res://art/ui/SummonWispPool/Summon Pool Base.png" id="2_xqtk2"]
@@ -47,7 +47,7 @@ offset_right = 0.23999786
 offset_bottom = 0.0399971
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_803mo")
+theme = ExtResource("1_lbfxs")
 script = ExtResource("2_yf6bw")
 timer = NodePath("VariableTimer")
 light_alignment_icon = NodePath("SigilBase/LightIcon")
