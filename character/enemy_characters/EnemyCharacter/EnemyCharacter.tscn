@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="6"]
 [ext_resource type="Material" uid="uid://i17vo4vtckre" path="res://character/enemy_characters/EnemyCharacter/character_sprite_xray.tres" id="6_q7821"]
 [ext_resource type="Script" uid="uid://dp6jkaqsiu5vq" path="res://fsm/enemy_character/enemy_character_think.gd" id="7"]
+[ext_resource type="SpriteFrames" uid="uid://b4geeoicss8b1" path="res://character/enemy_characters/EnemyCharacter/sprite_frames.tres" id="7_aji04"]
 [ext_resource type="Script" uid="uid://cdrf5m57oe7j7" path="res://fsm/enemy_character/enemy_character_action.gd" id="8"]
 [ext_resource type="Resource" uid="uid://beb544ylrc5ns" path="res://character/enemy_characters/EnemyCharacter/stat_data/stat_values.tres" id="9"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="10"]
@@ -19,8 +20,6 @@
 [ext_resource type="PackedScene" uid="uid://c4shujk0dhck0" path="res://actions/action_nodes/Empty/Empty.tscn" id="13_q7821"]
 [ext_resource type="Script" uid="uid://bdkgr4241wqcj" path="res://character_ai/action_behavior.gd" id="14_aji04"]
 [ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="15"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_q7821"]
 
 [node name="EnemyCharacter" type="Area3D"]
 collision_layer = 8
@@ -50,7 +49,7 @@ billboard = 1
 fixed_size = true
 texture_filter = 0
 render_priority = 1
-sprite_frames = SubResource("SpriteFrames_q7821")
+sprite_frames = ExtResource("7_aji04")
 script = ExtResource("13")
 char_pos = NodePath("../MapCoordinate")
 bind_to_hex = true
