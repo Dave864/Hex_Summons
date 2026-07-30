@@ -38,8 +38,8 @@ var roam_area: RoamArea = null
 
 ## The path to the map of the encounter.
 var _encounter_map_path: String = ""
-## The list of paths to the enemies that will be in the encounter.
-var _enemies_path_list: PackedStringArray = []
+## The list of names of the enemies that will be in the encounter.
+var _enemy_names_list: PackedStringArray = []
 ## Flag that indicates if the spawner is active.
 var _active: bool = false
 
@@ -67,10 +67,10 @@ func _exit_tree() -> void:
 ## Sets the details used for populating the encounter.
 func set_encounter_details(
 	map_path: String,
-	character_paths: PackedStringArray
+	enemy_names: PackedStringArray
 ) -> void:
 	_encounter_map_path = map_path
-	_enemies_path_list = character_paths
+	_enemy_names_list = enemy_names
 
 
 ## Sets the area details.
@@ -119,7 +119,7 @@ func _on_HitBox_body_entered(body: Node3D) -> void:
 	if body is OverworldAvatar:
 		SceneController.change_scene_to_encounter(
 				_encounter_map_path,
-				_enemies_path_list
+				_enemy_names_list
 		)
 
 

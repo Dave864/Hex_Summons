@@ -14,8 +14,8 @@ const Y_RAYCAST_LENGTH := 10.0
 ## Name of the mesh used for debugging.
 const DEBUG_MESH_NAME := "DebugMesh"
 
-## File paths to the possible enemy selections for this zone.
-@export_dir var enemies : PackedStringArray
+## Names of the possible enemy selections for this zone.
+@export var enemies : PackedStringArray
 ## The number of EncounterSpawn nodes that can be active at once.
 @export_range(0, 50) var spawn_limit := 1
 ## The likelihood that an EncounterSpawn will roam as opposed to travel.
