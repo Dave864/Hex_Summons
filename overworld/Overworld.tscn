@@ -282,6 +282,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.315, 0.6, -13.299)
 transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 0.9999998, -36.7013, 0.6, -11.437256)
 script = ExtResource("6_uyahc")
 radius = 6.21
+enemies = PackedStringArray("TestEnemy2")
 roam_chance = 1.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
