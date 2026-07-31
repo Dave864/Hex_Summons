@@ -39,7 +39,7 @@ var roam_area: RoamArea = null
 ## The path to the map of the encounter.
 var _encounter_map_path: String = ""
 ## The list of names of the enemies that will be in the encounter.
-var _enemy_names_list: PackedStringArray = []
+var _enemy_names: PackedStringArray = []
 ## Flag that indicates if the spawner is active.
 var _active: bool = false
 
@@ -56,6 +56,10 @@ var _active: bool = false
 ## Sets the initial orientation to a random value.
 func _ready() -> void:
 	sprite.face_random_direction()
+	# TODO: Set sprite to be the dominant enemy. Currently just sets
+	# it to the first one.
+	sprite.set_texture_to_character(_enemy_names[0])
+	sprite.play_idle()
 
 
 ## Removes the RoamArea from the scene tree and queues it for deletion.
@@ -70,7 +74,7 @@ func set_encounter_details(
 	enemy_names: PackedStringArray
 ) -> void:
 	_encounter_map_path = map_path
-	_enemy_names_list = enemy_names
+	_enemy_names = enemy_names
 
 
 ## Sets the area details.
@@ -119,7 +123,7 @@ func _on_HitBox_body_entered(body: Node3D) -> void:
 	if body is OverworldAvatar:
 		SceneController.change_scene_to_encounter(
 				_encounter_map_path,
-				_enemy_names_list
+				_enemy_names
 		)
 
 
