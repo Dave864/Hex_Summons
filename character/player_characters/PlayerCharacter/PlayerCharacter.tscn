@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://dtkpxtbsdtqpx"]
 
 [ext_resource type="Script" uid="uid://rqmmsouogt6p" path="res://character/player_characters/player_character.gd" id="2"]
-[ext_resource type="Texture2D" uid="uid://cvemm176qyol0" path="res://character/player_characters/PlayerCharacter/PlayerBattlePortrait.atlastex" id="2_mblau"]
+[ext_resource type="Texture2D" uid="uid://cvemm176qyol0" path="res://character/player_characters/PlayerCharacter/BattlePortrait.atlastex" id="2_mblau"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="3"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="6_htock"]
 [ext_resource type="SpriteFrames" uid="uid://c7u5papxnpejh" path="res://character/player_characters/PlayerCharacter/sprite_frames.tres" id="6_mblau"]
