@@ -4,6 +4,8 @@ extends EditorProperty
 
 ## Path to the enemy characters folder.
 const ENEMY_CHARACTERS_PATH := "res://character/enemy_characters/"
+## Path format to enemy character battle portrait.
+const PORTRIAT_PATH := ENEMY_CHARACTERS_PATH + "{0}/BattlePortrait.atlastex"
 
 ## The overall container for the UI elements.
 var _parent_container := VBoxContainer.new()
@@ -22,6 +24,8 @@ var _updating := false
 
 ## The available enemy options.
 static var enemy_options: PackedStringArray = []
+## The portraits for each enemy option.
+static var enemy_portraits: Dictionary[String, Texture2D] = {}
 
 
 ## Creates the inspector controls.
@@ -106,9 +110,17 @@ func _add_selection_item(selected_item: String) -> void:
 ## Obtains the currently available enemy options from the file system.
 func _get_enemy_options() -> void:
 	enemy_options.clear()
+	enemy_portraits.clear()
 	var enemy_folders := DirAccess.get_directories_at(ENEMY_CHARACTERS_PATH)
 	for name: String in enemy_folders:
 		enemy_options.append(name)
+		var portrait_path := PORTRIAT_PATH.format([name])
+		var portrait: Texture2D
+		if FileAccess.file_exists(portrait_path):
+			portrait = load(portrait_path)
+		else:
+			portrait = load(Constants.DEFAULT_ICON_PATH)
+		enemy_portraits[name] = portrait
 	for item: SelectionItem in _selection_items:
 		item.match_current_enemy_options()
 
@@ -176,7 +188,10 @@ class SelectionItem:
 		var prior_selected := option_button.get_item_text(option_button.selected)
 		option_button.clear()
 		for option: String in SpawnAreaEnemiesProperty.enemy_options:
-			option_button.add_item(option)
+			option_button.add_icon_item(
+					SpawnAreaEnemiesProperty.enemy_portraits[option],
+					option
+			)
 			if option == prior_selected:
 				option_button.select(option_button.item_count - 1)
 	
@@ -200,7 +215,10 @@ class SelectionItem:
 		var initial_index := 0
 		for i: int in SpawnAreaEnemiesProperty.enemy_options.size():
 			var option := SpawnAreaEnemiesProperty.enemy_options[i]
-			option_button.add_item(option)
+			option_button.add_icon_item(
+					SpawnAreaEnemiesProperty.enemy_portraits[option],
+					option
+			)
 			if initial_value == option:
 				initial_index = i
 		option_button.select(initial_index)
