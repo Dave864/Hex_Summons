@@ -21,12 +21,15 @@ var _current_pattern := BehaviorPattern.UNDECIDED
 var _travel_squared_distance := -1.0
 ## The position of EncounterSpawn in the last frame.
 var _last_frame_position := Vector3.ZERO
+## Flag that indicates that the EncounterSpawn is moving.
+var _moving := false
 
 
 ## Virtual function. Called by the state machine upon changing the active state.
 ## The `msg` parameter is a dictionary with arbitrary data the state can use to
 ## initialize itself.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
+	_moving = false
 	_current_pattern = (
 			BehaviorPattern.ROAM if enc_spawn.roam_area != null
 			else BehaviorPattern.TRAVEL
@@ -74,10 +77,15 @@ func _ready_connect_signals() -> void:
 ## Handles the roaming behavior, moving the spawner from point to point.
 func _roam_behavior() -> void:
 	if enc_spawn.nav_agent.is_target_reached():
+		_moving = false
+		enc_spawn.sprite.play_idle()
 		enc_spawn.nav_agent.target_position = enc_spawn.roam_area.get_next_point()
 		enc_spawn.timer.start(randf_range(0.2, 2.0))
 	if not enc_spawn.timer.is_stopped():
 		return
+	if not _moving:
+		enc_spawn.sprite.play_movement()
+	_moving = true
 	enc_spawn.move_spawner(enc_spawn.idle_speed)
 	_travel_squared_distance += enc_spawn.position.distance_squared_to(
 			_last_frame_position

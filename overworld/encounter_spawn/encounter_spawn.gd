@@ -99,7 +99,9 @@ func set_active(value: bool) -> void:
 ## Moves the spawner in the given direction.
 func move_spawner(speed: float) -> void:
 	var destination := nav_agent.get_next_path_position() - global_position
-	velocity = destination.normalized() * speed
+	var dir3D := destination.normalized()
+	velocity = dir3D * speed
+	sprite.facing_direction = Vector2(dir3D.x, dir3D.z).normalized()
 	move_and_slide()
 
 
