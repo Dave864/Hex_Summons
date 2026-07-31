@@ -10,7 +10,7 @@ extends Character
 ## The path to the default portrait for player characters.
 const DEFAULT_PORTRAIT_PATH: String = (
 		"res://character/player_characters/PlayerCharacter/" + \
-		"PlayerBattlePortrait.atlastex"
+		"BattlePortrait.atlastex"
 )
 ## Formatted string used to create the file path for the portrait of a player
 ## character.
