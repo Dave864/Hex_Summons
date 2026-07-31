@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://byets8barm0ik"]
 
 [ext_resource type="Script" uid="uid://blllus8v7ujpt" path="res://character/enemy_characters/enemy_character.gd" id="1_jci7l"]
-[ext_resource type="Texture2D" uid="uid://3iyuwde5qgbi" path="res://character/enemy_characters/EnemyPrey/EnemyBattlePortrait.atlastex" id="2_55dr5"]
+[ext_resource type="Texture2D" uid="uid://3iyuwde5qgbi" path="res://character/enemy_characters/EnemyPrey/BattlePortrait.atlastex" id="2_55dr5"]
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="3_mcimp"]
 [ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="4_a8r14"]
 [ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="5_rxfg0"]

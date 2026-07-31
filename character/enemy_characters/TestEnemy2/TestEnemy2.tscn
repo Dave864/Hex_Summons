@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="10"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="12"]
-[ext_resource type="Texture2D" uid="uid://dckqbmymk5fio" path="res://character/enemy_characters/TestEnemy2/TestEnemy2BattlePortrait.atlastex" id="13"]
+[ext_resource type="Texture2D" uid="uid://dckqbmymk5fio" path="res://character/enemy_characters/TestEnemy2/BattlePortrait.atlastex" id="13"]
 [ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="14"]
 [ext_resource type="PackedScene" uid="uid://cp6hc4c3kwymm" path="res://actions/action_nodes/Shot/Shot.tscn" id="15"]
 [ext_resource type="PackedScene" uid="uid://6pb0gwn4gr8t" path="res://actions/action_nodes/Blast/Blast.tscn" id="16"]
