@@ -86,11 +86,16 @@ func set_area_details(
 	spawn_area = new_area
 
 
-## Sets the navigation destination to a random travel point relative to
-## EncounterSpawn's current position. Can specify a range the point must be
+## Sets the target position for the navigation agent.
+func set_nav_target(destination: Vector3) -> void:
+	nav_agent.target_position = destination
+
+
+## Sets the navigation agent target position to a random travel point relative
+## to EncounterSpawn's current position. Can specify a range the point must be
 ## in. If the ranges contradict each other, or no point could be found in
 ## the given range, any random point is returned.
-func set_random_travel_point(
+func set_nav_to_travel_point(
 	min_dist: float = -1.0,
 	max_dist: float = -1.0
 ) -> void:

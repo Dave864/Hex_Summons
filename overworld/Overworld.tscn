@@ -283,7 +283,7 @@ transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 0.9999998, -36.7
 script = ExtResource("6_uyahc")
 radius = 6.21
 enemies = PackedStringArray("TestEnemy2")
-roam_chance = 1.0
+roam_chance = 0.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
 [node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
@@ -390,4 +390,4 @@ transform = Transform3D(1, 0, 0, 0, 0.6537509, 0.7567098, 0, -0.7567098, 0.65375
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.652, 0, -12.145)
 
 [node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
-transform = Transform3D(1, 0, 0, 0, 0.6480137, 0.76162875, 0, -0.76162875, 0.6480137, 0.1927185, 8.957132, 7.89653)
+transform = Transform3D(1, 0, 0, 0, 0.46507394, 0.8852719, 0, -0.8852719, 0.46507394, 0.1927185, 11.221527, 7.090953)

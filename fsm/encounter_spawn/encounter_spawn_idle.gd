@@ -17,6 +17,8 @@ enum BehaviorPattern {
 
 ## The pattern followed by EncounterSpawn.
 var _current_pattern := BehaviorPattern.UNDECIDED
+## The travel desitnation for EncounterSpawn. Used in `Travel` behavior.
+var _travel_point := Vector3.INF
 ## The total squared distance traveled by EncounterSpawn in this state.
 var _travel_squared_distance := -1.0
 ## The position of EncounterSpawn in the last frame.
@@ -37,13 +39,17 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	_last_frame_position = enc_spawn.position
 	if _travel_squared_distance < 0.0:
 		_travel_squared_distance = 0.0
-	if _current_pattern == BehaviorPattern.ROAM:
-		enc_spawn.nav_agent.target_position = enc_spawn.roam_area.get_next_point()
-
-
-## Virtual function. Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	pass
+	match _current_pattern:
+		BehaviorPattern.ROAM:
+			enc_spawn.set_nav_target(enc_spawn.roam_area.get_next_point())
+		BehaviorPattern.TRAVEL:
+			if _travel_point.is_finite():
+				enc_spawn.set_nav_target(_travel_point)
+			else:
+				enc_spawn.set_nav_to_travel_point()
+				_travel_point = enc_spawn.nav_agent.target_position
+		_:
+			enc_spawn.set_nav_target(enc_spawn.global_position)
 
 
 ## Virtual function. Corresponds to the `_physics_process()` callback.
@@ -52,17 +58,11 @@ func physics_update(_delta: float) -> void:
 		BehaviorPattern.ROAM:
 			_roam_behavior()
 		BehaviorPattern.TRAVEL:
-			pass
+			_travel_behavior()
 		_:
 			return
 	if _travel_squared_distance > pow(enc_spawn.idle_despawn_distance, 2.0):
 		state_machine.transition_to(DESPAWN)
-
-
-## Virtual function. Called by the state machine before changing the active
-## state. Use this function to clean up the state.
-func exit() -> void:
-	pass
 
 
 ## Virtual function. To be called in the _ready function to connect signals to 
@@ -83,14 +83,30 @@ func _roam_behavior() -> void:
 		enc_spawn.timer.start(randf_range(0.2, 2.0))
 	if not enc_spawn.timer.is_stopped():
 		return
+	_move_spawner()
+
+
+
+## Handles the travel behavior, moving the spawner to the final destination.
+func _travel_behavior() -> void:
+	if enc_spawn.nav_agent.is_target_reached():
+		_moving = false
+		state_machine.transition_to(DESPAWN)
+		return
+	_move_spawner()
+
+
+## Moves EncounterSpawn to current navigation target.
+func _move_spawner() -> void:
 	if not _moving:
 		enc_spawn.sprite.play_movement()
-	_moving = true
+	_moving = true 
 	enc_spawn.move_spawner(enc_spawn.idle_speed)
 	_travel_squared_distance += enc_spawn.position.distance_squared_to(
 			_last_frame_position
 	)
 	_last_frame_position = enc_spawn.position
+
 
 
 ## Triggers a transition to the `Alert` state when a relevant body enters the
