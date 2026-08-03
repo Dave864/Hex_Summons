@@ -86,6 +86,36 @@ func set_area_details(
 	spawn_area = new_area
 
 
+## Sets the navigation destination to a random travel point relative to
+## EncounterSpawn's current position. Can specify a range the point must be
+## in. If the ranges contradict each other, or no point could be found in
+## the given range, any random point is returned.
+func set_random_travel_point(
+	min_dist: float = -1.0,
+	max_dist: float = -1.0
+) -> void:
+	var point: Vector3
+	if min_dist >= max_dist or (min_dist < 0.0 and max_dist < 0.0):
+		point = start_terrain_zone.get_random_travel_point()
+	elif min_dist > 0.0 and max_dist < 0.0:
+		point = start_terrain_zone.get_random_travel_point_beyond_range(
+				global_position,
+				min_dist
+		)
+	elif max_dist > 0.0 and min_dist < 0.0:
+		point = start_terrain_zone.get_random_travel_point_in_range(
+				global_position,
+				max_dist
+		)
+	else:
+		point = start_terrain_zone.get_random_travel_point_within_range(
+				global_position,
+				min_dist,
+				max_dist
+		)
+	nav_agent.target_position = point
+
+
 ## Emits the "despawned" signal.
 func emit_despawned() -> void:
 	emit_signal("despawned", get_instance_id())

@@ -55,11 +55,10 @@ func get_random_travel_point_in_range(
 ) -> Vector3:
 	var lambda_1 = func is_smaller(dist_sq: float, shortest: float) -> bool:
 		return dist_sq < shortest
-	var lambda_2 = func is_in_range(dist_sq: float, limit: float) -> bool:
-		return dist_sq <= pow(limit, 2.0)
+	var lambda_2 = func is_in_range(dist_sq: float) -> bool:
+		return dist_sq <= pow(range_limit, 2.0)
 	return _get_random_travel_point_helper(
 			reference,
-			range_limit,
 			INF,
 			lambda_1,
 			lambda_2
@@ -76,15 +75,39 @@ func get_random_travel_point_beyond_range(
 ) -> Vector3:
 	var lambda_1 := func compare(dist_sq: float, value: float) -> bool:
 		return value < dist_sq if default_farthest else value > dist_sq
-	var lambda_2 := func outside_of_range(dist_sq: float, limit: float) -> bool:
-		return dist_sq > pow(limit, 2.0)
+	var lambda_2 := func outside_of_range(dist_sq: float) -> bool:
+		return dist_sq > pow(range_limit, 2.0)
 	return _get_random_travel_point_helper(
 			reference,
-			range_limit,
 			0.0 if default_farthest else INF,
 			lambda_1,
 			lambda_2
 	)
+
+
+## Gets a random travel that is farther than some minimum and closer than some
+## maximum. Returns any random point if the minimum and maximum contradict or
+## if no point could be found within the specified bounds.
+func get_random_travel_point_within_range(
+	reference: Vector3,
+	min_limit: float,
+	max_limit: float
+) -> Vector3:
+	if min_limit >= max_limit:
+		return get_random_travel_point()
+	var lambda_1 := func compare(_dist_sq: float, _value: float) -> bool:
+		return false
+	var lambda_2 := func within_range(dist_sq) -> bool:
+		return dist_sq > pow(min_limit, 2.0) and dist_sq < pow(max_limit, 2.0)
+	var point := _get_random_travel_point_helper(
+			reference,
+			INF,
+			lambda_1,
+			lambda_2
+	)
+	if point.is_finite():
+		return point
+	return get_random_travel_point()
 
 
 ## Creates a new collision shape if none is already present.
@@ -122,20 +145,19 @@ func _get_travel_points() -> void:
 ## comparison operations.
 func _get_random_travel_point_helper(
 	reference: Vector3,
-	range_limit: float,
 	starting_comparison: float,
 	default_comparator: Callable,
 	update_comparator: Callable
 ) -> Vector3:
 	var valid_points: PackedVector3Array = []
 	var comparison_distance := starting_comparison
-	var selected: Vector3
+	var selected := Vector3.INF
 	for point: Vector3 in travel_points:
 		var distance_squared := point.distance_squared_to(reference)
 		if default_comparator.call(distance_squared, comparison_distance):
 			comparison_distance = distance_squared
 			selected = point
-		if update_comparator.call(distance_squared, range_limit):
+		if update_comparator.call(distance_squared):
 			valid_points.append(point)
 	if valid_points.size() > 0:
 		var i := randi() % valid_points.size()
