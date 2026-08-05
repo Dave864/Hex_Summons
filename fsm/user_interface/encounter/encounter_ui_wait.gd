@@ -19,7 +19,7 @@ func enter(_msg := {}) -> void:
 ## Called by the state machine before changing the active state.
 ## Use this function to clean up the state.
 func exit() -> void:
-	SignalBus.player_turn_started.connect(_on_SignalBus_player_turn_started)
+	SignalBus.player_turn_started.disconnect(_on_SignalBus_player_turn_started)
 
 
 ## Connects the SignalBus summon_turn_started signal.

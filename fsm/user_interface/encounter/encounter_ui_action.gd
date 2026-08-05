@@ -32,8 +32,8 @@ func _connect_signals() -> void:
 
 ## Disconnect the signals connected to this state.
 func _disconnect_signals() -> void:
-	SignalBus.player_turn_finalized.connect(_on_SignalBus_player_turn_finalized)
-	SignalBus.character_action_executed.connect(
+	SignalBus.player_turn_finalized.disconnect(_on_SignalBus_player_turn_finalized)
+	SignalBus.character_action_executed.disconnect(
 			_on_SignalBus_character_action_executed
 	)
 
