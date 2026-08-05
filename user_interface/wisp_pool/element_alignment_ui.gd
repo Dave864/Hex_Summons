@@ -32,9 +32,8 @@ const DARK := Element.Alignment.DARK
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	ElementalAlignment.connect(
-			"alignment_changed",
-			Callable(self, "_on_ElementalAlignment_alignment_changed")
+	ElementalAlignment.alignment_changed.connect(
+			_on_ElementalAlignment_alignment_changed
 	)
 	_set_icons()
 

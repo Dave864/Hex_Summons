@@ -6,14 +6,8 @@ extends WispPoolUI
 ## Assigns the pool this UI node will display.
 func set_wisp_pool(new_pool: WispPool = null) -> void:
 	if pool != null:
-		pool.disconnect(
-				"active_count_changed",
-				Callable(self, "_on_WispPool_active_count_changed")
-		)
+		pool.active_count_changed.disconnect(_on_WispPool_active_count_changed)
 	pool = new_pool
 	if pool != null:
-		pool.connect(
-				"active_count_changed",
-				Callable(self, "_on_WispPool_active_count_changed")
-		)
+		pool.active_count_changed.connect(_on_WispPool_active_count_changed)
 		_set_labels()

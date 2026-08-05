@@ -155,12 +155,10 @@ func _get_start_indices(
 func _connect_map_to_selector() -> void:
 	selection_tracker.set_players_reference(players)
 	selection_tracker.set_enemies_reference(enemies)
-	var selector_mouse_hovered_func := Callable(
-			selection_tracker.selector,
-			"_on_MapTile_mouse_hovered"
-	)
 	for mt: MapTile in hex_map.get_map_tiles():
-		mt.connect("mouse_hovered", selector_mouse_hovered_func)
+		mt.mouse_hovered.connect(
+				selection_tracker.selector._on_MapTile_mouse_hovered
+		)
 
 
 ## Check that all required parameters are set.

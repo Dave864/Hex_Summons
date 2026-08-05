@@ -173,23 +173,23 @@ func _connect_signals() -> void:
 			$MouseBlocker/ScalingHexCollider,
 			"_on_HeightSource_height_changed"
 	)
-	if not is_connected("height_changed", height_changed_mouse_blocker_callable):
-		connect("height_changed", height_changed_mouse_blocker_callable)
+	if not height_changed.is_connected(height_changed_mouse_blocker_callable):
+		height_changed.connect(height_changed_mouse_blocker_callable)
 	var height_changed_tile_mesh_callable := Callable(
 			tile_mesh,
 			"_on_HeightSource_height_changed"
 	)
-	if not is_connected("height_changed", height_changed_tile_mesh_callable):
-		connect("height_changed", height_changed_tile_mesh_callable)
+	if not height_changed.is_connected(height_changed_tile_mesh_callable):
+		height_changed.connect(height_changed_tile_mesh_callable)
 	var area_entered_callable := Callable(occupant, "_on_MapTile_area_entered")
-	if not is_connected("area_entered", area_entered_callable):
-		connect("area_entered", area_entered_callable)
+	if not area_entered.is_connected(area_entered_callable):
+		area_entered.connect(area_entered_callable)
 	var area_exited_callable := Callable(occupant, "_on_MapTile_area_exited")
-	if not is_connected("area_exited", area_exited_callable):
-		connect("area_exited", area_exited_callable)
+	if not area_exited.is_connected(area_exited_callable):
+		area_exited.connect(area_exited_callable)
 	var mouse_entered_callable := Callable(self, "_on_MapTile_mouse_entered")
-	if not is_connected("mouse_entered", mouse_entered_callable):
-		connect("mouse_entered", mouse_entered_callable)
+	if not mouse_entered.is_connected(mouse_entered_callable):
+		mouse_entered.connect(mouse_entered_callable)
 
 
 ## Update the position of the tile highlighters so that they are on top of

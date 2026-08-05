@@ -20,11 +20,8 @@ func _init(stored_action: Action) -> void:
 	text = name
 	alignment = HORIZONTAL_ALIGNMENT_CENTER
 	flat = true
-	connect("pressed", Callable(self, "_on_ActionOptionButton_pressed"))
-	connect(
-			"focus_entered",
-			Callable(self, "_on_ActionOptionButton_focus_entered")
-	)
+	pressed.connect(_on_ActionOptionButton_pressed)
+	focus_entered.connect(_on_ActionOptionButton_focus_entered)
 
 
 ### Inidicates that a character action has been selected.

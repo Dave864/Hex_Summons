@@ -26,14 +26,11 @@ func _ready() -> void:
 ## Updates the summon character reference.
 func set_summon_reference(new_summon: Summon) -> void:
 	if _summon != null:
-		_summon.disconnect("activated", Callable(self, "_on_Summon_activated"))
-		_summon.disconnect(
-				"deactivated",
-				Callable(self, "_on_Summon_deactivated")
-		)
+		_summon.activated.disconnect(_on_Summon_activated)
+		_summon.deactivated.disconnect(_on_Summon_deactivated)
 	_summon = new_summon
-	_summon.connect("activated", Callable(self, "_on_Summon_activated"))
-	_summon.connect("deactivated", Callable(self, "_on_Summon_deactivated"))
+	_summon.activated.connect(_on_Summon_activated)
+	_summon.deactivated.connect(_on_Summon_deactivated)
 
 
 ## Populates the initiative tracker with character details.

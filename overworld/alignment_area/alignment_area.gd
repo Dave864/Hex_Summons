@@ -20,9 +20,8 @@ var _dark_2_current := Element.Core.WATER
 
 ## Creates a new CollisionShape if none is present.
 func _ready() -> void:
-	var body_entered_callable := Callable(self, "_on_AlignmentArea_body_entered")
-	if not is_connected("body_entered", body_entered_callable):
-		connect("body_entered", body_entered_callable)
+	if not body_entered.is_connected(_on_AlignmentArea_body_entered):
+		body_entered.connect(_on_AlignmentArea_body_entered)
 	if get_shape_owners().size() == 0:
 		var collision_shape := CollisionShape3D.new()
 		add_child(collision_shape)

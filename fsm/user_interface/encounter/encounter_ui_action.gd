@@ -24,41 +24,17 @@ func exit() -> void:
 ## These signals are used by other states and will be disconnected to avoid
 ## unintended behavior.
 func _connect_signals() -> void:
-	SignalBus.connect(
-			"player_turn_finalized",
-			Callable(self, "_on_SignalBus_player_turn_finalized")
-	)
-	SignalBus.connect(
-			"character_action_selected",
-			Callable(self, "_on_SignalBus_character_action_selected")
-	)
-	SignalBus.connect(
-			"spawn_action_selected", 
-			Callable(self, "_on_SignalBus_spawn_action_selected")
-	)
-	SignalBus.connect(
-			"character_action_executed",
-			Callable(self, "_on_SignalBus_character_action_executed")
+	SignalBus.player_turn_finalized.connect(_on_SignalBus_player_turn_finalized)
+	SignalBus.character_action_executed.connect(
+			_on_SignalBus_character_action_executed
 	)
 
 
 ## Disconnect the signals connected to this state.
 func _disconnect_signals() -> void:
-	SignalBus.disconnect(
-			"player_turn_finalized",
-			Callable(self, "_on_SignalBus_player_turn_finalized")
-	)
-	SignalBus.disconnect(
-			"character_action_selected",
-			Callable(self, "_on_SignalBus_character_action_selected")
-	)
-	SignalBus.disconnect(
-			"spawn_action_selected", 
-			Callable(self, "_on_SignalBus_spawn_action_selected")
-	)
-	SignalBus.disconnect(
-			"character_action_executed",
-			Callable(self, "_on_SignalBus_character_action_executed")
+	SignalBus.player_turn_finalized.connect(_on_SignalBus_player_turn_finalized)
+	SignalBus.character_action_executed.connect(
+			_on_SignalBus_character_action_executed
 	)
 
 

@@ -20,9 +20,8 @@ var _avatar: OverworldAvatar = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super._ready()
-	var body_exited_callable := Callable(self, "_on_AlignmentArea_body_exited")
-	if not is_connected("body_exited", body_exited_callable):
-		connect("body_exited", body_exited_callable)
+	if not body_exited.is_connected(_on_AlignmentArea_body_exited):
+		body_exited.connect(_on_AlignmentArea_body_exited)
 
 
 ## Updates the timer duration by the distance the avatar traveled. Avatar

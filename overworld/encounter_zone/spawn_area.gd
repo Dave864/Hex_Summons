@@ -187,10 +187,7 @@ func _process_spawning() -> void:
 			add_child(spawner)
 			spawner.global_position = _determine_spawn_global_position(roam_offset)
 		_active_spawners.append(spawner.get_instance_id())
-		spawner.connect(
-				"despawned",
-				Callable(self, "_on_EncounterSpawn_despawned")
-		)
+		spawner.despawned.connect(_on_EncounterSpawn_despawned)
 
 
 ## Define a roam area for an EncounterSpawn.

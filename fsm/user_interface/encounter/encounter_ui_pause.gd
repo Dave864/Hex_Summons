@@ -10,19 +10,15 @@ extends EncounterUIState
 ## initialize itself.
 func enter(_msg := {}) -> void:
 	encounter_ui.disable_player_menu(true)
-	SignalBus.connect(
-			"selector_required",
-			Callable(self, "_on_SignalBus_selector_required")
-	)
+	SignalBus.action_selector_required.connect(_on_SignalBus_selector_required)
 
 
 ## Virtual function. Called by the state machine before changing the active 
 ## state. Use this function to clean up the state.
 func exit() -> void:
 	encounter_ui.disable_player_menu(false)
-	SignalBus.disconnect(
-			"selector_required",
-			Callable(self, "_on_SignalBus_selector_required")
+	SignalBus.action_selector_required.disconnect(
+			_on_SignalBus_selector_required
 	)
 
 

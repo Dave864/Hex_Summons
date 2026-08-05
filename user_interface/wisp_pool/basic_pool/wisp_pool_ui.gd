@@ -30,9 +30,8 @@ var pool: WispPool = null
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	ElementalAlignment.connect(
-			"alignment_changed",
-			Callable(self, "_on_ElementalAlignment_alignment_changed")
+	ElementalAlignment.alignment_changed.connect(
+			_on_ElementalAlignment_alignment_changed
 	)
 	_set_labels_on_ready()
 	_set_icons()
@@ -41,16 +40,10 @@ func _ready():
 ## Virtual function. Initializes the wisp pool reference.
 func set_wisp_pool(new_pool: WispPool = null) -> void:
 	if pool != null:
-		pool.disconnect(
-				"active_count_changed",
-				Callable(self, "_on_WispPool_active_count_changed")
-		)
+		pool.active_count_changed.disconnect(_on_WispPool_active_count_changed)
 	pool = new_pool
 	if new_pool != null:
-		pool.connect(
-				"active_count_changed",
-				Callable(self, "_on_WispPool_active_count_changed")
-		)
+		pool.active_count_changed.connect(_on_WispPool_active_count_changed)
 	_set_labels()
 	_set_icons()
 

@@ -115,10 +115,7 @@ func track_enemy(e: EnemyCharacter) -> void:
 	)
 	e_label.set_enemy_wisp_count()
 	e_label.set_text_alignment(HORIZONTAL_ALIGNMENT_RIGHT)
-	e.stats.connect(
-			"health_changed",
-			Callable(e_label, "_on_Character_hp_changed")
-	)
+	e.stats.health_changed.connect(e_label._on_Character_hp_changed)
 	enemy_stats.add_child(e_label)
 
 
@@ -161,13 +158,11 @@ func _show_focused_character_in_party() -> void:
 func _disconnect_focus_player_health_changed() -> void:
 	var character_connected: bool = (
 			_focused_character != null 
-			and _focused_character.stats.is_connected(
-				"health_changed",
-				Callable(active_character_ui, "_on_Character_hp_changed")
+			and _focused_character.stats.health_changed.is_connected(
+				active_character_ui._on_Character_hp_changed
 			)
 	)
 	if character_connected:
-		_focused_character.stats.disconnect(
-				"health_changed",
-				Callable(active_character_ui, "_on_Character_hp_changed")
+		_focused_character.stats.health_changed.disconnect(
+				active_character_ui._on_Character_hp_changed
 		)

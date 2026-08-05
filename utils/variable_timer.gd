@@ -11,7 +11,7 @@ extends Timer
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	assert(lower_time <= upper_time, "lower_time is higher than upper_time.")
-	self.connect("timeout", Callable(self, "_on_Timer_timeout"))
+	timeout.connect(_on_Timer_timeout)
 	start(randf_range(lower_time, upper_time))
 
 

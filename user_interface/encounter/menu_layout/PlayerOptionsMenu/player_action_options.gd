@@ -205,8 +205,7 @@ func _create_action_option_button(
 	action_display_function: String
 ) -> void:
 	var option_button := ActionOptionButton.new(action)
-	option_button.connect(
-			"action_highlighted",
+	option_button.action_highlighted.connect(
 			Callable(action_display, action_display_function)
 	)
 	_action_options_container.add_child(option_button)
@@ -224,9 +223,8 @@ func _create_summon_option_button(
 			spawn_action,
 			summon_manager
 	)
-	option_button.connect(
-			"action_highlighted",
-			Callable(action_display, "_on_SummonOptionButton_action_highlighted")
+	option_button.action_highlighted.connect(
+			action_display._on_SummonOptionButton_action_highlighted
 	)
 	_action_options_container.add_child(option_button)
 	_set_button_neighbors(option_button, _summon_options)

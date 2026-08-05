@@ -13,27 +13,18 @@ func enter(_msg := {}) -> void:
 	
 	# These signals are used by other states and will be disconnected to avoid
 	# unintended behavior.
-	SignalBus.connect(
-		"player_turn_started",
-		Callable(self, "_on_SignalBus_player_turn_started")
-	)
+	SignalBus.player_turn_started.connect(_on_SignalBus_player_turn_started)
 
 
 ## Called by the state machine before changing the active state.
 ## Use this function to clean up the state.
 func exit() -> void:
-	SignalBus.disconnect(
-		"player_turn_started",
-		Callable(self, "_on_SignalBus_player_turn_started")
-	)
+	SignalBus.player_turn_started.connect(_on_SignalBus_player_turn_started)
 
 
 ## Connects the SignalBus summon_turn_started signal.
 func _ready_connect_signals() -> void:
-	SignalBus.connect(
-			"summon_turn_started",
-			Callable(self, "_on_SignalBus_summon_turn_started")
-	)
+	SignalBus.summon_turn_started.connect(_on_SignalBus_summon_turn_started)
 
 
 ## Set the specified player as the character of focus in EncounterUI and moves
