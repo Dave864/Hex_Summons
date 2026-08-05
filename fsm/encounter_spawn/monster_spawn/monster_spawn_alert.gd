@@ -8,4 +8,5 @@ extends EncounterSpawnAlert
 
 ## Goes to the `Reaction` state, specifying that the action should be to chase.
 func _determine_reaction() -> void:
+	print("Reaction!")
 	pass

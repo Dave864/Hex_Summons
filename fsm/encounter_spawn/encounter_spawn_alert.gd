@@ -17,6 +17,8 @@ var _alert_focus: CharacterBody3D = null
 var _focus_in_view: bool = false
 ## Tracks the characters that are within the alert range.
 var _tracked_targets: Dictionary[int, CharacterBody3D] = {}
+## The number of times the focus has been reset.
+var _focus_reset_count: int = 0
 ## The current global position of the EncounterSpawn.
 var _ref_position: Vector3:
 	get():
@@ -30,10 +32,15 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	_alert_focus = msg["AlertFocus"]
 	_tracked_targets[_alert_focus.get_instance_id()] = _alert_focus
 	_focus_in_view = _is_in_view(_alert_focus)
+	_focus_reset_count = 0
+	enc_spawn.timer.start(enc_spawn.alert_time)
 
 
 ## Virtual function. Corresponds to the `_process()` callback.
 func update(delta: float) -> void:
+	if enc_spawn.timer.is_stopped():
+		_determine_reaction()
+		return
 	if _tracked_targets.is_empty():
 		state_machine.transition_to(IDLE, {})
 		return
@@ -44,6 +51,12 @@ func update(delta: float) -> void:
 ## Virtual function. Corresponds to the `_physics_process()` callback.
 func physics_update(_delta: float) -> void:
 	pass
+
+
+## Starts the alert timer, accounting for the number of times the focus has
+## reset.
+func _start_alert_timer() -> void:
+	enc_spawn.timer.start(enc_spawn.alert_time / pow(2.0, _focus_reset_count))
 
 
 ## Virtual function. To be called in the _ready function to connect signals to 
@@ -76,6 +89,8 @@ func _update_focus() -> void:
 				_focus_in_view = true
 			_alert_focus = target
 			closest_dist = dist
+			_focus_reset_count += 1
+			enc_spawn.timer.start(enc_spawn.alert_time / 2.0)
 
 
 ## Gets the squared distance if the target to the EncounterSpawn.
