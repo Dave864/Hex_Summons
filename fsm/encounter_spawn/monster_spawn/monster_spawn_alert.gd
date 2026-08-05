@@ -1,11 +1,11 @@
+class_name MonsterSpawnAlert
 extends EncounterSpawnAlert
+## The logic of the `Alert` state of a monster EncounterSpawn.
+##
+## The spawner immediately goes to the `Reaction` state, specifying that it should
+## chase after the focus of the alert.
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+## Goes to the `Reaction` state, specifying that the action should be to chase.
+func _determine_reaction() -> void:
 	pass

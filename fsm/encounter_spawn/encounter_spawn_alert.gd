@@ -8,10 +8,15 @@ extends EncounterSpawnState
 ## EncounterSpawn has must be defined in derived classes.
 
 
+## The degrees per second EncounterSpawn rotates to face a target.
+const ROTATION_SPEED := 60.0
+
 ## The character that is the point of focus.
-var _alert_focus: Node3D = null
+var _alert_focus: CharacterBody3D = null
+## Flag that indicates that the focused is within view of EncounterSpawn.
+var _focus_in_view: bool = false
 ## Tracks the characters that are within the alert range.
-var _tracked_targets: Dictionary[int, TargetDetails] = {}
+var _tracked_targets: Dictionary[int, CharacterBody3D] = {}
 ## The current global position of the EncounterSpawn.
 var _ref_position: Vector3:
 	get():
@@ -23,90 +28,126 @@ var _ref_position: Vector3:
 ## initialize itself.
 func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	_alert_focus = msg["AlertFocus"]
-
-
-## Virtual function. Receives events from the `_unhandled_input()` callback.
-func handle_input(_event: InputEvent) -> void:
-	pass
+	_tracked_targets[_alert_focus.get_instance_id()] = _alert_focus
+	_focus_in_view = _is_in_view(_alert_focus)
 
 
 ## Virtual function. Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	pass
+func update(delta: float) -> void:
+	if _tracked_targets.is_empty():
+		state_machine.transition_to(IDLE, {})
+		return
+	_update_focus()
+	_orient_to_focus_target(delta)
 
 
 ## Virtual function. Corresponds to the `_physics_process()` callback.
 func physics_update(_delta: float) -> void:
-	for target: TargetDetails in _tracked_targets.values():
-		target.distance = _ref_position.distance_squared_to(target.position())
+	pass
+
+
+## Virtual function. To be called in the _ready function to connect signals to 
+## the state. The signals connected here should not be required by other states.
+func _ready_connect_signals() -> void:
+	enc_spawn.alert_range.body_entered.connect(_on_AlertRange_body_entered)
+	enc_spawn.alert_range.body_exited.connect(_on_AlertRange_body_exited)
 
 
 ## Virtual function. Called by the state machine before changing the active
 ## state. Use this function to clean up the state.
 func exit() -> void:
-	pass
+	_tracked_targets.clear()
 
 
 ## Looks at all tracked characters and updates focus to the closest one,
 ## prioritizing those that are within view.
 func _update_focus() -> void:
-	var closest_distance: float = INF
-	var in_view := false
-	for target: TargetDetails in _tracked_targets.values():
-		pass
+	_focus_in_view = _is_in_view(_alert_focus)
+	var closest_dist: float = _distance_squared_to_ref(_alert_focus)
+	for target: CharacterBody3D in _tracked_targets.values():
+		var dist := _distance_squared_to_ref(target)
+		if dist < closest_dist:
+			if _focus_in_view and not _is_in_view(target):
+				continue
+			# If the prior focus target left the alert area while still in view,
+			# _focus_in_view will be false. Want to prioritize any remaining
+			# target candidates that are in view in this case.
+			elif not _focus_in_view and _is_in_view(target):
+				_focus_in_view = true
+			_alert_focus = target
+			closest_dist = dist
+
+
+## Gets the squared distance if the target to the EncounterSpawn.
+func _distance_squared_to_ref(target: CharacterBody3D) -> float:
+	if target == null:
+		return INF
+	return target.global_position.distance_squared_to(_ref_position)
+
+
+## Checks if the target is in view of the EncounterSpawn.
+func _is_in_view(target: CharacterBody3D) -> bool:
+	if target == null:
+		return false
+	var dir := _direction_2D_to_target(target)
+	return enc_spawn.sprite.facing_direction.dot(dir) > 0.0
+
+
+## Gets the direction from EncounterSpawn to the target.
+func _direction_2D_to_target(target: CharacterBody3D) -> Vector2:
+	var dir3D := _ref_position.direction_to(target.global_position)
+	return Vector2(dir3D.x, dir3D.z).normalized()
+
+
+## Rotates EncounterSpawn so that it is facing the current focus target.
+func _orient_to_focus_target(delta: float) -> void:
+	var old_dir := enc_spawn.sprite.facing_direction
+	var target_dir := _direction_2D_to_target(_alert_focus)
+	var angle_change := deg_to_rad(ROTATION_SPEED) * delta
+	enc_spawn.sprite.facing_direction = old_dir.move_toward(
+			target_dir,
+			angle_change
+	)
+
+
+## Defines how EncounterSpawn should react when something gets too close.
+@abstract func _determine_reaction() -> void
 
 
 ## Adds the detected body to the target tracker.
 func _on_AlertRange_body_entered(body: Node3D) -> void:
+	if not _state_is_active():
+		return
 	if body is EncounterSpawn:
 		if body.type == enc_spawn.type:
 			return
-		body.connect(
-				"despawned",
-				Callable(self, "_on_EncounterSpawn_despawned")
-		)
-	var distance := _ref_position.distance_squared_to(body.global_position)
-	var details := TargetDetails.new(body, distance)
-	_tracked_targets[body.get_instance_id()] = details
+		body.despawned.connect(_on_EncounterSpawn_despawned)
+		_tracked_targets[body.get_instance_id()] = body
+	elif body is OverworldAvatar:
+		_tracked_targets[body.get_instance_id()] = body
 
 
 ## Removes the detected body from the target tracker.
 func _on_AlertRange_body_exited(body: Node3D) -> void:
+	if not _state_is_active():
+		return
 	if _tracked_targets.has(body.get_instance_id()):
 		_tracked_targets.erase(body.get_instance_id())
+		if body == _alert_focus:
+			_alert_focus = null
 	if body is EncounterSpawn:
 		if body.type == enc_spawn.type:
 			return
-		body.disconnect(
-				"despawned",
-				Callable(self, "_on_EncounterSpawn_despawned")
-		)
+		body.despawned.disconnect(_on_EncounterSpawn_despawned)
 
 
 ## Removes the despawned EncounterSpawn from the targets tracker.
 func _on_EncounterSpawn_despawned(id: int) -> void:
 	if _tracked_targets.has(id):
-		_tracked_targets[id].target.disconnect(
+		if _tracked_targets[id] == _alert_focus:
+			_alert_focus = null
+		_tracked_targets[id].disconnect(
 				"despawned",
 				Callable(self, "_on_EncounterSpawn_despawned")
 		)
 		_tracked_targets.erase(id)
-
-
-## Container that tracks data for a target.
-class TargetDetails:
-	## The character being tracked.
-	var target: CharacterBody3D
-	## How far away the character is from something.
-	var distance: float
-	
-	
-	## Creates a new instance of TargetDetails object.
-	func _init(target_data: CharacterBody3D, distance_data: float) -> void:
-		target = target_data
-		distance = distance_data
-	
-	
-	## Gets the global position of the target.
-	func position() -> Vector3:
-		return target.global_position
