@@ -71,8 +71,8 @@ func connect_encounter_details(
 	_o_ttr = ThreatTracker.new(_character.get_instance_id(), opponents, summon)
 	_a_ttr = ThreatTracker.new(_character.get_instance_id(), allies, summon)
 	_summon = summon
-	summon.connect("activated", Callable(self, "_on_Summon_activated"))
-	summon.connect("deactivated", Callable(self, "_on_Summon_deactivated"))
+	summon.activated.connect(_on_Summon_activated)
+	summon.deactivated.connect(_on_Summon_deactivated)
 
 
 ## Regenerates the distance map for the character's current position.
@@ -166,12 +166,12 @@ func _get_sorted_target_indexes(ab: ActionBehavior) -> Array[int]:
 		)
 	var target_indexes: Array[int]
 	if ab.target_focus == ActionBehavior.TargetFocus.CLOSEST:
-		_possible_targets.sort_custom(Callable(self, "_sort_character_dist"))
+		_possible_targets.sort_custom(_sort_character_dist)
 		for t: Character in _possible_targets:
 			target_indexes.append(t.map_coordinate.get_tile_index())
 		return target_indexes
 	if ab.target_focus == ActionBehavior.TargetFocus.FARTHEST:
-		_possible_targets.sort_custom(Callable(self, "_sort_character_dist"))
+		_possible_targets.sort_custom(_sort_character_dist)
 		for t in _possible_targets:
 			target_indexes.append(t.map_coordinate.get_tile_index())
 		target_indexes.reverse()
@@ -195,20 +195,18 @@ func _get_group_target_indexes(
 	match target_focus:
 		ActionBehavior.TargetFocus.CLOSEST:
 			var sorted_centers: Array[int] = groups.keys()
-			sorted_centers.sort_custom(Callable(self, "_sort_group_center_dist"))
+			sorted_centers.sort_custom(_sort_group_center_dist)
 			return sorted_centers
 		ActionBehavior.TargetFocus.FARTHEST:
 			var sorted_centers: Array[int] = groups.keys()
-			sorted_centers.sort_custom(Callable(self, "_sort_group_center_dist"))
+			sorted_centers.sort_custom(_sort_group_center_dist)
 			sorted_centers.reverse()
 			return sorted_centers
 		_:
 			var sorted_group_data: Array[Array] = []
 			for center: int in groups.keys():
 				sorted_group_data.append([center, groups[center]])
-			sorted_group_data.sort_custom(
-					Callable(self, "_sort_group_center_threat")
-			)
+			sorted_group_data.sort_custom(_sort_group_center_threat)
 			var sorted_centers: Array[int] = []
 			for gd: Array[Variant] in sorted_group_data:
 				sorted_centers.append(gd[0])
@@ -218,7 +216,7 @@ func _get_group_target_indexes(
 ## Gets the threat order of opponent characters.
 func _determine_opponent_index_threat_order() -> Array[int]:
 	var opponent_ids: Array[int] = _opponents.keys()
-	opponent_ids.sort_custom(Callable(self, "_sort_opponent_danger"))
+	opponent_ids.sort_custom(_sort_opponent_danger)
 	var indexes: Array[int] = []
 	for o: int in opponent_ids:
 		indexes.append(_opponents[o].map_coordinate.get_tile_index())
@@ -228,7 +226,7 @@ func _determine_opponent_index_threat_order() -> Array[int]:
 ## Gets the threat order of ally characters.
 func _determine_ally_index_threat_order() -> Array[int]:
 	var ally_ids: Array[int] = _allies.keys()
-	ally_ids.sort_custom(Callable(self, "_sort_ally_danger"))
+	ally_ids.sort_custom(_sort_ally_danger)
 	var indexes: Array[int] = []
 	for a: int in ally_ids:
 		indexes.append(_allies[a].map_coordinate.get_tile_index())

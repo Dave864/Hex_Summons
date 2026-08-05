@@ -8,10 +8,7 @@ extends UserCharacterWait
 ## Virtual function. To be called in the _ready function to connect signals to 
 ## the state. The signals connected here should not be required by other states.
 func _ready_connect_signals() -> void:
-	SignalBus.connect(
-			"summon_turn_started",
-			Callable(self, "_on_SignalBus_summon_turn_started")
-	)
+	SignalBus.summon_turn_started.connect(_on_SignalBus_summon_turn_started)
 
 
 ## Hit when the summon character is selected to take a turn. Transitions to

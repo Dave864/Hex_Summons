@@ -10,13 +10,9 @@ extends SelectionTrackerState
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
-	s_tracker.focused_character.connect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
-	)
-	SignalBus.connect(
-			"character_movement_finished",
-			Callable(self, "_on_SignalBus_character_movement_finished")
+	s_tracker.focused_character.turn_ended.connect(_on_Character_turn_ended)
+	SignalBus.character_movement_finished.connect(
+			_on_SignalBus_character_movement_finished
 	)
 	s_tracker.clear_highlights()
 	s_tracker.clear_indicators()
@@ -39,13 +35,9 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 ## Called by the state machine before changing the active state. Use this 
 ## function to clean up the state.
 func exit() -> void:
-	s_tracker.focused_character.disconnect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
-	)
-	SignalBus.disconnect(
-			"character_movement_finished",
-			Callable(self, "_on_SignalBus_character_movement_finished")
+	s_tracker.focused_character.turn_ended.disconnect(_on_Character_turn_ended)
+	SignalBus.character_movement_finished.disconnect(
+			_on_SignalBus_character_movement_finished
 	)
 
 

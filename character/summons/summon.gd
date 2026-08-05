@@ -119,9 +119,8 @@ func load_summon(summon_name: String, spawn_position: Vector3) -> void:
 	character_label.show_all()
 	character_label.set_max_health(summoner.stats.get_stat(Stat.Type.MAX_HEALTH))
 	character_label.set_cur_health(summoner.stats.get_stat(Stat.Type.CUR_HEALTH))
-	summoner.stats.connect(
-			"health_changed",
-			Callable(character_label, "_on_CharacterStatModifiers_health_changed")
+	summoner.stats.health_changed.connect(
+			character_label._on_CharacterStatModifiers_health_changed
 	)
 	position = spawn_position
 	_load_actions()
@@ -137,12 +136,8 @@ func dismiss_summon() -> void:
 	visible = false
 	if summoner != null:
 		summoner.character_label.show_all()
-		summoner.stats.disconnect(
-				"health_changed",
-				Callable(
-					character_label,
-					"_on_CharacterStatModifiers_health_changed"
-				)
+		summoner.stats.health_changed.disconnect(
+				character_label._on_CharacterStatModifiers_health_changed
 		)
 	character_label.hide_all()
 	for action: Action in turn_actions:

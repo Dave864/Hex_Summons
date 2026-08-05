@@ -35,14 +35,8 @@ func update(_delta: float) -> void:
 
 ## Connect signals that will persist throughout the life of this state.
 func _ready_connect_signals() -> void:
-	enc.summon.connect(
-			"is_waiting",
-			Callable(self, "_on_Summon_is_waiting")
-	)
-	enc.summon.connect(
-			"turn_ended",
-			Callable(self, "_on_Summon_turn_ended")
-	)
+	enc.summon.is_waiting.connect(_on_SummonCharacter_is_waiting)
+	enc.summon.turn_ended.connect(_on_Summon_turn_ended)
 
 
 ## Checks if the encounter has reached its end.

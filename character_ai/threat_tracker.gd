@@ -28,13 +28,10 @@ func _init(observer_id: int, chars: Array[Character], summon: Summon) -> void:
 	_observer_id = observer_id
 	for c: Character in chars:
 		_threat_values[c.get_instance_id()] = ThreatData.new()
-		c.connect("defeated", Callable(self, "_on_Character_defeated"))
-	SignalBus.connect(
-			"health_changed",
-			Callable(self, "_on_SignalBus_health_changed")
-	)
-	summon.connect("activated", Callable(self, "_on_Summon_activated"))
-	summon.connect("deactivated", Callable(self, "_on_Summon_deactivated"))
+		c.defeated.connect(_on_Character_defeated)
+	SignalBus.health_changed.connect(_on_SignalBus_health_changed)
+	summon.activated.connect(_on_Summon_activated)
+	summon.deactivated.connect(_on_Summon_deactivated)
 
 
 ## Returns the threat values recorded by the observer.

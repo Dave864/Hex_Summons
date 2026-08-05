@@ -54,29 +54,15 @@ func exit() -> void:
 ## Connect signals to this state.
 func _connect_signals() -> void:
 	_connect_character_turn_ended()
-	SignalBus.connect(
-			"player_turn_finalized",
-			Callable(self, "_on_SignalBus_player_turn_finalized")
+	SignalBus.player_turn_finalized.connect(_on_SignalBus_player_turn_finalized)
+	SignalBus.move_path_requested.connect(_on_SignalBus_move_path_requested)
+	SignalBus.character_action_selected.connect(
+			_on_SignalBus_character_action_selected
 	)
-	SignalBus.connect(
-			"move_path_requested",
-			Callable(self, "_on_SignalBus_move_path_requested")
-	)
-	SignalBus.connect(
-			"character_action_selected",
-			Callable(self, "_on_SignalBus_character_action_selected")
-	)
-	SignalBus.connect(
-			"spawn_action_selected",
-			Callable(self, "_on_SignalBus_spawn_action_selected")
-	)
-	SignalBus.connect(
-			"top_vertex_changed",
-			Callable(self, "_on_SignalBus_top_vertex_changed")
-	)
-	GamepadHandler.connect(
-			"left_joystick_pulsed",
-			Callable(self, "_on_GamepadHandler_left_joystick_pulsed")
+	SignalBus.spawn_action_selected.connect(_on_SignalBus_spawn_action_selected)
+	SignalBus.top_vertex_changed.connect(_on_SignalBus_top_vertex_changed)
+	GamepadHandler.left_joystick_pulsed.connect(
+			_on_GamepadHandler_left_joystick_pulsed
 	)
 
 
@@ -86,41 +72,28 @@ func _connect_signals() -> void:
 func _connect_character_turn_ended():
 	if s_tracker.focused_character.is_connected(
 			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
+			_on_Character_turn_ended
 	):
 		return
-	s_tracker.focused_character.connect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
-	)
+	s_tracker.focused_character.connect("turn_ended", _on_Character_turn_ended)
 
 
 ## Disconnect signals from this state that are reused by other states in this
 ## state machine.
 func _disconnect_signals() -> void:
-	SignalBus.disconnect(
-			"player_turn_finalized",
-			Callable(self, "_on_SignalBus_player_turn_finalized")
+	SignalBus.player_turn_finalized.disconnect(
+			_on_SignalBus_player_turn_finalized
 	)
-	SignalBus.disconnect(
-			"move_path_requested",
-			Callable(self, "_on_SignalBus_move_path_requested")
+	SignalBus.move_path_requested.disconnect(_on_SignalBus_move_path_requested)
+	SignalBus.character_action_selected.disconnect(
+			_on_SignalBus_character_action_selected
 	)
-	SignalBus.disconnect(
-			"character_action_selected",
-			Callable(self, "_on_SignalBus_character_action_selected")
+	SignalBus.spawn_action_selected.disconnect(
+			_on_SignalBus_spawn_action_selected
 	)
-	SignalBus.disconnect(
-			"spawn_action_selected",
-			Callable(self, "_on_SignalBus_spawn_action_selected")
-	)
-	SignalBus.disconnect(
-			"top_vertex_changed",
-			Callable(self, "_on_SignalBus_top_vertex_changed")
-	)
-	GamepadHandler.disconnect(
-			"left_joystick_pulsed",
-			Callable(self, "_on_GamepadHandler_left_joystick_pulsed")
+	SignalBus.top_vertex_changed.disconnect(_on_SignalBus_top_vertex_changed)
+	GamepadHandler.left_joystick_pulsed.disconnect(
+			_on_GamepadHandler_left_joystick_pulsed
 	)
 
 
@@ -167,10 +140,7 @@ func _on_Character_turn_ended() -> void:
 	# Clear out movement path to reset it.
 	s_tracker.set_movement_path([])
 	_move_origin_index = -1
-	s_tracker.focused_character.disconnect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
-	)
+	s_tracker.focused_character.turn_ended.disconnect(_on_Character_turn_ended)
 	if _state_is_active():
 		state_machine.transition_to(WAIT)
 

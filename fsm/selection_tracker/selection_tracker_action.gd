@@ -79,7 +79,7 @@ func _get_target_distances() -> Array[Array]:
 		)
 		target_distances.append([option, dist])
 	target_distances.sort_custom(
-			Callable(ArraySorters, "sort_distance_to_character_asc")
+			ArraySorters.sort_distance_to_character_asc
 	)
 	return target_distances
 
@@ -206,65 +206,39 @@ func _can_execute() -> bool:
 
 ## Connect signals to this state.
 func _connect_signals() -> void:
-	s_tracker.focused_character.connect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
+	s_tracker.focused_character.turn_ended.connect(_on_Character_turn_ended)
+	SignalBus.player_turn_finalized.connect(_on_SignalBus_player_turn_finalized)
+	SignalBus.character_action_selected.connect(
+			_on_SignalBus_character_action_selected
 	)
-	SignalBus.connect(
-			"player_turn_finalized",
-			Callable(self, "_on_SignalBus_player_turn_finalized")
+	SignalBus.spawn_action_selected.connect(_on_SignalBus_spawn_action_selected)
+	SignalBus.character_action_type_canceled.connect(
+			_on_SignalBus_character_action_type_canceled
 	)
-	SignalBus.connect(
-			"character_action_selected",
-			Callable(self, "_on_SignalBus_character_action_selected")
-	)
-	SignalBus.connect(
-			"spawn_action_selected",
-			Callable(self, "_on_SignalBus_spawn_action_selected")
-	)
-	SignalBus.connect(
-			"character_action_type_canceled",
-			Callable(self, "_on_SignalBus_character_action_type_canceled")
-	)
-	SignalBus.connect(
-			"top_vertex_changed",
-			Callable(self, "_on_SignalBus_top_vertex_changed")
-	)
-	GamepadHandler.connect(
-			"left_joystick_pulsed",
-			Callable(self, "_on_GamepadHandler_left_joystick_pulsed")
+	SignalBus.top_vertex_changed.connect(_on_SignalBus_top_vertex_changed)
+	GamepadHandler.left_joystick_pulsed.connect(
+			_on_GamepadHandler_left_joystick_pulsed
 	)
 
 
 ## Disconnect signals from this state.
 func _disconnect_signals() -> void:
-	s_tracker.focused_character.disconnect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
+	s_tracker.focused_character.turn_ended.disconnect(_on_Character_turn_ended)
+	SignalBus.player_turn_finalized.disconnect(
+			_on_SignalBus_player_turn_finalized
 	)
-	SignalBus.disconnect(
-			"player_turn_finalized",
-			Callable(self, "_on_SignalBus_player_turn_finalized")
+	SignalBus.character_action_selected.disconnect(
+			_on_SignalBus_character_action_selected
 	)
-	SignalBus.disconnect(
-			"character_action_selected",
-			Callable(self, "_on_SignalBus_character_action_selected")
+	SignalBus.spawn_action_selected.disconnect(
+			_on_SignalBus_spawn_action_selected
 	)
-	SignalBus.disconnect(
-			"spawn_action_selected",
-			Callable(self, "_on_SignalBus_spawn_action_selected")
+	SignalBus.character_action_type_canceled.disconnect(
+			_on_SignalBus_character_action_type_canceled
 	)
-	SignalBus.disconnect(
-			"character_action_type_canceled",
-			Callable(self, "_on_SignalBus_character_action_type_canceled")
-	)
-	SignalBus.disconnect(
-			"top_vertex_changed",
-			Callable(self, "_on_SignalBus_top_vertex_changed")
-	)
-	GamepadHandler.disconnect(
-			"left_joystick_pulsed",
-			Callable(self, "_on_GamepadHandler_left_joystick_pulsed")
+	SignalBus.top_vertex_changed.disconnect(_on_SignalBus_top_vertex_changed)
+	GamepadHandler.left_joystick_pulsed.disconnect(
+			_on_GamepadHandler_left_joystick_pulsed
 	)
 
 

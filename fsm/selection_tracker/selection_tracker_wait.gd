@@ -16,14 +16,8 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 ## Virtual function. To be called in the _ready function to connect signals to 
 ## the state. The signals connected here should not be required by other states.
 func _ready_connect_signals() -> void:
-	SignalBus.connect(
-			"player_turn_started",
-			Callable(self, "_on_SignalBus_player_turn_started")
-	)
-	SignalBus.connect(
-			"summon_turn_started",
-			Callable(self, "_on_SignalBus_summon_turn_started")
-	)
+	SignalBus.player_turn_started.connect(_on_SignalBus_player_turn_started)
+	SignalBus.summon_turn_started.connect(_on_SignalBus_summon_turn_started)
 
 
 ## Set the active character to be the player whose turn has started and move

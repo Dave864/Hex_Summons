@@ -18,13 +18,9 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	character.character_sprite.play_movement()
 	_movement_active = true
 	
-	character.connect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
-	)
-	SignalBus.connect(
-			"character_action_executed",
-			Callable(self, "_on_SignalBus_character_action_executed")
+	character.turn_ended.connect(_on_Character_turn_ended)
+	SignalBus.character_action_executed.connect(
+			_on_SignalBus_character_action_executed
 	)
 
 
@@ -52,22 +48,17 @@ func update(delta: float) -> void:
 func exit() -> void:
 	_weight = 0.0
 	character.hm_move_path.reset_path()
-	character.disconnect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
-	)
-	SignalBus.disconnect(
-			"character_action_executed",
-			Callable(self, "_on_SignalBus_character_action_executed")
+	character.turn_ended.disconnect(_on_Character_turn_ended)
+	SignalBus.character_action_executed.disconnect(
+			_on_SignalBus_character_action_executed
 	)
 
 
 ## Virtual function. To be called in the _ready function to connect signals to 
 ## the state. The signals connected here should not be required by other states.
 func _ready_connect_signals() -> void:
-	character.hm_move_path.connect(
-			"movement_finished",
-			Callable(self, "_on_HexMapMovementCurve_movement_finished")
+	character.hm_move_path.movement_finished.connect(
+			_on_HexMapMovementCurve_movement_finished
 	)
 
 

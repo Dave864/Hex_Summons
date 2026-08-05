@@ -8,34 +8,20 @@ extends UserCharacterState
 
 ## Connect this state to the signals it needs to observe.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
-	character.connect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
-	)
-	SignalBus.connect(
-			"move_path_created",
-			Callable(self, "_on_SignalBus_move_path_created")
-	)
-	SignalBus.connect(
-			"character_action_executed",
-			Callable(self, "_on_SignalBus_character_action_executed")
+	character.turn_ended.connect(_on_Character_turn_ended)
+	SignalBus.move_path_created.connect(_on_SignalBus_move_path_created)
+	SignalBus.character_action_executed.connect(
+			_on_SignalBus_character_action_executed
 	)
 
 
 ## Called by the state machine before changing the active state. Use this 
 ## function to clean up the state.
 func exit() -> void:
-	character.disconnect(
-			"turn_ended",
-			Callable(self, "_on_Character_turn_ended")
-	)
-	SignalBus.disconnect(
-			"move_path_created",
-			Callable(self, "_on_SignalBus_move_path_created")
-	)
-	SignalBus.disconnect(
-			"character_action_executed",
-			Callable(self, "_on_SignalBus_character_action_executed")
+	character.turn_ended.disconnect(_on_Character_turn_ended)
+	SignalBus.move_path_created.disconnect(_on_SignalBus_move_path_created)
+	SignalBus.character_action_executed.disconnect(
+			_on_SignalBus_character_action_executed
 	)
 
 

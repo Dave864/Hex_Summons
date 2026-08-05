@@ -36,18 +36,12 @@ func exit() -> void:
 ## These signals are used by other states and will be disconnected to avoid
 ## unintended behavior.
 func _connect_signals() -> void:
-	_active_char.connect(
-			"turn_ended",
-			Callable(self, "_on_EnemyCharacter_turn_ended")
-	)
+	_active_char.turn_ended.connect(_on_EnemyCharacter_turn_ended)
 
 
 ## Disconnect the signals connected to this state.
 func _disconnect_signals() -> void:
-	_active_char.disconnect(
-			"turn_ended",
-			Callable(self, "_on_EnemyCharacter_turn_ended")
-	)
+	_active_char.turn_ended.disconnect(_on_EnemyCharacter_turn_ended)
 
 
 ## Checks if the encounter has reached its end.

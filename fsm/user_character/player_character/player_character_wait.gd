@@ -6,20 +6,14 @@ extends UserCharacterWait
 
 
 func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
-	SignalBus.connect(
-			"player_turn_started",
-			Callable(self, "_on_SignalBus_player_turn_started")
-	)
+	SignalBus.player_turn_started.connect(_on_SignalBus_player_turn_started)
 	super.enter(msg)
 
 
 ## Called by the state machine before changing the active state. Use this 
 ## function to clean up the state.
 func exit() -> void:
-	SignalBus.disconnect(
-			"player_turn_started",
-			Callable(self, "_on_SignalBus_player_turn_started")
-	)
+	SignalBus.player_turn_started.disconnect(_on_SignalBus_player_turn_started)
 
 
 ## Hit when the player character is selected to take its turn.

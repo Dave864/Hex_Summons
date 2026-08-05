@@ -14,9 +14,8 @@ extends EncounterSpawnState
 ## initialize itself.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	enc_spawn.set_active(false)
-	enc_spawn.sprite.connect(
-			"transition_finished",
-			Callable(self, "_on_EncounterSpawnSprite_transition_finished")
+	enc_spawn.sprite.transition_finished.connect(
+			_on_EncounterSpawnSprite_transition_finished
 	)
 	enc_spawn.sprite.ready_despawn_transition()
 

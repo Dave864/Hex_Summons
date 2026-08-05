@@ -14,10 +14,7 @@ var _last_position: Vector2 = Vector2.ZERO
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	get_tree().connect(
-			"scene_changed",
-			Callable(self, "_on_SceneTree_scene_changed")
-	)
+	get_tree().scene_changed.connect(_on_SceneTree_scene_changed)
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	update_mouse_tracker_2d(get_viewport().get_mouse_position())

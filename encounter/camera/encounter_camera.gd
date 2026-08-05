@@ -72,10 +72,7 @@ var _default_orientation: Vector3
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	SignalBus.connect(
-			"position_camera_focus",
-			Callable(self, "_on_SignalBus_position_camera_focus")
-	)
+	SignalBus.position_camera_focus.connect(_on_SignalBus_position_camera_focus)
 	_check_for_required_parameters()
 	_focus_pt.rotation = Vector3(deg_to_rad(_vert_pan_midpoint), 0.0, 0.0)
 	_default_orientation = _focus_pt.rotation

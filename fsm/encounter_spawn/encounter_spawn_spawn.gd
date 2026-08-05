@@ -10,9 +10,8 @@ extends EncounterSpawnState
 ## The `msg` parameter is a dictionary with arbitrary data the state can use to
 ## initialize itself.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
-	enc_spawn.sprite.connect(
-			"transition_finished",
-			Callable(self, "_on_EncounterSpawnSprite_transition_finished")
+	enc_spawn.sprite.transition_finished.connect(
+			_on_EncounterSpawnSprite_transition_finished
 	)
 	enc_spawn.sprite.ready_spawn_transition()
 
@@ -26,9 +25,8 @@ func update(delta: float) -> void:
 ## Virtual function. Called by the state machine before changing the active
 ## state. Use this function to clean up the state.
 func exit() -> void:
-	enc_spawn.sprite.disconnect(
-			"transition_finished",
-			Callable(self, "_on_EncounterSpawnSprite_transition_finished")
+	enc_spawn.sprite.transition_finished.disconnect(
+			_on_EncounterSpawnSprite_transition_finished
 	)
 
 

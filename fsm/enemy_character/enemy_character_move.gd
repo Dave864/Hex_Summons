@@ -52,9 +52,8 @@ func exit() -> void:
 ## Virtual function. To be called in the _ready function to connect signals to 
 ## the state. The signals connected here should not be required by other states.
 func _ready_connect_signals() -> void:
-	ec.hm_move_path.connect(
-			"movement_finished",
-			Callable(self, "_on_HexMapMovementCurve_movement_finished")
+	ec.hm_move_path.movement_finished.connect(
+			_on_HexMapMovementCurve_movement_finished
 	)
 
 
