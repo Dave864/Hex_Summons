@@ -68,10 +68,7 @@ func physics_update(_delta: float) -> void:
 ## Virtual function. To be called in the _ready function to connect signals to 
 ## the state. The signals connected here should not be required by other states.
 func _ready_connect_signals() -> void:
-	enc_spawn.alert_range.connect(
-			"body_entered",
-			Callable(self, "_on_AlertRange_body_entered")
-	)
+	enc_spawn.alert_range.body_entered.connect(_on_AlertRange_body_entered)
 
 
 ## Handles the roaming behavior, moving the spawner from point to point.
