@@ -169,7 +169,7 @@ func _process_spawning() -> void:
 		_update_distance_trigger()
 		_travel_distance = 0.0
 		var spawner: EncounterSpawn = _monster_spawn.instantiate()
-		spawner.set_area_details(_terrain_zone, self)
+		spawner.set_start_terrain_zone(_terrain_zone)
 		spawner.set_encounter_details(
 				_terrain_zone.select_random_map_path(),
 				enemies

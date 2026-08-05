@@ -26,13 +26,13 @@ var reaction_speed := 8.0
 var idle_despawn_distance := 1.5
 ## The distance the spawner can travel while in reaction before despawning.
 var reaction_despawn_distance := 2.0
+## The time spent on alert before the character jumps to its reaction.
+var alert_time := 10.0
 ## How close something must get before it is detected.
 var alert_radius := 5.0:
 	set = _set_alert_radius
 ## The terrain zone the spawner starts in.
 var start_terrain_zone: TerrainZone = null
-## The area the spawner starts in.
-var spawn_area: SpawnArea = null
 ## The area the spawner wanders around in.
 var roam_area: RoamArea = null
 
@@ -77,13 +77,11 @@ func set_encounter_details(
 	_enemy_names = enemy_names
 
 
-## Sets the area details.
-func set_area_details(
+## Sets the terrain zone details.
+func set_start_terrain_zone(
 	new_terrain_zone: TerrainZone,
-	new_area: SpawnArea
 ) -> void:
 	start_terrain_zone = new_terrain_zone
-	spawn_area = new_area
 
 
 ## Sets the target position for the navigation agent.
