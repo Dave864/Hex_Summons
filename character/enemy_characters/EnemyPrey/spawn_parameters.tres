@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SpawnParameters" load_steps=3 format=3 uid="uid://b7b7gt8pihv8n"]
+
+[ext_resource type="Script" uid="uid://c1d78rtwc5l8y" path="res://overworld/encounter_spawn/spawn_parameters.gd" id="1_hln7n"]
+[ext_resource type="Texture2D" uid="uid://2qrlvea7bae1" path="res://art/placeholders/Prey.png" id="2_hln7n"]
+
+[resource]
+script = ExtResource("1_hln7n")
+sprite_atlas = ExtResource("2_hln7n")
+metadata/_custom_type_script = "uid://c1d78rtwc5l8y"

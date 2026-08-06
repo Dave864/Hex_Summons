@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SpawnParameters" load_steps=3 format=3 uid="uid://x1lh3f4vb6ij"]
+
+[ext_resource type="Script" uid="uid://c1d78rtwc5l8y" path="res://overworld/encounter_spawn/spawn_parameters.gd" id="1_s0i0c"]
+[ext_resource type="Texture2D" uid="uid://b501mxykcdbeq" path="res://art/placeholders/Monster3D.png" id="2_b3yp4"]
+
+[resource]
+script = ExtResource("1_s0i0c")
+sprite_atlas = ExtResource("2_b3yp4")
+metadata/_custom_type_script = "uid://c1d78rtwc5l8y"

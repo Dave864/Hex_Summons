@@ -11,8 +11,7 @@ var _actions: Array[Action]
 
 ## The default image to use for an enemy character's battle sprite.
 @onready var _default_portait: Texture2D = preload(
-		"res://character/enemy_characters/EnemyCharacter/" + \
-		"BattlePortrait.atlastex"
+		Constants.ENEMY_FOLDER + "EnemyCharacter/BattlePortrait.atlastex"
 )
 
 
