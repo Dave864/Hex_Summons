@@ -118,12 +118,18 @@ func set_nav_to_travel_point(
 
 ## Emits the "despawned" signal.
 func emit_despawned() -> void:
+	_active = false
 	emit_signal("despawned", get_instance_id())
 
 
 ## Sets the active state of the spawner.
 func set_active(value: bool) -> void:
 	_active = value
+
+
+## Checks if the spawner is active.
+func is_active() -> bool:
+	return _active
 
 
 ## Moves the spawner towards the navigation target.

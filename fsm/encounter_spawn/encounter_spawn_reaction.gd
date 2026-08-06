@@ -94,6 +94,7 @@ func _charge_behavior(delta: float) -> void:
 
 ## The EncounterSpawn moves to the current position of the reference character.
 func _pursue_behavior() -> void:
+	enc_spawn.nav_agent.target_position = _location_ref_char.global_position
 	enc_spawn.move_to_navigation(params.reaction_speed)
 
 

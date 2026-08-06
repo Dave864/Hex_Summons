@@ -13,7 +13,8 @@ extends EncounterSpawnState
 ## The `msg` parameter is a dictionary with arbitrary data the state can use to
 ## initialize itself.
 func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
-	enc_spawn.set_active(false)
+	if enc_spawn.is_active():
+		enc_spawn.emit_despawned()
 	enc_spawn.sprite.transition_finished.connect(
 			_on_EncounterSpawnSprite_transition_finished
 	)
@@ -25,7 +26,11 @@ func update(delta: float) -> void:
 	enc_spawn.sprite.progress_transition(delta)
 
 
+## Override parent function so that despawn signal is not detected.
+func _ready_connect_signals() -> void:
+	return
+
+
 ## Queue EncounterSpawn for deletion when its sprite completes the transition.
 func _on_EncounterSpawnSprite_transition_finished() -> void:
-	enc_spawn.emit_despawned()
 	enc_spawn.queue_free()

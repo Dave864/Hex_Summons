@@ -82,8 +82,10 @@ func _check_for_reaction_trigger() -> bool:
 	for target: CharacterBody3D in sorted_targets:
 		var distance := _distance_squared_to_ref(target)
 		if _is_in_view(target) and distance < reaction_radius:
+			_alert_focus = target
 			return true
 		elif distance < reaction_radius / 2.0:
+			_alert_focus = target
 			return true
 	return false
 
