@@ -48,3 +48,16 @@ func _ready() -> void:
 	assert(enc_spawn != null)
 	# Connect any unique signals the state will use.
 	_ready_connect_signals()
+
+
+## Virtual function. To be called in the _ready function to connect signals to 
+## the state. The signals connected here should not be required by other states.
+func _ready_connect_signals() -> void:
+	enc_spawn.despawned.connect(_on_EncounterSpawn_despawned)
+
+
+## Moves the spawner to the `Despawn` state.
+func _on_EncounterSpawn_despawned(id: int) -> void:
+	if not _state_is_active() or id != enc_spawn.get_instance_id():
+		return
+	state_machine.transition_to(DESPAWN)
