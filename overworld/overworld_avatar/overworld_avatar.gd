@@ -6,6 +6,9 @@ extends CharacterBody3D
 ## The speed the avatar moves at.
 const SPEED = 7.0
 
+## Flag that indicates if the character is moving.
+var _is_moving: bool
+
 ## The sprite for the character.
 @onready var _sprite: RotatingSprite3D = $RotatingSprite3D
 
@@ -13,6 +16,7 @@ const SPEED = 7.0
 ## Orient the sprite to face forwards.
 func _ready() -> void:
 	_sprite.facing_direction = Vector2.DOWN
+	_is_moving = false
 	_sprite.play_idle()
 
 
@@ -31,10 +35,14 @@ func _physics_process(delta: float) -> void:
 	)
 	# Only update facing direction if significant input has been provided.
 	if not input_dir.is_zero_approx():
-		_sprite.play_movement()
+		if not _is_moving:
+			_sprite.play_movement()
+		_is_moving = true
 		_sprite.facing_direction = input_dir.normalized()
 	else:
-		_sprite.play_idle()
+		if _is_moving:
+			_sprite.play_idle()
+		_is_moving = false
 	var input_dir_vector := Vector3(input_dir.x, 0.0, input_dir.y)
 	var direction := (transform.basis * input_dir_vector).normalized()
 	if direction:
