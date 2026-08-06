@@ -33,12 +33,12 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 	_tracked_targets[_alert_focus.get_instance_id()] = _alert_focus
 	_focus_in_view = _is_in_view(_alert_focus)
 	_focus_reset_count = 0
-	enc_spawn.timer.start(enc_spawn.alert_time)
+	_start_alert_timer()
 
 
 ## Virtual function. Corresponds to the `_process()` callback.
 func update(delta: float) -> void:
-	if enc_spawn.timer.is_stopped():
+	if _check_for_reaction_trigger():
 		_determine_reaction()
 		return
 	if _tracked_targets.is_empty():
@@ -48,15 +48,10 @@ func update(delta: float) -> void:
 	_orient_to_focus_target(delta)
 
 
-## Virtual function. Corresponds to the `_physics_process()` callback.
-func physics_update(_delta: float) -> void:
-	pass
-
-
-## Starts the alert timer, accounting for the number of times the focus has
-## reset.
-func _start_alert_timer() -> void:
-	enc_spawn.timer.start(enc_spawn.alert_time / pow(2.0, _focus_reset_count))
+## Virtual function. Called by the state machine before changing the active
+## state. Use this function to clean up the state.
+func exit() -> void:
+	_tracked_targets.clear()
 
 
 ## Virtual function. To be called in the _ready function to connect signals to 
@@ -66,10 +61,34 @@ func _ready_connect_signals() -> void:
 	enc_spawn.alert_range.body_exited.connect(_on_AlertRange_body_exited)
 
 
-## Virtual function. Called by the state machine before changing the active
-## state. Use this function to clean up the state.
-func exit() -> void:
-	_tracked_targets.clear()
+## Starts the alert timer, halving the initial time by the number of times the
+## focus was reset.
+func _start_alert_timer() -> void:
+	enc_spawn.timer.start(params.alert_time / pow(2.0, _focus_reset_count))
+
+
+## Checks if the reaction behavior should be triggered. Returns if the trigger
+## is activated or not.
+func _check_for_reaction_trigger() -> bool:
+	if enc_spawn.timer.is_stopped():
+		return true
+	
+	var sorted_targets: Array[CharacterBody3D] = _tracked_targets.values()
+	var lambda := func sort_dist_ascending(
+			c1: CharacterBody3D,
+			c2: CharacterBody3D
+	) -> bool:
+		return _distance_squared_to_ref(c1) < _distance_squared_to_ref(c2)
+	sorted_targets.sort_custom(lambda)
+	
+	var reaction_radius := pow(params.reaction_radius, 2.0)
+	for target: CharacterBody3D in sorted_targets:
+		var distance := _distance_squared_to_ref(target)
+		if _is_in_view(target) and distance < reaction_radius:
+			return true
+		elif distance < reaction_radius / 2.0:
+			return true
+	return false
 
 
 ## Looks at all tracked characters and updates focus to the closest one,
@@ -90,10 +109,10 @@ func _update_focus() -> void:
 			_alert_focus = target
 			closest_dist = dist
 			_focus_reset_count += 1
-			enc_spawn.timer.start(enc_spawn.alert_time / 2.0)
+			_start_alert_timer()
 
 
-## Gets the squared distance if the target to the EncounterSpawn.
+## Gets the squared distance of the target to the EncounterSpawn.
 func _distance_squared_to_ref(target: CharacterBody3D) -> float:
 	if target == null:
 		return INF

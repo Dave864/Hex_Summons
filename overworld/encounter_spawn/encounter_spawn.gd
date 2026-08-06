@@ -15,22 +15,16 @@ enum Type {
 	PREY,
 }
 
+## The format for the path to the spawn parameters of a character.
+const CHAR_SPAWN_PARAMETERS_PATH := (
+		Constants.ENEMY_CHAR_FOLDER + "spawn_parameters.tres"
+)
+
 ## The type of character this encounter spawn is.
 @export var type := Type.MONSTER
 
-## The speed the spawner moves at while idling.
-var idle_speed := 4.0
-## The speed the spawner moves at when reacting.
-var reaction_speed := 8.0
-## The distance the spawner can travel while in idle before despawining.
-var idle_despawn_distance := 1.5
-## The distance the spawner can travel while in reaction before despawning.
-var reaction_despawn_distance := 2.0
-## The time spent on alert before the character jumps to its reaction.
-var alert_time := 10.0
-## How close something must get before it is detected.
-var alert_radius := 5.0:
-	set = _set_alert_radius
+## The behavior parameters for this spawner.
+var spawn_params: SpawnParameters = null
 ## The terrain zone the spawner starts in.
 var start_terrain_zone: TerrainZone = null
 ## The area the spawner wanders around in.
@@ -75,6 +69,9 @@ func set_encounter_details(
 ) -> void:
 	_encounter_map_path = map_path
 	_enemy_names = enemy_names
+	# TODO: Set spawn to be dominant enemy. Current just uses the first enemy as
+	# the basis for the behavior.
+	spawn_params = load(CHAR_SPAWN_PARAMETERS_PATH.format([_enemy_names[0]]))
 
 
 ## Sets the terrain zone details.
@@ -140,12 +137,11 @@ func move_spawner(speed: float) -> void:
 
 ## Updates the radius of the AlertRange collision detection.
 func _set_alert_radius(new_radius: float) -> void:
-	alert_radius = new_radius
 	if not is_node_ready():
 		return
 	var alert_shape: CollisionShape3D = alert_range.get_node("CollisionShape3D")
 	var alert_sphere := alert_shape.shape as SphereShape3D
-	alert_sphere.radius = alert_radius
+	alert_sphere.radius = new_radius
 
 
 ## Triggers a switch to the Encounter scene when the OverworldAvatar is hit.

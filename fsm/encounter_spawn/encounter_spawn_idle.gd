@@ -43,7 +43,7 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 	_last_frame_position = enc_spawn.position
 	if _travel_squared_distance < 0.0:
 		_travel_squared_distance = 0.0
-		_despawn_distance = enc_spawn.idle_despawn_distance
+		_despawn_distance = params.idle_despawn_distance
 	match _current_pattern:
 		BehaviorPattern.ROAM:
 			enc_spawn.set_nav_target(enc_spawn.roam_area.get_next_point())
@@ -66,7 +66,7 @@ func physics_update(_delta: float) -> void:
 			_travel_behavior()
 		_:
 			return
-	if _travel_squared_distance > pow(enc_spawn.idle_despawn_distance, 2.0):
+	if _travel_squared_distance > pow(params.idle_despawn_distance, 2.0):
 		state_machine.transition_to(DESPAWN)
 
 
@@ -103,7 +103,7 @@ func _move_spawner() -> void:
 	if not _moving:
 		enc_spawn.sprite.play_movement()
 	_moving = true 
-	enc_spawn.move_spawner(enc_spawn.idle_speed)
+	enc_spawn.move_spawner(params.idle_speed)
 	_travel_squared_distance += enc_spawn.position.distance_squared_to(
 			_last_frame_position
 	)

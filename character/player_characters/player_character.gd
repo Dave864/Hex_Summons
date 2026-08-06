@@ -9,14 +9,12 @@ extends Character
 
 ## The path to the default portrait for player characters.
 const DEFAULT_PORTRAIT_PATH: String = (
-		"res://character/player_characters/PlayerCharacter/" + \
-		"BattlePortrait.atlastex"
+		Constants.PLAYER_FOLDER + "PlayerCharacter/BattlePortrait.atlastex"
 )
 ## Formatted string used to create the file path for the portrait of a player
 ## character.
 const PORTRAIT_PATH_FORMAT: String = (
-		"res://character/player_characters/{0}/" + \
-		"BattlePortrait.atlastex"
+		Constants.PLAYER_FOLDER + "{0}/BattlePortrait.atlastex"
 )
 
 ## The player character's wisp pool.

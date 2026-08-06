@@ -19,7 +19,13 @@ const REACTION := "Reaction"
 const DESPAWN := "Despawn"
 
 ## Typed reference to the encounter spawn node.
-var enc_spawn : EncounterSpawn
+var enc_spawn: EncounterSpawn
+## Shorthand for the spawn parameters of the encounter spawn node.
+var params: SpawnParameters:
+	get():
+		if enc_spawn != null:
+			return enc_spawn.spawn_params
+		return null
 
 
 ## Called when the node enters the scene tree for the first time.
