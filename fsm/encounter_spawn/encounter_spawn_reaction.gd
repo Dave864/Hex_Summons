@@ -22,7 +22,7 @@ const CHARGE_ROTATION := 15.0
 ## The pattern followed by EncounterSpawn.
 var _current_pattern := BehaviorPattern.UNDECIDED
 ## The total squared distance traveled by EncounterSpawn in this state.
-var _travel_squared_distance := -1.0
+var _travel_squared_distance := 0.0
 ## The position of EncounterSpawn in the last frame.
 var _last_frame_position := Vector3.ZERO
 ## The character that serves as the primary location reference.
@@ -33,9 +33,10 @@ var _location_ref_char: CharacterBody3D = null
 ## The `msg` parameter is a dictionary with arbitrary data the state can use to
 ## initialize itself.
 func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
+	enc_spawn.sprite.play_movement()
 	_current_pattern = msg["pattern"]
 	_location_ref_char = msg["reference_character"]
-	_last_frame_position = _location_ref_char.position
+	_last_frame_position = enc_spawn.position
 	_travel_squared_distance = 0.0
 	var flip := -1.0 if _current_pattern == BehaviorPattern.FLEE else 1.0
 	enc_spawn.sprite.facing_direction = (
@@ -45,6 +46,9 @@ func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
 
 ## Virtual function. Corresponds to the `_physics_process()` callback.
 func physics_update(delta: float) -> void:
+	if _travel_squared_distance > pow(params.despawn_distance_reaction, 2.0):
+		state_machine.transition_to(DESPAWN)
+		return
 	match _current_pattern:
 		BehaviorPattern.CHARGE:
 			_charge_behavior(delta)
@@ -54,6 +58,7 @@ func physics_update(delta: float) -> void:
 			_flee_behavior(delta)
 		_:
 			return
+	_update_travel_distance()
 
 
 ## Virtual function. Called by the state machine before changing the active
@@ -86,7 +91,7 @@ func _charge_behavior(delta: float) -> void:
 			angle_change
 	)
 	enc_spawn.move_in_direction(
-			params.reaction_speed,
+			params.speed_reaction,
 			enc_spawn.sprite.facing_direction,
 			delta
 	)
@@ -95,16 +100,24 @@ func _charge_behavior(delta: float) -> void:
 ## The EncounterSpawn moves to the current position of the reference character.
 func _pursue_behavior() -> void:
 	enc_spawn.nav_agent.target_position = _location_ref_char.global_position
-	enc_spawn.move_to_navigation(params.reaction_speed)
+	enc_spawn.move_to_navigation(params.speed_reaction)
 
 
 ## The EncounterSpawn moves away from the reference character.
 func _flee_behavior(delta: float) -> void:
 	enc_spawn.move_in_direction(
-			params.reaction_speed,
+			params.speed_reaction,
 			enc_spawn.sprite.facing_direction,
 			delta
 	)
+
+
+## Updates the recorded distance traveled.
+func _update_travel_distance() -> void:
+	_travel_squared_distance += enc_spawn.position.distance_squared_to(
+			_last_frame_position
+	)
+	_last_frame_position = enc_spawn.position
 
 
 ## Checks if the target is in view of the EncounterSpawn.

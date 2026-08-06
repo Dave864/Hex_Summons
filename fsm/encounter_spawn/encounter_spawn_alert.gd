@@ -25,6 +25,7 @@ var _focus_reset_count: int = 0
 ## The `msg` parameter is a dictionary with arbitrary data the state can use to
 ## initialize itself.
 func enter(msg: Dictionary[Variant, Variant] = {}) -> void:
+	enc_spawn.sprite.play_idle()
 	_alert_focus = msg["AlertFocus"]
 	_tracked_targets[_alert_focus.get_instance_id()] = _alert_focus
 	_focus_in_view = _is_in_view(_alert_focus)
