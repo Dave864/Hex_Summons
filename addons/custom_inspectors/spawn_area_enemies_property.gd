@@ -2,10 +2,8 @@ class_name SpawnAreaEnemiesProperty
 extends EditorProperty
 
 
-## Path to the enemy characters folder.
-const ENEMY_CHARACTERS_PATH := "res://character/enemy_characters/"
 ## Path format to enemy character battle portrait.
-const PORTRIAT_PATH := ENEMY_CHARACTERS_PATH + "{0}/BattlePortrait.atlastex"
+const PORTRIAT_PATH := Constants.ENEMY_CHAR_FOLDER + "BattlePortrait.atlastex"
 
 ## The overall container for the UI elements.
 var _parent_container := VBoxContainer.new()
@@ -111,7 +109,7 @@ func _add_selection_item(selected_item: String) -> void:
 func _get_enemy_options() -> void:
 	enemy_options.clear()
 	enemy_portraits.clear()
-	var enemy_folders := DirAccess.get_directories_at(ENEMY_CHARACTERS_PATH)
+	var enemy_folders := DirAccess.get_directories_at(Constants.ENEMY_FOLDER)
 	for name: String in enemy_folders:
 		enemy_options.append(name)
 		var portrait_path := PORTRIAT_PATH.format([name])

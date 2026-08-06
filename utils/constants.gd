@@ -12,6 +12,12 @@ const MAP_TEXTURE_REF := "res://art/tile_textures/hex_base_texture.png"
 const CURSOR_ICON_CAMERA_P := "res://art/ui/mouse_cursor/cursor_camera_pan.png"
 ## The path to the mouse cursor icon for panning the rotating the camera.
 const CURSOR_ICON_CAMERA_R := "res://art/ui/mouse_cursor/cursor_camera_rot.png"
+## The path to the player characters folder.
+const PLAYER_FOLDER := "res://character/player_characters/"
+## The path to enemy characters folder.
+const ENEMY_FOLDER := "res://character/enemy_characters/"
+## The path format to a specific enemy character folder.
+const ENEMY_CHAR_FOLDER := ENEMY_FOLDER + "{0}/"
 
 ## This is the number that was found to best conform a fixed size sprite image
 ## to the pixel size of the viewport dimensions 640 x 360.

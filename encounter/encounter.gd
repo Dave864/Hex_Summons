@@ -7,7 +7,7 @@ extends Node
 const DEFAULT_MAP_PATH := "res://hex_map/HexMap.tscn"
 ## The path to the default enemy.
 const DEFAULT_ENEMY_PATH := (
-	"res://character/enemy_characters/EnemyCharacter/EnemyCharacter.tscn"
+	Constants.ENEMY_FOLDER + "EnemyCharacter/EnemyCharacter.tscn"
 )
 
 ## Reference to the UI elements for the encounter.
@@ -23,8 +23,7 @@ var enemies: Array[Character] = []
 
 ## The scene used to create player characters from out of encounter data.
 var _player_template: PackedScene = preload(
-		"res://character/player_characters/" + \
-		"PlayerCharacter/PlayerCharacter.tscn"
+		Constants.PLAYER_FOLDER + "PlayerCharacter/PlayerCharacter.tscn"
 )
 
 ## Node that handles player character summons.

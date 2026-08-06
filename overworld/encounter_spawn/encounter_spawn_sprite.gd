@@ -20,18 +20,11 @@ enum TransitionState {
 
 ## The default name used when instancing this node.
 const DEFAULT_NAME := "EncounterSpawnSprite"
-## The default sprite used for the spawner.
-const DEFAULT_SPRITE_PATH := (
-	"res://art/icon.png"
-)
 ## The path format to a character's sprite sheet.
-const CHAR_SPRITE_FRAMES_PATH := (
-		"res://character/enemy_characters/{0}/sprite_frames.tres"
-)
-## The path format to a character's shader.
-const CHAR_SHADER_PATH := (
-		"res://character/enemy_characters/{0}/character_sprite_xray.tres"
-)
+const SPRITE_FRAMES_PATH := Constants.ENEMY_CHAR_FOLDER + "sprite_frames.tres"
+## The path format to a character's xray shader. Used to get the sprite sheet
+## for the shader material.
+const SHADER_PATH := Constants.ENEMY_CHAR_FOLDER + "character_sprite_xray.tres"
 ## The pixel size for the sprite.
 const SPRITE_PIXEL_SIZE := 0.0625
 ## The max dither intensity (sprite is fully transparent).
@@ -49,13 +42,13 @@ var _current_time := 0.0
 
 ## Sets the sprite frames and shader texture to match the specified character.
 func set_texture_to_character(char_name: String) -> void:
-	var sprite_frames_path := CHAR_SPRITE_FRAMES_PATH.format([char_name])
-	sprite_frames = load(sprite_frames_path)
-	var shader_path := CHAR_SHADER_PATH.format([char_name])
-	var shader: ShaderMaterial = load(shader_path)
-	var shader_texture: Texture2D = shader.get_shader_parameter("sprite_texture")
-	shader = material_override
-	shader.set_shader_parameter("sprite_texture", shader_texture)
+	sprite_frames = load(SPRITE_FRAMES_PATH.format([char_name]))
+	var xray_shader: ShaderMaterial = load(SHADER_PATH.format([char_name]))
+	var sprite_sheet: Texture2D = xray_shader.get_shader_parameter(
+			"sprite_texture"
+	)
+	var shader := material_override as ShaderMaterial
+	shader.set_shader_parameter("sprite_texture", sprite_sheet)
 
 
 ## Readies the sprite for a spawn transition, going from fully transparent

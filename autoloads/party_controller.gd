@@ -14,7 +14,7 @@ const IN_PARTY: String = "in_party"
 const WISP_POOL: String = "wisp_pool"
 
 @onready var base_player_node: PackedScene = preload(
-		"res://character/player_characters/PlayerCharacter/PlayerCharacter.tscn"
+		Constants.PLAYER_FOLDER + "PlayerCharacter/PlayerCharacter.tscn"
 )
 @onready var party_details: Dictionary[String, PlayerDetails] = {
 	"Player1": _initialize_details("Player1", "TestMeleeClass", true),

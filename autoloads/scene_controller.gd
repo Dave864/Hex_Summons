@@ -3,7 +3,7 @@ extends Node
 
 
 ## The path format to an enemy scene.
-const ENEMY_PATH_FORMAT := "res://character/enemy_characters/{0}/{0}.tscn"
+const ENEMY_PATH_FORMAT := Constants.ENEMY_CHAR_FOLDER + "{0}.tscn"
 ## The path to the Encounter scene.
 const ENCOUNTER_SCENE_PATH := "res://encounter/Encounter.tscn"
 ## The path to the Overworld scene.

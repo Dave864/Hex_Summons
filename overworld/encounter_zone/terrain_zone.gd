@@ -53,9 +53,9 @@ func get_random_travel_point_in_range(
 	reference: Vector3,
 	range_limit: float
 ) -> Vector3:
-	var lambda_1 = func is_smaller(dist_sq: float, shortest: float) -> bool:
+	var lambda_1 := func is_smaller(dist_sq: float, shortest: float) -> bool:
 		return dist_sq < shortest
-	var lambda_2 = func is_in_range(dist_sq: float) -> bool:
+	var lambda_2 := func is_in_range(dist_sq: float) -> bool:
 		return dist_sq <= pow(range_limit, 2.0)
 	return _get_random_travel_point_helper(
 			reference,
