@@ -19,10 +19,6 @@ var _focus_in_view: bool = false
 var _tracked_targets: Dictionary[int, CharacterBody3D] = {}
 ## The number of times the focus has been reset.
 var _focus_reset_count: int = 0
-## The current global position of the EncounterSpawn.
-var _ref_position: Vector3:
-	get():
-		return enc_spawn.global_position
 
 
 ## Virtual function. Called by the state machine upon changing the active state.
@@ -116,7 +112,7 @@ func _update_focus() -> void:
 func _distance_squared_to_ref(target: CharacterBody3D) -> float:
 	if target == null:
 		return INF
-	return target.global_position.distance_squared_to(_ref_position)
+	return target.global_position.distance_squared_to(spawn_global_pos)
 
 
 ## Checks if the target is in view of the EncounterSpawn.
@@ -129,7 +125,7 @@ func _is_in_view(target: CharacterBody3D) -> bool:
 
 ## Gets the direction from EncounterSpawn to the target.
 func _direction_2D_to_target(target: CharacterBody3D) -> Vector2:
-	var dir3D := _ref_position.direction_to(target.global_position)
+	var dir3D := spawn_global_pos.direction_to(target.global_position)
 	return Vector2(dir3D.x, dir3D.z).normalized()
 
 

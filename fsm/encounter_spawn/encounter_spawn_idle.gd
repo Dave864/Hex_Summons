@@ -103,7 +103,7 @@ func _move_spawner() -> void:
 	if not _moving:
 		enc_spawn.sprite.play_movement()
 	_moving = true 
-	enc_spawn.move_spawner(params.idle_speed)
+	enc_spawn.move_to_navigation(params.idle_speed)
 	_travel_squared_distance += enc_spawn.position.distance_squared_to(
 			_last_frame_position
 	)

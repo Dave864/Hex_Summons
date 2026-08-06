@@ -20,6 +20,10 @@ const DESPAWN := "Despawn"
 
 ## Typed reference to the encounter spawn node.
 var enc_spawn: EncounterSpawn
+## The current global position of the EncounterSpawn.
+var spawn_global_pos: Vector3:
+	get():
+		return enc_spawn.global_position
 ## Shorthand for the spawn parameters of the encounter spawn node.
 var params: SpawnParameters:
 	get():

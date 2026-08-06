@@ -126,12 +126,23 @@ func set_active(value: bool) -> void:
 	_active = value
 
 
-## Moves the spawner in the given direction.
-func move_spawner(speed: float) -> void:
+## Moves the spawner towards the navigation target.
+func move_to_navigation(speed: float) -> void:
 	var destination := nav_agent.get_next_path_position() - global_position
 	var dir3D := destination.normalized()
 	velocity = dir3D * speed
 	sprite.facing_direction = Vector2(dir3D.x, dir3D.z).normalized()
+	move_and_slide()
+
+
+## Moves the spawner in the specified direction, accounting for gravity.
+func move_in_direction(speed: float, xz_dir: Vector2, delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+	velocity.x = xz_dir.x * speed
+	velocity.z = xz_dir.y * speed
+	sprite.facing_direction = xz_dir
 	move_and_slide()
 
 
