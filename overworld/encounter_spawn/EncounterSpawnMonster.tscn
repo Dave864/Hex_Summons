@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bnypq6lgx2yet"]
+[gd_scene load_steps=15 format=3 uid="uid://bnypq6lgx2yet"]
 
 [ext_resource type="Shader" uid="uid://d3jbkjw03cw0d" path="res://overworld/encounter_spawn/billboard_dither_transparency.gdshader" id="1_rxih6"]
 [ext_resource type="Script" uid="uid://c8nw7puv2xa0p" path="res://overworld/encounter_spawn/encounter_spawn.gd" id="1_ycrvi"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://blpwleyfn2i45" path="res://fsm/encounter_spawn/monster_spawn/monster_spawn_idle.gd" id="7_j3dwb"]
 [ext_resource type="Script" uid="uid://cua3w47mw607t" path="res://fsm/encounter_spawn/encounter_spawn_despawn.gd" id="8_81ear"]
 [ext_resource type="Script" uid="uid://b7bk03ymlw64" path="res://fsm/encounter_spawn/monster_spawn/monster_spawn_alert.gd" id="9_3ltnn"]
+[ext_resource type="Script" uid="uid://csmq53xurqxtr" path="res://fsm/encounter_spawn/monster_spawn/monster_spawn_reaction.gd" id="10_a43lf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rip8a"]
 resource_local_to_scene = true
@@ -85,6 +86,10 @@ metadata/_custom_type_script = "uid://b7bk03ymlw64"
 [node name="Despawn" type="Node" parent="StateMachine"]
 script = ExtResource("8_81ear")
 metadata/_custom_type_script = "uid://cua3w47mw607t"
+
+[node name="Reaction" type="Node" parent="StateMachine"]
+script = ExtResource("10_a43lf")
+metadata/_custom_type_script = "uid://csmq53xurqxtr"
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_HitBox_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_HitBox_body_entered"]

@@ -106,6 +106,14 @@ func _flee_behavior(delta: float) -> void:
 	)
 
 
+## Checks if the target is in view of the EncounterSpawn.
+func _is_in_view(target: CharacterBody3D) -> bool:
+	if target == null:
+		return false
+	var dir := _direction_2D_to_target(target)
+	return enc_spawn.sprite.facing_direction.dot(dir) > 0.0
+
+
 ## Checks if the target is a threat to EncounterSpawn.
 @abstract func _is_threat(target: CharacterBody3D) -> bool
 
@@ -116,6 +124,8 @@ func _on_AlertRange_body_entered(body: Node3D) -> void:
 	if (
 		not _state_is_active()
 		or _current_pattern != BehaviorPattern.FLEE
+		or not body is CharacterBody3D
+		or not _is_in_view(body)
 		or not _is_threat(body)
 	):
 		return
