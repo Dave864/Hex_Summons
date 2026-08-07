@@ -149,7 +149,7 @@ func _calculate_round_zero_initiative() -> void:
 	var round_data := RoundDetails.new()
 	for details: NoTurnTracker in _c_pity_tracker.values():
 		characters.append(details.character)
-	characters.sort_custom(ArraySorters.sort_character_initiative)
+	characters.sort_custom(_sort_character_initiative)
 	for i: int in characters.size():
 		var c: Character = characters[i]
 		var character_turn_details := TurnDetails.new(

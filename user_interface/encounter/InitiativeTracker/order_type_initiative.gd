@@ -122,7 +122,7 @@ func _summon_check(character: Character) -> Character:
 
 ## Determines the initiative order starting from the current round.
 func _calculate_full_initiative() -> void:
-	_init_order.sort_custom(ArraySorters.sort_character_initiative)
+	_init_order.sort_custom(_sort_character_initiative)
 
 
 ## Removes the character from the initiative tracker.
@@ -135,7 +135,7 @@ func _remove_character(c: Character) -> void:
 	_init_order.erase(c)
 	_current_index = _init_order.bsearch_custom(
 			current_character,
-			ArraySorters.sort_character_initiative
+			_sort_character_initiative
 	)
 
 

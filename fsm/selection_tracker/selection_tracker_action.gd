@@ -78,9 +78,13 @@ func _get_target_distances() -> Array[Array]:
 				option.map_coordinate.get_tile_index()
 		)
 		target_distances.append([option, dist])
-	target_distances.sort_custom(
-			ArraySorters.sort_distance_to_character_asc
-	)
+	# Sorts characters by their distances (second index) in ascending order.
+	var lambda := func sort_dist_to_char_asc(
+			c1: Array[Variant],
+			c2: Array[Variant]
+	) -> bool:
+		return c1[1] < c2[1]
+	target_distances.sort_custom(lambda)
 	return target_distances
 
 

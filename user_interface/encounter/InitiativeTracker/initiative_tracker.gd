@@ -103,6 +103,13 @@ func _remove_character(c: Character) -> void:
 @abstract func _on_CharacterStatModifiers_agility_changed(new_agility: int) -> void
 
 
+## Returns which character's agility is higher. Used for sorting.
+func _sort_character_initiative(a: Character, b: Character) -> bool:
+	var agility_a := a.stats.get_stat(Stat.Type.AGILITY)
+	var agility_b := b.stats.get_stat(Stat.Type.AGILITY)
+	return agility_a > agility_b
+
+
 ## Removes the character from the initiative track when they are defeated.
 func _on_Character_defeated(c: Character) -> void:
 	_remove_character(c)
