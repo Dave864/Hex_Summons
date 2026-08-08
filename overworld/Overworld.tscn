@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=43 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="Script" uid="uid://b63wynnx1khli" path="res://overworld/overworld.gd" id="1_g3yfq"]
@@ -7,7 +7,9 @@
 [ext_resource type="Script" uid="uid://7gcajgi7sxds" path="res://overworld/alignment_area/flux_alignment_area.gd" id="3_35tns"]
 [ext_resource type="Script" uid="uid://ca7jxmn65fbji" path="res://overworld/encounter_zone/terrain_zone.gd" id="4_q1spi"]
 [ext_resource type="Script" uid="uid://cpqrkm0xmuufc" path="res://overworld/encounter_zone/spawn_area_circle.gd" id="6_uyahc"]
+[ext_resource type="Script" uid="uid://ctkkhxryhajwc" path="res://utils/area_gizmo_circle.gd" id="7_327yu"]
 [ext_resource type="Script" uid="uid://whcd1sb6tx51" path="res://overworld/encounter_zone/spawn_area_rect.gd" id="7_wc37g"]
+[ext_resource type="Script" uid="uid://dis4ld2v03m0e" path="res://utils/area_gizmo_rect.gd" id="9_naebm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q45au"]
 albedo_color = Color(0, 0.22352941, 1, 1)
@@ -84,21 +86,6 @@ size = Vector3(70, 5, 13)
 [sub_resource type="BoxShape3D" id="BoxShape3D_naebm"]
 size = Vector3(95, 5, 53)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_wc37g"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8t104"]
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_327yu"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_naebm"]
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
-size = Vector3(67, 5, 45)
-
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_taamv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iro46"]
@@ -108,6 +95,21 @@ albedo_color = Color(1, 0, 0, 1)
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_kur02"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1kkrf"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
+size = Vector3(67, 5, 45)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_eou61"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdnfc"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_6lilm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pn0iw"]
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
@@ -286,14 +288,17 @@ enemies = PackedStringArray("TestEnemy2")
 roam_chance = 0.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
-[node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
-mesh = SubResource("ImmediateMesh_wc37g")
-surface_material_override/0 = SubResource("StandardMaterial3D_8t104")
-
 [node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
 transform = Transform3D(1, 0, 0, 0, 1.0000002, 0, 0, 0, 1, 0, 0, 0)
 target_position = Vector3(0, -10, 0)
 collision_mask = 2
+
+[node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
+mesh = SubResource("ImmediateMesh_taamv")
+surface_material_override/0 = SubResource("StandardMaterial3D_iro46")
+script = ExtResource("7_327yu")
+radius = 6.21
+color = Color(1, 0, 0, 1)
 
 [node name="CircleSpawnArea2" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.84867, 0.6, 6.7512493)
@@ -304,13 +309,16 @@ spawn_limit = 2
 roam_chance = 1.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
-[node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
-mesh = SubResource("ImmediateMesh_327yu")
-surface_material_override/0 = SubResource("StandardMaterial3D_naebm")
-
 [node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
 target_position = Vector3(0, -10, 0)
 collision_mask = 2
+
+[node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
+mesh = SubResource("ImmediateMesh_kur02")
+surface_material_override/0 = SubResource("StandardMaterial3D_1kkrf")
+script = ExtResource("7_327yu")
+radius = 10.77
+color = Color(1, 0, 0, 1)
 
 [node name="TerrainZoneSand" type="Area3D" parent="EncounterZones"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.667734)
@@ -360,9 +368,14 @@ metadata/_custom_type_script = "uid://whcd1sb6tx51"
 target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
-[node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect"]
-mesh = SubResource("ImmediateMesh_taamv")
-surface_material_override/0 = SubResource("StandardMaterial3D_iro46")
+[node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect"]
+mesh = SubResource("ImmediateMesh_eou61")
+surface_material_override/0 = SubResource("StandardMaterial3D_xdnfc")
+script = ExtResource("9_naebm")
+is_square = true
+length = 20.49
+height = 20.49
+color = Color(1, 0, 0, 1)
 
 [node name="SpawnAreaRect2" type="Marker3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.423811, 0.6, -5.1863155)
@@ -379,9 +392,13 @@ metadata/_custom_type_script = "uid://whcd1sb6tx51"
 target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
-[node name="DebugMesh" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect2"]
-mesh = SubResource("ImmediateMesh_kur02")
-surface_material_override/0 = SubResource("StandardMaterial3D_1kkrf")
+[node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect2"]
+mesh = SubResource("ImmediateMesh_6lilm")
+surface_material_override/0 = SubResource("StandardMaterial3D_pn0iw")
+script = ExtResource("9_naebm")
+length = 11.68
+height = 27.24
+color = Color(1, 0, 0, 1)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.6537509, 0.7567098, 0, -0.7567098, 0.6537509, 0, 25.214062, 0)

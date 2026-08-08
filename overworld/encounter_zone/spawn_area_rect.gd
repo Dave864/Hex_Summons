@@ -16,14 +16,14 @@ extends SpawnArea
 		length = value
 		if is_square:
 			height = length
-		if is_node_ready():
-			_update_debug_mesh()
+		if is_node_ready() and _rect_gizmo != null:
+			_rect_gizmo.length = length
 ## The height of the reactangle (z-axis).
 @export_range(0.01, 100.0, 0.01) var height := 1.0:
 	set(value):
 		height = length if is_square else value
-		if is_node_ready():
-			_update_debug_mesh()
+		if is_node_ready() and _rect_gizmo != null:
+			_rect_gizmo.height = height
 
 ## Half of the length.
 var _half_length: float:
@@ -33,22 +33,22 @@ var _half_length: float:
 var _half_height: float:
 	get():
 		return height / 2
+## The gizmo visualizing the rectangle the spawn area covers.
+var _rect_gizmo: AreaGizmoRect = null
 
 
-## Updates the debug mesh to the current dimensions.
-func _update_debug_mesh() -> void:
-	if not Engine.is_editor_hint():
-		return
-	var rect_mesh := ImmediateMesh.new()
-	rect_mesh.surface_begin(Mesh.PRIMITIVE_LINE_STRIP)
-	rect_mesh.surface_add_vertex(Vector3(-_half_length, 0.0, _half_height))
-	rect_mesh.surface_add_vertex(Vector3(_half_length, 0.0, _half_height))
-	rect_mesh.surface_add_vertex(Vector3(_half_length, 0.0, -_half_height))
-	rect_mesh.surface_add_vertex(Vector3(-_half_length, 0.0, -_half_height))
-	rect_mesh.surface_add_vertex(Vector3(-_half_length, 0.0, _half_height))
-	rect_mesh.surface_end()
-	_debug_mesh.mesh = rect_mesh
-	_debug_mesh.set_surface_override_material(0, _debug_mesh_material())
+## Gets the reference to the rectangle gizmo, or creates one if none is present.
+func _instance_gizmo() -> void:
+	if has_node(GIZMO_NAME):
+		_rect_gizmo = get_node(GIZMO_NAME) as AreaGizmoRect
+	else:
+		_rect_gizmo = AreaGizmoRect.new(GIZMO_COLOR, height, length)
+		add_child(_rect_gizmo)
+		_rect_gizmo.name = GIZMO_NAME
+		if Engine.is_editor_hint():
+			_rect_gizmo.set_owner(get_tree().edited_scene_root)
+	if Engine.is_editor_hint():
+		_rect_gizmo.draw_mesh()
 
 
 ## Gets a random position in the defined spawn area plane.

@@ -11,27 +11,25 @@ const SEGMENT_COUNT := 16
 @export_range(1.0, 100.0, 0.01) var radius := 1.0:
 	set(value):
 		radius = value
-		if is_node_ready():
-			_update_debug_mesh()
+		if is_node_ready() and _circle_gizmo != null:
+			_circle_gizmo.radius = radius
+
+## The gizmo visualizing the circle the spawn area covers.
+var _circle_gizmo: AreaGizmoCircle = null
 
 
-## Updates the debug mesh to the current dimensions.
-func _update_debug_mesh() -> void:
-	if not Engine.is_editor_hint():
-		return
-	var circle_mesh := ImmediateMesh.new()
-	circle_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
-	var angle_step := TAU / SEGMENT_COUNT
-	for i in SEGMENT_COUNT:
-		var vertex_1 := Vector3.RIGHT.rotated(Vector3.UP, angle_step * i)
-		var vertex_2 := Vector3.RIGHT.rotated(Vector3.UP, angle_step * (i + 1))
-		vertex_1 += _debug_mesh.position
-		vertex_2 += _debug_mesh.position
-		circle_mesh.surface_add_vertex(vertex_1 * radius)
-		circle_mesh.surface_add_vertex(vertex_2 * radius)
-	circle_mesh.surface_end()
-	_debug_mesh.mesh = circle_mesh
-	_debug_mesh.set_surface_override_material(0, _debug_mesh_material())
+## Gets the reference to the circle gizmo, or creates one if none is present.
+func _instance_gizmo() -> void:
+	if has_node(GIZMO_NAME):
+		_circle_gizmo = get_node(GIZMO_NAME) as AreaGizmoCircle
+	else:
+		_circle_gizmo = AreaGizmoCircle.new(GIZMO_COLOR, radius)
+		add_child(_circle_gizmo)
+		_circle_gizmo.name = GIZMO_NAME
+		if Engine.is_editor_hint():
+			_circle_gizmo.set_owner(get_tree().edited_scene_root)
+	if Engine.is_editor_hint():
+		_circle_gizmo.draw_mesh()
 
 
 ## Gets a random position in the defined spawn area plane.

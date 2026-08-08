@@ -11,8 +11,10 @@ extends Marker3D
 const Y_RAYCAST_NAME := "Y_RayCast"
 ## The length of the raycast.
 const Y_RAYCAST_LENGTH := 10.0
-## Name of the mesh used for debugging.
-const DEBUG_MESH_NAME := "DebugMesh"
+## Name of the gizmo used for debugging.
+const GIZMO_NAME := "AreaGizmo"
+## The color to use for the gizmo.
+const GIZMO_COLOR := Color.RED
 
 ## Names of the possible enemy selections for this zone.
 @export var enemies : PackedStringArray
@@ -47,8 +49,6 @@ var _y_cast: RayCast3D = null
 var _terrain_zone: TerrainZone = null
 ## The currently active EncounterSpawn nodes.
 var _active_spawners: Array[int] = []
-## The mesh used to visualize the covered area.
-var _debug_mesh: MeshInstance3D = null
 
 ## The spawner that represents a monster.
 @onready var _monster_spawn: PackedScene = preload(
@@ -61,7 +61,7 @@ var _debug_mesh: MeshInstance3D = null
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_instance_y_raycast()
-	_instance_debug_mesh()
+	_instance_gizmo()
 	_update_distance_trigger()
 
 
@@ -98,24 +98,8 @@ func _instance_y_raycast() -> void:
 	_y_cast.global_rotation = Vector3.ZERO
 
 
-## Creates a mesh used to visualize the range of this SpawnArea.
-func _instance_debug_mesh() -> void:
-	if has_node(DEBUG_MESH_NAME):
-		_debug_mesh = get_node(DEBUG_MESH_NAME) as MeshInstance3D
-	else:
-		_debug_mesh = MeshInstance3D.new()
-		add_child(_debug_mesh)
-		_debug_mesh.name = DEBUG_MESH_NAME
-		if Engine.is_editor_hint():
-			_debug_mesh.set_owner(get_tree().edited_scene_root)
-	if Engine.is_editor_hint():
-		_update_debug_mesh()
-	else:
-		_debug_mesh.hide()
-
-
-## Updates the debug mesh to match the current dimensions.
-@abstract func _update_debug_mesh() -> void
+## Gets the reference to the area gizmo, or creates one if none is present.
+@abstract func _instance_gizmo() -> void
 
 
 ## Creates a material for the debug mesh.
