@@ -18,14 +18,14 @@ const SEGMENT_COUNT := 16
 
 
 ## Defines the parameters for a new circle gizmo.
-func _init(new_color: Color, new_radius: float) -> void:
+func _init(new_color: Color = Color.BLACK, new_radius: float = 0.0) -> void:
 	color = new_color
 	radius = new_radius
 
 
 ## Draws a circle mesh.
 func draw_mesh() -> void:
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and not debug_mode:
 		return
 	var circle_mesh := ImmediateMesh.new()
 	circle_mesh.surface_begin(Mesh.PRIMITIVE_LINES)

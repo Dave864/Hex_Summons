@@ -39,7 +39,11 @@ var _half_height: float:
 
 
 ## Defines the parameters for a new rectangle gizmo.
-func _init(new_color: Color, new_height: float, new_length: float) -> void:
+func _init(
+	new_color: Color = Color.BLACK,
+	new_height: float = 1.0,
+	new_length: float = 1.0
+) -> void:
 	color = new_color
 	length = new_length
 	height = new_height
@@ -48,7 +52,7 @@ func _init(new_color: Color, new_height: float, new_length: float) -> void:
 
 ## Draws a rectangular mesh
 func draw_mesh() -> void:
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and not debug_mode:
 		return
 	var rect_mesh := ImmediateMesh.new()
 	rect_mesh.surface_begin(Mesh.PRIMITIVE_LINE_STRIP)

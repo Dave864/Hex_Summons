@@ -19,6 +19,7 @@ extends MeshInstance3D
 ## Draws the gizmo shape if in the editor. Hide if otherwise.
 func _ready() -> void:
 	if not Engine.is_editor_hint() and not debug_mode:
+		hide()
 		return
 	draw_mesh()
 
