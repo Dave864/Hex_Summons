@@ -10,11 +10,31 @@ extends TravelPoints
 ## such mesh is detected.
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+## The radius of the circle plane.
+@export_range(1.0, 100.0, 0.01) var radius := 5.0:
+	set(value):
+		radius = value
+		if is_node_ready() and _circle_gizmo != null:
+			_circle_gizmo.radius = radius
+
+## The gizmo that defines the plane the points can be placed.
+var _circle_gizmo: AreaGizmoCircle = null
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+## Creates the gizmo used to visualize the area where the points will be placed.
+func _create_gizmo() -> void:
+	if has_node(GIZMO_NAME):
+		_circle_gizmo = get_node(GIZMO_NAME) as AreaGizmoCircle
+	else:
+		_circle_gizmo = AreaGizmoCircle.new(GIZMO_COLOR, radius)
+		add_child(_circle_gizmo)
+		if Engine.is_editor_hint():
+			_circle_gizmo.set_owner(get_tree().edited_scene_root)
+		_circle_gizmo.name = GIZMO_NAME
+	if Engine.is_editor_hint():
+		_circle_gizmo.draw_mesh()
+
+
+## Gets the uniform layout of points in the defined shape.
+func _get_points_layout() -> PackedVector3Array:
+	return []
