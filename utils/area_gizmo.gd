@@ -7,16 +7,20 @@ extends MeshInstance3D
 
 
 ## The color the gizmo will be.
-@export var color := Color.BLACK
+@export var color := Color.BLACK:
+	set(value):
+		color = value
+		if is_node_ready():
+			draw_mesh()
+## Indicates that the gizmo should appear in game.
+@export var debug_mode := false
 
-# Called when the node enters the scene tree for the first time.
+
+## Draws the gizmo shape if in the editor. Hide if otherwise.
 func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	if not Engine.is_editor_hint() and not debug_mode:
+		return
+	draw_mesh()
 
 
 ## Draws the mesh that visualizes the shape. The mesh is not drawn when the game
@@ -24,5 +28,10 @@ func _process(delta: float) -> void:
 @abstract func draw_mesh() -> void
 
 
-## Gets a random point within the area.
-@abstract func get_random_point() -> Vector3
+## Creates a material for the gizmo mesh.
+func _mesh_material() -> StandardMaterial3D:
+	var material := StandardMaterial3D.new()
+	# The material is unshaded to allow it to be visible regardless of shadows.
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.albedo_color = color
+	return material
