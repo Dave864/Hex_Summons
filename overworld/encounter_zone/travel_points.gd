@@ -1,3 +1,5 @@
+@tool
+@abstract
 class_name TravelPoints
 extends Node3D
 ## Holds a collection of points in 3D space that serve as travel points for
