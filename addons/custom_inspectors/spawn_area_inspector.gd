@@ -1,13 +1,17 @@
 class_name SpawnAreaInspector
 extends EditorInspectorPlugin
+## Custom inspector for relevant parameters of SpawnArea.
+##
+## Defines inspectors for the "enemis" parameter.
 
 
+## Checks that the object should be handled by this plugin.
 func _can_handle(object: Object) -> bool:
-	if object is SpawnArea:
-		return true
-	return false
+	return object is SpawnArea
 
 
+## Replaces the default inspector handlers in SpawnArea for any custom ones
+## should they exist.
 func _parse_property(
 	object: Object,
 	type: Variant.Type,

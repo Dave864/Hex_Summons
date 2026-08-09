@@ -1,5 +1,12 @@
 class_name SpawnAreaEnemiesProperty
 extends EditorProperty
+## Custom property inspector for the "enemies" parameter of SpawnArea.
+##
+## Creates an option button for all possible enemies currently present in the
+## file structure for each entry item in the array. This ensures that the
+## values stored in said array are indeed present in the project structure and
+## saves on having to go through the file structure manually to verify that
+## an enemy option exists.
 
 
 ## Path format to enemy character battle portrait.
