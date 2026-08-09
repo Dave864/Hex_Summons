@@ -36,7 +36,7 @@ func _instance_gizmo() -> void:
 func _random_area_position(roam_offset: float) -> Vector3:
 	var random_angle := randf_range(0.0, TAU)
 	# Ensure uniform disturbution across the enitre area.
-	var random_dist := sqrt(randf() * pow(radius - roam_offset, 2.0))
+	var random_dist := randf() * (radius - roam_offset)
 	var xz_pos := Vector2.from_angle(random_angle).normalized() * random_dist
 	return Vector3(xz_pos.x, 0.0, xz_pos.y)
 

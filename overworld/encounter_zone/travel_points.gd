@@ -42,8 +42,6 @@ const GIZMO_NAME := "AreaGizmo"
 			_create_points()
 ## Triggers a reset of all point positions.
 @export_tool_button("Reset Positions") var reset_function := _reset_point_positions
-## Triggers an erasure of all point positions.
-@export_tool_button("Erase Positions") var erase_function := _clear_all_points
 
 ## The available travel points.
 var points_list: Array[Marker3D] = []
@@ -54,10 +52,9 @@ func _ready() -> void:
 	_create_gizmo()
 	if Engine.is_editor_hint():
 		_create_gizmo()
-	else:
-		for point: Node in get_children():
-			if point is Marker3D:
-				points_list.append(point)
+	for point: Node in get_children():
+		if point is Marker3D:
+			points_list.append(point)
 
 
 ## Conditionally hides various parameters based on the set distribution mode.
@@ -85,7 +82,7 @@ func _create_points() -> void:
 		nav_finder.position = point_position
 		nav_finder.force_raycast_update()
 		if nav_finder.is_colliding():
-			point_position = nav_finder.get_collision_point()
+			point_position = nav_finder.get_collision_point() - global_position
 		_add_point(point_position, count)
 		count += 1
 	
@@ -98,10 +95,14 @@ func _create_points() -> void:
 func _reset_point_positions() -> void:
 	var nav_finder := _make_nav_finder()
 	for point: Marker3D in points_list:
-		nav_finder.position = point.position
+		nav_finder.position = Vector3(
+				point.position.x,
+				position.y,
+				point.position.z
+		)
 		nav_finder.force_raycast_update()
 		if nav_finder.is_colliding():
-			point.position = nav_finder.get_collision_point()
+			point.global_position = nav_finder.get_collision_point()
 	remove_child(nav_finder)
 	nav_finder.queue_free()
 
@@ -122,7 +123,7 @@ func _make_nav_finder() -> RayCast3D:
 		nav_finder.set_owner(get_tree().edited_scene_root)
 	nav_finder.set_collision_mask_value(Constants.MAP_LAYER, true)
 	nav_finder.global_rotation = Vector3.ZERO
-	nav_finder.target_position = Vector3(0.0, -INF, 0.0)
+	nav_finder.target_position = Vector3(0.0, -100.0, 0.0)
 	return nav_finder
 
 
@@ -132,6 +133,7 @@ func _make_nav_finder() -> RayCast3D:
 
 ## Gets the layout of points in the defined shape.
 func _get_points_layout() -> PackedVector3Array:
+	_clear_all_points()
 	match distribution:
 		DistributionMethod.GRID:
 			return _get_grid_layout()
@@ -155,16 +157,6 @@ func _get_random_layout() -> PackedVector3Array:
 
 ## Gets a random point in the defined shape.
 @abstract func _get_random_point() -> Vector3
-
-
-## Adjusts the point so that it is aligned to the gizmo.
-func _align_point_to_gizmo(point: Vector3) -> Vector3:
-	## Apply global Euler rotation to match the point position to gizmo's
-	## orientation.
-	#point = point.rotated(Vector3.UP, deg_to_rad(global_rotation.y))
-	#point = point.rotated(Vector3.RIGHT, deg_to_rad(global_rotation.x))
-	#point = point.rotated(Vector3.BACK, deg_to_rad(global_rotation.z))
-	return point
 
 
 ## Creates a new travel point at the specified position.

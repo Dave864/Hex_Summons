@@ -58,8 +58,9 @@ func _get_grid_layout() -> PackedVector3Array:
 func _get_random_point() -> Vector3:
 	var half_length := length / 2.0
 	var half_height := height / 2.0
-	return Vector3(
+	var point := Vector3(
 		randf_range(-half_length, half_length),
 		0.0,
 		randf_range(-half_height, half_height)
 	)
+	return point

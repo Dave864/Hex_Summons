@@ -43,7 +43,7 @@ func _get_grid_layout() -> PackedVector3Array:
 ## Gets a random point in the circle.
 func _get_random_point() -> Vector3:
 	var random_angle := randf_range(0.0, TAU)
-	# Ensure uniform disturbution across the enitre area.
-	var random_dist := sqrt(randf() * pow(radius, 2.0))
+	# Ensure uniform disturbution across the entire area.
+	var random_dist := randf() * radius
 	var xz_pos := Vector2.from_angle(random_angle).normalized() * random_dist
 	return Vector3(xz_pos.x, 0.0, xz_pos.y)
