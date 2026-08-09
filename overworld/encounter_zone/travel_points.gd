@@ -10,17 +10,40 @@ extends Node3D
 ## if no such mesh is found.
 
 
+## The different ways the points can be distributed.
+enum DistributionMethod {
+	GRID, # Points are spaced evenly across the area.
+	RANDOM, # A number of points are placed randomly across the area.
+}
+
 ## The color the gizmo will be.
 const GIZMO_COLOR := Color.BLACK
 ## Name of the gizmo used for debugging.
 const GIZMO_NAME := "AreaGizmo"
 
-## The number of points to create.
-@export_range(1, 1000, 1) var point_count = 1:
+## The current way points are created.
+@export var distribution: DistributionMethod = DistributionMethod.RANDOM:
 	set(value):
-		point_count = value
+		distribution = value
+		notify_property_list_changed()
 		if is_node_ready() and Engine.is_editor_hint():
 			_create_points()
+## The point density for the grid layout.
+@export_range(1, 10, 1) var grid_scale = 1:
+	set(value):
+		grid_scale = value
+		if is_node_ready() and Engine.is_editor_hint():
+			_create_points()
+## The number of random points to create.
+@export_range(1, 1000, 1) var random_count = 1:
+	set(value):
+		random_count = value
+		if is_node_ready() and Engine.is_editor_hint():
+			_create_points()
+## Triggers a reset of all point positions.
+@export_tool_button("Reset Positions") var reset_function := _reset_point_positions
+## Triggers an erasure of all point positions.
+@export_tool_button("Erase Positions") var erase_function := _clear_all_points
 
 ## The available travel points.
 var points_list: Array[Marker3D] = []
@@ -29,9 +52,26 @@ var points_list: Array[Marker3D] = []
 ## Gets the travel points present.
 func _ready() -> void:
 	_create_gizmo()
-	for point: Node in get_children():
-		if point is Marker3D:
-			points_list.append(point)
+	if Engine.is_editor_hint():
+		_create_gizmo()
+	else:
+		for point: Node in get_children():
+			if point is Marker3D:
+				points_list.append(point)
+
+
+## Conditionally hides various parameters based on the set distribution mode.
+func _validate_property(property: Dictionary) -> void:
+	if (
+		property.name == "grid_scale"
+		and distribution != DistributionMethod.GRID
+	):
+		property.usage = PROPERTY_USAGE_NO_EDITOR
+	if (
+		property.name == "random_count"
+		and distribution != DistributionMethod.RANDOM
+	):
+		property.usage = PROPERTY_USAGE_NO_EDITOR
 
 
 ## Creates the travel points in a uniform pattern, placing them on a nav mesh if
@@ -90,8 +130,41 @@ func _make_nav_finder() -> RayCast3D:
 @abstract func _create_gizmo() -> void
 
 
-## Gets the uniform layout of points in the defined shape.
-@abstract func _get_points_layout() -> PackedVector3Array
+## Gets the layout of points in the defined shape.
+func _get_points_layout() -> PackedVector3Array:
+	match distribution:
+		DistributionMethod.GRID:
+			return _get_grid_layout()
+		DistributionMethod.RANDOM:
+			return _get_random_layout()
+		_:
+			return []
+
+
+## Gets a layout of random points in the area.
+func _get_random_layout() -> PackedVector3Array:
+	var layout: PackedVector3Array = []
+	for i: int in random_count:
+		layout.append(_get_random_point())
+	return layout
+
+
+## Gets a grid layout of points in the area.
+@abstract func _get_grid_layout() -> PackedVector3Array
+
+
+## Gets a random point in the defined shape.
+@abstract func _get_random_point() -> Vector3
+
+
+## Adjusts the point so that it is aligned to the gizmo.
+func _align_point_to_gizmo(point: Vector3) -> Vector3:
+	## Apply global Euler rotation to match the point position to gizmo's
+	## orientation.
+	#point = point.rotated(Vector3.UP, deg_to_rad(global_rotation.y))
+	#point = point.rotated(Vector3.RIGHT, deg_to_rad(global_rotation.x))
+	#point = point.rotated(Vector3.BACK, deg_to_rad(global_rotation.z))
+	return point
 
 
 ## Creates a new travel point at the specified position.

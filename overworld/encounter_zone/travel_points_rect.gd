@@ -49,6 +49,17 @@ func _create_gizmo() -> void:
 		_rect_gizmo.draw_mesh()
 
 
-## Gets the uniform layout of points in the defined shape.
-func _get_points_layout() -> PackedVector3Array:
+## Gets a grid layout of points in the rectangle.
+func _get_grid_layout() -> PackedVector3Array:
 	return []
+
+
+## Gets a random point in the rectangle.
+func _get_random_point() -> Vector3:
+	var half_length := length / 2.0
+	var half_height := height / 2.0
+	return Vector3(
+		randf_range(-half_length, half_length),
+		0.0,
+		randf_range(-half_height, half_height)
+	)
