@@ -12,8 +12,8 @@ extends Node3D
 
 ## The different ways the points can be distributed.
 enum DistributionMethod {
-	GRID, # Points are spaced evenly across the area.
 	RANDOM, # A number of points are placed randomly across the area.
+	GRID, # Points are spaced evenly across the area.
 }
 
 ## The color the gizmo will be.
@@ -40,8 +40,14 @@ const GIZMO_NAME := "AreaGizmo"
 		random_count = value
 		if is_node_ready() and Engine.is_editor_hint():
 			_create_points()
-## Triggers a reset of all point positions.
-@export_tool_button("Reset Positions") var reset_function := _reset_point_positions
+## Places all existing points at new random locations.
+@export_tool_button("Reroll Positions") var reroll_function := (
+	_reroll_point_positions
+)
+## Relevels all positions so that they are on a map collision shape is able.
+@export_tool_button("Relevel Positions") var relevel_function := (
+	_relevel_point_positions
+)
 
 ## The available travel points.
 var points_list: Array[Marker3D] = []
@@ -69,6 +75,11 @@ func _validate_property(property: Dictionary) -> void:
 		and distribution != DistributionMethod.RANDOM
 	):
 		property.usage = PROPERTY_USAGE_NO_EDITOR
+	if (
+		property.name == "reroll_function"
+		and distribution != DistributionMethod.RANDOM
+	):
+		property.usage = PROPERTY_USAGE_NO_EDITOR
 
 
 ## Creates the travel points in a uniform pattern, placing them on a nav mesh if
@@ -82,7 +93,9 @@ func _create_points() -> void:
 		nav_finder.position = point_position
 		nav_finder.force_raycast_update()
 		if nav_finder.is_colliding():
-			point_position = nav_finder.get_collision_point() - global_position
+			point_position = nav_finder.get_collision_point()
+		else:
+			point_position += global_position
 		_add_point(point_position, count)
 		count += 1
 	
@@ -90,19 +103,38 @@ func _create_points() -> void:
 	nav_finder.queue_free()
 
 
+## Goes gets new random positions for all points.
+func _reroll_point_positions() -> void:
+	var nav_finder := _make_nav_finder()
+	var index := 0
+	for point_position: Vector3 in _get_random_layout():
+		nav_finder.position = point_position
+		nav_finder.force_raycast_update()
+		if nav_finder.is_colliding():
+			point_position = nav_finder.get_collision_point()
+		else:
+			point_position += global_position
+		points_list[index].global_position = point_position
+		points_list[index].global_rotation = Vector3.ZERO
+		index += 1
+	remove_child(nav_finder)
+	nav_finder.queue_free()
+
+
 ## Reevaluates the position of travel points, placing them on a nav mesh if
 ## one is detected.
-func _reset_point_positions() -> void:
+func _relevel_point_positions() -> void:
 	var nav_finder := _make_nav_finder()
 	for point: Marker3D in points_list:
 		nav_finder.position = Vector3(
 				point.position.x,
-				position.y,
+				0.0,
 				point.position.z
 		)
 		nav_finder.force_raycast_update()
 		if nav_finder.is_colliding():
 			point.global_position = nav_finder.get_collision_point()
+		point.global_rotation = Vector3.ZERO
 	remove_child(nav_finder)
 	nav_finder.queue_free()
 
@@ -160,11 +192,12 @@ func _get_random_layout() -> PackedVector3Array:
 
 
 ## Creates a new travel point at the specified position.
-func _add_point(point_position: Vector3, count: int) -> void:
+func _add_point(global_point_position: Vector3, count: int) -> void:
 	var point := Marker3D.new()
 	add_child(point)
 	if Engine.is_editor_hint():
 		point.set_owner(get_tree().edited_scene_root)
-	point.position = point_position
+	point.global_position = global_point_position
+	point.global_rotation = Vector3.ZERO
 	point.name = "Point{0}".format([count])
 	points_list.append(point)
