@@ -187,6 +187,15 @@ func _get_random_layout() -> PackedVector3Array:
 @abstract func _get_grid_layout() -> PackedVector3Array
 
 
+## Gets the point layout for a single grid space.
+@abstract func _grid_section_layout(section_center: Vector3) -> PackedVector3Array
+
+
+## Helper function for _grid_section_layout. Checks if a point is within the
+## defined area.
+@abstract func _is_point_in_area(point: Vector3) -> bool
+
+
 ## Gets a random point in the defined shape.
 @abstract func _get_random_point() -> Vector3
 

@@ -40,6 +40,29 @@ func _get_grid_layout() -> PackedVector3Array:
 	return []
 
 
+## Gets the point layout for a single grid space.
+func _grid_section_layout(section_center: Vector3) -> PackedVector3Array:
+	var section_layout: PackedVector3Array = []
+	# Only one point in center at scale of 1.
+	if grid_scale == 1:
+		var point := section_center
+		if _is_point_in_area(point):
+			section_layout.append(point)
+		return section_layout
+	# Create a square with scale many points on each side.
+	for x: int in grid_scale:
+		var x_pos: float = 0.0
+		for z: int in grid_scale:
+			var z_pos: float = 0.0
+	return section_layout
+
+
+## Helper function for _grid_section_layout. Checks if a point is within the
+## defined circle.
+func _is_point_in_area(point: Vector3) -> bool:
+	return Vector2(point.x, point.z).length_squared() <= pow(radius, 2.0)
+
+
 ## Gets a random point in the circle.
 func _get_random_point() -> Vector3:
 	var random_angle := randf_range(0.0, TAU)

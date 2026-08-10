@@ -54,6 +54,17 @@ func _get_grid_layout() -> PackedVector3Array:
 	return []
 
 
+## Gets the point layout for a single grid space.
+func _grid_section_layout(section_center: Vector3) -> PackedVector3Array:
+	return []
+
+
+## Helper function for _grid_section_layout. Checks if a point is within the
+## defined rectangle.
+func _is_point_in_area(point: Vector3) -> bool:
+	return absf(point.x) <= length / 2.0 and absf(point.z <= height)
+
+
 ## Gets a random point in the rectangle.
 func _get_random_point() -> Vector3:
 	var half_length := length / 2.0
