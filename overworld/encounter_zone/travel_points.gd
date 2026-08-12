@@ -29,13 +29,13 @@ const GIZMO_NAME := "AreaGizmo"
 		if is_node_ready() and Engine.is_editor_hint():
 			_create_points()
 ## The point density for the grid layout.
-@export_range(1, 10, 1) var grid_scale = 1:
+@export_range(0.01, 2.0, 0.01) var grid_scale: float = 0.5:
 	set(value):
 		grid_scale = value
 		if is_node_ready() and Engine.is_editor_hint():
 			_create_points()
 ## The number of random points to create.
-@export_range(1, 1000, 1) var random_count = 1:
+@export_range(1, 1000, 1) var random_count: int = 1:
 	set(value):
 		random_count = value
 		if is_node_ready() and Engine.is_editor_hint():
@@ -85,6 +85,7 @@ func _validate_property(property: Dictionary) -> void:
 ## Creates the travel points in a uniform pattern, placing them on a nav mesh if
 ## the plane is above one.
 func _create_points() -> void:
+	_clear_all_points()
 	var nav_finder := _make_nav_finder()
 	
 	var points_layout := _get_points_layout()
@@ -155,7 +156,7 @@ func _make_nav_finder() -> RayCast3D:
 		nav_finder.set_owner(get_tree().edited_scene_root)
 	nav_finder.set_collision_mask_value(Constants.MAP_LAYER, true)
 	nav_finder.global_rotation = Vector3.ZERO
-	nav_finder.target_position = Vector3(0.0, -100.0, 0.0)
+	nav_finder.target_position = Vector3(0.0, -10.0, 0.0)
 	return nav_finder
 
 
@@ -165,7 +166,6 @@ func _make_nav_finder() -> RayCast3D:
 
 ## Gets the layout of points in the defined shape.
 func _get_points_layout() -> PackedVector3Array:
-	_clear_all_points()
 	match distribution:
 		DistributionMethod.GRID:
 			return _get_grid_layout()

@@ -16,6 +16,8 @@ extends TravelPoints
 		radius = value
 		if is_node_ready() and _circle_gizmo != null:
 			_circle_gizmo.radius = radius
+			if distribution == TravelPoints.DistributionMethod.GRID:
+				_create_points()
 
 ## The gizmo that defines the plane the points can be placed.
 var _circle_gizmo: AreaGizmoCircle = null
@@ -37,23 +39,29 @@ func _create_gizmo() -> void:
 
 ## Gets a grid layout of points in the circle.
 func _get_grid_layout() -> PackedVector3Array:
-	return []
+	var layout: PackedVector3Array = []
+	for x: int in 2 * ceili(radius):
+		for z: int in 2 * ceili(radius):
+			var section_corner = Vector3(
+					-ceilf(radius) + x,
+					0.0,
+					-ceilf(radius) + z
+			)
+			layout.append_array(_grid_section_layout(section_corner))
+	return layout
 
 
 ## Gets the point layout for a single grid space.
-func _grid_section_layout(section_center: Vector3) -> PackedVector3Array:
+func _grid_section_layout(section_corner: Vector3) -> PackedVector3Array:
 	var section_layout: PackedVector3Array = []
-	# Only one point in center at scale of 1.
-	if grid_scale == 1:
-		var point := section_center
-		if _is_point_in_area(point):
-			section_layout.append(point)
-		return section_layout
-	# Create a square with scale many points on each side.
+	var point_space := 1.0 / grid_scale
 	for x: int in grid_scale:
-		var x_pos: float = 0.0
+		var x_pos: float = point_space * x + point_space / 2.0
 		for z: int in grid_scale:
-			var z_pos: float = 0.0
+			var z_pos: float = point_space * z + point_space / 2.0
+			var point := Vector3(x_pos, 0.0, z_pos) + section_corner
+			if _is_point_in_area(point):
+				section_layout.append(point)
 	return section_layout
 
 

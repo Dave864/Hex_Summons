@@ -51,12 +51,28 @@ func _create_gizmo() -> void:
 
 ## Gets a grid layout of points in the rectangle.
 func _get_grid_layout() -> PackedVector3Array:
-	return []
+	var layout: PackedVector3Array = []
+	for x: int in 2 * ceili(length):
+		for z: int in 2 * ceili(height):
+			var section_corner = Vector3(
+					-ceilf(length) + x,
+					0.0,
+					-ceilf(height) + z
+			)
+			layout.append_array(_grid_section_layout(section_corner))
+	return layout
 
 
 ## Gets the point layout for a single grid space.
-func _grid_section_layout(section_center: Vector3) -> PackedVector3Array:
-	return []
+func _grid_section_layout(section_corner: Vector3) -> PackedVector3Array:
+	var section_layout: PackedVector3Array = []
+	var point_space := 1.0 / grid_scale
+	for x: int in grid_scale:
+		var x_pos: float = point_space * x + point_space / 2.0
+		for z: int in grid_scale:
+			var z_pos: float = point_space * z + point_space / 2.0
+			section_layout.append(Vector3(x_pos, 0.0, z_pos) + section_corner)
+	return section_layout
 
 
 ## Helper function for _grid_section_layout. Checks if a point is within the
