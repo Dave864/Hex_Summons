@@ -43,7 +43,7 @@ func _create_gizmo() -> void:
 	if has_node(AREA_GIZMO_NAME):
 		_rect_gizmo = get_node(AREA_GIZMO_NAME) as AreaGizmoRect
 	else:
-		_rect_gizmo = AreaGizmoRect.new(GIZMO_COLOR, height, length)
+		_rect_gizmo = AreaGizmoRect.new(GIZMO_COLOR, height, length, is_square)
 		add_child(_rect_gizmo)
 		if Engine.is_editor_hint():
 			_rect_gizmo.set_owner(get_tree().edited_scene_root)

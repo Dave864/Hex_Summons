@@ -74,8 +74,6 @@ func _ready() -> void:
 	_create_gizmo()
 	_create_grid_gizmo()
 	_make_raycast()
-	if Engine.is_editor_hint():
-		_create_gizmo()
 	for point: Node in get_children():
 		if point is Marker3D:
 			points_list.append(point)

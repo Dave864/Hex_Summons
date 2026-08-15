@@ -100,20 +100,14 @@ albedo_color = Color(1, 0, 0, 1)
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_iro46"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_eou61"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kur02"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdnfc"]
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
 size = Vector3(67, 5, 45)
-
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_eou61"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdnfc"]
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_6lilm"]
 
@@ -121,9 +115,15 @@ albedo_color = Color(1, 0, 0, 1)
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_1kkrf"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_pl2eu"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eou61"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ove5u"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_ohl48"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2e2hg"]
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
@@ -332,8 +332,8 @@ relevel_function = Callable()
 metadata/_custom_type_script = "uid://b888q7s0x56r3"
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/TravelPointZones/TravelPointsRect"]
-mesh = SubResource("ImmediateMesh_iro46")
-surface_material_override/0 = SubResource("StandardMaterial3D_kur02")
+mesh = SubResource("ImmediateMesh_eou61")
+surface_material_override/0 = SubResource("StandardMaterial3D_xdnfc")
 script = ExtResource("9_naebm")
 length = 11.9
 height = 39.629999999999995
@@ -374,8 +374,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect"]
-mesh = SubResource("ImmediateMesh_eou61")
-surface_material_override/0 = SubResource("StandardMaterial3D_xdnfc")
+mesh = SubResource("ImmediateMesh_6lilm")
+surface_material_override/0 = SubResource("StandardMaterial3D_pn0iw")
 script = ExtResource("9_naebm")
 is_square = true
 length = 20.49
@@ -398,8 +398,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect2"]
-mesh = SubResource("ImmediateMesh_6lilm")
-surface_material_override/0 = SubResource("StandardMaterial3D_pn0iw")
+mesh = SubResource("ImmediateMesh_pl2eu")
+surface_material_override/0 = SubResource("StandardMaterial3D_ove5u")
 script = ExtResource("9_naebm")
 is_square = true
 length = 11.68
@@ -414,7 +414,7 @@ metadata/_custom_type_script = "uid://tnwvx2ts1kw1"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.71129227, 1.3390636, 1.662056)
 script = ExtResource("12_taamv")
 length = 60.08
-height = 38.269999999999996
+height = 38.27
 distribution = 3
 grid_scale = 0.12
 random_count = 50
@@ -422,11 +422,11 @@ reroll_function = Callable()
 metadata/_custom_type_script = "uid://b888q7s0x56r3"
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-mesh = SubResource("ImmediateMesh_1kkrf")
-surface_material_override/0 = SubResource("StandardMaterial3D_eou61")
+mesh = SubResource("ImmediateMesh_ohl48")
+surface_material_override/0 = SubResource("StandardMaterial3D_2e2hg")
 script = ExtResource("9_naebm")
 length = 60.08
-height = 38.269999999999996
+height = 38.27
 
 [node name="RayCast3D" type="RayCast3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
 target_position = Vector3(0, -10, 0)

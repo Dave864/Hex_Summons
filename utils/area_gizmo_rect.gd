@@ -42,12 +42,13 @@ var _half_height: float:
 func _init(
 	new_color: Color = Color.BLACK,
 	new_height: float = 1.0,
-	new_length: float = 1.0
+	new_length: float = 1.0,
+	square_flag: bool = false
 ) -> void:
 	color = new_color
 	length = new_length
 	height = new_height
-	is_square = length == height
+	is_square = square_flag
 
 
 ## Draws a rectangular mesh
