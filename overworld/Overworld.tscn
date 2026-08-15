@@ -411,12 +411,12 @@ script = ExtResource("8_naebm")
 metadata/_custom_type_script = "uid://tnwvx2ts1kw1"
 
 [node name="TravelPointsRect" type="Node3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9171677, 0.18665695)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.71129227, 1.3390636, 1.662056)
 script = ExtResource("12_taamv")
 length = 60.08
 height = 38.269999999999996
 distribution = 3
-grid_scale = 0.14
+grid_scale = 0.12
 random_count = 50
 reroll_function = Callable()
 metadata/_custom_type_script = "uid://b888q7s0x56r3"
@@ -433,100 +433,73 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 3
 
 [node name="Point0" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, -17.857143)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.166666, -0.83906364, -12.5)
 
 [node name="Point1" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, -10.714286)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.166666, -0.83906364, -4.166666)
 
 [node name="Point2" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, -3.5714283)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.166666, -0.83906364, 4.166666)
 
 [node name="Point3" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, 3.5714283)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.166666, -0.83906364, 12.500002)
 
 [node name="Point4" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, 10.714285)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.833334, -0.83906364, -12.5)
 
 [node name="Point5" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, 17.857141)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.833334, -0.83906364, -4.166666)
 
 [node name="Point6" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, -17.857143)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.833334, -0.83906364, 4.166666)
 
 [node name="Point7" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, -10.714286)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.833334, -0.83906364, 12.500002)
 
 [node name="Point8" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, -3.5714283)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, -0.83906364, -12.5)
 
 [node name="Point9" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, 3.5714283)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, -0.83906364, -4.166666)
 
 [node name="Point10" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, 10.714285)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, -0.83906364, 4.166666)
 
 [node name="Point11" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, 17.857141)
-
-[node name="Point12" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, -17.857143)
-
-[node name="Point13" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, -10.714286)
-
-[node name="Point14" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, -3.5714283)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, -0.83906364, 12.500002)
 
 [node name="Point15" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, 3.5714283)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1666665, -0.83906364, 12.500002)
 
-[node name="Point16" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, 10.714285)
-
-[node name="Point17" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, 17.857141)
-
-[node name="Point22" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5714285, -2.4171677, 10.714285)
+[node name="Point19" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1666665, -0.83906364, 12.500002)
 
 [node name="Point23" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5714285, -2.4171677, 17.857141)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, -0.83906364, 12.500002)
+
+[node name="Point24" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.833334, -0.83906364, -12.5)
+
+[node name="Point25" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.833334, -0.83906364, -4.166666)
+
+[node name="Point26" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.833334, -0.83906364, 4.166666)
+
+[node name="Point27" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.833334, -0.83906364, 12.500002)
 
 [node name="Point28" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5714285, -2.4171677, 10.714285)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.166666, -0.83906364, -12.5)
 
 [node name="Point29" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5714285, -2.4171677, 17.857141)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.166666, -0.83906364, -4.166666)
 
-[node name="Point34" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.714286, -2.4171677, 10.714285)
+[node name="Point30" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.166666, -0.83906364, 4.166666)
 
-[node name="Point35" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.714286, -2.4171677, 17.857141)
-
-[node name="Point40" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.857143, -2.4171677, 10.714285)
-
-[node name="Point41" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.857143, -2.4171677, 17.857141)
-
-[node name="Point42" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, -17.857143)
-
-[node name="Point43" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, -10.714286)
-
-[node name="Point44" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, -3.5714283)
-
-[node name="Point45" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, 3.5714283)
-
-[node name="Point46" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, 10.714285)
-
-[node name="Point47" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, 17.857141)
+[node name="Point31" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.166666, -0.83906364, 12.500002)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.6537509, 0.7567098, 0, -0.7567098, 0.6537509, 0, 25.214062, 0)

@@ -220,23 +220,25 @@ func _create_points() -> void:
 
 ## Goes gets new random positions for all points.
 func _reroll_point_positions() -> void:
-	var index := 0
-	for point_position: Vector3 in _get_random_layout():
-		_raycast.position = point_position
+	_clean_up_removed_points()
+	var random_position: Vector3
+	for i: int in points_list.size():
+		random_position = _get_random_point_in_shape()
+		_raycast.position = random_position
 		_raycast.force_raycast_update()
 		if _raycast.is_colliding():
-			point_position = _raycast.get_collision_point()
+			random_position = _raycast.get_collision_point()
 		else:
-			point_position += global_position
-		points_list[index].global_position = point_position
-		points_list[index].global_rotation = Vector3.ZERO
-		index += 1
+			random_position += global_position
+		points_list[i].global_position = random_position
+		points_list[i].global_rotation = Vector3.ZERO
 	_raycast.position = Vector3.ZERO
 
 
 ## Reevaluates the position of travel points, placing them on a nav mesh if
 ## one is detected.
 func _relevel_point_positions() -> void:
+	_clean_up_removed_points()
 	for point: Marker3D in points_list:
 		_raycast.position = Vector3(
 				point.position.x,
@@ -248,6 +250,17 @@ func _relevel_point_positions() -> void:
 			point.global_position = _raycast.get_collision_point()
 		point.global_rotation = Vector3.ZERO
 	_raycast.position = Vector3.ZERO
+
+
+## Goes through the points list and removes removed points.
+func _clean_up_removed_points() -> void:
+	var new_list: Array[Marker3D] = []
+	for point: Marker3D in points_list:
+		if point.is_inside_tree():
+			new_list.append(point)
+		else:
+			point.queue_free()
+	points_list = new_list
 
 
 ## Erases all points recorded, removing them from the scene tree.
