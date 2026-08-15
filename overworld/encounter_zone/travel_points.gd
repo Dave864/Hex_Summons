@@ -281,13 +281,18 @@ func _make_raycast() -> void:
 
 ## Creates a gizmo to vizualize the points in a grid.
 func _create_grid_gizmo() -> void:
-	if not Engine.is_editor_hint() or distribution != DistributionSystem.GRID:
+	if distribution != DistributionSystem.GRID:
 		return
 	if not has_node(GRID_POINTS_GIZMO_NAME):
 		_grid_points_gizmo = MeshInstance3D.new()
 		add_child(_grid_points_gizmo)
 		_grid_points_gizmo.name = GRID_POINTS_GIZMO_NAME
 		_grid_points_gizmo.set_owner(get_tree().edited_scene_root)
+	# Should not be adjusting travel point details when the game is running,
+	# but should set reference to gizmo for consistency.
+	elif not Engine.is_editor_hint():
+		_grid_points_gizmo = get_node(GRID_POINTS_GIZMO_NAME)
+		return
 	
 	var mesh_material := StandardMaterial3D.new()
 	mesh_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
