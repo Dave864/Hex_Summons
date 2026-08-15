@@ -16,7 +16,7 @@ extends TravelPoints
 		radius = value
 		if is_node_ready() and _circle_gizmo != null:
 			_circle_gizmo.radius = radius
-			if distribution == TravelPoints.DistributionMethod.GRID:
+			if distribution == TravelPoints.DistributionSystem.CUSTOM_GRID:
 				_create_points()
 
 ## The gizmo that defines the plane the points can be placed.
@@ -25,14 +25,14 @@ var _circle_gizmo: AreaGizmoCircle = null
 
 ## Creates the gizmo used to visualize the area where the points will be placed.
 func _create_gizmo() -> void:
-	if has_node(GIZMO_NAME):
-		_circle_gizmo = get_node(GIZMO_NAME) as AreaGizmoCircle
+	if has_node(AREA_GIZMO_NAME):
+		_circle_gizmo = get_node(AREA_GIZMO_NAME) as AreaGizmoCircle
 	else:
 		_circle_gizmo = AreaGizmoCircle.new(GIZMO_COLOR, radius)
 		add_child(_circle_gizmo)
 		if Engine.is_editor_hint():
 			_circle_gizmo.set_owner(get_tree().edited_scene_root)
-		_circle_gizmo.name = GIZMO_NAME
+		_circle_gizmo.name = AREA_GIZMO_NAME
 	if Engine.is_editor_hint():
 		_circle_gizmo.draw_mesh()
 
@@ -40,29 +40,18 @@ func _create_gizmo() -> void:
 ## Gets a grid layout of points in the circle.
 func _get_grid_layout() -> PackedVector3Array:
 	var layout: PackedVector3Array = []
-	for x: int in 2 * ceili(radius):
-		for z: int in 2 * ceili(radius):
-			var section_corner = Vector3(
-					-ceilf(radius) + x,
+	var grid_size := 1.0 / grid_scale
+	var half_count := ceili(radius / grid_size)
+	for x: int in half_count * 2:
+		for z: int in half_count * 2:
+			var point = Vector3(
+					grid_size * (x - half_count + 0.5),
 					0.0,
-					-ceilf(radius) + z
+					grid_size * (z - half_count + 0.5)
 			)
-			layout.append_array(_grid_section_layout(section_corner))
-	return layout
-
-
-## Gets the point layout for a single grid space.
-func _grid_section_layout(section_corner: Vector3) -> PackedVector3Array:
-	var section_layout: PackedVector3Array = []
-	var point_space := 1.0 / grid_scale
-	for x: int in grid_scale:
-		var x_pos: float = point_space * x + point_space / 2.0
-		for z: int in grid_scale:
-			var z_pos: float = point_space * z + point_space / 2.0
-			var point := Vector3(x_pos, 0.0, z_pos) + section_corner
 			if _is_point_in_area(point):
-				section_layout.append(point)
-	return section_layout
+				layout.append(point)
+	return layout
 
 
 ## Helper function for _grid_section_layout. Checks if a point is within the

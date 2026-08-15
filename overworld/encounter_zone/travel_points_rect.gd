@@ -14,6 +14,7 @@ extends TravelPoints
 @export var is_square := false:
 	set(value):
 		is_square = value
+		_rect_gizmo.is_square = value
 		if is_square:
 			height = length
 ## The length of the rectangle (x-axis). Dimension used when the area is a square.
@@ -24,12 +25,14 @@ extends TravelPoints
 			height = length
 		if is_node_ready() and _rect_gizmo != null:
 			_rect_gizmo.length = length
+			_create_points()
 ## The height of the reactangle (z-axis).
 @export_range(0.01, 100.0, 0.01) var height := 1.0:
 	set(value):
 		height = length if is_square else value
 		if is_node_ready() and _rect_gizmo != null:
 			_rect_gizmo.height = height
+			_create_points()
 
 ## The gizmo that defines the plane the points can be placed.
 var _rect_gizmo: AreaGizmoRect = null
@@ -37,14 +40,14 @@ var _rect_gizmo: AreaGizmoRect = null
 
 ## Creates the gizmo used to visualize the area where the points will be placed.
 func _create_gizmo() -> void:
-	if has_node(GIZMO_NAME):
-		_rect_gizmo = get_node(GIZMO_NAME) as AreaGizmoRect
+	if has_node(AREA_GIZMO_NAME):
+		_rect_gizmo = get_node(AREA_GIZMO_NAME) as AreaGizmoRect
 	else:
 		_rect_gizmo = AreaGizmoRect.new(GIZMO_COLOR, height, length)
 		add_child(_rect_gizmo)
 		if Engine.is_editor_hint():
 			_rect_gizmo.set_owner(get_tree().edited_scene_root)
-		_rect_gizmo.name = GIZMO_NAME
+		_rect_gizmo.name = AREA_GIZMO_NAME
 	if Engine.is_editor_hint():
 		_rect_gizmo.draw_mesh()
 
@@ -52,33 +55,25 @@ func _create_gizmo() -> void:
 ## Gets a grid layout of points in the rectangle.
 func _get_grid_layout() -> PackedVector3Array:
 	var layout: PackedVector3Array = []
-	for x: int in 2 * ceili(length):
-		for z: int in 2 * ceili(height):
-			var section_corner = Vector3(
-					-ceilf(length) + x,
+	var grid_size := 1.0 / grid_scale
+	var half_x := ceili(length / grid_size)
+	var half_z := ceili(height / grid_size)
+	for x: int in 2 * half_x:
+		for z: int in 2 * half_z:
+			var point = Vector3(
+					grid_size * (x - half_x + 0.5),
 					0.0,
-					-ceilf(height) + z
+					grid_size * (z - half_z + 0.5)
 			)
-			layout.append_array(_grid_section_layout(section_corner))
+			if _is_point_in_area(point):
+				layout.append(point)
 	return layout
-
-
-## Gets the point layout for a single grid space.
-func _grid_section_layout(section_corner: Vector3) -> PackedVector3Array:
-	var section_layout: PackedVector3Array = []
-	var point_space := 1.0 / grid_scale
-	for x: int in grid_scale:
-		var x_pos: float = point_space * x + point_space / 2.0
-		for z: int in grid_scale:
-			var z_pos: float = point_space * z + point_space / 2.0
-			section_layout.append(Vector3(x_pos, 0.0, z_pos) + section_corner)
-	return section_layout
 
 
 ## Helper function for _grid_section_layout. Checks if a point is within the
 ## defined rectangle.
 func _is_point_in_area(point: Vector3) -> bool:
-	return absf(point.x) <= length / 2.0 and absf(point.z <= height)
+	return absf(point.x) <= length / 2.0 and absf(point.z) <= height / 2.0
 
 
 ## Gets a random point in the rectangle.
