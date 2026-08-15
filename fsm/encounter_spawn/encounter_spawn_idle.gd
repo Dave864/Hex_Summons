@@ -1,4 +1,3 @@
-@abstract
 class_name EncounterSpawnIdle
 extends EncounterSpawnState
 ## Base class for the logic of the `Idle` state.
@@ -120,9 +119,5 @@ func _on_AlertRange_body_entered(body: Node3D) -> void:
 	if body is OverworldAvatar:
 		state_machine.transition_to(ALERT, {"AlertFocus": body})
 	if body is EncounterSpawn:
-		_process_encounter_spawn(body)
-
-
-## The behavior for determining what should happen when another EncounterSpawn
-## is detected.
-@abstract func _process_encounter_spawn(spawn: EncounterSpawn) -> void
+		if body.type != enc_spawn.type:
+			state_machine.transition_to(ALERT, {"AlertFocus": body})
