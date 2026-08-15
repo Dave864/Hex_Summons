@@ -4,6 +4,8 @@ extends Resource
 ## EncounterSpawn in the overworld.
 
 
+## The type of spawner the character is.
+@export var spawner_type := EncounterSpawn.Type.MONSTER
 @export_group("State Travel Speeds", "speed_")
 ## The speed the spawner moves at while idling.
 @export_range(1.0, 15.0, 0.01) var speed_idle := 4.0

@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="SpawnParameters" load_steps=3 format=3 uid="uid://d1s6wyoh0osou"]
+[gd_resource type="Resource" script_class="SpawnParameters" load_steps=2 format=3 uid="uid://d1s6wyoh0osou"]
 
 [ext_resource type="Script" uid="uid://c1d78rtwc5l8y" path="res://overworld/encounter_spawn/spawn_parameters.gd" id="1_geee2"]
-[ext_resource type="Texture2D" uid="uid://boi6frtqt31dn" path="res://art/placeholders/Predator3D.png" id="2_vru8j"]
 
 [resource]
 script = ExtResource("1_geee2")
-sprite_atlas = ExtResource("2_vru8j")
+spawner_type = 1
 metadata/_custom_type_script = "uid://c1d78rtwc5l8y"

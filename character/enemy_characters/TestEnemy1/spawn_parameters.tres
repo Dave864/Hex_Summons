@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_j6tv5")
+spawner_type = 1
 speed_reaction = 3.0
 despawn_distance_reaction = 0.6
 metadata/_custom_type_script = "uid://c1d78rtwc5l8y"
