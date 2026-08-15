@@ -24,6 +24,8 @@ const GIZMO_COLOR := Color.BLACK
 const AREA_GIZMO_NAME := "AreaGizmo"
 ## Name of the grid points gizmo.
 const GRID_POINTS_GIZMO_NAME := "GridPointsGizmo"
+## The number of times a random point is re-rolled before short-circuiting.
+const REROLL_COUNT := 10
 
 ## The current way points are created.
 @export var distribution: DistributionSystem = DistributionSystem.RANDOM:
@@ -110,6 +112,73 @@ func _validate_property(property: Dictionary) -> void:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
 
 
+## Gets a random travel point in global space. Returns an infinite vector if
+## no valid point is found.
+func get_a_global_point() -> Vector3:
+	var global_point := Vector3.INF
+	match distribution:
+		DistributionSystem.RANDOM:
+			_raycast.position = _get_random_point_in_shape()
+			_raycast.force_raycast_update()
+			if _raycast.is_colliding():
+				global_point = _raycast.get_collision_point()
+		DistributionSystem.GRID:
+			var points := _get_grid_layout()
+			_raycast.position = points[randi() % points.size()]
+			_raycast.force_raycast_update()
+			if _raycast.is_colliding():
+				global_point = _raycast.get_collision_point()
+		_:
+			if points_list.size() > 0:
+				global_point = _get_random_point_in_list()
+	return global_point
+
+
+## Gets a random travel point in global space that is in a specific range of a
+## reference point.
+func get_a_global_point_in(max_range: float, ref_point: Vector3) -> Vector3:
+	var global_point := get_a_global_point()
+	for i: int in REROLL_COUNT:
+		var point_ping := get_a_global_point()
+		if point_ping.distance_squared_to(ref_point) <= pow(max_range, 2.0):
+			global_point = point_ping
+			break
+	return global_point
+
+
+## Gets a random travel point in global space that is at least some distance
+## away from a reference point.
+func get_a_global_point_beyond(min_dist: float, ref_point: Vector3) -> Vector3:
+	var global_point := get_a_global_point()
+	for i: int in REROLL_COUNT:
+		var point_ping := get_a_global_point()
+		if point_ping.distance_squared_to(ref_point) > pow(min_dist, 2.0):
+			global_point = point_ping
+			break
+	return global_point
+
+## Gets a random travel point in global space that is within a specific range
+## band relative to a reference point. Returns any random point if no points
+## are found.
+func get_a_global_point_within(
+	min_dist: float,
+	max_dist: float,
+	ref_point: Vector3
+) -> Vector3:
+	var global_point := get_a_global_point()
+	var distance := 0.0
+	for i: int in REROLL_COUNT:
+		var point_ping := get_a_global_point()
+		distance = point_ping.distance_squared_to(ref_point)
+		if (
+			distance > pow(min_dist, 2.0)
+			and distance <= pow(max_dist, 2.0)
+		):
+			global_point = point_ping
+			break
+	return global_point
+
+
 ## Creates the travel points in some pattern, placing them on a nav mesh if
 ## the plane is above one.
 func _create_points() -> void:
@@ -123,7 +192,16 @@ func _create_points() -> void:
 		_grid_points_gizmo = null
 	if distribution == DistributionSystem.RANDOM:
 		return
-	var points_layout := _get_points_layout()
+	
+	var points_layout: PackedVector3Array
+	match distribution:
+		DistributionSystem.CUSTOM_GRID:
+			points_layout = _get_grid_layout()
+		DistributionSystem.CUSTOM_RANDOM:
+			points_layout = _get_random_layout()
+		_:
+			points_layout = []
+	
 	var count := 0
 	for point_position: Vector3 in points_layout:
 		_raycast.position = point_position
@@ -228,22 +306,11 @@ func _create_grid_gizmo() -> void:
 	_grid_points_gizmo.set_surface_override_material(0, mesh_material)
 
 
-## Gets the layout of points in the defined shape.
-func _get_points_layout() -> PackedVector3Array:
-	match distribution:
-		DistributionSystem.CUSTOM_GRID:
-			return _get_grid_layout()
-		DistributionSystem.CUSTOM_RANDOM:
-			return _get_random_layout()
-		_:
-			return []
-
-
 ## Gets a layout of random points in the area.
 func _get_random_layout() -> PackedVector3Array:
 	var layout: PackedVector3Array = []
 	for i: int in random_count:
-		layout.append(_get_random_point())
+		layout.append(_get_random_point_in_shape())
 	return layout
 
 
@@ -257,7 +324,14 @@ func _get_random_layout() -> PackedVector3Array:
 
 
 ## Gets a random point in the defined shape.
-@abstract func _get_random_point() -> Vector3
+@abstract func _get_random_point_in_shape() -> Vector3
+
+
+## Gets a random point within the current list of points.
+func _get_random_point_in_list() -> Vector3:
+	if points_list.size() == 0:
+		return Vector3.ZERO
+	return points_list[randi() % points_list.size()].global_position
 
 
 ## Creates a new travel point at the specified position.

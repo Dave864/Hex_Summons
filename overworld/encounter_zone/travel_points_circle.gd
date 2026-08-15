@@ -61,7 +61,7 @@ func _is_point_in_area(point: Vector3) -> bool:
 
 
 ## Gets a random point in the circle.
-func _get_random_point() -> Vector3:
+func _get_random_point_in_shape() -> Vector3:
 	var random_angle := randf_range(0.0, TAU)
 	# Ensure uniform disturbution across the entire area.
 	var random_dist := randf() * radius

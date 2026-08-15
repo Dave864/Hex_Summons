@@ -77,7 +77,7 @@ func _is_point_in_area(point: Vector3) -> bool:
 
 
 ## Gets a random point in the rectangle.
-func _get_random_point() -> Vector3:
+func _get_random_point_in_shape() -> Vector3:
 	var half_length := length / 2.0
 	var half_height := height / 2.0
 	var point := Vector3(
