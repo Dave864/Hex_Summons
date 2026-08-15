@@ -48,6 +48,10 @@ const GRID_POINTS_GIZMO_NAME := "GridPointsGizmo"
 @export_tool_button("Reroll Positions") var reroll_function := (
 	_reroll_point_positions
 )
+## Recreates all grid points for current point density.
+@export_tool_button("Regenerate Points") var regen_points_function := (
+	_create_points
+)
 ## Relevels all positions so that they are on a map collision shape is able.
 @export_tool_button("Relevel Positions") var relevel_function := (
 	_relevel_point_positions
@@ -91,6 +95,11 @@ func _validate_property(property: Dictionary) -> void:
 	if (
 		property.name == "reroll_function"
 		and distribution != DistributionSystem.CUSTOM_RANDOM
+	):
+		property.usage = PROPERTY_USAGE_NO_EDITOR
+	if (
+		property.name == "regen_points_function"
+		and distribution != DistributionSystem.CUSTOM_GRID
 	):
 		property.usage = PROPERTY_USAGE_NO_EDITOR
 	if (
@@ -163,7 +172,10 @@ func _relevel_point_positions() -> void:
 ## Erases all points recorded, removing them from the scene tree.
 func _clear_all_points() -> void:
 	for point: Marker3D in points_list:
-		remove_child(point)
+		# Possible for tracked points to not be in the scene tree due to having
+		# been removed in editor.
+		if point.is_inside_tree():
+			remove_child(point)
 		point.queue_free()
 	points_list.clear()
 
@@ -191,7 +203,7 @@ func _make_raycast() -> void:
 
 ## Creates a gizmo to vizualize the points in a grid.
 func _create_grid_gizmo() -> void:
-	if distribution != DistributionSystem.GRID:
+	if not Engine.is_editor_hint() or distribution != DistributionSystem.GRID:
 		return
 	if not has_node(GRID_POINTS_GIZMO_NAME):
 		_grid_points_gizmo = MeshInstance3D.new()
