@@ -96,23 +96,25 @@ func set_nav_to_travel_point(
 ) -> void:
 	var point: Vector3
 	if min_dist >= max_dist or (min_dist < 0.0 and max_dist < 0.0):
-		point = start_terrain_zone.get_random_travel_point()
+		point = start_terrain_zone.travel_point_zones.get_a_global_point()
 	elif min_dist > 0.0 and max_dist < 0.0:
-		point = start_terrain_zone.get_random_travel_point_beyond_range(
-				global_position,
-				min_dist
+		point = start_terrain_zone.travel_point_zones.get_a_global_point_beyond(
+				min_dist,
+				global_position
 		)
 	elif max_dist > 0.0 and min_dist < 0.0:
-		point = start_terrain_zone.get_random_travel_point_in_range(
-				global_position,
-				max_dist
+		point = start_terrain_zone.travel_point_zones.get_a_global_point_in(
+				max_dist,
+				global_position
 		)
 	else:
-		point = start_terrain_zone.get_random_travel_point_within_range(
-				global_position,
+		point = start_terrain_zone.travel_point_zones.get_a_global_point_within(
 				min_dist,
-				max_dist
+				max_dist,
+				global_position
 		)
+	if not point.is_finite():
+		point = global_position
 	nav_agent.target_position = point
 
 

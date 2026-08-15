@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=49 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="Script" uid="uid://b63wynnx1khli" path="res://overworld/overworld.gd" id="1_g3yfq"]
@@ -9,7 +9,9 @@
 [ext_resource type="Script" uid="uid://cpqrkm0xmuufc" path="res://overworld/encounter_zone/spawn_area_circle.gd" id="6_uyahc"]
 [ext_resource type="Script" uid="uid://ctkkhxryhajwc" path="res://utils/area_gizmo_circle.gd" id="7_327yu"]
 [ext_resource type="Script" uid="uid://whcd1sb6tx51" path="res://overworld/encounter_zone/spawn_area_rect.gd" id="7_wc37g"]
+[ext_resource type="Script" uid="uid://tnwvx2ts1kw1" path="res://overworld/encounter_zone/travel_point_zones.gd" id="8_naebm"]
 [ext_resource type="Script" uid="uid://dis4ld2v03m0e" path="res://utils/area_gizmo_rect.gd" id="9_naebm"]
+[ext_resource type="Script" uid="uid://b888q7s0x56r3" path="res://overworld/encounter_zone/travel_points_rect.gd" id="12_taamv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q45au"]
 albedo_color = Color(0, 0.22352941, 1, 1)
@@ -98,6 +100,12 @@ albedo_color = Color(1, 0, 0, 1)
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_iro46"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kur02"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
 size = Vector3(67, 5, 45)
 
@@ -112,6 +120,12 @@ albedo_color = Color(1, 0, 0, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pn0iw"]
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_1kkrf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eou61"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
 
 [node name="Overworld" type="Node" node_paths=PackedStringArray("player_avatar")]
 script = ExtResource("1_g3yfq")
@@ -261,23 +275,6 @@ shape = SubResource("BoxShape3D_naebm")
 debug_color = Color(1, 1, 0, 1)
 debug_fill = false
 
-[node name="TravelPoints" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
-
-[node name="Marker3D" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/TravelPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.84709, 0.6, -15.46928)
-
-[node name="Marker3D2" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/TravelPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.552, 0.6, 4.206)
-
-[node name="Marker3D3" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/TravelPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.292, 0.6, 5.992)
-
-[node name="Marker3D4" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/TravelPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.013, 0.6, -14.943)
-
-[node name="Marker3D5" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/TravelPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.315, 0.6, -13.299)
-
 [node name="SpawnAreas" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
 
 [node name="CircleSpawnArea" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas"]
@@ -320,6 +317,31 @@ script = ExtResource("7_327yu")
 radius = 10.77
 color = Color(1, 0, 0, 1)
 
+[node name="TravelPointZones" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
+script = ExtResource("8_naebm")
+metadata/_custom_type_script = "uid://tnwvx2ts1kw1"
+
+[node name="TravelPointsRect" type="Node3D" parent="EncounterZones/TerrainZoneGrass/TravelPointZones"]
+transform = Transform3D(0.98056334, 0, 0.19620286, 0, 1, 0, -0.19620286, 0, 0.98056334, -34.79517, 0.68645, -2.0860023)
+script = ExtResource("12_taamv")
+length = 11.9
+height = 39.629999999999995
+reroll_function = Callable()
+regen_points_function = Callable()
+relevel_function = Callable()
+metadata/_custom_type_script = "uid://b888q7s0x56r3"
+
+[node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/TravelPointZones/TravelPointsRect"]
+mesh = SubResource("ImmediateMesh_iro46")
+surface_material_override/0 = SubResource("StandardMaterial3D_kur02")
+script = ExtResource("9_naebm")
+length = 11.9
+height = 39.629999999999995
+
+[node name="RayCast3D" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/TravelPointZones/TravelPointsRect"]
+target_position = Vector3(0, -10, 0)
+collision_mask = 3
+
 [node name="TerrainZoneSand" type="Area3D" parent="EncounterZones"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.667734)
 collision_layer = 2
@@ -331,23 +353,6 @@ maps = Array[String](["res://hex_map/RockMapSmall.tscn", "res://hex_map/RockMapL
 shape = SubResource("BoxShape3D_taamv")
 debug_color = Color(1, 1, 0, 1)
 debug_fill = false
-
-[node name="TravelPoints" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
-
-[node name="Marker3D" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.855, 0.6, -6.165)
-
-[node name="Marker3D2" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.36, 0.6, 14.3242855)
-
-[node name="Marker3D3" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.072, 0.6, 14.049)
-
-[node name="Marker3D4" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.903, 0.6, 13.730646)
-
-[node name="Marker3D5" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.809, 0.6, -7.4918194)
 
 [node name="SpawnAreas" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
 
@@ -396,9 +401,132 @@ collision_mask = 2
 mesh = SubResource("ImmediateMesh_6lilm")
 surface_material_override/0 = SubResource("StandardMaterial3D_pn0iw")
 script = ExtResource("9_naebm")
+is_square = true
 length = 11.68
-height = 27.24
+height = 11.68
 color = Color(1, 0, 0, 1)
+
+[node name="TravelPointZones" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
+script = ExtResource("8_naebm")
+metadata/_custom_type_script = "uid://tnwvx2ts1kw1"
+
+[node name="TravelPointsRect" type="Node3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9171677, 0.18665695)
+script = ExtResource("12_taamv")
+length = 60.08
+height = 38.269999999999996
+distribution = 3
+grid_scale = 0.14
+random_count = 50
+reroll_function = Callable()
+metadata/_custom_type_script = "uid://b888q7s0x56r3"
+
+[node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+mesh = SubResource("ImmediateMesh_1kkrf")
+surface_material_override/0 = SubResource("StandardMaterial3D_eou61")
+script = ExtResource("9_naebm")
+length = 60.08
+height = 38.269999999999996
+
+[node name="RayCast3D" type="RayCast3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+target_position = Vector3(0, -10, 0)
+collision_mask = 3
+
+[node name="Point0" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, -17.857143)
+
+[node name="Point1" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, -10.714286)
+
+[node name="Point2" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, -3.5714283)
+
+[node name="Point3" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, 3.5714283)
+
+[node name="Point4" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, 10.714285)
+
+[node name="Point5" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -2.4171677, 17.857141)
+
+[node name="Point6" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, -17.857143)
+
+[node name="Point7" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, -10.714286)
+
+[node name="Point8" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, -3.5714283)
+
+[node name="Point9" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, 3.5714283)
+
+[node name="Point10" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, 10.714285)
+
+[node name="Point11" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.857143, -2.4171677, 17.857141)
+
+[node name="Point12" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, -17.857143)
+
+[node name="Point13" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, -10.714286)
+
+[node name="Point14" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, -3.5714283)
+
+[node name="Point15" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, 3.5714283)
+
+[node name="Point16" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, 10.714285)
+
+[node name="Point17" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.714286, -2.4171677, 17.857141)
+
+[node name="Point22" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5714285, -2.4171677, 10.714285)
+
+[node name="Point23" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5714285, -2.4171677, 17.857141)
+
+[node name="Point28" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5714285, -2.4171677, 10.714285)
+
+[node name="Point29" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5714285, -2.4171677, 17.857141)
+
+[node name="Point34" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.714286, -2.4171677, 10.714285)
+
+[node name="Point35" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.714286, -2.4171677, 17.857141)
+
+[node name="Point40" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.857143, -2.4171677, 10.714285)
+
+[node name="Point41" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.857143, -2.4171677, 17.857141)
+
+[node name="Point42" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, -17.857143)
+
+[node name="Point43" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, -10.714286)
+
+[node name="Point44" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, -3.5714283)
+
+[node name="Point45" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, 3.5714283)
+
+[node name="Point46" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, 10.714285)
+
+[node name="Point47" type="Marker3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -2.4171677, 17.857141)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.6537509, 0.7567098, 0, -0.7567098, 0.6537509, 0, 25.214062, 0)

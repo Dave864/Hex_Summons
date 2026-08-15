@@ -131,6 +131,8 @@ func get_a_global_point() -> Vector3:
 		_:
 			if points_list.size() > 0:
 				global_point = _get_random_point_in_list()
+	if not global_point.is_finite():
+		printerr("Could not find a valid random point.")
 	return global_point
 
 
@@ -156,6 +158,7 @@ func get_a_global_point_beyond(min_dist: float, ref_point: Vector3) -> Vector3:
 			global_point = point_ping
 			break
 	return global_point
+
 
 ## Gets a random travel point in global space that is within a specific range
 ## band relative to a reference point. Returns any random point if no points
