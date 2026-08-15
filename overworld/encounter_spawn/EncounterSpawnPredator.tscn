@@ -1,0 +1,96 @@
+[gd_scene load_steps=15 format=3 uid="uid://yy6qt45gqsr8"]
+
+[ext_resource type="Script" uid="uid://c8nw7puv2xa0p" path="res://overworld/encounter_spawn/encounter_spawn.gd" id="1_uiosi"]
+[ext_resource type="Shader" uid="uid://d3jbkjw03cw0d" path="res://overworld/encounter_spawn/billboard_dither_transparency.gdshader" id="2_hfk4g"]
+[ext_resource type="SpriteFrames" uid="uid://b4geeoicss8b1" path="res://character/enemy_characters/EnemyCharacter/sprite_frames.tres" id="3_y6ehm"]
+[ext_resource type="Script" uid="uid://dy57w3lavtlvm" path="res://overworld/encounter_spawn/encounter_spawn_sprite.gd" id="4_5djj7"]
+[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="5_wrul3"]
+[ext_resource type="Script" uid="uid://ckoxac0uocn4h" path="res://fsm/encounter_spawn/encounter_spawn_spawn.gd" id="6_1k7op"]
+[ext_resource type="Script" uid="uid://vkbpcgjpw4eq" path="res://fsm/encounter_spawn/encounter_spawn_idle.gd" id="7_uiosi"]
+[ext_resource type="Script" uid="uid://b21p5fgab1eq3" path="res://fsm/encounter_spawn/predator_spawn/predator_spawn_alert.gd" id="8_uiosi"]
+[ext_resource type="Script" uid="uid://cua3w47mw607t" path="res://fsm/encounter_spawn/encounter_spawn_despawn.gd" id="9_a8c5y"]
+[ext_resource type="Script" uid="uid://dcdxoorng2k8i" path="res://fsm/encounter_spawn/predator_spawn/predator_spawn_reaction.gd" id="9_uiosi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rip8a"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_hfk4g")
+shader_parameter/dither_intensity = 0.0
+shader_parameter/dither_pixel_size = 1.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1vheu"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rsewy"]
+radius = 0.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ycrvi"]
+radius = 5.0
+
+[node name="EncounterSpawnPredator" type="CharacterBody3D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_uiosi")
+type = 1
+
+[node name="EncounterSpawnSprite" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = SubResource("ShaderMaterial_rip8a")
+pixel_size = 0.0625
+billboard = 1
+texture_filter = 0
+sprite_frames = ExtResource("3_y6ehm")
+script = ExtResource("4_5djj7")
+metadata/_custom_type_script = "uid://dy57w3lavtlvm"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_1vheu")
+
+[node name="HitBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 8
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+shape = SubResource("CylinderShape3D_rsewy")
+
+[node name="AlertRange" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 12
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AlertRange"]
+shape = SubResource("SphereShape3D_ycrvi")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("5_wrul3")
+initial_state = NodePath("Spawn")
+metadata/_custom_type_script = "uid://dcm1t8lpe3xej"
+
+[node name="Spawn" type="Node" parent="StateMachine"]
+script = ExtResource("6_1k7op")
+metadata/_custom_type_script = "uid://ckoxac0uocn4h"
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("7_uiosi")
+metadata/_custom_type_script = "uid://vkbpcgjpw4eq"
+
+[node name="Alert" type="Node" parent="StateMachine"]
+script = ExtResource("8_uiosi")
+metadata/_custom_type_script = "uid://b21p5fgab1eq3"
+
+[node name="Reaction" type="Node" parent="StateMachine"]
+script = ExtResource("9_uiosi")
+metadata/_custom_type_script = "uid://dcdxoorng2k8i"
+
+[node name="Despawn" type="Node" parent="StateMachine"]
+script = ExtResource("9_a8c5y")
+metadata/_custom_type_script = "uid://cua3w47mw607t"
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_HitBox_area_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_HitBox_body_entered"]

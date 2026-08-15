@@ -55,6 +55,9 @@ var _active_spawners: Array[int] = []
 		"res://overworld/encounter_spawn/EncounterSpawnMonster.tscn"
 )
 ## The spawner that represents a predator.
+@onready var _predator_spawn: PackedScene = preload(
+		"res://overworld/encounter_spawn/EncounterSpawnPredator.tscn"
+)
 ## The spawner that represents a prey creature.
 
 
