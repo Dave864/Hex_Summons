@@ -42,8 +42,18 @@ var _current_time := 0.0
 
 ## Sets the sprite frames and shader texture to match the specified character.
 func set_texture_to_character(char_name: String) -> void:
-	sprite_frames = load(SPRITE_FRAMES_PATH.format([char_name]))
-	var xray_shader: ShaderMaterial = load(SHADER_PATH.format([char_name]))
+	var sprite_frames_file = SPRITE_FRAMES_PATH.format([char_name])
+	var shader_file = SHADER_PATH.format([char_name])
+	assert(
+			FileAccess.file_exists(sprite_frames_file),
+			"No sprite frames for {0} character.".format([char_name])
+	)
+	assert(
+			FileAccess.file_exists(shader_file),
+			"No shader for {0} character.".format([char_name])
+	)
+	sprite_frames = load(sprite_frames_file)
+	var xray_shader: ShaderMaterial = load(shader_file)
 	var sprite_sheet: Texture2D = xray_shader.get_shader_parameter(
 			"sprite_texture"
 	)
