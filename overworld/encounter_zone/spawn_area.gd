@@ -50,15 +50,10 @@ var _terrain_zone: TerrainZone = null
 ## The currently active EncounterSpawn nodes.
 var _active_spawners: Array[int] = []
 
-## The spawner that represents a monster.
-@onready var _monster_spawn: PackedScene = preload(
-		"res://overworld/encounter_spawn/EncounterSpawnMonster.tscn"
+## The spawner for a random encounter.
+@onready var _enc_spawn: PackedScene = preload(
+		"res://overworld/encounter_spawn/EncounterSpawn.tscn"
 )
-## The spawner that represents a predator.
-@onready var _predator_spawn: PackedScene = preload(
-		"res://overworld/encounter_spawn/EncounterSpawnPredator.tscn"
-)
-## The spawner that represents a prey creature.
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -155,9 +150,9 @@ func _process_spawning() -> void:
 	if _travel_distance >= _distance_trigger:
 		_update_distance_trigger()
 		_travel_distance = 0.0
-		var spawner: EncounterSpawn = _monster_spawn.instantiate()
-		spawner.set_start_terrain_zone(_terrain_zone)
-		spawner.set_encounter_details(
+		var spawner: EncounterSpawn = _enc_spawn.instantiate()
+		spawner.init_start_terrain_zone(_terrain_zone)
+		spawner.init_encounter_details(
 				_terrain_zone.select_random_map_path(),
 				enemies
 		)
