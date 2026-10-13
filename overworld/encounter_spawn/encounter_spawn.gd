@@ -13,6 +13,7 @@ enum Type {
 	MONSTER,
 	PREDATOR,
 	PREY,
+	UNDECIDED,
 }
 
 ## The format for the path to the spawn parameters of a character.
@@ -21,8 +22,7 @@ const CHAR_SPAWN_PARAMETERS_PATH := (
 )
 
 ## The type of character this encounter spawn is.
-@export var type := Type.MONSTER
-
+var type := Type.UNDECIDED
 ## The behavior parameters for this spawner.
 var spawn_params: SpawnParameters = null
 ## The terrain zone the spawner starts in.
@@ -49,6 +49,7 @@ var _active: bool = false
 
 ## Sets the initial orientation to a random value.
 func _ready() -> void:
+	_set_alert_radius(spawn_params.alert_radius)
 	sprite.face_random_direction()
 	# TODO: Set sprite to be the dominant enemy. Currently just sets
 	# it to the first one.
@@ -63,7 +64,7 @@ func _exit_tree() -> void:
 
 
 ## Sets the details used for populating the encounter.
-func set_encounter_details(
+func init_encounter_details(
 	map_path: String,
 	enemy_names: PackedStringArray
 ) -> void:
@@ -72,10 +73,11 @@ func set_encounter_details(
 	# TODO: Set spawn to be dominant enemy. Current just uses the first enemy as
 	# the basis for the behavior.
 	spawn_params = load(CHAR_SPAWN_PARAMETERS_PATH.format([_enemy_names[0]]))
+	type = spawn_params.spawner_type
 
 
 ## Sets the terrain zone details.
-func set_start_terrain_zone(
+func init_start_terrain_zone(
 	new_terrain_zone: TerrainZone,
 ) -> void:
 	start_terrain_zone = new_terrain_zone
@@ -156,8 +158,6 @@ func move_in_direction(speed: float, xz_dir: Vector2, delta: float) -> void:
 
 ## Updates the radius of the AlertRange collision detection.
 func _set_alert_radius(new_radius: float) -> void:
-	if not is_node_ready():
-		return
 	var alert_shape: CollisionShape3D = alert_range.get_node("CollisionShape3D")
 	var alert_sphere := alert_shape.shape as SphereShape3D
 	alert_sphere.radius = new_radius
