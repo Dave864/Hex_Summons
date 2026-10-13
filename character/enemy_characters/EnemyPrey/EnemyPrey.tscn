@@ -9,7 +9,7 @@
 [ext_resource type="SpriteFrames" uid="uid://drdmnvif0ta7f" path="res://character/enemy_characters/EnemyPrey/sprite_frames.tres" id="7_55dr5"]
 [ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="7_qbo74"]
 [ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="8_1sl2f"]
-[ext_resource type="Resource" uid="uid://geyha05qoeel" path="res://character/enemy_characters/EnemyPrey/stat_data/stat_values.tres" id="9_7nod2"]
+[ext_resource type="Resource" uid="uid://geyha05qoeel" path="res://character/enemy_characters/EnemyPrey/stats/stat_values.tres" id="9_7nod2"]
 [ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="10_413jb"]
 [ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="11_s3u6f"]
 [ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="12_pfh1v"]

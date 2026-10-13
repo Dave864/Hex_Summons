@@ -6,7 +6,7 @@ extends Node
 
 
 const CLASS_DATA_PATH: String = (
-	"res://character/player_classes/{0}/stat_data/class_data.tres"
+	"res://character/player_classes/{0}/stats/class_data.tres"
 )
 const NAME: String = "name"
 const CLASS: String = "class"

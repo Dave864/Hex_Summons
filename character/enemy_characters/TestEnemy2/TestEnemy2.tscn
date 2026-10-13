@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://cof1wrll2np4x" path="res://fsm/enemy_character/enemy_character_move.gd" id="4"]
 [ext_resource type="Script" uid="uid://bjdo0sq45ance" path="res://fsm/enemy_character/enemy_character_wait.gd" id="5"]
 [ext_resource type="Material" uid="uid://cot34utd5yf3a" path="res://character/enemy_characters/TestEnemy2/character_sprite_xray.tres" id="5_7rjkx"]
-[ext_resource type="Resource" uid="uid://o6be5nr75721" path="res://character/enemy_characters/TestEnemy2/stat_data/stat_values.tres" id="6"]
+[ext_resource type="Resource" uid="uid://o6be5nr75721" path="res://character/enemy_characters/TestEnemy2/stats/stat_values.tres" id="6"]
 [ext_resource type="SpriteFrames" uid="uid://bfarjm631ebkr" path="res://character/enemy_characters/TestEnemy2/sprite_frames.tres" id="6_v01gw"]
 [ext_resource type="Script" uid="uid://dp6jkaqsiu5vq" path="res://fsm/enemy_character/enemy_character_think.gd" id="7"]
 [ext_resource type="Script" uid="uid://cdrf5m57oe7j7" path="res://fsm/enemy_character/enemy_character_action.gd" id="8"]

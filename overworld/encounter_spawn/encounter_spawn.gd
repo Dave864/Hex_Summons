@@ -18,7 +18,7 @@ enum Type {
 
 ## The format for the path to the spawn parameters of a character.
 const CHAR_SPAWN_PARAMETERS_PATH := (
-		Constants.ENEMY_CHAR_FOLDER + "spawn_parameters.tres"
+		Constants.ENEMY_CHAR_FOLDER + "stats/spawn_parameters.tres"
 )
 
 ## The type of character this encounter spawn is.
