@@ -10,6 +10,8 @@ extends SpawnArea
 		is_square = value
 		if is_square:
 			height = length
+		if is_node_ready() and _rect_gizmo != null:
+			_rect_gizmo.is_square = is_square
 ## The length of the rectangle (x-axis). Dimension used when the area is a square.
 @export_range(0.01, 100.0, 0.01) var length := 1.0:
 	set(value):
