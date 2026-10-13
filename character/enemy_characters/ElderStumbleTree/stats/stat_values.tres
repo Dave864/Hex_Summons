@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BaseStats" load_steps=2 format=3 uid="uid://ha332uy0k0m"]
+
+[ext_resource type="Script" uid="uid://opqgf7412x5i" path="res://character/scripts/character_stats/base_stats.gd" id="1_w61ee"]
+
+[resource]
+script = ExtResource("1_w61ee")
+health_base = 200
+attack_base = 5
+defense_base = 3
+movement = 2

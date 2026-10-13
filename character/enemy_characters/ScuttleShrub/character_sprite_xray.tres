@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://dtee1e6mkhb48"]
+
+[ext_resource type="Shader" uid="uid://dtt3a1dq31nnw" path="res://character/material/sprite_billboard_draw.gdshader" id="1_gsho2"]
+[ext_resource type="Texture2D" uid="uid://cxafpnjy1qnp2" path="res://art/character/Scuttleshrub_Spritesheet.png" id="2_gsho2"]
+[ext_resource type="Shader" uid="uid://lh7xfgxfcqta" path="res://character/material/sprite_billboard_xray.gdshader" id="3_yfv2h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_01h8p"]
+resource_local_to_scene = true
+render_priority = 1
+shader = ExtResource("1_gsho2")
+shader_parameter/sprite_texture = ExtResource("2_gsho2")
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_01h8p")
+shader = ExtResource("3_yfv2h")
+shader_parameter/sprite_texture = ExtResource("2_gsho2")
+shader_parameter/x_ray_color = Color(0, 1, 1, 1)
+shader_parameter/dither_intensity = 0.5000000074506
+shader_parameter/dither_pixel_size = 1.0

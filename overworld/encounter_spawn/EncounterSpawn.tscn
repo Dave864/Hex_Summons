@@ -35,6 +35,7 @@ script = ExtResource("1_rip8a")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 material_override = SubResource("ShaderMaterial_384gu")
 pixel_size = 0.0625
+texture_filter = 0
 sprite_frames = ExtResource("2_6hm8t")
 script = ExtResource("3_fc5mb")
 metadata/_custom_type_script = "uid://dy57w3lavtlvm"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpawnParameters" load_steps=2 format=3 uid="uid://bnksvr8gxgbno"]
+
+[ext_resource type="Script" uid="uid://c1d78rtwc5l8y" path="res://overworld/encounter_spawn/spawn_parameters.gd" id="1_nufmj"]
+
+[resource]
+script = ExtResource("1_nufmj")
+spawner_type = 2
+speed_idle = 3.0
+speed_reaction = 6.0
+reaction_radius = 6.0
+metadata/_custom_type_script = "uid://c1d78rtwc5l8y"

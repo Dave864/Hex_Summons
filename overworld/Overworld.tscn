@@ -115,9 +115,9 @@ size = Vector3(67, 5, 45)
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_iro46"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_pl2eu"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kur02"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ove5u"]
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
@@ -281,7 +281,7 @@ debug_fill = false
 transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 0.9999998, -36.7013, 0.6, -11.437256)
 script = ExtResource("6_uyahc")
 radius = 6.21
-enemies = PackedStringArray("TestEnemy2")
+enemies = PackedStringArray("ScuttleShrub")
 roam_chance = 0.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
@@ -301,7 +301,7 @@ color = Color(1, 0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.84867, 0.6, 6.7512493)
 script = ExtResource("6_uyahc")
 radius = 10.77
-enemies = PackedStringArray("TestEnemy2")
+enemies = PackedStringArray("ScuttleShrub")
 spawn_limit = 2
 roam_chance = 1.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
@@ -362,7 +362,7 @@ script = ExtResource("7_wc37g")
 is_square = true
 length = 20.49
 height = 20.49
-enemies = PackedStringArray("TestEnemy1")
+enemies = PackedStringArray("StumbleTree")
 spawn_limit = 2
 roam_chance = 1.0
 distance_trigger_min = 0.5
@@ -387,7 +387,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.423811, 0.6, -5.1863155)
 script = ExtResource("7_wc37g")
 length = 11.68
 height = 27.57
-enemies = PackedStringArray("TestEnemy1")
+enemies = PackedStringArray("ElderStumbleTree")
 spawn_limit = 2
 roam_chance = 1.0
 distance_trigger_min = 2.0
@@ -398,8 +398,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect2"]
-mesh = SubResource("ImmediateMesh_iro46")
-surface_material_override/0 = SubResource("StandardMaterial3D_kur02")
+mesh = SubResource("ImmediateMesh_pl2eu")
+surface_material_override/0 = SubResource("StandardMaterial3D_ove5u")
 script = ExtResource("9_naebm")
 length = 11.68
 height = 27.57

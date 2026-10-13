@@ -1,0 +1,150 @@
+[gd_scene load_steps=26 format=3 uid="uid://chlxj5netb7h2"]
+
+[ext_resource type="Script" uid="uid://blllus8v7ujpt" path="res://character/enemy_characters/enemy_character.gd" id="1_uns60"]
+[ext_resource type="Texture2D" uid="uid://quntaau01524" path="res://character/enemy_characters/ElderStumbleTree/BattlePortrait.atlastex" id="2_hy8ab"]
+[ext_resource type="PackedScene" uid="uid://c7wswkqcskjh8" path="res://user_interface/encounter/CharacterLabel/CharacterLabel.tscn" id="3_qxta5"]
+[ext_resource type="Script" uid="uid://blq4c5w0gfdyw" path="res://hex_map/scripts/map_coordinate.gd" id="4_ahq1u"]
+[ext_resource type="Shape3D" uid="uid://cibar8mqtlhpg" path="res://character/player_characters/PlayerCharacter/character_map_box.tres" id="5_yqg3e"]
+[ext_resource type="Material" uid="uid://bkauojsyg642o" path="res://character/enemy_characters/ElderStumbleTree/character_sprite_xray.tres" id="6_7lm01"]
+[ext_resource type="SpriteFrames" uid="uid://i3e70kd1uckx" path="res://character/enemy_characters/ElderStumbleTree/sprite_frames.tres" id="7_w62d2"]
+[ext_resource type="Script" uid="uid://70b5is4mqv54" path="res://character/scripts/encounter_sprite.gd" id="8_we017"]
+[ext_resource type="Script" uid="uid://hdd3dsvn6r7c" path="res://character/scripts/character_stats/character_stat_modifiers.gd" id="9_281sy"]
+[ext_resource type="Resource" uid="uid://ha332uy0k0m" path="res://character/enemy_characters/ElderStumbleTree/stats/stat_values.tres" id="10_q5wp3"]
+[ext_resource type="PackedScene" uid="uid://d36rk0ycc66j7" path="res://effects_tracker/EffectsTracker.tscn" id="11_8v62p"]
+[ext_resource type="Shape3D" uid="uid://dr0af6qtgleqh" path="res://character/player_characters/PlayerCharacter/character_hit_box.tres" id="12_vbbgf"]
+[ext_resource type="Script" uid="uid://40cwhkfh7y22" path="res://character_ai/character_ai.gd" id="13_kwfub"]
+[ext_resource type="PackedScene" uid="uid://bwq1llmyfdw5o" path="res://actions/action_nodes/Strike/Strike.tscn" id="14_5rj11"]
+[ext_resource type="PackedScene" uid="uid://c4shujk0dhck0" path="res://actions/action_nodes/Empty/Empty.tscn" id="14_ix2rh"]
+[ext_resource type="PackedScene" uid="uid://dw8dgt1uo4nrp" path="res://actions/action_nodes/Sweep/Sweep.tscn" id="14_kacvo"]
+[ext_resource type="PackedScene" uid="uid://6pb0gwn4gr8t" path="res://actions/action_nodes/Blast/Blast.tscn" id="14_vr2iw"]
+[ext_resource type="Script" uid="uid://bdkgr4241wqcj" path="res://character_ai/action_behavior.gd" id="15_kg577"]
+[ext_resource type="Script" uid="uid://mxpbc437xmjm" path="res://character_ai/action_conditions/cooldown.gd" id="16_p0khd"]
+[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="16_sw75j"]
+[ext_resource type="Script" uid="uid://b020qxy754ll2" path="res://character_ai/action_conditions/group_condition.gd" id="17_p0khd"]
+[ext_resource type="Script" uid="uid://cof1wrll2np4x" path="res://fsm/enemy_character/enemy_character_move.gd" id="17_pulif"]
+[ext_resource type="Script" uid="uid://bjdo0sq45ance" path="res://fsm/enemy_character/enemy_character_wait.gd" id="18_trbhk"]
+[ext_resource type="Script" uid="uid://dp6jkaqsiu5vq" path="res://fsm/enemy_character/enemy_character_think.gd" id="19_e436r"]
+[ext_resource type="Script" uid="uid://cdrf5m57oe7j7" path="res://fsm/enemy_character/enemy_character_action.gd" id="20_cayfj"]
+
+[node name="ElderStumbleTree" type="Area3D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_uns60")
+battle_portrait = ExtResource("2_hy8ab")
+
+[node name="CharacterLabel" parent="." node_paths=PackedStringArray("char_pos") instance=ExtResource("3_qxta5")]
+offset_right = 0.0
+offset_bottom = 0.0
+character_type = 0
+char_pos = NodePath("../EncounterSprite/SpritePosition")
+
+[node name="MapCoordinate" type="Marker3D" parent="."]
+gizmo_extents = 9.72
+script = ExtResource("4_ahq1u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = ExtResource("5_yqg3e")
+
+[node name="EncounterSprite" type="AnimatedSprite3D" parent="." node_paths=PackedStringArray("char_pos")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.55, 0)
+material_override = ExtResource("6_7lm01")
+pixel_size = 0.0054
+billboard = 1
+fixed_size = true
+texture_filter = 0
+render_priority = 1
+sprite_frames = ExtResource("7_w62d2")
+script = ExtResource("8_we017")
+char_pos = NodePath("../MapCoordinate")
+bind_to_hex = true
+metadata/_custom_type_script = "uid://70b5is4mqv54"
+
+[node name="SpritePosition" type="Marker3D" parent="EncounterSprite"]
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("9_281sy")
+base_stat_values = ExtResource("10_q5wp3")
+
+[node name="EffectsTracker" parent="." instance=ExtResource("11_8v62p")]
+
+[node name="HitBox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 16
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+shape = ExtResource("12_vbbgf")
+
+[node name="CharacterAI" type="Node" parent="."]
+script = ExtResource("13_kwfub")
+actions_ref = NodePath("../Actions")
+
+[node name="Actions" type="Node" parent="."]
+
+[node name="Blast" parent="Actions" instance=ExtResource("14_vr2iw")]
+
+[node name="ActionBehavior" type="Node" parent="Actions/Blast"]
+script = ExtResource("15_kg577")
+metadata/_custom_type_script = "uid://bdkgr4241wqcj"
+
+[node name="GroupCondition" type="Node" parent="Actions/Blast"]
+script = ExtResource("17_p0khd")
+metadata/_custom_type_script = "uid://b020qxy754ll2"
+
+[node name="Cooldown" type="Node" parent="Actions/Blast"]
+script = ExtResource("16_p0khd")
+turn_count = 2
+metadata/_custom_type_script = "uid://mxpbc437xmjm"
+
+[node name="Sweep" parent="Actions" instance=ExtResource("14_kacvo")]
+
+[node name="ActionBehavior" type="Node" parent="Actions/Sweep"]
+script = ExtResource("15_kg577")
+movement_behavior = 1
+metadata/_custom_type_script = "uid://bdkgr4241wqcj"
+
+[node name="Cooldown" type="Node" parent="Actions/Sweep"]
+script = ExtResource("16_p0khd")
+turn_count = 1
+metadata/_custom_type_script = "uid://mxpbc437xmjm"
+
+[node name="GroupCondition" type="Node" parent="Actions/Sweep"]
+script = ExtResource("17_p0khd")
+metadata/_custom_type_script = "uid://b020qxy754ll2"
+
+[node name="Strike" parent="Actions" instance=ExtResource("14_5rj11")]
+
+[node name="ActionBehavior" type="Node" parent="Actions/Strike"]
+script = ExtResource("15_kg577")
+movement_behavior = 1
+metadata/_custom_type_script = "uid://bdkgr4241wqcj"
+
+[node name="Empty" parent="Actions" instance=ExtResource("14_ix2rh")]
+
+[node name="ActionBehavior" type="Node" parent="Actions/Empty"]
+script = ExtResource("15_kg577")
+movement_behavior = 1
+metadata/_custom_type_script = "uid://bdkgr4241wqcj"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("16_sw75j")
+initial_state = NodePath("Wait")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("17_pulif")
+
+[node name="Wait" type="Node" parent="StateMachine"]
+script = ExtResource("18_trbhk")
+
+[node name="Think" type="Node" parent="StateMachine" node_paths=PackedStringArray("ai_node")]
+script = ExtResource("19_e436r")
+ai_node = NodePath("../../CharacterAI")
+
+[node name="Action" type="Node" parent="StateMachine"]
+script = ExtResource("20_cayfj")
+
+[connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
+[connection signal="turn_ended" from="." to="EffectsTracker" method="_on_Character_turn_ended"]
+[connection signal="area_entered" from="HitBox" to="EffectsTracker" method="_on_HitBox_area_entered"]

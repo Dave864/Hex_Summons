@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SpawnParameters" load_steps=2 format=3 uid="uid://dl5316rg2cvpp"]
+
+[ext_resource type="Script" uid="uid://c1d78rtwc5l8y" path="res://overworld/encounter_spawn/spawn_parameters.gd" id="1_8vppa"]
+
+[resource]
+script = ExtResource("1_8vppa")
+spawner_type = 2
+speed_idle = 2.0
+speed_reaction = 4.0
+metadata/_custom_type_script = "uid://c1d78rtwc5l8y"

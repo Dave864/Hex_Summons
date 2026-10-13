@@ -34,7 +34,7 @@ void fragment() {
 	
 	// Get alpha from default texture.
 	ALPHA = texture_color.a;
-	ALBEDO = texture_color.rbg;
+	ALBEDO = texture_color.rgb;
 	
 	if (ALPHA > 0.0) {
 		vec2 pixel_size = dither_pixel_size / vec2(textureSize(sprite_texture, 0));
