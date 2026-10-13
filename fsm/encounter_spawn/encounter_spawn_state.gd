@@ -10,11 +10,21 @@ const SPAWN := "Spawn"
 ## The state where the node engages in some passive behavior until something
 ## enters its alert range.
 const IDLE := "Idle"
-## The state where the node waits for a detected object to either get too close
+## The state where a monster waits for a detected object to either get too close
 ## or go away.
-const ALERT := "Alert"
-## The state where the node responds to a detected object.
-const REACTION := "Reaction"
+const MONSTER_ALERT := "MonsterAlert"
+## The state where a predator waits for a detected object to either get too close
+## or go away.
+const PREDATOR_ALERT := "PredatorAlert"
+## The state where a prey waits for a detected object to either get too close
+## or go away.
+const PREY_ALERT := "PreyAlert"
+## The state where a monster responds to a detected object.
+const MONSTER_REACTION := "MonsterReaction"
+## The state where a predator responds to a detected object.
+const PREDATOR_REACTION := "PredatorReaction"
+## The state where a prey responds to a detected object.
+const PREY_REACTION := "PreyReaction"
 ## The state where the node vanishes before exiting the scene tree.
 const DESPAWN := "Despawn"
 

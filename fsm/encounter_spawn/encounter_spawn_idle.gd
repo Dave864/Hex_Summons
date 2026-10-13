@@ -116,8 +116,21 @@ func _move_spawner() -> void:
 func _on_AlertRange_body_entered(body: Node3D) -> void:
 	if not _state_is_active():
 		return
-	if body is OverworldAvatar:
-		state_machine.transition_to(ALERT, {"AlertFocus": body})
-	if body is EncounterSpawn:
-		if body.type != enc_spawn.type:
-			state_machine.transition_to(ALERT, {"AlertFocus": body})
+	if (
+		body is OverworldAvatar
+		or (
+			body is EncounterSpawn and body.type != enc_spawn.type
+		)
+	):
+		var alert_state: String
+		match enc_spawn.type:
+			EncounterSpawn.Type.MONSTER:
+				alert_state = MONSTER_ALERT
+			EncounterSpawn.Type.PREDATOR:
+				alert_state = PREDATOR_ALERT
+			EncounterSpawn.Type.PREY:
+				alert_state = PREY_ALERT
+			_:
+				printerr("No type has been set")
+				return
+		state_machine.transition_to(alert_state, {"AlertFocus": body})

@@ -30,3 +30,4 @@ func _determine_reaction() -> void:
 	else:
 		# TODO: Update to account for player level.
 		reaction_details["pattern"] = EncounterSpawnReaction.BehaviorPattern.PURSUE
+	state_machine.transition_to(PREDATOR_REACTION, reaction_details)

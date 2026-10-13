@@ -12,4 +12,4 @@ func _determine_reaction() -> void:
 		"pattern": EncounterSpawnReaction.BehaviorPattern.PURSUE,
 		"reference_character": _alert_focus
 	}
-	state_machine.transition_to(REACTION, reaction_details)
+	state_machine.transition_to(MONSTER_REACTION, reaction_details)
