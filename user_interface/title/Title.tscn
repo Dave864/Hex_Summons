@@ -1,4 +1,8 @@
-[gd_scene format=3 uid="uid://dv4dcnfe3lxnl"]
+[gd_scene load_steps=4 format=3 uid="uid://dv4dcnfe3lxnl"]
+
+[ext_resource type="Texture2D" uid="uid://bajoqfa6xysec" path="res://art/title/title_3.png" id="1_bgmhr"]
+[ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_nh5qr"]
+[ext_resource type="Script" uid="uid://br1fa86mjahek" path="res://user_interface/Title/title.gd" id="2_rf5iy"]
 
 [node name="Title" type="Control"]
 layout_mode = 3
@@ -7,3 +11,34 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_nh5qr")
+script = ExtResource("2_rf5iy")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 8.0
+offset_right = 499.0
+offset_bottom = 275.0
+texture = ExtResource("1_bgmhr")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 0
+offset_left = 378.0
+offset_top = 236.0
+offset_right = 424.0
+offset_bottom = 267.0
+text = "Start"
+
+[node name="CloseGame" type="Button" parent="."]
+layout_mode = 0
+offset_left = 379.0
+offset_top = 287.0
+offset_right = 478.0
+offset_bottom = 318.0
+text = "Close Game"
+
+[connection signal="pressed" from="Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="CloseGame" to="." method="_on_CloseGame_pressed"]
