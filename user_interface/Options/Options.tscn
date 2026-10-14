@@ -1,0 +1,104 @@
+[gd_scene load_steps=2 format=3 uid="uid://wrlommn3g1pu"]
+
+[ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
+
+[node name="Options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_p8d2p")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+
+[node name="Audio" type="Control" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VolumeContainer" type="VBoxContainer" parent="TabContainer/Audio"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 23.0
+offset_bottom = -199.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="TabContainer/Audio/VolumeContainer"]
+layout_mode = 2
+
+[node name="MasterLabel" type="Label" parent="TabContainer/Audio/VolumeContainer/MasterVolumeContainer"]
+layout_mode = 2
+text = "Master"
+
+[node name="MasterSlider" type="HSlider" parent="TabContainer/Audio/VolumeContainer/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+tick_count = 5
+ticks_position = 2
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Audio/VolumeContainer"]
+layout_mode = 2
+
+[node name="SubVolumeContainer" type="HBoxContainer" parent="TabContainer/Audio/VolumeContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LabelsContainer" type="VBoxContainer" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer"]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/LabelsContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Music"
+horizontal_alignment = 2
+
+[node name="InterfaceLabel" type="Label" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/LabelsContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Interface"
+horizontal_alignment = 2
+
+[node name="EffectsLabel" type="Label" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/LabelsContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Effects"
+horizontal_alignment = 2
+
+[node name="SlidersContainer" type="VBoxContainer" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MusicSlider" type="HSlider" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/SlidersContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+tick_count = 5
+ticks_position = 2
+
+[node name="MenuSlider" type="HSlider" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/SlidersContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+tick_count = 5
+ticks_position = 2
+
+[node name="EffectsSlider" type="HSlider" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/SlidersContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+tick_count = 5
+ticks_position = 2
+
+[node name="Controls" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
