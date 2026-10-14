@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dv4dcnfe3lxnl"]
+[gd_scene load_steps=5 format=3 uid="uid://dv4dcnfe3lxnl"]
 
 [ext_resource type="Texture2D" uid="uid://bajoqfa6xysec" path="res://art/title/title_3.png" id="1_bgmhr"]
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_nh5qr"]
-[ext_resource type="Script" uid="uid://br1fa86mjahek" path="res://user_interface/Title/title.gd" id="2_rf5iy"]
+[ext_resource type="Script" uid="uid://burxp8pmm0b08" path="res://user_interface/title/title.gd" id="2_rf5iy"]
+[ext_resource type="PackedScene" uid="uid://wrlommn3g1pu" path="res://user_interface/Options/Options.tscn" id="4_utrti"]
 
 [node name="Title" type="Control"]
 layout_mode = 3
@@ -42,6 +43,24 @@ text = "Options"
 [node name="CloseGame" type="Button" parent="ButtonContainer"]
 layout_mode = 2
 text = "Close Game"
+
+[node name="OptionsViewport" type="SubViewportContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_nh5qr")
+mouse_target = true
+
+[node name="SubViewport" type="SubViewport" parent="OptionsViewport"]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 0
+
+[node name="Options" parent="OptionsViewport/SubViewport" instance=ExtResource("4_utrti")]
 
 [connection signal="pressed" from="ButtonContainer/Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="ButtonContainer/CloseGame" to="." method="_on_CloseGame_pressed"]
