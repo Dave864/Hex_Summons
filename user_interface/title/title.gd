@@ -7,7 +7,7 @@ extends Control
 
 
 ## The button to start the game
-@onready var _start_button: Button = $Start
+@onready var _start_button: Button = $ButtonContainer/Start
 
 
 ## Places focus on the start button.

@@ -24,21 +24,24 @@ texture = ExtResource("1_bgmhr")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Start" type="Button" parent="."]
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 378.0
-offset_top = 236.0
-offset_right = 424.0
-offset_bottom = 267.0
+offset_left = 373.0
+offset_top = 225.0
+offset_right = 529.0
+offset_bottom = 347.0
+
+[node name="Start" type="Button" parent="ButtonContainer"]
+layout_mode = 2
 text = "Start"
 
-[node name="CloseGame" type="Button" parent="."]
-layout_mode = 0
-offset_left = 379.0
-offset_top = 287.0
-offset_right = 478.0
-offset_bottom = 318.0
+[node name="Options" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="CloseGame" type="Button" parent="ButtonContainer"]
+layout_mode = 2
 text = "Close Game"
 
-[connection signal="pressed" from="Start" to="." method="_on_Start_pressed"]
-[connection signal="pressed" from="CloseGame" to="." method="_on_CloseGame_pressed"]
+[connection signal="pressed" from="ButtonContainer/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="ButtonContainer/CloseGame" to="." method="_on_CloseGame_pressed"]
