@@ -121,15 +121,514 @@ tab_count = 2
 tab_0/title = "Keyboard"
 tab_1/title = "Gamepad"
 
+[node name="KeybindOptions" type="HBoxContainer" parent="TabContainer/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 31.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Column1" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelInterface" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Interface"
+horizontal_alignment = 1
+
+[node name="ItemsInterface" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1"]
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+draw_focus_border = true
+scroll_vertical_custom_step = 30.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Accept" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "accept"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Cancel" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Cancel"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "cancel"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Cancel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Left"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "left"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Left"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "right"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Up"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "up"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Up"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Down"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "down"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Down"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/KeybindOptions/Column1"]
+layout_mode = 2
+
+[node name="LabelMovement" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Movement"
+horizontal_alignment = 1
+
+[node name="ItemsMovement" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+draw_focus_border = true
+scroll_vertical_custom_step = 30.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Left"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "left"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Left"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "right"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Up"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "up"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Up"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Down"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "down"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Down"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Column2" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelCombat" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Combat"
+horizontal_alignment = 1
+
+[node name="ItemsCombat" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2"]
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+draw_focus_border = true
+scroll_vertical_custom_step = 30.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SelectTile" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "pick tile"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Movement" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Movement"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "movement"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Movement"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Techniques" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Techniques"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "techniques"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Techniques"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spells" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Spells"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "spells"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Spells"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Summons" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Summons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "summons"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Summons"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Items" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Items"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "items"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Items"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EndTurn" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/EndTurn"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "end turn"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/EndTurn"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/KeybindOptions/Column2"]
+layout_mode = 2
+
+[node name="LabelCombatCamera" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2"]
+layout_mode = 2
+text = "Combat Camera"
+horizontal_alignment = 1
+
+[node name="ItemsCombatCamera" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+draw_focus_border = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Rotate" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "rotate"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Reset" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Reset"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "reset"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Reset"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Column3" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelLeftJoystick" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Left Joystick"
+horizontal_alignment = 1
+
+[node name="ItemsLeftJoystick" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column3"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+draw_focus_border = true
+scroll_vertical_custom_step = 30.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Left"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "left"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Left"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "right"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Up"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "up"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Up"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Down"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "down"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Down"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/KeybindOptions/Column3"]
+layout_mode = 2
+
+[node name="LabelRightJoystick" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Right Joystick"
+horizontal_alignment = 1
+
+[node name="ItemsRightJoystick" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column3"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+draw_focus_border = true
+scroll_vertical_custom_step = 30.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Left"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "left"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Left"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "right"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Right"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "up"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "down"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="Confirm" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 11.0
+offset_left = 21.0
 offset_top = 310.0
-offset_right = -11.0
+offset_right = -237.0
 offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Confirm"
+
+[node name="RevertToDefault" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 412.0
+offset_top = 310.0
+offset_right = -21.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Revert to Default"
