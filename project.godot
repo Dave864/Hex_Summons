@@ -35,10 +35,10 @@ SceneController="*res://autoloads/scene_controller.gd"
 
 window/size/viewport_width=640
 window/size/viewport_height=360
-window/size/resizable=false
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 mouse_cursor/custom_image="uid://m53djgfialf6"
 
 [editor]
@@ -55,6 +55,8 @@ collision=false
 
 [gui]
 
+theme/custom="uid://c3h3cfs57rjy8"
+theme/custom_font="uid://c2yixxn80qihi"
 common/drop_mouse_on_gui_input_disabled=true
 
 [importer_defaults]
