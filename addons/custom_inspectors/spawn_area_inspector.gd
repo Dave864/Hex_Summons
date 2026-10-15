@@ -2,7 +2,7 @@ class_name SpawnAreaInspector
 extends EditorInspectorPlugin
 ## Custom inspector for relevant parameters of SpawnArea.
 ##
-## Defines inspectors for the "enemis" parameter.
+## Defines inspectors for the "enemies" parameter.
 
 
 ## Checks that the object should be handled by this plugin.
