@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=127 format=3 uid="uid://c3h3cfs57rjy8"]
+[gd_resource type="Theme" load_steps=136 format=3 uid="uid://c3h3cfs57rjy8"]
 
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="1_fs2ww"]
 [ext_resource type="FontFile" uid="uid://c2yixxn80qihi" path="res://fonts/pixelith.ttf" id="1_vtpyv"]
@@ -141,7 +141,79 @@ region = Rect2(45, 48, 11, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k8483"]
 atlas = ExtResource("1_fs2ww")
-region = Rect2(56, 35, 11, 11)
+region = Rect2(56, 33, 11, 11)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vtpyv"]
+load_path = "res://.godot/imported/GlyphTheme2.png-4acdc504236289b939f35f94c4958643.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmhai"]
+atlas = SubResource("CompressedTexture2D_vtpyv")
+region = Rect2(58, 46, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkdav"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(43, 33, 11, 11)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d3a5t"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+region_rect = Rect2(87, 12, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u8cce"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+expand_margin_bottom = 1.0
+region_rect = Rect2(88, 1, 10, 10)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_g5mt7"]
+load_path = "res://.godot/imported/GlyphTheme2.png-4acdc504236289b939f35f94c4958643.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j0crj"]
+texture = SubResource("CompressedTexture2D_g5mt7")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(77, 190, 10, 8)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iwaew"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(77, 199, 10, 8)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wol4a"]
+load_path = "res://.godot/imported/GlyphTheme2.png-4acdc504236289b939f35f94c4958643.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_du8pp"]
+texture = SubResource("CompressedTexture2D_wol4a")
+texture_margin_left = 4.0
+texture_margin_top = 3.0
+texture_margin_right = 4.0
+texture_margin_bottom = 3.0
+expand_margin_bottom = 1.0
+region_rect = Rect2(66, 190, 10, 8)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_icsc5"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 4.0
+texture_margin_top = 3.0
+texture_margin_right = 4.0
+texture_margin_bottom = 3.0
+expand_margin_bottom = 1.0
+region_rect = Rect2(66, 199, 10, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dvcxm"]
 atlas = ExtResource("1_fs2ww")
@@ -564,10 +636,6 @@ region = Rect2(173, 77, 16, 15)
 atlas = ExtResource("1_fs2ww")
 region = Rect2(173, 107, 16, 15)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fkdav"]
-atlas = ExtResource("1_fs2ww")
-region = Rect2(43, 35, 11, 11)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_2te13"]
 atlas = ExtResource("1_fs2ww")
 region = Rect2(164, 26, 15, 15)
@@ -603,18 +671,6 @@ texture_margin_top = 6.0
 texture_margin_right = 6.0
 texture_margin_bottom = 6.0
 region_rect = Rect2(111, 105, 13, 13)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d3a5t"]
-texture = ExtResource("1_fs2ww")
-texture_margin_left = 6.0
-texture_margin_top = 6.0
-texture_margin_right = 6.0
-texture_margin_bottom = 6.0
-expand_margin_left = 1.0
-expand_margin_top = 1.0
-expand_margin_right = 1.0
-expand_margin_bottom = 1.0
-region_rect = Rect2(87, 12, 12, 12)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f3yvc"]
 texture = ExtResource("1_fs2ww")
@@ -797,6 +853,17 @@ CheckButton/styles/pressed = SubResource("StyleBoxEmpty_oa643")
 ColorPicker/constants/separation = 4
 ColorPicker/icons/expanded_arrow = SubResource("AtlasTexture_s2gry")
 ColorPicker/icons/folded_arrow = SubResource("AtlasTexture_k8483")
+FoldableContainer/fonts/font = ExtResource("1_vtpyv")
+FoldableContainer/icons/expanded_arrow = SubResource("AtlasTexture_s2gry")
+FoldableContainer/icons/expanded_arrow_mirrored = SubResource("AtlasTexture_gmhai")
+FoldableContainer/icons/folded_arrow = SubResource("AtlasTexture_k8483")
+FoldableContainer/icons/folded_arrow_mirrored = SubResource("AtlasTexture_fkdav")
+FoldableContainer/styles/focus = SubResource("StyleBoxTexture_d3a5t")
+FoldableContainer/styles/panel = SubResource("StyleBoxTexture_u8cce")
+FoldableContainer/styles/title_collapsed_hover_panel = SubResource("StyleBoxTexture_j0crj")
+FoldableContainer/styles/title_collapsed_panel = SubResource("StyleBoxTexture_iwaew")
+FoldableContainer/styles/title_hover_panel = SubResource("StyleBoxTexture_du8pp")
+FoldableContainer/styles/title_panel = SubResource("StyleBoxTexture_icsc5")
 HScrollBar/icons/decrement = SubResource("AtlasTexture_dvcxm")
 HScrollBar/icons/decrement_highlight = SubResource("AtlasTexture_lsc7n")
 HScrollBar/icons/decrement_pressed = SubResource("AtlasTexture_lx4bu")
