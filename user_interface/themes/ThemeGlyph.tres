@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=136 format=3 uid="uid://c3h3cfs57rjy8"]
+[gd_resource type="Theme" load_steps=137 format=3 uid="uid://c3h3cfs57rjy8"]
 
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="1_fs2ww"]
 [ext_resource type="FontFile" uid="uid://c2yixxn80qihi" path="res://fonts/pixelith.ttf" id="1_vtpyv"]
@@ -495,6 +495,19 @@ texture_margin_right = 5.0
 texture_margin_bottom = 9.0
 region_rect = Rect2(66, 170, 21, 19)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ndeeh"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+anti_aliasing = false
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0kjok"]
 atlas = ExtResource("1_fs2ww")
 region = Rect2(140, 172, 10, 10)
@@ -936,6 +949,7 @@ PopupPanel/styles/panel = SubResource("StyleBoxTexture_0ub1x")
 ProgressBar/fonts/font = ExtResource("1_vtpyv")
 ProgressBar/styles/background = SubResource("StyleBoxTexture_b0u2j")
 ProgressBar/styles/fill = SubResource("StyleBoxTexture_2nfbh")
+ScrollContainer/styles/focus = SubResource("StyleBoxFlat_ndeeh")
 SpinBox/constants/field_and_buttons_separation = 4
 SpinBox/icons/down = SubResource("AtlasTexture_0kjok")
 SpinBox/icons/down_disabled = SubResource("AtlasTexture_23kip")
