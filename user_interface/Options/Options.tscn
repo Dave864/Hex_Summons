@@ -18,87 +18,118 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 1
 
-[node name="Audio" type="Control" parent="TabContainer"]
+[node name="Sound" type="Control" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="VolumeContainer" type="VBoxContainer" parent="TabContainer/Audio"]
+[node name="VolumeContainer" type="VBoxContainer" parent="TabContainer/Sound"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 23.0
-offset_bottom = -199.0
+offset_top = 42.0
+offset_bottom = -184.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MasterVolumeContainer" type="HBoxContainer" parent="TabContainer/Audio/VolumeContainer"]
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="TabContainer/Sound/VolumeContainer"]
 layout_mode = 2
 
-[node name="MasterLabel" type="Label" parent="TabContainer/Audio/VolumeContainer/MasterVolumeContainer"]
+[node name="MasterLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer"]
 layout_mode = 2
 text = "Master"
 
-[node name="MasterSlider" type="HSlider" parent="TabContainer/Audio/VolumeContainer/MasterVolumeContainer"]
+[node name="MasterSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+value = 100.0
 tick_count = 5
 ticks_position = 2
 
-[node name="HSeparator" type="HSeparator" parent="TabContainer/Audio/VolumeContainer"]
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Sound/VolumeContainer"]
 layout_mode = 2
 
-[node name="SubVolumeContainer" type="HBoxContainer" parent="TabContainer/Audio/VolumeContainer"]
+[node name="SubVolumeContainer" type="HBoxContainer" parent="TabContainer/Sound/VolumeContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LabelsContainer" type="VBoxContainer" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer"]
+[node name="LabelsContainer" type="VBoxContainer" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer"]
 layout_mode = 2
 
-[node name="MusicLabel" type="Label" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/LabelsContainer"]
+[node name="MusicLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/LabelsContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 text = "Music"
 horizontal_alignment = 2
 
-[node name="InterfaceLabel" type="Label" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/LabelsContainer"]
+[node name="InterfaceLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/LabelsContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 text = "Interface"
 horizontal_alignment = 2
 
-[node name="EffectsLabel" type="Label" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/LabelsContainer"]
+[node name="EffectsLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/LabelsContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 text = "Effects"
 horizontal_alignment = 2
 
-[node name="SlidersContainer" type="VBoxContainer" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer"]
+[node name="SlidersContainer" type="VBoxContainer" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MusicSlider" type="HSlider" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/SlidersContainer"]
+[node name="MusicSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer"]
 layout_mode = 2
 size_flags_vertical = 6
+value = 100.0
 tick_count = 5
 ticks_position = 2
 
-[node name="MenuSlider" type="HSlider" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/SlidersContainer"]
+[node name="MenuSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer"]
 layout_mode = 2
 size_flags_vertical = 6
+value = 100.0
 tick_count = 5
 ticks_position = 2
 
-[node name="EffectsSlider" type="HSlider" parent="TabContainer/Audio/VolumeContainer/SubVolumeContainer/SlidersContainer"]
+[node name="EffectsSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer"]
 layout_mode = 2
 size_flags_vertical = 6
+value = 100.0
 tick_count = 5
 ticks_position = 2
 
 [node name="Controls" type="Control" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
+
+[node name="ControlTabs" type="TabBar" parent="TabContainer/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -292.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+close_with_middle_mouse = false
+tab_count = 2
+tab_0/title = "Keyboard"
+tab_1/title = "Gamepad"
+
+[node name="Confirm" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = 310.0
+offset_right = -11.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Confirm"
