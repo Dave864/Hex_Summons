@@ -115,6 +115,7 @@ anchor_bottom = 1.0
 offset_bottom = -292.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_bottom = NodePath("../KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/Button")
 current_tab = 0
 close_with_middle_mouse = false
 tab_count = 2
@@ -166,6 +167,9 @@ horizontal_alignment = 2
 [node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../../../../../ControlTabs")
+focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/Button")
 
 [node name="Cancel" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
 layout_mode = 2
@@ -179,6 +183,8 @@ horizontal_alignment = 2
 [node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Cancel"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/Button")
 
 [node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
 layout_mode = 2
@@ -192,6 +198,8 @@ horizontal_alignment = 2
 [node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Left"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/Button")
 
 [node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
 layout_mode = 2
@@ -205,6 +213,8 @@ horizontal_alignment = 2
 [node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Right"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/Button")
 
 [node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
 layout_mode = 2
@@ -218,6 +228,8 @@ horizontal_alignment = 2
 [node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Up"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/Button")
 
 [node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
 layout_mode = 2
@@ -231,6 +243,9 @@ horizontal_alignment = 2
 [node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Down"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/Button")
+focus_neighbor_bottom = NodePath("../../../../ItemsMovement/VBoxContainer/Left/Button")
 
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/KeybindOptions/Column1"]
 layout_mode = 2
@@ -306,6 +321,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Column2" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions"]
+custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -333,12 +349,15 @@ layout_mode = 2
 [node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "pick tile"
+text = "select tile"
 horizontal_alignment = 2
 
 [node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/Button")
+focus_neighbor_top = NodePath("../../../../../../ControlTabs")
+focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/Button")
 
 [node name="Movement" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
 layout_mode = 2
@@ -352,6 +371,8 @@ horizontal_alignment = 2
 [node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Movement"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/Button")
+focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/Button")
 
 [node name="Techniques" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
 layout_mode = 2
@@ -365,6 +386,8 @@ horizontal_alignment = 2
 [node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Techniques"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/Button")
+focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/Button")
 
 [node name="Spells" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
 layout_mode = 2
@@ -378,6 +401,8 @@ horizontal_alignment = 2
 [node name="Button" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Spells"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/Button")
+focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/Button")
 
 [node name="Summons" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
 layout_mode = 2
