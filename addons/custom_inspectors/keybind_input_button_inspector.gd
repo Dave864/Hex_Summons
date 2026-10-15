@@ -22,6 +22,6 @@ func _parse_property(
 	wide: bool
 ) -> bool:
 	if name == "input_bind":
-		add_property_editor(name, KeybindInputButtonInputBindProperty.new())
+		add_property_editor(name, InputOptionProperty.new())
 		return true
 	return false

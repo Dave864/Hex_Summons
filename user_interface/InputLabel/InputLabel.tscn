@@ -16,6 +16,7 @@ offset_right = 0.07999992
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_vohd2")
+input_event = "ui_accept"
 icon_texture = NodePath("KeyboardLabel/IconTexture")
 key_label = NodePath("KeyboardLabel")
 

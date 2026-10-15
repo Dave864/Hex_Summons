@@ -5,6 +5,8 @@ extends EditorPlugin
 
 ## Custom inspector for SpawnArea.
 var spawn_area_inspector: SpawnAreaInspector
+## Custom inspector for InputLabel.
+var input_label_inspector: InputLabelInspector
 ## Custom inspector for KeybindInputButton.
 var keybind_input_button_inspector: KeybindInputButtonInspector
 
@@ -12,8 +14,10 @@ var keybind_input_button_inspector: KeybindInputButtonInspector
 ## Add all the custom inspectors.
 func _enter_tree() -> void:
 	spawn_area_inspector = SpawnAreaInspector.new()
+	input_label_inspector = InputLabelInspector.new()
 	keybind_input_button_inspector = KeybindInputButtonInspector.new()
 	add_inspector_plugin(spawn_area_inspector)
+	add_inspector_plugin(input_label_inspector)
 	add_inspector_plugin(keybind_input_button_inspector)
 
 
@@ -21,5 +25,7 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	if spawn_area_inspector:
 		remove_inspector_plugin(spawn_area_inspector)
+	if input_label_inspector:
+		remove_inspector_plugin(input_label_inspector)
 	if keybind_input_button_inspector:
 		remove_inspector_plugin(keybind_input_button_inspector)

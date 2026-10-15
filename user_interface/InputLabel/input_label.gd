@@ -72,17 +72,19 @@ func _update_icon() -> void:
 
 ## Updates the icon to display the input key for the specified input source.
 func _editor_update_icon() -> void:
-	if not ProjectSettings.has_setting("input/{0}".format([input_event])):
+	if (
+		not ProjectSettings.has_setting("input/{0}".format([input_event]))
+		or input_source == InputController.Source.NONE
+	):
 		_set_to_default()
 	elif input_source == InputController.Source.KEYBOARD_AND_MOUSE:
 		_set_to_keyboard()
-	elif input_source == InputController.Source.GAMEPAD:
+	else:
 		_set_to_gamepad()
 
 
 ## Sets the texture to the default Godot icon.
 func _set_to_default() -> void:
-	printerr("InputMap does not have event \"{0}\".".format([input_event]))
 	icon_texture.stretch_mode = TextureRect.STRETCH_SCALE
 	icon_texture.texture = _keyboard_icon
 	key_label.text = ""

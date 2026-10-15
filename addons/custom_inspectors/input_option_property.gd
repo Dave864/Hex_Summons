@@ -1,7 +1,7 @@
-class_name KeybindInputButtonInputBindProperty
+class_name InputOptionProperty
 extends EditorProperty
-## Custom property inspector for the "input_bind" parameter of
-## KeybindInputButton.
+## Custom property inspector that allows for the selection of inputs from a
+## drop-down menu.
 ##
 ## Creates an option button for all possible inputs in InputMap singleton. This
 ## allows for the simple selection of an input instead of going through the
