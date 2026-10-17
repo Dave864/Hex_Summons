@@ -73,6 +73,7 @@ func _input(event: InputEvent) -> void:
 	if not updating_bind:
 		return
 	var use_event_as_bind := false
+	# Only uses significant movement in a direction as valid joystick input.
 	if key_source == SOURCE_GAMEPAD and event is InputEventJoypadMotion:
 		use_event_as_bind = absf(event.axis_value) > JOYPAD_MOTION_DEADZONE
 	elif (

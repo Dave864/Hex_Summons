@@ -51,9 +51,10 @@ var _regex := RegEx.new()
 
 ## Connects to the InputController to enable detection of input change.
 func _ready() -> void:
-	InputController.input_source_changed.connect(
-			_on_InputController_input_source_changed
-	)
+	if not Engine.is_editor_hint():
+		InputController.input_source_changed.connect(
+				_on_InputController_input_source_changed
+		)
 	_update_icon()
 
 
