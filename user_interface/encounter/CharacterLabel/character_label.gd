@@ -11,16 +11,37 @@ extends Control
 ## The position of the character in 3D space.
 @export var char_pos: Marker3D = null
 
+## StyleBox for the progress bar fill.
+var health_bar_fill: StyleBoxTexture
+
 ## The container that holds the relevant UI nodes.
 @onready var _data_container: HBoxContainer = $CanvasLayer/HBoxContainer
 ## The label that lists the initiative count.
 @onready var _initiative_label: Label = $CanvasLayer/HBoxContainer/InitiativeLabel
 ## The health bar displayed.
-@onready var _health_bar: ProgressBar = $CanvasLayer/HBoxContainer/PanelContainer/HealthBar
+@onready var _health_bar: ProgressBar = $CanvasLayer/HBoxContainer/HealthBar
 ## The camera that the label is seen by.
 @onready var _camera: Camera3D = get_viewport().get_camera_3d()
 ## Half the length of the data container.
 @onready var _half_label_length: float = _data_container.size.x / 2.0
+
+
+## Called when the node enters the scene tree for the first time.
+func _ready():
+	_check_for_required_parameters()
+	health_bar_fill = _health_bar.get_theme_stylebox("fill").duplicate()
+	_set_health_bar_color()
+
+
+## Moves this element so that it is always above the character position.
+func _process(_delta: float) -> void:
+	var _char_origin: Vector3 = char_pos.global_transform.origin
+	_data_container.visible = not _camera.is_position_behind(_char_origin)
+	var r_pos: Vector2 = _camera.unproject_position(char_pos.global_position)
+	r_pos.x -= _half_label_length
+	r_pos.y -= y_offset
+	# Round position to snap label to pixel position.
+	_data_container.position = r_pos.round()
 
 
 ## Sets the value of the current health.
@@ -51,34 +72,18 @@ func hide_all() -> void:
 	$CanvasLayer.hide()
 
 
-## Called when the node enters the scene tree for the first time.
-func _ready():
-	_check_for_required_parameters()
-	_set_health_bar_color()
-
-
-## Moves this element so that it is always above the character position.
-func _process(_delta: float) -> void:
-	var _char_origin: Vector3 = char_pos.global_transform.origin
-	_data_container.visible = not _camera.is_position_behind(_char_origin)
-	var r_pos: Vector2 = _camera.unproject_position(char_pos.global_position)
-	r_pos.x -= _half_label_length
-	r_pos.y -= y_offset
-	# Round position to snap label to pixel position.
-	_data_container.position = r_pos.round()
-
-
 ## Sets the modulation color of the health bar based on the character type.
 func _set_health_bar_color() -> void:
 	match character_type:
 		Character.Type.PLAYER:
-			_health_bar.modulate = Color.AQUA
+			health_bar_fill.modulate_color = Color.AQUA
 		Character.Type.SUMMON:
-			_health_bar.modulate = Color.AQUA
+			health_bar_fill.modulate_color = Color.AQUA
 		Character.Type.ENEMY:
-			_health_bar.modulate = Color.RED
+			health_bar_fill.modulate_color = Color.RED
 		_:
-			_health_bar.modulate = Color.WHITE
+			health_bar_fill.modulate_color = Color.WHITE
+	_health_bar.add_theme_stylebox_override("fill", health_bar_fill)
 
 
 ## Checks that all parameters and variables are properly set.
