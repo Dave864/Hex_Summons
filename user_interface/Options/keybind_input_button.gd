@@ -93,6 +93,9 @@ func _input(event: InputEvent) -> void:
 	):
 		use_event_as_bind = true
 	if use_event_as_bind:
+		# Don't want to have double clicks as events.
+		if event is InputEventMouseButton:
+			event.double_click = false
 		key_bind[key_source] = event
 		_update_display()
 		new_bind_set.emit()
