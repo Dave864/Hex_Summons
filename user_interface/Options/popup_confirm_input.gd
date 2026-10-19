@@ -43,9 +43,11 @@ func _on_KeybindInputButton_new_bind_requested(
 ) -> void:
 	expected_input_source = input_source
 	popup_label.text = ENTER_INPUT_TEXT
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	show()
 
 
 ## Hides this popup when KeybindInputButton sets a new input bind.
 func _on_KeybindInputButton_new_bind_set() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	hide()
