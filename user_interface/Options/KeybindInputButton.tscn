@@ -1,33 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://br7781ay1g8re"]
+[gd_scene load_steps=2 format=3 uid="uid://br7781ay1g8re"]
 
 [ext_resource type="Script" uid="uid://d38ktuu0nh873" path="res://user_interface/Options/keybind_input_button.gd" id="1_pm2nf"]
-[ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="2_wn6n0"]
 
 [node name="KeybindInputButton" type="Button"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = 26.0
-offset_right = -193.0
-offset_bottom = -114.0
+offset_left = 35.0
+offset_top = 22.0
+offset_right = -496.0
+offset_bottom = -300.0
 grow_horizontal = 2
 grow_vertical = 2
 autowrap_mode = 2
 script = ExtResource("1_pm2nf")
-key_source = 0
-input_bind = "ui_accept"
-
-[node name="InputLabel" parent="." instance=ExtResource("2_wn6n0")]
-z_index = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 3.0
-offset_right = -5.0
-offset_bottom = -4.0
-mouse_filter = 2
+key_source = 1
+input_bind = "ui_select"
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -30,35 +30,40 @@ const JOYPAD_MOTION_DEADZONE := 0.5
 @export var input_bind := ""
 
 ## Records the keybind values for the given input for each input source.
-var key_bind: Dictionary[InputController.Source, String] = {
-	SOURCE_GAMEPAD: UNASSIGNED,
-	SOURCE_KEYMOUSE: UNASSIGNED,
-	SOURCE_NONE: UNASSIGNED,
+var key_bind: Dictionary[InputController.Source, InputEvent] = {
+	SOURCE_GAMEPAD: null,
+	SOURCE_KEYMOUSE: null,
+	SOURCE_NONE: null,
 }
-
 ## Flag that indicates that a new keybind is being set for the input.
 var updating_bind := false
+
+## Displays the texture icon for gamepad input.
+var _gamepad_icon: GamepadIcon = null
 
 
 ## Sets the display to match the current settings.
 func _ready() -> void:
+	_create_gamepad_icon()
+	if not pressed.is_connected(_on_pressed):
+		pressed.connect(_on_pressed)
 	if InputMap.has_action(input_bind):
 		for event: InputEvent in InputMap.action_get_events(input_bind):
 			if (
 					(
 						event is InputEventMouse or event is InputEventKey
 					)
-					and key_bind[SOURCE_KEYMOUSE] == UNASSIGNED
+					and key_bind[SOURCE_KEYMOUSE] == null
 			):
-				key_bind[SOURCE_KEYMOUSE] = event.as_text()
+				key_bind[SOURCE_KEYMOUSE] = event
 			elif (
 					(
 						event is InputEventJoypadMotion
 						or event is InputEventJoypadButton
 					)
-					and key_bind[SOURCE_GAMEPAD] == UNASSIGNED
+					and key_bind[SOURCE_GAMEPAD] == null
 			):
-				key_bind[SOURCE_GAMEPAD] = event.as_text()
+				key_bind[SOURCE_GAMEPAD] = event
 			else:
 				# Only a single key from each input source should be exposed
 				# by this button, so we only look at the first ones that appear
@@ -88,7 +93,7 @@ func _input(event: InputEvent) -> void:
 	):
 		use_event_as_bind = true
 	if use_event_as_bind:
-		key_bind[key_source] = event.as_text()
+		key_bind[key_source] = event
 		_update_display()
 		new_bind_set.emit()
 		# Defer update setting to prevent button from getting stuck triggering
@@ -96,28 +101,60 @@ func _input(event: InputEvent) -> void:
 		call_deferred("_set_to_update", false)
 
 
+## Updates the button to reflect the gamepad keybind.
+func set_input_to_gamepad() -> void:
+	key_source = SOURCE_GAMEPAD
+	_update_display()
+
+
+## Updates the button to reflect the mouse and keyboard keybind.
+func set_input_to_keymouse() -> void:
+	key_source = SOURCE_KEYMOUSE
+	_update_display()
+
+
 ## Resets the current bindings to unassigned.
 func clear_keybinds() -> void:
-	key_bind[SOURCE_GAMEPAD] = UNASSIGNED
-	key_bind[SOURCE_KEYMOUSE] = UNASSIGNED
+	key_bind[SOURCE_GAMEPAD] = null
+	key_bind[SOURCE_KEYMOUSE] = null
 	_update_display()
 
 
 ## Resets the current gamepad binding to unassigned.
 func clear_gamepad_keybind() -> void:
-	key_bind[SOURCE_GAMEPAD] = UNASSIGNED
+	key_bind[SOURCE_GAMEPAD] = null
 	_update_display()
 
 
 ## Resets the current keymouse binding to unassigned.
 func clear_keymouse_keybind() -> void:
-	key_bind[SOURCE_KEYMOUSE] = UNASSIGNED
+	key_bind[SOURCE_KEYMOUSE] = null
 	_update_display()
+
+
+## Creates a GamepadIcon to display gamepad input.
+func _create_gamepad_icon() -> void:
+	_gamepad_icon = GamepadIcon.new()
+	add_child(_gamepad_icon)
+	_gamepad_icon.set_anchors_preset(Control.PRESET_FULL_RECT, true)
+	_gamepad_icon.offset_left = 5.0
+	_gamepad_icon.offset_right = -5.0
+	_gamepad_icon.offset_top = 4.0
+	_gamepad_icon.offset_bottom = -4.0
 
 
 ## Updates the display to reflect the current keybind.
 func _update_display() -> void:
-	text = key_bind[key_source]
+	if key_source == SOURCE_GAMEPAD:
+		_gamepad_icon.show()
+		_gamepad_icon.update_for_event(key_bind[SOURCE_GAMEPAD])
+		if _gamepad_icon.texture != null:
+			text = ""
+		else:
+			text = UNASSIGNED
+	else:
+		text = key_bind[key_source].as_text()
+		_gamepad_icon.hide()
 
 
 ## Sets the disabled and updating_bind flags. This is to allow these operations

@@ -153,13 +153,13 @@ func _get_joypad_button_name(button_event: InputEventJoypadButton) -> String:
 ## icon file names (axis_#_(+/-).tres).
 func _get_joypad_motion_name(motion_event: InputEventJoypadMotion) -> String:
 	var motion_name := motion_event.as_text()
-	_regex.compile("Axis\\h\\d|\\h.?1\\.00")
+	_regex.compile("Axis\\h\\d|\\h.?\\d\\.\\d\\d")
 	var results := _regex.search_all(motion_name)
 	motion_name = results[0].get_string()
 	motion_name += " +" if results[1].get_string().find("-") >= 0 else " -"
 	_regex.compile("\\h")
 	motion_name = _regex.sub(motion_name, "_", true) + ".tres"
-	return motion_name
+	return motion_name.to_lower()
 
 
 ## Determines which icons to use. Uses XBox icons by default.
