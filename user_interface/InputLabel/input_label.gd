@@ -17,8 +17,8 @@ const SWITCH_ICON_PATH := "res://user_interface/InputLabel/input_icons/switch/"
 const XBOX_ICON_PATH := "res://user_interface/InputLabel/input_icons/xbox/"
 ## Keywords for specific controller types.
 const CONTROLLER_KEYWORDS := {
-	"PLAYSTATION" : ["PS", "PLAYSTATION"],
-	"SWITCH" : ["SWITCH"]
+	"PLAYSTATION" : ["PS", "PLAYSTATION", "DUALSENSE"],
+	"SWITCH" : ["SWITCH"],
 }
 
 ## The source of input events. Only used for testing.
@@ -56,6 +56,20 @@ func _ready() -> void:
 				_on_InputController_input_source_changed
 		)
 	_update_icon()
+
+
+## Sets the texture to the gamepad icon, matching it to either Xbox,
+## PlayStation, or Switch.
+func _set_to_gamepad() -> void:
+	icon_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	key_label.text = ""
+	_reset_label_size()
+	var icon_path := _get_controller_icon_path()
+	var event_file := _get_joypad_event_file()
+	if event_file == "":
+		icon_texture.texture = load(Constants.DEFAULT_ICON_PATH)
+	else:
+		icon_texture.texture = load(icon_path + event_file)
 
 
 ## Updates the icon to display the input key for the current source.
@@ -109,20 +123,6 @@ func _get_key_event_name() -> String:
 		if event is InputEventKey:
 			return event.as_text_keycode()
 	return ""
-
-
-## Sets the texture to the gamepad icon, matching it to either Xbox,
-## PlayStation, or Switch.
-func _set_to_gamepad() -> void:
-	icon_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	key_label.text = ""
-	_reset_label_size()
-	var icon_path := _get_controller_icon_path()
-	var event_file := _get_joypad_event_file()
-	if event_file == "":
-		icon_texture.texture = load(Constants.DEFAULT_ICON_PATH)
-	else:
-		icon_texture.texture = load(icon_path + event_file)
 
 
 ## Gets the name of the first joypad input for the input event. Returns an
