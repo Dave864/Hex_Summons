@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene load_steps=5 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
 [ext_resource type="Script" uid="uid://d38ktuu0nh873" path="res://user_interface/Options/keybind_input_button.gd" id="2_llrvc"]
+[ext_resource type="Script" uid="uid://umc1xo4msj3k" path="res://user_interface/Options/popup_confirm_input.gd" id="3_m3ftx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_llrvc"]
+bg_color = Color(0, 0, 0.2509804, 0.78431374)
 
 [node name="Options" type="Control"]
 layout_mode = 3
@@ -829,6 +833,33 @@ key_source = 1
 input_bind = "right_joystick_d"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
+[node name="PopupConfirmInput" type="Panel" parent="TabContainer/Controls"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = 26.0
+offset_right = 3.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_llrvc")
+script = ExtResource("3_m3ftx")
+
+[node name="Label" type="Label" parent="TabContainer/Controls/PopupConfirmInput"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Popup Text"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
 [node name="Confirm" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -858,3 +889,58 @@ grow_vertical = 2
 focus_neighbor_left = NodePath("../Confirm")
 focus_neighbor_right = NodePath("../Confirm")
 text = "Revert to Default"
+
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Cancel/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Cancel/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Left/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Left/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Right/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Right/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Right/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Right/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Movement/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Movement/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Techniques/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Techniques/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Spells/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Spells/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Summons/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Summons/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Items/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Items/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/EndTurn/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/EndTurn/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Right/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Right/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Right/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Right/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
