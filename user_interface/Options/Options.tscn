@@ -143,7 +143,6 @@ text = "Interface"
 horizontal_alignment = 1
 
 [node name="ItemsInterface" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1"]
-custom_minimum_size = Vector2(0, 115)
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
@@ -360,7 +359,6 @@ text = "Combat"
 horizontal_alignment = 1
 
 [node name="ItemsCombat" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2"]
-custom_minimum_size = Vector2(0, 115)
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true

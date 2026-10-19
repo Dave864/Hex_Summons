@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=137 format=3 uid="uid://c3h3cfs57rjy8"]
+[gd_resource type="Theme" load_steps=142 format=3 uid="uid://c3h3cfs57rjy8"]
 
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="1_fs2ww"]
 [ext_resource type="FontFile" uid="uid://c2yixxn80qihi" path="res://fonts/pixelith.ttf" id="1_vtpyv"]
@@ -495,18 +495,13 @@ texture_margin_right = 5.0
 texture_margin_bottom = 9.0
 region_rect = Rect2(66, 170, 21, 19)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ndeeh"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 2
-border_width_top = 1
-border_width_right = 2
-border_width_bottom = 1
-border_color = Color(1, 0.5019608, 0, 1)
-corner_radius_top_left = 1
-corner_radius_top_right = 1
-corner_radius_bottom_right = 1
-corner_radius_bottom_left = 1
-anti_aliasing = false
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s2gry"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(7, 85, 28, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0kjok"]
 atlas = ExtResource("1_fs2ww")
@@ -596,12 +591,60 @@ region = Rect2(140, 104, 10, 10)
 atlas = ExtResource("1_fs2ww")
 region = Rect2(140, 93, 10, 10)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1snlc"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(111, 120, 13, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3y5i8"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 7.0
+texture_margin_top = 7.0
+texture_margin_right = 7.0
+texture_margin_bottom = 7.0
+region_rect = Rect2(94, 89, 15, 15)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_71qck"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(95, 105, 13, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0yj0d"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(111, 105, 13, 13)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m4ndd"]
+texture = ExtResource("1_fs2ww")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+region_rect = Rect2(111, 90, 13, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2d56"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(173, 77, 16, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebukd"]
+atlas = ExtResource("1_fs2ww")
+region = Rect2(173, 107, 16, 15)
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2d5oc"]
 texture = ExtResource("1_fs2ww")
-texture_margin_left = 5.0
-texture_margin_top = 4.0
-texture_margin_right = 5.0
-texture_margin_bottom = 8.0
+texture_margin_left = 6.0
+texture_margin_top = 5.0
+texture_margin_right = 6.0
+texture_margin_bottom = 9.0
 expand_margin_bottom = 6.0
 region_rect = Rect2(94, 67, 11, 13)
 
@@ -632,7 +675,7 @@ texture_margin_bottom = 8.0
 expand_margin_bottom = 6.0
 region_rect = Rect2(70, 67, 11, 13)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m4ndd"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hsapy"]
 texture = ExtResource("1_fs2ww")
 texture_margin_left = 5.0
 texture_margin_top = 4.0
@@ -640,14 +683,6 @@ texture_margin_right = 5.0
 texture_margin_bottom = 8.0
 expand_margin_bottom = 6.0
 region_rect = Rect2(46, 67, 11, 13)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p2d56"]
-atlas = ExtResource("1_fs2ww")
-region = Rect2(173, 77, 16, 15)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ebukd"]
-atlas = ExtResource("1_fs2ww")
-region = Rect2(173, 107, 16, 15)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2te13"]
 atlas = ExtResource("1_fs2ww")
@@ -949,7 +984,7 @@ PopupPanel/styles/panel = SubResource("StyleBoxTexture_0ub1x")
 ProgressBar/fonts/font = ExtResource("1_vtpyv")
 ProgressBar/styles/background = SubResource("StyleBoxTexture_b0u2j")
 ProgressBar/styles/fill = SubResource("StyleBoxTexture_2nfbh")
-ScrollContainer/styles/focus = SubResource("StyleBoxFlat_ndeeh")
+ScrollContainer/styles/focus = SubResource("StyleBoxTexture_s2gry")
 SpinBox/constants/field_and_buttons_separation = 4
 SpinBox/icons/down = SubResource("AtlasTexture_0kjok")
 SpinBox/icons/down_disabled = SubResource("AtlasTexture_23kip")
@@ -970,10 +1005,10 @@ TabBar/icons/decrement_highlight = SubResource("AtlasTexture_7yy64")
 TabBar/icons/drop_mark = SubResource("AtlasTexture_d3a5t")
 TabBar/icons/increment = SubResource("AtlasTexture_3e7xl")
 TabBar/icons/increment_highlight = SubResource("AtlasTexture_2uout")
-TabBar/styles/tab_disabled = SubResource("StyleBoxTexture_2d5oc")
-TabBar/styles/tab_focus = SubResource("StyleBoxTexture_hudyr")
-TabBar/styles/tab_hovered = SubResource("StyleBoxTexture_qq1wu")
-TabBar/styles/tab_selected = SubResource("StyleBoxTexture_ywwie")
+TabBar/styles/tab_disabled = SubResource("StyleBoxTexture_1snlc")
+TabBar/styles/tab_focus = SubResource("StyleBoxTexture_3y5i8")
+TabBar/styles/tab_hovered = SubResource("StyleBoxTexture_71qck")
+TabBar/styles/tab_selected = SubResource("StyleBoxTexture_0yj0d")
 TabBar/styles/tab_unselected = SubResource("StyleBoxTexture_m4ndd")
 TabContainer/constants/side_margin = 12
 TabContainer/constants/tab_separation = 2
@@ -990,7 +1025,7 @@ TabContainer/styles/tab_disabled = SubResource("StyleBoxTexture_2d5oc")
 TabContainer/styles/tab_focus = SubResource("StyleBoxTexture_hudyr")
 TabContainer/styles/tab_hovered = SubResource("StyleBoxTexture_qq1wu")
 TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_ywwie")
-TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_m4ndd")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_hsapy")
 TextEdit/colors/selection_color = Color(0.19607843, 0.78039217, 1, 1)
 TextEdit/fonts/font = ExtResource("1_vtpyv")
 TextEdit/styles/focus = SubResource("StyleBoxTexture_7lwdo")
