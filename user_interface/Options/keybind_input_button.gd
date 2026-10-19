@@ -148,12 +148,12 @@ func _update_display() -> void:
 	if key_source == SOURCE_GAMEPAD:
 		_gamepad_icon.show()
 		_gamepad_icon.update_for_event(key_bind[SOURCE_GAMEPAD])
-		if _gamepad_icon.texture != null:
-			text = ""
-		else:
-			text = UNASSIGNED
+		text = UNASSIGNED if _gamepad_icon.texture == null else ""
 	else:
-		text = key_bind[key_source].as_text()
+		text = (
+				UNASSIGNED if key_bind[key_source] == null
+				else key_bind[key_source].as_text()
+		)
 		_gamepad_icon.hide()
 
 
