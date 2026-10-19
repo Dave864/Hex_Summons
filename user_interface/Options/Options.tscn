@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene load_steps=6 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
+[ext_resource type="Script" uid="uid://bud5cxvbdc33a" path="res://user_interface/Options/controls_menu.gd" id="2_8wd8u"]
 [ext_resource type="Script" uid="uid://d38ktuu0nh873" path="res://user_interface/Options/keybind_input_button.gd" id="2_llrvc"]
 [ext_resource type="Script" uid="uid://umc1xo4msj3k" path="res://user_interface/Options/popup_confirm_input.gd" id="3_m3ftx"]
 
@@ -108,11 +109,14 @@ value = 100.0
 tick_count = 5
 ticks_position = 2
 
-[node name="Controls" type="Control" parent="TabContainer"]
+[node name="Controls" type="Control" parent="TabContainer" node_paths=PackedStringArray("confirm_button", "reset_button")]
 layout_mode = 2
+script = ExtResource("2_8wd8u")
+confirm_button = NodePath("../../Confirm")
+reset_button = NodePath("../../RevertToDefault")
 metadata/_tab_index = 1
 
-[node name="ControlTabs" type="TabBar" parent="TabContainer/Controls"]
+[node name="SourceTabs" type="TabBar" parent="TabContainer/Controls"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,7 +158,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 39.0
+scroll_vertical_custom_step = 41.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface"]
@@ -301,7 +305,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 39.0
+scroll_vertical_custom_step = 41.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement"]
@@ -323,7 +327,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_top = NodePath("../../../../ItemsInterface/VBoxContainer/Down/KeybindInputButton")
-focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton")
+focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Right/KeybindInputButton")
 script = ExtResource("2_llrvc")
 key_source = 0
@@ -344,7 +348,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_top = NodePath("../../Left/KeybindInputButton")
-focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton")
+focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Up/KeybindInputButton")
 script = ExtResource("2_llrvc")
 key_source = 0
@@ -365,7 +369,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_top = NodePath("../../Right/KeybindInputButton")
-focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton")
+focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Down/KeybindInputButton")
 script = ExtResource("2_llrvc")
 key_source = 0
@@ -386,7 +390,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_top = NodePath("../../Up/KeybindInputButton")
-focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton")
+focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../../../../../../../Confirm")
 script = ExtResource("2_llrvc")
 key_source = 0
@@ -409,7 +413,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 39.0
+scroll_vertical_custom_step = 41.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat"]
@@ -424,6 +428,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "select tile"
 horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile"]
 layout_mode = 2
@@ -575,33 +580,12 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 39.0
+scroll_vertical_custom_step = 41.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="Rotate" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "rotate"
-horizontal_alignment = 2
-
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate"]
-layout_mode = 2
-size_flags_horizontal = 3
-focus_neighbor_left = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
-focus_neighbor_top = NodePath("../../../../ItemsCombat/VBoxContainer/EndTurn/KeybindInputButton")
-focus_neighbor_right = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
-focus_neighbor_bottom = NodePath("../../Reset/KeybindInputButton")
-script = ExtResource("2_llrvc")
-key_source = 0
-input_bind = "ui_camera_pan"
-metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
 [node name="Reset" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer"]
 layout_mode = 2
@@ -616,12 +600,33 @@ horizontal_alignment = 2
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
-focus_neighbor_top = NodePath("../../Rotate/KeybindInputButton")
+focus_neighbor_top = NodePath("../../../../ItemsCombat/VBoxContainer/EndTurn/KeybindInputButton")
+focus_neighbor_right = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
+focus_neighbor_bottom = NodePath("../../Rotate/KeybindInputButton")
+script = ExtResource("2_llrvc")
+key_source = 0
+input_bind = "ui_camera_reset"
+metadata/_custom_type_script = "uid://d38ktuu0nh873"
+
+[node name="Rotate" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "rotate"
+horizontal_alignment = 2
+
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
+focus_neighbor_top = NodePath("../../Reset/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../../../../../../../Confirm")
 script = ExtResource("2_llrvc")
 key_source = 0
-input_bind = "ui_camera_reset"
+input_bind = "ui_camera_pan"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
 [node name="Column3" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions"]
@@ -639,7 +644,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 39.0
+scroll_vertical_custom_step = 30.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick"]
@@ -743,7 +748,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 39.0
+scroll_vertical_custom_step = 30.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick"]
@@ -762,7 +767,7 @@ horizontal_alignment = 2
 [node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Left"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton")
+focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_top = NodePath("../../../../ItemsLeftJoystick/VBoxContainer/Down/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Right/KeybindInputButton")
@@ -783,7 +788,7 @@ horizontal_alignment = 2
 [node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Right"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton")
+focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_top = NodePath("../../Left/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Up/KeybindInputButton")
@@ -804,7 +809,7 @@ horizontal_alignment = 2
 [node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton")
+focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_top = NodePath("../../Right/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Down/KeybindInputButton")
@@ -825,7 +830,7 @@ horizontal_alignment = 2
 [node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton")
+focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_top = NodePath("../../Up/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../../../../../../../RevertToDefault")
@@ -925,10 +930,10 @@ text = "Revert to Default"
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Items/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/EndTurn/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/EndTurn/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
-[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
-[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
+[connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Right/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
