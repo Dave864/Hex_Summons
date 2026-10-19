@@ -154,7 +154,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 30.0
+scroll_vertical_custom_step = 39.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface"]
@@ -301,7 +301,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 30.0
+scroll_vertical_custom_step = 39.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement"]
@@ -409,7 +409,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 30.0
+scroll_vertical_custom_step = 39.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat"]
@@ -575,6 +575,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
+scroll_vertical_custom_step = 39.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera"]
@@ -638,7 +639,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 30.0
+scroll_vertical_custom_step = 39.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick"]
@@ -742,7 +743,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
-scroll_vertical_custom_step = 30.0
+scroll_vertical_custom_step = 39.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick"]
