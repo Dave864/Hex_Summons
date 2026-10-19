@@ -41,7 +41,7 @@ func _update_selection(map_tile: MapTile) -> void:
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	selector.tile_hovered = map_tile
 	# Orienting to mouse position is handled by handle_input.
-	if InputController.get_source() == InputController.Source.GAMEPAD:
+	if InputController.source_is_gamepad():
 		_orient_emission_to_tile(map_tile)
 
 

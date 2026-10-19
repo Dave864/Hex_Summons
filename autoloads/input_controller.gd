@@ -11,11 +11,11 @@ enum Source {
 	NONE
 }
 
-var _source: int = Source.NONE: get = get_source
+var _source: Source = Source.NONE: get = get_source
 
 
 ## Gets the current input source.
-func get_source() -> int:
+func get_source() -> Source:
 	return _source
 
 
