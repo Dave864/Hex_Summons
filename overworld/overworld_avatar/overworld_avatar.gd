@@ -26,13 +26,21 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	# Get the input direction and handle the movement/deceleration.
-	var input_dir := Input.get_vector(
-			"player_move_l",
-			"player_move_r",
-			"player_move_u",
-			"player_move_d"
-	)
+	var input_dir: Vector2
+	if InputController.source_is_gamepad():
+		input_dir = Input.get_vector(
+				"left_joystick_l",
+				"left_joystick_r",
+				"left_joystick_u",
+				"left_joystick_d"
+		)
+	else:
+		input_dir = Input.get_vector(
+				"player_move_l",
+				"player_move_r",
+				"player_move_u",
+				"player_move_d"
+		)
 	# Only update facing direction if significant input has been provided.
 	if not input_dir.is_zero_approx():
 		if not _is_moving:
