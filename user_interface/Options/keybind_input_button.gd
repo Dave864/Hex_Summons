@@ -83,28 +83,8 @@ func _ready() -> void:
 	_create_gamepad_icon()
 	if not pressed.is_connected(_on_pressed):
 		pressed.connect(_on_pressed)
-	if InputMap.has_action(input_bind):
-		for event: InputEvent in InputMap.action_get_events(input_bind):
-			if (
-					(
-						event is InputEventMouse or event is InputEventKey
-					)
-					and key_bind[SOURCE_KEYMOUSE] == null
-			):
-				key_bind[SOURCE_KEYMOUSE] = event
-			elif (
-					(
-						event is InputEventJoypadMotion
-						or event is InputEventJoypadButton
-					)
-					and key_bind[SOURCE_GAMEPAD] == null
-			):
-				key_bind[SOURCE_GAMEPAD] = event
-			else:
-				# Only a single key from each input source should be exposed
-				# by this button, so we only look at the first ones that appear
-				# for each input event.
-				break
+	set_gamepad_keybinds_to_current()
+	set_keymouse_keybinds_to_current()
 	_update_display()
 
 
@@ -175,6 +155,41 @@ func clear_keymouse_keybind() -> void:
 func clear_current_input_keybind() -> void:
 	key_bind[input_source] = null
 	_update_display()
+
+
+## Sets the gamepad keybinds to their current value in InputMap.
+func set_gamepad_keybinds_to_current() -> void:
+	if InputMap.has_action(input_bind):
+		for event: InputEvent in InputMap.action_get_events(input_bind):
+			if (
+					(
+						event is InputEventJoypadMotion
+						or event is InputEventJoypadButton
+					)
+					and key_bind[SOURCE_GAMEPAD] == null
+			):
+				key_bind[SOURCE_GAMEPAD] = event
+			else:
+				# Only a single key should be exposed by this button, so we only
+				# look at the first one te appear.
+				break
+
+
+## Sets the keymouse keybinds to their current value in InputMap.
+func set_keymouse_keybinds_to_current() -> void:
+	if InputMap.has_action(input_bind):
+		for event: InputEvent in InputMap.action_get_events(input_bind):
+			if (
+					(
+						event is InputEventMouse or event is InputEventKey
+					)
+					and key_bind[SOURCE_KEYMOUSE] == null
+			):
+				key_bind[SOURCE_KEYMOUSE] = event
+			else:
+				# Only a single key should be exposed by this button, so we only
+				# look at the first one te appear.
+				break
 
 
 ## Checks if the current input bind for the current input source is the same
