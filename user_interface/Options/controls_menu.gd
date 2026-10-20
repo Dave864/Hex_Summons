@@ -102,6 +102,11 @@ func _update_input_bind_controls() -> void:
 	if current_source == InputController.Source.KEYBOARD_AND_MOUSE:
 		com_cam_rotate.show()
 		com_cam_reset.set_input_to_keymouse()
+		var node_path := (
+				movement_controls.get_node("Left/KeybindInputButton").get_path()
+		)
+		com_cam_reset.focus_neighbor_left = node_path
+		com_cam_reset.focus_neighbor_right = node_path
 		$KeybindOptions/Column1/HSeparator.show()
 		$KeybindOptions/Column1/LabelMovement.show()
 		$KeybindOptions/Column1/ItemsMovement.show()
@@ -109,6 +114,12 @@ func _update_input_bind_controls() -> void:
 	else:
 		com_cam_rotate.hide()
 		com_cam_reset.set_input_to_gamepad()
+		com_cam_reset.focus_neighbor_left = interface_controls.get_node(
+				"Accept/KeybindInputButton"
+		).get_path()
+		com_cam_reset.focus_neighbor_right = right_joystick_controls.get_node(
+				"Left/KeybindInputButton"
+		).get_path()
 		$KeybindOptions/Column1/HSeparator.hide()
 		$KeybindOptions/Column1/LabelMovement.hide()
 		$KeybindOptions/Column1/ItemsMovement.hide()
