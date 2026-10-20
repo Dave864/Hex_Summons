@@ -23,6 +23,41 @@ const SOURCE_KEYMOUSE := InputController.Source.KEYBOARD_AND_MOUSE
 const SOURCE_NONE := InputController.Source.NONE
 ## The deadzone value for joypad axis motion.
 const JOYPAD_MOTION_DEADZONE := 0.5
+## Map to shorthand for various event text.
+const INPUT_EVENT_SHORTHAND := {
+	"Left Mouse Button": "Left Click",
+	"Right Mouse Button": "Right Click",
+	"Middle Mouse Button": "Middle Click",
+	"Mouse Wheel Up": "Scroll Up",
+	"Mouse Wheel Down": "Scroll Down",
+	"Escape": "Esc",
+	"QuoteLeft": "`",
+	"Minus": "-",
+	"Equal": "=",
+	"BackSlash": "\\",
+	"BracketLeft": "[",
+	"BracketRight": "]",
+	"Semicolon": ";",
+	"Apostrophe": "'",
+	"Comma": ",",
+	"Period": ".",
+	"Slash": "/",
+	"Kp Divide": "/",
+	"Kp Multiply": "*",
+	"Kp Subtract": "-",
+	"Kp Add": "+",
+	"Kp Period": ".",
+	"Kp Enter": "Enter",
+	"Kp 1": "1",
+	"Kp 2": "2",
+	"Kp 3": "3",
+	"Kp 4": "4",
+	"Kp 5": "5",
+	"Kp 6": "6",
+	"Kp 7": "7",
+	"Kp 8": "8",
+	"Kp 9": "9",
+}
 
 ## The source to look at for the key binding.
 @export var key_source := InputController.Source.NONE
@@ -157,6 +192,8 @@ func _update_display() -> void:
 				UNASSIGNED if key_bind[key_source] == null
 				else key_bind[key_source].as_text()
 		)
+		if INPUT_EVENT_SHORTHAND.has(text):
+			text = INPUT_EVENT_SHORTHAND[text]
 		_gamepad_icon.hide()
 
 
