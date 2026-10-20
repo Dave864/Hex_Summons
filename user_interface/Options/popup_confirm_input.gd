@@ -22,6 +22,9 @@ const KEYMOUSE_EXPECTED_TEXT := (
 ## Expected input source.
 var expected_input_source: InputController.Source
 
+## The last focused control.
+var _prior_focus: Control
+
 ## Label that displays the popup messages.
 @onready var popup_label: Label = $Label
 
@@ -45,9 +48,12 @@ func _on_KeybindInputButton_new_bind_requested(
 	popup_label.text = ENTER_INPUT_TEXT
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	show()
+	_prior_focus = get_viewport().gui_get_focus_owner()
+	grab_focus()
 
 
 ## Hides this popup when KeybindInputButton sets a new input bind.
-func _on_KeybindInputButton_new_bind_set() -> void:
+func _on_KeybindInputButton_new_bind_set(_id: int) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	hide()
+	_prior_focus.call_deferred("grab_focus")
