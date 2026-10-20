@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene load_steps=11 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
 [ext_resource type="Script" uid="uid://bud5cxvbdc33a" path="res://user_interface/Options/controls_menu.gd" id="2_8wd8u"]
 [ext_resource type="Script" uid="uid://d38ktuu0nh873" path="res://user_interface/Options/keybind_input_button.gd" id="2_llrvc"]
 [ext_resource type="Script" uid="uid://umc1xo4msj3k" path="res://user_interface/Options/popup_confirm_input.gd" id="3_m3ftx"]
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="4_hcx2a"]
+[ext_resource type="Script" uid="uid://k5oiqdib5paw" path="res://user_interface/Options/input_group.gd" id="4_tdglh"]
 [ext_resource type="Script" uid="uid://b5mo30b067mdw" path="res://user_interface/Options/active_icon.gd" id="4_vlufy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02efk"]
@@ -180,13 +181,15 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsInterface" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1"]
+[node name="ItemsInterface" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1" node_paths=PackedStringArray("updated_icon")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
 scroll_vertical_custom_step = 41.0
 horizontal_scroll_mode = 0
+script = ExtResource("4_tdglh")
+updated_icon = NodePath("../LabelInterface/ActiveIcon")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface"]
 layout_mode = 2
@@ -209,7 +212,7 @@ focus_neighbor_left = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxCon
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Cancel/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_accept"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -249,7 +252,7 @@ focus_neighbor_top = NodePath("../../Accept/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Left/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_cancel"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -289,7 +292,7 @@ focus_neighbor_top = NodePath("../../Cancel/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Right/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_left"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -329,7 +332,7 @@ focus_neighbor_top = NodePath("../../Left/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Up/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_right"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -369,7 +372,7 @@ focus_neighbor_top = NodePath("../../Right/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Down/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_up"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -409,7 +412,7 @@ focus_neighbor_top = NodePath("../../Up/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../../../ItemsMovement/VBoxContainer/Left/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_down"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -458,13 +461,15 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsMovement" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1"]
+[node name="ItemsMovement" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1" node_paths=PackedStringArray("updated_icon")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
 scroll_vertical_custom_step = 41.0
 horizontal_scroll_mode = 0
+script = ExtResource("4_tdglh")
+updated_icon = NodePath("../LabelMovement/ActiveIcon")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement"]
 layout_mode = 2
@@ -488,7 +493,7 @@ focus_neighbor_top = NodePath("../../../../ItemsInterface/VBoxContainer/Down/Key
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Right/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "player_move_l"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -528,7 +533,7 @@ focus_neighbor_top = NodePath("../../Left/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Up/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "player_move_r"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -568,7 +573,7 @@ focus_neighbor_top = NodePath("../../Right/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Down/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "player_move_u"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -608,7 +613,7 @@ focus_neighbor_top = NodePath("../../Up/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../../../../../../../Confirm")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "player_move_d"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -659,13 +664,15 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsCombat" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2"]
+[node name="ItemsCombat" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2" node_paths=PackedStringArray("updated_icon")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
 scroll_vertical_custom_step = 41.0
 horizontal_scroll_mode = 0
+script = ExtResource("4_tdglh")
+updated_icon = NodePath("../LabelCombat/ActiveIcon")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat"]
 layout_mode = 2
@@ -688,7 +695,7 @@ focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContai
 focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Movement/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_selector_select"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -728,7 +735,7 @@ focus_neighbor_top = NodePath("../../SelectTile/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Techniques/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_encounter_movement"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -768,7 +775,7 @@ focus_neighbor_top = NodePath("../../Movement/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Spells/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_encounter_option_1"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -808,7 +815,7 @@ focus_neighbor_top = NodePath("../../Techniques/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Summons/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_encounter_option_2"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -848,7 +855,7 @@ focus_neighbor_top = NodePath("../../Spells/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Items/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_encounter_option_3"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -888,7 +895,7 @@ focus_neighbor_top = NodePath("../../Summons/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../EndTurn/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_encounter_option_4"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -928,7 +935,7 @@ focus_neighbor_top = NodePath("../../Items/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../../../ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_encounter_player_end"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -977,13 +984,15 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsCombatCamera" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2"]
+[node name="ItemsCombatCamera" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2" node_paths=PackedStringArray("updated_icon")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
 scroll_vertical_custom_step = 41.0
 horizontal_scroll_mode = 0
+script = ExtResource("4_tdglh")
+updated_icon = NodePath("../LabelCombatCamera/ActiveIcon")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera"]
 layout_mode = 2
@@ -1005,7 +1014,7 @@ focus_neighbor_top = NodePath("../../../../ItemsCombat/VBoxContainer/EndTurn/Key
 focus_neighbor_right = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Rotate/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_camera_reset"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -1045,7 +1054,7 @@ focus_neighbor_top = NodePath("../../Reset/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../../../../../../../Confirm")
 script = ExtResource("2_llrvc")
-key_source = 0
+input_source = 0
 input_bind = "ui_camera_pan"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -1095,13 +1104,15 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsLeftJoystick" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column3"]
+[node name="ItemsLeftJoystick" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column3" node_paths=PackedStringArray("updated_icon")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
 scroll_vertical_custom_step = 30.0
 horizontal_scroll_mode = 0
+script = ExtResource("4_tdglh")
+updated_icon = NodePath("../LabelLeftJoystick/ActiveIcon")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick"]
 layout_mode = 2
@@ -1123,7 +1134,7 @@ focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Right/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 1
+input_source = 1
 input_bind = "left_joystick_l"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -1163,7 +1174,7 @@ focus_neighbor_top = NodePath("../../Left/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Up/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 1
+input_source = 1
 input_bind = "left_joystick_r"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -1203,7 +1214,7 @@ focus_neighbor_top = NodePath("../../Right/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Down/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 1
+input_source = 1
 input_bind = "left_joystick_u"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -1243,7 +1254,7 @@ focus_neighbor_top = NodePath("../../Up/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../../../ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 1
+input_source = 1
 input_bind = "left_joystick_d"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -1292,13 +1303,15 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsRightJoystick" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column3"]
+[node name="ItemsRightJoystick" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column3" node_paths=PackedStringArray("updated_icon")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 draw_focus_border = true
 scroll_vertical_custom_step = 30.0
 horizontal_scroll_mode = 0
+script = ExtResource("4_tdglh")
+updated_icon = NodePath("../LabelRightJoystick/ActiveIcon")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick"]
 layout_mode = 2
@@ -1321,7 +1334,7 @@ focus_neighbor_top = NodePath("../../../../ItemsLeftJoystick/VBoxContainer/Down/
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Right/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 1
+input_source = 1
 input_bind = "right_joystick_l"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -1361,7 +1374,7 @@ focus_neighbor_top = NodePath("../../Left/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Up/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 1
+input_source = 1
 input_bind = "right_joystick_r"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -1401,7 +1414,7 @@ focus_neighbor_top = NodePath("../../Right/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../Down/KeybindInputButton")
 script = ExtResource("2_llrvc")
-key_source = 1
+input_source = 1
 input_bind = "right_joystick_u"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
@@ -1441,7 +1454,7 @@ focus_neighbor_top = NodePath("../../Up/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
 focus_neighbor_bottom = NodePath("../../../../../../../../RevertToDefault")
 script = ExtResource("2_llrvc")
-key_source = 1
+input_source = 1
 input_bind = "right_joystick_d"
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 

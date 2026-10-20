@@ -150,7 +150,7 @@ func _on_KeyBindInputButton_new_bind_requested(
 
 ## Enables the confirm and reset buttons to allow them to be selected after
 ## updating a key bind.
-func _on_KeyBindInputButton_new_bind_set() -> void:
+func _on_KeyBindInputButton_new_bind_set(_id: int) -> void:
 	confirm_button.disabled = false
 	reset_button.disabled = false
 
