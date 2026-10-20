@@ -83,9 +83,8 @@ func _ready() -> void:
 	_create_gamepad_icon()
 	if not pressed.is_connected(_on_pressed):
 		pressed.connect(_on_pressed)
-	set_gamepad_keybinds_to_current()
-	set_keymouse_keybinds_to_current()
-	_update_display()
+	set_gamepad_keybinds_to_InputMap()
+	set_keymouse_keybinds_to_InputMap()
 
 
 ## Sets the first valid input as the keybind for the specified input when a new
@@ -157,8 +156,21 @@ func clear_current_input_keybind() -> void:
 	_update_display()
 
 
+## Gets the shorthand text description of the binding for the current input
+## source.
+func get_current_input_keybind_text() -> String:
+	var bound_event_text := (
+			UNASSIGNED if key_bind[input_source] == null
+			else key_bind[input_source].as_text()
+	)
+	if INPUT_EVENT_SHORTHAND.has(bound_event_text):
+		bound_event_text = INPUT_EVENT_SHORTHAND[bound_event_text]
+	return bound_event_text
+
+
 ## Sets the gamepad keybinds to their current value in InputMap.
-func set_gamepad_keybinds_to_current() -> void:
+func set_gamepad_keybinds_to_InputMap() -> void:
+	key_bind[SOURCE_GAMEPAD] = null
 	if InputMap.has_action(input_bind):
 		for event: InputEvent in InputMap.action_get_events(input_bind):
 			if (
@@ -169,14 +181,16 @@ func set_gamepad_keybinds_to_current() -> void:
 					and key_bind[SOURCE_GAMEPAD] == null
 			):
 				key_bind[SOURCE_GAMEPAD] = event
-			else:
+			elif key_bind[SOURCE_GAMEPAD] != null:
 				# Only a single key should be exposed by this button, so we only
-				# look at the first one te appear.
+				# look at the first one to appear.
 				break
+	_update_display()
 
 
 ## Sets the keymouse keybinds to their current value in InputMap.
-func set_keymouse_keybinds_to_current() -> void:
+func set_keymouse_keybinds_to_InputMap() -> void:
+	key_bind[SOURCE_KEYMOUSE] = null
 	if InputMap.has_action(input_bind):
 		for event: InputEvent in InputMap.action_get_events(input_bind):
 			if (
@@ -186,22 +200,42 @@ func set_keymouse_keybinds_to_current() -> void:
 					and key_bind[SOURCE_KEYMOUSE] == null
 			):
 				key_bind[SOURCE_KEYMOUSE] = event
-			else:
+			elif key_bind[SOURCE_KEYMOUSE] != null:
 				# Only a single key should be exposed by this button, so we only
-				# look at the first one te appear.
+				# look at the first one to appear.
 				break
+	_update_display()
 
 
 ## Checks if the current input bind for the current input source is the same
 ## as the input map.
-func matches_old_bind() -> bool:
+func matches_InputMap_bind() -> bool:
+	var bound_event_text := get_current_input_keybind_text()
+	var old_bind_present := false
 	for event: InputEvent in InputMap.action_get_events(input_bind):
+		if (
+				(
+					input_source == SOURCE_GAMEPAD
+					and (
+						event is InputEventJoypadButton
+						or event is InputEventJoypadMotion
+					)
+				)
+				or (
+					input_source == SOURCE_KEYMOUSE
+					and (event is InputEventKey or event is InputEventMouse)
+				)
+		):
+			old_bind_present = true
 		var event_text := event.as_text()
 		if INPUT_EVENT_SHORTHAND.has(event_text):
 			event_text = INPUT_EVENT_SHORTHAND[event_text]
-		if event_text == text:
+		if event_text == bound_event_text:
 			return true
-	return false
+	return (
+			true if bound_event_text == UNASSIGNED and not old_bind_present
+			else false
+	)
 
 
 ## Creates a GamepadIcon to display gamepad input.

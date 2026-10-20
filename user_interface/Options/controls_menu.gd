@@ -66,6 +66,9 @@ func _process(_delta: float) -> void:
 	current_source = InputController.get_source()
 	_update_source_tabs_display()
 	_update_input_bind_controls()
+	# Set focus to same place to prevent it from being lost due to prior focus
+	# now being hidden.
+	interface_controls.get_node("Accept/KeybindInputButton").grab_focus()
 
 
 ## Goes through the KeyBindInput controls and connects their signals to this
