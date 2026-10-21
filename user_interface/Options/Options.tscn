@@ -1511,6 +1511,30 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
+[node name="PopupNotAllSet" type="PopupPanel" parent="TabContainer/Controls"]
+oversampling_override = 1.0
+title = "Unset Keybind Error"
+initial_position = 2
+size = Vector2i(175, 100)
+
+[node name="Label" type="Label" parent="TabContainer/Controls/PopupNotAllSet"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Not all keybinds have been set!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="PopupTimer" type="Timer" parent="TabContainer/Controls"]
+one_shot = true
+
 [node name="Confirm" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -1595,3 +1619,5 @@ text = "Revert to Default"
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="pressed" from="Confirm" to="TabContainer/Controls" method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="RevertToDefault" to="TabContainer/Controls" method="_on_reset_button_pressed"]

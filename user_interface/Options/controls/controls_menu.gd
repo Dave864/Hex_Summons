@@ -24,6 +24,10 @@ var current_source: InputController.Source
 @onready var source_tabs: TabBar = $SourceTabs
 ## Popup for confirming input.
 @onready var confirm_popup: PopupConfirmInput = $PopupConfirmInput
+## Popup for indicating that not all keybinds have been set.
+@onready var not_all_set_popup: PopupPanel = $PopupNotAllSet
+## Timer for how long a popup should stay.
+@onready var popup_timer: Timer = $PopupTimer
 ## Container for Interface controls.
 @onready var interface_controls: InputGroup = (
 		$KeybindOptions/Column1/ItemsInterface
@@ -65,8 +69,12 @@ func _ready() -> void:
 
 ## Swaps available input binds to match the current input source.
 func _process(_delta: float) -> void:
-	# Don't swap if popup is present as an input bind is being set. Don't need
-	# to redo update logic if input source has not changed.
+	if not_all_set_popup.visible and popup_timer.is_stopped():
+		not_all_set_popup.hide()
+	elif not_all_set_popup.visible:
+		return
+	# Don't swap if confirm popup is present as an input bind is being set.
+	# Don't need to redo update logic if input source has not changed.
 	if confirm_popup.visible or current_source == InputController.get_source():
 		return
 	current_source = InputController.get_source()
@@ -78,10 +86,14 @@ func _process(_delta: float) -> void:
 		return
 	# Shift focus to same place to prevent focus from being lost due to prior
 	# focus being hidden.
-	interface_controls.get_node("VBoxContainer/Accept/KeybindInputButton").grab_focus()
+	(
+			interface_controls.get_node(
+				"VBoxContainer/Accept/KeybindInputButton"
+			).grab_focus()
+	)
 
 
-##
+## Loads the current keybind settings into InputMap.
 func load_current_keybinds() -> void:
 	pass
 
@@ -183,9 +195,30 @@ func _on_KeyBindInputButton_new_bind_set(_id: int) -> void:
 
 ## Updates the input map to match the displayed inputs.
 func _on_confirm_button_pressed() -> void:
-	pass
+	# Confirm button used for other option tabs, so should only process signal
+	# when this tab is active.
+	if not visible:
+		return
+	if (
+			interface_controls.all_bindings_unique()
+			and movement_controls.all_bindings_unique()
+			and combat_controls.all_bindings_unique()
+			and combat_camera_controls.all_bindings_unique()
+			and left_joystick_controls.all_bindings_unique()
+			and right_joystick_controls.all_bindings_unique()
+	):
+		# TODO: save keybinds to user settings.
+		load_current_keybinds()
+	else:
+		not_all_set_popup.show()
+		popup_timer.start()
 
 
 ## Updates the input map to be the default, refreshing the display to match.
 func _on_reset_button_pressed() -> void:
+	# Confirm button used for other option tabs, so should only process signal
+	# when this tab is active.
+	if not visible:
+		return
+	# TODO: load default into InputMap.
 	pass

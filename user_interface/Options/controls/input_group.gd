@@ -18,8 +18,6 @@ extends ScrollContainer
 var _input_binds: Dictionary[int, KeybindInputButton] = {}
 ## The current input source.
 var _current_source: InputController.Source
-## Flag that indicates if all bindings are valid/unique.
-var _all_unique_keybinds := true
 
 
 ## Gets the keybind buttons of this input group.
@@ -40,18 +38,34 @@ func _process(_delta: float) -> void:
 		return
 	_reset_bindings_to_InputMap()
 	_current_source = InputController.get_source()
-	_check_if_bindings_unique()
-	_mark_changed_bindings()
 
 
 ## Returns if the currently set keybinds for the current input source are all
-## unique.
+## unique. If any keybinds are not set, the keybinds are not considered unique.
 func all_bindings_unique() -> bool:
-	return _all_unique_keybinds
+	var bound_inputs: Dictionary[String, bool] = {}
+	var all_unique_keybinds = true
+	for bind_button: KeybindInputButton in _input_binds.values():
+		# Not all bindings may be avaiable for all input sources. Those that
+		# aren't for the current input source are made hidden and should not
+		# be evaluated.
+		if not bind_button.visible:
+			continue
+		var keybind_text := bind_button.get_current_input_keybind_text()
+		if (
+				bound_inputs.has(keybind_text)
+				or keybind_text == KeybindInputButton.UNASSIGNED
+		):
+			all_unique_keybinds = false
+		bound_inputs[keybind_text] = true
+	return all_unique_keybinds
 
 
 ## Goes through all binding buttons and resets them to reflect the InputMap.
 func _reset_bindings_to_InputMap() -> void:
+	# This method resets the binding buttons to an unchanged state, meaning that
+	# the group should not be considered updated.
+	updated_icon.is_active = false
 	for bind_button: KeybindInputButton in _input_binds.values():
 		# Not all bindings may be avaiable for all input sources. Those that
 		# aren't for the current input source are made hidden and should not
@@ -62,46 +76,15 @@ func _reset_bindings_to_InputMap() -> void:
 			bind_button.set_gamepad_keybinds_to_InputMap()
 		else:
 			bind_button.set_keymouse_keybinds_to_InputMap()
-
-
-## Goes through the binding buttons and checks if all of them are set to unique
-## input events.
-func _check_if_bindings_unique() -> void:
-	var bound_inputs: Dictionary[String, bool] = {}
-	_all_unique_keybinds = true
-	for bind_button: KeybindInputButton in _input_binds.values():
-		# Not all bindings may be avaiable for all input sources. Those that
-		# aren't for the current input source are made hidden and should not
-		# be affected.
-		if not bind_button.visible:
-			continue
-		if bound_inputs.has(bind_button.text):
-			_all_unique_keybinds = false
-		bound_inputs[bind_button.text] = true
-
-
-## Goes through the binding buttons and marks if any of them have input bindings
-## that are different from the current InputMap.
-func _mark_changed_bindings() -> void:
-	updated_icon.is_active = false
-	for bind_button: KeybindInputButton in _input_binds.values():
-		# Not all bindings may be avaiable for all input sources. Those that
-		# aren't for the current input source are made hidden and should not
-		# be affected.
-		if not bind_button.visible:
-			continue
-		var bind_changed := not bind_button.matches_InputMap_bind()
-		bind_button.get_child(0).is_active = bind_changed
-		updated_icon.is_active = (
-				true if bind_changed else updated_icon.is_active
-		)
+		# Binding button is being reset to unchanged, so its active icon should
+		# reflect that.
+		bind_button.get_child(0).is_active = false
 
 
 ## Changes any existing keybinds that match the new bind to be unassigned, also
 ## updating the active flag for each.
 func _on_KeybindInputButton_new_bind_set(id: int) -> void:
 	var event_name = _input_binds[id].get_current_input_keybind_text()
-	_all_unique_keybinds = true
 	updated_icon.is_active = false
 	for bind_id: int in _input_binds.keys():
 		var bind_button := _input_binds[bind_id]
@@ -116,7 +99,6 @@ func _on_KeybindInputButton_new_bind_set(id: int) -> void:
 				and bind_button_text == event_name
 		):
 			bind_button.clear_current_input_keybind()
-			_all_unique_keybinds = false
 			bind_button.get_child(0).is_active = true
 			updated_icon.is_active = true
 		else:

@@ -131,25 +131,6 @@ func set_input_to_keymouse() -> void:
 	_update_display()
 
 
-## Resets the current bindings to unassigned.
-func clear_keybinds() -> void:
-	key_bind[SOURCE_GAMEPAD] = null
-	key_bind[SOURCE_KEYMOUSE] = null
-	_update_display()
-
-
-## Resets the current gamepad binding to unassigned.
-func clear_gamepad_keybind() -> void:
-	key_bind[SOURCE_GAMEPAD] = null
-	_update_display()
-
-
-## Resets the current keymouse binding to unassigned.
-func clear_keymouse_keybind() -> void:
-	key_bind[SOURCE_KEYMOUSE] = null
-	_update_display()
-
-
 ## Resets the binding for the current input source to unassigned.
 func clear_current_input_keybind() -> void:
 	key_bind[input_source] = null
