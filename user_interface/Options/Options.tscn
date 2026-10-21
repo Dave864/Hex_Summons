@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
-[ext_resource type="Script" uid="uid://bud5cxvbdc33a" path="res://user_interface/Options/controls_menu.gd" id="2_8wd8u"]
-[ext_resource type="Script" uid="uid://d38ktuu0nh873" path="res://user_interface/Options/keybind_input_button.gd" id="2_llrvc"]
-[ext_resource type="Script" uid="uid://umc1xo4msj3k" path="res://user_interface/Options/popup_confirm_input.gd" id="3_m3ftx"]
+[ext_resource type="Script" uid="uid://bud5cxvbdc33a" path="res://user_interface/Options/controls/controls_menu.gd" id="2_8wd8u"]
+[ext_resource type="Script" uid="uid://d38ktuu0nh873" path="res://user_interface/Options/controls/keybind_input_button.gd" id="2_llrvc"]
+[ext_resource type="Script" uid="uid://umc1xo4msj3k" path="res://user_interface/Options/controls/popup_confirm_input.gd" id="3_m3ftx"]
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="4_hcx2a"]
-[ext_resource type="Script" uid="uid://k5oiqdib5paw" path="res://user_interface/Options/input_group.gd" id="4_tdglh"]
-[ext_resource type="Script" uid="uid://b5mo30b067mdw" path="res://user_interface/Options/active_icon.gd" id="4_vlufy"]
+[ext_resource type="Script" uid="uid://k5oiqdib5paw" path="res://user_interface/Options/controls/input_group.gd" id="4_tdglh"]
+[ext_resource type="Script" uid="uid://b5mo30b067mdw" path="res://user_interface/Options/controls/active_icon.gd" id="4_vlufy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02efk"]
 atlas = ExtResource("4_hcx2a")
