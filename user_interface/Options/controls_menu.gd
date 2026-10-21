@@ -3,8 +3,14 @@ extends Control
 ## Menu that handles the setting of input bindings.
 ##
 ## Handles the swapping between different input sources as well as saving current
-## keybinds and loading default ones.
+## keybinds and loading default ones. Also handles the loading of keybinds at
+## the start of the game.
 
+
+## Path to the user keybinds data.
+const USER_KEYBINDS_PATH := "user://user.keybind"
+## Path to the default keybinds data.
+const DEFAULT_KEYBINDS_PATH := "res://user_interface/Options/default_keybinds.tres"
 
 ## Button that sets the displayed input layout as the one to use.
 @export var confirm_button: Button = null
@@ -19,28 +25,28 @@ var current_source: InputController.Source
 ## Popup for confirming input.
 @onready var confirm_popup: PopupConfirmInput = $PopupConfirmInput
 ## Container for Interface controls.
-@onready var interface_controls: VBoxContainer = (
-		$KeybindOptions/Column1/ItemsInterface/VBoxContainer
+@onready var interface_controls: InputGroup = (
+		$KeybindOptions/Column1/ItemsInterface
 )
 ## Container for Movement controls.
-@onready var movement_controls: VBoxContainer = (
-		$KeybindOptions/Column1/ItemsMovement/VBoxContainer
+@onready var movement_controls: InputGroup = (
+		$KeybindOptions/Column1/ItemsMovement
 )
 ## Container for Combat controls.
-@onready var combat_controls: VBoxContainer = (
-		$KeybindOptions/Column2/ItemsCombat/VBoxContainer
+@onready var combat_controls: InputGroup = (
+		$KeybindOptions/Column2/ItemsCombat
 )
 ## Container for Combat Camera controls.
-@onready var combat_camera_controls: VBoxContainer = (
-		$KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer
+@onready var combat_camera_controls: InputGroup = (
+		$KeybindOptions/Column2/ItemsCombatCamera
 )
 ## Container for Left Joystick controls.
-@onready var left_joystick_controls: VBoxContainer = (
-		$KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer
+@onready var left_joystick_controls: InputGroup = (
+		$KeybindOptions/Column3/ItemsLeftJoystick
 )
 ## Container for Right Joystick controls.
-@onready var right_joystick_controls: VBoxContainer = (
-		$KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer
+@onready var right_joystick_controls: InputGroup = (
+		$KeybindOptions/Column3/ItemsRightJoystick
 )
 
 
@@ -66,15 +72,24 @@ func _process(_delta: float) -> void:
 	current_source = InputController.get_source()
 	_update_source_tabs_display()
 	_update_input_bind_controls()
-	# Set focus to same place to prevent it from being lost due to prior focus
-	# now being hidden.
-	interface_controls.get_node("Accept/KeybindInputButton").grab_focus()
+	# Don't want to shift focus if this tab is not active as it would be jarring
+	# to players and make it difficult to traverse other option tabs.
+	if not visible or has_focus():
+		return
+	# Shift focus to same place to prevent focus from being lost due to prior
+	# focus being hidden.
+	interface_controls.get_node("VBoxContainer/Accept/KeybindInputButton").grab_focus()
+
+
+##
+func load_current_keybinds() -> void:
+	pass
 
 
 ## Goes through the KeyBindInput controls and connects their signals to this
 ## node.
-func _connect_KeyBindInput_signals(controls_group: VBoxContainer) -> void:
-	for item: Node in controls_group.get_children():
+func _connect_KeyBindInput_signals(controls_group: InputGroup) -> void:
+	for item: Node in controls_group.get_child(0).get_children():
 		var input_button: KeybindInputButton = item.get_child(1)
 		input_button.new_bind_requested.connect(
 				_on_KeyBindInputButton_new_bind_requested
@@ -96,17 +111,21 @@ func _update_source_tabs_display() -> void:
 
 ## Updates the input binding controls to reflect the current input source.
 func _update_input_bind_controls() -> void:
-	var com_cam_rotate: HBoxContainer = combat_camera_controls.get_node(
-			"Rotate"
+	var com_cam_rotate: HBoxContainer = (
+			combat_camera_controls.get_node("VBoxContainer/Rotate")
 	)
-	var com_cam_reset: KeybindInputButton = combat_camera_controls.get_node(
-			"Reset/KeybindInputButton"
+	var com_cam_reset: KeybindInputButton = (
+			combat_camera_controls.get_node(
+				"VBoxContainer/Reset/KeybindInputButton"
+			)
 	)
 	if current_source == InputController.Source.KEYBOARD_AND_MOUSE:
 		com_cam_rotate.show()
 		com_cam_reset.set_input_to_keymouse()
 		var node_path := (
-				movement_controls.get_node("Left/KeybindInputButton").get_path()
+				movement_controls.get_node(
+					"VBoxContainer/Left/KeybindInputButton"
+				).get_path()
 		)
 		com_cam_reset.focus_neighbor_left = node_path
 		com_cam_reset.focus_neighbor_right = node_path
@@ -117,12 +136,16 @@ func _update_input_bind_controls() -> void:
 	else:
 		com_cam_rotate.hide()
 		com_cam_reset.set_input_to_gamepad()
-		com_cam_reset.focus_neighbor_left = interface_controls.get_node(
-				"Accept/KeybindInputButton"
-		).get_path()
-		com_cam_reset.focus_neighbor_right = right_joystick_controls.get_node(
-				"Left/KeybindInputButton"
-		).get_path()
+		com_cam_reset.focus_neighbor_left = (
+				interface_controls.get_node(
+					"VBoxContainer/Accept/KeybindInputButton"
+				).get_path()
+		)
+		com_cam_reset.focus_neighbor_right = (
+				right_joystick_controls.get_node(
+					"VBoxContainer/Left/KeybindInputButton"
+				).get_path()
+		)
 		$KeybindOptions/Column1/HSeparator.hide()
 		$KeybindOptions/Column1/LabelMovement.hide()
 		$KeybindOptions/Column1/ItemsMovement.hide()
@@ -133,8 +156,8 @@ func _update_input_bind_controls() -> void:
 
 ## Updates the specific group of input binding controls to match the current
 ## input source.
-func _update_input_bind_group(controls_group: VBoxContainer) -> void:
-	for item: Node in controls_group.get_children():
+func _update_input_bind_group(controls_group: InputGroup) -> void:
+	for item: Node in controls_group.get_child(0).get_children():
 		var input_button: KeybindInputButton = item.get_child(1)
 		if current_source == InputController.Source.KEYBOARD_AND_MOUSE:
 			input_button.set_input_to_keymouse()
