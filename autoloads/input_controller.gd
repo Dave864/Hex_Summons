@@ -8,10 +8,44 @@ signal input_source_changed()
 enum Source {
 	KEYBOARD_AND_MOUSE,
 	GAMEPAD,
-	NONE
+	NONE,
+	SWITCH_TO_GAMEPAD,
 }
 
-var _source: Source = Source.NONE: get = get_source
+var _source: Source = Source.GAMEPAD: get = get_source
+
+
+## Swaps between gamepad and mouse & keyboard input.
+func _input(event: InputEvent) -> void:
+	var left_dir_vec: Vector2 = GamepadHandler.left_joystick_dir()
+	var right_dir_vec: Vector2 = GamepadHandler.right_joystick_dir()
+	if (
+			_source == Source.NONE
+			or (
+				_source == Source.SWITCH_TO_GAMEPAD
+				and event is InputEventJoypadMotion
+			)
+	):
+		return
+	elif _source == Source.SWITCH_TO_GAMEPAD:
+		_source = Source.GAMEPAD
+		input_source_changed.emit()
+	elif (
+			(event is InputEventMouse or event is InputEventKey)
+			and not source_is_keymouse()
+	):
+		_swap_to_mouse_keyboard()
+	elif (
+			(
+				event is InputEventJoypadMotion
+				and (
+					not left_dir_vec.is_zero_approx()
+					or not right_dir_vec.is_zero_approx()
+				)
+			) or event is InputEventJoypadButton
+			and not source_is_gamepad()
+	):
+		_swap_to_gamepad()
 
 
 ## Gets the current input source.
@@ -29,34 +63,14 @@ func source_is_keymouse() -> bool:
 	return _source == Source.KEYBOARD_AND_MOUSE
 
 
-## Swaps between gamepad and mouse & keyboard input.
-func _input(event: InputEvent) -> void:
-	var left_dir_vec: Vector2 = GamepadHandler.left_joystick_dir()
-	var right_dir_vec: Vector2 = GamepadHandler.right_joystick_dir()
-	if (
-		(event is InputEventMouse or event is InputEventKey)
-		and not _source == Source.KEYBOARD_AND_MOUSE
-	):
-		_swap_to_mouse_keyboard()
-	elif (
-		(
-			event is InputEventJoypadMotion
-			and (left_dir_vec != Vector2.ZERO or right_dir_vec != Vector2.ZERO)
-		) or event is InputEventJoypadButton
-		and not _source == Source.GAMEPAD
-	):
-		_swap_to_gamepad()
-
-
 ## Reveals the mouse cursor at the last recorded position.
 func _swap_to_mouse_keyboard() -> void:
 	MouseHandler.activate()
 	_source = Source.KEYBOARD_AND_MOUSE
-	emit_signal("input_source_changed")
+	input_source_changed.emit()
 
 
-## Hides the mouse cursor.
+## Hides the mouse cursor and readies the input to swap.
 func _swap_to_gamepad() -> void:
 	MouseHandler.deactivate()
-	_source = Source.GAMEPAD
-	emit_signal("input_source_changed")
+	_source = Source.SWITCH_TO_GAMEPAD

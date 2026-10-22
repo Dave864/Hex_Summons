@@ -17,7 +17,7 @@ func _ready():
 	get_tree().scene_changed.connect(_on_SceneTree_scene_changed)
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	update_mouse_tracker_2d(get_viewport().get_mouse_position())
+	center_mouse_tracker()
 	_scale_to_window()
 
 
@@ -41,6 +41,13 @@ func update_mouse_tracker_2d(pos: Vector2) -> void:
 	_last_position = pos
 
 
+## Updates the recorded mouse position to be the center of the viewport.
+func center_mouse_tracker() -> void:
+	_last_position = get_viewport_rect().size
+	_last_position.x /= 2.0
+	_last_position.y /= 2.0
+
+
 ## Updates the recorded mouse position for a 3d coordinate.
 func update_mouse_tracker_3d(pos: Vector3) -> void:
 	_last_position = get_viewport().get_camera_3d().unproject_position(pos)
@@ -52,8 +59,11 @@ func activate() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
-## Hides the mouse cursor and renders it unable to move.
+## Hides the mouse cursor. Moves mouse beforehand to set mouse hoverable
+## controls to normal.
 func deactivate() -> void:
+	var vport_size := get_viewport_rect().size
+	warp_mouse(Vector2(vport_size.x / 2.0, vport_size.y / 2.0))
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 
