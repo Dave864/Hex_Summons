@@ -93,8 +93,8 @@ func _process(_delta: float) -> void:
 	)
 
 
-## Loads the current keybind settings into InputMap.
-func load_current_keybinds() -> void:
+## Saves the current keybind settings into InputMap.
+func save_current_keybinds() -> void:
 	pass
 
 
@@ -207,8 +207,7 @@ func _on_confirm_button_pressed() -> void:
 			and left_joystick_controls.all_bindings_unique()
 			and right_joystick_controls.all_bindings_unique()
 	):
-		# TODO: save keybinds to user settings.
-		load_current_keybinds()
+		save_current_keybinds()
 	else:
 		not_all_set_popup.show()
 		popup_timer.start()
@@ -220,5 +219,5 @@ func _on_reset_button_pressed() -> void:
 	# when this tab is active.
 	if not visible:
 		return
-	# TODO: load default into InputMap.
+	# TODO: save default into InputMap.
 	pass
