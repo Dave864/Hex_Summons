@@ -1,0 +1,202 @@
+[gd_resource type="Resource" script_class="DefaultKeybinds" load_steps=43 format=3 uid="uid://dqblrcybikccm"]
+
+[ext_resource type="Script" uid="uid://bqs8y7yprcbfk" path="res://user_interface/Options/controls/default_keybinds.gd" id="1_0evoo"]
+
+[sub_resource type="InputEventJoypadMotion" id="InputEventJoypadMotion_0evoo"]
+axis = 1
+axis_value = 1.0
+
+[sub_resource type="InputEventJoypadMotion" id="InputEventJoypadMotion_n8r1i"]
+axis_value = -1.0
+
+[sub_resource type="InputEventJoypadMotion" id="InputEventJoypadMotion_1840l"]
+axis_value = 1.0
+
+[sub_resource type="InputEventJoypadMotion" id="InputEventJoypadMotion_mv76w"]
+axis = 1
+axis_value = -1.0
+
+[sub_resource type="InputEventJoypadMotion" id="InputEventJoypadMotion_0khsb"]
+axis = 3
+axis_value = 1.0
+
+[sub_resource type="InputEventJoypadMotion" id="InputEventJoypadMotion_73wt5"]
+axis = 2
+axis_value = -1.0
+
+[sub_resource type="InputEventJoypadMotion" id="InputEventJoypadMotion_xb6t6"]
+axis = 2
+axis_value = 1.0
+
+[sub_resource type="InputEventJoypadMotion" id="InputEventJoypadMotion_qxeq8"]
+axis = 3
+axis_value = -1.0
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_0evoo"]
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_n8r1i"]
+button_index = 8
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_1840l"]
+button_index = 1
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_mv76w"]
+button_index = 12
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_0khsb"]
+button_index = 7
+pressed = true
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_73wt5"]
+button_index = 2
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_xb6t6"]
+button_index = 3
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_qxeq8"]
+button_index = 9
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_xnhlh"]
+button_index = 10
+pressed = true
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_74ho3"]
+button_index = 4
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_2m2br"]
+button_index = 13
+pressed = true
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_xki06"]
+button_index = 14
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_x0uyv"]
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_ssykj"]
+button_index = 11
+
+[sub_resource type="InputEventKey" id="InputEventKey_x0uyv"]
+device = -1
+keycode = 83
+unicode = 115
+
+[sub_resource type="InputEventKey" id="InputEventKey_ssykj"]
+device = -1
+keycode = 65
+unicode = 97
+
+[sub_resource type="InputEventKey" id="InputEventKey_7xwb2"]
+device = -1
+keycode = 68
+unicode = 100
+
+[sub_resource type="InputEventKey" id="InputEventKey_c1dif"]
+device = -1
+keycode = 87
+unicode = 119
+
+[sub_resource type="InputEventKey" id="InputEventKey_0evoo"]
+device = -1
+keycode = 4194309
+
+[sub_resource type="InputEventMouseButton" id="InputEventMouseButton_0evoo"]
+button_index = 2
+
+[sub_resource type="InputEventMouseButton" id="InputEventMouseButton_n8r1i"]
+button_index = 3
+
+[sub_resource type="InputEventKey" id="InputEventKey_n8r1i"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="InputEventKey" id="InputEventKey_0khsb"]
+device = -1
+keycode = 4194322
+
+[sub_resource type="InputEventKey" id="InputEventKey_73wt5"]
+device = -1
+keycode = 4194325
+
+[sub_resource type="InputEventKey" id="InputEventKey_qxeq8"]
+device = -1
+keycode = 49
+unicode = 49
+
+[sub_resource type="InputEventKey" id="InputEventKey_xnhlh"]
+device = -1
+keycode = 50
+unicode = 50
+
+[sub_resource type="InputEventKey" id="InputEventKey_74ho3"]
+device = -1
+keycode = 51
+unicode = 51
+
+[sub_resource type="InputEventKey" id="InputEventKey_2m2br"]
+device = -1
+keycode = 52
+unicode = 52
+
+[sub_resource type="InputEventKey" id="InputEventKey_xki06"]
+device = -1
+keycode = 4194326
+
+[sub_resource type="InputEventKey" id="InputEventKey_1840l"]
+device = -1
+keycode = 4194319
+
+[sub_resource type="InputEventKey" id="InputEventKey_mv76w"]
+device = -1
+keycode = 4194321
+
+[sub_resource type="InputEventMouseButton" id="InputEventMouseButton_73wt5"]
+button_index = 1
+
+[sub_resource type="InputEventKey" id="InputEventKey_xb6t6"]
+device = -1
+keycode = 4194320
+
+[resource]
+script = ExtResource("1_0evoo")
+keymouse_ui_accept = SubResource("InputEventKey_0evoo")
+keymouse_ui_cancel = SubResource("InputEventKey_n8r1i")
+keymouse_ui_left = SubResource("InputEventKey_1840l")
+keymouse_ui_right = SubResource("InputEventKey_mv76w")
+keymouse_ui_up = SubResource("InputEventKey_xb6t6")
+keymouse_ui_down = SubResource("InputEventKey_0khsb")
+keymouse_ui_selector_select = SubResource("InputEventMouseButton_73wt5")
+keymouse_ui_encounter_movement = SubResource("InputEventKey_73wt5")
+keymouse_ui_encounter_option_1 = SubResource("InputEventKey_qxeq8")
+keymouse_ui_encounter_option_2 = SubResource("InputEventKey_xnhlh")
+keymouse_ui_encounter_option_3 = SubResource("InputEventKey_74ho3")
+keymouse_ui_encounter_option_4 = SubResource("InputEventKey_2m2br")
+keymouse_ui_encounter_player_end = SubResource("InputEventKey_xki06")
+keymouse_ui_camera_reset = SubResource("InputEventMouseButton_n8r1i")
+keymouse_ui_camera_pan = SubResource("InputEventMouseButton_0evoo")
+keymouse_player_move_l = SubResource("InputEventKey_ssykj")
+keymouse_player_move_r = SubResource("InputEventKey_7xwb2")
+keymouse_player_move_u = SubResource("InputEventKey_c1dif")
+keymouse_player_move_d = SubResource("InputEventKey_x0uyv")
+gamepad_ui_accept = SubResource("InputEventJoypadButton_0evoo")
+gamepad_ui_cancel = SubResource("InputEventJoypadButton_1840l")
+gamepad_ui_left = SubResource("InputEventJoypadButton_2m2br")
+gamepad_ui_right = SubResource("InputEventJoypadButton_xki06")
+gamepad_ui_up = SubResource("InputEventJoypadButton_ssykj")
+gamepad_ui_down = SubResource("InputEventJoypadButton_mv76w")
+gamepad_ui_selector_select = SubResource("InputEventJoypadButton_x0uyv")
+gamepad_ui_encounter_movement = SubResource("InputEventJoypadButton_0khsb")
+gamepad_ui_encounter_option_1 = SubResource("InputEventJoypadButton_73wt5")
+gamepad_ui_encounter_option_2 = SubResource("InputEventJoypadButton_xb6t6")
+gamepad_ui_encounter_option_3 = SubResource("InputEventJoypadButton_qxeq8")
+gamepad_ui_encounter_option_4 = SubResource("InputEventJoypadButton_xnhlh")
+gamepad_ui_encounter_player_end = SubResource("InputEventJoypadButton_74ho3")
+gamepad_ui_camera_reset = SubResource("InputEventJoypadButton_n8r1i")
+gamepad_left_joystick_l = SubResource("InputEventJoypadMotion_n8r1i")
+gamepad_left_joystick_r = SubResource("InputEventJoypadMotion_1840l")
+gamepad_left_joystick_u = SubResource("InputEventJoypadMotion_mv76w")
+gamepad_left_joystick_d = SubResource("InputEventJoypadMotion_0evoo")
+gamepad_right_joystick_l = SubResource("InputEventJoypadMotion_73wt5")
+gamepad_right_joystick_r = SubResource("InputEventJoypadMotion_xb6t6")
+gamepad_right_joystick_u = SubResource("InputEventJoypadMotion_qxeq8")
+gamepad_right_joystick_d = SubResource("InputEventJoypadMotion_0khsb")
+metadata/_custom_type_script = "uid://bqs8y7yprcbfk"
