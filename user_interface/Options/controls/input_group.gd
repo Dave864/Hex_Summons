@@ -16,28 +16,22 @@ extends ScrollContainer
 
 ## The set of input binding buttons.
 var _input_binds: Dictionary[int, KeybindInputButton] = {}
-## The current input source.
-var _current_source: InputController.Source
 
 
 ## Gets the keybind buttons of this input group.
 func _ready() -> void:
-	_current_source = InputController.get_source()
+	InputController.input_source_changed.connect(
+			_on_InputController_input_source_changed
+	)
 	for item: Node in $VBoxContainer.get_children():
 		var input_button: KeybindInputButton = item.get_child(1)
 		_input_binds[input_button.get_instance_id()] = input_button
 		input_button.new_bind_set.connect(_on_KeybindInputButton_new_bind_set)
 
 
-## Sets all input binding buttons to reflect current InputMap bindings when input
-## source changes.
-func _process(_delta: float) -> void:
-	# Don't swap if popup is present as an input bind is being set. Don't need
-	# to redo update logic if input source has not changed.
-	if confirm_popup.visible or _current_source == InputController.get_source():
-		return
-	_reset_bindings_to_InputMap()
-	_current_source = InputController.get_source()
+## Gets the input binding buttons for this group.
+func get_binding_buttons() -> Array[KeybindInputButton]:
+	return _input_binds.values()
 
 
 ## Returns if the currently set keybinds for the current input source are all
@@ -107,3 +101,11 @@ func _on_KeybindInputButton_new_bind_set(id: int) -> void:
 			updated_icon.is_active = (
 					true if bind_changed else updated_icon.is_active
 			)
+
+
+## Sets all input binding buttons to reflect current InputMap bindings.
+func _on_InputController_input_source_changed() -> void:
+	# Don't swap if popup is present as an input bind is being set.
+	if confirm_popup.visible:
+		return
+	_reset_bindings_to_InputMap()

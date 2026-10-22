@@ -20,8 +20,6 @@ const UNASSIGNED := "NONE"
 const SOURCE_GAMEPAD := InputController.Source.GAMEPAD
 ## Shorthand for InputController's KEYBOARD_AND_MOUSE Source enum.
 const SOURCE_KEYMOUSE := InputController.Source.KEYBOARD_AND_MOUSE
-## Shorthand for InputController's NONE Source enum.
-const SOURCE_NONE := InputController.Source.NONE
 ## The deadzone value for joypad axis motion.
 const JOYPAD_MOTION_DEADZONE := 0.5
 ## Map to shorthand for various event text.
@@ -66,14 +64,14 @@ const INPUT_EVENT_SHORTHAND := {
 @export var input_bind := ""
 
 ## Records the keybind values for the given input for each input source.
-var key_binds: Dictionary[InputController.Source, InputEvent] = {
+var _key_binds: Dictionary[InputController.Source, InputEvent] = {
 	SOURCE_GAMEPAD: null,
 	SOURCE_KEYMOUSE: null,
-	SOURCE_NONE: null,
+	InputController.Source.NONE: null,
+	InputController.Source.SWITCH_TO_GAMEPAD: null,
 }
 ## Flag that indicates that a new keybind is being set for the input.
-var updating_bind := false
-
+var _updating_bind := false
 ## Displays the texture icon for gamepad input.
 var _gamepad_icon: GamepadIcon = null
 
@@ -90,7 +88,7 @@ func _ready() -> void:
 ## Sets the first valid input as the keybind for the specified input when a new
 ## keybind has been requested.
 func _input(event: InputEvent) -> void:
-	if not updating_bind:
+	if not _updating_bind:
 		return
 	var use_event_as_bind := false
 	# Only uses significant movement in a direction as valid joystick input.
@@ -111,12 +109,22 @@ func _input(event: InputEvent) -> void:
 		# Don't want to have double clicks as events.
 		if event is InputEventMouseButton:
 			event.double_click = false
-		key_binds[input_source] = event
+		_key_binds[input_source] = event
 		_update_display()
 		new_bind_set.emit(get_instance_id())
 		# Defer update setting to prevent button from getting stuck triggering
 		# a rebind when setting ui_select input.
 		call_deferred("_set_to_update", false)
+
+
+## Returns the current gamepad keybind for the input event.
+func gamepad_keybind() -> InputEvent:
+	return _key_binds[SOURCE_GAMEPAD]
+
+
+## Returns the current keymouse keybind for the input event.
+func keymouse_keybind() -> InputEvent:
+	return _key_binds[SOURCE_KEYMOUSE]
 
 
 ## Updates the button to reflect the gamepad keybind.
@@ -133,7 +141,7 @@ func set_input_to_keymouse() -> void:
 
 ## Resets the binding for the current input source to unassigned.
 func clear_current_input_keybind() -> void:
-	key_binds[input_source] = null
+	_key_binds[input_source] = null
 	_update_display()
 
 
@@ -141,8 +149,8 @@ func clear_current_input_keybind() -> void:
 ## source.
 func get_current_input_keybind_text() -> String:
 	var bound_event_text := (
-			UNASSIGNED if key_binds[input_source] == null
-			else key_binds[input_source].as_text()
+			UNASSIGNED if _key_binds[input_source] == null
+			else _key_binds[input_source].as_text()
 	)
 	if INPUT_EVENT_SHORTHAND.has(bound_event_text):
 		bound_event_text = INPUT_EVENT_SHORTHAND[bound_event_text]
@@ -151,7 +159,7 @@ func get_current_input_keybind_text() -> String:
 
 ## Sets the gamepad keybinds to their current value in InputMap.
 func set_gamepad_keybinds_to_InputMap() -> void:
-	key_binds[SOURCE_GAMEPAD] = null
+	_key_binds[SOURCE_GAMEPAD] = null
 	if InputMap.has_action(input_bind):
 		for event: InputEvent in InputMap.action_get_events(input_bind):
 			if (
@@ -159,10 +167,10 @@ func set_gamepad_keybinds_to_InputMap() -> void:
 						event is InputEventJoypadMotion
 						or event is InputEventJoypadButton
 					)
-					and key_binds[SOURCE_GAMEPAD] == null
+					and _key_binds[SOURCE_GAMEPAD] == null
 			):
-				key_binds[SOURCE_GAMEPAD] = event
-			elif key_binds[SOURCE_GAMEPAD] != null:
+				_key_binds[SOURCE_GAMEPAD] = event
+			elif _key_binds[SOURCE_GAMEPAD] != null:
 				# Only a single key should be exposed by this button, so we only
 				# look at the first one to appear.
 				break
@@ -171,17 +179,17 @@ func set_gamepad_keybinds_to_InputMap() -> void:
 
 ## Sets the keymouse keybinds to their current value in InputMap.
 func set_keymouse_keybinds_to_InputMap() -> void:
-	key_binds[SOURCE_KEYMOUSE] = null
+	_key_binds[SOURCE_KEYMOUSE] = null
 	if InputMap.has_action(input_bind):
 		for event: InputEvent in InputMap.action_get_events(input_bind):
 			if (
 					(
 						event is InputEventMouse or event is InputEventKey
 					)
-					and key_binds[SOURCE_KEYMOUSE] == null
+					and _key_binds[SOURCE_KEYMOUSE] == null
 			):
-				key_binds[SOURCE_KEYMOUSE] = event
-			elif key_binds[SOURCE_KEYMOUSE] != null:
+				_key_binds[SOURCE_KEYMOUSE] = event
+			elif _key_binds[SOURCE_KEYMOUSE] != null:
 				# Only a single key should be exposed by this button, so we only
 				# look at the first one to appear.
 				break
@@ -234,12 +242,12 @@ func _create_gamepad_icon() -> void:
 func _update_display() -> void:
 	if input_source == SOURCE_GAMEPAD:
 		_gamepad_icon.show()
-		_gamepad_icon.update_for_event(key_binds[SOURCE_GAMEPAD])
+		_gamepad_icon.update_for_event(_key_binds[SOURCE_GAMEPAD])
 		text = UNASSIGNED if _gamepad_icon.texture == null else ""
 	else:
 		text = (
-				UNASSIGNED if key_binds[input_source] == null
-				else key_binds[input_source].as_text()
+				UNASSIGNED if _key_binds[input_source] == null
+				else _key_binds[input_source].as_text()
 		)
 		if INPUT_EVENT_SHORTHAND.has(text):
 			text = INPUT_EVENT_SHORTHAND[text]
@@ -250,14 +258,14 @@ func _update_display() -> void:
 ## to be deferred.
 func _set_to_update(state: bool) -> void:
 	disabled = state
-	updating_bind = state
+	_updating_bind = state
 
 
 ## Indicates that a new keybind has been requested and readies the button to
 ## recieve new valid input.
 func _on_pressed() -> void:
 	# Don't want to retrigger rebind while a new bind is being set.
-	if updating_bind:
+	if _updating_bind:
 		return
 	new_bind_requested.emit(input_source)
 	_set_to_update(true)
