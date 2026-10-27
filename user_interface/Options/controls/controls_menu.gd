@@ -10,7 +10,47 @@ extends Control
 ## Path to the user keybinds data.
 const USER_KEYBINDS_PATH := "user://user.keybind"
 ## Path to the default keybinds data.
-const DEFAULT_KEYBINDS_PATH := "res://user_interface/Options/default_keybinds.tres"
+const DEFAULT_KEYBINDS_PATH := (
+		"res://user_interface/Options/controls/default_keybinds.tres"
+)
+## Map from keypad keys to their equivalent normal keys.
+const KEYPAD_TO_NORMAL_KEYS: Dictionary[Key, Key] = {
+	Key.KEY_KP_0: Key.KEY_0,
+	Key.KEY_KP_1: Key.KEY_1,
+	Key.KEY_KP_2: Key.KEY_2,
+	Key.KEY_KP_3: Key.KEY_3,
+	Key.KEY_KP_4: Key.KEY_4,
+	Key.KEY_KP_5: Key.KEY_5,
+	Key.KEY_KP_6: Key.KEY_6,
+	Key.KEY_KP_7: Key.KEY_7,
+	Key.KEY_KP_8: Key.KEY_8,
+	Key.KEY_KP_9: Key.KEY_9,
+	Key.KEY_KP_ADD: Key.KEY_PLUS,
+	Key.KEY_KP_SUBTRACT: Key.KEY_MINUS,
+	Key.KEY_KP_MULTIPLY: Key.KEY_ASTERISK,
+	Key.KEY_KP_DIVIDE: Key.KEY_SLASH,
+	Key.KEY_KP_ENTER: Key.KEY_ENTER,
+	Key.KEY_KP_PERIOD: Key.KEY_PERIOD,
+}
+## Map for keys that have keypad equivalents.
+const NORMAL_TO_KEYPAD_KEYS: Dictionary[Key, Key] = {
+	Key.KEY_0: Key.KEY_KP_0,
+	Key.KEY_1: Key.KEY_KP_1,
+	Key.KEY_2: Key.KEY_KP_2,
+	Key.KEY_3: Key.KEY_KP_3,
+	Key.KEY_4: Key.KEY_KP_4,
+	Key.KEY_5: Key.KEY_KP_5,
+	Key.KEY_6: Key.KEY_KP_6,
+	Key.KEY_7: Key.KEY_KP_7,
+	Key.KEY_8: Key.KEY_KP_8,
+	Key.KEY_9: Key.KEY_KP_9,
+	Key.KEY_PLUS: Key.KEY_KP_ADD,
+	Key.KEY_MINUS: Key.KEY_KP_SUBTRACT,
+	Key.KEY_ASTERISK: Key.KEY_KP_MULTIPLY,
+	Key.KEY_SLASH: Key.KEY_KP_DIVIDE,
+	Key.KEY_ENTER: Key.KEY_KP_ENTER,
+	Key.KEY_PERIOD: Key.KEY_KP_PERIOD,
+}
 
 ## Button that sets the displayed input layout as the one to use.
 @export var confirm_button: Button = null
@@ -95,7 +135,30 @@ func _process(_delta: float) -> void:
 
 ## Saves the current keybind settings into InputMap.
 func save_current_keybinds() -> void:
-	pass
+	var binding_buttons: Array[KeybindInputButton] = []
+	binding_buttons.append_array(interface_controls.get_binding_buttons())
+	binding_buttons.append_array(movement_controls.get_binding_buttons())
+	binding_buttons.append_array(combat_controls.get_binding_buttons())
+	binding_buttons.append_array(combat_camera_controls.get_binding_buttons())
+	binding_buttons.append_array(left_joystick_controls.get_binding_buttons())
+	binding_buttons.append_array(right_joystick_controls.get_binding_buttons())
+	for bind_button: KeybindInputButton in binding_buttons:
+		InputMap.action_erase_events(bind_button.input_bind)
+		var keymouse_bind := bind_button.keymouse_keybind()
+		if keymouse_bind != null:
+			InputMap.action_add_event(bind_button.input_bind, keymouse_bind)
+			if keymouse_bind is InputEventKey:
+				var keypad_match := _get_input_for_keypad(keymouse_bind)
+				if keypad_match != null:
+					InputMap.action_add_event(
+							bind_button.input_bind,
+							keypad_match
+					)
+			bind_button.set_keymouse_keybinds_to_InputMap()
+		var gamepad_keybind := bind_button.gamepad_keybind()
+		if gamepad_keybind != null:
+			InputMap.action_add_event(bind_button.input_bind, gamepad_keybind)
+			bind_button.set_gamepad_keybinds_to_InputMap()
 
 
 ## Goes through the KeyBindInput controls and connects their signals to this
@@ -177,6 +240,19 @@ func _update_input_bind_group(controls_group: InputGroup) -> void:
 			input_button.set_input_to_gamepad()
 
 
+## Takes the current key and determines either the equivalent keypad button or
+## keyboard button. 
+func _get_input_for_keypad(input: InputEventKey) -> InputEventKey:
+	var input_equivalent: InputEventKey = null
+	if KEYPAD_TO_NORMAL_KEYS.has(input.keycode):
+		input_equivalent = InputEventKey.new()
+		input_equivalent.keycode = KEYPAD_TO_NORMAL_KEYS[input.keycode]
+	elif NORMAL_TO_KEYPAD_KEYS.has(input.keycode):
+		input_equivalent = InputEventKey.new()
+		input_equivalent.keycode = NORMAL_TO_KEYPAD_KEYS[input.keycode]
+	return input_equivalent
+
+
 ## Disables the confirm and reset buttons to prevent them from being selectable
 ## during input bind update.
 func _on_KeyBindInputButton_new_bind_requested(
@@ -208,6 +284,12 @@ func _on_confirm_button_pressed() -> void:
 			and right_joystick_controls.all_bindings_unique()
 	):
 		save_current_keybinds()
+		interface_controls.reset_bindings_to_InputMap()
+		movement_controls.reset_bindings_to_InputMap()
+		combat_controls.reset_bindings_to_InputMap()
+		combat_camera_controls.reset_bindings_to_InputMap()
+		left_joystick_controls.reset_bindings_to_InputMap()
+		right_joystick_controls.reset_bindings_to_InputMap()
 	else:
 		not_all_set_popup.show()
 		popup_timer.start()

@@ -56,7 +56,7 @@ func all_bindings_unique() -> bool:
 
 
 ## Goes through all binding buttons and resets them to reflect the InputMap.
-func _reset_bindings_to_InputMap() -> void:
+func reset_bindings_to_InputMap() -> void:
 	# This method resets the binding buttons to an unchanged state, meaning that
 	# the group should not be considered updated.
 	updated_icon.is_active = false
@@ -108,4 +108,4 @@ func _on_InputController_input_source_changed() -> void:
 	# Don't swap if popup is present as an input bind is being set.
 	if confirm_popup.visible:
 		return
-	_reset_bindings_to_InputMap()
+	reset_bindings_to_InputMap()
