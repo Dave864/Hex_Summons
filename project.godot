@@ -30,6 +30,7 @@ PartyController="*res://autoloads/party_controller.gd"
 WispTracker="*res://autoloads/wisp_tracker.gd"
 WispController="*res://autoloads/wisp_controller.gd"
 SceneController="*res://autoloads/scene_controller.gd"
+OptionsController="*res://autoloads/options_controller.gd"
 
 [display]
 
