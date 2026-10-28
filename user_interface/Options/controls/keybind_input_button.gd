@@ -72,6 +72,8 @@ var _key_binds: Dictionary[InputController.Source, InputEvent] = {
 }
 ## Flag that indicates that a new keybind is being set for the input.
 var _updating_bind := false
+## Displays if the input bind is different from InputMap.
+var _input_changed_icon: ActiveIcon = null
 ## Displays the texture icon for gamepad input.
 var _gamepad_icon: GamepadIcon = null
 
@@ -79,6 +81,7 @@ var _gamepad_icon: GamepadIcon = null
 ## Sets the display to match the current settings.
 func _ready() -> void:
 	_create_gamepad_icon()
+	_create_input_changed_icon()
 	if not pressed.is_connected(_on_pressed):
 		pressed.connect(_on_pressed)
 	set_gamepad_keybinds_to_InputMap()
@@ -110,6 +113,7 @@ func _input(event: InputEvent) -> void:
 		if event is InputEventMouseButton:
 			event.double_click = false
 		_key_binds[input_source] = event
+		_input_changed_icon.is_active = not matches_InputMap_bind()
 		_update_display()
 		new_bind_set.emit(get_instance_id())
 		# Defer update setting to prevent button from getting stuck triggering
@@ -142,6 +146,7 @@ func set_input_to_keymouse() -> void:
 ## Resets the binding for the current input source to unassigned.
 func clear_current_input_keybind() -> void:
 	_key_binds[input_source] = null
+	_input_changed_icon.is_active = true
 	_update_display()
 
 
@@ -196,6 +201,11 @@ func set_keymouse_keybinds_to_InputMap() -> void:
 	_update_display()
 
 
+## Updates the input changed icon to indicate that the input is unchanged.
+func mark_as_unchanged() -> void:
+	_input_changed_icon.is_active = false
+
+
 ## Checks if the current input bind for the current input source is the same
 ## as the input map.
 func matches_InputMap_bind() -> bool:
@@ -236,6 +246,21 @@ func _create_gamepad_icon() -> void:
 	_gamepad_icon.offset_right = -5.0
 	_gamepad_icon.offset_top = 4.0
 	_gamepad_icon.offset_bottom = -4.0
+
+
+## Creates an ActiveIcon to indicate if this input has changed from its
+## original state.
+func _create_input_changed_icon() -> void:
+	_input_changed_icon = ActiveIcon.new()
+	add_child(_input_changed_icon)
+	_input_changed_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_input_changed_icon.set_anchors_preset(Control.PRESET_CENTER_RIGHT, true)
+	_input_changed_icon.grow_vertical = Control.GROW_DIRECTION_BOTH
+	var active_size := _input_changed_icon.active_texture.get_size()
+	var inactive_size := _input_changed_icon.inactive_texture.get_size()
+	_input_changed_icon.offset_left = -active_size.x
+	_input_changed_icon.offset_top = -inactive_size.y / 2.0
+	_input_changed_icon.offset_bottom = inactive_size.y / 2.0
 
 
 ## Updates the display to reflect the current keybind.

@@ -72,7 +72,7 @@ func reset_bindings_to_InputMap() -> void:
 			bind_button.set_keymouse_keybinds_to_InputMap()
 		# Binding button is being reset to unchanged, so its active icon should
 		# reflect that.
-		bind_button.get_child(0).is_active = false
+		bind_button.mark_as_unchanged()
 
 
 ## Changes any existing keybinds that match the new bind to be unassigned, also
@@ -93,13 +93,11 @@ func _on_KeybindInputButton_new_bind_set(id: int) -> void:
 				and bind_button_text == event_name
 		):
 			bind_button.clear_current_input_keybind()
-			bind_button.get_child(0).is_active = true
 			updated_icon.is_active = true
 		else:
-			var bind_changed := not bind_button.matches_InputMap_bind()
-			bind_button.get_child(0).is_active = bind_changed
 			updated_icon.is_active = (
-					true if bind_changed else updated_icon.is_active
+					true if not bind_button.matches_InputMap_bind()
+					else updated_icon.is_active
 			)
 
 
