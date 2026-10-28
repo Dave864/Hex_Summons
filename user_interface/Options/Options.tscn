@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene load_steps=13 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
+[ext_resource type="Script" uid="uid://cge7q6thdquo5" path="res://user_interface/Options/options.gd" id="2_2aq4h"]
 [ext_resource type="Script" uid="uid://bud5cxvbdc33a" path="res://user_interface/Options/controls/controls_menu.gd" id="2_8wd8u"]
 [ext_resource type="Script" uid="uid://d38ktuu0nh873" path="res://user_interface/Options/controls/keybind_input_button.gd" id="2_llrvc"]
 [ext_resource type="Script" uid="uid://umc1xo4msj3k" path="res://user_interface/Options/controls/popup_confirm_input.gd" id="3_m3ftx"]
@@ -28,6 +29,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_p8d2p")
+script = ExtResource("2_2aq4h")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 1
