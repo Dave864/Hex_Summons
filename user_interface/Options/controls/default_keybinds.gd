@@ -148,3 +148,38 @@ func get_all_keybinds() -> Dictionary[String, Array]:
 		"right_joystick_u": [gamepad_right_joystick_u],
 		"right_joystick_d": [gamepad_right_joystick_d],
 	}
+
+
+## Gets the name of the actions that will have default keybinds.
+func get_input_actions() -> PackedStringArray:
+	return PackedStringArray(
+			[
+				"ui_accept",
+				"ui_cancel",
+				"ui_left",
+				"ui_right",
+				"ui_up",
+				"ui_down",
+				"ui_selector_select",
+				"ui_encounter_movement",
+				"ui_encounter_option_1",
+				"ui_encounter_option_2",
+				"ui_encounter_option_3",
+				"ui_encounter_option_4",
+				"ui_encounter_player_end",
+				"ui_camera_reset",
+				"ui_camera_pan",
+				"player_move_l",
+				"player_move_r",
+				"player_move_u",
+				"player_move_d",
+				"left_joystick_l",
+				"left_joystick_r",
+				"left_joystick_u",
+				"left_joystick_d",
+				"right_joystick_l",
+				"right_joystick_r",
+				"right_joystick_u",
+				"right_joystick_d",
+			]
+	)
