@@ -93,3 +93,58 @@ extends Resource
 @export var gamepad_right_joystick_u: InputEventJoypadMotion = null
 ## Gamepad input for "right_joystick_d" event.
 @export var gamepad_right_joystick_d: InputEventJoypadMotion = null
+
+
+## Gets all the events for each input action. The actions are the key and their
+## associated events are stored in an array.
+func get_all_keybinds() -> Dictionary[String, Array]:
+	return {
+		"ui_accept": [keymouse_ui_accept, gamepad_ui_accept],
+		"ui_cancel": [keymouse_ui_cancel, gamepad_ui_cancel],
+		"ui_left": [keymouse_ui_left, gamepad_ui_left],
+		"ui_right": [keymouse_ui_right, gamepad_ui_right],
+		"ui_up": [keymouse_ui_up, gamepad_ui_up],
+		"ui_down": [keymouse_ui_down, gamepad_ui_down],
+		"ui_selector_select": [
+			keymouse_ui_selector_select,
+			gamepad_ui_selector_select,
+		],
+		"ui_encounter_movement": [
+			keymouse_ui_encounter_movement,
+			gamepad_ui_encounter_movement,
+		],
+		"ui_encounter_option_1": [
+			keymouse_ui_encounter_option_1,
+			gamepad_ui_encounter_option_1,
+		],
+		"ui_encounter_option_2": [
+			keymouse_ui_encounter_option_2,
+			gamepad_ui_encounter_option_2,
+		],
+		"ui_encounter_option_3": [
+			keymouse_ui_encounter_option_3,
+			gamepad_ui_encounter_option_3,
+		],
+		"ui_encounter_option_4": [
+			keymouse_ui_encounter_option_4,
+			gamepad_ui_encounter_option_4,
+		],
+		"ui_encounter_player_end": [
+			keymouse_ui_encounter_player_end,
+			gamepad_ui_encounter_player_end,
+		],
+		"ui_camera_reset": [keymouse_ui_camera_reset, gamepad_ui_camera_reset],
+		"ui_camera_pan": [keymouse_ui_camera_pan],
+		"player_move_l": [keymouse_player_move_l],
+		"player_move_r": [keymouse_player_move_r],
+		"player_move_u": [keymouse_player_move_u],
+		"player_move_d": [keymouse_player_move_d],
+		"left_joystick_l": [gamepad_left_joystick_l],
+		"left_joystick_r": [gamepad_left_joystick_r],
+		"left_joystick_u": [gamepad_left_joystick_u],
+		"left_joystick_d": [gamepad_left_joystick_d],
+		"right_joystick_l": [gamepad_right_joystick_l],
+		"right_joystick_r": [gamepad_right_joystick_r],
+		"right_joystick_u": [gamepad_right_joystick_u],
+		"right_joystick_d": [gamepad_right_joystick_d],
+	}
