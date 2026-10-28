@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene load_steps=12 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
 [ext_resource type="Script" uid="uid://bud5cxvbdc33a" path="res://user_interface/Options/controls/controls_menu.gd" id="2_8wd8u"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="4_hcx2a"]
 [ext_resource type="Script" uid="uid://k5oiqdib5paw" path="res://user_interface/Options/controls/input_group.gd" id="4_tdglh"]
 [ext_resource type="Script" uid="uid://b5mo30b067mdw" path="res://user_interface/Options/controls/active_icon.gd" id="4_vlufy"]
+[ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="8_02efk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02efk"]
 atlas = ExtResource("4_hcx2a")
@@ -1051,6 +1052,31 @@ grow_vertical = 2
 focus_neighbor_left = NodePath("../Confirm")
 focus_neighbor_right = NodePath("../Confirm")
 text = "Revert to Default"
+
+[node name="ExitInputLabel" parent="." instance=ExtResource("8_02efk")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -37.0
+offset_top = 2.0
+offset_right = -6.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 1
+input_source = 0
+input_event = "ui_cancel"
+
+[node name="Label" type="Label" parent="ExitInputLabel"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -57.0
+offset_right = -7.0
+grow_vertical = 2
+text = "Close"
+vertical_alignment = 1
 
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]

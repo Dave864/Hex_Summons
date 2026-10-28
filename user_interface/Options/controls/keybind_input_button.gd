@@ -22,41 +22,6 @@ const SOURCE_GAMEPAD := InputController.Source.GAMEPAD
 const SOURCE_KEYMOUSE := InputController.Source.KEYBOARD_AND_MOUSE
 ## The deadzone value for joypad axis motion.
 const JOYPAD_MOTION_DEADZONE := 0.5
-## Map to shorthand for various event text.
-const INPUT_EVENT_SHORTHAND := {
-	"Left Mouse Button": "Left Click",
-	"Right Mouse Button": "Right Click",
-	"Middle Mouse Button": "Middle Click",
-	"Mouse Wheel Up": "Scroll Up",
-	"Mouse Wheel Down": "Scroll Down",
-	"Escape": "Esc",
-	"QuoteLeft": "`",
-	"Minus": "-",
-	"Equal": "=",
-	"BackSlash": "\\",
-	"BracketLeft": "[",
-	"BracketRight": "]",
-	"Semicolon": ";",
-	"Apostrophe": "'",
-	"Comma": ",",
-	"Period": ".",
-	"Slash": "/",
-	"Kp Divide": "/",
-	"Kp Multiply": "*",
-	"Kp Subtract": "-",
-	"Kp Add": "+",
-	"Kp Period": ".",
-	"Kp Enter": "Enter",
-	"Kp 1": "1",
-	"Kp 2": "2",
-	"Kp 3": "3",
-	"Kp 4": "4",
-	"Kp 5": "5",
-	"Kp 6": "6",
-	"Kp 7": "7",
-	"Kp 8": "8",
-	"Kp 9": "9",
-}
 
 ## The source to look at for the key binding.
 @export var input_source := InputController.Source.NONE
@@ -153,13 +118,10 @@ func clear_current_input_keybind() -> void:
 ## Gets the shorthand text description of the binding for the current input
 ## source.
 func get_current_input_keybind_text() -> String:
-	var bound_event_text := (
+	return OptionsController.get_input_key_shorthand(
 			UNASSIGNED if _key_binds[input_source] == null
 			else _key_binds[input_source].as_text()
 	)
-	if INPUT_EVENT_SHORTHAND.has(bound_event_text):
-		bound_event_text = INPUT_EVENT_SHORTHAND[bound_event_text]
-	return bound_event_text
 
 
 ## Sets the gamepad keybinds to their current value in InputMap.
@@ -226,9 +188,9 @@ func matches_InputMap_bind() -> bool:
 				)
 		):
 			old_bind_present = true
-		var event_text := event.as_text()
-		if INPUT_EVENT_SHORTHAND.has(event_text):
-			event_text = INPUT_EVENT_SHORTHAND[event_text]
+		var event_text := OptionsController.get_input_key_shorthand(
+				event.as_text()
+		)
 		if event_text == bound_event_text:
 			return true
 	return (
@@ -270,12 +232,10 @@ func _update_display() -> void:
 		_gamepad_icon.update_for_event(_key_binds[SOURCE_GAMEPAD])
 		text = UNASSIGNED if _gamepad_icon.texture == null else ""
 	else:
-		text = (
+		text = OptionsController.get_input_key_shorthand(
 				UNASSIGNED if _key_binds[input_source] == null
 				else _key_binds[input_source].as_text()
 		)
-		if INPUT_EVENT_SHORTHAND.has(text):
-			text = INPUT_EVENT_SHORTHAND[text]
 		_gamepad_icon.hide()
 
 

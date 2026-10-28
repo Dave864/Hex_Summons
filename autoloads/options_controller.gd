@@ -4,6 +4,9 @@ extends Node
 ## Manages the file saves of user settings and default values for game options.
 
 
+## Indicates that events for input actions have been updated.
+signal input_updated
+
 ## Path to the user settings.
 const USER_SETTINGS_PATH := "user://settings.cfg"
 ## Section name for volume settings.
@@ -48,6 +51,41 @@ const NORMAL_TO_KEYPAD_KEYS: Dictionary[Key, Key] = {
 	Key.KEY_ENTER: Key.KEY_KP_ENTER,
 	Key.KEY_PERIOD: Key.KEY_KP_PERIOD,
 }
+## Map to shorthand for various event key text.
+const INPUT_KEY_SHORTHAND := {
+	"Left Mouse Button": "Left Click",
+	"Right Mouse Button": "Right Click",
+	"Middle Mouse Button": "Middle Click",
+	"Mouse Wheel Up": "Scroll Up",
+	"Mouse Wheel Down": "Scroll Down",
+	"Escape": "Esc",
+	"QuoteLeft": "`",
+	"Minus": "-",
+	"Equal": "=",
+	"BackSlash": "\\",
+	"BracketLeft": "[",
+	"BracketRight": "]",
+	"Semicolon": ";",
+	"Apostrophe": "'",
+	"Comma": ",",
+	"Period": ".",
+	"Slash": "/",
+	"Kp Divide": "/",
+	"Kp Multiply": "*",
+	"Kp Subtract": "-",
+	"Kp Add": "+",
+	"Kp Period": ".",
+	"Kp Enter": "Enter",
+	"Kp 1": "1",
+	"Kp 2": "2",
+	"Kp 3": "3",
+	"Kp 4": "4",
+	"Kp 5": "5",
+	"Kp 6": "6",
+	"Kp 7": "7",
+	"Kp 8": "8",
+	"Kp 9": "9",
+}
 
 ## Helper for managing user settings.
 var _config_file: ConfigFile
@@ -71,6 +109,14 @@ func _ready() -> void:
 		_create_user_file()
 	load_default_volumes()
 	load_default_keybinds()
+
+
+## Gets the shorthand for the given key text. Returns the original text if no
+## shorthand exists.
+func get_input_key_shorthand(input_key: String) -> String:
+	if INPUT_KEY_SHORTHAND.has(input_key):
+		return INPUT_KEY_SHORTHAND[input_key]
+	return input_key
 
 
 ## Takes the current key and determines either the equivalent keypad button or
@@ -120,6 +166,7 @@ func load_default_keybinds() -> void:
 					InputMap.action_add_event(action, kp_event)
 					events.append(kp_event)
 		_config_file.set_value(SECTION_KEYBIND, action, events)
+	input_updated.emit()
 	_save_config()
 
 
@@ -134,6 +181,7 @@ func load_custom_keybinds() -> void:
 		)
 		for event: InputEvent in input_events:
 			InputMap.action_add_event(action, event)
+	input_updated.emit()
 
 
 ## Saves the current keybinds to user file.

@@ -55,6 +55,7 @@ func _ready() -> void:
 		InputController.input_source_changed.connect(
 				_on_InputController_input_source_changed
 		)
+		OptionsController.input_updated.connect(_update_icon)
 	_update_icon()
 
 
@@ -121,7 +122,12 @@ func _get_key_event_name() -> String:
 	var input_events: Array = ProjectSettings.get_setting(input_path).events
 	for event: InputEvent in input_events:
 		if event is InputEventKey:
-			return event.as_text_keycode()
+			if Engine.is_editor_hint():
+				return event.as_text_keycode()
+			else:
+				return OptionsController.get_input_key_shorthand(
+						event.as_text_keycode()
+				)
 	return ""
 
 
