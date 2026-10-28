@@ -63,11 +63,10 @@ var _config_file: ConfigFile
 func _ready() -> void:
 	_config_file = ConfigFile.new()
 	if FileAccess.file_exists(USER_SETTINGS_PATH):
-		pass
-		var status := _config_file.load(USER_SETTINGS_PATH)
-		if status == Error.OK:
+		if Error.OK == _config_file.load(USER_SETTINGS_PATH):
 			load_custom_volumes()
 			load_custom_keybinds()
+			return
 	else:
 		_create_user_file()
 	load_default_volumes()
@@ -129,7 +128,7 @@ func load_custom_keybinds() -> void:
 	var input_actions := _config_file.get_section_keys(SECTION_KEYBIND)
 	for action: String in input_actions:
 		InputMap.action_erase_events(action)
-		var input_events: Array[InputEvent] = _config_file.get_value(
+		var input_events: Array = _config_file.get_value(
 				SECTION_KEYBIND,
 				action
 		)

@@ -240,12 +240,7 @@ func _on_confirm_button_pressed() -> void:
 			and right_joystick_controls.all_bindings_unique()
 	):
 		save_current_keybinds()
-		interface_controls.reset_bindings_to_InputMap()
-		movement_controls.reset_bindings_to_InputMap()
-		combat_controls.reset_bindings_to_InputMap()
-		combat_camera_controls.reset_bindings_to_InputMap()
-		left_joystick_controls.reset_bindings_to_InputMap()
-		right_joystick_controls.reset_bindings_to_InputMap()
+		_reset_bindings_to_InputMap()
 	else:
 		not_all_set_popup.show()
 		popup_timer.start()
@@ -257,5 +252,15 @@ func _on_reset_button_pressed() -> void:
 	# when this tab is active.
 	if not visible:
 		return
-	# TODO: save default into InputMap.
-	pass
+	OptionsController.load_default_keybinds()
+	_reset_bindings_to_InputMap()
+
+
+## Updates the keybind buttons to reflect the InpuMap settings.
+func _reset_bindings_to_InputMap() -> void:
+	interface_controls.reset_bindings_to_InputMap()
+	movement_controls.reset_bindings_to_InputMap()
+	combat_controls.reset_bindings_to_InputMap()
+	combat_camera_controls.reset_bindings_to_InputMap()
+	left_joystick_controls.reset_bindings_to_InputMap()
+	right_joystick_controls.reset_bindings_to_InputMap()
