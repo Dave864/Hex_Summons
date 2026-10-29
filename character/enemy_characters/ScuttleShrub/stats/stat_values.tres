@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_r2uho")
 health_base = 50
-attack_base = 2
+attack_base = 6
 agility_base = 3
 movement = 3

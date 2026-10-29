@@ -83,7 +83,7 @@ func _get_targets(possible_targets: Array[Character]) -> Array[Character]:
 		p_t_set[pt.get_instance_id()] = pt
 	if _action.stats.effect_range is DirectionalAreaRange:
 		effect_area = _action.stats.effect_range.get_dir_area_indexes(
-				_target_index,
+				_move_end_index,
 				_action.get_emission_direction(),
 				ai_node.h_map
 		)

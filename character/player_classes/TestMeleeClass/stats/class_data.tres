@@ -8,7 +8,6 @@
 [ext_resource type="Resource" path="res://character/player_classes/TestMeleeClass/stats/sweep_data.tres" id="4"]
 [ext_resource type="Script" uid="uid://ci8l3katyguri" path="res://character/scripts/action_stats/technique_stats.gd" id="5_1i026"]
 
-
 [resource]
 script = ExtResource("1")
 name = "TestMelee"

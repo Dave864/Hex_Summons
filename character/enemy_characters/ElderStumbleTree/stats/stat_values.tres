@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_w61ee")
 health_base = 200
-attack_base = 5
+attack_base = 10
 defense_base = 3
 movement = 2
