@@ -19,6 +19,10 @@ boot_splash/bg_color=Color(1, 0.49803922, 0.7137255, 1)
 boot_splash/image="uid://dt4m5q7n5uihc"
 config/icon="uid://yq8a4poshlxe"
 
+[audio]
+
+buses/default_bus_layout="res://audio/buses/default_bus_layout.tres"
+
 [autoload]
 
 SignalBus="*res://autoloads/signal_bus.gd"

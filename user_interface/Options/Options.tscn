@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene load_steps=14 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
 [ext_resource type="Script" uid="uid://cge7q6thdquo5" path="res://user_interface/Options/options.gd" id="2_2aq4h"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://k5oiqdib5paw" path="res://user_interface/Options/controls/input_group.gd" id="4_tdglh"]
 [ext_resource type="Script" uid="uid://b5mo30b067mdw" path="res://user_interface/Options/controls/active_icon.gd" id="4_vlufy"]
 [ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="8_02efk"]
+[ext_resource type="AudioStream" uid="uid://236s8v38rhj" path="res://audio/UIClick_Neutral Button 06_KRST_NONE.wav" id="10_khxxo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02efk"]
 atlas = ExtResource("4_hcx2a")
@@ -38,10 +39,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 0
 
 [node name="Sound" type="Control" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -66,7 +66,9 @@ text = "Master"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-value = 100.0
+max_value = 1.0
+step = 0.01
+value = 1.0
 tick_count = 5
 ticks_position = 2
 
@@ -105,25 +107,32 @@ size_flags_horizontal = 3
 [node name="MusicSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-value = 100.0
+max_value = 1.0
+step = 0.01
+value = 1.0
 tick_count = 5
 ticks_position = 2
 
 [node name="MenuSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-value = 100.0
+max_value = 1.0
+step = 0.01
+value = 1.0
 tick_count = 5
 ticks_position = 2
 
 [node name="EffectsSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-value = 100.0
+max_value = 1.0
+step = 0.01
+value = 1.0
 tick_count = 5
 ticks_position = 2
 
 [node name="Controls" type="Control" parent="TabContainer" node_paths=PackedStringArray("confirm_button", "reset_button")]
+visible = false
 layout_mode = 2
 script = ExtResource("2_8wd8u")
 confirm_button = NodePath("../../Confirm")
@@ -1079,6 +1088,10 @@ offset_right = -7.0
 grow_vertical = 2
 text = "Close"
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_khxxo")
+bus = &"Interface"
 
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
