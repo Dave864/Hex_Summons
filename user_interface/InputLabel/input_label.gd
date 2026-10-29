@@ -52,9 +52,7 @@ var _regex := RegEx.new()
 ## Connects to the InputController to enable detection of input change.
 func _ready() -> void:
 	if not Engine.is_editor_hint():
-		InputController.input_source_changed.connect(
-				_on_InputController_input_source_changed
-		)
+		InputController.input_source_changed.connect(_update_icon)
 		OptionsController.input_updated.connect(_update_icon)
 	_update_icon()
 
@@ -187,8 +185,3 @@ func _reset_label_size() -> void:
 	key_label.set_deferred("offset_right", 0.0)
 	key_label.set_deferred("offset_top", 0.0)
 	key_label.set_deferred("offset_bottom", 0.0)
-
-
-## Updates the icon display to match the new input source.
-func _on_InputController_input_source_changed() -> void:
-	_update_icon()
