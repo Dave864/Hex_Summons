@@ -29,3 +29,4 @@ func _input(event: InputEvent) -> void:
 func open() -> void:
 	is_open = true
 	menu.current_tab = 0
+	menu.get_tab_bar().grab_focus()
