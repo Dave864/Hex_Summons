@@ -17,8 +17,6 @@ var _source: Source = Source.GAMEPAD: get = get_source
 
 ## Swaps between gamepad and mouse & keyboard input.
 func _input(event: InputEvent) -> void:
-	var left_dir_vec: Vector2 = GamepadHandler.left_joystick_dir()
-	var right_dir_vec: Vector2 = GamepadHandler.right_joystick_dir()
 	if (
 			_source == Source.NONE
 			or (
@@ -39,8 +37,8 @@ func _input(event: InputEvent) -> void:
 			(
 				event is InputEventJoypadMotion
 				and (
-					not left_dir_vec.is_zero_approx()
-					or not right_dir_vec.is_zero_approx()
+					not GamepadHandler.left_joystick_dir().is_zero_approx()
+					or not GamepadHandler.right_joystick_dir().is_zero_approx()
 				)
 			) or event is InputEventJoypadButton
 			and not source_is_gamepad()

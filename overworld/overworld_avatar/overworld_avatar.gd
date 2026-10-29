@@ -21,32 +21,27 @@ func _ready() -> void:
 
 
 ## Processes the physics of moving around.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity()
 
 	var input_dir: Vector2
 	if InputController.source_is_gamepad():
-		input_dir = Input.get_vector(
-				"left_joystick_l",
-				"left_joystick_r",
-				"left_joystick_u",
-				"left_joystick_d"
-		)
+		input_dir = GamepadHandler.left_joystick_dir()
 	else:
 		input_dir = Input.get_vector(
 				"player_move_l",
 				"player_move_r",
 				"player_move_u",
 				"player_move_d"
-		)
+		).normalized()
 	# Only update facing direction if significant input has been provided.
 	if not input_dir.is_zero_approx():
 		if not _is_moving:
 			_sprite.play_movement()
 		_is_moving = true
-		_sprite.facing_direction = input_dir.normalized()
+		_sprite.facing_direction = input_dir
 	else:
 		if _is_moving:
 			_sprite.play_idle()
