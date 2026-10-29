@@ -5,28 +5,34 @@ extends Node
 ## Indicates that the source for the input has changed.
 signal input_source_changed()
 
+## The options for input sources.
 enum Source {
 	KEYBOARD_AND_MOUSE,
 	GAMEPAD,
 	NONE,
-	SWITCH_TO_GAMEPAD,
 }
 
-var _source: Source = Source.GAMEPAD: get = get_source
+## The current source of input.
+var _source := Source.GAMEPAD: get = get_source
+## Flag indicating that we are pausing signaling source changed to gamepad to
+## allow for mouse hover to clear.
+var _paused_for_hover_clear := false
 
 
 ## Swaps between gamepad and mouse & keyboard input.
 func _input(event: InputEvent) -> void:
+	# Return early for joypad motion when pausing to prevent stutter switchng
+	# between input sources.
 	if (
 			_source == Source.NONE
 			or (
-				_source == Source.SWITCH_TO_GAMEPAD
+				_paused_for_hover_clear
 				and event is InputEventJoypadMotion
 			)
 	):
 		return
-	elif _source == Source.SWITCH_TO_GAMEPAD:
-		_source = Source.GAMEPAD
+	elif _paused_for_hover_clear:
+		_paused_for_hover_clear = false
 		input_source_changed.emit()
 	elif (
 			(event is InputEventMouse or event is InputEventKey)
@@ -71,4 +77,5 @@ func _swap_to_mouse_keyboard() -> void:
 ## Hides the mouse cursor and readies the input to swap.
 func _swap_to_gamepad() -> void:
 	MouseHandler.deactivate()
-	_source = Source.SWITCH_TO_GAMEPAD
+	_source = Source.GAMEPAD
+	_paused_for_hover_clear = true

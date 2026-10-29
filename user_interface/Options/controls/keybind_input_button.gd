@@ -33,7 +33,6 @@ var _key_binds: Dictionary[InputController.Source, InputEvent] = {
 	SOURCE_GAMEPAD: null,
 	SOURCE_KEYMOUSE: null,
 	InputController.Source.NONE: null,
-	InputController.Source.SWITCH_TO_GAMEPAD: null,
 }
 ## Flag that indicates that a new keybind is being set for the input.
 var _updating_bind := false
