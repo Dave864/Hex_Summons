@@ -166,8 +166,8 @@ func load_default_keybinds() -> void:
 					InputMap.action_add_event(action, kp_event)
 					events.append(kp_event)
 		_config_file.set_value(SECTION_KEYBIND, action, events)
-	input_updated.emit()
 	_save_config()
+	input_updated.emit()
 
 
 ## Updates the input map to use saved custom keybind settings.
@@ -184,12 +184,14 @@ func load_custom_keybinds() -> void:
 	input_updated.emit()
 
 
-## Saves the current keybinds to user file.
+## Saves the current keybinds to user file, updating the input map to reflect
+## the changes.
 func save_custom_keybinds_to_file(keybinds: Dictionary[String, Array]) -> void:
 	for input_event: String in keybinds.keys():
 		var input_binds: Array[InputEvent] = keybinds[input_event]
 		_config_file.set_value(SECTION_KEYBIND, input_event, input_binds)
 	_save_config()
+	load_custom_keybinds()
 
 
 ## Creates a new configuration file.

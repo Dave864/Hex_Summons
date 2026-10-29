@@ -105,25 +105,18 @@ func save_current_keybinds() -> void:
 	var input_binds: Dictionary[String, Array] = {}
 	for bind_button: KeybindInputButton in binding_buttons:
 		var inputEvents: Array[InputEvent] = []
-		InputMap.action_erase_events(bind_button.input_bind)
 		var keymouse_bind := bind_button.keymouse_keybind()
 		if keymouse_bind != null:
-			InputMap.action_add_event(bind_button.input_bind, keymouse_bind)
 			inputEvents.append(keymouse_bind)
 			if keymouse_bind is InputEventKey:
 				var keypad_match := OptionsController.get_input_for_keypad(
 						keymouse_bind
 				)
 				if keypad_match != null:
-					InputMap.action_add_event(
-							bind_button.input_bind,
-							keypad_match
-					)
 					inputEvents.append(keypad_match)
 			bind_button.set_keymouse_keybinds_to_InputMap()
 		var gamepad_keybind := bind_button.gamepad_keybind()
 		if gamepad_keybind != null:
-			InputMap.action_add_event(bind_button.input_bind, gamepad_keybind)
 			bind_button.set_gamepad_keybinds_to_InputMap()
 			inputEvents.append(gamepad_keybind)
 		input_binds[bind_button.input_bind] = inputEvents
