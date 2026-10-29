@@ -2,10 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://bajoqfa6xysec" path="res://art/title/title_3.png" id="1_bgmhr"]
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_nh5qr"]
-[ext_resource type="Script" uid="uid://burxp8pmm0b08" path="res://user_interface/title/title.gd" id="2_rf5iy"]
+[ext_resource type="Script" uid="uid://burxp8pmm0b08" path="res://user_interface/Title/title.gd" id="2_rf5iy"]
 [ext_resource type="PackedScene" uid="uid://wrlommn3g1pu" path="res://user_interface/Options/Options.tscn" id="4_utrti"]
 
-[node name="Title" type="Control"]
+[node name="Title" type="Control" node_paths=PackedStringArray("start_button", "options_button", "options_viewport", "options_menu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +14,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_nh5qr")
 script = ExtResource("2_rf5iy")
+start_button = NodePath("ButtonContainer/Start")
+options_button = NodePath("ButtonContainer/Options")
+options_viewport = NodePath("OptionsViewport")
+options_menu = NodePath("OptionsViewport/SubViewport/Options")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -53,9 +57,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_nh5qr")
-mouse_target = true
 
 [node name="SubViewport" type="SubViewport" parent="OptionsViewport"]
+disable_3d = true
 handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 0
@@ -63,4 +67,6 @@ render_target_update_mode = 0
 [node name="Options" parent="OptionsViewport/SubViewport" instance=ExtResource("4_utrti")]
 
 [connection signal="pressed" from="ButtonContainer/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="ButtonContainer/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="ButtonContainer/CloseGame" to="." method="_on_CloseGame_pressed"]
+[connection signal="closed" from="OptionsViewport/SubViewport/Options" to="." method="_on_OptionsMenu_closed"]
