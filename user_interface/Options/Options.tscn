@@ -1352,6 +1352,7 @@ bus = &"Interface"
 stream = ExtResource("15_kkd7s")
 bus = &"Effects"
 
+[connection signal="closed" from="." to="TabContainer/Sound" method="reset"]
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Cancel/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]

@@ -29,7 +29,16 @@ func _ready() -> void:
 	OptionsController.volume_updated.connect(
 			_on_OptionsController_volume_updated
 	)
-	hidden.connect(_on_hidden)
+	hidden.connect(reset)
+
+
+## Resets all sliders to their initial values.
+func reset() -> void:
+	master_slider.set_value_to_initial()
+	music_slider.set_value_to_initial()
+	interface_slider.set_value_to_initial()
+	effects_slider.set_value_to_initial()
+	OptionsController.load_custom_volumes()
 
 
 ## Updates the volume sliders to matcht the current user settings.
@@ -42,15 +51,6 @@ func _on_OptionsController_volume_updated() -> void:
 	music_slider.reset_initial_value()
 	interface_slider.reset_initial_value()
 	effects_slider.reset_initial_value()
-
-
-## Resets all sliders to their initial value when closing menu.
-func _on_hidden() -> void:
-	master_slider.set_value_to_initial()
-	music_slider.set_value_to_initial()
-	interface_slider.set_value_to_initial()
-	effects_slider.set_value_to_initial()
-	OptionsController.load_custom_volumes()
 
 
 ## Updates the user settings to match the currently set volumes.
