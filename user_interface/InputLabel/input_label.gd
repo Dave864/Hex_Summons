@@ -138,8 +138,14 @@ func _get_key_event_name() -> String:
 ## Gets the name of the first joypad input for the input event. Returns an
 ## empty string if no joypad input is assigned to the event.
 func _get_joypad_event_file() -> String:
-	var input_path: String = "input/{0}".format([input_event])
-	var input_events: Array = ProjectSettings.get_setting(input_path).events
+	var input_events: Array
+	# Use ProjectSettings when in Editor as InputMap won't retain all events
+	# when used.
+	if Engine.is_editor_hint():
+		var input_path: String = "input/{0}".format([input_event])
+		input_events = ProjectSettings.get_setting(input_path).events
+	else:
+		input_events = InputMap.action_get_events(input_event)
 	for event: InputEvent in input_events:
 		if event is InputEventJoypadButton:
 			return _get_joypad_button_name(event)
