@@ -4,6 +4,8 @@ extends Node
 ## Manages the file saves of user settings and default values for game options.
 
 
+## Indicates that the volume settings have been updated.
+signal volume_updated
 ## Indicates that events for input actions have been updated.
 signal input_updated
 
@@ -11,6 +13,15 @@ signal input_updated
 const USER_SETTINGS_PATH := "user://settings.cfg"
 ## Section name for volume settings.
 const SECTION_VOLUME := "volume"
+## Names of the primary audio buses.
+const AUDIO_BUSES: PackedStringArray = [
+		"Master",
+		"Music",
+		"Interface",
+		"Effects",
+]
+## The default value for audio bus scale.
+const DEFAULT_AUDIO_SLIDER := 1.0
 ## Section name for keybind settings.
 const SECTION_KEYBIND := "keybind"
 ## Map from keypad keys to their equivalent normal keys.
@@ -135,17 +146,48 @@ func get_input_for_keypad(input: InputEventKey) -> InputEventKey:
 ## Updates the audio buses to use the default settings. Also saves the default
 ## values to user file.
 func load_default_volumes() -> void:
-	pass
+	for audio_bus: String in AUDIO_BUSES:
+		var index: int = _get_audio_bus_index(audio_bus)
+		if index < 0:
+			continue
+		_config_file.set_value(SECTION_VOLUME, audio_bus, DEFAULT_AUDIO_SLIDER)
+		AudioServer.set_bus_volume_db(index, linear_to_db(DEFAULT_AUDIO_SLIDER))
+	_save_config()
+	volume_updated.emit()
 
 
 ## Updates the audio buses to use custom user settings.
 func load_custom_volumes() -> void:
-	pass
+	if not _config_file.has_section(SECTION_VOLUME):
+		load_default_volumes()
+		return
+	for audio_bus: String in AUDIO_BUSES:
+		var index: int = _get_audio_bus_index(audio_bus)
+		if index < 0:
+			continue
+		var slider_value: float = _config_file.get_value(
+				SECTION_VOLUME,
+				audio_bus
+		)
+		AudioServer.set_bus_volume_db(index, linear_to_db(slider_value))
+	volume_updated.emit()
 
 
 ## Saves current volume values to user file.
-func save_custom_volumes_to_file() -> void:
-	pass
+func save_custom_volumes_to_file(
+	volume_scales: Dictionary[String, float]
+) -> void:
+	for audio_bus: String in volume_scales.keys():
+		var index: int = _get_audio_bus_index(audio_bus)
+		if index < 0:
+			continue
+		_config_file.set_value(
+				SECTION_VOLUME,
+				audio_bus,
+				volume_scales[audio_bus]
+		)
+	_save_config()
+	load_custom_volumes()
 
 
 ## Updates the input map to use default keybind settings. Also saves the default
@@ -172,6 +214,9 @@ func load_default_keybinds() -> void:
 
 ## Updates the input map to use saved custom keybind settings.
 func load_custom_keybinds() -> void:
+	if not _config_file.has_section(SECTION_KEYBIND):
+		load_default_keybinds()
+		return
 	var input_actions := _config_file.get_section_keys(SECTION_KEYBIND)
 	for action: String in input_actions:
 		InputMap.action_erase_events(action)
@@ -194,9 +239,18 @@ func save_custom_keybinds_to_file(keybinds: Dictionary[String, Array]) -> void:
 	load_custom_keybinds()
 
 
+## Gets the index of the specified audio bus, checking if it exists.
+func _get_audio_bus_index(audio_bus: String) -> int:
+	var index: int = AudioServer.get_bus_index(audio_bus)
+	if index < 0:
+		printerr("There is no audio bus named {0}.".format([audio_bus]))
+	return index
+
+
 ## Creates a new configuration file.
 func _create_user_file() -> void:
-	# TODO: add logic for volume settings.
+	for audio_bus: String in AUDIO_BUSES:
+		_config_file.set_value(SECTION_VOLUME, audio_bus, DEFAULT_AUDIO_SLIDER)
 	for action: String in _default_keybinds.get_input_actions():
 		_config_file.set_value(SECTION_KEYBIND, action, [])
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene load_steps=31 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
 [ext_resource type="Script" uid="uid://cge7q6thdquo5" path="res://user_interface/Options/options.gd" id="2_2aq4h"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d38ktuu0nh873" path="res://user_interface/Options/controls/keybind_input_button.gd" id="2_llrvc"]
 [ext_resource type="Script" uid="uid://dbk30tnjas3x0" path="res://user_interface/audio_nodes/tab_container_audio.gd" id="3_c26h8"]
 [ext_resource type="Script" uid="uid://umc1xo4msj3k" path="res://user_interface/Options/controls/popup_confirm_input.gd" id="3_m3ftx"]
+[ext_resource type="Script" uid="uid://bp4yvdl588bvy" path="res://user_interface/Options/sound/volume_menu.gd" id="4_47c21"]
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="4_hcx2a"]
 [ext_resource type="Script" uid="uid://dhwea77lcy0r5" path="res://user_interface/Options/sound/volume_slider.gd" id="4_knvvj"]
 [ext_resource type="Script" uid="uid://k5oiqdib5paw" path="res://user_interface/Options/controls/input_group.gd" id="4_tdglh"]
@@ -18,6 +19,38 @@
 [ext_resource type="AudioStream" uid="uid://b4jvukx5h5fd7" path="res://audio/UIMisc_Open Close Pause Menu 09_KRST_NONE.wav" id="13_02ge3"]
 [ext_resource type="AudioStream" uid="uid://b7hbk0xy3ye44" path="res://audio/UIClick_Tab Switching Button 03_KRST_NONE.wav" id="13_pwjkw"]
 [ext_resource type="AudioStream" uid="uid://8cqdqc0w7sbw" path="res://audio/AW_Sword_SWING_whoosh_03.wav" id="15_kkd7s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47c21"]
+atlas = ExtResource("4_hcx2a")
+region = Rect2(49, 155, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30vob"]
+atlas = ExtResource("4_hcx2a")
+region = Rect2(35, 171, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3uads"]
+atlas = ExtResource("4_hcx2a")
+region = Rect2(49, 155, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vp4e1"]
+atlas = ExtResource("4_hcx2a")
+region = Rect2(35, 171, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kn58i"]
+atlas = ExtResource("4_hcx2a")
+region = Rect2(49, 155, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4xxc"]
+atlas = ExtResource("4_hcx2a")
+region = Rect2(35, 171, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hystq"]
+atlas = ExtResource("4_hcx2a")
+region = Rect2(49, 155, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f32s2"]
+atlas = ExtResource("4_hcx2a")
+region = Rect2(35, 171, 11, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02efk"]
 atlas = ExtResource("4_hcx2a")
@@ -56,6 +89,7 @@ metadata/_custom_type_script = "uid://dbk30tnjas3x0"
 
 [node name="Sound" type="Control" parent="TabContainer"]
 layout_mode = 2
+script = ExtResource("4_47c21")
 metadata/_tab_index = 0
 
 [node name="VolumeContainer" type="VBoxContainer" parent="TabContainer/Sound"]
@@ -89,6 +123,22 @@ debounce_timer = NodePath("../../../DebounceTimer")
 asp_focus_entered = NodePath("../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://dhwea77lcy0r5"
+
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer/MasterSlider"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -4.5
+offset_right = 7.0
+offset_bottom = 4.5
+grow_vertical = 2
+texture = SubResource("AtlasTexture_47c21")
+script = ExtResource("4_vlufy")
+active_texture = SubResource("AtlasTexture_30vob")
+inactive_texture = SubResource("AtlasTexture_47c21")
+metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Sound/VolumeContainer"]
 layout_mode = 2
@@ -137,6 +187,22 @@ asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://dhwea77lcy0r5"
 
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer/MusicSlider"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -4.5
+offset_right = 7.0
+offset_bottom = 4.5
+grow_vertical = 2
+texture = SubResource("AtlasTexture_3uads")
+script = ExtResource("4_vlufy")
+active_texture = SubResource("AtlasTexture_vp4e1")
+inactive_texture = SubResource("AtlasTexture_3uads")
+metadata/_custom_type_script = "uid://b5mo30b067mdw"
+
 [node name="InterfaceSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" node_paths=PackedStringArray("debounce_timer", "asp_value_changed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_vertical = 6
@@ -153,6 +219,22 @@ asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://dhwea77lcy0r5"
 
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer/InterfaceSlider"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -4.5
+offset_right = 7.0
+offset_bottom = 4.5
+grow_vertical = 2
+texture = SubResource("AtlasTexture_kn58i")
+script = ExtResource("4_vlufy")
+active_texture = SubResource("AtlasTexture_d4xxc")
+inactive_texture = SubResource("AtlasTexture_kn58i")
+metadata/_custom_type_script = "uid://b5mo30b067mdw"
+
 [node name="EffectsSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" node_paths=PackedStringArray("debounce_timer", "asp_value_changed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_vertical = 6
@@ -168,6 +250,22 @@ asp_value_changed = NodePath("../../../../../../EffectSample")
 asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://dhwea77lcy0r5"
+
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer/EffectsSlider"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -4.5
+offset_right = 7.0
+offset_bottom = 4.5
+grow_vertical = 2
+texture = SubResource("AtlasTexture_hystq")
+script = ExtResource("4_vlufy")
+active_texture = SubResource("AtlasTexture_f32s2")
+inactive_texture = SubResource("AtlasTexture_hystq")
+metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
 [node name="DebounceTimer" type="Timer" parent="TabContainer/Sound"]
 wait_time = 0.1
@@ -1301,5 +1399,7 @@ bus = &"Effects"
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
+[connection signal="pressed" from="Confirm" to="TabContainer/Sound" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="Confirm" to="TabContainer/Controls" method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="RevertToDefault" to="TabContainer/Sound" method="_on_reset_button_pressed"]
 [connection signal="pressed" from="RevertToDefault" to="TabContainer/Controls" method="_on_reset_button_pressed"]

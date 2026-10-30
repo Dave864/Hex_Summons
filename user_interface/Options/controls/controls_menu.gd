@@ -7,11 +7,6 @@ extends Control
 ## the start of the game.
 
 
-## Path to the default keybinds data.
-const DEFAULT_KEYBINDS_PATH := (
-		"res://user_interface/Options/controls/default_keybinds.tres"
-)
-
 ## Button that sets the displayed input layout as the one to use.
 @export var confirm_button: Button = null
 ## Button that resets all displayed inputs to the default values.
