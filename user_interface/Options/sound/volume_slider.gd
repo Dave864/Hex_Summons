@@ -53,6 +53,12 @@ func match_slider_to_audio_bus() -> void:
 	set_value_no_signal(db_to_linear(AudioServer.get_bus_volume_db(_bus_index)))
 
 
+## Sets the value to the initial value.
+func set_value_to_initial() -> void:
+	set_value_no_signal(_initial_value)
+	_changed_icon.is_active = false
+
+
 ## Updates the initial value to match the current value.
 func reset_initial_value() -> void:
 	_initial_value = value
