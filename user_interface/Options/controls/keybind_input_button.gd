@@ -1,5 +1,5 @@
 class_name KeybindInputButton
-extends Button
+extends ButtonAudio
 ## Button that lets a player select the key used for a specific input.
 ##
 ## Able to specify the key source for the input (gamepad or mouse & keyboard),
@@ -44,6 +44,7 @@ var _gamepad_icon: GamepadIcon = null
 
 ## Sets the display to match the current settings.
 func _ready() -> void:
+	super._ready()
 	_create_gamepad_icon()
 	_create_input_changed_icon()
 	if not pressed.is_connected(_on_pressed):
