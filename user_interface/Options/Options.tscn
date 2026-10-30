@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene load_steps=21 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
 [ext_resource type="Script" uid="uid://cge7q6thdquo5" path="res://user_interface/Options/options.gd" id="2_2aq4h"]
 [ext_resource type="Script" uid="uid://bud5cxvbdc33a" path="res://user_interface/Options/controls/controls_menu.gd" id="2_8wd8u"]
 [ext_resource type="Script" uid="uid://d38ktuu0nh873" path="res://user_interface/Options/controls/keybind_input_button.gd" id="2_llrvc"]
+[ext_resource type="Script" uid="uid://dbk30tnjas3x0" path="res://user_interface/audio_nodes/tab_container_audio.gd" id="3_c26h8"]
 [ext_resource type="Script" uid="uid://umc1xo4msj3k" path="res://user_interface/Options/controls/popup_confirm_input.gd" id="3_m3ftx"]
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="4_hcx2a"]
 [ext_resource type="Script" uid="uid://k5oiqdib5paw" path="res://user_interface/Options/controls/input_group.gd" id="4_tdglh"]
@@ -14,6 +15,8 @@
 [ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="12_403fo"]
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/UIClick_Accept Button 04_KRST_NONE.wav" id="12_iubo3"]
 [ext_resource type="AudioStream" uid="uid://b4jvukx5h5fd7" path="res://audio/UIMisc_Open Close Pause Menu 09_KRST_NONE.wav" id="13_02ge3"]
+[ext_resource type="AudioStream" uid="uid://b7hbk0xy3ye44" path="res://audio/UIClick_Tab Switching Button 03_KRST_NONE.wav" id="13_pwjkw"]
+[ext_resource type="AudioStream" uid="uid://8cqdqc0w7sbw" path="res://audio/AW_Sword_SWING_whoosh_03.wav" id="15_kkd7s"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02efk"]
 atlas = ExtResource("4_hcx2a")
@@ -36,17 +39,21 @@ grow_vertical = 2
 theme = ExtResource("1_p8d2p")
 script = ExtResource("2_2aq4h")
 
-[node name="TabContainer" type="TabContainer" parent="."]
+[node name="TabContainer" type="TabContainer" parent="." node_paths=PackedStringArray("asp_tab_changed", "asp_tab_hovered", "asp_focus_entered")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 0
+script = ExtResource("3_c26h8")
+asp_tab_changed = NodePath("../UITabChange")
+asp_tab_hovered = NodePath("../UIMouseOver")
+asp_focus_entered = NodePath("../UIMoveFocus")
+metadata/_custom_type_script = "uid://dbk30tnjas3x0"
 
 [node name="Sound" type="Control" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -137,6 +144,7 @@ tick_count = 5
 ticks_position = 2
 
 [node name="Controls" type="Control" parent="TabContainer" node_paths=PackedStringArray("confirm_button", "reset_button")]
+visible = false
 layout_mode = 2
 script = ExtResource("2_8wd8u")
 confirm_button = NodePath("../../Confirm")
@@ -1188,6 +1196,11 @@ vertical_alignment = 1
 stream = ExtResource("11_6frqe")
 bus = &"Interface"
 
+[node name="UITabChange" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_pwjkw")
+volume_db = -5.0
+bus = &"Interface"
+
 [node name="UIMouseOver" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_403fo")
 bus = &"Interface"
@@ -1199,6 +1212,10 @@ bus = &"Interface"
 [node name="UIGoBack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_02ge3")
 bus = &"Interface"
+
+[node name="EffectSample" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_kkd7s")
+bus = &"Effects"
 
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
