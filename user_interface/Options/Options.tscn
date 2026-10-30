@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene load_steps=22 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
 [ext_resource type="Script" uid="uid://cge7q6thdquo5" path="res://user_interface/Options/options.gd" id="2_2aq4h"]
@@ -7,8 +7,9 @@
 [ext_resource type="Script" uid="uid://dbk30tnjas3x0" path="res://user_interface/audio_nodes/tab_container_audio.gd" id="3_c26h8"]
 [ext_resource type="Script" uid="uid://umc1xo4msj3k" path="res://user_interface/Options/controls/popup_confirm_input.gd" id="3_m3ftx"]
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="4_hcx2a"]
+[ext_resource type="Script" uid="uid://dhwea77lcy0r5" path="res://user_interface/Options/sound/volume_slider.gd" id="4_knvvj"]
 [ext_resource type="Script" uid="uid://k5oiqdib5paw" path="res://user_interface/Options/controls/input_group.gd" id="4_tdglh"]
-[ext_resource type="Script" uid="uid://b5mo30b067mdw" path="res://user_interface/Options/controls/active_icon.gd" id="4_vlufy"]
+[ext_resource type="Script" uid="uid://b5mo30b067mdw" path="res://user_interface/active_icon.gd" id="4_vlufy"]
 [ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="8_02efk"]
 [ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="9_6frqe"]
 [ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/UIClick_Menu Button 09_KRST_NONE.wav" id="11_6frqe"]
@@ -74,7 +75,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Master"
 
-[node name="MasterSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer"]
+[node name="MasterSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer" node_paths=PackedStringArray("debounce_timer", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -83,6 +84,11 @@ step = 0.01
 value = 1.0
 tick_count = 5
 ticks_position = 2
+script = ExtResource("4_knvvj")
+debounce_timer = NodePath("../../../DebounceTimer")
+asp_focus_entered = NodePath("../../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../../UIMouseOver")
+metadata/_custom_type_script = "uid://dhwea77lcy0r5"
 
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Sound/VolumeContainer"]
 layout_mode = 2
@@ -116,7 +122,7 @@ horizontal_alignment = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MusicSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer"]
+[node name="MusicSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" node_paths=PackedStringArray("debounce_timer", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_vertical = 6
 max_value = 1.0
@@ -124,8 +130,14 @@ step = 0.01
 value = 1.0
 tick_count = 5
 ticks_position = 2
+script = ExtResource("4_knvvj")
+audio_bus = "Music"
+debounce_timer = NodePath("../../../../DebounceTimer")
+asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
+metadata/_custom_type_script = "uid://dhwea77lcy0r5"
 
-[node name="MenuSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer"]
+[node name="InterfaceSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" node_paths=PackedStringArray("debounce_timer", "asp_value_changed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_vertical = 6
 max_value = 1.0
@@ -133,8 +145,15 @@ step = 0.01
 value = 1.0
 tick_count = 5
 ticks_position = 2
+script = ExtResource("4_knvvj")
+audio_bus = "Interface"
+debounce_timer = NodePath("../../../../DebounceTimer")
+asp_value_changed = NodePath("../../../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
+metadata/_custom_type_script = "uid://dhwea77lcy0r5"
 
-[node name="EffectsSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer"]
+[node name="EffectsSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" node_paths=PackedStringArray("debounce_timer", "asp_value_changed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_vertical = 6
 max_value = 1.0
@@ -142,6 +161,17 @@ step = 0.01
 value = 1.0
 tick_count = 5
 ticks_position = 2
+script = ExtResource("4_knvvj")
+audio_bus = "Effects"
+debounce_timer = NodePath("../../../../DebounceTimer")
+asp_value_changed = NodePath("../../../../../../EffectSample")
+asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
+metadata/_custom_type_script = "uid://dhwea77lcy0r5"
+
+[node name="DebounceTimer" type="Timer" parent="TabContainer/Sound"]
+wait_time = 0.1
+one_shot = true
 
 [node name="Controls" type="Control" parent="TabContainer" node_paths=PackedStringArray("confirm_button", "reset_button")]
 visible = false

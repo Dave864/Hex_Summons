@@ -22,13 +22,13 @@ extends HSlider
 
 ## Connects the relevant signals to play sound.
 func _ready() -> void:
-	changed.connect(_on_changed)
-	value_changed.connect(_on_value_changed)
-	focus_entered.connect(_on_focus_entered)
-	focus_exited.connect(_on_focus_exited)
-	gui_input.connect(_on_gui_input)
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
+	changed.connect(_on_HSliderAudio_changed)
+	value_changed.connect(_on_HSliderAudio_value_changed)
+	focus_entered.connect(_on_HSliderAudio_focus_entered)
+	focus_exited.connect(_on_HSliderAudio_focus_exited)
+	gui_input.connect(_on_HSliderAudio_gui_input)
+	mouse_entered.connect(_on_HSliderAudio_mouse_entered)
+	mouse_exited.connect(_on_HSliderAudio_mouse_exited)
 
 
 ## Plays the specified sound if present.
@@ -39,41 +39,41 @@ func _play_sound(audio_stream: AudioStreamPlayer) -> void:
 
 ## Plays the sound assigned to "on_changed". Does nothing if no sound is
 ## assigned.
-func _on_changed() -> void:
+func _on_HSliderAudio_changed() -> void:
 	_play_sound(asp_changed)
 
 
 ## Plays the sound assigned to "value_changed". Does nothing if no sound is
 ## assigned.
-func _on_value_changed(_value: float) -> void:
+func _on_HSliderAudio_value_changed(_value: float) -> void:
 	_play_sound(asp_value_changed)
 
 
 ## Plays the sound assigned to "focus_entered". Does nothing if no sound is
 ## assigned.
-func _on_focus_entered() -> void:
+func _on_HSliderAudio_focus_entered() -> void:
 	_play_sound(asp_focus_entered)
 
 
 ## Plays the sound assigned to "focus_exited". Does nothing if no sound is
 ## assigned.
-func _on_focus_exited() -> void:
+func _on_HSliderAudio_focus_exited() -> void:
 	_play_sound(asp_focus_exited)
 
 
 ## Plays the sound assigned to "gui_input". Does nothing if no sound is
 ## assigned.
-func _on_gui_input(_event: InputEvent) -> void:
+func _on_HSliderAudio_gui_input(_event: InputEvent) -> void:
 	_play_sound(asp_gui_input)
 
 
 ## Plays the sound assigned to "mouse_entered". Does nothing if no sound is
 ## assigned.
-func _on_mouse_entered() -> void:
+func _on_HSliderAudio_mouse_entered() -> void:
 	_play_sound(asp_mouse_entered)
 
 
 ## Plays the sound assigned to "mouse_exited". Does nothing if no sound is
 ## assigned.
-func _on_mouse_exited() -> void:
+func _on_HSliderAudio_mouse_exited() -> void:
 	_play_sound(asp_mouse_exited)
