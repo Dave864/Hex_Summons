@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://coxoky16gj1xw"
+path="res://.godot/imported/UIClick_Accept Button 08_KRST_NONE.wav-0cecebb07a848e83c6ea2e4eafa2693a.sample"
+
+[deps]
+
+source_file="res://audio/UIClick_Accept Button 08_KRST_NONE.wav"
+dest_files=["res://.godot/imported/UIClick_Accept Button 08_KRST_NONE.wav-0cecebb07a848e83c6ea2e4eafa2693a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
