@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene load_steps=32 format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
 [ext_resource type="Script" uid="uid://cge7q6thdquo5" path="res://user_interface/Options/options.gd" id="2_2aq4h"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://b4jvukx5h5fd7" path="res://audio/UIMisc_Open Close Pause Menu 09_KRST_NONE.wav" id="13_02ge3"]
 [ext_resource type="AudioStream" uid="uid://b7hbk0xy3ye44" path="res://audio/UIClick_Tab Switching Button 03_KRST_NONE.wav" id="13_pwjkw"]
 [ext_resource type="AudioStream" uid="uid://8cqdqc0w7sbw" path="res://audio/AW_Sword_SWING_whoosh_03.wav" id="15_kkd7s"]
+[ext_resource type="AudioStream" uid="uid://bpnsmwle73ip5" path="res://audio/UIMisc_Open Close Pause Menu 03_KRST_NONE.wav" id="18_30vob"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_47c21"]
 atlas = ExtResource("4_hcx2a")
@@ -63,7 +64,7 @@ region = Rect2(35, 171, 11, 11)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_llrvc"]
 bg_color = Color(0, 0, 0.2509804, 0.78431374)
 
-[node name="Options" type="Control"]
+[node name="Options" type="Control" node_paths=PackedStringArray("asp_open", "asp_closed")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,6 +73,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_p8d2p")
 script = ExtResource("2_2aq4h")
+asp_open = NodePath("UIOpenMenu")
+asp_closed = NodePath("UIGoBack")
 
 [node name="TabContainer" type="TabContainer" parent="." node_paths=PackedStringArray("asp_tab_changed", "asp_tab_hovered", "asp_focus_entered")]
 layout_mode = 1
@@ -1335,6 +1338,10 @@ bus = &"Interface"
 
 [node name="UIConfirm" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_iubo3")
+bus = &"Interface"
+
+[node name="UIOpenMenu" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_30vob")
 bus = &"Interface"
 
 [node name="UIGoBack" type="AudioStreamPlayer" parent="."]
