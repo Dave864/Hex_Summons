@@ -81,7 +81,8 @@ var _cursor_camera_image: CompressedTexture2D = preload(
 ## Connects the top_vertex_changed signal from SignalBus.
 func _ready() -> void:
 	_set_camera_cursor()
-	SignalBus.top_vertex_changed.connect(_on_SignalBus_top_vertex_changed)
+	if not Engine.is_editor_hint():
+		SignalBus.top_vertex_changed.connect(_on_SignalBus_top_vertex_changed)
 
 
 ## Calculates the direction from center to the mouse position when the mouse is
