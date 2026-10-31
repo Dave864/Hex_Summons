@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://8cqdqc0w7sbw"
-path="res://.godot/imported/AW_Sword_SWING_whoosh_03.wav-d33d816bab88776a1bd9cf621aa2a431.sample"
+path="res://.godot/imported/AW_Sword_SWING_whoosh_03.wav-da8e80b4d6fb6811e1c60add8ca4f9c4.sample"
 
 [deps]
 
-source_file="res://audio/AW_Sword_SWING_whoosh_03.wav"
-dest_files=["res://.godot/imported/AW_Sword_SWING_whoosh_03.wav-d33d816bab88776a1bd9cf621aa2a431.sample"]
+source_file="res://audio/effects/AW_Sword_SWING_whoosh_03.wav"
+dest_files=["res://.godot/imported/AW_Sword_SWING_whoosh_03.wav-da8e80b4d6fb6811e1c60add8ca4f9c4.sample"]
 
 [params]
 

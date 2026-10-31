@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=50 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="Script" uid="uid://b63wynnx1khli" path="res://overworld/overworld.gd" id="1_g3yfq"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://tnwvx2ts1kw1" path="res://overworld/encounter_zone/travel_point_zones.gd" id="8_naebm"]
 [ext_resource type="Script" uid="uid://dis4ld2v03m0e" path="res://utils/area_gizmo_rect.gd" id="9_naebm"]
 [ext_resource type="Script" uid="uid://b888q7s0x56r3" path="res://overworld/encounter_zone/travel_points_rect.gd" id="12_taamv"]
+[ext_resource type="AudioStream" uid="uid://bvqjwi0islra0" path="res://audio/music/Adventure Map.mp3" id="13_iro46"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q45au"]
 albedo_color = Color(0, 0.22352941, 1, 1)
@@ -508,3 +509,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.652, 0, -12.145)
 
 [node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
 transform = Transform3D(1, 0, 0, 0, 0.46507394, 0.8852719, 0, -0.8852719, 0.46507394, 0.1927185, 11.221527, 7.090953)
+
+[node name="MusicOverworld" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_iro46")
+pitch_scale = 1.05
+autoplay = true
+bus = &"Music"

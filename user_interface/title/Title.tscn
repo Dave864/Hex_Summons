@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://dv4dcnfe3lxnl"]
+[gd_scene load_steps=10 format=3 uid="uid://dv4dcnfe3lxnl"]
 
 [ext_resource type="Texture2D" uid="uid://bajoqfa6xysec" path="res://art/title/title_3.png" id="1_bgmhr"]
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_nh5qr"]
 [ext_resource type="Script" uid="uid://burxp8pmm0b08" path="res://user_interface/Title/title.gd" id="2_rf5iy"]
 [ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="4_1ntpf"]
 [ext_resource type="PackedScene" uid="uid://wrlommn3g1pu" path="res://user_interface/Options/Options.tscn" id="4_utrti"]
-[ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/UIClick_Menu Button 09_KRST_NONE.wav" id="6_ic1t1"]
-[ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="7_4ogk3"]
-[ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/UIClick_Accept Button 04_KRST_NONE.wav" id="8_4rnq4"]
+[ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/interface/UIClick_Menu Button 09_KRST_NONE.wav" id="6_ic1t1"]
+[ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/interface/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="7_4ogk3"]
+[ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="8_4rnq4"]
+[ext_resource type="AudioStream" uid="uid://cvk3dpfnl77u7" path="res://audio/music/starting_journey.wav" id="9_onrvd"]
 
 [node name="Title" type="Control" node_paths=PackedStringArray("start_button", "options_button", "options_viewport", "options_menu")]
 layout_mode = 3
@@ -97,6 +98,13 @@ bus = &"Interface"
 [node name="UIConfirm" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_4rnq4")
 bus = &"Interface"
+
+[node name="MusicTitle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_onrvd")
+volume_db = -4.0
+pitch_scale = 0.95
+autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="ButtonContainer/Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="ButtonContainer/Options" to="." method="_on_Options_pressed"]
