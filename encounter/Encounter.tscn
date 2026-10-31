@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://x4o3gls28fh"]
+[gd_scene load_steps=14 format=3 uid="uid://x4o3gls28fh"]
 
 [ext_resource type="PackedScene" uid="uid://ddvk0q84qb3m" path="res://hex_map/SelectionTracker/SelectionTracker.tscn" id="2_a00se"]
 [ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://cio2lxf2jspfo" path="res://user_interface/encounter/menu_layout/EncounterUIMenuLayout.tscn" id="4_a00se"]
 [ext_resource type="PackedScene" uid="uid://cqtyo80p26xko" path="res://character/summons/Summon.tscn" id="5_31f15"]
+[ext_resource type="AudioStream" uid="uid://bufru41q6sqp1" path="res://audio/music/Random Battle.mp3" id="5_vwj2q"]
 [ext_resource type="Script" uid="uid://k5pevugk72ex" path="res://fsm/encounter/encounter_start.gd" id="8"]
 [ext_resource type="Script" uid="uid://2muhbs0a7qgu" path="res://fsm/encounter/encounter_player_turn.gd" id="9"]
 [ext_resource type="Script" uid="uid://bet15deb5w7us" path="res://encounter/encounter.gd" id="10"]
@@ -29,6 +30,12 @@ sky_mode = 1
 [node name="EncounterUIMenuLayout" parent="." instance=ExtResource("4_a00se")]
 
 [node name="Summon" parent="." instance=ExtResource("5_31f15")]
+
+[node name="MusicBattle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_vwj2q")
+pitch_scale = 1.02
+autoplay = true
+bus = &"Music"
 
 [node name="SelectionTracker" parent="." node_paths=PackedStringArray("selector") instance=ExtResource("2_a00se")]
 selector = NodePath("Selector")
