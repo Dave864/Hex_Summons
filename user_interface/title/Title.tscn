@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bajoqfa6xysec" path="res://art/title/title_3.png" id="1_bgmhr"]
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_nh5qr"]
-[ext_resource type="Script" uid="uid://burxp8pmm0b08" path="res://user_interface/Title/title.gd" id="2_rf5iy"]
+[ext_resource type="Script" uid="uid://cjx7webpbdfwr" path="res://user_interface/Title/title.gd" id="2_rf5iy"]
 [ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="4_1ntpf"]
 [ext_resource type="PackedScene" uid="uid://wrlommn3g1pu" path="res://user_interface/Options/Options.tscn" id="4_utrti"]
 [ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/interface/UIClick_Menu Button 09_KRST_NONE.wav" id="6_ic1t1"]
