@@ -55,6 +55,10 @@ func _on_OptionsController_volume_updated() -> void:
 
 ## Updates the user settings to match the currently set volumes.
 func _on_confirm_button_pressed() -> void:
+	# Confirm button used for other option tabs, so should only process signal
+	# when this tab is active.
+	if not visible:
+		return
 	var volume_data: Dictionary[String, float] = {
 		OptionsController.AUDIO_BUSES[0]: master_slider.value,
 		OptionsController.AUDIO_BUSES[1]: music_slider.value,
@@ -66,4 +70,8 @@ func _on_confirm_button_pressed() -> void:
 
 ## Resets the user settings to the default volume settings.
 func _on_reset_button_pressed() -> void:
+	# Confirm button used for other option tabs, so should only process signal
+	# when this tab is active.
+	if not visible:
+		return
 	OptionsController.load_default_volumes()

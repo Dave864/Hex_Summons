@@ -83,7 +83,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 1
 script = ExtResource("3_c26h8")
 asp_tab_changed = NodePath("../UITabChange")
 asp_tab_hovered = NodePath("../UIMouseOver")
@@ -91,6 +91,7 @@ asp_focus_entered = NodePath("../UIMoveFocus")
 metadata/_custom_type_script = "uid://dbk30tnjas3x0"
 
 [node name="Sound" type="Control" parent="TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("4_47c21")
 metadata/_tab_index = 0
@@ -275,11 +276,10 @@ wait_time = 0.1
 one_shot = true
 
 [node name="Controls" type="Control" parent="TabContainer" node_paths=PackedStringArray("confirm_button", "reset_button")]
-visible = false
 layout_mode = 2
 script = ExtResource("2_8wd8u")
-confirm_button = NodePath("../../Confirm")
-reset_button = NodePath("../../RevertToDefault")
+confirm_button = NodePath("../../HBoxContainer/Confirm")
+reset_button = NodePath("../../HBoxContainer/RevertToDefault")
 metadata/_tab_index = 1
 
 [node name="SourceTabs" type="TabBar" parent="TabContainer/Controls"]
@@ -624,7 +624,7 @@ size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_top = NodePath("../../Up/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
-focus_neighbor_bottom = NodePath("../../../../../../../../Confirm")
+focus_neighbor_bottom = NodePath("../../../../../../../../HBoxContainer/Confirm")
 script = ExtResource("2_llrvc")
 input_source = 0
 input_bind = "player_move_d"
@@ -923,7 +923,7 @@ size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
 focus_neighbor_top = NodePath("../../Reset/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
-focus_neighbor_bottom = NodePath("../../../../../../../../Confirm")
+focus_neighbor_bottom = NodePath("../../../../../../../../HBoxContainer/Confirm")
 script = ExtResource("2_llrvc")
 input_source = 0
 input_bind = "ui_camera_pan"
@@ -1197,7 +1197,7 @@ size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
 focus_neighbor_top = NodePath("../../Up/KeybindInputButton")
 focus_neighbor_right = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
-focus_neighbor_bottom = NodePath("../../../../../../../../RevertToDefault")
+focus_neighbor_bottom = NodePath("../../../../../../../../HBoxContainer/RevertToDefault")
 script = ExtResource("2_llrvc")
 input_source = 1
 input_bind = "right_joystick_d"
@@ -1258,44 +1258,41 @@ autowrap_mode = 2
 [node name="PopupTimer" type="Timer" parent="TabContainer/Controls"]
 one_shot = true
 
-[node name="Confirm" type="Button" parent="." node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 21.0
-offset_top = 310.0
-offset_right = -237.0
-offset_bottom = -12.0
+offset_left = 7.0
+offset_top = -45.0
+offset_right = -7.0
+offset_bottom = -7.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Confirm" type="Button" parent="HBoxContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+layout_mode = 2
+size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../RevertToDefault")
 focus_neighbor_right = NodePath("../RevertToDefault")
 text = "Confirm"
 script = ExtResource("9_6frqe")
-asp_pressed = NodePath("../UIConfirm")
-asp_focus_entered = NodePath("../UIMoveFocus")
-asp_mouse_entered = NodePath("../UIMouseOver")
+asp_pressed = NodePath("../../UIConfirm")
+asp_focus_entered = NodePath("../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="RevertToDefault" type="Button" parent="." node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 412.0
-offset_top = 310.0
-offset_right = -21.0
-offset_bottom = -12.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="RevertToDefault" type="Button" parent="HBoxContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+layout_mode = 2
 focus_neighbor_left = NodePath("../Confirm")
 focus_neighbor_right = NodePath("../Confirm")
-text = "Revert to Default"
+text = "Revert Tab to Default"
 script = ExtResource("9_6frqe")
-asp_pressed = NodePath("../UIConfirm")
-asp_focus_entered = NodePath("../UIMoveFocus")
-asp_mouse_entered = NodePath("../UIMouseOver")
+asp_pressed = NodePath("../../UIConfirm")
+asp_focus_entered = NodePath("../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="ExitInputLabel" parent="." instance=ExtResource("8_02efk")]
@@ -1407,7 +1404,7 @@ bus = &"Effects"
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
 [connection signal="new_bind_requested" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_requested"]
 [connection signal="new_bind_set" from="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down/KeybindInputButton" to="TabContainer/Controls/PopupConfirmInput" method="_on_KeybindInputButton_new_bind_set"]
-[connection signal="pressed" from="Confirm" to="TabContainer/Sound" method="_on_confirm_button_pressed"]
-[connection signal="pressed" from="Confirm" to="TabContainer/Controls" method="_on_confirm_button_pressed"]
-[connection signal="pressed" from="RevertToDefault" to="TabContainer/Sound" method="_on_reset_button_pressed"]
-[connection signal="pressed" from="RevertToDefault" to="TabContainer/Controls" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Confirm" to="TabContainer/Sound" method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Confirm" to="TabContainer/Controls" method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/RevertToDefault" to="TabContainer/Sound" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/RevertToDefault" to="TabContainer/Controls" method="_on_reset_button_pressed"]
