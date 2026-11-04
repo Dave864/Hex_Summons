@@ -40,7 +40,7 @@ enum PathType {
 
 
 ## Sets the parameters of the sprite.
-func ready() -> void:
+func _ready() -> void:
 	_set_parameters()
 
 

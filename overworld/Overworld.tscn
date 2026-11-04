@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=51 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="Script" uid="uid://b63wynnx1khli" path="res://overworld/overworld.gd" id="1_g3yfq"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cpqrkm0xmuufc" path="res://overworld/encounter_zone/spawn_area_circle.gd" id="6_uyahc"]
 [ext_resource type="Script" uid="uid://ctkkhxryhajwc" path="res://utils/area_gizmo_circle.gd" id="7_327yu"]
 [ext_resource type="Script" uid="uid://whcd1sb6tx51" path="res://overworld/encounter_zone/spawn_area_rect.gd" id="7_wc37g"]
+[ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="8_kur02"]
 [ext_resource type="Script" uid="uid://tnwvx2ts1kw1" path="res://overworld/encounter_zone/travel_point_zones.gd" id="8_naebm"]
 [ext_resource type="Script" uid="uid://dis4ld2v03m0e" path="res://utils/area_gizmo_rect.gd" id="9_naebm"]
 [ext_resource type="Script" uid="uid://b888q7s0x56r3" path="res://overworld/encounter_zone/travel_points_rect.gd" id="12_taamv"]
@@ -89,12 +90,6 @@ size = Vector3(70, 5, 13)
 [sub_resource type="BoxShape3D" id="BoxShape3D_naebm"]
 size = Vector3(95, 5, 53)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_taamv"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iro46"]
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_kur02"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1kkrf"]
@@ -105,16 +100,16 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdnfc"]
 shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
-size = Vector3(67, 5, 45)
+albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_6lilm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pn0iw"]
 shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
+size = Vector3(67, 5, 45)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_pl2eu"]
 
@@ -125,6 +120,12 @@ albedo_color = Color(1, 0, 0, 1)
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_ohl48"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2e2hg"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_y2ko7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7qrdv"]
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
@@ -215,6 +216,8 @@ shape = SubResource("BoxShape3D_36ygl")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="Terrain/NavigationRegion3D/LongMountain/StaticBody3D"]
 
+[node name="Landmarks" type="Node3D" parent="."]
+
 [node name="AlignmentAreas" type="Node3D" parent="."]
 
 [node name="StableGrassArea" type="Area3D" parent="AlignmentAreas"]
@@ -253,8 +256,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 37.046726)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("3_35tns")
-flux_timer = 2.0
-timer_margin = 1.0
+flux_distance = 2.0
+distance_margin = 1.0
 metadata/_custom_type_script = "uid://7gcajgi7sxds"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AlignmentAreas/FluxSandArea"]
@@ -284,6 +287,8 @@ script = ExtResource("6_uyahc")
 radius = 6.21
 enemies = PackedStringArray("ScuttleShrub")
 roam_chance = 0.0
+time_trigger_min = 3.0
+time_trigger_max = 7.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
 [node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
@@ -292,11 +297,16 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
-mesh = SubResource("ImmediateMesh_taamv")
-surface_material_override/0 = SubResource("StandardMaterial3D_iro46")
+mesh = SubResource("ImmediateMesh_kur02")
+surface_material_override/0 = SubResource("StandardMaterial3D_1kkrf")
 script = ExtResource("7_327yu")
 radius = 6.21
 color = Color(1, 0, 0, 1)
+
+[node name="SpawnTimer" type="Timer" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
+script = ExtResource("8_kur02")
+lower_time = 3.0
+upper_time = 7.0
 
 [node name="CircleSpawnArea2" type="Marker3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.84867, 0.6, 6.7512493)
@@ -305,6 +315,8 @@ radius = 10.77
 enemies = PackedStringArray("ScuttleShrub")
 spawn_limit = 2
 roam_chance = 1.0
+time_trigger_min = 1.5
+time_trigger_max = 5.0
 metadata/_custom_type_script = "uid://cpqrkm0xmuufc"
 
 [node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
@@ -312,11 +324,16 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
-mesh = SubResource("ImmediateMesh_kur02")
-surface_material_override/0 = SubResource("StandardMaterial3D_1kkrf")
+mesh = SubResource("ImmediateMesh_eou61")
+surface_material_override/0 = SubResource("StandardMaterial3D_xdnfc")
 script = ExtResource("7_327yu")
 radius = 10.77
 color = Color(1, 0, 0, 1)
+
+[node name="SpawnTimer" type="Timer" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
+script = ExtResource("8_kur02")
+lower_time = 1.5
+upper_time = 5.0
 
 [node name="TravelPointZones" type="Node3D" parent="EncounterZones/TerrainZoneGrass"]
 script = ExtResource("8_naebm")
@@ -333,8 +350,8 @@ relevel_function = Callable()
 metadata/_custom_type_script = "uid://b888q7s0x56r3"
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/TravelPointZones/TravelPointsRect"]
-mesh = SubResource("ImmediateMesh_eou61")
-surface_material_override/0 = SubResource("StandardMaterial3D_xdnfc")
+mesh = SubResource("ImmediateMesh_6lilm")
+surface_material_override/0 = SubResource("StandardMaterial3D_pn0iw")
 script = ExtResource("9_naebm")
 length = 11.9
 height = 39.629999999999995
@@ -366,8 +383,8 @@ height = 20.49
 enemies = PackedStringArray("StumbleTree")
 spawn_limit = 2
 roam_chance = 1.0
-distance_trigger_min = 0.5
-distance_trigger_max = 2.0
+time_trigger_min = 2.0
+time_trigger_max = 5.0
 metadata/_custom_type_script = "uid://whcd1sb6tx51"
 
 [node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect"]
@@ -375,13 +392,18 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect"]
-mesh = SubResource("ImmediateMesh_6lilm")
-surface_material_override/0 = SubResource("StandardMaterial3D_pn0iw")
+mesh = SubResource("ImmediateMesh_pl2eu")
+surface_material_override/0 = SubResource("StandardMaterial3D_ove5u")
 script = ExtResource("9_naebm")
 is_square = true
 length = 20.49
 height = 20.49
 color = Color(1, 0, 0, 1)
+
+[node name="SpawnTimer" type="Timer" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect"]
+script = ExtResource("8_kur02")
+lower_time = 2.0
+upper_time = 5.0
 
 [node name="SpawnAreaRect2" type="Marker3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.423811, 0.6, -5.1863155)
@@ -391,7 +413,8 @@ height = 27.57
 enemies = PackedStringArray("ElderStumbleTree")
 spawn_limit = 2
 roam_chance = 1.0
-distance_trigger_min = 2.0
+time_trigger_min = 1.5
+time_trigger_max = 5.0
 metadata/_custom_type_script = "uid://whcd1sb6tx51"
 
 [node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect2"]
@@ -399,12 +422,17 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect2"]
-mesh = SubResource("ImmediateMesh_pl2eu")
-surface_material_override/0 = SubResource("StandardMaterial3D_ove5u")
+mesh = SubResource("ImmediateMesh_ohl48")
+surface_material_override/0 = SubResource("StandardMaterial3D_2e2hg")
 script = ExtResource("9_naebm")
 length = 11.68
 height = 27.57
 color = Color(1, 0, 0, 1)
+
+[node name="SpawnTimer" type="Timer" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect2"]
+script = ExtResource("8_kur02")
+lower_time = 1.5
+upper_time = 5.0
 
 [node name="TravelPointZones" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
 script = ExtResource("8_naebm")
@@ -422,8 +450,8 @@ reroll_function = Callable()
 metadata/_custom_type_script = "uid://b888q7s0x56r3"
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-mesh = SubResource("ImmediateMesh_ohl48")
-surface_material_override/0 = SubResource("StandardMaterial3D_2e2hg")
+mesh = SubResource("ImmediateMesh_y2ko7")
+surface_material_override/0 = SubResource("StandardMaterial3D_7qrdv")
 script = ExtResource("9_naebm")
 length = 60.08
 height = 38.27

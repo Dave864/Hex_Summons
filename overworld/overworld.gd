@@ -15,9 +15,11 @@ func _ready() -> void:
 	var start_position := SceneController.prior_avatar_position
 	if start_position.is_finite():
 		player_avatar.position = start_position
-	SceneController.set_avatar_reference(player_avatar)
+	else:
+		# TODO: Add logic to place avatar at landmark spawn point.
+		pass
 
 
 ## Clears out the avatar reference in the SceneController.
 func _exit_tree() -> void:
-	SceneController.set_avatar_reference(null)
+	SceneController.prior_avatar_position = player_avatar.position

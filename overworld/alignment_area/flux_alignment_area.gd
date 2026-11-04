@@ -4,15 +4,17 @@ extends AlignmentArea
 ## Defines an AlignmentArea whose alignments change randomly.
 
 
-## The distance (time) that must be traveled for the alignment to shift.
-@export_range(0.1, 10.0, 0.1) var flux_timer: float = 1.0
-## The margin of difference the timer can have.
-@export_range(0.0, 5.0, 0.1) var timer_margin: float = 0.0
+## The distance that must be traveled for the alignment to shift.
+@export_range(0.1, 10.0, 0.1) var flux_distance: float = 1.0
+## The margin of difference for the distances.
+@export_range(0.0, 5.0, 0.1) var distance_margin: float = 0.0
 
-## The current timer value.
-var _timer_value: float = 0.0
-## The current duration of the timer.
-var _timer_duration: float = 0.0
+## The current distance threshold.
+var _flux_value: float = 0.0
+## The current distance traveled.
+var _distance_traveled: float = 0.0
+## The position of the player last frame.
+var _prior_position := Vector3.INF
 ## The player avatar within this area.
 var _avatar: OverworldAvatar = null
 
@@ -30,10 +32,13 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if _avatar == null:
 		return
-	_timer_duration += SceneController.get_last_squared_distance()
-	if _timer_duration > _timer_value:
+	_distance_traveled += _avatar.global_position.distance_squared_to(
+			_prior_position
+	)
+	_prior_position = _avatar.global_position
+	if _distance_traveled > pow(_flux_value, 2.0):
 		_randomize_alignment()
-		_timer_duration = 0.0
+		_distance_traveled = 0.0
 
 
 ## Updates the elemental alignment by randomly modifying the current alignment.
@@ -68,11 +73,12 @@ func _randomize_alignment() -> void:
 ## Begins tracking the player avatar.
 func _on_AlignmentArea_body_entered(player_avatar: OverworldAvatar) -> void:
 	if _avatar == null:
+		_prior_position = player_avatar.global_position
+		_distance_traveled = 0.0
 		_avatar = player_avatar
-		_timer_duration = 0.0
-		_timer_value = randf_range(
-				flux_timer - timer_margin,
-				flux_timer + timer_margin
+		_flux_value = randf_range(
+				flux_distance - distance_margin,
+				flux_distance + distance_margin
 		)
 		_randomize_alignment()
 	else:

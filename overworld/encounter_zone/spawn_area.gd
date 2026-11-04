@@ -7,6 +7,9 @@ extends Marker3D
 ## placed properly.
 
 
+## Name of variable timer used for determining when to create EncounterSpawn
+## nodes.
+const SPAWN_TIMER_NAME := "SpawnTimer"
 ## Name of the raycast node for detecting where to place an EncounterSpawn.
 const Y_RAYCAST_NAME := "Y_RayCast"
 ## The length of the raycast.
@@ -22,26 +25,26 @@ const GIZMO_COLOR := Color.RED
 @export_range(0, 50) var spawn_limit := 1
 ## The likelihood that an EncounterSpawn will roam as opposed to travel.
 @export_range(0.0, 1.0, 0.01) var roam_chance := 0.5
-@export_group("Encounter Spawn Distance Trigger", "distance_trigger")
-## The minimum distance that must be traveled before an EncounterSpawner appears.
-@export_range(0.01, 10.0, 0.01) var distance_trigger_min := 1.0:
+@export_group("Encounter Spawn Time", "time_trigger")
+## The minimum time in seconds that can pass before an EncounterSpawner appears.
+@export_range(0.01, 300.0, 0.01, "exp", "suffix:s") var time_trigger_min := 1.0:
 	set(value):
-		distance_trigger_min = value
-		if distance_trigger_max < distance_trigger_min:
-			distance_trigger_max = value
-## The maximum distance that can be traveled before an EncounterSpawner appears.
-@export_range(0.01, 10.0, 0.01) var distance_trigger_max := 3.0:
+		time_trigger_min = value
+		if _spawn_timer != null:
+			_spawn_timer.lower_time = value
+		if time_trigger_max < time_trigger_min:
+			time_trigger_max = value
+## The maximum time in seconds that can pass before an EncounterSpawner appears.
+@export_range(0.01, 300.0, 0.01, "exp", "suffix:s") var time_trigger_max := 3.0:
 	set(value):
-		distance_trigger_max = value
-		if distance_trigger_min > distance_trigger_max:
-			distance_trigger_min = value
+		time_trigger_max = value
+		if _spawn_timer != null:
+			_spawn_timer.upper_time = time_trigger_max
+		if time_trigger_min > time_trigger_max:
+			time_trigger_min = value
 
-## The distance the avatar must travel before an EncounterSpawn node is made.
-var _distance_trigger := 0.0:
-	get:
-		return pow(_distance_trigger, 2.0)
-## The distance traveled by the avatar.
-var _travel_distance := 0.0
+## Variable timer used to determine when to create an EncounterSpawn.
+var _spawn_timer: VariableTimer = null
 ## Raycast used to determine where on the y-axis to place the EncounterSpawn
 ## node.
 var _y_cast: RayCast3D = null
@@ -58,9 +61,9 @@ var _active_spawners: Array[int] = []
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_instance_timer()
 	_instance_y_raycast()
 	_instance_gizmo()
-	_update_distance_trigger()
 
 
 ## Update the ecosystem based on how far the avatar has traveled.
@@ -68,13 +71,27 @@ func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	_simulate_environment()
-	if _active_spawners.size() < spawn_limit:
-		_process_spawning()
 
 
 ## Updates the terrain zone this spawn area is in.
 func set_terrain_zone(new_zone: TerrainZone) -> void:
 	_terrain_zone = new_zone
+
+
+## Creates a timer for determining when to spawn another EncounterSpawn.
+func _instance_timer() -> void:
+	if has_node(SPAWN_TIMER_NAME):
+		_spawn_timer = get_node(SPAWN_TIMER_NAME) as VariableTimer
+	else:
+		_spawn_timer = VariableTimer.new()
+		add_child(_spawn_timer)
+		if Engine.is_editor_hint():
+			_spawn_timer.set_owner(get_tree().edited_scene_root)
+		_spawn_timer.name = SPAWN_TIMER_NAME
+	if not _spawn_timer.timeout.is_connected(_process_spawning):
+		_spawn_timer.timeout.connect(_process_spawning)
+	_spawn_timer.lower_time = time_trigger_min
+	_spawn_timer.upper_time = time_trigger_max
 
 
 ## Creates raycast node for detecting where on the y-axis to place an
@@ -143,42 +160,35 @@ func _simulate_environment() -> void:
 
 ## Handles the creation and placement of encounter spawners.
 func _process_spawning() -> void:
+	if Engine.is_editor_hint() or _active_spawners.size() >= spawn_limit:
+		return
 	if _terrain_zone == null:
 		printerr("No TerrainZone has been assigned.")
 		return
-	_travel_distance += SceneController.get_last_squared_distance()
-	if _travel_distance >= _distance_trigger:
-		_update_distance_trigger()
-		_travel_distance = 0.0
-		var spawner: EncounterSpawn = _enc_spawn.instantiate()
-		spawner.init_start_terrain_zone(_terrain_zone)
-		spawner.init_encounter_details(
-				_terrain_zone.select_random_map_path(),
-				enemies
-		)
-		var roam_offset: float = 0.0
-		if randf() <= roam_chance:
-			_define_roam_area(spawner)
-			roam_offset = spawner.roam_area.radius
-			add_child(spawner.roam_area)
-			spawner.roam_area.position = _random_area_position(roam_offset)
-			spawner.roam_area.global_rotation = global_rotation
-			spawner.roam_area.add_child(spawner)
-			spawner.global_position = spawner.roam_area.get_next_point()
-		else:
-			add_child(spawner)
-			spawner.global_position = _determine_spawn_global_position(roam_offset)
-		_active_spawners.append(spawner.get_instance_id())
-		spawner.despawned.connect(_on_EncounterSpawn_despawned)
+	var spawner: EncounterSpawn = _enc_spawn.instantiate()
+	spawner.init_start_terrain_zone(_terrain_zone)
+	spawner.init_encounter_details(
+			_terrain_zone.select_random_map_path(),
+			enemies
+	)
+	var roam_offset: float = 0.0
+	if randf() <= roam_chance:
+		_define_roam_area(spawner)
+		roam_offset = spawner.roam_area.radius
+		add_child(spawner.roam_area)
+		spawner.roam_area.position = _random_area_position(roam_offset)
+		spawner.roam_area.global_rotation = global_rotation
+		spawner.roam_area.add_child(spawner)
+		spawner.global_position = spawner.roam_area.get_next_point()
+	else:
+		add_child(spawner)
+		spawner.global_position = _determine_spawn_global_position(roam_offset)
+	_active_spawners.append(spawner.get_instance_id())
+	spawner.despawned.connect(_on_EncounterSpawn_despawned)
 
 
 ## Define a roam area for an EncounterSpawn.
 @abstract func _define_roam_area(spawner: EncounterSpawn) -> void
-
-
-## Resets the spawn distance trigger to a new random value.
-func _update_distance_trigger() -> void:
-	_distance_trigger = randf_range(distance_trigger_min, distance_trigger_max)
 
 
 ## Removes the despawned EncounterSpawn node from the tracker.

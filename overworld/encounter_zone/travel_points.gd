@@ -54,7 +54,7 @@ const REROLL_COUNT := 10
 @export_tool_button("Regenerate Points") var regen_points_function := (
 	_create_points
 )
-## Relevels all positions so that they are on a map collision shape is able.
+## Relevels all positions so that they are on a map collision shape.
 @export_tool_button("Relevel Positions") var relevel_function := (
 	_relevel_point_positions
 )

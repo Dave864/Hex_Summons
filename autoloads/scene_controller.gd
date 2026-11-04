@@ -18,10 +18,6 @@ var _loading_screen: PackedScene = preload(
 )
 ## The path to the scene currently being loaded.
 var load_scene_path: String = ""
-## Reference to the OverworldAvatar.
-var _overworld_avatar: OverworldAvatar = null
-## The squared distance the tracked avatar traveled in the last frame.
-var _last_frame_distance: float = 0.0
 ## The path to the map to use for the next encounter.
 var _encounter_map_path: String = ""
 ## The paths to the enemies to use for the next encounter.
@@ -35,29 +31,7 @@ func _ready() -> void:
 
 ## Updates the last tracked position for the currently tracked OverworldAvatar.
 func _physics_process(_delta: float) -> void:
-	if _overworld_avatar != null:
-		_last_frame_distance = prior_avatar_position.distance_squared_to(
-				_overworld_avatar.position
-		)
-		prior_avatar_position = _overworld_avatar.position
-
-
-## Gets the reference to the OverworldAvatar.
-func get_avatar_reference() -> OverworldAvatar:
-	return _overworld_avatar
-
-
-## Sets the reference to the OverworldAvatar.
-func set_avatar_reference(avatar_reference: OverworldAvatar) -> void:
-	_overworld_avatar = avatar_reference
-	_last_frame_distance = 0.0
-	if not prior_avatar_position.is_finite() and _overworld_avatar != null:
-		prior_avatar_position = _overworld_avatar.position
-
-
-## Gets the distance traveled by the avatar in the last frame.
-func get_last_squared_distance() -> float:
-	return _last_frame_distance
+	pass
 
 
 ## Returns the path to the currently set encounter map.
