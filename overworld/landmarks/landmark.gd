@@ -33,6 +33,8 @@ func _ready() -> void:
 		_create_missing_nodes()
 	_spawn_point = $SpawnPoint
 	_transition_area = $TransitionArea
+	if not _transition_area.body_entered.is_connected(_on_body_entered):
+		_transition_area.body_entered.connect(_on_body_entered)
 	if Engine.is_editor_hint():
 		_spawn_point.set_owner(get_tree().edited_scene_root)
 		_transition_area.set_owner(get_tree().edited_scene_root)
@@ -62,6 +64,7 @@ func _create_missing_nodes() -> void:
 				Constants.DEFAULT_LAYER,
 				false
 		)
+		_transition_area.set_collision_layer_value(Constants.MAP_LAYER, true)
 		_transition_area.set_collision_mask_value(
 				Constants.DEFAULT_LAYER,
 				false
@@ -78,6 +81,8 @@ func _create_missing_nodes() -> void:
 
 ## Updates the collision shape to match the new radius.
 func _update_transition_area(new_radius: float) -> void:
+	if not is_node_ready():
+		return
 	var owner_id := _transition_area.get_shape_owners()[0]
 	var boundary_sphere := _transition_area.shape_owner_get_shape(
 			owner_id,
@@ -111,3 +116,8 @@ func _relevel_spawn_point() -> void:
 	if raycast.is_colliding():
 		_spawn_point.global_position = raycast.get_collision_point()
 	raycast.queue_free.call_deferred()
+
+
+## Triggers a scene switch to the connected zone.
+func _on_body_entered(_player_collider: Node3D) -> void:
+	pass

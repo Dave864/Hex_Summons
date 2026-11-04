@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TransitionConnections" load_steps=2 format=3 uid="uid://bnlhfcdfv207w"]
+
+[ext_resource type="Script" uid="uid://bckeb05e2etoc" path="res://landmark_zones/transition_connections.gd" id="1_kh8ng"]
+
+[resource]
+script = ExtResource("1_kh8ng")
+zone_to_landmark = Dictionary[String, String]({
+"ZoneEnd": "LandmarkEnd",
+"ZoneStart": "LandmarkStart"
+})
+landmark_to_zone = Dictionary[String, String]({
+"LandmarkEnd": "ZoneEnd",
+"LandmarkStart": "ZoneStart"
+})
+metadata/_custom_type_script = "uid://bckeb05e2etoc"

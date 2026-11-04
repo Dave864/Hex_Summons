@@ -1,9 +1,10 @@
-[gd_scene load_steps=51 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=56 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="Script" uid="uid://b63wynnx1khli" path="res://overworld/overworld.gd" id="1_g3yfq"]
 [ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="1_q45au"]
 [ext_resource type="Script" uid="uid://crnlh08xvaccx" path="res://overworld/alignment_area/stable_alignment_area.gd" id="2_36ygl"]
+[ext_resource type="Script" uid="uid://c7xewvlqs0214" path="res://overworld/landmarks/landmark.gd" id="3_1kkrf"]
 [ext_resource type="Script" uid="uid://7gcajgi7sxds" path="res://overworld/alignment_area/flux_alignment_area.gd" id="3_35tns"]
 [ext_resource type="Script" uid="uid://ca7jxmn65fbji" path="res://overworld/encounter_zone/terrain_zone.gd" id="4_q1spi"]
 [ext_resource type="Script" uid="uid://cpqrkm0xmuufc" path="res://overworld/encounter_zone/spawn_area_circle.gd" id="6_uyahc"]
@@ -77,6 +78,18 @@ size = Vector3(30, 15, 60)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_36ygl"]
 size = Vector3(30, 15, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_eou61"]
+size = Vector3(2, 1, 2)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xdnfc"]
+radius = 2.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_1kkrf"]
+size = Vector3(5, 1.5, 5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eou61"]
+radius = 4.56
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wc37g"]
 size = Vector3(95, 5, 46)
@@ -217,6 +230,39 @@ shape = SubResource("BoxShape3D_36ygl")
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="Terrain/NavigationRegion3D/LongMountain/StaticBody3D"]
 
 [node name="Landmarks" type="Node3D" parent="."]
+
+[node name="LandmarkStart" type="MeshInstance3D" parent="Landmarks"]
+transform = Transform3D(0.7852521, 0, 0.61917615, 0, 1, 0, -0.61917615, 0, 0.7852521, -42.015366, 0.94484353, -43.089516)
+mesh = SubResource("BoxMesh_eou61")
+script = ExtResource("3_1kkrf")
+metadata/_custom_type_script = "uid://c7xewvlqs0214"
+
+[node name="SpawnPoint" type="Marker3D" parent="Landmarks/LandmarkStart"]
+transform = Transform3D(1.0000002, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1.0000002, 0.11335373, -0.44484353, 2.532692)
+
+[node name="TransitionArea" type="Area3D" parent="Landmarks/LandmarkStart"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="BoundaryShape" type="CollisionShape3D" parent="Landmarks/LandmarkStart/TransitionArea"]
+shape = SubResource("SphereShape3D_xdnfc")
+
+[node name="LandmarkEnd" type="MeshInstance3D" parent="Landmarks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.117163, 0.93312454, -37.30602)
+mesh = SubResource("BoxMesh_1kkrf")
+script = ExtResource("3_1kkrf")
+transition_radius = 4.56
+metadata/_custom_type_script = "uid://c7xewvlqs0214"
+
+[node name="SpawnPoint" type="Marker3D" parent="Landmarks/LandmarkEnd"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.43312454, 5.1708107)
+
+[node name="TransitionArea" type="Area3D" parent="Landmarks/LandmarkEnd"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="BoundaryShape" type="CollisionShape3D" parent="Landmarks/LandmarkEnd/TransitionArea"]
+shape = SubResource("SphereShape3D_eou61")
 
 [node name="AlignmentAreas" type="Node3D" parent="."]
 
@@ -541,5 +587,4 @@ transform = Transform3D(1, 0, 0, 0, 0.46507394, 0.8852719, 0, -0.8852719, 0.4650
 [node name="MusicOverworld" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_iro46")
 pitch_scale = 1.05
-autoplay = true
 bus = &"Music"
