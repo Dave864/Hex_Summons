@@ -1,0 +1,311 @@
+[gd_scene load_steps=36 format=3 uid="uid://ccvakmxlt0pt6"]
+
+[ext_resource type="ArrayMesh" uid="uid://dbv05s8l8awg" path="res://landmark_zones/mesh_libraries/simple/TileMeshFlat.res" id="1_p4001"]
+[ext_resource type="ArrayMesh" uid="uid://dxusoddbj0sha" path="res://landmark_zones/mesh_libraries/simple/TileMeshDropEdge.res" id="2_mng4f"]
+[ext_resource type="ArrayMesh" uid="uid://epqlbvitjl6w" path="res://landmark_zones/mesh_libraries/simple/TileMeshDropDiag.res" id="3_s1yq7"]
+[ext_resource type="ArrayMesh" uid="uid://bo5p6bjvy0mwn" path="res://landmark_zones/mesh_libraries/simple/TileMeshDropCorner.res" id="4_l0fj7"]
+[ext_resource type="ArrayMesh" uid="uid://dnxgoc1rlemeh" path="res://landmark_zones/mesh_libraries/simple/TileMeshDropSalient.res" id="5_lf2nu"]
+[ext_resource type="ArrayMesh" uid="uid://cq1bae4ynsb75" path="res://landmark_zones/mesh_libraries/simple/TileMeshRampStraight.res" id="6_mng4f"]
+[ext_resource type="ArrayMesh" uid="uid://bp8pctugdy6qq" path="res://landmark_zones/mesh_libraries/simple/TileMeshRampStraightLR.res" id="7_s1yq7"]
+[ext_resource type="ArrayMesh" uid="uid://bl8oble5narxd" path="res://landmark_zones/mesh_libraries/simple/TileMeshRampStraightL.res" id="8_l0fj7"]
+[ext_resource type="ArrayMesh" uid="uid://qycwck40d8fb" path="res://landmark_zones/mesh_libraries/simple/TileMeshRampStraightR.res" id="9_lf2nu"]
+[ext_resource type="ArrayMesh" uid="uid://bd5gtynpdnsaw" path="res://landmark_zones/mesh_libraries/simple/TileMeshRampDiag.res" id="10_qx8pe"]
+[ext_resource type="ArrayMesh" uid="uid://53aptej2jrub" path="res://landmark_zones/mesh_libraries/simple/TileMeshRampDiagL.res" id="11_8mnut"]
+[ext_resource type="ArrayMesh" uid="uid://capruvmjydc2f" path="res://landmark_zones/mesh_libraries/simple/TileMeshWallDiag.res" id="11_bk6bh"]
+[ext_resource type="ArrayMesh" uid="uid://vd2mvd2gss7l" path="res://landmark_zones/mesh_libraries/simple/TileMeshRampDiagR.res" id="12_mo146"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8mnut"]
+data = PackedVector3Array(0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 0, -0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_8mnut"]
+vertices = PackedVector3Array(0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 0, -0.5, 0.5, 0, 0.5)
+polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 3, 1)]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mo146"]
+data = PackedVector3Array(0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 0, -0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, 0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0, 0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_8mnut"]
+points = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 0.5, -0.5, 0, 0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fow70"]
+data = PackedVector3Array(0.5, 0, -0.5, -0.5, -0.5, 0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0, 0.5, -0.5, 0, -0.5, 0.5, 0, -0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ce48w"]
+points = PackedVector3Array(-0.5, 0, 0.5, -0.5, 0.5, 0.5, 0.5, 0, -0.5, 0.5, 0.5, -0.5)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_ce48w"]
+vertices = PackedVector3Array(0.5, 0, -0.5, -0.5, 0, -0.5, -0.5, 0, 0.5)
+polygons = [PackedInt32Array(0, 1, 2)]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ce48w"]
+data = PackedVector3Array(0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 0, -0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, 0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, 0.5, 0, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0, 0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mo146"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0, 0.5, 0.5, 0, -0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_pkts4"]
+data = PackedVector3Array(0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 0, -0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, 0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0, 0.5, -0.5, -0.5, 0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, 0.5, 0, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0, 0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fow70"]
+points = PackedVector3Array(-0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, -0.5, 0, -0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mng4f"]
+data = PackedVector3Array(0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_mng4f"]
+vertices = PackedVector3Array(0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0, 0.5)
+polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 3, 1)]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pkts4"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0, 0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_x02kh"]
+points = PackedVector3Array(-0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bk6bh"]
+data = PackedVector3Array(-0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, 0.5)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_spqt7"]
+vertices = PackedVector3Array(-0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, 0.5)
+polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 5)]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2icsu"]
+points = PackedVector3Array(-0.5, 0.5, 0.5, -0.5, 0, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ugb57"]
+points = PackedVector3Array(-0.5, 0.5, -0.5, 0.5, 0, -0.5, 0.5, 0.5, -0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_spqt7"]
+data = PackedVector3Array(0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, 0.5, 0.5, -0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qx8pe"]
+points = PackedVector3Array(-0.5, 0.5, 0.5, -0.5, 1, 0.5, 0.5, 1, -0.5, 0.5, 0.5, -0.5)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_bk6bh"]
+vertices = PackedVector3Array(0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5)
+polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 5)]
+
+[node name="MeshLibrarySimple" type="Node3D"]
+
+[node name="Flat" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 0, 0)
+mesh = ExtResource("1_p4001")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Flat"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Flat/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_8mnut")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Flat"]
+navigation_mesh = SubResource("NavigationMesh_8mnut")
+
+[node name="DropWall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, 0)
+mesh = ExtResource("2_mng4f")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="DropWall"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DropWall/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_mo146")
+
+[node name="WallCollisionShape3D" type="CollisionShape3D" parent="DropWall/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_8mnut")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="DropWall"]
+navigation_mesh = SubResource("NavigationMesh_8mnut")
+
+[node name="DropDiag" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_s1yq7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="DropDiag"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DropDiag/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_fow70")
+
+[node name="WallCollisionShape3D" type="CollisionShape3D" parent="DropDiag/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_ce48w")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="DropDiag"]
+navigation_mesh = SubResource("NavigationMesh_ce48w")
+
+[node name="DropCorner" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, 0)
+mesh = ExtResource("4_l0fj7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="DropCorner"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DropCorner/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ce48w")
+
+[node name="WallCollisionShape3D1" type="CollisionShape3D" parent="DropCorner/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_8mnut")
+
+[node name="WallCollisionShape3D2" type="CollisionShape3D" parent="DropCorner/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_mo146")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="DropCorner"]
+navigation_mesh = SubResource("NavigationMesh_8mnut")
+
+[node name="DropSalient" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 0, 0)
+mesh = ExtResource("5_lf2nu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="DropSalient"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DropSalient/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_pkts4")
+
+[node name="WallCollisionShape3D1" type="CollisionShape3D" parent="DropSalient/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_8mnut")
+
+[node name="WallCollisionShape3D2" type="CollisionShape3D" parent="DropSalient/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_mo146")
+
+[node name="WallCollisionShape3D3" type="CollisionShape3D" parent="DropSalient/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_fow70")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="DropSalient"]
+navigation_mesh = SubResource("NavigationMesh_8mnut")
+
+[node name="RampStraight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 0, 1.1)
+mesh = ExtResource("6_mng4f")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RampStraight"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RampStraight/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_mng4f")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="RampStraight"]
+navigation_mesh = SubResource("NavigationMesh_mng4f")
+
+[node name="RampStraightLR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, 1.1)
+mesh = ExtResource("7_s1yq7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RampStraightLR"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RampStraightLR/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_mng4f")
+
+[node name="WallRightCollisionShape3D" type="CollisionShape3D" parent="RampStraightLR/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_pkts4")
+
+[node name="WallLeftCollisionShape3D" type="CollisionShape3D" parent="RampStraightLR/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_x02kh")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="RampStraightLR"]
+navigation_mesh = SubResource("NavigationMesh_mng4f")
+
+[node name="RampStraightL" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.1)
+mesh = ExtResource("8_l0fj7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RampStraightL"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="WallLeftCollisionShape3D" type="CollisionShape3D" parent="RampStraightL/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_x02kh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RampStraightL/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_mng4f")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="RampStraightL"]
+navigation_mesh = SubResource("NavigationMesh_mng4f")
+
+[node name="RampStraightR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, 1.1)
+mesh = ExtResource("9_lf2nu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RampStraightR"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="WallRightCollisionShape3D" type="CollisionShape3D" parent="RampStraightR/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_pkts4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RampStraightR/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_mng4f")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="RampStraightR"]
+navigation_mesh = SubResource("NavigationMesh_mng4f")
+
+[node name="RampDiag" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 0, 1.1)
+mesh = ExtResource("10_qx8pe")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RampDiag"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RampDiag/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_bk6bh")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="RampDiag"]
+navigation_mesh = SubResource("NavigationMesh_spqt7")
+
+[node name="RampDiagLEdge" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 0, 2.2)
+mesh = ExtResource("11_8mnut")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RampDiagLEdge"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="WallCollisionShape3D" type="CollisionShape3D" parent="RampDiagLEdge/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_2icsu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RampDiagLEdge/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_bk6bh")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="RampDiagLEdge"]
+navigation_mesh = SubResource("NavigationMesh_spqt7")
+
+[node name="RampDiagREdge" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, 2.2)
+mesh = ExtResource("12_mo146")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RampDiagREdge"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="WallCollisionShape3D" type="CollisionShape3D" parent="RampDiagREdge/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_ugb57")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RampDiagREdge/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_bk6bh")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="RampDiagREdge"]
+navigation_mesh = SubResource("NavigationMesh_spqt7")
+
+[node name="WallDiag" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.2)
+mesh = ExtResource("11_bk6bh")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WallDiag"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallDiag/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_spqt7")
+
+[node name="WallCollisionShape3D" type="CollisionShape3D" parent="WallDiag/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_qx8pe")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="WallDiag"]
+navigation_mesh = SubResource("NavigationMesh_bk6bh")
