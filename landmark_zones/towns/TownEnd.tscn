@@ -2,6 +2,7 @@
 
 [ext_resource type="MeshLibrary" uid="uid://dsua3fryx1hhl" path="res://landmark_zones/mesh_libraries/simple/Simple.meshlib" id="1_gb8g0"]
 
-[node name="TownEnd" type="GridMap"]
+[node name="TownEnd" type="Node3D"]
+
+[node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_gb8g0")
-cell_size = Vector3(1, 0.5, 1)

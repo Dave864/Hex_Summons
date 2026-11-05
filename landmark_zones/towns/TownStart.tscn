@@ -2,10 +2,8 @@
 
 [ext_resource type="MeshLibrary" uid="uid://dsua3fryx1hhl" path="res://landmark_zones/mesh_libraries/simple/Simple.meshlib" id="1_dbt6e"]
 
-[node name="TownStart" type="GridMap"]
-mesh_library = ExtResource("1_dbt6e")
-cell_size = Vector3(1, 0.5, 1)
-cell_center_y = false
-collision_layer = 2
-collision_mask = 4
+[node name="TownStart" type="Node3D"]
 metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_dbt6e")
