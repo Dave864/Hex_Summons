@@ -1,0 +1,216 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://c42hjojhcljpy"
+path="res://.godot/imported/MLSimpleMeshes.glb-fb3c6123bd2d5ef9acebe53178f89b62.scn"
+
+[deps]
+
+source_file="res://landmark_zones/mesh_libraries/simple/MLSimpleMeshes.glb"
+dest_files=["res://.godot/imported/MLSimpleMeshes.glb-fb3c6123bd2d5ef9acebe53178f89b62.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name="Mesh"
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=false
+animation/import=false
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=false
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"meshes": {
+"MLSimpleMeshes_Cube_001": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMNavDropDiag.res",
+"save_to_file/path": "uid://b8tlxeqigsly1"
+},
+"MLSimpleMeshes_Cube_002": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMFlat.res",
+"save_to_file/path": "uid://dubg6ymp87fsy"
+},
+"MLSimpleMeshes_Cube_003": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMDropEdge.res",
+"save_to_file/path": "uid://crc8t6l2ssye0"
+},
+"MLSimpleMeshes_Cube_004": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMNavWallDiag.res",
+"save_to_file/path": "uid://ce0iebg52d2k5"
+},
+"MLSimpleMeshes_Cube_005": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMDropDiag.res",
+"save_to_file/path": "uid://b8a2yi8ox7xqc"
+},
+"MLSimpleMeshes_Cube_006": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMWallDiag.res",
+"save_to_file/path": "uid://wbhcbfe730m1"
+},
+"MLSimpleMeshes_Cube_010": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampDiag.res",
+"save_to_file/path": "uid://coetk01tb51ql"
+},
+"MLSimpleMeshes_Cube_014": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMDropCorner.res",
+"save_to_file/path": "uid://ujvron6kkfpq"
+},
+"MLSimpleMeshes_Cube_015": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMDropSalient.res",
+"save_to_file/path": "uid://bxc87k6k5rw05"
+},
+"MLSimpleMeshes_Cube_020": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampStraight.res",
+"save_to_file/path": "uid://crmbm3q7lu24a"
+},
+"MLSimpleMeshes_Cube_021": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampStraightL.res",
+"save_to_file/path": "uid://dcy7dvsy5sxs"
+},
+"MLSimpleMeshes_Cube_022": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampStraightR.res",
+"save_to_file/path": "uid://dej4f2q18eehb"
+},
+"MLSimpleMeshes_Cube_023": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampStraightLR.res",
+"save_to_file/path": "uid://xnhpwsmpujsn"
+},
+"MLSimpleMeshes_Cube_024": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampSalient.res",
+"save_to_file/path": "uid://ce3yt1g3tvpk3"
+},
+"MLSimpleMeshes_Cube_025": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampSalientL.res",
+"save_to_file/path": "uid://cgq6kg1akrxv1"
+},
+"MLSimpleMeshes_Cube_026": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampSalientR.res",
+"save_to_file/path": "uid://cd7nv76lh4phn"
+},
+"MLSimpleMeshes_Cube_027": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampDiagL.res",
+"save_to_file/path": "uid://c5bff174qstv7"
+},
+"MLSimpleMeshes_Cube_028": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampDiagR.res",
+"save_to_file/path": "uid://cv6gskb4lpwhj"
+},
+"MLSimpleMeshes_Cube_029": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMRampInset.res",
+"save_to_file/path": "uid://bh2exx78682kc"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1
