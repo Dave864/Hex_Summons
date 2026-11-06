@@ -182,6 +182,33 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TilesMeshRampSalient.res",
 "save_to_file/path": "uid://b2ai2jdjjdgif"
+},
+"MeshLibrarySimple_Cube_017": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TileMeshRampInset.res",
+"save_to_file/path": "uid://dh4i1iurxvumr"
+},
+"MeshLibrarySimple_Cube_018": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TileMeshRampSalientR.res",
+"save_to_file/path": "uid://lde0pnq7160g"
+},
+"MeshLibrarySimple_Cube_019": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/MeshLibrarySimple_Cube_019.res",
+"save_to_file/path": "uid://dloedl6hhskxo"
 }
 }
 }
