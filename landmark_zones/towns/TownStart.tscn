@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://csmeim5hlrfl3"]
+[gd_scene load_steps=7 format=3 uid="uid://csmeim5hlrfl3"]
 
 [ext_resource type="MeshLibrary" uid="uid://dsua3fryx1hhl" path="res://landmark_zones/mesh_libraries/simple/Simple.meshlib" id="1_dbt6e"]
 [ext_resource type="Script" uid="uid://cj0hfj1ac30tg" path="res://landmark_zones/character_body_3d.gd" id="2_u71ww"]
@@ -9,6 +9,9 @@
 albedo_color = Color(0, 1, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_dbt6e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u71ww"]
+size = Vector3(7, 2, 2)
 
 [node name="TownStart" type="Node3D"]
 metadata/_editor_floor_ = Vector3(0, 0, 0)
@@ -26,7 +29,11 @@ data = {
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.8795738, -0.04026582, 0.47405544, -0.47576246, -0.07444212, 0.87641805, -3.3821437e-09, -0.99641204, -0.084634304, -9.946511, 8.001995, 0)
+transform = Transform3D(-0.08894568, -0.9659258, 0.24305542, -0.3319497, 0.258819, 0.90709543, -0.93909425, 4.0100165e-08, -0.3436596, 0, 10, 0)
+light_energy = 0.8
+light_specular = 0.5
+shadow_enabled = true
+directional_shadow_mode = 0
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.904604, 1.1274214, -12.454961)
@@ -37,10 +44,19 @@ script = ExtResource("2_u71ww")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("CapsuleShape3D_dbt6e")
 
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 0.3458059, 0.9383061, 0, -0.9383061, 0.3458059, 0, 6.0390406, 3.5995083)
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.182966, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49, 0)
 material_override = SubResource("StandardMaterial3D_dbt6e")
 mesh = SubResource("BoxMesh_dbt6e")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.3458059, 0.9383061, 0, -0.9383061, 0.3458059, 1.904604, 7.166462, -8.855453)
+
+[node name="ExitZone" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.2)
+shape = SubResource("BoxShape3D_u71ww")
+debug_color = Color(0.97494775, 0, 0.4265193, 0.41960785)
