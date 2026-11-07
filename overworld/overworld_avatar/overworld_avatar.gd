@@ -4,7 +4,7 @@ extends CharacterBody3D
 
 
 ## The speed the avatar moves at.
-const SPEED = 7.0
+@export_range(1.0, 20.0, 0.1) var speed := 6.0
 
 ## Flag that indicates if the character is moving.
 var _is_moving: bool
@@ -49,10 +49,10 @@ func _physics_process(_delta: float) -> void:
 	var input_dir_vector := Vector3(input_dir.x, 0.0, input_dir.y)
 	var direction := (transform.basis * input_dir_vector).normalized()
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()

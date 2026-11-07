@@ -83,7 +83,7 @@ size = Vector3(30, 15, 60)
 size = Vector3(2, 1, 2)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xdnfc"]
-radius = 2.0
+radius = 1.6
 
 [sub_resource type="BoxMesh" id="BoxMesh_1kkrf"]
 size = Vector3(5, 1.5, 5)
@@ -235,6 +235,7 @@ shape = SubResource("BoxShape3D_36ygl")
 transform = Transform3D(0.7852521, 0, 0.61917615, 0, 1, 0, -0.61917615, 0, 0.7852521, -42.015366, 0.94484353, -43.089516)
 mesh = SubResource("BoxMesh_eou61")
 script = ExtResource("3_1kkrf")
+transition_radius = 1.5999999999999999
 metadata/_custom_type_script = "uid://c7xewvlqs0214"
 
 [node name="SpawnPoint" type="Marker3D" parent="Landmarks/LandmarkStart"]

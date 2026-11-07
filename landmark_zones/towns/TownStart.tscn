@@ -1,20 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://csmeim5hlrfl3"]
+[gd_scene load_steps=10 format=3 uid="uid://csmeim5hlrfl3"]
 
 [ext_resource type="MeshLibrary" uid="uid://dsua3fryx1hhl" path="res://landmark_zones/mesh_libraries/simple/Simple.meshlib" id="1_dbt6e"]
 [ext_resource type="Script" uid="uid://c0unjyujryvx4" path="res://landmark_zones/landmark_zone.gd" id="1_u106e"]
-[ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="3_u106e"]
+[ext_resource type="Script" uid="uid://cqmg5j4kolqc7" path="res://overworld/overworld_avatar/overworld_avatar.gd" id="3_oke51"]
+[ext_resource type="SpriteFrames" uid="uid://dbaaxve5s3g2p" path="res://overworld/overworld_avatar/sprite_frames.tres" id="4_p7fh7"]
+[ext_resource type="Script" uid="uid://byskru7lp6ore" path="res://utils/rotating_sprite_3d.gd" id="5_o8ysx"]
+[ext_resource type="Environment" uid="uid://cmaeqvpnva8vi" path="res://default_env.tres" id="6_p7fh7"]
+[ext_resource type="AudioStream" uid="uid://cgmrmdgdolu22" path="res://audio/music/Peaceful Village.mp3" id="7_o8ysx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oke51"]
+radius = 0.2
+height = 0.6
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u71ww"]
-size = Vector3(7, 2, 2)
+size = Vector3(5, 1.5, 1.5)
 
-[node name="TownStart" type="Node3D" node_paths=PackedStringArray("player_avatar", "overworld_entry_point")]
+[node name="TownStart" type="Node3D" node_paths=PackedStringArray("overworld_entry_point")]
 script = ExtResource("1_u106e")
-player_avatar = NodePath("OverworldAvatar")
 overworld_entry_point = NodePath("ExitZone/EntryPoint")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="GridMap" type="GridMap" parent="."]
-transform = Transform3D(-1.5, 0, -2.2649371e-07, 0, 1.5, 0, 2.2649371e-07, 0, -1.5, 0, 0, 0)
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 mesh_library = ExtResource("1_dbt6e")
 cell_size = Vector3(1, 0.5, 1)
 cell_center_y = false
@@ -32,21 +39,49 @@ light_specular = 0.5
 shadow_enabled = true
 directional_shadow_mode = 0
 
-[node name="OverworldAvatar" parent="." instance=ExtResource("3_u106e")]
+[node name="OverworldAvatar" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1022456, 0)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("3_oke51")
+speed = 4.0
+
+[node name="RotatingSprite3D" type="AnimatedSprite3D" parent="OverworldAvatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+pixel_size = 0.0056
+billboard = 1
+fixed_size = true
+texture_filter = 0
+sprite_frames = ExtResource("4_p7fh7")
+script = ExtResource("5_o8ysx")
+metadata/_custom_type_script = "uid://byskru7lp6ore"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OverworldAvatar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("CapsuleShape3D_oke51")
 
 [node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
-transform = Transform3D(1, 0, 0, 0, 0.3458059, 0.9383061, 0, -0.9383061, 0.3458059, -1.9073486e-06, 7.231249, 2.7318716)
+transform = Transform3D(1, 0, 0, 0, 0.6319888, 0.7749776, 0, -0.7749776, 0.6319888, -1.9073486e-06, 6.6683855, 4.61981)
+environment = ExtResource("6_p7fh7")
+projection = 1
+size = 8.0
 
 [node name="ExitZone" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.18856)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16.156366)
 collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.1050644)
 shape = SubResource("BoxShape3D_u71ww")
 debug_color = Color(0.97494775, 0, 0.4265193, 0.41960785)
 
 [node name="EntryPoint" type="Marker3D" parent="ExitZone"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.240778)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_o8ysx")
+autoplay = true
+bus = &"Music"
 
 [connection signal="body_entered" from="ExitZone" to="." method="_on_exit_zone_body_entered"]
