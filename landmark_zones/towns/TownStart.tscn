@@ -1,19 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://csmeim5hlrfl3"]
+[gd_scene load_steps=5 format=3 uid="uid://csmeim5hlrfl3"]
 
 [ext_resource type="MeshLibrary" uid="uid://dsua3fryx1hhl" path="res://landmark_zones/mesh_libraries/simple/Simple.meshlib" id="1_dbt6e"]
-[ext_resource type="Script" uid="uid://cj0hfj1ac30tg" path="res://landmark_zones/character_body_3d.gd" id="2_u71ww"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dbt6e"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dbt6e"]
-albedo_color = Color(0, 1, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_dbt6e"]
+[ext_resource type="Script" uid="uid://c0unjyujryvx4" path="res://landmark_zones/landmark_zone.gd" id="1_u106e"]
+[ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="3_u106e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u71ww"]
 size = Vector3(7, 2, 2)
 
-[node name="TownStart" type="Node3D"]
+[node name="TownStart" type="Node3D" node_paths=PackedStringArray("player_avatar", "overworld_entry_point")]
+script = ExtResource("1_u106e")
+player_avatar = NodePath("OverworldAvatar")
+overworld_entry_point = NodePath("ExitZone/EntryPoint")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="GridMap" type="GridMap" parent="."]
@@ -35,28 +32,21 @@ light_specular = 0.5
 shadow_enabled = true
 directional_shadow_mode = 0
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.904604, 1.1274214, -12.454961)
-collision_layer = 4
-collision_mask = 2
-script = ExtResource("2_u71ww")
+[node name="OverworldAvatar" parent="." instance=ExtResource("3_u106e")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-shape = SubResource("CapsuleShape3D_dbt6e")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.49, 0)
-material_override = SubResource("StandardMaterial3D_dbt6e")
-mesh = SubResource("BoxMesh_dbt6e")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.3458059, 0.9383061, 0, -0.9383061, 0.3458059, 1.904604, 7.166462, -8.855453)
+[node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
+transform = Transform3D(1, 0, 0, 0, 0.3458059, 0.9383061, 0, -0.9383061, 0.3458059, -1.9073486e-06, 7.231249, 2.7318716)
 
 [node name="ExitZone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.18856)
 collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitZone"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.2)
 shape = SubResource("BoxShape3D_u71ww")
 debug_color = Color(0.97494775, 0, 0.4265193, 0.41960785)
+
+[node name="EntryPoint" type="Marker3D" parent="ExitZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[connection signal="body_entered" from="ExitZone" to="." method="_on_exit_zone_body_entered"]

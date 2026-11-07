@@ -5,11 +5,11 @@
 [resource]
 script = ExtResource("1_kh8ng")
 zone_to_landmark = Dictionary[String, String]({
-"ZoneEnd": "LandmarkEnd",
-"ZoneStart": "LandmarkStart"
+"TownEnd": "LandmarkEnd",
+"TownStart": "LandmarkStart"
 })
 landmark_to_zone = Dictionary[String, String]({
-"LandmarkEnd": "ZoneEnd",
-"LandmarkStart": "ZoneStart"
+"LandmarkEnd": "TownEnd",
+"LandmarkStart": "TownStart"
 })
 metadata/_custom_type_script = "uid://bckeb05e2etoc"

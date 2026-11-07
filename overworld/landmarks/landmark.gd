@@ -120,4 +120,4 @@ func _relevel_spawn_point() -> void:
 
 ## Triggers a scene switch to the connected zone.
 func _on_body_entered(_player_collider: Node3D) -> void:
-	pass
+	SceneController.change_scene_to_landmark_zone(name)
