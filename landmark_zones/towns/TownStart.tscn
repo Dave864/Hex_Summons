@@ -81,6 +81,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.240778)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_o8ysx")
+pitch_scale = 0.8
 autoplay = true
 bus = &"Music"
 
