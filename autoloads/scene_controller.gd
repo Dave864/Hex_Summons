@@ -96,29 +96,33 @@ func change_scene_to_overworld() -> void:
 	_load_scene.call_deferred(OVERWORLD_SCENE_PATH)
 
 
-## Triggers a scene change to a landmark zone.
-func change_scene_to_landmark_zone(landmark: String = "") -> void:
-	if landmark == "":
-		printerr("No landmark was specified.")
-		if map_connections.landmark_to_zone.size() == 0:
-			printerr("No zone connections for landmarks.")
-			return
-		landmark = map_connections.landmark_to_zone.keys()[0]
+## Triggers a scene change to a landmark's connected zone.
+func change_scene_to_connected_zone(landmark: String) -> void:
+	if not map_connections.landmark_to_zone.has(landmark):
+		printerr("Landmark {0} has no connected zone.".format([landmark]))
+		return
 	var zone: String = map_connections.landmark_to_zone[landmark]
 	landmark_active = landmark
+	if not change_scene_to_landmark_zone(zone):
+		printerr(
+				"No scene detected for landmark {0} mapped zone {1}".format(
+					[landmark, zone]
+				)
+		)
+
+
+## Triggers a scene change to a specified landmark zone. Returns if a scene
+## exists for the zone.
+func change_scene_to_landmark_zone(zone: String) -> bool:
 	var zone_scene_path := LANDMARK_TOWN_SCENE_PATH_FORMAT.format([zone])
 	if FileAccess.file_exists(zone_scene_path):
 		_load_scene.call_deferred(zone_scene_path)
-		return
+		return true
 	zone_scene_path = LANDMARK_DUNGEON_SCENE_PATH_FORMAT.format(zone)
 	if FileAccess.file_exists(zone_scene_path):
 		_load_scene.call_deferred(zone_scene_path)
-		return
-	printerr(
-			"No scene detected for landmark {0} mapped zone {1}".format(
-				[landmark, zone]
-			)
-	)
+		return true
+	return false
 
 
 ## Triggers a scene change to the specified path.

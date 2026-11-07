@@ -8,13 +8,25 @@ extends Node3D
 
 ## The player character avatar.
 @export var player_avatar: CharacterBody3D = null
+## The point the character is placed if not entering this zone from Overworld.
+@export var default_placement_point: Marker3D = null
 ## The point that the character enters the zone from the overworld.
 @export var overworld_entry_point: Marker3D = null
 
 
 ## Places the player avatar at the entry point or some designated start position.
 func _ready() -> void:
-	if SceneController.get_active_landmark_zone() == name:
+	assert(player_avatar != null, "No player avatar has been specified.")
+	assert(
+			overworld_entry_point != null,
+			"No overworld_entry_point has been specified."
+	)
+	if (
+			SceneController.landmark_active == ""
+			and default_placement_point != null
+	):
+		player_avatar.global_position = default_placement_point.global_position
+	elif SceneController.get_active_landmark_zone() == name:
 		player_avatar.global_position = overworld_entry_point.global_position
 
 

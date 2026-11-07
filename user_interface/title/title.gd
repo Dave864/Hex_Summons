@@ -21,9 +21,9 @@ func _ready() -> void:
 	start_button.grab_focus.call_deferred()
 
 
-## Loads the overworld scene.
+## Starts a new game.
 func _on_Start_pressed() -> void:
-	SceneController.change_scene_to_overworld()
+	SceneController.change_scene_to_landmark_zone("TownStart")
 
 
 ## Opens the options menu.
