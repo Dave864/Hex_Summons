@@ -5,6 +5,8 @@ extends CharacterBody3D
 
 ## The speed the avatar moves at.
 @export_range(1.0, 20.0, 0.1) var speed := 6.0
+## The initial direction the avatar faces.
+@export var initial_orientation := RotatingSprite3D.DisplayOrientation.FRONT
 
 ## Flag that indicates if the character is moving.
 var _is_moving: bool
@@ -15,7 +17,7 @@ var _is_moving: bool
 
 ## Orient the sprite to face forwards.
 func _ready() -> void:
-	_sprite.facing_direction = Vector2.DOWN
+	_sprite.face_orientation(initial_orientation)
 	_is_moving = false
 	_sprite.play_idle()
 

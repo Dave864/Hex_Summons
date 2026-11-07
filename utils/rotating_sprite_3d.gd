@@ -14,6 +14,7 @@ enum DisplayOrientation {
 	BACK_LEFT,
 	LEFT,
 	FRONT_LEFT,
+	RANDOM,
 }
 
 ## Indicates if the rotating sprite should align to hexagonal directions.
@@ -53,6 +54,19 @@ func _process(_delta: float) -> void:
 func face_hex_direction(direction: HexUtil.HexDirection) -> void:
 	facing_direction = Vector2.UP.rotated(-HexUtil.dir_rotation(direction))
 
+
+## Updates the facing direction to match the given display orientation with
+## respect to the current camera.
+func face_orientation(orientation: DisplayOrientation) -> void:
+	if orientation == DisplayOrientation.RANDOM:
+		face_random_direction()
+	else:
+		var camera_dir_transform := _camera.global_transform.basis.z * -1
+		var camera_dir := Vector2(
+				camera_dir_transform.x,
+				camera_dir_transform.z
+		).normalized()
+		facing_direction = camera_dir.rotated(orientation * TAU / 8.0)
 
 ## Updates the facing direction to a random one.
 func face_random_direction() -> void:
