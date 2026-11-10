@@ -1,10 +1,11 @@
-[gd_scene load_steps=42 format=3 uid="uid://bmxpg7ob4xc5u"]
+[gd_scene load_steps=43 format=3 uid="uid://bmxpg7ob4xc5u"]
 
 [ext_resource type="ArrayMesh" uid="uid://dubg6ymp87fsy" path="res://landmark_zones/mesh_libraries/simple/TMFlat.res" id="1_nex1a"]
 [ext_resource type="ArrayMesh" uid="uid://crc8t6l2ssye0" path="res://landmark_zones/mesh_libraries/simple/TMDropEdge.res" id="2_sjknv"]
 [ext_resource type="ArrayMesh" uid="uid://ujvron6kkfpq" path="res://landmark_zones/mesh_libraries/simple/TMDropCorner.res" id="3_loith"]
 [ext_resource type="ArrayMesh" uid="uid://bxc87k6k5rw05" path="res://landmark_zones/mesh_libraries/simple/TMDropSalient.res" id="4_dm3cd"]
 [ext_resource type="ArrayMesh" uid="uid://b8a2yi8ox7xqc" path="res://landmark_zones/mesh_libraries/simple/TMDropDiag.res" id="5_p4001"]
+[ext_resource type="ArrayMesh" uid="uid://ci2ueyin75n7" path="res://landmark_zones/mesh_libraries/simple/TMDropBridge.res" id="5_x02kh"]
 [ext_resource type="ArrayMesh" uid="uid://wbhcbfe730m1" path="res://landmark_zones/mesh_libraries/simple/TMWallDiag.res" id="6_mng4f"]
 [ext_resource type="ArrayMesh" uid="uid://crmbm3q7lu24a" path="res://landmark_zones/mesh_libraries/simple/TMRampStraight.res" id="7_s1yq7"]
 [ext_resource type="ArrayMesh" uid="uid://dcy7dvsy5sxs" path="res://landmark_zones/mesh_libraries/simple/TMRampStraightL.res" id="8_l0fj7"]
@@ -74,10 +75,10 @@ vertices = PackedVector3Array(-0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.4000
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 2, 3), PackedInt32Array(4, 5, 6), PackedInt32Array(4, 6, 7)]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_spqt7"]
-points = PackedVector3Array(-0.5, 0, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.4)
+points = PackedVector3Array(-0.5, 0, 0.5, -0.5, 0.5, 0.5, -0.5, 1, -0.5, -0.5, 0.5, -0.5)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bk6bh"]
-points = PackedVector3Array(0.5, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.4)
+points = PackedVector3Array(0.5, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 1, -0.5, 0.5, 0.5, -0.5)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_8mnut"]
 points = PackedVector3Array(-0.5, 0.5, -0.5, -0.5, 0.5, -0.40005875, -0.40005875, 0.5, -0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5)
@@ -87,7 +88,7 @@ vertices = PackedVector3Array(-0.5, 0.5, -0.5, -0.5, 0.5, -0.40000764, -0.400007
 polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 5), PackedInt32Array(6, 7, 8), PackedInt32Array(6, 8, 9)]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mo146"]
-points = PackedVector3Array(-0.4, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0, -0.5)
+points = PackedVector3Array(-0.5, 1, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0, -0.5)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fow70"]
 points = PackedVector3Array(-0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.40005875, 0.5, 0.5, 0.5, 0.5, -0.40005875)
@@ -172,6 +173,27 @@ shape = SubResource("ConvexPolygonShape3D_loith")
 shape = SubResource("ConvexPolygonShape3D_p4001")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="DropSalient"]
+navigation_mesh = SubResource("NavigationMesh_nex1a")
+
+[node name="DropBridge" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 0, 1.2)
+mesh = ExtResource("5_x02kh")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="DropBridge"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DropBridge/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape3D_nex1a")
+
+[node name="WallShape3D2" type="CollisionShape3D" parent="DropBridge/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_loith")
+
+[node name="WallShape3D3" type="CollisionShape3D" parent="DropBridge/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_p4001")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="DropBridge"]
 navigation_mesh = SubResource("NavigationMesh_nex1a")
 
 [node name="DropDiag" type="MeshInstance3D" parent="."]

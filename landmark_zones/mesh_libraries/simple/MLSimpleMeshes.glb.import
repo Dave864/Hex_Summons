@@ -93,6 +93,15 @@ _subresources={
 "save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMWallDiag.res",
 "save_to_file/path": "uid://wbhcbfe730m1"
 },
+"MLSimpleMeshes_Cube_007": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://landmark_zones/mesh_libraries/simple/TMDropBridge.res",
+"save_to_file/path": "uid://ci2ueyin75n7"
+},
 "MLSimpleMeshes_Cube_010": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,

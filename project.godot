@@ -48,6 +48,7 @@ mouse_cursor/custom_image="uid://m53djgfialf6"
 
 [editor]
 
+movie_writer/video_quality=0.5
 movie_writer/movie_file="D:/Users/David Macpherson/Videos/Screen Recordings/HexSummonsRecording.avi"
 
 [editor_plugins]
