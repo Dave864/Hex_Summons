@@ -52,7 +52,7 @@ data = {
 metadata/_editor_floor_ = Vector3(0, -1, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.08894568, -0.9659258, 0.24305542, -0.3319497, 0.258819, 0.90709543, -0.93909425, 4.0100165e-08, -0.3436596, 0, 10, 0)
+transform = Transform3D(0.07946153, -0.97290117, -0.21713886, 0.20062429, -0.19776191, 0.9595, -0.97644037, -0.119806595, 0.17947292, 0, 10, 0)
 light_energy = 0.8
 light_specular = 0.5
 shadow_enabled = true
