@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="8_4rnq4"]
 [ext_resource type="AudioStream" uid="uid://cvk3dpfnl77u7" path="res://audio/music/starting_journey.wav" id="9_onrvd"]
 
-[node name="Title" type="Control" node_paths=PackedStringArray("start_button", "options_button", "options_viewport", "options_menu")]
+[node name="Title" type="Control" node_paths=PackedStringArray("start_button", "options_button", "credits_button", "options_viewport", "credits_viewport", "options_menu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +21,9 @@ theme = ExtResource("1_nh5qr")
 script = ExtResource("2_rf5iy")
 start_button = NodePath("ButtonContainer/Start")
 options_button = NodePath("ButtonContainer/Options")
+credits_button = NodePath("ButtonContainer/Credits")
 options_viewport = NodePath("OptionsViewport")
+credits_viewport = NodePath("CreditsViewport")
 options_menu = NodePath("OptionsViewport/SubViewport/Options")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -99,6 +101,17 @@ size = Vector2i(640, 360)
 render_target_update_mode = 0
 
 [node name="Options" parent="OptionsViewport/SubViewport" instance=ExtResource("4_utrti")]
+
+[node name="CreditsViewport" type="SubViewportContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="CreditsViewport"]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 0
 
 [node name="UIMoveFocus" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_ic1t1")

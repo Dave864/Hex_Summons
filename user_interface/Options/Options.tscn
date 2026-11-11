@@ -83,7 +83,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 0
 script = ExtResource("3_c26h8")
 asp_tab_changed = NodePath("../UITabChange")
 asp_tab_hovered = NodePath("../UIMouseOver")
@@ -91,7 +91,6 @@ asp_focus_entered = NodePath("../UIMoveFocus")
 metadata/_custom_type_script = "uid://dbk30tnjas3x0"
 
 [node name="Sound" type="Control" parent="TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("4_47c21")
 metadata/_tab_index = 0
@@ -276,6 +275,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="Controls" type="Control" parent="TabContainer" node_paths=PackedStringArray("confirm_button", "reset_button")]
+visible = false
 layout_mode = 2
 script = ExtResource("2_8wd8u")
 confirm_button = NodePath("../../HBoxContainer/Confirm")

@@ -38,7 +38,7 @@ func _on_Options_pressed() -> void:
 
 ## Opens the credits page viewport.
 func _on_Credits_pressed() -> void:
-	pass
+	credits_viewport.show()
 
 
 ## Closes the game.
@@ -56,4 +56,5 @@ func _on_OptionsMenu_closed() -> void:
 
 ## Closes the credits page viewport.
 func _on_Credits_closed() -> void:
-	pass
+	credits_viewport.hide()
+	credits_button.grab_focus.call_deferred()
