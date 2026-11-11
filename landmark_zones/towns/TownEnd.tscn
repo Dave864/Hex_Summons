@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ybl52xwltwmp"]
+[gd_scene load_steps=13 format=3 uid="uid://ybl52xwltwmp"]
 
 [ext_resource type="Script" uid="uid://c0unjyujryvx4" path="res://landmark_zones/landmark_zone.gd" id="1_b3fyq"]
 [ext_resource type="MeshLibrary" uid="uid://dsua3fryx1hhl" path="res://landmark_zones/mesh_libraries/simple/Simple.meshlib" id="1_gb8g0"]
@@ -11,6 +11,13 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lryo6"]
 radius = 0.2
 height = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e4xux"]
+albedo_color = Color(0.05490196, 0.67058825, 0.07450981, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_li5g4"]
+material = SubResource("StandardMaterial3D_e4xux")
+size = Vector2(75, 75)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b3fyq"]
 size = Vector3(6.5, 1, 2)
@@ -68,6 +75,10 @@ transform = Transform3D(1, 0, 0, 0, 0.6319888, 0.7749776, 0, -0.7749776, 0.63198
 environment = ExtResource("6_sims0")
 projection = 1
 size = 8.0
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("PlaneMesh_li5g4")
 
 [node name="ExitZone" type="Area3D" parent="."]
 collision_layer = 2
