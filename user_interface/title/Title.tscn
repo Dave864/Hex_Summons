@@ -26,23 +26,25 @@ options_menu = NodePath("OptionsViewport/SubViewport/Options")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 80.0
-offset_top = 8.0
-offset_right = 499.0
-offset_bottom = 275.0
+offset_left = 131.0
+offset_top = 18.0
+offset_right = 550.0
+offset_bottom = 285.0
 texture = ExtResource("1_bgmhr")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="ButtonContainer" type="VBoxContainer" parent="."]
+[node name="ButtonContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 373.0
-offset_top = 225.0
-offset_right = 529.0
-offset_bottom = 347.0
+offset_left = 72.0
+offset_top = 301.0
+offset_right = 583.0
+offset_bottom = 339.0
+alignment = 1
 
 [node name="Start" type="Button" parent="ButtonContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Start"
 script = ExtResource("4_1ntpf")
 asp_pressed = NodePath("../../UIConfirm")
@@ -52,7 +54,18 @@ metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="Options" type="Button" parent="ButtonContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Options"
+script = ExtResource("4_1ntpf")
+asp_pressed = NodePath("../../UIConfirm")
+asp_focus_entered = NodePath("../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../UIMouseOver")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="Credits" type="Button" parent="ButtonContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Credits"
 script = ExtResource("4_1ntpf")
 asp_pressed = NodePath("../../UIConfirm")
 asp_focus_entered = NodePath("../../UIMoveFocus")
@@ -61,6 +74,7 @@ metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="CloseGame" type="Button" parent="ButtonContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Close Game"
 script = ExtResource("4_1ntpf")
 asp_pressed = NodePath("../../UIConfirm")
