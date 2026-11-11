@@ -21,6 +21,9 @@ func _ready() -> void:
 		var landmark := _find_active_landmark()
 		if landmark != null:
 			player_avatar.global_position = landmark.get_spawn_point()
+			player_avatar.set_facing_direction(
+					SceneController.landmark_transition_direction
+			)
 			SceneController.reset_landmark()
 			return
 	elif start_position.is_finite():

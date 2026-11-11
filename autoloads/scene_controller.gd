@@ -19,6 +19,8 @@ const LANDMARK_DUNGEON_SCENE_PATH_FORMAT := (
 var prior_avatar_position: Vector3 = Vector3.INF
 ## Name of the landmark the player is in.
 var landmark_active: String = ""
+## The direction the player enters of exits a landmark from.
+var landmark_transition_direction := Vector2.ZERO
 ## The path to the scene currently being loaded.
 var load_scene_path: String = ""
 ## The connections between landmarks and landmark zones.
@@ -75,6 +77,7 @@ func get_zone_landmark(zone: String) -> String:
 ## Sets the active landmark to none (empty String).
 func reset_landmark() -> void:
 	landmark_active = ""
+	landmark_transition_direction = Vector2.ZERO
 
 
 ## Triggers a scene change to the Encounter scene, passing along the map and

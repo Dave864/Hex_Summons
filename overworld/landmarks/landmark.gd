@@ -12,17 +12,15 @@ extends MeshInstance3D
 ## The radius of the transition area.
 @export_range(0.01, 50.0, 0.01) var transition_radius := 2.0:
 	set = _update_transition_area
+@export_range(0.01, 20.0, 0.01) var spawn_distance := 2.1:
+	set = _update_spawn_distance
 ## Repositions spawn point so that it is on the transition radius.
 @export_tool_button("Snap Spawn to Transition") var reposition_function := (
 		_reposition_spawn_point
 )
-## Repositions spawn point so that it is on a map collision shape.
-@export_tool_button("Relevel Spawn Point") var relevel_function := (
-		_relevel_spawn_point
-)
 
-## The point where the player spawns when exiting the landmark's zone.
-var _spawn_point: Marker3D = null
+## Indicates how far away the spawner will be.
+var _spawn_marker: AreaGizmoCircle = null
 ## The boundary area that causes the player to enter the landmark's zone.
 var _transition_area: Area3D = null
 
@@ -31,33 +29,48 @@ var _transition_area: Area3D = null
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		_create_missing_nodes()
-	_spawn_point = $SpawnPoint
+	_spawn_marker = $SpawnMarker
 	_transition_area = $TransitionArea
 	if not _transition_area.body_entered.is_connected(_on_body_entered):
 		_transition_area.body_entered.connect(_on_body_entered)
 	if Engine.is_editor_hint():
-		_spawn_point.set_owner(get_tree().edited_scene_root)
+		_update_transition_area(transition_radius)
+		_spawn_marker.set_owner(get_tree().edited_scene_root)
 		_transition_area.set_owner(get_tree().edited_scene_root)
 		_transition_area.get_child(0).set_owner(get_tree().edited_scene_root)
 
 
-## Gets the spawn point of this landmark in global coordinates.
+## Gets the spawn point in global coordinates.
 func get_spawn_point() -> Vector3:
-	return _spawn_point.global_position
+	var spawn_point := Vector3(
+			global_position.x,
+			global_position.y + 0.5,
+			global_position.z
+	)
+	var displacement := Vector3(
+		SceneController.landmark_transition_direction.x,
+		0.0,
+		SceneController.landmark_transition_direction.y
+	) * spawn_distance
+	spawn_point += displacement
+	return _relevel_spawn_point(spawn_point)
 
 
 ## Creates spawn point, collision area, and placeholder mesh if they are not
 ## preset.
 func _create_missing_nodes() -> void:
-	if not has_node("SpawnPoint"):
-		_spawn_point = Marker3D.new()
-		_spawn_point.name = "SpawnPoint"
-		add_child(_spawn_point)
+	if not has_node("SpawnMarker"):
+		_spawn_marker = AreaGizmoCircle.new()
+		_spawn_marker.name = "SpawnMarker"
+		add_child(_spawn_marker)
+		_spawn_marker.radius = spawn_distance
+		_spawn_marker.color = Color.LAWN_GREEN
 	if not has_node("TransitionArea"):
 		_transition_area = Area3D.new()
 		var boundary_shape := CollisionShape3D.new()
 		_transition_area.name = "TransitionArea"
 		boundary_shape.name = "BoundaryShape"
+		boundary_shape.debug_color = Color.DARK_BLUE
 		add_child(_transition_area)
 		_transition_area.add_child(boundary_shape)
 		_transition_area.set_collision_layer_value(
@@ -92,18 +105,22 @@ func _update_transition_area(new_radius: float) -> void:
 	transition_radius = new_radius
 
 
-## Moves the spawn point so that it is on the edge of the transition area.
+## Updates the spawn distance from the center of the landmark. Updates the spawn
+## marker to indicate the distance.
+func _update_spawn_distance(new_distance: float) -> void:
+	spawn_distance = new_distance
+	if _spawn_marker != null:
+		_spawn_marker.radius = spawn_distance
+
+
+## Moves the spawn marker so that it is on the edge of the transition area.
 func _reposition_spawn_point() -> void:
-	var dir_to_spawn := (
-			Vector3.BACK if _spawn_point.position.is_zero_approx()
-			else _spawn_point.position.normalized()
-	)
-	_spawn_point.position = dir_to_spawn * transition_radius
+	_spawn_marker.radius = transition_radius
 
 
-## Reevaluates the position of the spawn point, placing it on a nav mesh if
-## one is detected.
-func _relevel_spawn_point() -> void:
+## Reevaluates the position of a spawn point, return the point where it rests on
+## a nav mesh if one is detected.
+func _relevel_spawn_point(spawn_point: Vector3) -> Vector3:
 	var raycast := RayCast3D.new()
 	add_child(raycast)
 	if Engine.is_editor_hint():
@@ -111,13 +128,23 @@ func _relevel_spawn_point() -> void:
 	raycast.set_collision_mask_value(Constants.MAP_LAYER, true)
 	raycast.global_rotation = Vector3.ZERO
 	raycast.target_position = Vector3(0.0, -10.0, 0.0)
-	raycast.position = _spawn_point.position
+	raycast.global_position = spawn_point
 	raycast.force_raycast_update()
-	if raycast.is_colliding():
-		_spawn_point.global_position = raycast.get_collision_point()
+	var new_point := (
+			spawn_point if not raycast.is_colliding()
+			else raycast.get_collision_point()
+	)
 	raycast.queue_free.call_deferred()
+	return new_point
 
 
 ## Triggers a scene switch to the connected zone.
-func _on_body_entered(_player_collider: Node3D) -> void:
+func _on_body_entered(player_collider: Node3D) -> void:
+	var entry_direction := player_collider.global_position.direction_to(
+			global_position
+	)
+	SceneController.landmark_transition_direction = Vector2(
+			entry_direction.x,
+			entry_direction.z
+	).normalized()
 	SceneController.change_scene_to_connected_zone(name)

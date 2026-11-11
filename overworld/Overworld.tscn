@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=60 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="Script" uid="uid://b63wynnx1khli" path="res://overworld/overworld.gd" id="1_g3yfq"]
@@ -83,13 +83,25 @@ size = Vector3(30, 15, 60)
 size = Vector3(2, 1, 2)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xdnfc"]
-radius = 1.8
+radius = 1.3
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_1kkrf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eou61"]
+shading_mode = 0
+albedo_color = Color(0.4862745, 0.9882353, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_1kkrf"]
 size = Vector3(5, 1.5, 5)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_eou61"]
 radius = 3.0
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_eou61"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdnfc"]
+shading_mode = 0
+albedo_color = Color(0.4862745, 0.9882353, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wc37g"]
 size = Vector3(95, 5, 46)
@@ -103,26 +115,11 @@ size = Vector3(70, 5, 13)
 [sub_resource type="BoxShape3D" id="BoxShape3D_naebm"]
 size = Vector3(95, 5, 53)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_1kkrf"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eou61"]
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_xdnfc"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6lilm"]
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_pn0iw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pl2eu"]
 shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
-size = Vector3(67, 5, 45)
+albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_ove5u"]
 
@@ -134,11 +131,26 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2ko7"]
 shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
+size = Vector3(67, 5, 45)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_7qrdv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof3h"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_1cenw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_loo77"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_81oxm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s44g2"]
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
@@ -147,6 +159,12 @@ script = ExtResource("1_g3yfq")
 player_avatar = NodePath("OverworldAvatar")
 
 [node name="ElementAlignmentUI" parent="." instance=ExtResource("1_36ygl")]
+
+[node name="OverworldAvatar" parent="." instance=ExtResource("1_q45au")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.652, 0, -12.145)
+
+[node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
+transform = Transform3D(1, 0, 0, 0, 0.46507394, 0.8852719, 0, -0.8852719, 0.46507394, 0.1927185, 11.221527, 7.090953)
 
 [node name="Terrain" type="Node3D" parent="."]
 
@@ -232,14 +250,11 @@ shape = SubResource("BoxShape3D_36ygl")
 [node name="Landmarks" type="Node3D" parent="."]
 
 [node name="LandmarkStart" type="MeshInstance3D" parent="Landmarks"]
-transform = Transform3D(0.7852521, 0, 0.61917615, 0, 1, 0, -0.61917615, 0, 0.7852521, -42.015366, 0.94484353, -43.089516)
+transform = Transform3D(0.78525203, 0, 0.6191761, 0, 1, 0, -0.6191761, 0, 0.78525203, -42.015366, 0.94484353, -43.089516)
 mesh = SubResource("BoxMesh_eou61")
 script = ExtResource("3_1kkrf")
-transition_radius = 1.8
+transition_radius = 1.3
 metadata/_custom_type_script = "uid://c7xewvlqs0214"
-
-[node name="SpawnPoint" type="Marker3D" parent="Landmarks/LandmarkStart"]
-transform = Transform3D(1.0000002, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1.0000002, 0.15001297, -0.44484353, 3.2149086)
 
 [node name="TransitionArea" type="Area3D" parent="Landmarks/LandmarkStart"]
 collision_layer = 2
@@ -247,16 +262,21 @@ collision_mask = 4
 
 [node name="BoundaryShape" type="CollisionShape3D" parent="Landmarks/LandmarkStart/TransitionArea"]
 shape = SubResource("SphereShape3D_xdnfc")
+debug_color = Color(0, 0, 0.545, 1)
+
+[node name="SpawnMarker" type="MeshInstance3D" parent="Landmarks/LandmarkStart"]
+mesh = SubResource("ImmediateMesh_1kkrf")
+surface_material_override/0 = SubResource("StandardMaterial3D_eou61")
+script = ExtResource("7_327yu")
+radius = 2.1
+color = Color(0.4862745, 0.9882353, 0, 1)
 
 [node name="LandmarkEnd" type="MeshInstance3D" parent="Landmarks"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.117163, 0.93312454, -37.30602)
 mesh = SubResource("BoxMesh_1kkrf")
 script = ExtResource("3_1kkrf")
-transition_radius = 3.0
+spawn_distance = 4.26
 metadata/_custom_type_script = "uid://c7xewvlqs0214"
-
-[node name="SpawnPoint" type="Marker3D" parent="Landmarks/LandmarkEnd"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.43312454, 5.1708107)
 
 [node name="TransitionArea" type="Area3D" parent="Landmarks/LandmarkEnd"]
 collision_layer = 2
@@ -264,6 +284,14 @@ collision_mask = 4
 
 [node name="BoundaryShape" type="CollisionShape3D" parent="Landmarks/LandmarkEnd/TransitionArea"]
 shape = SubResource("SphereShape3D_eou61")
+debug_color = Color(0, 0, 0.54509807, 1)
+
+[node name="SpawnMarker" type="MeshInstance3D" parent="Landmarks/LandmarkEnd"]
+mesh = SubResource("ImmediateMesh_eou61")
+surface_material_override/0 = SubResource("StandardMaterial3D_xdnfc")
+script = ExtResource("7_327yu")
+radius = 4.26
+color = Color(0.4862745, 0.9882353, 0, 1)
 
 [node name="AlignmentAreas" type="Node3D" parent="."]
 
@@ -344,8 +372,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea"]
-mesh = SubResource("ImmediateMesh_1kkrf")
-surface_material_override/0 = SubResource("StandardMaterial3D_eou61")
+mesh = SubResource("ImmediateMesh_pn0iw")
+surface_material_override/0 = SubResource("StandardMaterial3D_pl2eu")
 script = ExtResource("7_327yu")
 radius = 6.21
 color = Color(1, 0, 0, 1)
@@ -371,8 +399,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2"]
-mesh = SubResource("ImmediateMesh_xdnfc")
-surface_material_override/0 = SubResource("StandardMaterial3D_6lilm")
+mesh = SubResource("ImmediateMesh_ove5u")
+surface_material_override/0 = SubResource("StandardMaterial3D_ohl48")
 script = ExtResource("7_327yu")
 radius = 10.77
 color = Color(1, 0, 0, 1)
@@ -397,8 +425,8 @@ relevel_function = Callable()
 metadata/_custom_type_script = "uid://b888q7s0x56r3"
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/TravelPointZones/TravelPointsRect"]
-mesh = SubResource("ImmediateMesh_pn0iw")
-surface_material_override/0 = SubResource("StandardMaterial3D_pl2eu")
+mesh = SubResource("ImmediateMesh_2e2hg")
+surface_material_override/0 = SubResource("StandardMaterial3D_y2ko7")
 script = ExtResource("9_naebm")
 length = 11.9
 height = 39.629999999999995
@@ -439,8 +467,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect"]
-mesh = SubResource("ImmediateMesh_ove5u")
-surface_material_override/0 = SubResource("StandardMaterial3D_ohl48")
+mesh = SubResource("ImmediateMesh_7qrdv")
+surface_material_override/0 = SubResource("StandardMaterial3D_iof3h")
 script = ExtResource("9_naebm")
 is_square = true
 length = 20.49
@@ -469,8 +497,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect2"]
-mesh = SubResource("ImmediateMesh_2e2hg")
-surface_material_override/0 = SubResource("StandardMaterial3D_y2ko7")
+mesh = SubResource("ImmediateMesh_1cenw")
+surface_material_override/0 = SubResource("StandardMaterial3D_loo77")
 script = ExtResource("9_naebm")
 length = 11.68
 height = 27.57
@@ -497,8 +525,8 @@ reroll_function = Callable()
 metadata/_custom_type_script = "uid://b888q7s0x56r3"
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect"]
-mesh = SubResource("ImmediateMesh_7qrdv")
-surface_material_override/0 = SubResource("StandardMaterial3D_iof3h")
+mesh = SubResource("ImmediateMesh_81oxm")
+surface_material_override/0 = SubResource("StandardMaterial3D_s44g2")
 script = ExtResource("9_naebm")
 length = 60.08
 height = 38.27
@@ -578,12 +606,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.166666, -0.83906364, 12.50
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.6537509, 0.7567098, 0, -0.7567098, 0.6537509, 0, 25.214062, 0)
-
-[node name="OverworldAvatar" parent="." instance=ExtResource("1_q45au")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.652, 0, -12.145)
-
-[node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
-transform = Transform3D(1, 0, 0, 0, 0.46507394, 0.8852719, 0, -0.8852719, 0.46507394, 0.1927185, 11.221527, 7.090953)
 
 [node name="MusicOverworld" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_iro46")

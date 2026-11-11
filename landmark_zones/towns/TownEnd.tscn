@@ -18,10 +18,10 @@ size = Vector3(6.5, 1, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_e4xux"]
 size = Vector3(6.5, 1, 3)
 
-[node name="TownEnd" type="Node3D" node_paths=PackedStringArray("player_avatar", "overworld_entry_point")]
+[node name="TownEnd" type="Node3D" node_paths=PackedStringArray("player_avatar", "overworld_entry_points")]
 script = ExtResource("1_b3fyq")
 player_avatar = NodePath("OverworldAvatar")
-overworld_entry_point = NodePath("ExitZone/ExitPoint")
+overworld_entry_points = [NodePath("ExitZone/ExitPointSouth"), NodePath("ExitZone/ExitPointNorth")]
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_gb8g0")
@@ -83,8 +83,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17.948963)
 shape = SubResource("BoxShape3D_e4xux")
 debug_color = Color(0.9764706, 0, 0.42745098, 0.41960785)
 
-[node name="ExitPoint" type="Marker3D" parent="ExitZone"]
+[node name="ExitPointSouth" type="Marker3D" parent="ExitZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15.165028)
+
+[node name="ExitPointNorth" type="Marker3D" parent="ExitZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15.302719)
 
 [node name="MusicTown" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_e4xux")

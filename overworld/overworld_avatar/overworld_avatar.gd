@@ -58,3 +58,8 @@ func _physics_process(_delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
+
+
+## Updates the direction this avatar faces.
+func set_facing_direction(direction: Vector2) -> void:
+	_sprite.facing_direction = direction.normalized()
