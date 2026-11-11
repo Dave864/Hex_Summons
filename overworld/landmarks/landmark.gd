@@ -47,12 +47,13 @@ func get_spawn_point() -> Vector3:
 			global_position.y + 0.5,
 			global_position.z
 	)
-	var displacement := Vector3(
+	# Rotate transition direction so that spawn point aligns with the orientation
+	# of the landmark in the overworld.
+	spawn_point += Vector3(
 		SceneController.landmark_transition_direction.x,
 		0.0,
 		SceneController.landmark_transition_direction.y
-	) * spawn_distance
-	spawn_point += displacement
+	).rotated(Vector3.UP, global_rotation.y) * spawn_distance
 	return _relevel_spawn_point(spawn_point)
 
 
@@ -143,8 +144,10 @@ func _on_body_entered(player_collider: Node3D) -> void:
 	var entry_direction := player_collider.global_position.direction_to(
 			global_position
 	)
+	# Rotate to match orientation of landmark so that is aligns with the
+	# orientation of the connected zone.
 	SceneController.landmark_transition_direction = Vector2(
 			entry_direction.x,
 			entry_direction.z
-	).normalized()
+	).normalized().rotated(global_rotation.y)
 	SceneController.change_scene_to_connected_zone(name)
