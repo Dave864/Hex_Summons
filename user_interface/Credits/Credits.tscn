@@ -1,0 +1,118 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7rcxoq0jblji"]
+
+[ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="1_2otkj"]
+[ext_resource type="Script" uid="uid://bgdppcow8ks8o" path="res://user_interface/Credits/credits.gd" id="1_rl47g"]
+[ext_resource type="AudioStream" uid="uid://bpnsmwle73ip5" path="res://audio/interface/UIMisc_Open Close Pause Menu 03_KRST_NONE.wav" id="3_agxt1"]
+[ext_resource type="AudioStream" uid="uid://b4jvukx5h5fd7" path="res://audio/interface/UIMisc_Open Close Pause Menu 09_KRST_NONE.wav" id="4_o7f46"]
+
+[node name="Credits" type="Panel" node_paths=PackedStringArray("credits_text", "asp_open", "asp_closed")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rl47g")
+credits_text = NodePath("RichTextLabel")
+asp_open = NodePath("UIOpenMenu")
+asp_closed = NodePath("UIGoBack")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 23.0
+offset_right = -50.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/line_separation = 5
+theme_override_constants/paragraph_separation = 5
+bbcode_enabled = true
+text = "[center]Made by Anthony David Macpherson (@DirectionalFancy)[/center]
+[br]
+[center][color=AQUA][font_size=26]Audio[/font_size][/color][/center]
+[hr height=1 width=75% align=c color=AQUA]
+[left]
+[font_size=20]UI[/font_size] - mKhronStudio
+[url]https://www.gamedevmarket.net/asset/rpg-interface-essentials-complete-collection[/url]
+[/left]
+[left]
+[font_size=20]Effects[/font_size] - wowsoundsg
+[url]https://www.gamedevmarket.net/asset/anime-weapon-sound-effects-pack[/url]
+[/left]
+[center][color=AQUA][font_size=26]Music[/font_size][/color][/center]
+[hr height=1 width=75% align=c color=AQUA]
+[left]
+[url=https://opengameart.org/users/tarush-singhal]Tarush Singhal[/url] - [i]Starting a Legendary Journey[/i]
+Licensed under [url=http://creativecommons.org/licenses/by/3.0/]Creative Commons: By Attribution 3.0[/url]
+Pitch scale set to 0.95
+[/left]
+[left]
+[url=https://opengameart.org/users/jkfite01]Jon K. Fite[/url] - [i]Peaceful Village[/i]
+Licensed under [url=http://creativecommons.org/licenses/by/3.0/]Creative Commons: By Attribution 3.0[/url]
+Pitch scale set to 0.8
+[/left]
+[left]
+[url=https://opengameart.org/users/controllerhead]controllerhead[/url] - [i]Adventure Map[/i]
+Licensed under [url=http://creativecommons.org/licenses/by/3.0/]Creative Commons: By Attribution 3.0[/url]
+Pitch scale set to 1.05
+[/left]
+[left]
+[url=https://opengameart.org/users/controllerhead]controllerhead[/url] - [i]Random Battle[/i]
+Licensed under [url=https://creativecommons.org/publicdomain/zero/1.0/]Creative Commons: By Attribution 1.0[/url]
+[/left]
+[center][color=AQUA][font_size=26]Special Thanks[/font_size][/color][/center]
+[hr height=1 width=75% align=c color=AQUA]
+[left]
+Geeky Teas & Games Writers Group
+Alex Hanson
+Bruce Macpherson
+Hilda Macpherson
+[/left]
+[br]
+[center][color=AQUA][font_size=26]Thank You for Playing[/font_size][/color][/center]"
+justification_flags = 161
+
+[node name="CancelLabel" parent="." instance=ExtResource("1_2otkj")]
+z_index = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -28.0
+offset_right = -8.0
+offset_bottom = -11.0
+grow_vertical = 0
+input_source = 1
+input_event = "ui_cancel"
+
+[node name="Label" type="Label" parent="CancelLabel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = -5.0
+offset_right = 53.0
+offset_bottom = 5.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Close"
+
+[node name="UIOpenMenu" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_agxt1")
+bus = &"Interface"
+
+[node name="UIGoBack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_o7f46")
+bus = &"Interface"
+
+[connection signal="meta_clicked" from="RichTextLabel" to="." method="_on_credits_text_meta_clicked"]

@@ -1,16 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://dv4dcnfe3lxnl"]
+[gd_scene load_steps=11 format=3 uid="uid://dv4dcnfe3lxnl"]
 
 [ext_resource type="Texture2D" uid="uid://bajoqfa6xysec" path="res://art/title/title_3.png" id="1_bgmhr"]
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_nh5qr"]
 [ext_resource type="Script" uid="uid://cjx7webpbdfwr" path="res://user_interface/Title/title.gd" id="2_rf5iy"]
 [ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="4_1ntpf"]
 [ext_resource type="PackedScene" uid="uid://wrlommn3g1pu" path="res://user_interface/Options/Options.tscn" id="4_utrti"]
+[ext_resource type="PackedScene" uid="uid://c7rcxoq0jblji" path="res://user_interface/Credits/Credits.tscn" id="6_i7mkt"]
 [ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/interface/UIClick_Menu Button 09_KRST_NONE.wav" id="6_ic1t1"]
 [ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/interface/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="7_4ogk3"]
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="8_4rnq4"]
 [ext_resource type="AudioStream" uid="uid://cvk3dpfnl77u7" path="res://audio/music/starting_journey.wav" id="9_onrvd"]
 
-[node name="Title" type="Control" node_paths=PackedStringArray("start_button", "options_button", "credits_button", "options_viewport", "credits_viewport", "options_menu")]
+[node name="Title" type="Control" node_paths=PackedStringArray("start_button", "options_button", "credits_button", "options_viewport", "credits_viewport", "options_menu", "credits_page")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,6 +26,7 @@ credits_button = NodePath("ButtonContainer/Credits")
 options_viewport = NodePath("OptionsViewport")
 credits_viewport = NodePath("CreditsViewport")
 options_menu = NodePath("OptionsViewport/SubViewport/Options")
+credits_page = NodePath("CreditsViewport/SubViewport/Credits")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -113,6 +115,8 @@ handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 0
 
+[node name="Credits" parent="CreditsViewport/SubViewport" instance=ExtResource("6_i7mkt")]
+
 [node name="UIMoveFocus" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_ic1t1")
 volume_db = -5.0
@@ -135,5 +139,7 @@ bus = &"Music"
 
 [connection signal="pressed" from="ButtonContainer/Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="ButtonContainer/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="ButtonContainer/Credits" to="." method="_on_Credits_pressed"]
 [connection signal="pressed" from="ButtonContainer/CloseGame" to="." method="_on_CloseGame_pressed"]
 [connection signal="closed" from="OptionsViewport/SubViewport/Options" to="." method="_on_OptionsMenu_closed"]
+[connection signal="closed" from="CreditsViewport/SubViewport/Credits" to="." method="_on_Credits_closed"]

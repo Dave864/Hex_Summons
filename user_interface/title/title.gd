@@ -18,6 +18,8 @@ extends Control
 @export var credits_viewport: SubViewportContainer = null
 ## The options menu.
 @export var options_menu: Options = null
+## The credits page.
+@export var credits_page: Credits = null
 
 
 ## Places focus on the start button.
@@ -39,6 +41,7 @@ func _on_Options_pressed() -> void:
 ## Opens the credits page viewport.
 func _on_Credits_pressed() -> void:
 	credits_viewport.show()
+	credits_page.open()
 
 
 ## Closes the game.
