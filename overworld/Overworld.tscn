@@ -470,7 +470,7 @@ upper_time = 7.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.84867, 0.6, 6.7512493)
 script = ExtResource("6_uyahc")
 radius = 10.77
-enemies = PackedStringArray("ScuttleShrub")
+enemies = PackedStringArray("ScuttleShrub", "StumbleTree")
 spawn_limit = 2
 roam_chance = 1.0
 time_trigger_min = 1.5
@@ -506,7 +506,7 @@ time_trigger_max = 5.0
 metadata/_custom_type_script = "uid://whcd1sb6tx51"
 
 [node name="SpawnTimer" type="Timer" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/SpawnAreaRect"]
-wait_time = 2.198409820366609
+wait_time = 3.4113143298377704
 script = ExtResource("8_kur02")
 lower_time = 2.0
 upper_time = 5.0
