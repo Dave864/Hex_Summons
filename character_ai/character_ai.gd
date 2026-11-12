@@ -101,19 +101,15 @@ func determine_action_chain() -> Array[Array]:
 			else _opponents.values()
 		)
 		if not ab.conditions_met(_character, _possible_targets, d_map):
-			print("action {0} conditions not met.".format([action.name]))
 			continue
 		var details: Array[Variant] = _determine_action_details(action, ab)
 		if details.size() == 0:
-			print("action {0} out of range of all targets.".format([action.name]))
 			continue
 		if action.name == MOVE_ACTION_NAME:
-			print("Default move")
 			return[
 				[MOVE, details[0]]
 			]
 		else:
-			print("{0} action selected".format([action.name]))
 			return [
 				[ACTION, action, details[1], _possible_targets],
 				[MOVE, details[0]]

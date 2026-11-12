@@ -57,10 +57,8 @@ func _orient_to_emission(action: Action) -> void:
 func _move_to_next_state() -> void:
 	if _command_chain.size() > 0:
 		if _command_chain.back()[0] == MOVE:
-			print("Go to move")
 			state_machine.transition_to(MOVE, {"command_chain": _command_chain})
 		elif _command_chain.back()[0] == ACTION:
-			print("Go to action")
 			state_machine.transition_to(ACTION, {"command_chain": _command_chain})
 	else:
 		ec.emit_turn_ended()
