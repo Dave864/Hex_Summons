@@ -100,18 +100,25 @@ func _load_enemies() -> void:
 	if enemy_load_paths.size() == 0:
 		enemy_load_paths.append(DEFAULT_ENEMY_PATH)
 	# TODO: Additional logic is needed to determine how many of each enemy option
-	# should be loaded. For now, only one of each is loaded.
+	# should be loaded. For now, one to two of each enemy is spawned if able.
+	var enemy_counts: Dictionary[String, int] = {}
+	var total_count: int = 0
+	for path: String in enemy_load_paths:
+		var count := randi() % 2 + 1
+		enemy_counts[path] = count
+		total_count += count
 	var start_positions := _get_start_indices(
 			hex_map.enemy_start_tiles_values,
-			enemy_load_paths.size()
+			total_count
 	)
 	if start_positions.size() == 0:
 		printerr("Not enough start positions for enemies.")
 		return
-	for path: String in enemy_load_paths:
-		var enemy: EnemyCharacter = load(path).instantiate()
-		$Enemies.add_child(enemy)
-		enemies.append(enemy)
+	for path: String in enemy_counts.keys():
+		for count: int in enemy_counts[path]:
+			var enemy: EnemyCharacter = load(path).instantiate()
+			$Enemies.add_child(enemy)
+			enemies.append(enemy)
 	
 	var e_index: int = 0
 	for enemy: EnemyCharacter in enemies:
