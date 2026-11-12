@@ -89,11 +89,12 @@ script = ExtResource("15_fpl7x")
 movement_behavior = 1
 metadata/_custom_type_script = "uid://bdkgr4241wqcj"
 
-[node name="GroupCondition" type="Node" parent="Actions/Sweep"]
+[node name="GroupCondition" type="Node" parent="Actions/Sweep/ActionBehavior"]
 script = ExtResource("16_bbaia")
+max_distance = 0
 metadata/_custom_type_script = "uid://b020qxy754ll2"
 
-[node name="Cooldown" type="Node" parent="Actions/Sweep"]
+[node name="Cooldown" type="Node" parent="Actions/Sweep/ActionBehavior"]
 script = ExtResource("17_j1h2q")
 turn_count = 1
 metadata/_custom_type_script = "uid://mxpbc437xmjm"

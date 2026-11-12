@@ -89,11 +89,11 @@ actions_ref = NodePath("../Actions")
 script = ExtResource("15_kg577")
 metadata/_custom_type_script = "uid://bdkgr4241wqcj"
 
-[node name="GroupCondition" type="Node" parent="Actions/Blast"]
+[node name="GroupCondition" type="Node" parent="Actions/Blast/ActionBehavior"]
 script = ExtResource("17_p0khd")
 metadata/_custom_type_script = "uid://b020qxy754ll2"
 
-[node name="Cooldown" type="Node" parent="Actions/Blast"]
+[node name="Cooldown" type="Node" parent="Actions/Blast/ActionBehavior"]
 script = ExtResource("16_p0khd")
 turn_count = 2
 metadata/_custom_type_script = "uid://mxpbc437xmjm"
@@ -105,12 +105,12 @@ script = ExtResource("15_kg577")
 movement_behavior = 1
 metadata/_custom_type_script = "uid://bdkgr4241wqcj"
 
-[node name="Cooldown" type="Node" parent="Actions/Sweep"]
+[node name="Cooldown" type="Node" parent="Actions/Sweep/ActionBehavior"]
 script = ExtResource("16_p0khd")
 turn_count = 1
 metadata/_custom_type_script = "uid://mxpbc437xmjm"
 
-[node name="GroupCondition" type="Node" parent="Actions/Sweep"]
+[node name="GroupCondition" type="Node" parent="Actions/Sweep/ActionBehavior"]
 script = ExtResource("17_p0khd")
 metadata/_custom_type_script = "uid://b020qxy754ll2"
 
