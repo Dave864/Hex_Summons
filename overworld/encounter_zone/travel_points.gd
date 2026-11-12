@@ -302,10 +302,11 @@ func _create_grid_gizmo() -> void:
 		add_child(_grid_points_gizmo)
 		_grid_points_gizmo.name = GRID_POINTS_GIZMO_NAME
 		_grid_points_gizmo.set_owner(get_tree().edited_scene_root)
+	else:
+		_grid_points_gizmo = get_node(GRID_POINTS_GIZMO_NAME)
 	# Should not be adjusting travel point details when the game is running,
 	# but should set reference to gizmo for consistency.
-	elif not Engine.is_editor_hint():
-		_grid_points_gizmo = get_node(GRID_POINTS_GIZMO_NAME)
+	if not Engine.is_editor_hint():
 		return
 	
 	var mesh_material := StandardMaterial3D.new()
