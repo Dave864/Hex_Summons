@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://tq4e5nhs80jw"]
+[gd_scene load_steps=72 format=3 uid="uid://tq4e5nhs80jw"]
 
 [ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="1_36ygl"]
 [ext_resource type="Script" uid="uid://b63wynnx1khli" path="res://overworld/overworld.gd" id="1_g3yfq"]
@@ -199,6 +199,12 @@ albedo_color = Color(1, 0, 0, 1)
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_81oxm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s44g2"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_pl2eu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2e2hg"]
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
@@ -506,7 +512,7 @@ time_trigger_max = 5.0
 metadata/_custom_type_script = "uid://whcd1sb6tx51"
 
 [node name="SpawnTimer" type="Timer" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/SpawnAreaRect"]
-wait_time = 3.4113143298377704
+wait_time = 2.821597046359114
 script = ExtResource("8_kur02")
 lower_time = 2.0
 upper_time = 5.0
@@ -647,6 +653,36 @@ color = Color(1, 0, 0, 1)
 script = ExtResource("8_kur02")
 lower_time = 1.5
 upper_time = 5.0
+
+[node name="SpawnAreaRect3" type="Marker3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6985369, 14.573416)
+script = ExtResource("7_wc37g")
+length = 38.73
+height = 6.49
+enemies = PackedStringArray("ElderStumbleTree", "StumbleTree")
+spawn_limit = 3
+roam_chance = 0.2
+time_trigger_min = 5.0
+time_trigger_max = 10.0
+metadata/_custom_type_script = "uid://whcd1sb6tx51"
+
+[node name="SpawnTimer" type="Timer" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect3"]
+wait_time = 5.398055720485152
+script = ExtResource("8_kur02")
+lower_time = 5.0
+upper_time = 10.0
+
+[node name="Y_RayCast" type="RayCast3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect3"]
+target_position = Vector3(0, -10, 0)
+collision_mask = 2
+
+[node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect3"]
+mesh = SubResource("ImmediateMesh_pl2eu")
+surface_material_override/0 = SubResource("StandardMaterial3D_2e2hg")
+script = ExtResource("9_naebm")
+length = 38.73
+height = 6.49
+color = Color(1, 0, 0, 1)
 
 [node name="TravelPointZones" type="Node3D" parent="EncounterZones/TerrainZoneSand"]
 script = ExtResource("8_naebm")
