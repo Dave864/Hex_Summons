@@ -1,11 +1,8 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" script_class="TechniqueStats" load_steps=3 format=3 uid="uid://3qgtki25uufl"]
 
 [ext_resource type="Script" uid="uid://ci8l3katyguri" path="res://character/scripts/action_stats/technique_stats.gd" id="1"]
 [ext_resource type="Resource" uid="uid://dwr3s086j0bub" path="res://actions/action_nodes/Shot/action_stats.tres" id="2"]
 
-
-
 [resource]
-script = ExtResource( 1 )
-action_stats = ExtResource( 2 )
-cooldown = 0
+script = ExtResource("1")
+action_stats = ExtResource("2")

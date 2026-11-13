@@ -8,4 +8,4 @@ health_base = 80
 attack_base = 6
 defense_base = 2
 agility_base = 2
-movement = 7
+movement = 4
