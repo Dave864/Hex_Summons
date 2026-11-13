@@ -29,7 +29,6 @@ func _ready() -> void:
 	_y_cast.global_rotation = Vector3.ZERO
 	# Negative index indicates that the pool has not been set yet.
 	_current_index = -1
-	#_update_points_pool()
 	_points_pool[0] = _determine_point(_current_index)
 	_current_index = 0
 
@@ -63,18 +62,7 @@ func get_next_point() -> Vector3:
 	var prior_index := _current_index
 	_current_index = posmod(_current_index + 1, POINT_QUEUE_LIMIT)
 	_points_pool[_current_index] = _determine_point(prior_index)
-	#if _next_index == 0:
-		#_update_points_pool()
 	return _points_pool[_current_index]
-
-
-## Updates the points pool.
-func _update_points_pool() -> void:
-	_points_pool[0] = _determine_point(
-			_current_index if _current_index < 0 else POINT_QUEUE_LIMIT - 1
-	)
-	for i: int in range(1, POINT_QUEUE_LIMIT):
-		_points_pool[i] = _determine_point(i - 1)
 
 
 ## Gets a random point defined by the roam area.
@@ -160,8 +148,9 @@ func _get_random_direction(exclusion_center: Vector2) -> Vector2:
 
 
 ## Gets a random position along a ray cast in a given direction. The returned
-## position will always be within the bounds of the RoamArea, and at least
-## min_distance away from the starting point of the ray.
+## position will be within the bounds of the RoamArea, and at least
+## min_distance away from the starting point of the ray. If the operation
+## fails, thet ray's starting position is returned.
 ## Reference: https://www.scratchapixel.com/lessons/3d-basic-rendering/
 ## minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html
 func _get_random_point_on_ray(
