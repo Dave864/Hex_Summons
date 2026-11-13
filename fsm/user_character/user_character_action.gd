@@ -38,7 +38,11 @@ func _orient_to_emission(action: Action) -> void:
 ## Changes the state of the targets.
 func _change_target_state(targets: Array[Character], active: bool) -> void:
 	for t: Character in targets:
-		if active:
+		# Characters that have been defeated are removed, but the target list
+		# still holds onto the reference.
+		if t == null:
+			continue
+		elif active:
 			t.activate_hit_box()
 		else:
 			t.deactivate_hit_box()
