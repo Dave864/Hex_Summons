@@ -46,9 +46,7 @@ func _on_Credits_pressed() -> void:
 
 ## Closes the game.
 func _on_CloseGame_pressed() -> void:
-	var scene_tree := get_tree()
-	scene_tree.root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
-	scene_tree.quit()
+	SceneController.close_game()
 
 
 ## Closes the options menu viewport.

@@ -4,6 +4,8 @@ extends Node
 
 ## The path format to an enemy scene.
 const ENEMY_PATH_FORMAT := Constants.ENEMY_CHAR_FOLDER + "{0}.tscn"
+## The path to the Title scene.
+const TITLE_SCENE_PATH := "res://user_interface/Title/Title.tscn"
 ## The path to the Encounter scene.
 const ENCOUNTER_SCENE_PATH := "res://encounter/Encounter.tscn"
 ## The path to the Overworld scene.
@@ -80,6 +82,11 @@ func reset_landmark() -> void:
 	landmark_transition_direction = Vector2.ZERO
 
 
+## Triggers a scene change to the Title scene.
+func change_scene_to_title() -> void:
+	_load_scene.call_deferred(TITLE_SCENE_PATH)
+
+
 ## Triggers a scene change to the Encounter scene, passing along the map and
 ## enemy details.
 func change_scene_to_encounter(
@@ -131,6 +138,13 @@ func change_scene_to_landmark_zone(zone: String) -> bool:
 ## Triggers a scene change to the specified path.
 func change_to_scene(scene_path: String) -> void:
 	_load_scene.call_deferred(scene_path)
+
+
+## Closes the game.
+func close_game() -> void:
+	var scene_tree := get_tree()
+	scene_tree.root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+	scene_tree.quit()
 
 
 ## Triggers the load screen to be created.

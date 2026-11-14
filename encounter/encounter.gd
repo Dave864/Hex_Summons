@@ -17,7 +17,7 @@ const DEFAULT_ENEMY_PATH := (
 ## hex map scene to be used.
 var hex_map: HexMap = null
 ## The player characters active in the encounter.
-var players: Array[Character] = []
+var players: Dictionary[Character, bool] = {}
 ## List of enemy characters active in the encounter.
 var enemies: Array[Character] = []
 
@@ -62,6 +62,19 @@ func get_current_character() -> Character:
 	return ui.initiative_tracker.get_current_character()
 
 
+## Checks if all the players are defeated.
+func players_defeated() -> bool:
+	var all_active: bool = true
+	for is_active: bool in players.values():
+		all_active = false if not is_active else all_active
+	return not all_active
+
+
+## Checks if all the enemies are defeated.
+func enemies_defeated() -> bool:
+	return enemies.size() == 0
+
+
 ## Loads the map for this given encounter.
 func _load_map() -> void:
 	var map_path := SceneController.get_encounter_map_path()
@@ -87,11 +100,11 @@ func _load_players() -> void:
 		player.defeated.connect(_on_Character_defeated)
 		$Players.add_child(player)
 		player.update_player_details(data)
-		players.append(player)
+		players[player] = true
 		player.stats.max_cur_health()
 		hex_map.place_character_at_tile(player, start_positions[p_index])
 		p_index += 1
-	ui.track_party_members(players)
+	ui.track_party_members(players.keys())
 
 
 ## Initializes the enemy characters present in the encounter.
@@ -127,7 +140,7 @@ func _load_enemies() -> void:
 		ai_node.connect_encounter_details(
 				hex_map,
 				enemy,
-				players,
+				players.keys(),
 				enemies,
 				summon
 		)
@@ -159,7 +172,7 @@ func _get_start_indices(
 
 ## Connects all map tile "mouse_hovered" signals to the selector.
 func _connect_map_to_selector() -> void:
-	selection_tracker.set_players_reference(players)
+	selection_tracker.set_players_reference(players.keys())
 	selection_tracker.set_enemies_reference(enemies)
 	for mt: MapTile in hex_map.get_map_tiles():
 		mt.mouse_hovered.connect(
@@ -183,5 +196,4 @@ func _on_Character_defeated(character: Character) -> void:
 		enemies.erase(character)
 		character.queue_free() 
 	else:
-		# TODO: Need to add logic to disable the player character
-		pass
+		players[character] = false

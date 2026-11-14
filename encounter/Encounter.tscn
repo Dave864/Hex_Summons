@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://x4o3gls28fh"]
+[gd_scene load_steps=15 format=3 uid="uid://x4o3gls28fh"]
 
 [ext_resource type="PackedScene" uid="uid://ddvk0q84qb3m" path="res://hex_map/SelectionTracker/SelectionTracker.tscn" id="2_a00se"]
 [ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://bfd3p1gudo2k4" path="res://fsm/encounter/encounter_summon_turn.gd" id="12_vwj2q"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="13"]
 [ext_resource type="PackedScene" uid="uid://dxny3bidwcnmv" path="res://encounter/camera/EncounterCamera.tscn" id="14"]
+[ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="14_vwj2q"]
 
 [node name="Encounter" type="Node" node_paths=PackedStringArray("ui")]
 script = ExtResource("10")
@@ -62,8 +63,86 @@ script = ExtResource("12_vwj2q")
 [node name="EnemyTurn" type="Node" parent="StateMachine"]
 script = ExtResource("12")
 
-[node name="End" type="Node" parent="StateMachine"]
+[node name="End" type="Node" parent="StateMachine" node_paths=PackedStringArray("victory_popup", "defeat_popup")]
 script = ExtResource("11")
+victory_popup = NodePath("../../VictoryPopup")
+defeat_popup = NodePath("../../DefeatPopup")
+
+[node name="VictoryPopup" type="PopupPanel" parent="."]
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(200, 75)
+
+[node name="VictoryLabel" type="Label" parent="VictoryPopup"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 196.0
+offset_bottom = 71.0
+text = "Victory"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="VictoryPopup"]
+wait_time = 0.5
+one_shot = true
+
+[node name="DefeatPopup" type="PopupPanel" parent="."]
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(390, 150)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DefeatPopup"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 386.0
+offset_bottom = 146.0
+
+[node name="DefeatLabel" type="Label" parent="DefeatPopup/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DefeatPopup/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ResetButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../CloseButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../TitleButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../TitleButton")
+focus_previous = NodePath("../CloseButton")
+text = "Reset"
+script = ExtResource("14_vwj2q")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="TitleButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../ResetButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../CloseButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../CloseButton")
+focus_previous = NodePath("../ResetButton")
+text = "Title Screen"
+script = ExtResource("14_vwj2q")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="CloseButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../TitleButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../ResetButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../ResetButton")
+focus_previous = NodePath("../TitleButton")
+text = "Close Game"
+script = ExtResource("14_vwj2q")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [connection signal="focus_moved_by_edge" from="EncounterCamera" to="SelectionTracker/Selector" method="_on_EncounterCamera_focus_moved_by_edge"]
 [connection signal="activated" from="Summon" to="EncounterUIMenuLayout" method="_on_Summon_activated"]

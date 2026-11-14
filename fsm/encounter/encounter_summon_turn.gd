@@ -41,7 +41,7 @@ func _ready_connect_signals() -> void:
 
 ## Checks if the encounter has reached its end.
 func _check_for_end() -> void:
-	if enc.enemies.size() == 0:
+	if enc.players_defeated() or enc.enemies_defeated():
 		state_machine.transition_to(END)
 
 
