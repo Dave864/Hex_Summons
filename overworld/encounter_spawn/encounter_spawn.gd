@@ -34,8 +34,6 @@ var roam_area: RoamArea = null
 var _encounter_map_path: String = ""
 ## The list of names of the enemies that will be in the encounter.
 var _enemy_names: PackedStringArray = []
-## The index of the displayed enemy
-var _enemy_display_index: int = 0
 ## Flag that indicates if the spawner is active.
 var _active: bool = false
 
@@ -54,8 +52,8 @@ func _ready() -> void:
 	_set_alert_radius(spawn_params.alert_radius)
 	sprite.face_random_direction()
 	# TODO: Set sprite to be the dominant enemy. Currently just sets
-	# it to the set index.
-	sprite.set_texture_to_character(_enemy_names[_enemy_display_index])
+	# it to the first enemy.s
+	sprite.set_texture_to_character(_enemy_names[0])
 	sprite.play_idle()
 
 
@@ -71,14 +69,19 @@ func init_encounter_details(
 	enemy_names: PackedStringArray
 ) -> void:
 	_encounter_map_path = map_path
-	_enemy_names = enemy_names
+	var all_names := Array(enemy_names.duplicate())
 	# TODO: Set spawn to be dominant enemy. Currently just randomly picks from
 	# the options as the basis for the behavior.
-	_enemy_display_index = randi() % enemy_names.size()
+	all_names.shuffle()
 	spawn_params = load(
 			CHAR_SPAWN_PARAMETERS_PATH.format(
-				[_enemy_names[_enemy_display_index]]
+				[all_names[0]]
 			)
+	)
+	# Randomly select how many enemies from the pool to record. Don't want to
+	# include all enemies in every encounter.
+	_enemy_names = PackedStringArray(
+			all_names.slice(0, randi() % all_names.size() + 1)
 	)
 	type = spawn_params.spawner_type
 
