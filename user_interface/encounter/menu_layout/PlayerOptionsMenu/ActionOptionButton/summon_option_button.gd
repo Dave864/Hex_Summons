@@ -27,7 +27,13 @@ func _init(
 	focus_entered.connect(_on_ActionOptionButton_focus_entered)
 
 
-### Indicates that a spawn action has been selected.
+## Indicates that a spawn action has been selected. Does nothing is a summon
+## is already active.
 func _on_ActionOptionButton_pressed() -> void:
+	if _sumon_manager_ref == null:
+		printerr("No summon handler specified for SummonButton.")
+		return
+	if _sumon_manager_ref.is_active():
+		return
 	_sumon_manager_ref.set_cost_for_spawn_action(name)
 	SignalBus.emit_spawn_action_selected(name, _action)

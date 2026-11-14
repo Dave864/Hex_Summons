@@ -67,5 +67,7 @@ func _process_button_press() -> void:
 	if _summon_handler == null or _summon_name == "":
 		printerr("No summon handler or summon name specified for SummonButton.")
 		return
+	if _summon_handler.is_active():
+		return
 	_summon_handler.set_cost_for_spawn_action(_summon_name)
 	SignalBus.emit_spawn_action_selected(_summon_name, _option_details)
