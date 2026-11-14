@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="16_jpf5s"]
 
 [node name="Encounter" type="Node" node_paths=PackedStringArray("ui")]
+process_mode = 1
 script = ExtResource("10")
 ui = NodePath("EncounterUIMenuLayout")
 
@@ -45,6 +46,7 @@ selector = NodePath("Selector")
 [node name="Enemies" type="Node" parent="."]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+process_mode = 3
 script = ExtResource("13")
 initial_state = NodePath("Start")
 
@@ -66,6 +68,7 @@ victory_popup = NodePath("../../VictoryPopup")
 defeat_popup = NodePath("../../DefeatPopup")
 
 [node name="VictoryPopup" type="PopupPanel" parent="."]
+process_mode = 2
 oversampling_override = 1.0
 initial_position = 1
 size = Vector2i(200, 75)
@@ -80,10 +83,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Timer" type="Timer" parent="VictoryPopup"]
-wait_time = 0.5
+wait_time = 2.0
 one_shot = true
 
 [node name="DefeatPopup" type="PopupPanel" parent="."]
+process_mode = 2
 oversampling_override = 1.0
 initial_position = 1
 size = Vector2i(390, 150)
@@ -151,19 +155,23 @@ asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="UIMoveFocus" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("14_k3q7x")
 volume_db = -5.0
 bus = &"Interface"
 
 [node name="UIMouseOver" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("15_8uc3n")
 bus = &"Interface"
 
 [node name="UIConfirm" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("16_jpf5s")
 bus = &"Interface"
 
 [node name="MusicBattle" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("5_vwj2q")
 volume_db = -10.0
 pitch_scale = 1.02

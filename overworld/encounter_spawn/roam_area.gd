@@ -163,7 +163,6 @@ func _get_random_point_on_ray(
 	var discriminent := pow(b, 2.0) - 4.0 * a * c
 	var max_dist: float
 	if discriminent < 0.0:
-		printerr("Cannot find random point in RoamArea.")
 		return ray_start
 	elif is_zero_approx(discriminent):
 		max_dist = -b / (2.0 * a)

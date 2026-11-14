@@ -21,6 +21,7 @@ var _defeat_focus_button: Button = null
 ## Connect the button and timer signals for the popups.
 func _ready() -> void:
 	super._ready()
+	victory_popup.popup_hide.connect(_on_victory_timeout)
 	_victory_timer = victory_popup.get_node("Timer")
 	_victory_timer.timeout.connect(_on_victory_timeout)
 	var reset_button: Button = defeat_popup.get_node(
@@ -42,6 +43,7 @@ func _ready() -> void:
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
 	WispController.recall_all_to_players(enc.summon.summon_wisp_pool)
+	get_tree().paused = true
 	if enc.enemies_defeated():
 		victory_popup.show()
 		_victory_timer.start()
@@ -52,18 +54,24 @@ func enter(_msg := {}) -> void:
 
 ## Goes back to the overworld.
 func _on_victory_timeout() -> void:
+	# Time out can happen if menu is closed prematurely, so stop the timer to
+	# prevent timeout from triggering again.
+	_victory_timer.stop()
+	get_tree().paused = false
 	SceneController.change_scene_to_overworld()
 
 
 ## Loads the start of the game.
 func _on_defeat_reset_pressed() -> void:
 	SceneController.reset_landmark()
+	get_tree().paused = false
 	SceneController.change_scene_to_landmark_zone("TownStart")
 
 
 ## Loads the title screen. 
 func _on_defeat_title_pressed() -> void:
 	SceneController.reset_landmark()
+	get_tree().paused = false
 	SceneController.change_scene_to_title()
 
 
