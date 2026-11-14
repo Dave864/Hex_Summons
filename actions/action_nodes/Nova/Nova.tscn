@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bkqx7l8kj0bii"]
+[gd_scene load_steps=14 format=3 uid="uid://bkqx7l8kj0bii"]
 
 [ext_resource type="Script" uid="uid://b4nchvbsc7a5a" path="res://actions/action.gd" id="1"]
 [ext_resource type="Script" uid="uid://bmwncc537t588" path="res://actions/action_hit_box.gd" id="2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Material" path="res://actions/test_shader_material.tres" id="6"]
 [ext_resource type="Script" uid="uid://c3neh3ael3g72" path="res://actions/effects/action_effect.gd" id="6_2qpbv"]
 [ext_resource type="Script" uid="uid://jdmr4u2vh1uj" path="res://actions/effects/flat_action_effect.gd" id="7_rdb5j"]
+[ext_resource type="AudioStream" uid="uid://b7jej1fsfekcu" path="res://audio/effects/AW_Gun_HIT_explode_03.wav" id="8_8y23p"]
 
 [sub_resource type="CylinderShape3D" id="1"]
 height = 10.0
@@ -121,6 +122,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [0.5, 3.0]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sound:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v8i7y"]
 _data = {
@@ -173,3 +186,7 @@ metadata/_custom_type_script = "uid://jdmr4u2vh1uj"
 libraries = {
 &"": SubResource("AnimationLibrary_v8i7y")
 }
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_8y23p")
+bus = &"Effects"

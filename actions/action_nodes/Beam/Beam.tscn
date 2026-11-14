@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b63u8x16ow4ir"]
+[gd_scene load_steps=14 format=3 uid="uid://b63u8x16ow4ir"]
 
 [ext_resource type="Script" uid="uid://b4nchvbsc7a5a" path="res://actions/action.gd" id="1"]
 [ext_resource type="Resource" uid="uid://c7tacoqetxp51" path="res://actions/action_nodes/Beam/action_stats.tres" id="4"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c3neh3ael3g72" path="res://actions/effects/action_effect.gd" id="6_wtpub"]
 [ext_resource type="Script" uid="uid://bk5n62fatmjkt" path="res://actions/effects/percent_action_effect.gd" id="7_jqfnu"]
 [ext_resource type="Material" path="res://actions/test_shader_material.tres" id="8"]
+[ext_resource type="AudioStream" uid="uid://bpnetm3lw76w4" path="res://audio/effects/AW_Laser_HIT_blast_large_02.wav" id="8_06mor"]
 
 [sub_resource type="CylinderShape3D" id="5"]
 height = 1.0
@@ -230,6 +231,18 @@ tracks/8/keys = {
 "method": &"_signal_focus_camera_decay"
 }]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Sound:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0chhd"]
 _data = {
@@ -287,3 +300,7 @@ metadata/_custom_type_script = "uid://bk5n62fatmjkt"
 libraries = {
 &"": SubResource("AnimationLibrary_0chhd")
 }
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_06mor")
+bus = &"Effects"

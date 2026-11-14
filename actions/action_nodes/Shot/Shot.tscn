@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cp6hc4c3kwymm"]
+[gd_scene load_steps=13 format=3 uid="uid://cp6hc4c3kwymm"]
 
 [ext_resource type="Script" uid="uid://b4nchvbsc7a5a" path="res://actions/action.gd" id="2"]
 [ext_resource type="Resource" uid="uid://dwr3s086j0bub" path="res://actions/action_nodes/Shot/action_stats.tres" id="3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bigg48w851oea" path="res://actions/effects/effects_list.gd" id="5_1mejq"]
 [ext_resource type="Material" path="res://actions/test_shader_material.tres" id="6"]
 [ext_resource type="Script" uid="uid://c3neh3ael3g72" path="res://actions/effects/action_effect.gd" id="6_1mejq"]
+[ext_resource type="AudioStream" uid="uid://dtwu1ql2w50d8" path="res://audio/effects/AW_Bow_HIT_Generic_03.wav" id="7_asy7p"]
 
 [sub_resource type="SphereShape3D" id="1"]
 
@@ -56,6 +57,18 @@ tracks/1/keys = {
 "method": &"_signal_focus_camera_snap"
 }]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sound:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_76gep"]
 _data = {
@@ -100,3 +113,7 @@ metadata/_custom_type_script = "uid://c3neh3ael3g72"
 libraries = {
 &"": SubResource("AnimationLibrary_76gep")
 }
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_asy7p")
+bus = &"Interface"
