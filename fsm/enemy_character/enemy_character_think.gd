@@ -106,10 +106,8 @@ func _get_targets(possible_targets: Array[Character]) -> Array[Character]:
 func _process_action_chain(action_chain: Array[Array]) -> void:
 	if action_chain.size() > 0:
 		if action_chain.back()[0] == MOVE:
-			print("Go to move")
 			state_machine.transition_to(MOVE, {"command_chain": action_chain})
 		elif action_chain.back()[0] == ACTION:
-			print("Go to action")
 			state_machine.transition_to(ACTION, {"command_chain": action_chain})
 	else:
 		ec.emit_turn_ended()

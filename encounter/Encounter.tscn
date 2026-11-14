@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://x4o3gls28fh"]
+[gd_scene load_steps=18 format=3 uid="uid://x4o3gls28fh"]
 
 [ext_resource type="PackedScene" uid="uid://ddvk0q84qb3m" path="res://hex_map/SelectionTracker/SelectionTracker.tscn" id="2_a00se"]
 [ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3"]
@@ -13,7 +13,10 @@
 [ext_resource type="Script" uid="uid://bfd3p1gudo2k4" path="res://fsm/encounter/encounter_summon_turn.gd" id="12_vwj2q"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="13"]
 [ext_resource type="PackedScene" uid="uid://dxny3bidwcnmv" path="res://encounter/camera/EncounterCamera.tscn" id="14"]
+[ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/interface/UIClick_Menu Button 09_KRST_NONE.wav" id="14_k3q7x"]
 [ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="14_vwj2q"]
+[ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/interface/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="15_8uc3n"]
+[ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="16_jpf5s"]
 
 [node name="Encounter" type="Node" node_paths=PackedStringArray("ui")]
 script = ExtResource("10")
@@ -31,12 +34,6 @@ sky_mode = 1
 [node name="EncounterUIMenuLayout" parent="." instance=ExtResource("4_a00se")]
 
 [node name="Summon" parent="." instance=ExtResource("5_31f15")]
-
-[node name="MusicBattle" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_vwj2q")
-pitch_scale = 1.02
-autoplay = true
-bus = &"Music"
 
 [node name="SelectionTracker" parent="." node_paths=PackedStringArray("selector") instance=ExtResource("2_a00se")]
 selector = NodePath("Selector")
@@ -108,7 +105,7 @@ vertical_alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="ResetButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer"]
+[node name="ResetButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../CloseButton")
 focus_neighbor_top = NodePath(".")
@@ -118,9 +115,12 @@ focus_next = NodePath("../TitleButton")
 focus_previous = NodePath("../CloseButton")
 text = "Reset"
 script = ExtResource("14_vwj2q")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="TitleButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer"]
+[node name="TitleButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../ResetButton")
 focus_neighbor_top = NodePath(".")
@@ -130,9 +130,12 @@ focus_next = NodePath("../CloseButton")
 focus_previous = NodePath("../ResetButton")
 text = "Title Screen"
 script = ExtResource("14_vwj2q")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="CloseButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer"]
+[node name="CloseButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../TitleButton")
 focus_neighbor_top = NodePath(".")
@@ -142,7 +145,30 @@ focus_next = NodePath("../ResetButton")
 focus_previous = NodePath("../TitleButton")
 text = "Close Game"
 script = ExtResource("14_vwj2q")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="UIMoveFocus" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_k3q7x")
+volume_db = -5.0
+bus = &"Interface"
+
+[node name="UIMouseOver" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_8uc3n")
+bus = &"Interface"
+
+[node name="UIConfirm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_jpf5s")
+bus = &"Interface"
+
+[node name="MusicBattle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_vwj2q")
+volume_db = -10.0
+pitch_scale = 1.02
+autoplay = true
+bus = &"Music"
 
 [connection signal="focus_moved_by_edge" from="EncounterCamera" to="SelectionTracker/Selector" method="_on_EncounterCamera_focus_moved_by_edge"]
 [connection signal="activated" from="Summon" to="EncounterUIMenuLayout" method="_on_Summon_activated"]

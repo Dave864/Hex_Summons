@@ -64,10 +64,10 @@ func get_current_character() -> Character:
 
 ## Checks if all the players are defeated.
 func players_defeated() -> bool:
-	var all_active: bool = true
 	for is_active: bool in players.values():
-		all_active = false if not is_active else all_active
-	return not all_active
+		if is_active:
+			return false
+	return true
 
 
 ## Checks if all the enemies are defeated.

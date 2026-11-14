@@ -64,10 +64,12 @@ func connect_encounter_details(
 ) -> void:
 	h_map = h_map_ref
 	_character = character
-	for o in opponents:
+	for o: Character in opponents:
 		_opponents[o.get_instance_id()] = o
-	for a in allies:
+		o.defeated.connect(_on_Character_defeated)
+	for a: Character in allies:
 		_allies[a.get_instance_id()] = a
+		a.defeated.connect(_on_Character_defeated)
 	_o_ttr = ThreatTracker.new(_character.get_instance_id(), opponents, summon)
 	_a_ttr = ThreatTracker.new(_character.get_instance_id(), allies, summon)
 	_summon = summon
@@ -740,3 +742,12 @@ func _on_Summon_deactivated() -> void:
 	else:
 		_opponents[summoner_id] = _summoner
 	_summoner = null
+
+
+## Removes the character from the relevant tracker array.
+func _on_Character_defeated(character: Character) -> void:
+	var char_id := character.get_instance_id()
+	if _allies.has(char_id):
+		_allies.erase(char_id)
+	if _opponents.has(char_id):
+		_opponents.erase(char_id)

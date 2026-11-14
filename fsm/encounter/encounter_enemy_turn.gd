@@ -44,17 +44,21 @@ func _disconnect_signals() -> void:
 	_active_char.turn_ended.disconnect(_on_EnemyCharacter_turn_ended)
 
 
-## Checks if the encounter has reached its end.
-func _check_for_end() -> void:
+## Rerturns if the encounter has reached its end. Triggers a state change if
+## it has.
+func _reached_end() -> bool:
 	if enc.players_defeated() or enc.enemies_defeated():
 		state_machine.transition_to(END)
+		return true
+	return false
 
 
 ## Update the initiative tracker and transition to either the PlayerTurn state,
 ## the SummonTurn state, or the EnemyTurn state depending on the next character.
 func _on_EnemyCharacter_turn_ended() -> void:
 	await _active_char.is_waiting
-	_check_for_end()
+	if _reached_end():
+		return
 	var next_character: Character = enc.get_next_character()
 	enc.progress_initiative()
 	if next_character is PlayerCharacter:

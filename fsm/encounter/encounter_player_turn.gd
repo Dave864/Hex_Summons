@@ -29,12 +29,11 @@ func enter(_msg := {}) -> void:
 	SignalBus.emit_player_turn_started(_active_char)
 
 
-## Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	# Move to the `End` State when all enemies are defeated.
-	if enc.enemies.size() == 0:
-		state_machine.transition_to(END)
-	## TODO: Add logic to check if all players are defeated
+### Corresponds to the `_process()` callback.
+#func update(_delta: float) -> void:
+	## Move to the `End` State when all enemies are defeated.
+	#if enc.enemies_defeated() or enc.players_defeated():
+		#state_machine.transition_to(END)
 
 
 ## Called by the state machine before changing the active state.
@@ -57,10 +56,13 @@ func _disconnect_signals() -> void:
 	_active_char.is_waiting.disconnect(_on_PlayerCharacter_is_waiting)
 	_active_char.turn_ended.disconnect(_on_PlayerCharacter_turn_ended)
 
-## Checks if the encounter has reached its end.
-func _check_for_end() -> void:
+## Rerturns if the encounter has reached its end. Triggers a state change if
+## it has.
+func _reached_end() -> bool:
 	if enc.players_defeated() or enc.enemies_defeated():
 		state_machine.transition_to(END)
+		return true
+	return false
 
 
 ## Marks the player as waiting.
@@ -76,7 +78,8 @@ func _on_PlayerCharacter_turn_ended() -> void:
 	enc.selection_tracker.clear_indicators()
 	if not _player_waiting:
 		await _active_char.is_waiting
-	_check_for_end()
+	if _reached_end():
+		return
 	var next_character: Character = enc.get_next_character()
 	enc.progress_initiative()
 	if next_character is PlayerCharacter:
