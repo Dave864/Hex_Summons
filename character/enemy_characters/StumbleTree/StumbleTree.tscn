@@ -110,6 +110,8 @@ metadata/_custom_type_script = "uid://bdkgr4241wqcj"
 
 [node name="ActionBehavior" type="Node" parent="Actions/Empty"]
 script = ExtResource("15_fpl7x")
+movement_behavior = 1
+randomize_move_dist = true
 metadata/_custom_type_script = "uid://bdkgr4241wqcj"
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
