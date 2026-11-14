@@ -141,6 +141,7 @@ func _load_enemies() -> void:
 	
 	var e_index: int = 0
 	for enemy: EnemyCharacter in enemies:
+		ObjectiveTracker.track_enemy(enemy)
 		enemy.defeated.connect(_on_Character_defeated)
 		var ai_node: CharacterAI = enemy.get_node("CharacterAI")
 		ai_node.connect_encounter_details(

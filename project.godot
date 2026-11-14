@@ -35,6 +35,7 @@ WispTracker="*res://autoloads/wisp_tracker.gd"
 WispController="*res://autoloads/wisp_controller.gd"
 SceneController="*res://autoloads/scene_controller.gd"
 OptionsController="*res://autoloads/options_controller.gd"
+ObjectiveTracker="*res://autoloads/objective_tracker.gd"
 
 [display]
 
