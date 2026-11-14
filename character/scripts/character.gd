@@ -44,12 +44,12 @@ func _ready() -> void:
 
 ## Emits the is_waiting signal.
 func emit_is_waiting() -> void:
-	emit_signal("is_waiting")
+	is_waiting.emit()
 
 
 ## Emit the signal 'turn_ended'.
 func emit_turn_ended() -> void:
-	emit_signal("turn_ended")
+	turn_ended.emit()
 
 
 ## Virtual function. Returns the character type.
@@ -89,7 +89,7 @@ func _on_Character_area_entered(map_tile: Area3D) -> void:
 	map_coordinate.set_cube_coord(map_tile.map_coordinate.get_cube_coord())
 	if !_start_set:
 		_start_set = true
-		emit_signal("start_set")
+		start_set.emit()
 
 
 ## Checks if the character has been defeated based on the health change.
@@ -98,4 +98,4 @@ func _on_CharacterStatModifiers_health_changed(
 	_old_value: int
 ) -> void:
 	if new_value == 0:
-		emit_signal("defeated", self)
+		defeated.emit(self)

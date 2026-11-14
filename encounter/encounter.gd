@@ -128,9 +128,15 @@ func _load_enemies() -> void:
 		printerr("Not enough start positions for enemies.")
 		return
 	for path: String in enemy_counts.keys():
+		var enemy_name := ""
 		for count: int in enemy_counts[path]:
 			var enemy: EnemyCharacter = load(path).instantiate()
+			if enemy_name == "":
+				enemy_name = enemy.name
 			$Enemies.add_child(enemy)
+			# Make sure that the names of duplicate enemies contain the original
+			# so that ObjectTracker can properly evaluate them.
+			enemy.name = enemy_name + str(count)
 			enemies.append(enemy)
 	
 	var e_index: int = 0
