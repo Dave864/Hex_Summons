@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://rymx7imper32"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://rymx7imper32"]
 
 [ext_resource type="Shader" uid="uid://dtt3a1dq31nnw" path="res://character/material/sprite_billboard_draw.gdshader" id="1_14kg6"]
 [ext_resource type="Texture2D" uid="uid://domsgi3d7m5h7" path="res://art/placeholders/Player3D.png" id="2_wbs6r"]

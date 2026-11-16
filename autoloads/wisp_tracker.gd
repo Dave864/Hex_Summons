@@ -207,7 +207,7 @@ func _is_tracked(wisp: String) -> bool:
 func _get_wisp_data(wisp_name: String) -> Wisp:
 	var path_format := "res://wisps/{0}/{1}/{1}.tres"
 	for element: String in Element.Core.keys():
-		var wisp_path := path_format.format([element, wisp_name])
+		var wisp_path := path_format.format([element.to_lower(), wisp_name])
 		if ResourceLoader.exists(wisp_path, "Wisp"):
 			return load(wisp_path)
 	printerr("No data could be found for wisp {0}.".format([wisp_name]))

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://wrlommn3g1pu"]
+[gd_scene format=3 uid="uid://wrlommn3g1pu"]
 
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_p8d2p"]
 [ext_resource type="Script" uid="uid://cge7q6thdquo5" path="res://user_interface/Options/options.gd" id="2_2aq4h"]
@@ -64,7 +64,7 @@ region = Rect2(35, 171, 11, 11)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_30vob"]
 bg_color = Color(0, 0, 0.2509804, 0.7411765)
 
-[node name="Options" type="Control" node_paths=PackedStringArray("asp_open", "asp_closed")]
+[node name="Options" type="Control" unique_id=1713460526 node_paths=PackedStringArray("asp_open", "asp_closed")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -76,7 +76,7 @@ script = ExtResource("2_2aq4h")
 asp_open = NodePath("UIOpenMenu")
 asp_closed = NodePath("UIGoBack")
 
-[node name="TabContainer" type="TabContainer" parent="." node_paths=PackedStringArray("asp_tab_changed", "asp_tab_hovered", "asp_focus_entered")]
+[node name="TabContainer" type="TabContainer" parent="." unique_id=204953859 node_paths=PackedStringArray("asp_tab_changed", "asp_tab_hovered", "asp_focus_entered")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -90,13 +90,13 @@ asp_tab_hovered = NodePath("../UIMouseOver")
 asp_focus_entered = NodePath("../UIMoveFocus")
 metadata/_custom_type_script = "uid://dbk30tnjas3x0"
 
-[node name="Sound" type="Control" parent="TabContainer"]
+[node name="Sound" type="Control" parent="TabContainer" unique_id=1940559230]
 visible = false
 layout_mode = 2
 script = ExtResource("4_47c21")
 metadata/_tab_index = 0
 
-[node name="VolumeContainer" type="VBoxContainer" parent="TabContainer/Sound"]
+[node name="VolumeContainer" type="VBoxContainer" parent="TabContainer/Sound" unique_id=1162885189]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -106,14 +106,14 @@ offset_bottom = -184.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MasterVolumeContainer" type="HBoxContainer" parent="TabContainer/Sound/VolumeContainer"]
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="TabContainer/Sound/VolumeContainer" unique_id=1533097582]
 layout_mode = 2
 
-[node name="MasterLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer"]
+[node name="MasterLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer" unique_id=1849288208]
 layout_mode = 2
 text = "Master"
 
-[node name="MasterSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer" node_paths=PackedStringArray("debounce_timer", "asp_focus_entered", "asp_mouse_entered")]
+[node name="MasterSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer" unique_id=1530035811 node_paths=PackedStringArray("debounce_timer", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -128,7 +128,7 @@ asp_focus_entered = NodePath("../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://dhwea77lcy0r5"
 
-[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer/MasterSlider"]
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/MasterVolumeContainer/MasterSlider" unique_id=1216277387]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -144,39 +144,39 @@ active_texture = SubResource("AtlasTexture_30vob")
 inactive_texture = SubResource("AtlasTexture_47c21")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="HSeparator" type="HSeparator" parent="TabContainer/Sound/VolumeContainer"]
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Sound/VolumeContainer" unique_id=1023411720]
 layout_mode = 2
 
-[node name="SubVolumeContainer" type="HBoxContainer" parent="TabContainer/Sound/VolumeContainer"]
+[node name="SubVolumeContainer" type="HBoxContainer" parent="TabContainer/Sound/VolumeContainer" unique_id=330796399]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LabelsContainer" type="VBoxContainer" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer"]
+[node name="LabelsContainer" type="VBoxContainer" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer" unique_id=2076206536]
 layout_mode = 2
 
-[node name="MusicLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/LabelsContainer"]
+[node name="MusicLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/LabelsContainer" unique_id=1610326315]
 layout_mode = 2
 size_flags_vertical = 6
 text = "Music"
 horizontal_alignment = 2
 
-[node name="InterfaceLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/LabelsContainer"]
+[node name="InterfaceLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/LabelsContainer" unique_id=193889662]
 layout_mode = 2
 size_flags_vertical = 6
 text = "Interface"
 horizontal_alignment = 2
 
-[node name="EffectsLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/LabelsContainer"]
+[node name="EffectsLabel" type="Label" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/LabelsContainer" unique_id=589842869]
 layout_mode = 2
 size_flags_vertical = 6
 text = "Effects"
 horizontal_alignment = 2
 
-[node name="SlidersContainer" type="VBoxContainer" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer"]
+[node name="SlidersContainer" type="VBoxContainer" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer" unique_id=615970680]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MusicSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" node_paths=PackedStringArray("debounce_timer", "asp_focus_entered", "asp_mouse_entered")]
+[node name="MusicSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" unique_id=503340744 node_paths=PackedStringArray("debounce_timer", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_vertical = 6
 max_value = 1.0
@@ -191,7 +191,7 @@ asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://dhwea77lcy0r5"
 
-[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer/MusicSlider"]
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer/MusicSlider" unique_id=198973224]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -207,7 +207,7 @@ active_texture = SubResource("AtlasTexture_vp4e1")
 inactive_texture = SubResource("AtlasTexture_3uads")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="InterfaceSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" node_paths=PackedStringArray("debounce_timer", "asp_value_changed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="InterfaceSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" unique_id=404195531 node_paths=PackedStringArray("debounce_timer", "asp_value_changed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_vertical = 6
 max_value = 1.0
@@ -223,7 +223,7 @@ asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://dhwea77lcy0r5"
 
-[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer/InterfaceSlider"]
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer/InterfaceSlider" unique_id=2017686985]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -239,7 +239,7 @@ active_texture = SubResource("AtlasTexture_d4xxc")
 inactive_texture = SubResource("AtlasTexture_kn58i")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="EffectsSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" node_paths=PackedStringArray("debounce_timer", "asp_value_changed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="EffectsSlider" type="HSlider" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer" unique_id=1906985186 node_paths=PackedStringArray("debounce_timer", "asp_value_changed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_vertical = 6
 max_value = 1.0
@@ -255,7 +255,7 @@ asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://dhwea77lcy0r5"
 
-[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer/EffectsSlider"]
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Sound/VolumeContainer/SubVolumeContainer/SlidersContainer/EffectsSlider" unique_id=235511276]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -271,11 +271,11 @@ active_texture = SubResource("AtlasTexture_f32s2")
 inactive_texture = SubResource("AtlasTexture_hystq")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="DebounceTimer" type="Timer" parent="TabContainer/Sound"]
+[node name="DebounceTimer" type="Timer" parent="TabContainer/Sound" unique_id=1202693518]
 wait_time = 0.1
 one_shot = true
 
-[node name="Controls" type="Control" parent="TabContainer" node_paths=PackedStringArray("confirm_button", "reset_button")]
+[node name="Controls" type="Control" parent="TabContainer" unique_id=207681199 node_paths=PackedStringArray("confirm_button", "reset_button")]
 layout_mode = 2
 script = ExtResource("2_8wd8u")
 confirm_button = NodePath("../../HBoxContainer/Confirm")
@@ -283,7 +283,7 @@ reset_button = NodePath("../../HBoxContainer/RevertToDefault")
 confirm_keybind_delay_time = 0.2
 metadata/_tab_index = 1
 
-[node name="SourceTabs" type="TabBar" parent="TabContainer/Controls"]
+[node name="SourceTabs" type="TabBar" parent="TabContainer/Controls" unique_id=122064346]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -300,7 +300,7 @@ tab_count = 2
 tab_0/title = "Keyboard"
 tab_1/title = "Gamepad"
 
-[node name="KeybindOptions" type="HBoxContainer" parent="TabContainer/Controls"]
+[node name="KeybindOptions" type="HBoxContainer" parent="TabContainer/Controls" unique_id=126799677]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -310,17 +310,17 @@ offset_bottom = -42.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Column1" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions"]
+[node name="Column1" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions" unique_id=2014987076]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LabelInterface" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1"]
+[node name="LabelInterface" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1" unique_id=2077937455]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Interface"
 horizontal_alignment = 1
 
-[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column1/LabelInterface"]
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column1/LabelInterface" unique_id=826204996]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -337,7 +337,7 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsInterface" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1" node_paths=PackedStringArray("updated_icon", "confirm_popup")]
+[node name="ItemsInterface" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1" unique_id=920695727 node_paths=PackedStringArray("updated_icon", "confirm_popup")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
@@ -348,21 +348,21 @@ script = ExtResource("4_tdglh")
 updated_icon = NodePath("../LabelInterface/ActiveIcon")
 confirm_popup = NodePath("../../../PopupConfirmInput")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface" unique_id=351417451]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Accept" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+[node name="Accept" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer" unique_id=1488500230]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept" unique_id=1407221008]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "accept"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Accept" unique_id=35717555 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
@@ -376,16 +376,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Cancel" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+[node name="Cancel" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer" unique_id=84435253]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Cancel"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Cancel" unique_id=1774215724]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "cancel"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Cancel" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Cancel" unique_id=903582161 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
@@ -400,16 +400,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer" unique_id=775241166]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Left"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Left" unique_id=834470925]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "left"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Left" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Left" unique_id=543760779 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
@@ -424,16 +424,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer" unique_id=856638185]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Right"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Right" unique_id=36532432]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "right"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Right" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Right" unique_id=442905687 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
@@ -448,16 +448,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer" unique_id=777518465]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Up"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Up" unique_id=1324046858]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "up"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Up" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Up" unique_id=447326109 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
@@ -472,16 +472,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer"]
+[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer" unique_id=595227049]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Down"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Down" unique_id=1772634930]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "down"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Down" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Down" unique_id=186785769 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsLeftJoystick/VBoxContainer/Left/KeybindInputButton")
@@ -496,16 +496,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/KeybindOptions/Column1"]
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/KeybindOptions/Column1" unique_id=1482474056]
 layout_mode = 2
 
-[node name="LabelMovement" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1"]
+[node name="LabelMovement" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1" unique_id=1197711272]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Movement"
 horizontal_alignment = 1
 
-[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column1/LabelMovement"]
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column1/LabelMovement" unique_id=228221191]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -522,7 +522,7 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsMovement" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1" node_paths=PackedStringArray("updated_icon", "confirm_popup")]
+[node name="ItemsMovement" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column1" unique_id=431301707 node_paths=PackedStringArray("updated_icon", "confirm_popup")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
@@ -533,21 +533,21 @@ script = ExtResource("4_tdglh")
 updated_icon = NodePath("../LabelMovement/ActiveIcon")
 confirm_popup = NodePath("../../../PopupConfirmInput")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement" unique_id=1676363135]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer"]
+[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer" unique_id=1638568128]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Left"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Left" unique_id=601356518]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "left"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Left" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Left" unique_id=1323050840 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
@@ -562,16 +562,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer"]
+[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer" unique_id=1634232211]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Right"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Right" unique_id=2070233624]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "right"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Right" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Right" unique_id=148888254 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
@@ -586,16 +586,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer"]
+[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer" unique_id=530583724]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Up"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Up" unique_id=790558403]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "up"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Up" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Up" unique_id=441315486 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
@@ -610,16 +610,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer"]
+[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer" unique_id=585381858]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Down"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Down" unique_id=576102928]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "down"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Down" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsMovement/VBoxContainer/Down" unique_id=648540498 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column3/ItemsRightJoystick/VBoxContainer/Left/KeybindInputButton")
@@ -634,18 +634,18 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Column2" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions"]
+[node name="Column2" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions" unique_id=107970993]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LabelCombat" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2"]
+[node name="LabelCombat" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2" unique_id=1543240680]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Combat"
 horizontal_alignment = 1
 
-[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column2/LabelCombat"]
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column2/LabelCombat" unique_id=356958038]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -662,7 +662,7 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsCombat" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2" node_paths=PackedStringArray("updated_icon", "confirm_popup")]
+[node name="ItemsCombat" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2" unique_id=1806364724 node_paths=PackedStringArray("updated_icon", "confirm_popup")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
@@ -673,21 +673,21 @@ script = ExtResource("4_tdglh")
 updated_icon = NodePath("../LabelCombat/ActiveIcon")
 confirm_popup = NodePath("../../../PopupConfirmInput")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat" unique_id=832933832]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SelectTile" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+[node name="SelectTile" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer" unique_id=653708697]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile" unique_id=1816809880]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "select tile"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/SelectTile" unique_id=185147925 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
@@ -701,16 +701,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Movement" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+[node name="Movement" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer" unique_id=808199650]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Movement"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Movement" unique_id=284555172]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "movement"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Movement" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Movement" unique_id=1199078096 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
@@ -725,16 +725,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Techniques" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+[node name="Techniques" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer" unique_id=1888080938]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Techniques"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Techniques" unique_id=1227352477]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "techniques"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Techniques" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Techniques" unique_id=1622329993 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
@@ -749,16 +749,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Spells" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+[node name="Spells" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer" unique_id=1323760412]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Spells"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Spells" unique_id=1862464051]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "spells"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Spells" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Spells" unique_id=2112165501 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
@@ -773,16 +773,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Summons" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+[node name="Summons" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer" unique_id=269879519]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Summons"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Summons" unique_id=1624273678]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "summons"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Summons" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Summons" unique_id=737620803 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
@@ -797,16 +797,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Items" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+[node name="Items" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer" unique_id=1673241312]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Items"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Items" unique_id=126900809]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "items"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Items" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/Items" unique_id=1928407710 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
@@ -821,16 +821,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="EndTurn" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer"]
+[node name="EndTurn" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer" unique_id=1136219557]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/EndTurn"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/EndTurn" unique_id=470241955]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "end turn"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/EndTurn" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombat/VBoxContainer/EndTurn" unique_id=781854271 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column1/ItemsInterface/VBoxContainer/Accept/KeybindInputButton")
@@ -845,16 +845,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/KeybindOptions/Column2"]
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/KeybindOptions/Column2" unique_id=1806563892]
 layout_mode = 2
 
-[node name="LabelCombatCamera" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2"]
+[node name="LabelCombatCamera" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2" unique_id=151169913]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Combat Camera"
 horizontal_alignment = 1
 
-[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column2/LabelCombatCamera"]
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column2/LabelCombatCamera" unique_id=212844457]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -871,7 +871,7 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsCombatCamera" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2" node_paths=PackedStringArray("updated_icon", "confirm_popup")]
+[node name="ItemsCombatCamera" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column2" unique_id=311502586 node_paths=PackedStringArray("updated_icon", "confirm_popup")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
@@ -882,20 +882,20 @@ script = ExtResource("4_tdglh")
 updated_icon = NodePath("../LabelCombatCamera/ActiveIcon")
 confirm_popup = NodePath("../../../PopupConfirmInput")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera" unique_id=765998565]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Reset" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer"]
+[node name="Reset" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer" unique_id=249678921]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Reset"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Reset" unique_id=248388032]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "reset"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Reset" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Reset" unique_id=584567637 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_top = NodePath("../../../../ItemsCombat/VBoxContainer/EndTurn/KeybindInputButton")
@@ -909,16 +909,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Rotate" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer"]
+[node name="Rotate" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer" unique_id=52646520]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate" unique_id=227961424]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "rotate"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column2/ItemsCombatCamera/VBoxContainer/Rotate" unique_id=460930409 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column1/ItemsMovement/VBoxContainer/Left/KeybindInputButton")
@@ -933,17 +933,17 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Column3" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions"]
+[node name="Column3" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions" unique_id=1435046908]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LabelLeftJoystick" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3"]
+[node name="LabelLeftJoystick" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3" unique_id=2076703375]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Left Joystick"
 horizontal_alignment = 1
 
-[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column3/LabelLeftJoystick"]
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column3/LabelLeftJoystick" unique_id=2130082454]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -960,7 +960,7 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsLeftJoystick" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column3" node_paths=PackedStringArray("updated_icon", "confirm_popup")]
+[node name="ItemsLeftJoystick" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column3" unique_id=737757678 node_paths=PackedStringArray("updated_icon", "confirm_popup")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
@@ -971,20 +971,20 @@ script = ExtResource("4_tdglh")
 updated_icon = NodePath("../LabelLeftJoystick/ActiveIcon")
 confirm_popup = NodePath("../../../PopupConfirmInput")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick" unique_id=1924659456]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer"]
+[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer" unique_id=4781868]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Left"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Left" unique_id=1897826400]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "left"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Left" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Left" unique_id=1589063916 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton")
@@ -998,16 +998,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer"]
+[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer" unique_id=1518619383]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Right"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Right" unique_id=2038639380]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "right"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Right" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Right" unique_id=460634756 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton")
@@ -1022,16 +1022,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer"]
+[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer" unique_id=730875730]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Up"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Up" unique_id=994545577]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "up"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Up" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Up" unique_id=1619027979 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton")
@@ -1046,16 +1046,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer"]
+[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer" unique_id=1218437532]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Down"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Down" unique_id=470290844]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "down"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Down" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsLeftJoystick/VBoxContainer/Down" unique_id=1784672251 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombat/VBoxContainer/SelectTile/KeybindInputButton")
@@ -1070,16 +1070,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/KeybindOptions/Column3"]
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/KeybindOptions/Column3" unique_id=332071148]
 layout_mode = 2
 
-[node name="LabelRightJoystick" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3"]
+[node name="LabelRightJoystick" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3" unique_id=1065828073]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Right Joystick"
 horizontal_alignment = 1
 
-[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column3/LabelRightJoystick"]
+[node name="ActiveIcon" type="TextureRect" parent="TabContainer/Controls/KeybindOptions/Column3/LabelRightJoystick" unique_id=1766391868]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -1096,7 +1096,7 @@ active_texture = SubResource("AtlasTexture_2aq4h")
 inactive_texture = SubResource("AtlasTexture_02efk")
 metadata/_custom_type_script = "uid://b5mo30b067mdw"
 
-[node name="ItemsRightJoystick" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column3" node_paths=PackedStringArray("updated_icon", "confirm_popup")]
+[node name="ItemsRightJoystick" type="ScrollContainer" parent="TabContainer/Controls/KeybindOptions/Column3" unique_id=452229742 node_paths=PackedStringArray("updated_icon", "confirm_popup")]
 layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
@@ -1107,20 +1107,20 @@ script = ExtResource("4_tdglh")
 updated_icon = NodePath("../LabelRightJoystick/ActiveIcon")
 confirm_popup = NodePath("../../../PopupConfirmInput")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick" unique_id=44234195]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer"]
+[node name="Left" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer" unique_id=161731852]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Left"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Left" unique_id=1046449809]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "left"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Left" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Left" unique_id=1969267755 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
@@ -1135,16 +1135,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer"]
+[node name="Right" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer" unique_id=205644531]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Right"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Right" unique_id=1066238056]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "right"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Right" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Right" unique_id=1426373038 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
@@ -1159,16 +1159,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer"]
+[node name="Up" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer" unique_id=2000315709]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up" unique_id=903404245]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "up"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Up" unique_id=636146708 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
@@ -1183,16 +1183,16 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer"]
+[node name="Down" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer" unique_id=939003064]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down"]
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down" unique_id=1823728938]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "down"
 horizontal_alignment = 2
 
-[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column3/ItemsRightJoystick/VBoxContainer/Down" unique_id=650595398 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../../../../../Column2/ItemsCombatCamera/VBoxContainer/Reset/KeybindInputButton")
@@ -1207,7 +1207,7 @@ asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://d38ktuu0nh873"
 
-[node name="PopupConfirmInput" type="Panel" parent="TabContainer/Controls"]
+[node name="PopupConfirmInput" type="Panel" parent="TabContainer/Controls" unique_id=203296664]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -1220,7 +1220,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_30vob")
 script = ExtResource("3_m3ftx")
 
-[node name="Label" type="Label" parent="TabContainer/Controls/PopupConfirmInput"]
+[node name="Label" type="Label" parent="TabContainer/Controls/PopupConfirmInput" unique_id=1317407226]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1232,20 +1232,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="PopupNotAllSet" type="PopupPanel" parent="TabContainer/Controls"]
+[node name="PopupNotAllSet" type="PopupPanel" parent="TabContainer/Controls" unique_id=1582665555]
 oversampling_override = 1.0
 title = "Unset Keybind Error"
 initial_position = 2
 size = Vector2i(175, 100)
 
-[node name="Label" type="Label" parent="TabContainer/Controls/PopupNotAllSet"]
+[node name="Label" type="Label" parent="TabContainer/Controls/PopupNotAllSet" unique_id=330537751]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 171.0
+offset_bottom = 96.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Not all keybinds have been set!"
@@ -1253,10 +1253,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="PopupTimer" type="Timer" parent="TabContainer/Controls"]
+[node name="PopupTimer" type="Timer" parent="TabContainer/Controls" unique_id=1171644544]
 one_shot = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=764844250]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -1270,7 +1270,7 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="Confirm" type="Button" parent="HBoxContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="Confirm" type="Button" parent="HBoxContainer" unique_id=510932563 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../RevertToDefault")
@@ -1282,7 +1282,7 @@ asp_focus_entered = NodePath("../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="RevertToDefault" type="Button" parent="HBoxContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="RevertToDefault" type="Button" parent="HBoxContainer" unique_id=1985310492 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../Confirm")
 focus_neighbor_right = NodePath("../Confirm")
@@ -1293,7 +1293,7 @@ asp_focus_entered = NodePath("../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="ExitInputLabel" parent="." instance=ExtResource("8_02efk")]
+[node name="ExitInputLabel" parent="." unique_id=897889507 instance=ExtResource("8_02efk")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -1308,7 +1308,7 @@ grow_vertical = 1
 input_source = 0
 input_event = "ui_cancel"
 
-[node name="Label" type="Label" parent="ExitInputLabel"]
+[node name="Label" type="Label" parent="ExitInputLabel" unique_id=1879051455]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -1318,32 +1318,32 @@ grow_vertical = 2
 text = "Close"
 vertical_alignment = 1
 
-[node name="UIMoveFocus" type="AudioStreamPlayer" parent="."]
+[node name="UIMoveFocus" type="AudioStreamPlayer" parent="." unique_id=1536442131]
 stream = ExtResource("11_6frqe")
 bus = &"Interface"
 
-[node name="UITabChange" type="AudioStreamPlayer" parent="."]
+[node name="UITabChange" type="AudioStreamPlayer" parent="." unique_id=2131907450]
 stream = ExtResource("13_pwjkw")
 volume_db = -5.0
 bus = &"Interface"
 
-[node name="UIMouseOver" type="AudioStreamPlayer" parent="."]
+[node name="UIMouseOver" type="AudioStreamPlayer" parent="." unique_id=1928902690]
 stream = ExtResource("12_403fo")
 bus = &"Interface"
 
-[node name="UIConfirm" type="AudioStreamPlayer" parent="."]
+[node name="UIConfirm" type="AudioStreamPlayer" parent="." unique_id=264669635]
 stream = ExtResource("12_iubo3")
 bus = &"Interface"
 
-[node name="UIOpenMenu" type="AudioStreamPlayer" parent="."]
+[node name="UIOpenMenu" type="AudioStreamPlayer" parent="." unique_id=1410392255]
 stream = ExtResource("18_30vob")
 bus = &"Interface"
 
-[node name="UIGoBack" type="AudioStreamPlayer" parent="."]
+[node name="UIGoBack" type="AudioStreamPlayer" parent="." unique_id=995854981]
 stream = ExtResource("13_02ge3")
 bus = &"Interface"
 
-[node name="EffectSample" type="AudioStreamPlayer" parent="."]
+[node name="EffectSample" type="AudioStreamPlayer" parent="." unique_id=1542397429]
 stream = ExtResource("15_kkd7s")
 bus = &"Effects"
 

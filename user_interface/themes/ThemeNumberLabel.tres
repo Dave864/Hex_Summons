@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dhnuwcf6tcapi"]
+[gd_resource type="Theme" format=3 uid="uid://dhnuwcf6tcapi"]
 
 [ext_resource type="FontFile" uid="uid://c3q27450ajuhm" path="res://fonts/label_numbers.fnt" id="1"]
 
