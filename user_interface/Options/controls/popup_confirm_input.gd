@@ -29,8 +29,15 @@ var _prior_focus: Control
 @onready var popup_label: Label = $Label
 
 
-## Updates popup text if input source is different from what is expected.
-func _process(_delta: float) -> void:
+## Connects the InputController 
+func _ready() -> void:
+	InputController.input_source_changed.connect(
+			_on_InputController_input_source_changed
+	)
+
+
+## Updates the label text to match the current input.
+func _on_InputController_input_source_changed() -> void:
 	if not visible:
 		return
 	if InputController.get_source() != expected_input_source:
@@ -49,11 +56,11 @@ func _on_KeybindInputButton_new_bind_requested(
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	show()
 	_prior_focus = get_viewport().gui_get_focus_owner()
-	grab_focus()
+	release_focus()
 
 
 ## Hides this popup when KeybindInputButton sets a new input bind.
 func _on_KeybindInputButton_new_bind_set(_id: int) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	hide()
-	_prior_focus.call_deferred("grab_focus")
+	_prior_focus.grab_focus.call_deferred()
