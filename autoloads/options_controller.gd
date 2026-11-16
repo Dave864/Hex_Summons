@@ -24,6 +24,37 @@ const AUDIO_BUSES: PackedStringArray = [
 const DEFAULT_AUDIO_SLIDER := 1.0
 ## Section name for keybind settings.
 const SECTION_KEYBIND := "keybind"
+## Input actions that can have custom bindings.
+const INPUT_ACTIONS: PackedStringArray = [
+	"ui_accept",
+	"ui_cancel",
+	"ui_left",
+	"ui_right",
+	"ui_up",
+	"ui_down",
+	"ui_selector_select",
+	"ui_encounter_movement",
+	"ui_encounter_option_1",
+	"ui_encounter_option_2",
+	"ui_encounter_option_3",
+	"ui_encounter_option_4",
+	"ui_encounter_player_end",
+	"ui_camera_reset",
+	"ui_camera_pan",
+	"options_menu",
+	"player_move_l",
+	"player_move_r",
+	"player_move_u",
+	"player_move_d",
+	"left_joystick_l",
+	"left_joystick_r",
+	"left_joystick_u",
+	"left_joystick_d",
+	"right_joystick_l",
+	"right_joystick_r",
+	"right_joystick_u",
+	"right_joystick_d",
+]
 ## Map from keypad keys to their equivalent normal keys.
 const KEYPAD_TO_NORMAL_KEYS: Dictionary[Key, Key] = {
 	Key.KEY_KP_0: Key.KEY_0,
@@ -100,11 +131,6 @@ const INPUT_KEY_SHORTHAND := {
 
 ## Helper for managing user settings.
 var _config_file: ConfigFile
-
-## The default values for input keybinds.
-@onready var _default_keybinds: DefaultKeybinds = preload(
-		"res://user_interface/Options/controls/default_keybinds.tres"
-)
 
 
 ## Initializes the settings to custom user values if any have been defined.
@@ -193,21 +219,22 @@ func save_custom_volumes_to_file(
 ## Updates the input map to use default keybind settings. Also saves the default
 ## settings to user file.
 func load_default_keybinds() -> void:
-	var keybinds := _default_keybinds.get_all_keybinds()
-	for action: String in keybinds.keys():
+	for action: String in INPUT_ACTIONS:
 		InputMap.action_erase_events(action)
+		var events: Array = (
+				ProjectSettings.get_setting("input/{0}".format([action])).events
+		)
 		# Need to add on additional inputs for events that have matching keypad
-		# action and vice-versa. Is a copy to prevent infinite loop when
-		# checking for keypad action.
-		var events := keybinds[action].duplicate()
-		for event: InputEvent in keybinds[action]:
+		# action and vice-versa.
+		var events_to_set := events.duplicate()
+		for event: InputEvent in events:
 			InputMap.action_add_event(action, event)
 			if event is InputEventKey:
 				var kp_event := get_input_for_keypad(event)
 				if kp_event != null:
 					InputMap.action_add_event(action, kp_event)
-					events.append(kp_event)
-		_config_file.set_value(SECTION_KEYBIND, action, events)
+					events_to_set.append(kp_event)
+		_config_file.set_value(SECTION_KEYBIND, action, events_to_set)
 	_save_config()
 	input_updated.emit()
 
@@ -251,7 +278,7 @@ func _get_audio_bus_index(audio_bus: String) -> int:
 func _create_user_file() -> void:
 	for audio_bus: String in AUDIO_BUSES:
 		_config_file.set_value(SECTION_VOLUME, audio_bus, DEFAULT_AUDIO_SLIDER)
-	for action: String in _default_keybinds.get_input_actions():
+	for action: String in INPUT_ACTIONS:
 		_config_file.set_value(SECTION_KEYBIND, action, [])
 
 
