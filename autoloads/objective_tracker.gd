@@ -4,12 +4,20 @@ extends Node
 ## Currently tracks the number of enemy types that have been defeated.
 
 
+## The number of scuttleshrub enemies to kill to complete the objective.
+const REQ_COUNT_SCUTTLESHRUB := 8
+## The number of stumbletree enemies to kill to complete the objective.
+const REQ_COUNT_STUMBLETREE := 5
+## The number of elder stumbletree enemies to kill to complete the objective.
+const REQ_COUNT_ELDERSTUMBLETREE := 3
+
+
 ## The collection of target enemies to kill, the required kill count, and the
 ## current number killed.
 var kill_objectives: Dictionary[String, Array] = {
-		"ScuttleShrub": [0, 0],
-		"StumbleTree": [0, 0],
-		"ElderStumbleTree": [0, 0],
+		"ScuttleShrub": [REQ_COUNT_SCUTTLESHRUB, 0],
+		"StumbleTree": [REQ_COUNT_STUMBLETREE, 0],
+		"ElderStumbleTree": [REQ_COUNT_ELDERSTUMBLETREE, 0],
 }
 
 
