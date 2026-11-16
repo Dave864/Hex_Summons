@@ -6,6 +6,10 @@ extends Node
 ## for the player character when transitioning to this scene.
 
 
+## The viewport for the options menu.
+@export var options_viewport: SubViewportContainer = null
+## The options menu.
+@export var options_menu: Options = null
 ## The player avatar for traversing through the overworld.
 @export var player_avatar: OverworldAvatar = null
 
@@ -32,6 +36,16 @@ func _ready() -> void:
 	printerr("No valid position for player found.")
 
 
+## Checks if the options menu should be opened.
+func _input(event: InputEvent) -> void:
+	if options_viewport.visible:
+		return
+	elif event.is_action("options_menu"):
+		options_viewport.show()
+		options_menu.open()
+		get_tree().paused = true
+
+
 ## Records the last current position.
 func _exit_tree() -> void:
 	SceneController.prior_avatar_position = player_avatar.position
@@ -56,3 +70,9 @@ func _find_active_landmark() -> Landmark:
 			)
 	)
 	return null
+
+
+## Closes the options menu.
+func _on_Options_closed() -> void:
+	options_viewport.hide()
+	get_tree().paused = false
