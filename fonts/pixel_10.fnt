@@ -18,6 +18,13 @@ char id=44   x=60    y=0    width=5     height=7    xoffset=0    yoffset=0     x
 char id=45   x=65    y=0    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
 char id=46   x=70    y=0    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
 char id=47   x=75    y=0    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
+char id=8592   x=80    y=0    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
+char id=8593   x=85    y=0    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
+char id=8594   x=90    y=0    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
+char id=8595   x=95    y=0    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
+char id=8629   x=100    y=0    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
+char id=9224   x=105    y=0    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
+char id=9003   x=110    y=0    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
 char id=48   x=0    y=8    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
 char id=49   x=5    y=8    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
 char id=50   x=10    y=8    width=5     height=7    xoffset=0    yoffset=0     xadvance=5     page=0  chnl=15
