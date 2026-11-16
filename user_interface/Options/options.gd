@@ -20,13 +20,20 @@ var is_open := false
 
 ## The tab menu for the options.
 @onready var menu: TabContainer = $TabContainer
+## The menu for the controls.
+@onready var controls_menu: ControlsMenu = $TabContainer/Controls
+## The label for the button to close the menu.
+@onready var exit_input_label: InputLabel = $ExitInputLabel
 
 
 ## Checks if the menu should be closed.
 func _input(event: InputEvent) -> void:
 	if not is_open:
 		return
-	if event.is_action("ui_cancel"):
+	if (
+			not controls_menu.is_keybind_being_set()
+			and event.is_action(exit_input_label.input_event)
+	):
 		closed.emit()
 		_play_sound(asp_closed)
 		is_open = false

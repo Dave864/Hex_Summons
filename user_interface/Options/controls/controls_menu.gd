@@ -11,6 +11,11 @@ extends Control
 @export var confirm_button: Button = null
 ## Button that resets all displayed inputs to the default values.
 @export var reset_button: Button = null
+## Time the popup warning that not all keybinds have been set stays up.
+@export_range(0.001, 10.0, 0.001) var not_all_set_popup_time := 1.0
+## Delay time before allowing options to recieve other input after confirming
+## keybind settings.
+@export_range(0.001, 1.0, 0.001) var confirm_keybind_delay_time := 0.01
 
 ## The current input source.
 var current_source: InputController.Source
@@ -48,10 +53,17 @@ var current_source: InputController.Source
 		$KeybindOptions/Column3/ItemsRightJoystick
 )
 
+## Flag that indicates a keybind is being updated.
+var _keybind_being_set := false
+
 
 ## Gets the current input source.
 func _ready() -> void:
 	current_source = InputController.get_source()
+	InputController.input_source_changed.connect(
+			_on_InputController_source_changed
+	)
+	popup_timer.timeout.connect(_on_popup_timer_timeout)
 	_update_source_tabs_display()
 	_update_input_bind_controls()
 	_connect_KeyBindInput_signals(interface_controls)
@@ -60,32 +72,7 @@ func _ready() -> void:
 	_connect_KeyBindInput_signals(combat_camera_controls)
 	_connect_KeyBindInput_signals(left_joystick_controls)
 	_connect_KeyBindInput_signals(right_joystick_controls)
-
-
-## Swaps available input binds to match the current input source.
-func _process(_delta: float) -> void:
-	if not_all_set_popup.visible and popup_timer.is_stopped():
-		not_all_set_popup.hide()
-	elif not_all_set_popup.visible:
-		return
-	# Don't swap if confirm popup is present as an input bind is being set.
-	# Don't need to redo update logic if input source has not changed.
-	if confirm_popup.visible or current_source == InputController.get_source():
-		return
-	current_source = InputController.get_source()
-	_update_source_tabs_display()
-	_update_input_bind_controls()
-	# Don't want to shift focus if this tab is not active as it would be jarring
-	# to players and make it difficult to traverse other option tabs.
-	if not visible or has_focus():
-		return
-	# Shift focus to same place to prevent focus from being lost due to prior
-	# focus being hidden.
-	(
-			interface_controls.get_node(
-				"VBoxContainer/Accept/KeybindInputButton"
-			).grab_focus()
-	)
+	hidden.connect(_reset_bindings_to_InputMap)
 
 
 ## Saves the current keybind settings into InputMap.
@@ -118,6 +105,11 @@ func save_current_keybinds() -> void:
 	OptionsController.save_custom_keybinds_to_file(input_binds)
 
 
+## Returns if a keybind is being set.
+func is_keybind_being_set() -> bool:
+	return _keybind_being_set
+
+
 ## Goes through the KeyBindInput controls and connects their signals to this
 ## node.
 func _connect_KeyBindInput_signals(controls_group: InputGroup) -> void:
@@ -127,6 +119,12 @@ func _connect_KeyBindInput_signals(controls_group: InputGroup) -> void:
 				_on_KeyBindInputButton_new_bind_requested
 		)
 		input_button.new_bind_set.connect(_on_KeyBindInputButton_new_bind_set)
+		input_button.new_bind_requested.connect(
+				confirm_popup._on_KeybindInputButton_new_bind_requested
+		)
+		input_button.new_bind_set.connect(
+				confirm_popup._on_KeybindInputButton_new_bind_set
+		)
 
 
 ## Updates the source tabs to reflect the current input source.
@@ -202,6 +200,7 @@ func _update_input_bind_group(controls_group: InputGroup) -> void:
 func _on_KeyBindInputButton_new_bind_requested(
 	_input_source: InputController.Source
 ) -> void:
+	_keybind_being_set = true
 	confirm_button.disabled = true
 	reset_button.disabled = true
 
@@ -211,6 +210,7 @@ func _on_KeyBindInputButton_new_bind_requested(
 func _on_KeyBindInputButton_new_bind_set(_id: int) -> void:
 	confirm_button.disabled = false
 	reset_button.disabled = false
+	popup_timer.start(confirm_keybind_delay_time)
 
 
 ## Updates the input map to match the displayed inputs.
@@ -231,7 +231,7 @@ func _on_confirm_button_pressed() -> void:
 		_reset_bindings_to_InputMap()
 	else:
 		not_all_set_popup.show()
-		popup_timer.start()
+		popup_timer.start(not_all_set_popup_time)
 
 
 ## Updates the input map to be the default, refreshing the display to match.
@@ -252,3 +252,36 @@ func _reset_bindings_to_InputMap() -> void:
 	combat_camera_controls.reset_bindings_to_InputMap()
 	left_joystick_controls.reset_bindings_to_InputMap()
 	right_joystick_controls.reset_bindings_to_InputMap()
+
+
+## Hides the currently active popup.
+func _on_popup_timer_timeout() -> void:
+	if not_all_set_popup.visible:
+		not_all_set_popup.hide()
+	elif _keybind_being_set:
+		_keybind_being_set = false
+
+
+## Swaps available input binds to match the current input source.
+func _on_InputController_source_changed() -> void:
+	if not_all_set_popup.visible:
+		return
+	# Don't swap if confirm popup is present as an input bind is being set.
+	# Don't need to redo update logic if input source has not changed.
+	if confirm_popup.visible or current_source == InputController.get_source():
+		return
+	current_source = InputController.get_source()
+	_update_source_tabs_display()
+	_update_input_bind_controls()
+	# Don't want to shift focus if this tab is not active as it would be jarring
+	# to players and make it difficult to traverse other option tabs.
+	if not visible:
+		return
+	# Shift focus to accept button as it is present for both input sources.
+	# Allows the player to maintain the ability to select obtions using
+	# directional inputs.
+	(
+			interface_controls.get_node(
+				"VBoxContainer/Accept/KeybindInputButton"
+			).grab_focus()
+	)

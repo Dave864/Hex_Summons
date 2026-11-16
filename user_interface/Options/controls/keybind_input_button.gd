@@ -83,7 +83,7 @@ func _input(event: InputEvent) -> void:
 		new_bind_set.emit(get_instance_id())
 		# Defer update setting to prevent button from getting stuck triggering
 		# a rebind when setting ui_select input.
-		call_deferred("_set_to_update", false)
+		_set_to_update.call_deferred(false)
 
 
 ## Returns the current gamepad keybind for the input event.
