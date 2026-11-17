@@ -132,9 +132,9 @@ size = Vector3(2, 1, 2)
 [sub_resource type="SphereShape3D" id="SphereShape3D_xdnfc"]
 radius = 1.2
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_xdnfc"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_ove5u"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6lilm"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ohl48"]
 shading_mode = 0
 albedo_color = Color(0.4862745, 0.9882353, 0, 1)
 
@@ -142,11 +142,11 @@ albedo_color = Color(0.4862745, 0.9882353, 0, 1)
 size = Vector3(5, 1.5, 5)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_eou61"]
-radius = 2.0
+radius = 2.7
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_pn0iw"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_2e2hg"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pl2eu"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2ko7"]
 shading_mode = 0
 albedo_color = Color(0.4862745, 0.9882353, 0, 1)
 
@@ -162,18 +162,6 @@ size = Vector3(70, 5, 13)
 [sub_resource type="BoxShape3D" id="BoxShape3D_naebm"]
 size = Vector3(95, 5, 53)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_ove5u"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ohl48"]
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_2e2hg"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2ko7"]
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_7qrdv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof3h"]
@@ -184,13 +172,13 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_loo77"]
 shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
+albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_81oxm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s44g2"]
 shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
+albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_c3vdw"]
 
@@ -198,20 +186,20 @@ albedo_color = Color(0, 0, 0, 1)
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
-size = Vector3(67, 5, 45)
-
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_4una5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pommj"]
 shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
+albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_30b6f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6xb22"]
 shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_taamv"]
+size = Vector3(67, 5, 45)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_3co8e"]
 
@@ -222,6 +210,18 @@ albedo_color = Color(1, 0, 0, 1)
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_moymp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x8kqv"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_eubum"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ckn8s"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_o7mbu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3fg6y"]
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
@@ -241,7 +241,9 @@ grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="OverworldViewport" unique_id=460576965]
 transparent_bg = true
+handle_input_locally = false
 size = Vector2i(640, 360)
+render_target_update_mode = 4
 
 [node name="ElementAlignmentUI" parent="OverworldViewport/SubViewport" unique_id=580010159 instance=ExtResource("1_36ygl")]
 anchor_right = 0.058000002
@@ -331,6 +333,7 @@ render_target_update_mode = 0
 
 [node name="OverworldAvatar" parent="." unique_id=1395263931 instance=ExtResource("1_q45au")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.652, 0, -12.145)
+initial_orientation = 4
 
 [node name="Camera3D" type="Camera3D" parent="OverworldAvatar" unique_id=909996243]
 transform = Transform3D(1, 0, 0, 0, 0.46507394, 0.8852719, 0, -0.8852719, 0.46507394, 0.1927185, 11.221527, 7.090953)
@@ -464,8 +467,8 @@ shape = SubResource("SphereShape3D_xdnfc")
 debug_color = Color(0, 0, 0.545, 1)
 
 [node name="SpawnMarker" type="MeshInstance3D" parent="Landmarks/LandmarkStart" unique_id=1634320417]
-mesh = SubResource("ImmediateMesh_xdnfc")
-surface_material_override/0 = SubResource("StandardMaterial3D_6lilm")
+mesh = SubResource("ImmediateMesh_ove5u")
+surface_material_override/0 = SubResource("StandardMaterial3D_ohl48")
 script = ExtResource("7_327yu")
 radius = 2.1
 color = Color(0.4862745, 0.9882353, 0, 1)
@@ -474,6 +477,7 @@ color = Color(0.4862745, 0.9882353, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.117163, 0.93312454, -37.30602)
 mesh = SubResource("BoxMesh_1kkrf")
 script = ExtResource("3_1kkrf")
+transition_radius = 2.6999999999999997
 spawn_distance = 4.3
 metadata/_custom_type_script = "uid://c7xewvlqs0214"
 
@@ -486,8 +490,8 @@ shape = SubResource("SphereShape3D_eou61")
 debug_color = Color(0, 0, 0.54509807, 1)
 
 [node name="SpawnMarker" type="MeshInstance3D" parent="Landmarks/LandmarkEnd" unique_id=310097726]
-mesh = SubResource("ImmediateMesh_pn0iw")
-surface_material_override/0 = SubResource("StandardMaterial3D_pl2eu")
+mesh = SubResource("ImmediateMesh_2e2hg")
+surface_material_override/0 = SubResource("StandardMaterial3D_y2ko7")
 script = ExtResource("7_327yu")
 radius = 4.3
 color = Color(0.4862745, 0.9882353, 0, 1)
@@ -571,8 +575,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea" unique_id=304218236]
-mesh = SubResource("ImmediateMesh_ove5u")
-surface_material_override/0 = SubResource("StandardMaterial3D_ohl48")
+mesh = SubResource("ImmediateMesh_7qrdv")
+surface_material_override/0 = SubResource("StandardMaterial3D_iof3h")
 script = ExtResource("7_327yu")
 radius = 6.21
 color = Color(1, 0, 0, 1)
@@ -598,8 +602,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/CircleSpawnArea2" unique_id=605295780]
-mesh = SubResource("ImmediateMesh_2e2hg")
-surface_material_override/0 = SubResource("StandardMaterial3D_y2ko7")
+mesh = SubResource("ImmediateMesh_1cenw")
+surface_material_override/0 = SubResource("StandardMaterial3D_loo77")
 script = ExtResource("7_327yu")
 radius = 10.77
 color = Color(1, 0, 0, 1)
@@ -633,8 +637,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/SpawnAreas/SpawnAreaRect" unique_id=307996235]
-mesh = SubResource("ImmediateMesh_7qrdv")
-surface_material_override/0 = SubResource("StandardMaterial3D_iof3h")
+mesh = SubResource("ImmediateMesh_81oxm")
+surface_material_override/0 = SubResource("StandardMaterial3D_s44g2")
 script = ExtResource("9_naebm")
 length = 21.33
 height = 27.37
@@ -655,8 +659,8 @@ relevel_function = Callable()
 metadata/_custom_type_script = "uid://b888q7s0x56r3"
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/TravelPointZones/TravelPointsRect" unique_id=925825594]
-mesh = SubResource("ImmediateMesh_1cenw")
-surface_material_override/0 = SubResource("StandardMaterial3D_loo77")
+mesh = SubResource("ImmediateMesh_c3vdw")
+surface_material_override/0 = SubResource("StandardMaterial3D_lqgre")
 script = ExtResource("9_naebm")
 length = 11.9
 height = 39.629999999999995
@@ -678,8 +682,8 @@ relevel_function = Callable()
 metadata/_custom_type_script = "uid://b1w5jmpfmank4"
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/TravelPointZones/TravelPointsCircle" unique_id=379333033]
-mesh = SubResource("ImmediateMesh_81oxm")
-surface_material_override/0 = SubResource("StandardMaterial3D_s44g2")
+mesh = SubResource("ImmediateMesh_4una5")
+surface_material_override/0 = SubResource("StandardMaterial3D_pommj")
 script = ExtResource("7_327yu")
 radius = 12.07
 
@@ -688,8 +692,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 3
 
 [node name="GridPointsGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneGrass/TravelPointZones/TravelPointsCircle" unique_id=966376207]
-mesh = SubResource("ImmediateMesh_c3vdw")
-surface_material_override/0 = SubResource("StandardMaterial3D_lqgre")
+mesh = SubResource("ImmediateMesh_30b6f")
+surface_material_override/0 = SubResource("StandardMaterial3D_6xb22")
 
 [node name="TerrainZoneSand" type="Area3D" parent="EncounterZones" unique_id=1344348777]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 21.667734)
@@ -723,8 +727,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect" unique_id=96925334]
-mesh = SubResource("ImmediateMesh_4una5")
-surface_material_override/0 = SubResource("StandardMaterial3D_pommj")
+mesh = SubResource("ImmediateMesh_3co8e")
+surface_material_override/0 = SubResource("StandardMaterial3D_jgh4w")
 script = ExtResource("9_naebm")
 is_square = true
 length = 20.49
@@ -753,8 +757,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect2" unique_id=2066878203]
-mesh = SubResource("ImmediateMesh_30b6f")
-surface_material_override/0 = SubResource("StandardMaterial3D_6xb22")
+mesh = SubResource("ImmediateMesh_moymp")
+surface_material_override/0 = SubResource("StandardMaterial3D_x8kqv")
 script = ExtResource("9_naebm")
 length = 11.68
 height = 27.57
@@ -788,8 +792,8 @@ target_position = Vector3(0, -10, 0)
 collision_mask = 2
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/SpawnAreas/SpawnAreaRect3" unique_id=1510410304]
-mesh = SubResource("ImmediateMesh_3co8e")
-surface_material_override/0 = SubResource("StandardMaterial3D_jgh4w")
+mesh = SubResource("ImmediateMesh_eubum")
+surface_material_override/0 = SubResource("StandardMaterial3D_ckn8s")
 script = ExtResource("9_naebm")
 length = 38.73
 height = 6.49
@@ -811,8 +815,8 @@ reroll_function = Callable()
 metadata/_custom_type_script = "uid://b888q7s0x56r3"
 
 [node name="AreaGizmo" type="MeshInstance3D" parent="EncounterZones/TerrainZoneSand/TravelPointZones/TravelPointsRect" unique_id=1242616971]
-mesh = SubResource("ImmediateMesh_moymp")
-surface_material_override/0 = SubResource("StandardMaterial3D_x8kqv")
+mesh = SubResource("ImmediateMesh_o7mbu")
+surface_material_override/0 = SubResource("StandardMaterial3D_3fg6y")
 script = ExtResource("9_naebm")
 length = 60.08
 height = 38.27
