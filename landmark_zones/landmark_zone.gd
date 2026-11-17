@@ -32,6 +32,10 @@ func _ready() -> void:
 		player_avatar.set_facing_direction(
 				SceneController.landmark_transition_direction
 		)
+		# TownStart landmark is the start zone, so the objective step is the
+		# start.
+		if name == "TownStart":
+			ObjectiveTracker.set_objective_step(0)
 
 
 ## Returns which marker more closely matches the entry direction.

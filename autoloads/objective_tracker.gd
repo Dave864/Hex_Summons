@@ -19,8 +19,9 @@ const REQ_COUNT_ELDERSTUMBLETREE := 3
 ## The text summarizing the current objective that is displayed when the pause
 ## menu is open.
 const OBJECTIVE_SUMMARIES: PackedStringArray = [
-		"These tranquil mounds offer no secrets. Venture South to collect samples.",
+		"These tranquil mounds hold no secrets. Venture South to collect samples.",
 		"Fell stumbletrees to collect samples, then report to the North East camp.",
+		"Not enough samples collected. Venture out to collect samples.",
 		"Enough samples collected, report to the camp in the North East.",
 		"Deliver samples to the command tent.",
 ]
@@ -44,11 +45,13 @@ func reset_objective_progress() -> void:
 	_objective_step = 0
 
 
-## Updates the objective tracker to the specified step. Automatically updates
-## the step if the objective is met.
+## Attempts to update the objective step. Automatically adjusts the step
+## depending on the current conditions.
 func set_objective_step(step: int) -> void:
 	_objective_step = clampi(step, 0, OBJECTIVE_SUMMARIES.size() - 1)
-	if _objective_step == 1 and all_kill_objectives_met():
+	if _objective_step <= 1 and all_kill_objectives_met():
+		_objective_step = 3
+	elif _objective_step == 4 and not all_kill_objectives_met():
 		_objective_step = 2
 
 

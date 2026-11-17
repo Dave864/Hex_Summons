@@ -16,6 +16,11 @@ signal objectives_pending
 @export var reset_point: Marker3D = null
 
 
+## Updates the objective step to final step.
+func _ready() -> void:
+	ObjectiveTracker.set_objective_step(4)
+
+
 ## Checks if the full game objectives have been met. Places the player at the
 ## reset point if they have not.
 func _on_entrance_body_entered(player: Node3D) -> void:

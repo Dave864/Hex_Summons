@@ -16,6 +16,7 @@ var _landmarks: Array[Landmark] = []
 ## Places the player avatar at the last recorded position.
 func _ready() -> void:
 	_obtain_landmarks()
+	ObjectiveTracker.set_objective_step(1)
 	var start_position := SceneController.prior_avatar_position
 	if SceneController.landmark_active != "":
 		var landmark := _find_active_landmark()

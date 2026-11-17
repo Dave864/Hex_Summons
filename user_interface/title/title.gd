@@ -25,6 +25,7 @@ extends Control
 ## Places focus on the start button.
 func _ready() -> void:
 	start_button.grab_focus.call_deferred()
+	ObjectiveTracker.reset_objective_progress()
 
 
 ## Starts a new game.
