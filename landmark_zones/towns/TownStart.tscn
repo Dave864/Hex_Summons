@@ -1,12 +1,24 @@
-[gd_scene load_steps=14 format=3 uid="uid://csmeim5hlrfl3"]
+[gd_scene format=3 uid="uid://csmeim5hlrfl3"]
 
 [ext_resource type="MeshLibrary" uid="uid://dsua3fryx1hhl" path="res://landmark_zones/mesh_libraries/simple/Simple.meshlib" id="1_dbt6e"]
 [ext_resource type="Script" uid="uid://c0unjyujryvx4" path="res://landmark_zones/landmark_zone.gd" id="1_u106e"]
+[ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="2_vclio"]
+[ext_resource type="Texture2D" uid="uid://p125r4cnurx7" path="res://character/enemy_characters/ScuttleShrub/BattlePortrait.atlastex" id="3_4lwov"]
 [ext_resource type="Script" uid="uid://cqmg5j4kolqc7" path="res://overworld/overworld_avatar/overworld_avatar.gd" id="3_oke51"]
+[ext_resource type="Script" uid="uid://ga32pouj2bsq" path="res://user_interface/objective_count.gd" id="4_olqrg"]
 [ext_resource type="SpriteFrames" uid="uid://dbaaxve5s3g2p" path="res://overworld/overworld_avatar/sprite_frames.tres" id="4_p7fh7"]
+[ext_resource type="Texture2D" uid="uid://02rvpah872uq" path="res://character/enemy_characters/StumbleTree/BattlePortrait.atlastex" id="5_e0gxk"]
 [ext_resource type="Script" uid="uid://byskru7lp6ore" path="res://utils/rotating_sprite_3d.gd" id="5_o8ysx"]
+[ext_resource type="Texture2D" uid="uid://quntaau01524" path="res://character/enemy_characters/ElderStumbleTree/BattlePortrait.atlastex" id="6_m1ggy"]
 [ext_resource type="Environment" uid="uid://cmaeqvpnva8vi" path="res://default_env.tres" id="6_p7fh7"]
 [ext_resource type="AudioStream" uid="uid://cgmrmdgdolu22" path="res://audio/music/Peaceful Village.mp3" id="7_o8ysx"]
+[ext_resource type="PackedScene" uid="uid://bbp36hxsmfkpa" path="res://user_interface/PauseMenu/PauseMenu.tscn" id="7_vgeyc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_of7fy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_plqy7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8303x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oke51"]
 radius = 0.2
@@ -29,17 +41,118 @@ size = Vector2(100, 100)
 [sub_resource type="BoxShape3D" id="BoxShape3D_u71ww"]
 size = Vector3(5, 1.5, 3)
 
-[node name="TownStart" type="Node3D" node_paths=PackedStringArray("player_avatar", "default_placement_point", "overworld_entry_points")]
+[node name="TownStart" type="Node3D" unique_id=545238545 node_paths=PackedStringArray("player_avatar", "default_placement_point", "overworld_entry_points")]
 script = ExtResource("1_u106e")
 player_avatar = NodePath("OverworldAvatar")
 default_placement_point = NodePath("DefaultPos")
 overworld_entry_points = [NodePath("ExitZone/EntryPoint")]
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="DefaultPos" type="Marker3D" parent="."]
+[node name="MainViewport" type="SubViewportContainer" parent="." unique_id=1942851199]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="MainViewport" unique_id=658059078]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="ElementAlignmentUI" parent="MainViewport/SubViewport" unique_id=1978553128 instance=ExtResource("2_vclio")]
+anchor_right = 0.058000002
+anchor_bottom = 0.119
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -0.12000275
+offset_bottom = 0.15999985
+
+[node name="KillCount" type="VBoxContainer" parent="MainViewport/SubViewport" unique_id=427790866]
+offset_top = 56.0
+offset_right = 68.0
+offset_bottom = 130.0
+alignment = 1
+
+[node name="KillCount1" type="HBoxContainer" parent="MainViewport/SubViewport/KillCount" unique_id=1641526746]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainViewport/SubViewport/KillCount/KillCount1" unique_id=2139853971]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_4lwov")
+stretch_mode = 5
+flip_h = true
+
+[node name="Label" type="Label" parent="MainViewport/SubViewport/KillCount/KillCount1" unique_id=1219134597]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+label_settings = SubResource("LabelSettings_of7fy")
+horizontal_alignment = 1
+script = ExtResource("4_olqrg")
+
+[node name="KillCount2" type="HBoxContainer" parent="MainViewport/SubViewport/KillCount" unique_id=926346156]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainViewport/SubViewport/KillCount/KillCount2" unique_id=659067539]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_e0gxk")
+stretch_mode = 5
+flip_h = true
+
+[node name="Label" type="Label" parent="MainViewport/SubViewport/KillCount/KillCount2" unique_id=252295160]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+label_settings = SubResource("LabelSettings_plqy7")
+horizontal_alignment = 1
+script = ExtResource("4_olqrg")
+tracked_enemy = "StumbleTree"
+
+[node name="KillCount3" type="HBoxContainer" parent="MainViewport/SubViewport/KillCount" unique_id=1126556090]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainViewport/SubViewport/KillCount/KillCount3" unique_id=1583254458]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_m1ggy")
+stretch_mode = 5
+flip_h = true
+
+[node name="Label" type="Label" parent="MainViewport/SubViewport/KillCount/KillCount3" unique_id=866374775]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+label_settings = SubResource("LabelSettings_8303x")
+horizontal_alignment = 1
+script = ExtResource("4_olqrg")
+tracked_enemy = "ElderStumbleTree"
+
+[node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=1458182726]
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="PauseViewport" unique_id=832522663]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 0
+
+[node name="PauseMenu" parent="PauseViewport/SubViewport" unique_id=455300474 node_paths=PackedStringArray("parent_viewport") instance=ExtResource("7_vgeyc")]
+parent_viewport = NodePath("../..")
+
+[node name="DefaultPos" type="Marker3D" parent="." unique_id=619610948]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2600324, 1, -9.456644)
 
-[node name="GridMap" type="GridMap" parent="."]
+[node name="GridMap" type="GridMap" parent="." unique_id=1407804454]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 mesh_library = ExtResource("1_dbt6e")
 cell_size = Vector3(1, 0.5, 1)
@@ -51,14 +164,14 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1916839000]
 transform = Transform3D(0.07946153, -0.97290117, -0.21713886, 0.20062429, -0.19776191, 0.9595, -0.97644037, -0.119806595, 0.17947292, 0, 10, 0)
 light_energy = 0.8
 light_specular = 0.5
 shadow_enabled = true
 directional_shadow_mode = 0
 
-[node name="OverworldAvatar" type="CharacterBody3D" parent="."]
+[node name="OverworldAvatar" type="CharacterBody3D" parent="." unique_id=830846484]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0454755, 1.1022456, -8.758621)
 collision_layer = 4
 collision_mask = 2
@@ -66,7 +179,7 @@ script = ExtResource("3_oke51")
 speed = 2.6
 initial_orientation = 7
 
-[node name="RotatingSprite3D" type="AnimatedSprite3D" parent="OverworldAvatar"]
+[node name="RotatingSprite3D" type="AnimatedSprite3D" parent="OverworldAvatar" unique_id=1369125787]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 pixel_size = 0.0056
 billboard = 1
@@ -76,38 +189,39 @@ sprite_frames = ExtResource("4_p7fh7")
 script = ExtResource("5_o8ysx")
 metadata/_custom_type_script = "uid://byskru7lp6ore"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OverworldAvatar"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OverworldAvatar" unique_id=1693714085]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 shape = SubResource("CapsuleShape3D_oke51")
 
-[node name="Camera3D" type="Camera3D" parent="OverworldAvatar"]
+[node name="Camera3D" type="Camera3D" parent="OverworldAvatar" unique_id=833355492]
 transform = Transform3D(1, 0, 0, 0, 0.6319888, 0.7749776, 0, -0.7749776, 0.6319888, -1.9073486e-06, 6.6683855, 4.61981)
 environment = ExtResource("6_p7fh7")
 projection = 1
 size = 8.0
 
-[node name="Cliff" type="MeshInstance3D" parent="."]
+[node name="Cliff" type="MeshInstance3D" parent="." unique_id=1089012292]
 transform = Transform3D(0.7071067, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.7071067, 0, -0.25, 11.033588)
 mesh = SubResource("PlaneMesh_ce6in")
 
-[node name="Water" type="MeshInstance3D" parent="."]
+[node name="Water" type="MeshInstance3D" parent="." unique_id=21529089]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh = SubResource("PlaneMesh_o8ysx")
 
-[node name="ExitZone" type="Area3D" parent="."]
+[node name="ExitZone" type="Area3D" parent="." unique_id=1045551838]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15.699451)
 collision_layer = 2
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitZone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitZone" unique_id=1754796522]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.1050644)
 shape = SubResource("BoxShape3D_u71ww")
 debug_color = Color(0.97494775, 0, 0.4265193, 0.41960785)
 
-[node name="EntryPoint" type="Marker3D" parent="ExitZone"]
+[node name="EntryPoint" type="Marker3D" parent="ExitZone" unique_id=703098976]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.8492613)
 
-[node name="MusicTown" type="AudioStreamPlayer" parent="."]
+[node name="MusicTown" type="AudioStreamPlayer" parent="." unique_id=225871043]
+process_mode = 3
 stream = ExtResource("7_o8ysx")
 volume_db = -3.0
 pitch_scale = 0.8

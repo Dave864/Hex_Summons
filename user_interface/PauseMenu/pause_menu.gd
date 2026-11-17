@@ -58,7 +58,6 @@ func _ready() -> void:
 	assert(asp_closed != null, "No audio stream for closed sound has been set.")
 	_options_menu = options_viewport.get_child(0).get_child(0)
 	_timer.timeout.connect(_on_timer_timeout)
-	button_first_focus.grab_focus.call_deferred()
 
 
 ## Opens itself when the options menu input has been detected.
@@ -130,8 +129,10 @@ func _on_PopupPanelConfirm_button_no_pressed() -> void:
 ## state.
 func _on_PopupPanelConfirm_button_yes_pressed() -> void:
 	if _menu_state == State.CONFIRM_TITLE:
+		get_tree().paused = false
 		SceneController.change_scene_to_title()
 	elif _menu_state == State.CONFIRM_CLOSE:
+		get_tree().paused = false
 		SceneController.close_game()
 
 

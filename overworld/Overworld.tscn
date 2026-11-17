@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://b63wynnx1khli" path="res://overworld/overworld.gd" id="1_g3yfq"]
 [ext_resource type="PackedScene" uid="uid://d3jwh6akuilwn" path="res://overworld/overworld_avatar/OverworldAvatar.tscn" id="1_q45au"]
 [ext_resource type="Script" uid="uid://crnlh08xvaccx" path="res://overworld/alignment_area/stable_alignment_area.gd" id="2_36ygl"]
-[ext_resource type="PackedScene" uid="uid://wrlommn3g1pu" path="res://user_interface/Options/Options.tscn" id="2_xdnfc"]
 [ext_resource type="Script" uid="uid://c7xewvlqs0214" path="res://overworld/landmarks/landmark.gd" id="3_1kkrf"]
 [ext_resource type="Texture2D" uid="uid://p125r4cnurx7" path="res://character/enemy_characters/ScuttleShrub/BattlePortrait.atlastex" id="3_6lilm"]
 [ext_resource type="Script" uid="uid://7gcajgi7sxds" path="res://overworld/alignment_area/flux_alignment_area.gd" id="3_35tns"]
@@ -14,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://quntaau01524" path="res://character/enemy_characters/ElderStumbleTree/BattlePortrait.atlastex" id="5_ove5u"]
 [ext_resource type="Script" uid="uid://cpqrkm0xmuufc" path="res://overworld/encounter_zone/spawn_area_circle.gd" id="6_uyahc"]
 [ext_resource type="Script" uid="uid://ctkkhxryhajwc" path="res://utils/area_gizmo_circle.gd" id="7_327yu"]
+[ext_resource type="PackedScene" uid="uid://bbp36hxsmfkpa" path="res://user_interface/PauseMenu/PauseMenu.tscn" id="7_ove5u"]
 [ext_resource type="Script" uid="uid://whcd1sb6tx51" path="res://overworld/encounter_zone/spawn_area_rect.gd" id="7_wc37g"]
 [ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="8_kur02"]
 [ext_resource type="Script" uid="uid://tnwvx2ts1kw1" path="res://overworld/encounter_zone/travel_point_zones.gd" id="8_naebm"]
@@ -225,11 +225,9 @@ albedo_color = Color(1, 0, 0, 1)
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
-[node name="Overworld" type="Node" unique_id=1365097877 node_paths=PackedStringArray("options_viewport", "options_menu", "player_avatar")]
+[node name="Overworld" type="Node" unique_id=1365097877 node_paths=PackedStringArray("player_avatar")]
 process_mode = 1
 script = ExtResource("1_g3yfq")
-options_viewport = NodePath("PauseViewport")
-options_menu = NodePath("PauseViewport/SubViewport/Options")
 player_avatar = NodePath("OverworldAvatar")
 
 [node name="MainViewport" type="SubViewportContainer" parent="." unique_id=51415685]
@@ -316,7 +314,7 @@ script = ExtResource("4_ove5u")
 tracked_enemy = "ElderStumbleTree"
 
 [node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=1160410191]
-process_mode = 2
+process_mode = 3
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -325,11 +323,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="PauseViewport" unique_id=2002693767]
+transparent_bg = true
 handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 0
 
-[node name="Options" parent="PauseViewport/SubViewport" unique_id=1478542070 instance=ExtResource("2_xdnfc")]
+[node name="PauseMenu" parent="PauseViewport/SubViewport" unique_id=455300474 node_paths=PackedStringArray("parent_viewport") instance=ExtResource("7_ove5u")]
+parent_viewport = NodePath("../..")
 
 [node name="OverworldAvatar" parent="." unique_id=1395263931 instance=ExtResource("1_q45au")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.652, 0, -12.145)
@@ -904,5 +904,3 @@ volume_db = -5.0
 pitch_scale = 1.05
 autoplay = true
 bus = &"Music"
-
-[connection signal="closed" from="PauseViewport/SubViewport/Options" to="." method="_on_Options_closed"]

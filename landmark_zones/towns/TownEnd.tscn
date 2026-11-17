@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://02rvpah872uq" path="res://character/enemy_characters/StumbleTree/BattlePortrait.atlastex" id="5_vbd2t"]
 [ext_resource type="Texture2D" uid="uid://quntaau01524" path="res://character/enemy_characters/ElderStumbleTree/BattlePortrait.atlastex" id="6_3b4ao"]
 [ext_resource type="Environment" uid="uid://cmaeqvpnva8vi" path="res://default_env.tres" id="6_sims0"]
+[ext_resource type="PackedScene" uid="uid://bbp36hxsmfkpa" path="res://user_interface/PauseMenu/PauseMenu.tscn" id="7_6w55w"]
 [ext_resource type="AudioStream" uid="uid://cgmrmdgdolu22" path="res://audio/music/Peaceful Village.mp3" id="7_e4xux"]
 [ext_resource type="Script" uid="uid://c7ru2v10ccksi" path="res://landmark_zones/end_objective_place.gd" id="7_li5g4"]
 
@@ -149,7 +150,8 @@ script = ExtResource("4_tfbqa")
 tracked_enemy = "ElderStumbleTree"
 
 [node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=1070171831]
-process_mode = 2
+process_mode = 3
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -160,7 +162,10 @@ grow_vertical = 2
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(640, 360)
-render_target_update_mode = 4
+render_target_update_mode = 0
+
+[node name="PauseMenu" parent="PauseViewport/SubViewport" unique_id=455300474 node_paths=PackedStringArray("parent_viewport") instance=ExtResource("7_6w55w")]
+parent_viewport = NodePath("../..")
 
 [node name="GridMap" type="GridMap" parent="." unique_id=324453540]
 mesh_library = ExtResource("1_gb8g0")
