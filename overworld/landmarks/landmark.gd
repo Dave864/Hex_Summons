@@ -95,6 +95,7 @@ func _create_missing_nodes() -> void:
 
 ## Updates the collision shape to match the new radius.
 func _update_transition_area(new_radius: float) -> void:
+	transition_radius = new_radius
 	if not is_node_ready():
 		return
 	var owner_id := _transition_area.get_shape_owners()[0]
@@ -102,8 +103,7 @@ func _update_transition_area(new_radius: float) -> void:
 			owner_id,
 			0
 	) as SphereShape3D
-	boundary_sphere.radius = new_radius
-	transition_radius = new_radius
+	boundary_sphere.radius = transition_radius
 
 
 ## Updates the spawn distance from the center of the landmark. Updates the spawn
