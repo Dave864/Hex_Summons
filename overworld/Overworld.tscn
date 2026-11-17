@@ -232,20 +232,20 @@ options_viewport = NodePath("PauseViewport")
 options_menu = NodePath("PauseViewport/SubViewport/Options")
 player_avatar = NodePath("OverworldAvatar")
 
-[node name="OverworldViewport" type="SubViewportContainer" parent="." unique_id=51415685]
+[node name="MainViewport" type="SubViewportContainer" parent="." unique_id=51415685]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SubViewport" type="SubViewport" parent="OverworldViewport" unique_id=460576965]
+[node name="SubViewport" type="SubViewport" parent="MainViewport" unique_id=460576965]
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 
-[node name="ElementAlignmentUI" parent="OverworldViewport/SubViewport" unique_id=580010159 instance=ExtResource("1_36ygl")]
+[node name="ElementAlignmentUI" parent="MainViewport/SubViewport" unique_id=580010159 instance=ExtResource("1_36ygl")]
 anchor_right = 0.058000002
 anchor_bottom = 0.119
 offset_left = 1.0
@@ -253,23 +253,23 @@ offset_top = 1.0
 offset_right = -0.12000275
 offset_bottom = 0.15999985
 
-[node name="KillCount" type="VBoxContainer" parent="OverworldViewport/SubViewport" unique_id=1619309384]
+[node name="KillCount" type="VBoxContainer" parent="MainViewport/SubViewport" unique_id=1619309384]
 offset_top = 56.0
 offset_right = 68.0
 offset_bottom = 130.0
 alignment = 1
 
-[node name="KillCount1" type="HBoxContainer" parent="OverworldViewport/SubViewport/KillCount" unique_id=453772613]
+[node name="KillCount1" type="HBoxContainer" parent="MainViewport/SubViewport/KillCount" unique_id=453772613]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="OverworldViewport/SubViewport/KillCount/KillCount1" unique_id=1270386]
+[node name="TextureRect" type="TextureRect" parent="MainViewport/SubViewport/KillCount/KillCount1" unique_id=1270386]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("3_6lilm")
 stretch_mode = 5
 flip_h = true
 
-[node name="Label" type="Label" parent="OverworldViewport/SubViewport/KillCount/KillCount1" unique_id=1169252241]
+[node name="Label" type="Label" parent="MainViewport/SubViewport/KillCount/KillCount1" unique_id=1169252241]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0/0"
@@ -277,17 +277,17 @@ label_settings = SubResource("LabelSettings_ohl48")
 horizontal_alignment = 1
 script = ExtResource("4_ove5u")
 
-[node name="KillCount2" type="HBoxContainer" parent="OverworldViewport/SubViewport/KillCount" unique_id=2032587350]
+[node name="KillCount2" type="HBoxContainer" parent="MainViewport/SubViewport/KillCount" unique_id=2032587350]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="OverworldViewport/SubViewport/KillCount/KillCount2" unique_id=1306601643]
+[node name="TextureRect" type="TextureRect" parent="MainViewport/SubViewport/KillCount/KillCount2" unique_id=1306601643]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("4_pl2eu")
 stretch_mode = 5
 flip_h = true
 
-[node name="Label" type="Label" parent="OverworldViewport/SubViewport/KillCount/KillCount2" unique_id=1962034063]
+[node name="Label" type="Label" parent="MainViewport/SubViewport/KillCount/KillCount2" unique_id=1962034063]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0/0"
@@ -296,17 +296,17 @@ horizontal_alignment = 1
 script = ExtResource("4_ove5u")
 tracked_enemy = "StumbleTree"
 
-[node name="KillCount3" type="HBoxContainer" parent="OverworldViewport/SubViewport/KillCount" unique_id=1703798303]
+[node name="KillCount3" type="HBoxContainer" parent="MainViewport/SubViewport/KillCount" unique_id=1703798303]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="OverworldViewport/SubViewport/KillCount/KillCount3" unique_id=1985642496]
+[node name="TextureRect" type="TextureRect" parent="MainViewport/SubViewport/KillCount/KillCount3" unique_id=1985642496]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("5_ove5u")
 stretch_mode = 5
 flip_h = true
 
-[node name="Label" type="Label" parent="OverworldViewport/SubViewport/KillCount/KillCount3" unique_id=1899372114]
+[node name="Label" type="Label" parent="MainViewport/SubViewport/KillCount/KillCount3" unique_id=1899372114]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0/0"

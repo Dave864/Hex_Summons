@@ -2,12 +2,23 @@
 
 [ext_resource type="Script" uid="uid://c0unjyujryvx4" path="res://landmark_zones/landmark_zone.gd" id="1_b3fyq"]
 [ext_resource type="MeshLibrary" uid="uid://dsua3fryx1hhl" path="res://landmark_zones/mesh_libraries/simple/Simple.meshlib" id="1_gb8g0"]
+[ext_resource type="PackedScene" uid="uid://cw2m8e3jgpop4" path="res://user_interface/wisp_pool/ElementAlignmentUI.tscn" id="2_a1lwb"]
+[ext_resource type="Texture2D" uid="uid://p125r4cnurx7" path="res://character/enemy_characters/ScuttleShrub/BattlePortrait.atlastex" id="3_6w55w"]
 [ext_resource type="Script" uid="uid://cqmg5j4kolqc7" path="res://overworld/overworld_avatar/overworld_avatar.gd" id="3_o7nyb"]
 [ext_resource type="SpriteFrames" uid="uid://dbaaxve5s3g2p" path="res://overworld/overworld_avatar/sprite_frames.tres" id="4_e4xux"]
+[ext_resource type="Script" uid="uid://ga32pouj2bsq" path="res://user_interface/objective_count.gd" id="4_tfbqa"]
 [ext_resource type="Script" uid="uid://byskru7lp6ore" path="res://utils/rotating_sprite_3d.gd" id="5_li5g4"]
+[ext_resource type="Texture2D" uid="uid://02rvpah872uq" path="res://character/enemy_characters/StumbleTree/BattlePortrait.atlastex" id="5_vbd2t"]
+[ext_resource type="Texture2D" uid="uid://quntaau01524" path="res://character/enemy_characters/ElderStumbleTree/BattlePortrait.atlastex" id="6_3b4ao"]
 [ext_resource type="Environment" uid="uid://cmaeqvpnva8vi" path="res://default_env.tres" id="6_sims0"]
 [ext_resource type="AudioStream" uid="uid://cgmrmdgdolu22" path="res://audio/music/Peaceful Village.mp3" id="7_e4xux"]
 [ext_resource type="Script" uid="uid://c7ru2v10ccksi" path="res://landmark_zones/end_objective_place.gd" id="7_li5g4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_a1lwb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6w55w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tfbqa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lryo6"]
 radius = 0.2
@@ -49,9 +60,107 @@ material = SubResource("StandardMaterial3D_e4xux")
 size = Vector3(1, 1, 1.2)
 
 [node name="TownEnd" type="Node3D" unique_id=742609229 node_paths=PackedStringArray("player_avatar", "overworld_entry_points")]
+process_mode = 1
 script = ExtResource("1_b3fyq")
 player_avatar = NodePath("OverworldAvatar")
 overworld_entry_points = [NodePath("ExitZone/ExitPointSouth"), NodePath("ExitZone/ExitPointNorth")]
+
+[node name="MainViewport" type="SubViewportContainer" parent="." unique_id=1880795398]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="MainViewport" unique_id=1885085448]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="ElementAlignmentUI" parent="MainViewport/SubViewport" unique_id=2068572601 instance=ExtResource("2_a1lwb")]
+anchor_right = 0.058000002
+anchor_bottom = 0.119
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -0.12000275
+offset_bottom = 0.15999985
+
+[node name="KillCount" type="VBoxContainer" parent="MainViewport/SubViewport" unique_id=488196769]
+offset_top = 56.0
+offset_right = 68.0
+offset_bottom = 130.0
+alignment = 1
+
+[node name="KillCount1" type="HBoxContainer" parent="MainViewport/SubViewport/KillCount" unique_id=1728605227]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainViewport/SubViewport/KillCount/KillCount1" unique_id=1542297656]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_6w55w")
+stretch_mode = 5
+flip_h = true
+
+[node name="Label" type="Label" parent="MainViewport/SubViewport/KillCount/KillCount1" unique_id=334469159]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+label_settings = SubResource("LabelSettings_a1lwb")
+horizontal_alignment = 1
+script = ExtResource("4_tfbqa")
+
+[node name="KillCount2" type="HBoxContainer" parent="MainViewport/SubViewport/KillCount" unique_id=1462372639]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainViewport/SubViewport/KillCount/KillCount2" unique_id=1599144856]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_vbd2t")
+stretch_mode = 5
+flip_h = true
+
+[node name="Label" type="Label" parent="MainViewport/SubViewport/KillCount/KillCount2" unique_id=991762523]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+label_settings = SubResource("LabelSettings_6w55w")
+horizontal_alignment = 1
+script = ExtResource("4_tfbqa")
+tracked_enemy = "StumbleTree"
+
+[node name="KillCount3" type="HBoxContainer" parent="MainViewport/SubViewport/KillCount" unique_id=372501278]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainViewport/SubViewport/KillCount/KillCount3" unique_id=733043347]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_3b4ao")
+stretch_mode = 5
+flip_h = true
+
+[node name="Label" type="Label" parent="MainViewport/SubViewport/KillCount/KillCount3" unique_id=841446481]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+label_settings = SubResource("LabelSettings_tfbqa")
+horizontal_alignment = 1
+script = ExtResource("4_tfbqa")
+tracked_enemy = "ElderStumbleTree"
+
+[node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=1070171831]
+process_mode = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="PauseViewport" unique_id=1065477940]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
 
 [node name="GridMap" type="GridMap" parent="." unique_id=324453540]
 mesh_library = ExtResource("1_gb8g0")
