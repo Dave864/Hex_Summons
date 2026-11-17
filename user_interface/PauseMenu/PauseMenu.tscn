@@ -4,10 +4,14 @@
 [ext_resource type="Script" uid="uid://b7aij7s86ichj" path="res://user_interface/PauseMenu/pause_menu.gd" id="1_of3e7"]
 [ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="1_up870"]
 [ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="2_6ubmy"]
+[ext_resource type="Texture2D" uid="uid://p125r4cnurx7" path="res://character/enemy_characters/ScuttleShrub/BattlePortrait.atlastex" id="2_ac3n6"]
 [ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/interface/UIClick_Menu Button 09_KRST_NONE.wav" id="2_gmtwu"]
+[ext_resource type="Script" uid="uid://ga32pouj2bsq" path="res://user_interface/objective_count.gd" id="2_hp556"]
 [ext_resource type="AudioStream" uid="uid://b7hbk0xy3ye44" path="res://audio/interface/UIClick_Tab Switching Button 03_KRST_NONE.wav" id="3_up870"]
+[ext_resource type="Texture2D" uid="uid://02rvpah872uq" path="res://character/enemy_characters/StumbleTree/BattlePortrait.atlastex" id="4_lw6rh"]
 [ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/interface/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="4_of3e7"]
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="5_6ubmy"]
+[ext_resource type="Texture2D" uid="uid://quntaau01524" path="res://character/enemy_characters/ElderStumbleTree/BattlePortrait.atlastex" id="5_lw6rh"]
 [ext_resource type="AudioStream" uid="uid://bpnsmwle73ip5" path="res://audio/interface/UIMisc_Open Close Pause Menu 03_KRST_NONE.wav" id="6_hp556"]
 [ext_resource type="AudioStream" uid="uid://b4jvukx5h5fd7" path="res://audio/interface/UIMisc_Open Close Pause Menu 09_KRST_NONE.wav" id="7_iog8l"]
 
@@ -49,19 +53,81 @@ custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.277
-anchor_top = 0.264
+anchor_top = 0.25800002
 anchor_right = 1.0
-anchor_bottom = 0.492
+anchor_bottom = 0.47800002
 offset_left = 11.720001
-offset_top = -0.040000916
+offset_top = 0.11999512
 offset_right = -14.0
-offset_bottom = -0.120010376
+offset_bottom = -0.08000183
 grow_horizontal = 2
 grow_vertical = 2
 text = "Objective Summary"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LabelObjective" unique_id=1458177502]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Objective1" type="HBoxContainer" parent="LabelObjective/VBoxContainer" unique_id=195187778]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="LabelObjective/VBoxContainer/Objective1" unique_id=215659580]
+layout_mode = 2
+texture = ExtResource("2_ac3n6")
+stretch_mode = 5
+flip_h = true
+
+[node name="ObjectiveCount" type="Label" parent="LabelObjective/VBoxContainer/Objective1" unique_id=998777620]
+layout_mode = 2
+text = "0/0"
+script = ExtResource("2_hp556")
+metadata/_custom_type_script = "uid://ga32pouj2bsq"
+
+[node name="Objective2" type="HBoxContainer" parent="LabelObjective/VBoxContainer" unique_id=1810716301]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="LabelObjective/VBoxContainer/Objective2" unique_id=217411309]
+layout_mode = 2
+texture = ExtResource("4_lw6rh")
+stretch_mode = 5
+flip_h = true
+
+[node name="ObjectiveCount" type="Label" parent="LabelObjective/VBoxContainer/Objective2" unique_id=932730720]
+layout_mode = 2
+text = "0/0"
+script = ExtResource("2_hp556")
+tracked_enemy = "StumbleTree"
+metadata/_custom_type_script = "uid://ga32pouj2bsq"
+
+[node name="Objective3" type="HBoxContainer" parent="LabelObjective/VBoxContainer" unique_id=273476224]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="LabelObjective/VBoxContainer/Objective3" unique_id=1997875675]
+layout_mode = 2
+texture = ExtResource("5_lw6rh")
+stretch_mode = 5
+flip_h = true
+
+[node name="ObjectiveCount" type="Label" parent="LabelObjective/VBoxContainer/Objective3" unique_id=1308988821]
+layout_mode = 2
+text = "0/0"
+horizontal_alignment = 1
+script = ExtResource("2_hp556")
+tracked_enemy = "ElderStumbleTree"
+metadata/_custom_type_script = "uid://ga32pouj2bsq"
 
 [node name="ExitLabel" type="Label" parent="." unique_id=667514327]
 layout_mode = 1
