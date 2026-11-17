@@ -16,8 +16,17 @@ const REQ_COUNT_SCUTTLESHRUB := 8
 const REQ_COUNT_STUMBLETREE := 5
 ## The number of elder stumbletree enemies to kill to complete the objective.
 const REQ_COUNT_ELDERSTUMBLETREE := 3
+## The text summarizing the current objective that is displayed when the pause
+## menu is open.
+const OBJECTIVE_SUMMARIES: PackedStringArray = [
+		"These tranquil mounds offer no secrets. Venture outside to begin sample collection.",
+		"Fell stumbletrees to collect samples, then report to the Northwest camp.",
+		"Enough samples collected, report to the camp in the Northeast.",
+		"Deliver samples to the command tent.",
+]
 
-
+## The current step in the objective track.
+var objective_step: int = 0
 ## The collection of target enemies to kill, the required kill count, and the
 ## current number killed.
 var kill_objectives: Dictionary[String, Array] = {
