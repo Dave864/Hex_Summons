@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Hex Summons"
 config/description="A tactics RPG with an emphasis on summoning."
-config/version="p0.14"
+config/version="p0.15"
 run/main_scene="uid://dv4dcnfe3lxnl"
 config/features=PackedStringArray("4.7")
 boot_splash/bg_color=Color(1, 0.49803922, 0.7137255, 1)
