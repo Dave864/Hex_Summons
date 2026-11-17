@@ -29,6 +29,9 @@ button_first_focus = NodePath("ActionButtons/Options")
 asp_open = NodePath("UIOpenMenu")
 asp_closed = NodePath("UIGoBack")
 
+[node name="Timer" type="Timer" parent="." unique_id=558931459]
+one_shot = true
+
 [node name="Background" type="Panel" parent="." unique_id=210112443]
 layout_mode = 1
 anchors_preset = 14
@@ -123,7 +126,9 @@ asp_mouse_entered = NodePath("../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="OptionsViewport" type="SubViewportContainer" parent="." unique_id=375211670]
+process_mode = 2
 visible = false
+z_index = 1
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -163,3 +168,4 @@ bus = &"Interface"
 [connection signal="pressed" from="ActionButtons/Options" to="." method="_on_Options_button_pressed"]
 [connection signal="pressed" from="ActionButtons/Title" to="." method="_on_Title_button_pressed"]
 [connection signal="pressed" from="ActionButtons/Close" to="." method="_on_Close_button_pressed"]
+[connection signal="closed" from="OptionsViewport/SubViewport/Options" to="." method="_on_Options_closed"]

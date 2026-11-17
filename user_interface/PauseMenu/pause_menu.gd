@@ -7,6 +7,9 @@ extends Control
 ## viewport it is specified to be contained in.
 
 
+## The states that this menu can be in.
+enum State {CLOSED, OPEN, OPTIONS}
+
 ## The viewport container this menu is in.
 @export var parent_viewport: SubViewportContainer = null
 ## The viewport for the options menu.
@@ -23,8 +26,11 @@ extends Control
 
 ## The options menu.
 var _options_menu: Options = null
-## Flag indicating that this menu is open.
-var _is_open := false
+## Flag indicating the current state of this menu.
+var _menu_state := State.CLOSED
+
+## The timer that delays the changing from options to open.
+@onready var _timer: Timer = $Timer
 
 
 ## Checks if the required node references have been set.
@@ -44,28 +50,38 @@ func _ready() -> void:
 	assert(asp_open != null, "No audio stream for open sound has been set.")
 	assert(asp_closed != null, "No audio stream for closed sound has been set.")
 	_options_menu = options_viewport.get_child(0).get_child(0)
+	_timer.timeout.connect(_on_timer_timeout)
 
 
 ## Opens itself when the options menu input has been detected.
 func _input(event: InputEvent) -> void:
-	if not _is_open and event.is_action("options_menu"):
-		_is_open = true
+	if _menu_state == State.CLOSED and event.is_action("options_menu"):
+		_menu_state = State.OPEN
 		objective_label.text = ObjectiveTracker.get_current_summary()
 		asp_open.play()
 		if parent_viewport != null and not parent_viewport.visible:
 			parent_viewport.show()
 			button_first_focus.grab_focus.call_deferred()
 		get_tree().paused = true
-	if _is_open and event.is_action("ui_cancel"):
-		_is_open = false
+	elif _menu_state != State.CLOSED and event.is_action("ui_cancel"):
+		if _menu_state == State.OPTIONS:
+			return
+		print("Close Pause")
+		_menu_state = State.CLOSED
 		asp_closed.play()
 		get_tree().paused = false
 		if parent_viewport != null and parent_viewport.visible:
 			parent_viewport.hide()
 
 
+## Sets the pause menu to be open.
+func _on_timer_timeout() -> void:
+	_menu_state = State.OPEN
+
+
 ## Opens the options menu.
 func _on_Options_button_pressed() -> void:
+	_menu_state = State.OPTIONS
 	options_viewport.show()
 	_options_menu.open()
 
@@ -84,3 +100,4 @@ func _on_Close_button_pressed() -> void:
 func _on_Options_closed() -> void:
 	options_viewport.hide()
 	button_first_focus.grab_focus()
+	_timer.start(0.2)
