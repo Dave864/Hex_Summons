@@ -120,7 +120,7 @@ radius = 10.965
 size = Vector3(2, 1, 2)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xdnfc"]
-radius = 2.0
+radius = 1.2
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_xdnfc"]
 
@@ -132,11 +132,11 @@ albedo_color = Color(0.4862745, 0.9882353, 0, 1)
 size = Vector3(5, 1.5, 5)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_eou61"]
-radius = 2.0
+radius = 2.7
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_pn0iw"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_6lilm"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pl2eu"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pn0iw"]
 shading_mode = 0
 albedo_color = Color(0.4862745, 0.9882353, 0, 1)
 
@@ -360,6 +360,8 @@ shape = SubResource("CylinderShape3D_pn0iw")
 transform = Transform3D(0.78525203, 0, 0.6191761, 0, 1, 0, -0.6191761, 0, 0.78525203, -42.015366, 0.94484353, -43.089516)
 mesh = SubResource("BoxMesh_eou61")
 script = ExtResource("3_1kkrf")
+transition_radius = 1.2
+spawn_distance = 2.0
 metadata/_custom_type_script = "uid://c7xewvlqs0214"
 
 [node name="TransitionArea" type="Area3D" parent="Landmarks/LandmarkStart" unique_id=872350118]
@@ -374,14 +376,15 @@ debug_color = Color(0, 0, 0.545, 1)
 mesh = SubResource("ImmediateMesh_xdnfc")
 surface_material_override/0 = SubResource("StandardMaterial3D_6lilm")
 script = ExtResource("7_327yu")
-radius = 2.1
+radius = 2.0
 color = Color(0.4862745, 0.9882353, 0, 1)
 
 [node name="LandmarkEnd" type="MeshInstance3D" parent="Landmarks" unique_id=2060219919]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.117163, 0.93312454, -37.30602)
 mesh = SubResource("BoxMesh_1kkrf")
 script = ExtResource("3_1kkrf")
-spawn_distance = 4.26
+transition_radius = 2.6999999999999997
+spawn_distance = 4.3
 metadata/_custom_type_script = "uid://c7xewvlqs0214"
 
 [node name="TransitionArea" type="Area3D" parent="Landmarks/LandmarkEnd" unique_id=1220896619]
@@ -393,10 +396,10 @@ shape = SubResource("SphereShape3D_eou61")
 debug_color = Color(0, 0, 0.54509807, 1)
 
 [node name="SpawnMarker" type="MeshInstance3D" parent="Landmarks/LandmarkEnd" unique_id=310097726]
-mesh = SubResource("ImmediateMesh_pn0iw")
-surface_material_override/0 = SubResource("StandardMaterial3D_pl2eu")
+mesh = SubResource("ImmediateMesh_6lilm")
+surface_material_override/0 = SubResource("StandardMaterial3D_pn0iw")
 script = ExtResource("7_327yu")
-radius = 4.26
+radius = 4.3
 color = Color(0.4862745, 0.9882353, 0, 1)
 
 [node name="AlignmentAreas" type="Node3D" parent="." unique_id=833921131]
