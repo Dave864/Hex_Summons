@@ -19,14 +19,12 @@ const REQ_COUNT_ELDERSTUMBLETREE := 3
 ## The text summarizing the current objective that is displayed when the pause
 ## menu is open.
 const OBJECTIVE_SUMMARIES: PackedStringArray = [
-		"These tranquil mounds offer no secrets. Venture outside to begin sample collection.",
-		"Fell stumbletrees to collect samples, then report to the Northwest camp.",
-		"Enough samples collected, report to the camp in the Northeast.",
+		"These tranquil mounds offer no secrets. Venture South to collect samples.",
+		"Fell stumbletrees to collect samples, then report to the North East camp.",
+		"Enough samples collected, report to the camp in the North East.",
 		"Deliver samples to the command tent.",
 ]
 
-## The current step in the objective track.
-var objective_step: int = 0
 ## The collection of target enemies to kill, the required kill count, and the
 ## current number killed.
 var kill_objectives: Dictionary[String, Array] = {
@@ -34,6 +32,29 @@ var kill_objectives: Dictionary[String, Array] = {
 		TRACKED_ENEMIES[1]: [REQ_COUNT_STUMBLETREE, 0],
 		TRACKED_ENEMIES[2]: [REQ_COUNT_ELDERSTUMBLETREE, 0],
 }
+
+## The current step in the objective track.
+var _objective_step: int = 0
+
+
+## Resets the progress made on the objectives.
+func reset_objective_progress() -> void:
+	for enemy: String in kill_objectives.keys():
+		kill_objectives[enemy][1] = 0
+	_objective_step = 0
+
+
+## Updates the objective tracker to the specified step. Automatically updates
+## the step if the objective is met.
+func set_objective_step(step: int) -> void:
+	_objective_step = clampi(step, 0, OBJECTIVE_SUMMARIES.size() - 1)
+	if _objective_step == 1 and all_kill_objectives_met():
+		_objective_step = 2
+
+
+## Gets the summary of the current objective.
+func get_current_summary() -> String:
+	return OBJECTIVE_SUMMARIES[_objective_step]
 
 
 ## Returns if all the kill objectives have been met.

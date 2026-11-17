@@ -14,8 +14,8 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n4y2n"]
 bg_color = Color(0, 0, 0.5019608, 0.54901963)
 
-[node name="PauseMenu" type="Control" unique_id=455300474 node_paths=PackedStringArray("objective_label", "asp_open", "asp_closed")]
-process_mode = 2
+[node name="PauseMenu" type="Control" unique_id=455300474 node_paths=PackedStringArray("options_viewport", "objective_label", "button_first_focus", "asp_open", "asp_closed")]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_of3e7")
+options_viewport = NodePath("OptionsViewport")
 objective_label = NodePath("LabelObjective")
+button_first_focus = NodePath("ActionButtons/Options")
 asp_open = NodePath("UIOpenMenu")
 asp_closed = NodePath("UIGoBack")
 
@@ -40,6 +42,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_n4y2n")
 
 [node name="LabelObjective" type="Label" parent="." unique_id=853534936]
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.277
@@ -55,6 +58,7 @@ grow_vertical = 2
 text = "Objective Summary"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="ExitLabel" type="Label" parent="." unique_id=667514327]
 layout_mode = 1
@@ -91,6 +95,7 @@ grow_vertical = 2
 
 [node name="Options" type="Button" parent="ActionButtons" unique_id=714359421 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
+focus_neighbor_top = NodePath("../Close")
 text = "Options"
 script = ExtResource("1_up870")
 asp_pressed = NodePath("../../UIConfirm")
@@ -109,6 +114,7 @@ metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="Close" type="Button" parent="ActionButtons" unique_id=1071251988 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../Options")
 text = "Close Game"
 script = ExtResource("1_up870")
 asp_pressed = NodePath("../../UIConfirm")
@@ -153,3 +159,7 @@ bus = &"Interface"
 [node name="UIGoBack" type="AudioStreamPlayer" parent="." unique_id=478985217]
 stream = ExtResource("7_iog8l")
 bus = &"Interface"
+
+[connection signal="pressed" from="ActionButtons/Options" to="." method="_on_Options_button_pressed"]
+[connection signal="pressed" from="ActionButtons/Title" to="." method="_on_Title_button_pressed"]
+[connection signal="pressed" from="ActionButtons/Close" to="." method="_on_Close_button_pressed"]
