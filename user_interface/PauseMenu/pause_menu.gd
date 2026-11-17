@@ -8,7 +8,12 @@ extends Control
 
 
 ## The states that this menu can be in.
-enum State {CLOSED, OPEN, OPTIONS}
+enum State {CLOSED, OPEN, OPTIONS, CONFIRM_TITLE, CONFIRM_CLOSE}
+
+## Message that clarifies if the player wants to exit to the title screen.
+const CONFIRM_TEXT_TITLE := "Return to Title Screen?\n(game progress will reset)"
+## Meesage that clarifies if the player wants to close the game.
+const CONFIRM_TEXT_CLOSE := "Close the Game?"
 
 ## The viewport container this menu is in.
 @export var parent_viewport: SubViewportContainer = null
@@ -31,6 +36,8 @@ var _menu_state := State.CLOSED
 
 ## The timer that delays the changing from options to open.
 @onready var _timer: Timer = $Timer
+## The popup that asks for confirmation for certain selections.
+@onready var _popup_confirm: PopupPanel = $PopupPanelConfirm
 
 
 ## Checks if the required node references have been set.
@@ -51,6 +58,7 @@ func _ready() -> void:
 	assert(asp_closed != null, "No audio stream for closed sound has been set.")
 	_options_menu = options_viewport.get_child(0).get_child(0)
 	_timer.timeout.connect(_on_timer_timeout)
+	button_first_focus.grab_focus.call_deferred()
 
 
 ## Opens itself when the options menu input has been detected.
@@ -64,9 +72,8 @@ func _input(event: InputEvent) -> void:
 			button_first_focus.grab_focus.call_deferred()
 		get_tree().paused = true
 	elif _menu_state != State.CLOSED and event.is_action("ui_cancel"):
-		if _menu_state == State.OPTIONS:
+		if _menu_state != State.OPEN:
 			return
-		print("Close Pause")
 		_menu_state = State.CLOSED
 		asp_closed.play()
 		get_tree().paused = false
@@ -88,12 +95,44 @@ func _on_Options_button_pressed() -> void:
 
 ## Reveals a popup asking for confirmation.
 func _on_Title_button_pressed() -> void:
-	pass
+	_menu_state = State.CONFIRM_TITLE
+	_open_confirmation_popup()
 
 
 ## Reveals a popup asking for confirmation.
 func _on_Close_button_pressed() -> void:
-	pass
+	_menu_state = State.CONFIRM_CLOSE
+	_open_confirmation_popup()
+
+
+## Opens the confirmation popup.
+func _open_confirmation_popup() -> void:
+	var popup_label: Label = _popup_confirm.get_node("VBoxContainer/Label")
+	popup_label.text = (
+			CONFIRM_TEXT_TITLE if _menu_state == State.CONFIRM_TITLE
+			else CONFIRM_TEXT_CLOSE if _menu_state == State.CONFIRM_CLOSE
+			else "ERROR!"
+	)
+	_popup_confirm.show()
+	var button_focus: Button = _popup_confirm.get_node(
+			"VBoxContainer/HBoxContainer/ButtonNo"
+	)
+	button_focus.grab_focus.call_deferred()
+
+
+## Closes the confirmation popup.
+func _on_PopupPanelConfirm_button_no_pressed() -> void:
+	_menu_state = State.OPEN
+	_popup_confirm.hide()
+
+
+## Goes to the title screen or closes the game depending on the current menu
+## state.
+func _on_PopupPanelConfirm_button_yes_pressed() -> void:
+	if _menu_state == State.CONFIRM_TITLE:
+		SceneController.change_scene_to_title()
+	elif _menu_state == State.CONFIRM_CLOSE:
+		SceneController.close_game()
 
 
 ## Closes the options menu viewport.
