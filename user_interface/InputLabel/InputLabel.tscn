@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckassm00rixmq"]
+[gd_scene format=3 uid="uid://ckassm00rixmq"]
 
+[ext_resource type="FontFile" uid="uid://cfk0gmxowcanh" path="res://fonts/simple-pixel.ttf" id="2_rp6pb"]
 [ext_resource type="Script" uid="uid://bcj63bhaiegu3" path="res://user_interface/InputLabel/input_label.gd" id="2_vohd2"]
 [ext_resource type="Texture2D" uid="uid://dup6xawyouy0l" path="res://user_interface/InputLabel/input_icons/keyboard.tres" id="3_3umhj"]
-[ext_resource type="FontFile" uid="uid://bomd4sauyxdrx" path="res://fonts/pixel_10.fnt" id="3_rp6pb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vohd2"]
-font = ExtResource("3_rp6pb")
-font_size = 10
+font = ExtResource("2_rp6pb")
+font_size = 7
 
-[node name="InputLabel" type="Control" node_paths=PackedStringArray("icon_texture", "key_label")]
+[node name="InputLabel" type="Control" unique_id=541699125 node_paths=PackedStringArray("icon_texture", "key_label")]
 layout_mode = 3
 anchor_right = 0.028
 anchor_bottom = 0.05
@@ -16,11 +16,12 @@ offset_right = 0.07999992
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_vohd2")
+input_source = 0
 input_event = "ui_accept"
 icon_texture = NodePath("KeyboardLabel/IconTexture")
 key_label = NodePath("KeyboardLabel")
 
-[node name="KeyboardLabel" type="Label" parent="."]
+[node name="KeyboardLabel" type="Label" parent="." unique_id=264797049]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.091000006
@@ -29,12 +30,13 @@ anchor_right = 0.92700005
 anchor_bottom = 0.804
 grow_horizontal = 2
 grow_vertical = 2
+text = "Enter"
 label_settings = SubResource("LabelSettings_vohd2")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="IconTexture" type="TextureRect" parent="KeyboardLabel"]
+[node name="IconTexture" type="TextureRect" parent="KeyboardLabel" unique_id=1972313543]
 z_index = -1
 layout_mode = 1
 anchors_preset = -1

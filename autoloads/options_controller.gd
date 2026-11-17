@@ -102,7 +102,7 @@ const INPUT_KEY_SHORTHAND := {
 	"Mouse Wheel Down": "Scroll Down",
 	"Left": "←",
 	"Right": "→",
-	"Up": "࢏↑",
+	"Up": "↑",
 	"Down": "↓",
 	"Escape": "Esc",
 	"Enter": "↵",
