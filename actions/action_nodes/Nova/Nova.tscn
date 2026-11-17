@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bkqx7l8kj0bii"]
+[gd_scene format=3 uid="uid://bkqx7l8kj0bii"]
 
 [ext_resource type="Script" uid="uid://b4nchvbsc7a5a" path="res://actions/action.gd" id="1"]
 [ext_resource type="Script" uid="uid://bmwncc537t588" path="res://actions/action_hit_box.gd" id="2"]
@@ -141,11 +141,11 @@ _data = {
 &"execute": SubResource("2")
 }
 
-[node name="Nova" type="Node"]
+[node name="Nova" type="Node" unique_id=2040212121]
 script = ExtResource("1")
 stats = ExtResource("3")
 
-[node name="ActionHitBox" type="Area3D" parent="." node_paths=PackedStringArray("effects_list")]
+[node name="ActionHitBox" type="Area3D" parent="." unique_id=2047245298 node_paths=PackedStringArray("effects_list")]
 collision_layer = 16
 collision_mask = 0
 monitoring = false
@@ -153,28 +153,28 @@ monitorable = false
 script = ExtResource("2")
 effects_list = NodePath("../EffectsList")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ActionHitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ActionHitBox" unique_id=190861754]
 shape = SubResource("1")
 disabled = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ActionHitBox"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ActionHitBox" unique_id=256439270]
 visible = false
 mesh = SubResource("3")
 
-[node name="CameraFocusPoint" type="Marker3D" parent="ActionHitBox"]
+[node name="CameraFocusPoint" type="Marker3D" parent="ActionHitBox" unique_id=1247368683]
 
-[node name="EffectsList" type="Node" parent="."]
+[node name="EffectsList" type="Node" parent="." unique_id=580414003]
 script = ExtResource("5_2qpbv")
 metadata/_custom_type_script = "uid://bigg48w851oea"
 
-[node name="Damage" type="Node" parent="EffectsList"]
+[node name="Damage" type="Node" parent="EffectsList" unique_id=1324046899]
 script = ExtResource("6_2qpbv")
 target = 2
 operation = 1
 resistance_effect = 1
 metadata/_custom_type_script = "uid://c3neh3ael3g72"
 
-[node name="DecreaseMovement" type="Node" parent="EffectsList"]
+[node name="DecreaseMovement" type="Node" parent="EffectsList" unique_id=1663312647]
 script = ExtResource("7_rdb5j")
 flat_change_value = 1
 target = 2
@@ -182,11 +182,10 @@ stat_affected = 5
 operation = 1
 metadata/_custom_type_script = "uid://jdmr4u2vh1uj"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_v8i7y")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=617276253]
+libraries/ = SubResource("AnimationLibrary_v8i7y")
 
-[node name="Sound" type="AudioStreamPlayer" parent="."]
+[node name="Sound" type="AudioStreamPlayer" parent="." unique_id=1121664718]
+process_mode = 3
 stream = ExtResource("8_8y23p")
 bus = &"Effects"

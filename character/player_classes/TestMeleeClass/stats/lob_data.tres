@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpellStats" format=3 uid="uid://8dol07paugjh"]
+
+[ext_resource type="Resource" uid="uid://cu3ujpuqcywfj" path="res://actions/action_nodes/Lob/action_stats.tres" id="1_1dorp"]
+[ext_resource type="Script" uid="uid://bnw4xati435cd" path="res://character/scripts/action_stats/spell_stats.gd" id="1_kywfm"]
+
+[resource]
+script = ExtResource("1_kywfm")
+action_stats = ExtResource("1_1dorp")
+req_earth = 1
+cost_earth = 1
+metadata/_custom_type_script = "uid://bnw4xati435cd"

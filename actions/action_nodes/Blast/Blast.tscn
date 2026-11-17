@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://6pb0gwn4gr8t"]
+[gd_scene format=3 uid="uid://6pb0gwn4gr8t"]
 
 [ext_resource type="Script" uid="uid://b4nchvbsc7a5a" path="res://actions/action.gd" id="1"]
 [ext_resource type="Script" uid="uid://bmwncc537t588" path="res://actions/action_hit_box.gd" id="2"]
@@ -152,11 +152,11 @@ _data = {
 &"execute": SubResource("2")
 }
 
-[node name="Blast" type="Node"]
+[node name="Blast" type="Node" unique_id=325082926]
 script = ExtResource("1")
 stats = ExtResource("3")
 
-[node name="ActionHitBox" type="Area3D" parent="." node_paths=PackedStringArray("effects_list")]
+[node name="ActionHitBox" type="Area3D" parent="." unique_id=828409964 node_paths=PackedStringArray("effects_list")]
 collision_layer = 16
 collision_mask = 0
 monitoring = false
@@ -164,32 +164,31 @@ monitorable = false
 script = ExtResource("2")
 effects_list = NodePath("../EffectsList")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ActionHitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ActionHitBox" unique_id=1293763681]
 shape = SubResource("1")
 disabled = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ActionHitBox"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ActionHitBox" unique_id=443921026]
 visible = false
 mesh = SubResource("3")
 
-[node name="CameraFocusPoint" type="Marker3D" parent="ActionHitBox"]
+[node name="CameraFocusPoint" type="Marker3D" parent="ActionHitBox" unique_id=722408611]
 
-[node name="EffectsList" type="Node" parent="."]
+[node name="EffectsList" type="Node" parent="." unique_id=859998908]
 script = ExtResource("5_i06sl")
 metadata/_custom_type_script = "uid://bigg48w851oea"
 
-[node name="Damage" type="Node" parent="EffectsList"]
+[node name="Damage" type="Node" parent="EffectsList" unique_id=1121916688]
 script = ExtResource("6_i06sl")
 target = 2
 operation = 1
 resistance_effect = 1
 metadata/_custom_type_script = "uid://c3neh3ael3g72"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_22s23")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=584389225]
+libraries/ = SubResource("AnimationLibrary_22s23")
 
-[node name="Sound" type="AudioStreamPlayer" parent="."]
+[node name="Sound" type="AudioStreamPlayer" parent="." unique_id=1461149409]
+process_mode = 3
 stream = ExtResource("7_jhw3g")
 bus = &"Effects"

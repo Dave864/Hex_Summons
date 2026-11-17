@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b63u8x16ow4ir"]
+[gd_scene format=3 uid="uid://b63u8x16ow4ir"]
 
 [ext_resource type="Script" uid="uid://b4nchvbsc7a5a" path="res://actions/action.gd" id="1"]
 [ext_resource type="Resource" uid="uid://c7tacoqetxp51" path="res://actions/action_nodes/Beam/action_stats.tres" id="4"]
@@ -250,11 +250,11 @@ _data = {
 &"execute": SubResource("2")
 }
 
-[node name="Beam" type="Node"]
+[node name="Beam" type="Node" unique_id=741131511]
 script = ExtResource("1")
 stats = ExtResource("4")
 
-[node name="ActionHitBox" type="Area3D" parent="." node_paths=PackedStringArray("effects_list")]
+[node name="ActionHitBox" type="Area3D" parent="." unique_id=1067106230 node_paths=PackedStringArray("effects_list")]
 collision_layer = 16
 collision_mask = 0
 monitoring = false
@@ -262,31 +262,31 @@ monitorable = false
 script = ExtResource("6")
 effects_list = NodePath("../EffectsList")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ActionHitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ActionHitBox" unique_id=1685185855]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("5")
 disabled = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ActionHitBox"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ActionHitBox" unique_id=1858899139]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 visible = false
 mesh = SubResource("3")
 
-[node name="CameraFocusPoint" type="Marker3D" parent="ActionHitBox"]
+[node name="CameraFocusPoint" type="Marker3D" parent="ActionHitBox" unique_id=2039857289]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.5)
 
-[node name="EffectsList" type="Node" parent="."]
+[node name="EffectsList" type="Node" parent="." unique_id=787414682]
 script = ExtResource("5_wtpub")
 metadata/_custom_type_script = "uid://bigg48w851oea"
 
-[node name="Damage" type="Node" parent="EffectsList"]
+[node name="Damage" type="Node" parent="EffectsList" unique_id=1357766529]
 script = ExtResource("6_wtpub")
 target = 2
 operation = 1
 resistance_effect = 1
 metadata/_custom_type_script = "uid://c3neh3ael3g72"
 
-[node name="DecreaseAttack" type="Node" parent="EffectsList"]
+[node name="DecreaseAttack" type="Node" parent="EffectsList" unique_id=337313828]
 script = ExtResource("7_jqfnu")
 percent_change_value = 0.5
 target = 2
@@ -296,11 +296,10 @@ resistance_effect = 1
 max_turn_duration = 3
 metadata/_custom_type_script = "uid://bk5n62fatmjkt"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_0chhd")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1281228351]
+libraries/ = SubResource("AnimationLibrary_0chhd")
 
-[node name="Sound" type="AudioStreamPlayer" parent="."]
+[node name="Sound" type="AudioStreamPlayer" parent="." unique_id=1980511316]
+process_mode = 3
 stream = ExtResource("8_06mor")
 bus = &"Effects"

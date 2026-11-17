@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ActionStats" load_steps=6 format=3 uid="uid://cu3ujpuqcywfj"]
+[gd_resource type="Resource" script_class="ActionStats" format=3 uid="uid://cu3ujpuqcywfj"]
 
 [ext_resource type="Script" uid="uid://u40d4erg4smm" path="res://actions/action_stats.gd" id="1"]
 [ext_resource type="Resource" path="res://actions/action_nodes/Lob/potency.tres" id="2"]
