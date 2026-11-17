@@ -4,6 +4,12 @@ extends Node
 ## Currently tracks the number of enemy types that have been defeated.
 
 
+## The enemies that are tracked.
+const TRACKED_ENEMIES: PackedStringArray = [
+		"ScuttleShrub",
+		"StumbleTree",
+		"ElderStumbleTree",
+]
 ## The number of scuttleshrub enemies to kill to complete the objective.
 const REQ_COUNT_SCUTTLESHRUB := 8
 ## The number of stumbletree enemies to kill to complete the objective.
@@ -15,20 +21,30 @@ const REQ_COUNT_ELDERSTUMBLETREE := 3
 ## The collection of target enemies to kill, the required kill count, and the
 ## current number killed.
 var kill_objectives: Dictionary[String, Array] = {
-		"ScuttleShrub": [REQ_COUNT_SCUTTLESHRUB, 0],
-		"StumbleTree": [REQ_COUNT_STUMBLETREE, 0],
-		"ElderStumbleTree": [REQ_COUNT_ELDERSTUMBLETREE, 0],
+		TRACKED_ENEMIES[0]: [REQ_COUNT_SCUTTLESHRUB, 0],
+		TRACKED_ENEMIES[1]: [REQ_COUNT_STUMBLETREE, 0],
+		TRACKED_ENEMIES[2]: [REQ_COUNT_ELDERSTUMBLETREE, 0],
 }
 
 
-## Returns if the kill objectives have been met.
-func kill_objectives_met() -> bool:
+## Returns if all the kill objectives have been met.
+func all_kill_objectives_met() -> bool:
 	var objectives_met := true
 	for target_name: String in kill_objectives.keys():
-		var kill_target: int = kill_objectives[target_name][0]
-		var kill_count: int = kill_objectives[target_name][1]
-		objectives_met = false if kill_count < kill_target else objectives_met
+		objectives_met = (
+				false if not kill_objective_met(target_name)
+				else objectives_met
+		)
 	return objectives_met
+
+
+## Returns if the kill objective for the enemy has been met. Returns false if
+## the enemy is not currently tracked.
+func kill_objective_met(enemy_name: String) -> bool:
+	if not kill_objectives.has(enemy_name):
+		return false
+	else:
+		return kill_objectives[enemy_name][0] < kill_objectives[enemy_name][1]
 
 
 ## Marks the character for observation so that the kill objectives will update

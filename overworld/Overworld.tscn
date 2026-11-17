@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://c7xewvlqs0214" path="res://overworld/landmarks/landmark.gd" id="3_1kkrf"]
 [ext_resource type="Texture2D" uid="uid://p125r4cnurx7" path="res://character/enemy_characters/ScuttleShrub/BattlePortrait.atlastex" id="3_6lilm"]
 [ext_resource type="Script" uid="uid://7gcajgi7sxds" path="res://overworld/alignment_area/flux_alignment_area.gd" id="3_35tns"]
+[ext_resource type="Script" uid="uid://ga32pouj2bsq" path="res://user_interface/objective_count.gd" id="4_ove5u"]
 [ext_resource type="Texture2D" uid="uid://02rvpah872uq" path="res://character/enemy_characters/StumbleTree/BattlePortrait.atlastex" id="4_pl2eu"]
 [ext_resource type="Script" uid="uid://ca7jxmn65fbji" path="res://overworld/encounter_zone/terrain_zone.gd" id="4_q1spi"]
 [ext_resource type="Texture2D" uid="uid://quntaau01524" path="res://character/enemy_characters/ElderStumbleTree/BattlePortrait.atlastex" id="5_ove5u"]
@@ -20,6 +21,12 @@
 [ext_resource type="Script" uid="uid://b888q7s0x56r3" path="res://overworld/encounter_zone/travel_points_rect.gd" id="12_taamv"]
 [ext_resource type="AudioStream" uid="uid://bvqjwi0islra0" path="res://audio/music/Adventure Map.mp3" id="13_iro46"]
 [ext_resource type="Script" uid="uid://b1w5jmpfmank4" path="res://overworld/encounter_zone/travel_points_circle.gd" id="15_eou61"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ohl48"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pl2eu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ove5u"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q45au"]
 albedo_color = Color(0, 0.22352941, 1, 1)
@@ -237,10 +244,12 @@ transparent_bg = true
 size = Vector2i(640, 360)
 
 [node name="ElementAlignmentUI" parent="OverworldViewport/SubViewport" unique_id=580010159 instance=ExtResource("1_36ygl")]
-anchor_right = 0.056
-anchor_bottom = 0.117000006
-offset_right = 0.15999985
-offset_bottom = -0.12000275
+anchor_right = 0.058000002
+anchor_bottom = 0.119
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -0.12000275
+offset_bottom = 0.15999985
 
 [node name="KillCount" type="VBoxContainer" parent="OverworldViewport/SubViewport" unique_id=1619309384]
 offset_top = 56.0
@@ -262,7 +271,9 @@ flip_h = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0/0"
+label_settings = SubResource("LabelSettings_ohl48")
 horizontal_alignment = 1
+script = ExtResource("4_ove5u")
 
 [node name="KillCount2" type="HBoxContainer" parent="OverworldViewport/SubViewport/KillCount" unique_id=2032587350]
 layout_mode = 2
@@ -278,7 +289,10 @@ flip_h = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0/0"
+label_settings = SubResource("LabelSettings_pl2eu")
 horizontal_alignment = 1
+script = ExtResource("4_ove5u")
+tracked_enemy = "StumbleTree"
 
 [node name="KillCount3" type="HBoxContainer" parent="OverworldViewport/SubViewport/KillCount" unique_id=1703798303]
 layout_mode = 2
@@ -294,7 +308,10 @@ flip_h = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0/0"
+label_settings = SubResource("LabelSettings_ove5u")
 horizontal_alignment = 1
+script = ExtResource("4_ove5u")
+tracked_enemy = "ElderStumbleTree"
 
 [node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=1160410191]
 process_mode = 2
