@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bkauojsyg642o"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bkauojsyg642o"]
 
 [ext_resource type="Shader" uid="uid://dtt3a1dq31nnw" path="res://character/material/sprite_billboard_draw.gdshader" id="1_dfr1j"]
 [ext_resource type="Texture2D" uid="uid://57ukbgj845r" path="res://art/character/ElderStumbletree_Spritesheet.png" id="2_dfr1j"]

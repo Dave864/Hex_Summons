@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://chlxj5netb7h2"]
+[gd_scene format=3 uid="uid://chlxj5netb7h2"]
 
 [ext_resource type="Script" uid="uid://blllus8v7ujpt" path="res://character/enemy_characters/enemy_character.gd" id="1_uns60"]
 [ext_resource type="Texture2D" uid="uid://quntaau01524" path="res://character/enemy_characters/ElderStumbleTree/BattlePortrait.atlastex" id="2_hy8ab"]
@@ -26,27 +26,27 @@
 [ext_resource type="Script" uid="uid://dp6jkaqsiu5vq" path="res://fsm/enemy_character/enemy_character_think.gd" id="19_e436r"]
 [ext_resource type="Script" uid="uid://cdrf5m57oe7j7" path="res://fsm/enemy_character/enemy_character_action.gd" id="20_cayfj"]
 
-[node name="ElderStumbleTree" type="Area3D"]
+[node name="ElderStumbleTree" type="Area3D" unique_id=1046051136]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_uns60")
 battle_portrait = ExtResource("2_hy8ab")
 
-[node name="CharacterLabel" parent="." node_paths=PackedStringArray("char_pos") instance=ExtResource("3_qxta5")]
+[node name="CharacterLabel" parent="." unique_id=412286247 node_paths=PackedStringArray("char_pos") instance=ExtResource("3_qxta5")]
 offset_right = 0.0
 offset_bottom = 0.0
 character_type = 0
 char_pos = NodePath("../EncounterSprite/SpritePosition")
 
-[node name="MapCoordinate" type="Marker3D" parent="."]
+[node name="MapCoordinate" type="Marker3D" parent="." unique_id=693888286]
 gizmo_extents = 9.72
 script = ExtResource("4_ahq1u")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=825304702]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 shape = ExtResource("5_yqg3e")
 
-[node name="EncounterSprite" type="AnimatedSprite3D" parent="." node_paths=PackedStringArray("char_pos")]
+[node name="EncounterSprite" type="AnimatedSprite3D" parent="." unique_id=1264335976 node_paths=PackedStringArray("char_pos")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.55, 0)
 material_override = ExtResource("6_7lm01")
 pixel_size = 0.0054
@@ -55,94 +55,95 @@ fixed_size = true
 texture_filter = 0
 render_priority = 1
 sprite_frames = ExtResource("7_w62d2")
+frame_progress = 0.39666405
 script = ExtResource("8_we017")
 char_pos = NodePath("../MapCoordinate")
 bind_to_hex = true
 metadata/_custom_type_script = "uid://70b5is4mqv54"
 
-[node name="SpritePosition" type="Marker3D" parent="EncounterSprite"]
+[node name="SpritePosition" type="Marker3D" parent="EncounterSprite" unique_id=90799835]
 
-[node name="Stats" type="Node" parent="."]
+[node name="Stats" type="Node" parent="." unique_id=1426093084]
 script = ExtResource("9_281sy")
 base_stat_values = ExtResource("10_q5wp3")
 
-[node name="EffectsTracker" parent="." instance=ExtResource("11_8v62p")]
+[node name="EffectsTracker" parent="." unique_id=1798442415 instance=ExtResource("11_8v62p")]
 
-[node name="HitBox" type="Area3D" parent="."]
+[node name="HitBox" type="Area3D" parent="." unique_id=230502421]
 collision_layer = 0
 collision_mask = 16
 monitoring = false
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" unique_id=1336495940]
 shape = ExtResource("12_vbbgf")
 
-[node name="CharacterAI" type="Node" parent="."]
+[node name="CharacterAI" type="Node" parent="." unique_id=1010058136]
 script = ExtResource("13_kwfub")
 actions_ref = NodePath("../Actions")
 
-[node name="Actions" type="Node" parent="."]
+[node name="Actions" type="Node" parent="." unique_id=1852737789]
 
-[node name="Blast" parent="Actions" instance=ExtResource("14_vr2iw")]
+[node name="Blast" parent="Actions" unique_id=2107738825 instance=ExtResource("14_vr2iw")]
 
-[node name="ActionBehavior" type="Node" parent="Actions/Blast"]
+[node name="ActionBehavior" type="Node" parent="Actions/Blast" unique_id=724194471]
 script = ExtResource("15_kg577")
 metadata/_custom_type_script = "uid://bdkgr4241wqcj"
 
-[node name="GroupCondition" type="Node" parent="Actions/Blast/ActionBehavior"]
+[node name="GroupCondition" type="Node" parent="Actions/Blast/ActionBehavior" unique_id=1342259812]
 script = ExtResource("17_p0khd")
 metadata/_custom_type_script = "uid://b020qxy754ll2"
 
-[node name="Cooldown" type="Node" parent="Actions/Blast/ActionBehavior"]
+[node name="Cooldown" type="Node" parent="Actions/Blast/ActionBehavior" unique_id=2091361990]
 script = ExtResource("16_p0khd")
 turn_count = 2
 metadata/_custom_type_script = "uid://mxpbc437xmjm"
 
-[node name="Sweep" parent="Actions" instance=ExtResource("14_kacvo")]
+[node name="Sweep" parent="Actions" unique_id=162832475 instance=ExtResource("14_kacvo")]
 
-[node name="ActionBehavior" type="Node" parent="Actions/Sweep"]
+[node name="ActionBehavior" type="Node" parent="Actions/Sweep" unique_id=783344541]
 script = ExtResource("15_kg577")
 movement_behavior = 1
 metadata/_custom_type_script = "uid://bdkgr4241wqcj"
 
-[node name="Cooldown" type="Node" parent="Actions/Sweep/ActionBehavior"]
+[node name="Cooldown" type="Node" parent="Actions/Sweep/ActionBehavior" unique_id=1451410157]
 script = ExtResource("16_p0khd")
 turn_count = 1
 metadata/_custom_type_script = "uid://mxpbc437xmjm"
 
-[node name="GroupCondition" type="Node" parent="Actions/Sweep/ActionBehavior"]
+[node name="GroupCondition" type="Node" parent="Actions/Sweep/ActionBehavior" unique_id=419998944]
 script = ExtResource("17_p0khd")
 metadata/_custom_type_script = "uid://b020qxy754ll2"
 
-[node name="Strike" parent="Actions" instance=ExtResource("14_5rj11")]
+[node name="Strike" parent="Actions" unique_id=630628431 instance=ExtResource("14_5rj11")]
 
-[node name="ActionBehavior" type="Node" parent="Actions/Strike"]
+[node name="ActionBehavior" type="Node" parent="Actions/Strike" unique_id=2109947897]
 script = ExtResource("15_kg577")
 movement_behavior = 1
 metadata/_custom_type_script = "uid://bdkgr4241wqcj"
 
-[node name="Empty" parent="Actions" instance=ExtResource("14_ix2rh")]
+[node name="Empty" parent="Actions" unique_id=1480584831 instance=ExtResource("14_ix2rh")]
 
-[node name="ActionBehavior" type="Node" parent="Actions/Empty"]
+[node name="ActionBehavior" type="Node" parent="Actions/Empty" unique_id=157302065]
 script = ExtResource("15_kg577")
 movement_behavior = 1
 metadata/_custom_type_script = "uid://bdkgr4241wqcj"
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=1847666155 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("16_sw75j")
 initial_state = NodePath("Wait")
 
-[node name="Move" type="Node" parent="StateMachine"]
+[node name="Move" type="Node" parent="StateMachine" unique_id=88085816]
 script = ExtResource("17_pulif")
 
-[node name="Wait" type="Node" parent="StateMachine"]
+[node name="Wait" type="Node" parent="StateMachine" unique_id=247368211]
 script = ExtResource("18_trbhk")
 
-[node name="Think" type="Node" parent="StateMachine" node_paths=PackedStringArray("ai_node")]
+[node name="Think" type="Node" parent="StateMachine" unique_id=1082141301 node_paths=PackedStringArray("ai_node")]
 script = ExtResource("19_e436r")
 ai_node = NodePath("../../CharacterAI")
 
-[node name="Action" type="Node" parent="StateMachine"]
+[node name="Action" type="Node" parent="StateMachine" unique_id=1714090348]
 script = ExtResource("20_cayfj")
 
 [connection signal="area_entered" from="." to="." method="_on_Character_area_entered"]
