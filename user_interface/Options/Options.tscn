@@ -353,6 +353,26 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Menu" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer" unique_id=1494105866]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Menu" unique_id=2032372785]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "menu"
+horizontal_alignment = 2
+
+[node name="KeybindInputButton" type="Button" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer/Menu" unique_id=673856982 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_llrvc")
+input_source = 0
+input_bind = "options_menu"
+asp_pressed = NodePath("../../../../../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../../../../../UIMouseOver")
+metadata/_custom_type_script = "uid://d38ktuu0nh873"
+
 [node name="Accept" type="HBoxContainer" parent="TabContainer/Controls/KeybindOptions/Column1/ItemsInterface/VBoxContainer" unique_id=1488500230]
 layout_mode = 2
 
@@ -1305,7 +1325,6 @@ offset_right = -6.0
 offset_bottom = 20.0
 grow_horizontal = 0
 grow_vertical = 1
-input_source = 0
 input_event = "ui_cancel"
 
 [node name="Label" type="Label" parent="ExitInputLabel" unique_id=1879051455]

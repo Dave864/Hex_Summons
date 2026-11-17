@@ -282,6 +282,6 @@ func _on_InputController_source_changed() -> void:
 	# directional inputs.
 	(
 			interface_controls.get_node(
-				"VBoxContainer/Accept/KeybindInputButton"
+				"VBoxContainer/Menu/KeybindInputButton"
 			).grab_focus()
 	)
