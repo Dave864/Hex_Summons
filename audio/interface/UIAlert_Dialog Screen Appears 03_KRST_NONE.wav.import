@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dlujbdchyisu2"
+path="res://.godot/imported/UIAlert_Dialog Screen Appears 03_KRST_NONE.wav-57dcb3c2e10a52db73c0100e56bad88c.sample"
+
+[deps]
+
+source_file="res://audio/interface/UIAlert_Dialog Screen Appears 03_KRST_NONE.wav"
+dest_files=["res://.godot/imported/UIAlert_Dialog Screen Appears 03_KRST_NONE.wav-57dcb3c2e10a52db73c0100e56bad88c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
