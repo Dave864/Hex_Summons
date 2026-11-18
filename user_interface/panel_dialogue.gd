@@ -14,11 +14,11 @@ const TEXT_LABEL_POSITION := Vector2(20.0, 12.0)
 ## The time in seconds it takes to display the full text.
 const FULL_DISPLAY_TIME := 3.0
 ## The posiiton of the input label.
-const INPUT_LABEL_POSITION := Vector2(605.0, -21.0)
+const INPUT_LABEL_POSITION := Vector2(600.0, 48.0)
 ## The size of the input label.
 const INPUT_LABEL_SIZE := Vector2(30.0, 20.0)
 ## The maximum number of characters that can be displayed in the text box.
-const CHARACTER_LIMIT: int = 160
+const CHARACTER_LIMIT: int = 165
 ## The path to the open dialogue sound.
 const OPEN_SOUND_PATH := (
 		"res://audio/interface/UIAlert_Dialog Screen Appears 03_KRST_NONE.wav"
@@ -53,24 +53,21 @@ func _ready() -> void:
 	if not has_node("InputLabel"):
 		_init_InputLabel()
 	if not has_node("UIOpenDialogue"):
-		_init_audio_stream_player(
-				_asp_open_dialogue,
+		_asp_open_dialogue = _init_audio_stream_player(
 				"UIOpenDialogue",
 				OPEN_SOUND_PATH
 		)
 	else:
 		_asp_open_dialogue = $UIOpenDialogue
 	if not has_node("UIProgressDialogue"):
-		_init_audio_stream_player(
-				_asp_progress_dialogue,
+		_asp_progress_dialogue = _init_audio_stream_player(
 				"UIProgressDialogue",
 				PROGRESS_SOUND_PATH
 		)
 	else:
 		_asp_progress_dialogue = $UIProgressDialogue
 	if not has_node("UISpeakDialogue"):
-		_init_audio_stream_player(
-				_asp_speak_dialogue,
+		_asp_speak_dialogue = _init_audio_stream_player(
 				"UISpeakDialogue",
 				SPEAK_SOUND_PATH
 		)
@@ -96,10 +93,12 @@ func _init() -> void:
 
 ## Gradually reveals the dialogue text when visible.
 func _process(delta: float) -> void:
-	if not visible:
+	if not visible or Engine.is_editor_hint():
 		return
-	_text_label.visible_ratio += delta / FULL_DISPLAY_TIME
 	if _text_label.visible_ratio < 1.0:
+		_text_label.visible_characters += ceili(
+				CHARACTER_LIMIT / FULL_DISPLAY_TIME * delta
+		)
 		_asp_speak_dialogue.play()
 
 
@@ -110,12 +109,12 @@ func _input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("ui_accept"):
 		if _text_label.visible_ratio < 1.0:
-			_text_label.visible_ratio = 1.0
+			_text_label.visible_characters = -1
 			_asp_progress_dialogue.play()
 		elif _displayed_section < _text_sections.size() - 1:
 			_displayed_section += 1
 			_text_label.text = _text_sections[_displayed_section]
-			_text_label.visible_ratio = 0.0
+			_text_label.visible_characters = 0
 			_asp_progress_dialogue.play()
 		else:
 			hide()
@@ -127,36 +126,11 @@ func _input(event: InputEvent) -> void:
 ## set text.
 func set_text(new_text: String, uses_bbcode: bool) -> void:
 	_text_sections.clear()
+	var word_tokens := new_text.split(" ", false)
 	if not uses_bbcode:
-		var section_count := ceili(new_text.length() / float(CHARACTER_LIMIT))
-		for section: int in section_count:
-			_text_sections.append(
-					new_text.substr(section * CHARACTER_LIMIT, CHARACTER_LIMIT)
-			)
+		_get_text_sections(word_tokens)
 	else:
-		var section_start: int = 0
-		var section_count: int = 0
-		var letter_count: int = 0
-		var bracket_count: int = 0
-		for index: int in new_text.length():
-			if section_count == CHARACTER_LIMIT:
-				_text_sections.append(
-						new_text.substr(section_start, letter_count)
-				)
-				section_count = 0
-				section_start = index
-				letter_count = 0
-			bracket_count += (
-					1 if new_text[index] == "["
-					else -1 if new_text[index] == "]"
-					else 0
-			)
-			letter_count += 1
-			if bracket_count == 0:
-				section_count += 1
-		var final_section := new_text.substr(section_start, -1)
-		if final_section.length() > 0:
-			_text_sections.append(final_section)
+		_get_bbc_text_sections(word_tokens)
 
 
 ## Reveals the dialogue panel, setting the text to the first section.
@@ -165,7 +139,7 @@ func display() -> void:
 	_asp_open_dialogue.play()
 	_displayed_section = 0
 	_text_label.text = _text_sections[_displayed_section]
-	_text_label.visible_ratio = 0.0
+	_text_label.visible_characters = 0
 
 
 ## Instantiates a new RichTextLabel.
@@ -175,7 +149,7 @@ func _init_RichTextLabel() -> void:
 	_text_label.name = "RichTextLabel"
 	_text_label.bbcode_enabled = true
 	_text_label.autowrap_mode = TextServer.AUTOWRAP_WORD
-	_text_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_text_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	_text_label.visible_characters_behavior = TextServer.VC_GLYPHS_LTR
 	if Engine.is_editor_hint():
 		_text_label.set_owner(get_tree().edited_scene_root)
@@ -198,7 +172,7 @@ func _init_InputLabel() -> void:
 	add_child(input_label)
 	if Engine.is_editor_hint():
 		input_label.set_owner(get_tree().edited_scene_root)
-	input_label.set_anchors_preset.call_deferred(Control.PRESET_TOP_RIGHT)
+	input_label.set_anchors_preset.call_deferred(Control.PRESET_BOTTOM_RIGHT)
 	input_label.set_position.call_deferred(INPUT_LABEL_POSITION)
 	input_label.set_size.call_deferred(INPUT_LABEL_SIZE)
 	input_label.z_index = 1
@@ -206,14 +180,57 @@ func _init_InputLabel() -> void:
 
 ## Instantiates an audio stream player for the provided sound path.
 func _init_audio_stream_player(
-	asp: AudioStreamPlayer,
 	asp_name: String,
 	sound_path: String
-) -> void:
-	asp = AudioStreamPlayer.new()
+) -> AudioStreamPlayer:
+	var asp := AudioStreamPlayer.new()
 	add_child(asp)
 	asp.name = asp_name
 	if Engine.is_editor_hint():
 		asp.set_owner(get_tree().edited_scene_root)
 	asp.bus = "Interface"
 	asp.stream = load(sound_path)
+	return asp
+
+
+## Organizes the words into sections.
+func _get_text_sections(words: PackedStringArray) -> void:
+		var section_text: String = ""
+		var letter_count: int = 0
+		for word: String in words:
+			if letter_count + word.length() >= CHARACTER_LIMIT:
+				letter_count = 0
+				section_text.trim_suffix(" ")
+				_text_sections.append(section_text)
+				section_text = ""
+			letter_count += word.length() + 1
+			section_text += word + " "
+		section_text.trim_suffix(" ")
+		_text_sections.append(section_text)
+
+
+## Splits the BBC formatted words into sections.
+func _get_bbc_text_sections(words: PackedStringArray) -> void:
+		var section_start: int = 0
+		var section_count: int = 0
+		var letter_count: int = 0
+		var bracket_count: int = 0
+		#for index: int in new_text.length():
+			#if section_count == CHARACTER_LIMIT:
+				#_text_sections.append(
+						#new_text.substr(section_start, letter_count)
+				#)
+				#section_count = 0
+				#section_start = index
+				#letter_count = 0
+			#bracket_count += (
+					#1 if new_text[index] == "["
+					#else -1 if new_text[index] == "]"
+					#else 0
+			#)
+			#letter_count += 1
+			#if bracket_count == 0:
+				#section_count += 1
+		#var final_section := new_text.substr(section_start, -1)
+		#if final_section.length() > 0:
+			#_text_sections.append(final_section)
