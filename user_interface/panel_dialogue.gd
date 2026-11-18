@@ -11,12 +11,24 @@ extends Panel
 const PANEL_SIZE := Vector2(640.0, 75.0)
 ## The position of the text.
 const TEXT_LABEL_POSITION := Vector2(20.0, 12.0)
+## The time in seconds it takes to display the full text.
+const FULL_DISPLAY_TIME := 3.0
 ## The posiiton of the input label.
 const INPUT_LABEL_POSITION := Vector2(605.0, -21.0)
 ## The size of the input label.
 const INPUT_LABEL_SIZE := Vector2(30.0, 20.0)
 ## The maximum number of characters that can be displayed in the text box.
 const CHARACTER_LIMIT: int = 160
+## The path to the open dialogue sound.
+const OPEN_SOUND_PATH := (
+		"res://audio/interface/UIAlert_Dialog Screen Appears 03_KRST_NONE.wav"
+)
+## The path to the progress dialogue sound.
+const PROGRESS_SOUND_PATH := (
+		"res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav"
+)
+## The path to the speak dialogue sound.
+const SPEAK_SOUND_PATH := "res://audio/interface/dialogue_001.wav"
 
 ## The label that displays the text.
 var _text_label: RichTextLabel = null
@@ -24,6 +36,12 @@ var _text_label: RichTextLabel = null
 var _text_sections: PackedStringArray = []
 ## The section currently being displayed.
 var _displayed_section: int = 0
+## The audio stream for opening the dialogue panel.
+var _asp_open_dialogue: AudioStreamPlayer = null
+## The audio stream for progressing the dialogue text.
+var _asp_progress_dialogue: AudioStreamPlayer = null
+## The audio stream for speaking the dialogue text.
+var _asp_speak_dialogue: AudioStreamPlayer = null
 
 
 ## Initializes the text label if not present.
@@ -34,6 +52,32 @@ func _ready() -> void:
 		_text_label = $RichTextLabel
 	if not has_node("InputLabel"):
 		_init_InputLabel()
+	if not has_node("UIOpenDialogue"):
+		_init_audio_stream_player(
+				_asp_open_dialogue,
+				"UIOpenDialogue",
+				OPEN_SOUND_PATH
+		)
+	else:
+		_asp_open_dialogue = $UIOpenDialogue
+	if not has_node("UIProgressDialogue"):
+		_init_audio_stream_player(
+				_asp_progress_dialogue,
+				"UIProgressDialogue",
+				PROGRESS_SOUND_PATH
+		)
+	else:
+		_asp_progress_dialogue = $UIProgressDialogue
+	if not has_node("UISpeakDialogue"):
+		_init_audio_stream_player(
+				_asp_speak_dialogue,
+				"UISpeakDialogue",
+				SPEAK_SOUND_PATH
+		)
+	else:
+		_asp_speak_dialogue = $UISpeakDialogue
+	_asp_speak_dialogue.volume_db = -15.0
+	_asp_speak_dialogue.pitch_scale = 0.9
 	hide()
 
 
@@ -54,7 +98,9 @@ func _init() -> void:
 func _process(delta: float) -> void:
 	if not visible:
 		return
-	_text_label.visible_ratio += delta / 4.0
+	_text_label.visible_ratio += delta / FULL_DISPLAY_TIME
+	if _text_label.visible_ratio < 1.0:
+		_asp_speak_dialogue.play()
 
 
 ## Progresses the dialogue by either immediately displaying all text of the
@@ -65,10 +111,12 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		if _text_label.visible_ratio < 1.0:
 			_text_label.visible_ratio = 1.0
+			_asp_progress_dialogue.play()
 		elif _displayed_section < _text_sections.size() - 1:
 			_displayed_section += 1
 			_text_label.text = _text_sections[_displayed_section]
 			_text_label.visible_ratio = 0.0
+			_asp_progress_dialogue.play()
 		else:
 			hide()
 
@@ -114,6 +162,7 @@ func set_text(new_text: String, uses_bbcode: bool) -> void:
 ## Reveals the dialogue panel, setting the text to the first section.
 func display() -> void:
 	show()
+	_asp_open_dialogue.play()
 	_displayed_section = 0
 	_text_label.text = _text_sections[_displayed_section]
 	_text_label.visible_ratio = 0.0
@@ -153,3 +202,18 @@ func _init_InputLabel() -> void:
 	input_label.set_position.call_deferred(INPUT_LABEL_POSITION)
 	input_label.set_size.call_deferred(INPUT_LABEL_SIZE)
 	input_label.z_index = 1
+
+
+## Instantiates an audio stream player for the provided sound path.
+func _init_audio_stream_player(
+	asp: AudioStreamPlayer,
+	asp_name: String,
+	sound_path: String
+) -> void:
+	asp = AudioStreamPlayer.new()
+	add_child(asp)
+	asp.name = asp_name
+	if Engine.is_editor_hint():
+		asp.set_owner(get_tree().edited_scene_root)
+	asp.bus = "Interface"
+	asp.stream = load(sound_path)
