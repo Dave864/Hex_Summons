@@ -19,6 +19,8 @@ const INPUT_LABEL_POSITION := Vector2(600.0, 48.0)
 const INPUT_LABEL_SIZE := Vector2(30.0, 20.0)
 ## The maximum number of characters that can be displayed in the text box.
 const CHARACTER_LIMIT: int = 165
+## How many characters must be displayed before the speak sound is played.
+const SPEAK_LETTER_FREQUENCY: int = 6
 ## The path to the open dialogue sound.
 const OPEN_SOUND_PATH := (
 		"res://audio/interface/UIAlert_Dialog Screen Appears 03_KRST_NONE.wav"
@@ -34,6 +36,8 @@ const SPEAK_SOUND_PATH := "res://audio/interface/dialogue_001.wav"
 var _text_label: RichTextLabel = null
 ## The text to display broken up into sections.
 var _text_sections: PackedStringArray = []
+## Used to determine when to play the speak sound.
+var _speak_step: int = 0
 ## The section currently being displayed.
 var _displayed_section: int = 0
 ## The audio stream for opening the dialogue panel.
@@ -96,10 +100,14 @@ func _process(delta: float) -> void:
 	if not visible or Engine.is_editor_hint():
 		return
 	if _text_label.visible_ratio < 1.0:
-		_text_label.visible_characters += ceili(
+		var display_count := ceili(
 				CHARACTER_LIMIT / FULL_DISPLAY_TIME * delta
 		)
-		_asp_speak_dialogue.play()
+		_text_label.visible_characters += display_count
+		_speak_step += display_count
+		if _speak_step >= SPEAK_LETTER_FREQUENCY:
+			_asp_speak_dialogue.play()
+			_speak_step = 0
 
 
 ## Progresses the dialogue by either immediately displaying all text of the
@@ -110,6 +118,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		if _text_label.visible_ratio < 1.0:
 			_text_label.visible_characters = -1
+			_asp_speak_dialogue.play()
 			_asp_progress_dialogue.play()
 		elif _displayed_section < _text_sections.size() - 1:
 			_displayed_section += 1
@@ -137,6 +146,7 @@ func set_text(new_text: String, uses_bbcode: bool) -> void:
 func display() -> void:
 	show()
 	_asp_open_dialogue.play()
+	_speak_step = 0
 	_displayed_section = 0
 	_text_label.text = _text_sections[_displayed_section]
 	_text_label.visible_characters = 0
