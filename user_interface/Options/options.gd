@@ -32,7 +32,7 @@ func _input(event: InputEvent) -> void:
 		return
 	if (
 			not controls_menu.is_keybind_being_set()
-			and event.is_action(exit_input_label.input_event)
+			and event.is_action_pressed(exit_input_label.input_event)
 	):
 		closed.emit()
 		_play_sound(asp_closed)

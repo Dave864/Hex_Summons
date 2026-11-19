@@ -56,7 +56,7 @@ func _on_KeybindInputButton_new_bind_requested(
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	show()
 	_prior_focus = get_viewport().gui_get_focus_owner()
-	release_focus()
+	_prior_focus.release_focus()
 
 
 ## Hides this popup when KeybindInputButton sets a new input bind.
