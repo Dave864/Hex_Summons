@@ -16,7 +16,6 @@
 [ext_resource type="Script" uid="uid://c7ru2v10ccksi" path="res://landmark_zones/end_objective_place.gd" id="7_li5g4"]
 [ext_resource type="Script" uid="uid://bsmtlfj826hye" path="res://user_interface/panel_dialogue.gd" id="7_ofvbv"]
 [ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="8_83bg0"]
-[ext_resource type="Script" uid="uid://bcj63bhaiegu3" path="res://user_interface/InputLabel/input_label.gd" id="9_v1nm1"]
 [ext_resource type="AudioStream" uid="uid://dlujbdchyisu2" path="res://audio/interface/UIAlert_Dialog Screen Appears 03_KRST_NONE.wav" id="10_eop8o"]
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="11_xpdr2"]
 [ext_resource type="AudioStream" uid="uid://bhyadftko6eb1" path="res://audio/interface/dialogue_001.wav" id="12_pq55l"]
@@ -160,7 +159,6 @@ tracked_enemy = "ElderStumbleTree"
 
 [node name="DarkBackground" type="Panel" parent="MainViewport/SubViewport" unique_id=786172481]
 visible = false
-modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -169,7 +167,6 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_q08l8")
 
 [node name="PanelDialogue" type="Panel" parent="MainViewport/SubViewport" unique_id=280887934]
-visible = false
 anchors_preset = -1
 anchor_top = 0.792
 anchor_right = 1.0
@@ -192,7 +189,7 @@ offset_bottom = -12.0
 autowrap_mode = 2
 visible_characters_behavior = 3
 
-[node name="InputLabel" type="Control" parent="MainViewport/SubViewport/PanelDialogue" unique_id=541699125 node_paths=PackedStringArray("icon_texture", "key_label") instance=ExtResource("8_83bg0")]
+[node name="InputLabel" parent="MainViewport/SubViewport/PanelDialogue" unique_id=541699125 instance=ExtResource("8_83bg0")]
 z_index = 1
 layout_mode = 1
 anchors_preset = 3
@@ -204,13 +201,6 @@ offset_left = -40.0
 offset_top = -27.0
 offset_right = -10.0
 offset_bottom = -7.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("9_v1nm1")
-input_source = 0
-input_event = "ui_accept"
-icon_texture = NodePath("KeyboardLabel/IconTexture")
-key_label = NodePath("KeyboardLabel")
 
 [node name="UIOpenDialogue" type="AudioStreamPlayer" parent="MainViewport/SubViewport/PanelDialogue" unique_id=798434853]
 stream = ExtResource("10_eop8o")

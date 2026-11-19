@@ -82,8 +82,11 @@ func _ready() -> void:
 	hide()
 
 
-## Creates the RichTextLabel for displaying the text.
+## Initializes the anchor points.
 func _init() -> void:
+	# Panel details should not be reset when game is running.
+	if not Engine.is_editor_hint():
+		return
 	name = "PanelDialogue"
 	set_anchor.call_deferred(SIDE_LEFT, 0.0)
 	set_anchor.call_deferred(SIDE_TOP, 0.792)
