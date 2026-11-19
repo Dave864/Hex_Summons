@@ -3,7 +3,7 @@ class_name PanelDialogue
 extends Panel
 ## Panel that displays dialogue text.
 ##
-## Breaks down provided text into distinct sections where the true character count
+## Breaks down provided text into distinct sections where the character count
 ## falls within the character limit of the panel.
 
 
@@ -33,7 +33,7 @@ const PROGRESS_SOUND_PATH := (
 const SPEAK_SOUND_PATH := "res://audio/interface/dialogue_001.wav"
 
 ## The label that displays the text.
-var _text_label: RichTextLabel = null
+var _text_label: Label = null
 ## The text to display broken up into sections.
 var _text_sections: PackedStringArray = []
 ## Used to determine when to play the speak sound.
@@ -50,10 +50,10 @@ var _asp_speak_dialogue: AudioStreamPlayer = null
 
 ## Initializes the text label if not present.
 func _ready() -> void:
-	if not has_node("RichTextLabel"):
-		_init_RichTextLabel()
+	if not has_node("Label"):
+		_init_Label()
 	else:
-		_text_label = $RichTextLabel
+		_text_label = $Label
 	if not has_node("InputLabel"):
 		_init_InputLabel()
 	if not has_node("UIOpenDialogue"):
@@ -130,16 +130,11 @@ func _input(event: InputEvent) -> void:
 
 
 ## Parses the provided text into section that are each no longer than the
-## character limit. If the text is specified to use BBCode, the code tags
-## will be ignored when counting the characters. Clears out any previously
-## set text.
-func set_text(new_text: String, uses_bbcode: bool) -> void:
+## character limit. Clears out any previously set text.
+func set_text(new_text: String) -> void:
 	_text_sections.clear()
 	var word_tokens := new_text.split(" ", false)
-	if not uses_bbcode:
-		_get_text_sections(word_tokens)
-	else:
-		_get_bbc_text_sections(word_tokens)
+	_get_text_sections(word_tokens)
 
 
 ## Reveals the dialogue panel, setting the text to the first section.
@@ -152,12 +147,13 @@ func display() -> void:
 	_text_label.visible_characters = 0
 
 
-## Instantiates a new RichTextLabel.
-func _init_RichTextLabel() -> void:
-	_text_label = RichTextLabel.new()
+## Instantiates a new Label.
+func _init_Label() -> void:
+	_text_label = Label.new()
 	add_child(_text_label)
-	_text_label.name = "RichTextLabel"
-	_text_label.bbcode_enabled = true
+	_text_label.name = "Label"
+	# Set minimum size to address node condiguration warning.
+	_text_label.custom_minimum_size = Vector2(1.0, 1.0)
 	_text_label.autowrap_mode = TextServer.AUTOWRAP_WORD
 	_text_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	_text_label.visible_characters_behavior = TextServer.VC_GLYPHS_LTR
@@ -217,30 +213,3 @@ func _get_text_sections(words: PackedStringArray) -> void:
 			section_text += word + " "
 		section_text.trim_suffix(" ")
 		_text_sections.append(section_text)
-
-
-## Splits the BBC formatted words into sections.
-func _get_bbc_text_sections(words: PackedStringArray) -> void:
-		var section_start: int = 0
-		var section_count: int = 0
-		var letter_count: int = 0
-		var bracket_count: int = 0
-		#for index: int in new_text.length():
-			#if section_count == CHARACTER_LIMIT:
-				#_text_sections.append(
-						#new_text.substr(section_start, letter_count)
-				#)
-				#section_count = 0
-				#section_start = index
-				#letter_count = 0
-			#bracket_count += (
-					#1 if new_text[index] == "["
-					#else -1 if new_text[index] == "]"
-					#else 0
-			#)
-			#letter_count += 1
-			#if bracket_count == 0:
-				#section_count += 1
-		#var final_section := new_text.substr(section_start, -1)
-		#if final_section.length() > 0:
-			#_text_sections.append(final_section)
