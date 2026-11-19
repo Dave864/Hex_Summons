@@ -25,6 +25,11 @@ const LABEL_FORMAT := "{0}/{1}"
 func _ready() -> void:
 	if label_settings == null:
 		label_settings = LabelSettings.new()
+	refresh()
+
+
+## Updates the display to match the current status of the ObjectiveTracker.
+func refresh() -> void:
 	if ObjectiveTracker.kill_objective_met(tracked_enemy):
 		label_settings.font_color = color_complete
 	var progress_count: int = ObjectiveTracker.kill_objectives[tracked_enemy][1]

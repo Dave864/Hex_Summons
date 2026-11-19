@@ -65,6 +65,7 @@ func _input(event: InputEvent) -> void:
 	if _menu_state == State.CLOSED and event.is_action_pressed("options_menu"):
 		_menu_state = State.OPEN
 		objective_label.text = ObjectiveTracker.get_current_summary()
+		_refresh_objective_trackers()
 		asp_open.play()
 		if parent_viewport != null and not parent_viewport.visible:
 			parent_viewport.show()
@@ -85,6 +86,15 @@ func _input(event: InputEvent) -> void:
 		get_viewport().gui_release_focus()
 		if parent_viewport != null and parent_viewport.visible:
 			parent_viewport.hide()
+
+
+## Refreshes the objective trackers to reflect the current status of the
+## ObjectiveTracker.
+func _refresh_objective_trackers() -> void:
+	var objectives_container := objective_label.get_child(0)
+	for objective: Node in objectives_container.get_children():
+		var objective_count: ObjectiveCount = objective.get_child(1)
+		objective_count.refresh()
 
 
 ## Sets the pause menu to be open.
