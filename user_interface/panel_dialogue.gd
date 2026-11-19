@@ -116,6 +116,7 @@ func _input(event: InputEvent) -> void:
 	if not visible:
 		return
 	if event.is_action_pressed("ui_accept"):
+		accept_event()
 		if _text_label.visible_ratio < 1.0:
 			_text_label.visible_characters = -1
 			_asp_speak_dialogue.play()
@@ -133,8 +134,10 @@ func _input(event: InputEvent) -> void:
 ## character limit. Clears out any previously set text.
 func set_text(new_text: String) -> void:
 	_text_sections.clear()
-	var word_tokens := new_text.split(" ", false)
-	_get_text_sections(word_tokens)
+	var paragraph_tokens := new_text.split("\n[b]\n")
+	for paragraph: String in paragraph_tokens:
+		var word_tokens := paragraph.split(" ", false)
+		_get_text_sections(word_tokens)
 
 
 ## Reveals the dialogue panel, setting the text to the first section.
