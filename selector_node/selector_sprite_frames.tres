@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://b3eokt3sxlnh4"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://b3eokt3sxlnh4"]
 
 [ext_resource type="Texture2D" uid="uid://dqandgm8dyrf5" path="res://art/ui/selector.png" id="1_2vgrp"]
 
@@ -40,7 +40,7 @@ animations = [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_iqmh8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 12.0
 }]

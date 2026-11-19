@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://x4o3gls28fh"]
+[gd_scene format=3 uid="uid://x4o3gls28fh"]
 
 [ext_resource type="PackedScene" uid="uid://ddvk0q84qb3m" path="res://hex_map/SelectionTracker/SelectionTracker.tscn" id="2_a00se"]
 [ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3"]
@@ -12,68 +12,76 @@
 [ext_resource type="Script" uid="uid://5h132lxn112i" path="res://fsm/encounter/encounter_enemy_turn.gd" id="12"]
 [ext_resource type="Script" uid="uid://bfd3p1gudo2k4" path="res://fsm/encounter/encounter_summon_turn.gd" id="12_vwj2q"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="13"]
+[ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="13_8uc3n"]
 [ext_resource type="PackedScene" uid="uid://dxny3bidwcnmv" path="res://encounter/camera/EncounterCamera.tscn" id="14"]
 [ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/interface/UIClick_Menu Button 09_KRST_NONE.wav" id="14_k3q7x"]
 [ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="14_vwj2q"]
 [ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/interface/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="15_8uc3n"]
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="16_jpf5s"]
 
-[node name="Encounter" type="Node" node_paths=PackedStringArray("ui")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q08l8"]
+texture = ExtResource("13_8uc3n")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(88, 1, 10, 10)
+
+[node name="Encounter" type="Node" unique_id=702181272 node_paths=PackedStringArray("ui")]
 process_mode = 1
 script = ExtResource("10")
 ui = NodePath("EncounterUIMenuLayout")
 
-[node name="EncounterCamera" parent="." instance=ExtResource("14")]
+[node name="EncounterCamera" parent="." unique_id=439162434 instance=ExtResource("14")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=605533834]
 transform = Transform3D(0.84282833, -0.19124404, -0.50305676, 0.5381825, 0.29950044, 0.7878192, 0, -0.9347327, 0.35535166, 0, 6.48444, 0)
 light_energy = 2.0
 light_specular = 0.0
 directional_shadow_mode = 0
 sky_mode = 1
 
-[node name="EncounterUIMenuLayout" parent="." instance=ExtResource("4_a00se")]
+[node name="EncounterUIMenuLayout" parent="." unique_id=1264622696 instance=ExtResource("4_a00se")]
 
-[node name="Summon" parent="." instance=ExtResource("5_31f15")]
+[node name="Summon" parent="." unique_id=976968482 instance=ExtResource("5_31f15")]
 
-[node name="SelectionTracker" parent="." node_paths=PackedStringArray("selector") instance=ExtResource("2_a00se")]
+[node name="SelectionTracker" parent="." unique_id=1555752012 node_paths=PackedStringArray("selector") instance=ExtResource("2_a00se")]
 selector = NodePath("Selector")
 
-[node name="Selector" parent="SelectionTracker" instance=ExtResource("3")]
+[node name="Selector" parent="SelectionTracker" unique_id=552048493 instance=ExtResource("3")]
 
-[node name="Players" type="Node" parent="."]
+[node name="Players" type="Node" parent="." unique_id=1614319765]
 
-[node name="Enemies" type="Node" parent="."]
+[node name="Enemies" type="Node" parent="." unique_id=2056529557]
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=1545759602 node_paths=PackedStringArray("initial_state")]
 process_mode = 3
 script = ExtResource("13")
 initial_state = NodePath("Start")
 
-[node name="Start" type="Node" parent="StateMachine"]
+[node name="Start" type="Node" parent="StateMachine" unique_id=2139429467]
 script = ExtResource("8")
 
-[node name="PlayerTurn" type="Node" parent="StateMachine"]
+[node name="PlayerTurn" type="Node" parent="StateMachine" unique_id=1494271597]
 script = ExtResource("9")
 
-[node name="SummonTurn" type="Node" parent="StateMachine"]
+[node name="SummonTurn" type="Node" parent="StateMachine" unique_id=1833441340]
 script = ExtResource("12_vwj2q")
 
-[node name="EnemyTurn" type="Node" parent="StateMachine"]
+[node name="EnemyTurn" type="Node" parent="StateMachine" unique_id=176777996]
 script = ExtResource("12")
 
-[node name="End" type="Node" parent="StateMachine" node_paths=PackedStringArray("victory_popup", "defeat_popup")]
+[node name="End" type="Node" parent="StateMachine" unique_id=576553993 node_paths=PackedStringArray("victory_popup")]
 script = ExtResource("11")
-victory_popup = NodePath("../../VictoryPopup")
-defeat_popup = NodePath("../../DefeatPopup")
+victory_popup = NodePath("../../PopupVictory")
 
-[node name="VictoryPopup" type="PopupPanel" parent="."]
+[node name="PopupVictory" type="PopupPanel" parent="." unique_id=1725088452]
 process_mode = 2
 oversampling_override = 1.0
 initial_position = 1
 size = Vector2i(200, 75)
 
-[node name="VictoryLabel" type="Label" parent="VictoryPopup"]
+[node name="VictoryLabel" type="Label" parent="PopupVictory" unique_id=858799354]
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 196.0
@@ -82,34 +90,43 @@ text = "Victory"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Timer" type="Timer" parent="VictoryPopup"]
+[node name="Timer" type="Timer" parent="PopupVictory" unique_id=1619155754]
 wait_time = 2.0
 one_shot = true
 
-[node name="DefeatPopup" type="PopupPanel" parent="."]
+[node name="WindowDefeat" type="Window" parent="." unique_id=1301128948]
 process_mode = 2
 oversampling_override = 1.0
 initial_position = 1
 size = Vector2i(390, 150)
+borderless = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DefeatPopup"]
+[node name="Panel" type="Panel" parent="WindowDefeat" unique_id=683064271]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_q08l8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WindowDefeat" unique_id=1723204653]
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 386.0
 offset_bottom = 146.0
 
-[node name="DefeatLabel" type="Label" parent="DefeatPopup/VBoxContainer"]
+[node name="DefeatLabel" type="Label" parent="WindowDefeat/VBoxContainer" unique_id=147088279]
 layout_mode = 2
 size_flags_vertical = 3
 text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="DefeatPopup/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="WindowDefeat/VBoxContainer" unique_id=1980068504]
 layout_mode = 2
 alignment = 1
 
-[node name="ResetButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="ResetButton" type="Button" parent="WindowDefeat/VBoxContainer/HBoxContainer" unique_id=675346953 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../CloseButton")
 focus_neighbor_top = NodePath(".")
@@ -124,7 +141,7 @@ asp_focus_entered = NodePath("../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="TitleButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="TitleButton" type="Button" parent="WindowDefeat/VBoxContainer/HBoxContainer" unique_id=1416661798 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../ResetButton")
 focus_neighbor_top = NodePath(".")
@@ -139,7 +156,7 @@ asp_focus_entered = NodePath("../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="CloseButton" type="Button" parent="DefeatPopup/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="CloseButton" type="Button" parent="WindowDefeat/VBoxContainer/HBoxContainer" unique_id=842676193 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../TitleButton")
 focus_neighbor_top = NodePath(".")
@@ -154,23 +171,23 @@ asp_focus_entered = NodePath("../../../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="UIMoveFocus" type="AudioStreamPlayer" parent="."]
+[node name="UIMoveFocus" type="AudioStreamPlayer" parent="." unique_id=943620836]
 process_mode = 3
 stream = ExtResource("14_k3q7x")
 volume_db = -5.0
 bus = &"Interface"
 
-[node name="UIMouseOver" type="AudioStreamPlayer" parent="."]
+[node name="UIMouseOver" type="AudioStreamPlayer" parent="." unique_id=2011114694]
 process_mode = 3
 stream = ExtResource("15_8uc3n")
 bus = &"Interface"
 
-[node name="UIConfirm" type="AudioStreamPlayer" parent="."]
+[node name="UIConfirm" type="AudioStreamPlayer" parent="." unique_id=371048637]
 process_mode = 3
 stream = ExtResource("16_jpf5s")
 bus = &"Interface"
 
-[node name="MusicBattle" type="AudioStreamPlayer" parent="."]
+[node name="MusicBattle" type="AudioStreamPlayer" parent="." unique_id=876296295]
 process_mode = 3
 stream = ExtResource("5_vwj2q")
 volume_db = -10.0

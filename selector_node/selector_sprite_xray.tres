@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://cnse8wptyodwh"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cnse8wptyodwh"]
 
 [ext_resource type="Shader" uid="uid://itmkicmhc6ef" path="res://selector_node/sprite_draw.gdshader" id="1_nmhk8"]
 [ext_resource type="Texture2D" uid="uid://dqandgm8dyrf5" path="res://art/ui/selector.png" id="2_e77kd"]

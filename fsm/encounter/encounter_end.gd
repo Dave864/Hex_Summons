@@ -9,8 +9,8 @@ extends EncounterState
 
 ## The popup that appears when the player wins.
 @export var victory_popup: PopupPanel = null
-## The popup that appears when the player loses.
-@export var defeat_popup: PopupPanel = null
+## The window that appears when the player loses.
+@export var defeat_window: Window = null
 
 ## The timer for the victory popup.
 var _victory_timer: Timer = null
@@ -24,16 +24,16 @@ func _ready() -> void:
 	victory_popup.popup_hide.connect(_on_victory_timeout)
 	_victory_timer = victory_popup.get_node("Timer")
 	_victory_timer.timeout.connect(_on_victory_timeout)
-	var reset_button: Button = defeat_popup.get_node(
+	var reset_button: Button = defeat_window.get_node(
 			"VBoxContainer/HBoxContainer/ResetButton"
 	)
 	_defeat_focus_button = reset_button
 	reset_button.pressed.connect(_on_defeat_reset_pressed)
-	var title_button: Button = defeat_popup.get_node(
+	var title_button: Button = defeat_window.get_node(
 			"VBoxContainer/HBoxContainer/TitleButton"
 	)
 	title_button.pressed.connect(_on_defeat_title_pressed)
-	var close_button: Button = defeat_popup.get_node(
+	var close_button: Button = defeat_window.get_node(
 			"VBoxContainer/HBoxContainer/CloseButton"
 	)
 	close_button.pressed.connect(_on_defeat_close_pressed)
@@ -48,7 +48,7 @@ func enter(_msg := {}) -> void:
 		victory_popup.show()
 		_victory_timer.start()
 	else:
-		defeat_popup.show()
+		defeat_window.show()
 		_defeat_focus_button.grab_focus.call_deferred()
 
 
