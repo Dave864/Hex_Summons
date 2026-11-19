@@ -77,7 +77,7 @@ func kill_objective_met(enemy_name: String) -> bool:
 	if not kill_objectives.has(enemy_name):
 		return false
 	else:
-		return kill_objectives[enemy_name][0] < kill_objectives[enemy_name][1]
+		return kill_objectives[enemy_name][0] <= kill_objectives[enemy_name][1]
 
 
 ## Marks the character for observation so that the kill objectives will update
