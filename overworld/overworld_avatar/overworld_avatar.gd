@@ -10,6 +10,8 @@ extends CharacterBody3D
 
 ## Flag that indicates if the character is moving.
 var _is_moving: bool
+## Flag that indicates that the character should ignore input.
+var _ignore_input: bool
 
 ## The sprite for the character.
 @onready var _sprite: RotatingSprite3D = $RotatingSprite3D
@@ -19,11 +21,14 @@ var _is_moving: bool
 func _ready() -> void:
 	_sprite.face_orientation(initial_orientation)
 	_is_moving = false
+	_ignore_input = false
 	_sprite.play_idle()
 
 
 ## Processes the physics of moving around.
 func _physics_process(_delta: float) -> void:
+	if _ignore_input:
+		return
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity()
@@ -58,6 +63,11 @@ func _physics_process(_delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
+
+
+## Sets whether the player avatar should ignore input.
+func ignore_input(flag_value: bool) -> void:
+	_ignore_input = flag_value
 
 
 ## Updates the direction this avatar faces.

@@ -14,12 +14,21 @@
 [ext_resource type="PackedScene" uid="uid://bbp36hxsmfkpa" path="res://user_interface/PauseMenu/PauseMenu.tscn" id="7_6w55w"]
 [ext_resource type="AudioStream" uid="uid://cgmrmdgdolu22" path="res://audio/music/Peaceful Village.mp3" id="7_e4xux"]
 [ext_resource type="Script" uid="uid://c7ru2v10ccksi" path="res://landmark_zones/end_objective_place.gd" id="7_li5g4"]
+[ext_resource type="Script" uid="uid://bsmtlfj826hye" path="res://user_interface/panel_dialogue.gd" id="7_ofvbv"]
+[ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="8_83bg0"]
+[ext_resource type="Script" uid="uid://bcj63bhaiegu3" path="res://user_interface/InputLabel/input_label.gd" id="9_v1nm1"]
+[ext_resource type="AudioStream" uid="uid://dlujbdchyisu2" path="res://audio/interface/UIAlert_Dialog Screen Appears 03_KRST_NONE.wav" id="10_eop8o"]
+[ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="11_xpdr2"]
+[ext_resource type="AudioStream" uid="uid://bhyadftko6eb1" path="res://audio/interface/dialogue_001.wav" id="12_pq55l"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_a1lwb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6w55w"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tfbqa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q08l8"]
+bg_color = Color(0, 0, 0.09803922, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lryo6"]
 radius = 0.2
@@ -149,6 +158,74 @@ horizontal_alignment = 1
 script = ExtResource("4_tfbqa")
 tracked_enemy = "ElderStumbleTree"
 
+[node name="DarkBackground" type="Panel" parent="MainViewport/SubViewport" unique_id=786172481]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q08l8")
+
+[node name="PanelDialogue" type="Panel" parent="MainViewport/SubViewport" unique_id=280887934]
+visible = false
+anchors_preset = -1
+anchor_top = 0.792
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.11999512
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_ofvbv")
+metadata/_custom_type_script = "uid://bsmtlfj826hye"
+
+[node name="Label" type="Label" parent="MainViewport/SubViewport/PanelDialogue" unique_id=2041259855]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 12.0
+offset_right = -20.0
+offset_bottom = -12.0
+autowrap_mode = 2
+visible_characters_behavior = 3
+
+[node name="InputLabel" type="Control" parent="MainViewport/SubViewport/PanelDialogue" unique_id=541699125 node_paths=PackedStringArray("icon_texture", "key_label") instance=ExtResource("8_83bg0")]
+z_index = 1
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -27.0
+offset_right = -10.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_v1nm1")
+input_source = 0
+input_event = "ui_accept"
+icon_texture = NodePath("KeyboardLabel/IconTexture")
+key_label = NodePath("KeyboardLabel")
+
+[node name="UIOpenDialogue" type="AudioStreamPlayer" parent="MainViewport/SubViewport/PanelDialogue" unique_id=798434853]
+stream = ExtResource("10_eop8o")
+bus = &"Interface"
+
+[node name="UIProgressDialogue" type="AudioStreamPlayer" parent="MainViewport/SubViewport/PanelDialogue" unique_id=1046885297]
+stream = ExtResource("11_xpdr2")
+bus = &"Interface"
+
+[node name="UISpeakDialogue" type="AudioStreamPlayer" parent="MainViewport/SubViewport/PanelDialogue" unique_id=1768268321]
+stream = ExtResource("12_pq55l")
+volume_db = -15.0
+pitch_scale = 0.9
+bus = &"Interface"
+
 [node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=1070171831]
 process_mode = 3
 visible = false
@@ -186,7 +263,7 @@ shadow_enabled = true
 directional_shadow_mode = 0
 
 [node name="OverworldAvatar" type="CharacterBody3D" parent="." unique_id=360287674]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.31255054, 0.969579, 13.730612)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9791794, 1.9789419, -2.6374874)
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("3_o7nyb")
@@ -237,9 +314,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15.165028)
 [node name="ExitPointNorth" type="Marker3D" parent="ExitZone" unique_id=1994167498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15.302719)
 
-[node name="ObjectiveTent" type="Node3D" parent="." unique_id=531174197 node_paths=PackedStringArray("reset_point")]
+[node name="ObjectiveTent" type="Node3D" parent="." unique_id=531174197 node_paths=PackedStringArray("dialogue_panel", "blackout_panel", "reset_point")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.639591, 1.885371, -6.0696945)
 script = ExtResource("7_li5g4")
+dialogue_objective_failed = "Ah good you've returned! Did you collect the samples I requested?
+[b]
+...
+[b]
+Your short on the amount I asked for.
+[b]
+...
+[b]
+Why are you still here? Get back out there and fell more stumbletrees, those samples won't collect themselves."
+fade_time = 0.7999999999999999
+dialogue_panel = NodePath("../MainViewport/SubViewport/PanelDialogue")
+blackout_panel = NodePath("../MainViewport/SubViewport/DarkBackground")
 reset_point = NodePath("ExitPoint")
 
 [node name="ConeShape" type="MeshInstance3D" parent="ObjectiveTent" unique_id=564063174]

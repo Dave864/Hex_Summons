@@ -21,7 +21,7 @@ const REQ_COUNT_ELDERSTUMBLETREE := 3
 const OBJECTIVE_SUMMARIES: PackedStringArray = [
 		"These tranquil mounds hold no secrets. Venture South to collect samples.",
 		"Fell stumbletrees to collect samples, then report to the North East camp.",
-		"Not enough samples collected. Venture out to collect samples.",
+		"Not enough samples collected. Venture out to fell stumbletrees.",
 		"Enough samples collected, report to the camp in the North East.",
 		"Deliver samples to the command tent.",
 ]
