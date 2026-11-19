@@ -13,14 +13,14 @@ enum State{
 	OBJECTIVE_FAIL_FADE_IN,
 	OBJECTIVE_FAIL_DIALOGUE,
 	OBJECTIVE_FAIL_FADE_OUT,
-	OBJECTIVE_SUCCESS,
+	OBJECTIVE_SUCCESS_FADE_IN,
+	OBJECTIVE_SUCCESS_DIALOGUE,
 }
 
-## Indicates that the game objectives have been verified to be complete.
-signal objectives_met
-
+## The dialogue text to display when the objective is met.
+@export_multiline var dialogue_objective_met := ""
 ## The dialogue text to display when the objective has not been met.
-@export_multiline var dialogue_objective_failed: String = ""
+@export_multiline var dialogue_objective_failed := ""
 ## The time it takes in seconds to fade to black and back again.
 @export_range(0.1, 10.0, 0.001, "suffix:s") var fade_time := 1.0
 ## The dialogue panel to send the text to.
@@ -65,6 +65,15 @@ func _process(delta: float) -> void:
 			if _transition_progress <= 0.0:
 				blackout_panel.hide()
 				_state = State.WAIT
+		State.OBJECTIVE_SUCCESS_FADE_IN:
+			_transition_progress += delta / fade_time / fade_time
+			blackout_panel.modulate.a = clampf(_transition_progress, 0.0, 1.0)
+			if _transition_progress >= 1.0:
+				dialogue_panel.display()
+				_state = State.OBJECTIVE_SUCCESS_DIALOGUE
+		State.OBJECTIVE_SUCCESS_DIALOGUE:
+			if not dialogue_panel.visible:
+				_state = State.WAIT
 		_:
 			return
 
@@ -72,13 +81,13 @@ func _process(delta: float) -> void:
 ## Checks if the full game objectives have been met. Places the player at the
 ## reset point if they have not.
 func _on_entrance_body_entered(player: Node3D) -> void:
+	_player_ref = player as OverworldAvatar
+	_player_ref.ignore_input(true)
+	_transition_progress = 0.0
+	blackout_panel.show()
 	if ObjectiveTracker.all_kill_objectives_met():
-		objectives_met.emit()
-		_state = State.OBJECTIVE_SUCCESS
+		dialogue_panel.set_text(dialogue_objective_met)
+		_state = State.OBJECTIVE_SUCCESS_FADE_IN
 	else:
 		dialogue_panel.set_text(dialogue_objective_failed)
-		blackout_panel.show()
-		_transition_progress = 0.0
 		_state = State.OBJECTIVE_FAIL_FADE_IN
-		_player_ref = player as OverworldAvatar
-		_player_ref.ignore_input(true)

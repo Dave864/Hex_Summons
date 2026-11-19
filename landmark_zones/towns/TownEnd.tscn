@@ -307,11 +307,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15.302719)
 [node name="ObjectiveTent" type="Node3D" parent="." unique_id=531174197 node_paths=PackedStringArray("dialogue_panel", "blackout_panel", "reset_point")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.639591, 1.885371, -6.0696945)
 script = ExtResource("7_li5g4")
-dialogue_objective_failed = "Ah good you've returned! Did you collect the samples I requested?
+dialogue_objective_met = "Welcome back. Do you have my samples?
 [b]
 ...
 [b]
-Your short on the amount I asked for.
+JUBILATION! Now I can start to unravel the mystery of these stumbletrees, and why they are the only creatures on this island.
+[b]
+Thank you for your assistance."
+dialogue_objective_failed = "Ah good, you've returned! Did you collect the samples I requested?
+[b]
+...
+[b]
+You're short on the amount I asked for.
 [b]
 ...
 [b]
