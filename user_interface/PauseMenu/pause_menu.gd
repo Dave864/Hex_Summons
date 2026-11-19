@@ -62,7 +62,7 @@ func _ready() -> void:
 
 ## Opens itself when the options menu input has been detected.
 func _input(event: InputEvent) -> void:
-	if _menu_state == State.CLOSED and event.is_action("options_menu"):
+	if _menu_state == State.CLOSED and event.is_action_pressed("options_menu"):
 		_menu_state = State.OPEN
 		objective_label.text = ObjectiveTracker.get_current_summary()
 		asp_open.play()
@@ -70,12 +70,19 @@ func _input(event: InputEvent) -> void:
 			parent_viewport.show()
 			button_first_focus.grab_focus.call_deferred()
 		get_tree().paused = true
-	elif _menu_state != State.CLOSED and event.is_action("ui_cancel"):
+	elif (
+			_menu_state != State.CLOSED
+			and (
+				event.is_action_pressed("ui_cancel")
+				or event.is_action_pressed("options_menu")
+			)
+	):
 		if _menu_state != State.OPEN:
 			return
 		_menu_state = State.CLOSED
 		asp_closed.play()
 		get_tree().paused = false
+		get_viewport().gui_release_focus()
 		if parent_viewport != null and parent_viewport.visible:
 			parent_viewport.hide()
 
