@@ -27,6 +27,8 @@ enum State{
 @export var dialogue_panel: PanelDialogue = null
 ## The panel used to blackout the screen.
 @export var blackout_panel: Panel = null
+## The window that provides the player with options upon game end.
+@export var popup_window_end: Window = null
 ## The point the player is placed if objective is not met.
 @export var reset_point: Marker3D = null
 
@@ -73,6 +75,8 @@ func _process(delta: float) -> void:
 				_state = State.OBJECTIVE_SUCCESS_DIALOGUE
 		State.OBJECTIVE_SUCCESS_DIALOGUE:
 			if not dialogue_panel.visible:
+				popup_window_end.show()
+				popup_window_end.get_node("VBoxContainer/ButtonTitle").grab_focus()
 				_state = State.WAIT
 		_:
 			return
@@ -91,3 +95,13 @@ func _on_entrance_body_entered(player: Node3D) -> void:
 	else:
 		dialogue_panel.set_text(dialogue_objective_failed)
 		_state = State.OBJECTIVE_FAIL_FADE_IN
+
+
+## Goes back to the title screen.
+func _on_ButtonTitle_pressed() -> void:
+	SceneController.change_scene_to_title()
+
+
+## Closes the game.
+func _on_ButtonEnd_pressed() -> void:
+	SceneController.close_game()

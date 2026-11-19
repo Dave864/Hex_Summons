@@ -167,6 +167,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_q08l8")
 
 [node name="PanelDialogue" type="Panel" parent="MainViewport/SubViewport" unique_id=280887934]
+visible = false
 anchors_preset = -1
 anchor_top = 0.792
 anchor_right = 1.0
@@ -215,6 +216,29 @@ stream = ExtResource("12_pq55l")
 volume_db = -15.0
 pitch_scale = 0.9
 bus = &"Interface"
+
+[node name="PopupWindowEnd" type="Window" parent="MainViewport/SubViewport" unique_id=863635008]
+transparent_bg = true
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(186, 100)
+visible = false
+borderless = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainViewport/SubViewport/PopupWindowEnd" unique_id=756554846]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 182.0
+offset_bottom = 96.0
+alignment = 1
+
+[node name="ButtonTitle" type="Button" parent="MainViewport/SubViewport/PopupWindowEnd/VBoxContainer" unique_id=479462235]
+layout_mode = 2
+text = "Return to Title"
+
+[node name="ButtonClose" type="Button" parent="MainViewport/SubViewport/PopupWindowEnd/VBoxContainer" unique_id=1917029320]
+layout_mode = 2
+text = "Close Game"
 
 [node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=1070171831]
 process_mode = 3
@@ -304,7 +328,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15.165028)
 [node name="ExitPointNorth" type="Marker3D" parent="ExitZone" unique_id=1994167498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15.302719)
 
-[node name="ObjectiveTent" type="Node3D" parent="." unique_id=531174197 node_paths=PackedStringArray("dialogue_panel", "blackout_panel", "reset_point")]
+[node name="ObjectiveTent" type="Node3D" parent="." unique_id=531174197 node_paths=PackedStringArray("dialogue_panel", "blackout_panel", "popup_window_end", "reset_point")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.639591, 1.885371, -6.0696945)
 script = ExtResource("7_li5g4")
 dialogue_objective_met = "Welcome back. Do you have my samples?
@@ -326,6 +350,7 @@ Why are you still here? Get back out there and fell more stumbletrees, those sam
 fade_time = 0.7999999999999999
 dialogue_panel = NodePath("../MainViewport/SubViewport/PanelDialogue")
 blackout_panel = NodePath("../MainViewport/SubViewport/DarkBackground")
+popup_window_end = NodePath("../MainViewport/SubViewport/PopupWindowEnd")
 reset_point = NodePath("ExitPoint")
 
 [node name="ConeShape" type="MeshInstance3D" parent="ObjectiveTent" unique_id=564063174]
@@ -363,5 +388,7 @@ pitch_scale = 0.8
 autoplay = true
 bus = &"Music"
 
+[connection signal="pressed" from="MainViewport/SubViewport/PopupWindowEnd/VBoxContainer/ButtonTitle" to="ObjectiveTent" method="_on_ButtonTitle_pressed"]
+[connection signal="pressed" from="MainViewport/SubViewport/PopupWindowEnd/VBoxContainer/ButtonClose" to="ObjectiveTent" method="_on_ButtonEnd_pressed"]
 [connection signal="body_entered" from="ExitZone" to="." method="_on_exit_zone_body_entered"]
 [connection signal="body_entered" from="ObjectiveTent/EntranceShape/Area3D" to="ObjectiveTent" method="_on_entrance_body_entered"]
