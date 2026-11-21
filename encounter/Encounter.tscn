@@ -31,25 +31,17 @@ region_rect = Rect2(88, 1, 10, 10)
 [node name="Encounter" type="Node" unique_id=702181272 node_paths=PackedStringArray("ui")]
 process_mode = 1
 script = ExtResource("10")
-ui = NodePath("MainViewport/SubViewport/EncounterUIMenuLayout")
+ui = NodePath("EncounterUIMenuLayout")
 
-[node name="MainViewport" type="SubViewportContainer" parent="." unique_id=215439926]
-offset_right = 640.0
-offset_bottom = 360.0
+[node name="EncounterUIMenuLayout" parent="." unique_id=1264622696 instance=ExtResource("4_a00se")]
 
-[node name="SubViewport" type="SubViewport" parent="MainViewport" unique_id=360724533]
-transparent_bg = true
-size = Vector2i(640, 360)
-
-[node name="EncounterUIMenuLayout" parent="MainViewport/SubViewport" unique_id=1264622696 instance=ExtResource("4_a00se")]
-
-[node name="PopupVictory" type="PopupPanel" parent="MainViewport/SubViewport" unique_id=1725088452]
+[node name="PopupVictory" type="PopupPanel" parent="." unique_id=1725088452]
 process_mode = 2
 oversampling_override = 1.0
 initial_position = 1
 size = Vector2i(200, 75)
 
-[node name="VictoryLabel" type="Label" parent="MainViewport/SubViewport/PopupVictory" unique_id=858799354]
+[node name="VictoryLabel" type="Label" parent="PopupVictory" unique_id=858799354]
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 196.0
@@ -58,11 +50,11 @@ text = "Victory"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Timer" type="Timer" parent="MainViewport/SubViewport/PopupVictory" unique_id=1619155754]
+[node name="Timer" type="Timer" parent="PopupVictory" unique_id=1619155754]
 wait_time = 2.0
 one_shot = true
 
-[node name="WindowDefeat" type="Window" parent="MainViewport/SubViewport" unique_id=1301128948]
+[node name="WindowDefeat" type="Window" parent="." unique_id=1301128948]
 process_mode = 2
 oversampling_override = 1.0
 initial_position = 1
@@ -70,7 +62,7 @@ size = Vector2i(390, 150)
 visible = false
 borderless = true
 
-[node name="Panel" type="Panel" parent="MainViewport/SubViewport/WindowDefeat" unique_id=683064271]
+[node name="Panel" type="Panel" parent="WindowDefeat" unique_id=683064271]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -78,24 +70,24 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_q08l8")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainViewport/SubViewport/WindowDefeat" unique_id=1723204653]
+[node name="VBoxContainer" type="VBoxContainer" parent="WindowDefeat" unique_id=1723204653]
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 386.0
 offset_bottom = 146.0
 
-[node name="DefeatLabel" type="Label" parent="MainViewport/SubViewport/WindowDefeat/VBoxContainer" unique_id=147088279]
+[node name="DefeatLabel" type="Label" parent="WindowDefeat/VBoxContainer" unique_id=147088279]
 layout_mode = 2
 size_flags_vertical = 3
 text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainViewport/SubViewport/WindowDefeat/VBoxContainer" unique_id=1980068504]
+[node name="HBoxContainer" type="HBoxContainer" parent="WindowDefeat/VBoxContainer" unique_id=1980068504]
 layout_mode = 2
 alignment = 1
 
-[node name="ResetButton" type="Button" parent="MainViewport/SubViewport/WindowDefeat/VBoxContainer/HBoxContainer" unique_id=675346953 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="ResetButton" type="Button" parent="WindowDefeat/VBoxContainer/HBoxContainer" unique_id=675346953 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../CloseButton")
 focus_neighbor_top = NodePath(".")
@@ -105,12 +97,12 @@ focus_next = NodePath("../TitleButton")
 focus_previous = NodePath("../CloseButton")
 text = "Reset"
 script = ExtResource("14_vwj2q")
-asp_pressed = NodePath("../../../../../../UIConfirm")
-asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
-asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="TitleButton" type="Button" parent="MainViewport/SubViewport/WindowDefeat/VBoxContainer/HBoxContainer" unique_id=1416661798 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="TitleButton" type="Button" parent="WindowDefeat/VBoxContainer/HBoxContainer" unique_id=1416661798 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../ResetButton")
 focus_neighbor_top = NodePath(".")
@@ -120,12 +112,12 @@ focus_next = NodePath("../CloseButton")
 focus_previous = NodePath("../ResetButton")
 text = "Title Screen"
 script = ExtResource("14_vwj2q")
-asp_pressed = NodePath("../../../../../../UIConfirm")
-asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
-asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="CloseButton" type="Button" parent="MainViewport/SubViewport/WindowDefeat/VBoxContainer/HBoxContainer" unique_id=842676193 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="CloseButton" type="Button" parent="WindowDefeat/VBoxContainer/HBoxContainer" unique_id=842676193 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../TitleButton")
 focus_neighbor_top = NodePath(".")
@@ -135,14 +127,15 @@ focus_next = NodePath("../ResetButton")
 focus_previous = NodePath("../TitleButton")
 text = "Close Game"
 script = ExtResource("14_vwj2q")
-asp_pressed = NodePath("../../../../../../UIConfirm")
-asp_focus_entered = NodePath("../../../../../../UIMoveFocus")
-asp_mouse_entered = NodePath("../../../../../../UIMouseOver")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=576101643]
 process_mode = 3
 visible = false
+z_index = 1
 offset_right = 640.0
 offset_bottom = 360.0
 
@@ -194,8 +187,8 @@ script = ExtResource("12")
 
 [node name="End" type="Node" parent="StateMachine" unique_id=576553993 node_paths=PackedStringArray("victory_popup", "defeat_window")]
 script = ExtResource("11")
-victory_popup = NodePath("../../MainViewport/SubViewport/PopupVictory")
-defeat_window = NodePath("../../MainViewport/SubViewport/WindowDefeat")
+victory_popup = NodePath("../../PopupVictory")
+defeat_window = NodePath("../../WindowDefeat")
 
 [node name="UIMoveFocus" type="AudioStreamPlayer" parent="." unique_id=943620836]
 process_mode = 3
@@ -222,8 +215,8 @@ autoplay = true
 bus = &"Music"
 
 [connection signal="focus_moved_by_edge" from="EncounterCamera" to="SelectionTracker/Selector" method="_on_EncounterCamera_focus_moved_by_edge"]
-[connection signal="activated" from="Summon" to="MainViewport/SubViewport/EncounterUIMenuLayout" method="_on_Summon_activated"]
-[connection signal="deactivated" from="Summon" to="MainViewport/SubViewport/EncounterUIMenuLayout" method="_on_Summon_deactivated"]
+[connection signal="activated" from="Summon" to="EncounterUIMenuLayout" method="_on_Summon_activated"]
+[connection signal="deactivated" from="Summon" to="EncounterUIMenuLayout" method="_on_Summon_deactivated"]
 [connection signal="camera_focus_locked" from="SelectionTracker" to="EncounterCamera" method="_on_SelectionTracker_camera_focus_locked"]
 [connection signal="new_focus_point" from="SelectionTracker" to="EncounterCamera" method="_on_SelectionTracker_new_focus_point"]
 [connection signal="spawn_action_confirmed" from="SelectionTracker" to="Summon" method="_on_SelectionTracker_spawn_action_confirmed"]

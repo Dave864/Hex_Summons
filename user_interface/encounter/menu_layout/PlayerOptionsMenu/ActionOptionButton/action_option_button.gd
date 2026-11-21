@@ -30,4 +30,4 @@ func _on_ActionOptionButton_pressed() -> void:
 
 ## Passes along the stored action.
 func _on_ActionOptionButton_focus_entered() -> void:
-	emit_signal("action_highlighted", _action)
+	action_highlighted.emit(_action)

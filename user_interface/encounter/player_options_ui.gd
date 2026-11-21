@@ -81,7 +81,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Shows this menu, setting the control focus to the movement button.
 func display() -> void:
 	show()
-	_movement_button.call_deferred("grab_focus")
+	_movement_button.grab_focus.call_deferred()
 	_movement_button.button_pressed = true
 
 

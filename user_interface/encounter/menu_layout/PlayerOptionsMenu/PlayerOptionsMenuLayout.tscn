@@ -223,7 +223,7 @@ custom_maximum_size = Vector2(-1, 20)
 layout_mode = 2
 input_event = "ui_encounter_movement"
 
-[node name="Movement" type="Button" parent="PlayerActions/VBoxContainer/ContainerMovement" unique_id=1447393474]
+[node name="Movement" type="Button" parent="PlayerActions/VBoxContainer/ContainerMovement" unique_id=1447393474 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../ContainerWait/Wait")
@@ -251,6 +251,9 @@ toggle_mode = true
 text = "MOVEMENT"
 flat = true
 script = ExtResource("2_sy35k")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="ContainerTechnique" type="HBoxContainer" parent="PlayerActions/VBoxContainer" unique_id=1875284437]
@@ -310,7 +313,7 @@ custom_maximum_size = Vector2(-1, 20)
 layout_mode = 2
 input_event = "ui_encounter_option_2"
 
-[node name="Spell" type="Button" parent="PlayerActions/VBoxContainer/ContainerSpell" unique_id=1299457178]
+[node name="Spell" type="Button" parent="PlayerActions/VBoxContainer/ContainerSpell" unique_id=1299457178 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../ContainerTechnique/Technique")
@@ -339,6 +342,9 @@ text = "SPELL"
 flat = true
 alignment = 0
 script = ExtResource("2_sy35k")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIConfirm")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="ContainerSummon" type="HBoxContainer" parent="PlayerActions/VBoxContainer" unique_id=1312012640]
@@ -352,7 +358,7 @@ custom_maximum_size = Vector2(-1, 20)
 layout_mode = 2
 input_event = "ui_encounter_option_3"
 
-[node name="Summon" type="Button" parent="PlayerActions/VBoxContainer/ContainerSummon" unique_id=120196770]
+[node name="Summon" type="Button" parent="PlayerActions/VBoxContainer/ContainerSummon" unique_id=120196770 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../ContainerSpell/Spell")
@@ -381,6 +387,9 @@ text = "SUMMON"
 flat = true
 alignment = 0
 script = ExtResource("2_sy35k")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="ContainerItem" type="HBoxContainer" parent="PlayerActions/VBoxContainer" unique_id=58777796]
@@ -394,7 +403,7 @@ custom_maximum_size = Vector2(-1, 20)
 layout_mode = 2
 input_event = "ui_encounter_option_4"
 
-[node name="Item" type="Button" parent="PlayerActions/VBoxContainer/ContainerItem" unique_id=1474874894]
+[node name="Item" type="Button" parent="PlayerActions/VBoxContainer/ContainerItem" unique_id=1474874894 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../ContainerSummon/Summon")
@@ -423,6 +432,9 @@ text = "ITEM"
 flat = true
 alignment = 0
 script = ExtResource("2_sy35k")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="ContainerWait" type="HBoxContainer" parent="PlayerActions/VBoxContainer" unique_id=728918137]
@@ -436,7 +448,7 @@ custom_maximum_size = Vector2(-1, 20)
 layout_mode = 2
 input_event = "ui_encounter_player_end"
 
-[node name="Wait" type="Button" parent="PlayerActions/VBoxContainer/ContainerWait" unique_id=1555859432]
+[node name="Wait" type="Button" parent="PlayerActions/VBoxContainer/ContainerWait" unique_id=1555859432 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../ContainerItem/Item")
@@ -464,6 +476,9 @@ text = "WAIT"
 flat = true
 alignment = 0
 script = ExtResource("2_sy35k")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
 [node name="UIMoveFocus" type="AudioStreamPlayer" parent="." unique_id=1244435867]

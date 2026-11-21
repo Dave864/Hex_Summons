@@ -33,6 +33,8 @@ const CONFIRM_TEXT_CLOSE := "Close the Game?"
 var _options_menu: Options = null
 ## Flag indicating the current state of this menu.
 var _menu_state := State.CLOSED
+## The last Control node in focus before opening the pause menu.
+var _prior_focus: Control = null
 
 ## The timer that delays the changing from options to open.
 @onready var _timer: Timer = $Timer
@@ -63,6 +65,7 @@ func _ready() -> void:
 ## Opens itself when the options menu input has been detected.
 func _input(event: InputEvent) -> void:
 	if _menu_state == State.CLOSED and event.is_action_pressed("options_menu"):
+		_prior_focus = get_tree().get_root().gui_get_focus_owner()
 		_menu_state = State.OPEN
 		objective_label.text = ObjectiveTracker.get_current_summary()
 		_refresh_objective_trackers()
@@ -83,7 +86,10 @@ func _input(event: InputEvent) -> void:
 		_menu_state = State.CLOSED
 		asp_closed.play()
 		get_tree().paused = false
-		get_viewport().gui_release_focus()
+		if _prior_focus == null:
+			get_viewport().gui_release_focus()
+		else:
+			_prior_focus.grab_focus.call_deferred()
 		if parent_viewport != null and parent_viewport.visible:
 			parent_viewport.hide()
 

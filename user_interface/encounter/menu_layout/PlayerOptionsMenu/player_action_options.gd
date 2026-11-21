@@ -223,8 +223,8 @@ func _create_summon_option_button(
 			spawn_action,
 			summon_manager
 	)
-	option_button.action_highlighted.connect(
-			action_display._on_SummonOptionButton_action_highlighted
+	option_button.summon_highlighted.connect(
+			action_display._on_SummonOptionButton_summon_highlighted
 	)
 	_action_options_container.add_child(option_button)
 	_set_button_neighbors(option_button, _summon_options)

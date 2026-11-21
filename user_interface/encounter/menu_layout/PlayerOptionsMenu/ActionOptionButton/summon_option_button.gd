@@ -6,6 +6,10 @@ extends ActionOptionButton
 ## when this button is pressed.
 
 
+## Indicates that the spawn action this button represents has been highlighted.
+## Passes along the action and its wisp cost.
+signal summon_highlighted(action, cost)
+
 ## The summon manager.
 var _sumon_manager_ref: Summon = null
 
@@ -36,3 +40,11 @@ func _on_ActionOptionButton_pressed() -> void:
 		return
 	_sumon_manager_ref.set_cost_for_spawn_action(name)
 	SignalBus.emit_spawn_action_selected(name, _action)
+
+
+## Passes along the stored action.
+func _on_ActionOptionButton_focus_entered() -> void:
+	summon_highlighted.emit(
+			_action,
+			_sumon_manager_ref.available_summons[name].cost_summary()
+	)
