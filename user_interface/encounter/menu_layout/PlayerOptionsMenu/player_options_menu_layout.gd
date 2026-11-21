@@ -37,73 +37,73 @@ func disable_menu(disable: bool) -> void:
 ## technique button if no actions are provided.
 func populate_technique_options(technique_actions: Array[Action]) -> void:
 	if technique_actions.size() == 0:
-		_technique_button.hide()
+		_technique_button.get_parent_control().hide()
 		return
-	_technique_button.show()
+	_technique_button.get_parent_control().show()
 	_action_options.populate_technique_options(technique_actions)
 
 
 ## Clears out the recorded technique options, hiding the technique button.
 func clear_technique_options() -> void:
 	_action_options.clear_technique_options()
-	_technique_button.hide()
+	_technique_button.get_parent_control().hide()
 
 
 ## Populates the action options menu with the listed spells. Hides the spell
 ## button if no actions are provided.
 func populate_spell_options(spell_actions: Array[Action]) -> void:
 	if spell_actions.size() == 0:
-		_spell_button.hide()
+		_spell_button.get_parent_control().hide()
 		return
-	_spell_button.show()
+	_spell_button.get_parent_control().show()
 	_action_options.populate_spell_options(spell_actions)
 
 
 ## Clears out the recorded spell options, hiding the spell button.
 func clear_spell_options() -> void:
 	_action_options.clear_spell_options()
-	_spell_button.hide()
+	_spell_button.get_parent_control().hide()
 
 
 ## Populates the action options menu with the listed summon spawn actions.
 ## Hides the summon button if no actions are provided.
 func populate_summon_options(summon_manager: Summon) -> void:
 	if summon_manager == null or summon_manager.available_summons.size() == 0:
-		_summon_button.hide()
+		_summon_button.get_parent_control().hide()
 		return
-	_summon_button.show()
+	_summon_button.get_parent_control().show()
 	_action_options.populate_summon_options(summon_manager)
 
 
 ## Clears out the recorded summon options, hiding the summon button.
 func clear_summon_options() -> void:
 	_action_options.clear_summon_options()
-	_summon_button.hide()
+	_summon_button.get_parent_control().hide()
 
 
 ## Populate the action options menu with the listed item actions. Hides the
 ## item button if no actions are provided.
 func populate_item_options(item_actions: Array[Action]) -> void:
 	if item_actions.size() == 0:
-		_item_button.hide()
+		_item_button.get_parent_control().hide()
 		return
-	_item_button.show()
+	_item_button.get_parent_control().show()
 	_action_options.populate_item_options(item_actions)
 
 
 ## Clears out the recorded item options, hiding the item button.
 func clear_item_options() -> void:
 	_action_options.clear_item_options()
-	_item_button.hide()
+	_item_button.get_parent_control().hide()
 
 
 ## Clears out the recorded options for all action types, hiding all buttons.
 func clear_all_options() -> void:
 	_action_options.clear_all_options()
-	_technique_button.hide()
-	_spell_button.hide()
-	_summon_button.hide()
-	_item_button.hide()
+	_technique_button.get_parent_control().hide()
+	_spell_button.get_parent_control().hide()
+	_summon_button.get_parent_control().hide()
+	_item_button.get_parent_control().hide()
 
 
 ## Focus neighbors do not need to be updated, as they are hidden when disabled.

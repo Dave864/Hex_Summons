@@ -1,224 +1,493 @@
-[gd_scene load_steps=6 format=3 uid="uid://dp3b42qitf0at"]
+[gd_scene format=3 uid="uid://dp3b42qitf0at"]
 
-[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_m8drq"]
+[ext_resource type="FontFile" uid="uid://cfk0gmxowcanh" path="res://fonts/simple-pixel.ttf" id="2_0lw16"]
 [ext_resource type="Script" uid="uid://b4pkwviamfe4m" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/player_options_menu_layout.gd" id="2_slwd1"]
+[ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="2_sy35k"]
 [ext_resource type="Script" uid="uid://drfkxuuxn4m7t" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/player_action_options.gd" id="3_0cb23"]
+[ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="3_3q20a"]
 [ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="3_slwd1"]
 [ext_resource type="PackedScene" uid="uid://cww308tl4jk5n" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/OptionData/OptionData.tscn" id="4_imudb"]
+[ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/interface/UIClick_Menu Button 09_KRST_NONE.wav" id="6_3q20a"]
+[ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/interface/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="7_sy35k"]
+[ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="8_0lw16"]
 
-[node name="PlayerOptionsMenuLayout" type="Control" node_paths=PackedStringArray("_movement_button", "_technique_button", "_spell_button", "_summon_button", "_item_button", "_wait_button")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_imudb"]
+texture = ExtResource("3_3q20a")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(88, 1, 10, 10)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0lw16"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n15q4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q5wlj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jaedd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tyfw4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lfv3w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7dix8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lwrmy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vf2sb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8bfwo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ndl2"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(1, 0.5019608, 0.2509804, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2udnq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q6d6n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_87dwa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mqm5b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2btcn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vb8v7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dixa6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_csioq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8tcar"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4ndl2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_us0rd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j71dc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_04tr7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2njy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_inagy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0bci8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4jm86"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pxx4r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1jn07"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p1sqc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_15h71"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f3a3o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xu4ts"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kmlcj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_psef8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k01uc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cowgm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_crde1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g086d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kiktw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k4fu3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cswku"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_piljh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lhbv4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5som4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a2yv4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dwo48"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0my48"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aaov2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q0b8f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_grind"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2o2yi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5hgp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xgcm7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnwsx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k687f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dwls3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hqgh1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rbuys"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xd1y7"]
+
+[node name="PlayerOptionsMenuLayout" type="Control" unique_id=1326126012 node_paths=PackedStringArray("_movement_button", "_technique_button", "_spell_button", "_summon_button", "_item_button", "_wait_button")]
 layout_mode = 3
-anchor_right = 0.275
-anchor_bottom = 0.62200004
-offset_bottom = 0.07998657
+anchor_right = 0.312
+anchor_bottom = 0.61700004
+offset_right = 0.31999207
+offset_bottom = -0.120010376
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("1_m8drq")
 script = ExtResource("2_slwd1")
-_movement_button = NodePath("PlayerActions/VBoxContainer/Movement")
-_technique_button = NodePath("PlayerActions/VBoxContainer/Technique")
-_spell_button = NodePath("PlayerActions/VBoxContainer/Spell")
-_summon_button = NodePath("PlayerActions/VBoxContainer/Summon")
-_item_button = NodePath("PlayerActions/VBoxContainer/Item")
-_wait_button = NodePath("PlayerActions/VBoxContainer/Wait")
+_movement_button = NodePath("PlayerActions/VBoxContainer/ContainerMovement/Movement")
+_technique_button = NodePath("PlayerActions/VBoxContainer/ContainerTechnique/Technique")
+_spell_button = NodePath("PlayerActions/VBoxContainer/ContainerSpell/Spell")
+_summon_button = NodePath("PlayerActions/VBoxContainer/ContainerSummon/Summon")
+_item_button = NodePath("PlayerActions/VBoxContainer/ContainerItem/Item")
+_wait_button = NodePath("PlayerActions/VBoxContainer/ContainerWait/Wait")
 
-[node name="PlayerActions" type="PanelContainer" parent="."]
+[node name="ActionOptions" type="PanelContainer" parent="." unique_id=387996715 node_paths=PackedStringArray("action_display")]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.5
-anchor_bottom = 0.75000006
-offset_bottom = -1.5258789e-05
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PlayerActions"]
-layout_mode = 2
-alignment = 1
-
-[node name="Movement" type="Button" parent="PlayerActions/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Wait")
-focus_neighbor_bottom = NodePath("../Technique")
-focus_next = NodePath("../Technique")
-focus_previous = NodePath("../Wait")
-toggle_mode = true
-text = "MOVEMENT"
-flat = true
-alignment = 2
-
-[node name="InputLabel" parent="PlayerActions/VBoxContainer/Movement" instance=ExtResource("3_slwd1")]
-z_index = 1
-layout_mode = 1
-anchor_left = -0.038000003
-anchor_right = 0.18300001
-anchor_bottom = 0.85
-offset_left = -0.035999775
-offset_right = -0.27400112
-input_source = 0
-input_event = "ui_encounter_movement"
-
-[node name="Technique" type="Button" parent="PlayerActions/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Movement")
-focus_neighbor_bottom = NodePath("../Spell")
-focus_next = NodePath("../Spell")
-focus_previous = NodePath("../Movement")
-toggle_mode = true
-text = "TECHNIQUE"
-flat = true
-alignment = 2
-icon_alignment = 2
-
-[node name="InputLabel" parent="PlayerActions/VBoxContainer/Technique" instance=ExtResource("3_slwd1")]
-z_index = 1
-layout_mode = 1
-anchor_left = -0.038000003
-anchor_right = 0.179
-anchor_bottom = 0.85
-offset_left = -0.035999775
-offset_right = 0.037999153
-input_source = 0
-input_event = "ui_encounter_option_1"
-
-[node name="Spell" type="Button" parent="PlayerActions/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Technique")
-focus_neighbor_bottom = NodePath("../Summon")
-focus_next = NodePath("../Summon")
-focus_previous = NodePath("../Technique")
-toggle_mode = true
-text = "SPELL"
-flat = true
-alignment = 2
-
-[node name="InputLabel" parent="PlayerActions/VBoxContainer/Spell" instance=ExtResource("3_slwd1")]
-z_index = 1
-layout_mode = 1
-anchor_left = -0.041
-anchor_right = 0.179
-anchor_bottom = 0.85
-offset_left = 0.1980002
-offset_right = 0.037999153
-input_source = 0
-input_event = "ui_encounter_option_2"
-
-[node name="Summon" type="Button" parent="PlayerActions/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Spell")
-focus_neighbor_bottom = NodePath("../Item")
-focus_next = NodePath("../Item")
-focus_previous = NodePath("../Spell")
-toggle_mode = true
-text = "SUMMON"
-flat = true
-alignment = 2
-
-[node name="InputLabel" parent="PlayerActions/VBoxContainer/Summon" instance=ExtResource("3_slwd1")]
-z_index = 1
-layout_mode = 1
-anchor_left = -0.038000003
-anchor_right = 0.179
-anchor_bottom = 0.85
-offset_left = -0.035999775
-offset_right = 0.037999153
-input_source = 0
-input_event = "ui_encounter_option_3"
-
-[node name="Item" type="Button" parent="PlayerActions/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Summon")
-focus_neighbor_bottom = NodePath("../Wait")
-focus_next = NodePath("../Wait")
-focus_previous = NodePath("../Summon")
-toggle_mode = true
-text = "ITEM"
-flat = true
-alignment = 2
-
-[node name="InputLabel" parent="PlayerActions/VBoxContainer/Item" instance=ExtResource("3_slwd1")]
-z_index = 1
-layout_mode = 1
-anchor_left = -0.038000003
-anchor_right = 0.179
-anchor_bottom = 0.85
-offset_left = -0.035999775
-offset_right = 0.037999153
-input_source = 0
-input_event = "ui_encounter_option_4"
-
-[node name="Wait" type="Button" parent="PlayerActions/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Item")
-focus_neighbor_bottom = NodePath("../Movement")
-focus_next = NodePath("../Movement")
-focus_previous = NodePath("../Item")
-text = "WAIT"
-flat = true
-alignment = 2
-
-[node name="InputLabel" parent="PlayerActions/VBoxContainer/Wait" instance=ExtResource("3_slwd1")]
-z_index = 1
-layout_mode = 1
-anchor_left = -0.026
-anchor_right = 0.192
-anchor_bottom = 0.85
-offset_left = 0.028000116
-offset_right = 0.024000168
-input_source = 0
-input_event = "ui_encounter_player_end"
-
-[node name="ActionOptions" type="PanelContainer" parent="." node_paths=PackedStringArray("action_display")]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
+anchor_left = 0.57500005
 anchor_right = 1.0
-anchor_bottom = 0.75000006
-offset_bottom = -1.5258789e-05
-grow_horizontal = 2
-grow_vertical = 2
+anchor_bottom = 0.734
+offset_top = 4.0
+offset_bottom = 0.051986694
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_imudb")
 script = ExtResource("3_0cb23")
 action_display = NodePath("../OptionData")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ActionOptions"]
-layout_direction = 3
+[node name="ScrollContainer" type="ScrollContainer" parent="ActionOptions" unique_id=321525724]
 layout_mode = 2
+layout_direction = 3
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ActionOptions/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ActionOptions/ScrollContainer" unique_id=1146175491]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 alignment = 1
 
-[node name="OptionData" parent="." instance=ExtResource("4_imudb")]
+[node name="OptionData" parent="." unique_id=1165624468 instance=ExtResource("4_imudb")]
 layout_mode = 1
-anchor_top = 0.75000006
+anchor_top = 0.757
 anchor_right = 1.0
-anchor_bottom = 0.9990001
-offset_top = -1.5258789e-05
-offset_bottom = 0.015975952
+anchor_bottom = 0.757
+offset_left = 1.0
+offset_top = -0.054000854
+offset_bottom = 56.946
 grow_horizontal = 1
 grow_vertical = 1
 
-[connection signal="toggled" from="PlayerActions/VBoxContainer/Movement" to="." method="_on_Movement_toggled"]
-[connection signal="toggled" from="PlayerActions/VBoxContainer/Movement" to="ActionOptions" method="_on_Movement_toggled"]
-[connection signal="toggled" from="PlayerActions/VBoxContainer/Technique" to="." method="_on_Technique_toggled"]
-[connection signal="toggled" from="PlayerActions/VBoxContainer/Technique" to="ActionOptions" method="_on_Technique_toggled"]
-[connection signal="toggled" from="PlayerActions/VBoxContainer/Spell" to="." method="_on_Spell_toggled"]
-[connection signal="toggled" from="PlayerActions/VBoxContainer/Spell" to="ActionOptions" method="_on_Spell_toggled"]
-[connection signal="toggled" from="PlayerActions/VBoxContainer/Summon" to="." method="_on_Summon_toggled"]
-[connection signal="toggled" from="PlayerActions/VBoxContainer/Summon" to="ActionOptions" method="_on_Summon_toggled"]
-[connection signal="toggled" from="PlayerActions/VBoxContainer/Item" to="." method="_on_Item_toggled"]
-[connection signal="toggled" from="PlayerActions/VBoxContainer/Item" to="ActionOptions" method="_on_Item_toggled"]
-[connection signal="pressed" from="PlayerActions/VBoxContainer/Wait" to="." method="_on_Wait_pressed"]
-[connection signal="pressed" from="PlayerActions/VBoxContainer/Wait" to="ActionOptions" method="_on_Wait_pressed"]
+[node name="PlayerActions" type="PanelContainer" parent="." unique_id=976662994]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.57500005
+anchor_bottom = 0.757
+offset_bottom = -0.054000854
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerActions" unique_id=1290560439]
+layout_mode = 2
+alignment = 1
+
+[node name="ContainerMovement" type="HBoxContainer" parent="PlayerActions/VBoxContainer" unique_id=782435848]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InputLabel" parent="PlayerActions/VBoxContainer/ContainerMovement" unique_id=1208325133 instance=ExtResource("3_slwd1")]
+z_index = 1
+custom_minimum_size = Vector2(35, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 2
+input_event = "ui_encounter_movement"
+
+[node name="Movement" type="Button" parent="PlayerActions/VBoxContainer/ContainerMovement" unique_id=1447393474]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../ContainerWait/Wait")
+focus_neighbor_bottom = NodePath("../../ContainerTechnique/Technique")
+focus_next = NodePath("../../ContainerTechnique/Technique")
+focus_previous = NodePath("../../ContainerWait/Wait")
+theme_override_colors/font_focus_color = Color(1, 0.5019608, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0.6666667, 0.15294118, 1)
+theme_override_fonts/font = ExtResource("2_0lw16")
+theme_override_font_sizes/font_size = 7
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0lw16")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_n15q4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_q5wlj")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_jaedd")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tyfw4")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_lfv3w")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_7dix8")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_lwrmy")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_vf2sb")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8bfwo")
+theme_override_styles/focus = SubResource("StyleBoxFlat_4ndl2")
+toggle_mode = true
+text = "MOVEMENT"
+flat = true
+script = ExtResource("2_sy35k")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="ContainerTechnique" type="HBoxContainer" parent="PlayerActions/VBoxContainer" unique_id=1875284437]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InputLabel" parent="PlayerActions/VBoxContainer/ContainerTechnique" unique_id=1206488423 instance=ExtResource("3_slwd1")]
+z_index = 1
+custom_minimum_size = Vector2(35, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 2
+input_event = "ui_encounter_option_1"
+
+[node name="Technique" type="Button" parent="PlayerActions/VBoxContainer/ContainerTechnique" unique_id=1012651522 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../ContainerMovement/Movement")
+focus_neighbor_bottom = NodePath("../../ContainerSpell/Spell")
+focus_next = NodePath("../../ContainerSpell/Spell")
+focus_previous = NodePath("../../ContainerMovement/Movement")
+theme_override_colors/font_focus_color = Color(1, 0.5019608, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0.6666667, 0.15294118, 1)
+theme_override_fonts/font = ExtResource("2_0lw16")
+theme_override_font_sizes/font_size = 7
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2udnq")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_q6d6n")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_87dwa")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_mqm5b")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2btcn")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_vb8v7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dixa6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_csioq")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8tcar")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_4ndl2")
+theme_override_styles/focus = SubResource("StyleBoxFlat_4ndl2")
+toggle_mode = true
+text = "TECHNIQUE"
+flat = true
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_sy35k")
+asp_pressed = NodePath("../../../../UIConfirm")
+asp_focus_entered = NodePath("../../../../UIMoveFocus")
+asp_mouse_entered = NodePath("../../../../UIMouseOver")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="ContainerSpell" type="HBoxContainer" parent="PlayerActions/VBoxContainer" unique_id=785840271]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InputLabel" parent="PlayerActions/VBoxContainer/ContainerSpell" unique_id=1142235051 instance=ExtResource("3_slwd1")]
+z_index = 1
+custom_minimum_size = Vector2(35, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 2
+input_event = "ui_encounter_option_2"
+
+[node name="Spell" type="Button" parent="PlayerActions/VBoxContainer/ContainerSpell" unique_id=1299457178]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../ContainerTechnique/Technique")
+focus_neighbor_bottom = NodePath("../../ContainerSummon/Summon")
+focus_next = NodePath("../../ContainerSummon/Summon")
+focus_previous = NodePath("../../ContainerTechnique/Technique")
+theme_override_colors/font_focus_color = Color(1, 0.5019608, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0.6666667, 0.15294118, 1)
+theme_override_fonts/font = ExtResource("2_0lw16")
+theme_override_font_sizes/font_size = 7
+theme_override_styles/normal = SubResource("StyleBoxEmpty_us0rd")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_j71dc")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_04tr7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_s2njy")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_inagy")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_0bci8")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_4jm86")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_pxx4r")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1jn07")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_p1sqc")
+theme_override_styles/focus = SubResource("StyleBoxFlat_4ndl2")
+toggle_mode = true
+text = "SPELL"
+flat = true
+alignment = 0
+script = ExtResource("2_sy35k")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="ContainerSummon" type="HBoxContainer" parent="PlayerActions/VBoxContainer" unique_id=1312012640]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InputLabel" parent="PlayerActions/VBoxContainer/ContainerSummon" unique_id=739821674 instance=ExtResource("3_slwd1")]
+z_index = 1
+custom_minimum_size = Vector2(35, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 2
+input_event = "ui_encounter_option_3"
+
+[node name="Summon" type="Button" parent="PlayerActions/VBoxContainer/ContainerSummon" unique_id=120196770]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../ContainerSpell/Spell")
+focus_neighbor_bottom = NodePath("../../ContainerItem/Item")
+focus_next = NodePath("../../ContainerItem/Item")
+focus_previous = NodePath("../../ContainerSpell/Spell")
+theme_override_colors/font_focus_color = Color(1, 0.5019608, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0.6666667, 0.15294118, 1)
+theme_override_fonts/font = ExtResource("2_0lw16")
+theme_override_font_sizes/font_size = 7
+theme_override_styles/normal = SubResource("StyleBoxEmpty_15h71")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_f3a3o")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xu4ts")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_kmlcj")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_psef8")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_k01uc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_cowgm")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_crde1")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_g086d")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_kiktw")
+theme_override_styles/focus = SubResource("StyleBoxFlat_4ndl2")
+toggle_mode = true
+text = "SUMMON"
+flat = true
+alignment = 0
+script = ExtResource("2_sy35k")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="ContainerItem" type="HBoxContainer" parent="PlayerActions/VBoxContainer" unique_id=58777796]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InputLabel" parent="PlayerActions/VBoxContainer/ContainerItem" unique_id=1880356118 instance=ExtResource("3_slwd1")]
+z_index = 1
+custom_minimum_size = Vector2(35, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 2
+input_event = "ui_encounter_option_4"
+
+[node name="Item" type="Button" parent="PlayerActions/VBoxContainer/ContainerItem" unique_id=1474874894]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../ContainerSummon/Summon")
+focus_neighbor_bottom = NodePath("../../ContainerWait/Wait")
+focus_next = NodePath("../../ContainerWait/Wait")
+focus_previous = NodePath("../../ContainerSummon/Summon")
+theme_override_colors/font_focus_color = Color(1, 0.5019608, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0.6666667, 0.15294118, 1)
+theme_override_fonts/font = ExtResource("2_0lw16")
+theme_override_font_sizes/font_size = 7
+theme_override_styles/normal = SubResource("StyleBoxEmpty_k4fu3")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_cswku")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_piljh")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_lhbv4")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5som4")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_a2yv4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dwo48")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0my48")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_aaov2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_q0b8f")
+theme_override_styles/focus = SubResource("StyleBoxFlat_4ndl2")
+toggle_mode = true
+text = "ITEM"
+flat = true
+alignment = 0
+script = ExtResource("2_sy35k")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="ContainerWait" type="HBoxContainer" parent="PlayerActions/VBoxContainer" unique_id=728918137]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InputLabel" parent="PlayerActions/VBoxContainer/ContainerWait" unique_id=120420826 instance=ExtResource("3_slwd1")]
+z_index = 1
+custom_minimum_size = Vector2(35, 20)
+custom_maximum_size = Vector2(-1, 20)
+layout_mode = 2
+input_event = "ui_encounter_player_end"
+
+[node name="Wait" type="Button" parent="PlayerActions/VBoxContainer/ContainerWait" unique_id=1555859432]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../ContainerItem/Item")
+focus_neighbor_bottom = NodePath("../../ContainerMovement/Movement")
+focus_next = NodePath("../../ContainerMovement/Movement")
+focus_previous = NodePath("../../ContainerItem/Item")
+theme_override_colors/font_focus_color = Color(1, 0.5019608, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0.6666667, 0.15294118, 1)
+theme_override_fonts/font = ExtResource("2_0lw16")
+theme_override_font_sizes/font_size = 7
+theme_override_styles/normal = SubResource("StyleBoxEmpty_grind")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2o2yi")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_i5hgp")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xgcm7")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wnwsx")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_k687f")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dwls3")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hqgh1")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_rbuys")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_xd1y7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_4ndl2")
+text = "WAIT"
+flat = true
+alignment = 0
+script = ExtResource("2_sy35k")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="UIMoveFocus" type="AudioStreamPlayer" parent="." unique_id=1244435867]
+stream = ExtResource("6_3q20a")
+volume_db = -5.0
+bus = &"Interface"
+
+[node name="UIMouseOver" type="AudioStreamPlayer" parent="." unique_id=1447837195]
+stream = ExtResource("7_sy35k")
+bus = &"Interface"
+
+[node name="UIConfirm" type="AudioStreamPlayer" parent="." unique_id=585364500]
+stream = ExtResource("8_0lw16")
+bus = &"Interface"
+
+[connection signal="toggled" from="PlayerActions/VBoxContainer/ContainerMovement/Movement" to="." method="_on_Movement_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/ContainerMovement/Movement" to="ActionOptions" method="_on_Movement_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/ContainerTechnique/Technique" to="." method="_on_Technique_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/ContainerTechnique/Technique" to="ActionOptions" method="_on_Technique_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/ContainerSpell/Spell" to="." method="_on_Spell_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/ContainerSpell/Spell" to="ActionOptions" method="_on_Spell_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/ContainerSummon/Summon" to="." method="_on_Summon_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/ContainerSummon/Summon" to="ActionOptions" method="_on_Summon_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/ContainerItem/Item" to="." method="_on_Item_toggled"]
+[connection signal="toggled" from="PlayerActions/VBoxContainer/ContainerItem/Item" to="ActionOptions" method="_on_Item_toggled"]
+[connection signal="pressed" from="PlayerActions/VBoxContainer/ContainerWait/Wait" to="." method="_on_Wait_pressed"]
+[connection signal="pressed" from="PlayerActions/VBoxContainer/ContainerWait/Wait" to="ActionOptions" method="_on_Wait_pressed"]

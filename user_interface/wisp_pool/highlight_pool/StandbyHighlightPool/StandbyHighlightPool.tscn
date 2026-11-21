@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://d20ttalw3d47o"]
 
 [ext_resource type="Script" uid="uid://rspptncr83si" path="res://user_interface/wisp_pool/highlight_pool/highlight_wisp_pool_ui.gd" id="1_ky7gd"]
-[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_o1kwj"]
 [ext_resource type="Texture2D" uid="uid://ll5fwpnd6mtq" path="res://art/ui/SummonWispPool/Highlight Summon Pool.png" id="1_pni28"]
 [ext_resource type="Script" uid="uid://u62jhqt5eq2g" path="res://utils/variable_timer.gd" id="2_a05bc"]
 [ext_resource type="PackedScene" uid="uid://deu4qxm7qqsmy" path="res://user_interface/wisp_pool/highlight_pool/StandbyHighlightPool/AlignmentElementIcon.tscn" id="3_pni28"]
@@ -13,6 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://deii8e6eb6oty" path="res://user_interface/wisp_pool/highlight_pool/StandbyHighlightPool/HighlightUpperLeft.tscn" id="11_mxy0q"]
 [ext_resource type="PackedScene" uid="uid://bva02osf072uo" path="res://user_interface/wisp_pool/highlight_pool/StandbyHighlightPool/HighlightUpperRight.tscn" id="12_ddro5"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0bjn4"]
+resource_local_to_scene = true
+atlas = ExtResource("4_o1kwj")
+region = Rect2(118, 42, 9, 6)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_s6lg3"]
 resource_local_to_scene = true
 atlas = ExtResource("4_o1kwj")
@@ -21,7 +25,7 @@ region = Rect2(118, 42, 9, 6)
 [sub_resource type="AtlasTexture" id="AtlasTexture_sywte"]
 resource_local_to_scene = true
 atlas = ExtResource("4_o1kwj")
-region = Rect2(118, 42, 9, 6)
+region = Rect2(110, 40, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7h1a5"]
 resource_local_to_scene = true
@@ -38,22 +42,16 @@ resource_local_to_scene = true
 atlas = ExtResource("4_o1kwj")
 region = Rect2(110, 40, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tun1i"]
-resource_local_to_scene = true
-atlas = ExtResource("4_o1kwj")
-region = Rect2(110, 40, 8, 8)
-
 [node name="StandbyHighlightPool" type="Panel" unique_id=977738124 node_paths=PackedStringArray("light_highlight_1", "light_highlight_2", "dark_highlight_1", "dark_highlight_2", "light_label", "light_elem_1_label", "light_elem_2_label", "dark_label", "dark_elem_1_label", "dark_elem_2_label", "timer", "light_alignment_icon", "light_elem_1_icon", "light_elem_2_icon", "dark_alignment_icon", "dark_elem_1_icon", "dark_elem_2_icon")]
 custom_minimum_size = Vector2(47, 58)
 anchors_preset = -1
 anchor_right = 0.07300001
 anchor_bottom = 0.16100001
 offset_right = 0.27999496
-offset_bottom = 0.039993286
+offset_bottom = 1.0399933
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("1_o1kwj")
 script = ExtResource("1_ky7gd")
 light_highlight_1 = NodePath("Sigil/HighlightUpperLeft")
 light_highlight_2 = NodePath("Sigil/HighlightUpperRight")
@@ -172,7 +170,7 @@ offset_left = -4.5
 offset_top = -14.5
 offset_right = 4.5
 offset_bottom = -8.5
-texture = SubResource("AtlasTexture_s6lg3")
+texture = SubResource("AtlasTexture_0bjn4")
 
 [node name="DarkIcon" parent="Sigil" unique_id=21505545 instance=ExtResource("3_pni28")]
 layout_mode = 1
@@ -185,7 +183,7 @@ offset_left = -4.5
 offset_top = 8.5
 offset_right = 4.5
 offset_bottom = 14.5
-texture = SubResource("AtlasTexture_sywte")
+texture = SubResource("AtlasTexture_s6lg3")
 element = 5
 
 [node name="LightLeftIcon" parent="Sigil" unique_id=1031829339 instance=ExtResource("8_yjaa4")]
@@ -199,7 +197,7 @@ offset_left = -11.5
 offset_top = -11.5
 offset_right = -3.5
 offset_bottom = -3.5
-texture = SubResource("AtlasTexture_7h1a5")
+texture = SubResource("AtlasTexture_sywte")
 element = 1
 
 [node name="LightRightIcon" parent="Sigil" unique_id=53430464 instance=ExtResource("8_yjaa4")]
@@ -213,7 +211,7 @@ offset_left = 3.5
 offset_top = -11.5
 offset_right = 11.5
 offset_bottom = -3.5
-texture = SubResource("AtlasTexture_72743")
+texture = SubResource("AtlasTexture_7h1a5")
 element = 3
 
 [node name="DarkLeftIcon" parent="Sigil" unique_id=1862105448 instance=ExtResource("8_yjaa4")]
@@ -227,7 +225,7 @@ offset_left = -11.5
 offset_top = 3.5
 offset_right = -3.5
 offset_bottom = 11.5
-texture = SubResource("AtlasTexture_1wug2")
+texture = SubResource("AtlasTexture_72743")
 
 [node name="DarkRightIcon" parent="Sigil" unique_id=2133464371 instance=ExtResource("8_yjaa4")]
 layout_mode = 1
@@ -240,7 +238,7 @@ offset_left = 3.5
 offset_top = 3.5
 offset_right = 11.5
 offset_bottom = 11.5
-texture = SubResource("AtlasTexture_tun1i")
+texture = SubResource("AtlasTexture_1wug2")
 element = 2
 
 [node name="HighlightLowerLeft" parent="Sigil" unique_id=130662957 instance=ExtResource("9_duv2o")]

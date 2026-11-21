@@ -19,7 +19,6 @@ func _init(stored_action: Action) -> void:
 	name = _action.name
 	text = name
 	alignment = HORIZONTAL_ALIGNMENT_CENTER
-	flat = true
 	pressed.connect(_on_ActionOptionButton_pressed)
 	focus_entered.connect(_on_ActionOptionButton_focus_entered)
 

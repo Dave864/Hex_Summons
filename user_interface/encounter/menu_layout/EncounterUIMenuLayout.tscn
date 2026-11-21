@@ -30,7 +30,6 @@ offset_left = 8.0
 offset_top = 296.0
 offset_right = -575.0
 offset_bottom = -3.0
-theme = null
 
 [node name="InitiativeTracker" parent="." unique_id=1500101882 instance=ExtResource("1_vudnu")]
 layout_mode = 1
@@ -44,9 +43,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 14.0
+offset_left = 9.0
 offset_top = 64.0
-offset_right = -451.0
+offset_right = -431.0
 offset_bottom = -72.0
 
 [node name="PartyStatsContainer" type="VBoxContainer" parent="." unique_id=74976911]
@@ -65,15 +64,19 @@ mouse_filter = 2
 alignment = 2
 
 [node name="PartyCharacterStats1" parent="PartyStatsContainer" unique_id=1707017943 instance=ExtResource("4_thx3u")]
+visible = false
 layout_mode = 2
 
 [node name="PartyCharacterStats2" parent="PartyStatsContainer" unique_id=377897168 instance=ExtResource("4_thx3u")]
+visible = false
 layout_mode = 2
 
 [node name="PartyCharacterStats3" parent="PartyStatsContainer" unique_id=1056948423 instance=ExtResource("4_thx3u")]
+visible = false
 layout_mode = 2
 
 [node name="PartyCharacterStats4" parent="PartyStatsContainer" unique_id=84328867 instance=ExtResource("4_thx3u")]
+visible = false
 layout_mode = 2
 
 [node name="StateMachine" type="Node" parent="." unique_id=182262980 node_paths=PackedStringArray("initial_state")]
