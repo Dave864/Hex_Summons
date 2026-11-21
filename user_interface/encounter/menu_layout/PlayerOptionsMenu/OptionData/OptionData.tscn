@@ -1,8 +1,17 @@
 [gd_scene format=3 uid="uid://cww308tl4jk5n"]
 
-[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_iahou"]
+[ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="2_c8r3c"]
 [ext_resource type="Script" uid="uid://bfo867j3rde8c" path="res://user_interface/encounter/RangeDisplay/range_display.gd" id="2_jrdtc"]
 [ext_resource type="Script" uid="uid://crvp40ygveqh4" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/OptionData/option_data.gd" id="2_mr07l"]
+[ext_resource type="FontFile" uid="uid://cfk0gmxowcanh" path="res://fonts/simple-pixel.ttf" id="4_c8r3c"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jrdtc"]
+texture = ExtResource("2_c8r3c")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(88, 1, 10, 10)
 
 [node name="OptionData" type="Panel" unique_id=1723529948]
 anchors_preset = -1
@@ -12,7 +21,7 @@ offset_bottom = -0.08000183
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("1_iahou")
+theme_override_styles/panel = SubResource("StyleBoxTexture_jrdtc")
 script = ExtResource("2_mr07l")
 
 [node name="RangeDisplay" type="Panel" parent="." unique_id=1277155385]
@@ -27,6 +36,7 @@ offset_right = 64.0
 offset_bottom = 25.0
 grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_jrdtc")
 script = ExtResource("2_jrdtc")
 row_count = 7
 col_count = 7
@@ -41,12 +51,14 @@ anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -0.5
-offset_right = 64.0
-offset_bottom = -3.0
+offset_left = 1.0
+offset_top = 6.0
+offset_right = 59.0
+offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 5
+theme_override_fonts/font = ExtResource("4_c8r3c")
+theme_override_font_sizes/font_size = 4
 text = "cost details"
 horizontal_alignment = 1
 vertical_alignment = 2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d20ttalw3d47o"]
+[gd_scene format=3 uid="uid://d20ttalw3d47o"]
 
 [ext_resource type="Script" uid="uid://rspptncr83si" path="res://user_interface/wisp_pool/highlight_pool/highlight_wisp_pool_ui.gd" id="1_ky7gd"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_o1kwj"]
@@ -13,42 +13,43 @@
 [ext_resource type="PackedScene" uid="uid://deii8e6eb6oty" path="res://user_interface/wisp_pool/highlight_pool/StandbyHighlightPool/HighlightUpperLeft.tscn" id="11_mxy0q"]
 [ext_resource type="PackedScene" uid="uid://bva02osf072uo" path="res://user_interface/wisp_pool/highlight_pool/StandbyHighlightPool/HighlightUpperRight.tscn" id="12_ddro5"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_v6sa2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6lg3"]
 resource_local_to_scene = true
 atlas = ExtResource("4_o1kwj")
 region = Rect2(118, 42, 9, 6)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yjaa4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sywte"]
 resource_local_to_scene = true
 atlas = ExtResource("4_o1kwj")
 region = Rect2(118, 42, 9, 6)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_duv2o"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7h1a5"]
 resource_local_to_scene = true
 atlas = ExtResource("4_o1kwj")
 region = Rect2(110, 40, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_67dua"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_72743"]
 resource_local_to_scene = true
 atlas = ExtResource("4_o1kwj")
 region = Rect2(110, 40, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mxy0q"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wug2"]
 resource_local_to_scene = true
 atlas = ExtResource("4_o1kwj")
 region = Rect2(110, 40, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ddro5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tun1i"]
 resource_local_to_scene = true
 atlas = ExtResource("4_o1kwj")
 region = Rect2(110, 40, 8, 8)
 
-[node name="StandbyHighlightPool" type="Panel" node_paths=PackedStringArray("light_highlight_1", "light_highlight_2", "dark_highlight_1", "dark_highlight_2", "light_label", "light_elem_1_label", "light_elem_2_label", "dark_label", "dark_elem_1_label", "dark_elem_2_label", "timer", "light_alignment_icon", "light_elem_1_icon", "light_elem_2_icon", "dark_alignment_icon", "dark_elem_1_icon", "dark_elem_2_icon")]
+[node name="StandbyHighlightPool" type="Panel" unique_id=977738124 node_paths=PackedStringArray("light_highlight_1", "light_highlight_2", "dark_highlight_1", "dark_highlight_2", "light_label", "light_elem_1_label", "light_elem_2_label", "dark_label", "dark_elem_1_label", "dark_elem_2_label", "timer", "light_alignment_icon", "light_elem_1_icon", "light_elem_2_icon", "dark_alignment_icon", "dark_elem_1_icon", "dark_elem_2_icon")]
+custom_minimum_size = Vector2(47, 58)
 anchors_preset = -1
-anchor_right = 0.089
-anchor_bottom = 0.16900001
-offset_right = 0.040000916
-offset_bottom = 0.15999603
+anchor_right = 0.07300001
+anchor_bottom = 0.16100001
+offset_right = 0.27999496
+offset_bottom = 0.039993286
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -72,13 +73,13 @@ dark_alignment_icon = NodePath("Sigil/DarkIcon")
 dark_elem_1_icon = NodePath("Sigil/DarkLeftIcon")
 dark_elem_2_icon = NodePath("Sigil/DarkRightIcon")
 
-[node name="VariableTimer" type="Timer" parent="."]
+[node name="VariableTimer" type="Timer" parent="." unique_id=1689774294]
 script = ExtResource("2_a05bc")
 lower_time = 10.001
 upper_time = 20.001
 metadata/_custom_type_script = "uid://u62jhqt5eq2g"
 
-[node name="LightLabel" parent="." instance=ExtResource("4_v6sa2")]
+[node name="LightLabel" parent="." unique_id=1364116502 instance=ExtResource("4_v6sa2")]
 layout_mode = 1
 anchor_left = 0.45600003
 anchor_top = 0.066
@@ -89,7 +90,7 @@ offset_right = 0.022996902
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LightLeftLabel" parent="." instance=ExtResource("4_v6sa2")]
+[node name="LightLeftLabel" parent="." unique_id=998708496 instance=ExtResource("4_v6sa2")]
 layout_mode = 1
 anchor_left = 0.14
 anchor_top = 0.164
@@ -100,7 +101,7 @@ offset_right = -0.022000313
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LightRightLabel" parent="." instance=ExtResource("4_v6sa2")]
+[node name="LightRightLabel" parent="." unique_id=1673433865 instance=ExtResource("4_v6sa2")]
 layout_mode = 1
 anchor_left = 0.754
 anchor_top = 0.164
@@ -111,7 +112,7 @@ offset_right = -0.020000458
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DarkLabel" parent="." instance=ExtResource("4_v6sa2")]
+[node name="DarkLabel" parent="." unique_id=1462551717 instance=ExtResource("4_v6sa2")]
 layout_mode = 1
 anchor_left = 0.45600003
 anchor_top = 0.80300003
@@ -122,7 +123,7 @@ offset_right = 0.022996902
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DarkLeftLabel" parent="." instance=ExtResource("4_v6sa2")]
+[node name="DarkLeftLabel" parent="." unique_id=1813607305 instance=ExtResource("4_v6sa2")]
 layout_mode = 1
 anchor_left = 0.14
 anchor_top = 0.70500004
@@ -133,7 +134,7 @@ offset_right = -0.022000313
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DarkRightLabel" parent="." instance=ExtResource("4_v6sa2")]
+[node name="DarkRightLabel" parent="." unique_id=504693025 instance=ExtResource("4_v6sa2")]
 layout_mode = 1
 anchor_left = 0.754
 anchor_top = 0.70500004
@@ -144,7 +145,7 @@ offset_right = -0.020000458
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Sigil" type="TextureRect" parent="."]
+[node name="Sigil" type="TextureRect" parent="." unique_id=1207007416]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -160,7 +161,7 @@ grow_vertical = 2
 texture = ExtResource("1_pni28")
 stretch_mode = 4
 
-[node name="LightIcon" parent="Sigil" instance=ExtResource("3_pni28")]
+[node name="LightIcon" parent="Sigil" unique_id=756638504 instance=ExtResource("3_pni28")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -171,9 +172,9 @@ offset_left = -4.5
 offset_top = -14.5
 offset_right = 4.5
 offset_bottom = -8.5
-texture = SubResource("AtlasTexture_v6sa2")
+texture = SubResource("AtlasTexture_s6lg3")
 
-[node name="DarkIcon" parent="Sigil" instance=ExtResource("3_pni28")]
+[node name="DarkIcon" parent="Sigil" unique_id=21505545 instance=ExtResource("3_pni28")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -184,10 +185,10 @@ offset_left = -4.5
 offset_top = 8.5
 offset_right = 4.5
 offset_bottom = 14.5
-texture = SubResource("AtlasTexture_yjaa4")
+texture = SubResource("AtlasTexture_sywte")
 element = 5
 
-[node name="LightLeftIcon" parent="Sigil" instance=ExtResource("8_yjaa4")]
+[node name="LightLeftIcon" parent="Sigil" unique_id=1031829339 instance=ExtResource("8_yjaa4")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -198,10 +199,10 @@ offset_left = -11.5
 offset_top = -11.5
 offset_right = -3.5
 offset_bottom = -3.5
-texture = SubResource("AtlasTexture_duv2o")
+texture = SubResource("AtlasTexture_7h1a5")
 element = 1
 
-[node name="LightRightIcon" parent="Sigil" instance=ExtResource("8_yjaa4")]
+[node name="LightRightIcon" parent="Sigil" unique_id=53430464 instance=ExtResource("8_yjaa4")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -212,10 +213,10 @@ offset_left = 3.5
 offset_top = -11.5
 offset_right = 11.5
 offset_bottom = -3.5
-texture = SubResource("AtlasTexture_67dua")
+texture = SubResource("AtlasTexture_72743")
 element = 3
 
-[node name="DarkLeftIcon" parent="Sigil" instance=ExtResource("8_yjaa4")]
+[node name="DarkLeftIcon" parent="Sigil" unique_id=1862105448 instance=ExtResource("8_yjaa4")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -226,9 +227,9 @@ offset_left = -11.5
 offset_top = 3.5
 offset_right = -3.5
 offset_bottom = 11.5
-texture = SubResource("AtlasTexture_mxy0q")
+texture = SubResource("AtlasTexture_1wug2")
 
-[node name="DarkRightIcon" parent="Sigil" instance=ExtResource("8_yjaa4")]
+[node name="DarkRightIcon" parent="Sigil" unique_id=2133464371 instance=ExtResource("8_yjaa4")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -239,10 +240,10 @@ offset_left = 3.5
 offset_top = 3.5
 offset_right = 11.5
 offset_bottom = 11.5
-texture = SubResource("AtlasTexture_ddro5")
+texture = SubResource("AtlasTexture_tun1i")
 element = 2
 
-[node name="HighlightLowerLeft" parent="Sigil" instance=ExtResource("9_duv2o")]
+[node name="HighlightLowerLeft" parent="Sigil" unique_id=130662957 instance=ExtResource("9_duv2o")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -254,7 +255,7 @@ offset_top = 0.5
 offset_right = -0.5
 offset_bottom = 6.5
 
-[node name="HighlightLowerRight" parent="Sigil" instance=ExtResource("10_67dua")]
+[node name="HighlightLowerRight" parent="Sigil" unique_id=596359062 instance=ExtResource("10_67dua")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -267,7 +268,7 @@ offset_right = 6.5
 offset_bottom = 6.5
 element = 2
 
-[node name="HighlightUpperLeft" parent="Sigil" instance=ExtResource("11_mxy0q")]
+[node name="HighlightUpperLeft" parent="Sigil" unique_id=2112916077 instance=ExtResource("11_mxy0q")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -280,7 +281,7 @@ offset_right = -0.5
 offset_bottom = -0.5
 element = 1
 
-[node name="HighlightUpperRight" parent="Sigil" instance=ExtResource("12_ddro5")]
+[node name="HighlightUpperRight" parent="Sigil" unique_id=1816132047 instance=ExtResource("12_ddro5")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

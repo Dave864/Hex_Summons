@@ -1,126 +1,125 @@
-[gd_scene load_steps=31 format=3 uid="uid://d3i1mqeluj5hv"]
+[gd_scene format=3 uid="uid://d3i1mqeluj5hv"]
 
 [ext_resource type="PackedScene" uid="uid://3fxn0walrbhe" path="res://user_interface/encounter/InitiativeTracker/InitiativeSlot.tscn" id="2"]
 [ext_resource type="Script" uid="uid://bift00408ti8f" path="res://user_interface/encounter/InitiativeTracker/order_type_initiative.gd" id="2_v2kbp"]
-[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="3"]
+[ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="3_v2kbp"]
 [ext_resource type="Texture2D" uid="uid://c7jbdsahx5x83" path="res://art/ui/Init.png" id="4"]
-[ext_resource type="Texture2D" uid="uid://brvrgnwi2ctlg" path="res://art/ui/ThemeBlueSigil/panel.png" id="5"]
 [ext_resource type="Shader" uid="uid://d1rqm2l1tcof8" path="res://user_interface/shaders/change_color.gdshader" id="14"]
 
-[sub_resource type="StyleBoxTexture" id="24"]
-texture = ExtResource("5")
-texture_margin_left = 5.0
-texture_margin_top = 5.0
-texture_margin_right = 5.0
-texture_margin_bottom = 5.0
-region_rect = Rect2(24, 0, 12, 12)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bokxm"]
+texture = ExtResource("3_v2kbp")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(88, 1, 10, 10)
 
-[sub_resource type="ShaderMaterial" id="1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vqg7f"]
 resource_local_to_scene = true
 shader = ExtResource("14")
 shader_parameter/old_color = Color(1, 1, 1, 1)
 shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="13"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2hex"]
 resource_local_to_scene = true
 atlas = ExtResource("4")
 region = Rect2(0, 0, 34, 34)
 
-[sub_resource type="ShaderMaterial" id="2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0wq4p"]
 resource_local_to_scene = true
 shader = ExtResource("14")
 shader_parameter/old_color = Color(1, 1, 1, 1)
 shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="14"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_orf5u"]
 resource_local_to_scene = true
 atlas = ExtResource("4")
 region = Rect2(0, 0, 34, 34)
 
-[sub_resource type="ShaderMaterial" id="3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_21skt"]
 resource_local_to_scene = true
 shader = ExtResource("14")
 shader_parameter/old_color = Color(1, 1, 1, 1)
 shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="15"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2762"]
 resource_local_to_scene = true
 atlas = ExtResource("4")
 region = Rect2(0, 0, 34, 34)
 
-[sub_resource type="ShaderMaterial" id="4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3smb3"]
 resource_local_to_scene = true
 shader = ExtResource("14")
 shader_parameter/old_color = Color(1, 1, 1, 1)
 shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="16"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbl2h"]
 resource_local_to_scene = true
 atlas = ExtResource("4")
 region = Rect2(0, 0, 34, 34)
 
-[sub_resource type="ShaderMaterial" id="5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qd05e"]
 resource_local_to_scene = true
 shader = ExtResource("14")
 shader_parameter/old_color = Color(1, 1, 1, 1)
 shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="17"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_updm1"]
 resource_local_to_scene = true
 atlas = ExtResource("4")
 region = Rect2(0, 0, 34, 34)
 
-[sub_resource type="ShaderMaterial" id="6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jy6yw"]
 resource_local_to_scene = true
 shader = ExtResource("14")
 shader_parameter/old_color = Color(1, 1, 1, 1)
 shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="18"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_blro4"]
 resource_local_to_scene = true
 atlas = ExtResource("4")
 region = Rect2(0, 0, 34, 34)
 
-[sub_resource type="ShaderMaterial" id="7"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x6glx"]
 resource_local_to_scene = true
 shader = ExtResource("14")
 shader_parameter/old_color = Color(1, 1, 1, 1)
 shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="19"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cq7wv"]
 resource_local_to_scene = true
 atlas = ExtResource("4")
 region = Rect2(0, 0, 34, 34)
 
-[sub_resource type="ShaderMaterial" id="8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0mwtu"]
 resource_local_to_scene = true
 shader = ExtResource("14")
 shader_parameter/old_color = Color(1, 1, 1, 1)
 shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="20"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vx8ex"]
 resource_local_to_scene = true
 atlas = ExtResource("4")
 region = Rect2(0, 0, 34, 34)
 
-[sub_resource type="ShaderMaterial" id="9"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3hs03"]
 resource_local_to_scene = true
 shader = ExtResource("14")
 shader_parameter/old_color = Color(1, 1, 1, 1)
 shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="21"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_40b3j"]
 resource_local_to_scene = true
 atlas = ExtResource("4")
 region = Rect2(0, 0, 34, 34)
 
-[sub_resource type="ShaderMaterial" id="10"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_23luh"]
 resource_local_to_scene = true
 shader = ExtResource("14")
 shader_parameter/old_color = Color(1, 1, 1, 1)
 shader_parameter/new_color = Color(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="22"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_i25k1"]
 resource_local_to_scene = true
 atlas = ExtResource("4")
 region = Rect2(0, 0, 34, 34)
@@ -444,7 +443,7 @@ _data = {
 &"shift": SubResource("12")
 }
 
-[node name="InitiativeTracker" type="Control"]
+[node name="InitiativeTracker" type="Control" unique_id=1656546633]
 custom_minimum_size = Vector2(512, 0)
 layout_mode = 3
 anchors_preset = 10
@@ -455,37 +454,42 @@ offset_right = -62.0
 offset_bottom = 38.0
 grow_horizontal = 2
 mouse_filter = 2
-theme = ExtResource("3")
 script = ExtResource("2_v2kbp")
 
-[node name="Active" type="Panel" parent="."]
-layout_mode = 0
-anchor_right = 0.07
-anchor_bottom = 1.0
-offset_right = 0.16
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-theme_override_styles/panel = SubResource("24")
-
-[node name="Pending" type="Panel" parent="."]
+[node name="Pending" type="Panel" parent="." unique_id=714614052]
 layout_mode = 0
 anchor_left = 0.07
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.16
+offset_left = 0.15999985
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_bokxm")
+
+[node name="Active" type="Panel" parent="." unique_id=1340449221]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.006
+anchor_top = -0.059000004
+anchor_right = 0.076000005
+anchor_bottom = 1.059
+offset_left = 0.07200003
+offset_top = 0.006000042
+offset_right = 0.08799744
+offset_bottom = -0.006000519
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="InitiativeSlots" type="Control" parent="."]
+[node name="InitiativeSlots" type="Control" parent="." unique_id=2029680797]
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="InitiativeSlot0" parent="InitiativeSlots" instance=ExtResource("2")]
-material = SubResource("1")
+[node name="InitiativeSlot0" parent="InitiativeSlots" unique_id=864848839 instance=ExtResource("2")]
+material = SubResource("ShaderMaterial_vqg7f")
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.035
@@ -496,10 +500,10 @@ offset_left = -17.0
 offset_top = -17.0
 offset_right = 17.000013
 offset_bottom = 17.0
-texture = SubResource("13")
+texture = SubResource("AtlasTexture_u2hex")
 
-[node name="InitiativeSlot1" parent="InitiativeSlots" instance=ExtResource("2")]
-material = SubResource("2")
+[node name="InitiativeSlot1" parent="InitiativeSlots" unique_id=1875003222 instance=ExtResource("2")]
+material = SubResource("ShaderMaterial_0wq4p")
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.133
@@ -510,10 +514,10 @@ offset_left = -16.812
 offset_top = -17.0
 offset_right = 17.188057
 offset_bottom = 17.0
-texture = SubResource("14")
+texture = SubResource("AtlasTexture_orf5u")
 
-[node name="InitiativeSlot2" parent="InitiativeSlots" instance=ExtResource("2")]
-material = SubResource("3")
+[node name="InitiativeSlot2" parent="InitiativeSlots" unique_id=203281109 instance=ExtResource("2")]
+material = SubResource("ShaderMaterial_21skt")
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.234
@@ -524,10 +528,10 @@ offset_left = -17.154
 offset_top = -17.0
 offset_right = 16.846329
 offset_bottom = 17.0
-texture = SubResource("15")
+texture = SubResource("AtlasTexture_g2762")
 
-[node name="InitiativeSlot3" parent="InitiativeSlots" instance=ExtResource("2")]
-material = SubResource("4")
+[node name="InitiativeSlot3" parent="InitiativeSlots" unique_id=639459703 instance=ExtResource("2")]
+material = SubResource("ShaderMaterial_3smb3")
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.334
@@ -538,10 +542,10 @@ offset_left = -17.067993
 offset_top = -17.0
 offset_right = 16.932007
 offset_bottom = 17.0
-texture = SubResource("16")
+texture = SubResource("AtlasTexture_rbl2h")
 
-[node name="InitiativeSlot4" parent="InitiativeSlots" instance=ExtResource("2")]
-material = SubResource("5")
+[node name="InitiativeSlot4" parent="InitiativeSlots" unique_id=2002589800 instance=ExtResource("2")]
+material = SubResource("ShaderMaterial_qd05e")
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.434
@@ -552,10 +556,10 @@ offset_left = -17.21399
 offset_top = -17.0
 offset_right = 16.78743
 offset_bottom = 17.0
-texture = SubResource("17")
+texture = SubResource("AtlasTexture_updm1")
 
-[node name="InitiativeSlot5" parent="InitiativeSlots" instance=ExtResource("2")]
-material = SubResource("6")
+[node name="InitiativeSlot5" parent="InitiativeSlots" unique_id=2075398321 instance=ExtResource("2")]
+material = SubResource("ShaderMaterial_jy6yw")
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.534
@@ -566,10 +570,10 @@ offset_left = -17.227997
 offset_top = -17.0
 offset_right = 16.772003
 offset_bottom = 17.0
-texture = SubResource("18")
+texture = SubResource("AtlasTexture_blro4")
 
-[node name="InitiativeSlot6" parent="InitiativeSlots" instance=ExtResource("2")]
-material = SubResource("7")
+[node name="InitiativeSlot6" parent="InitiativeSlots" unique_id=1163999920 instance=ExtResource("2")]
+material = SubResource("ShaderMaterial_x6glx")
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.633
@@ -580,10 +584,10 @@ offset_left = -16.817993
 offset_top = -17.0
 offset_right = 17.182007
 offset_bottom = 17.0
-texture = SubResource("19")
+texture = SubResource("AtlasTexture_cq7wv")
 
-[node name="InitiativeSlot7" parent="InitiativeSlots" instance=ExtResource("2")]
-material = SubResource("8")
+[node name="InitiativeSlot7" parent="InitiativeSlots" unique_id=616199974 instance=ExtResource("2")]
+material = SubResource("ShaderMaterial_0mwtu")
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.733
@@ -594,10 +598,10 @@ offset_left = -16.843994
 offset_top = -17.0
 offset_right = 17.156006
 offset_bottom = 17.0
-texture = SubResource("20")
+texture = SubResource("AtlasTexture_vx8ex")
 
-[node name="InitiativeSlot8" parent="InitiativeSlots" instance=ExtResource("2")]
-material = SubResource("9")
+[node name="InitiativeSlot8" parent="InitiativeSlots" unique_id=825221507 instance=ExtResource("2")]
+material = SubResource("ShaderMaterial_3hs03")
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.834
@@ -608,10 +612,10 @@ offset_left = -17.243988
 offset_top = -17.0
 offset_right = 16.756012
 offset_bottom = 17.0
-texture = SubResource("21")
+texture = SubResource("AtlasTexture_40b3j")
 
-[node name="InitiativeSlot9" parent="InitiativeSlots" instance=ExtResource("2")]
-material = SubResource("10")
+[node name="InitiativeSlot9" parent="InitiativeSlots" unique_id=853993730 instance=ExtResource("2")]
+material = SubResource("ShaderMaterial_23luh")
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.933
@@ -622,10 +626,8 @@ offset_left = -16.896027
 offset_top = -17.0
 offset_right = 17.103973
 offset_bottom = 17.0
-texture = SubResource("22")
+texture = SubResource("AtlasTexture_i25k1")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1565396266]
 callback_mode_method = 1
-libraries = {
-&"": SubResource("AnimationLibrary_v2kbp")
-}
+libraries/ = SubResource("AnimationLibrary_v2kbp")

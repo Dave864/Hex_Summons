@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dn4vmatmue5p6"]
+[gd_scene format=3 uid="uid://dn4vmatmue5p6"]
 
 [ext_resource type="PackedScene" uid="uid://cbwi1fc72lu56" path="res://user_interface/wisp_pool/highlight_pool/PartyHighlightPool/PartyHighlightPool.tscn" id="1_cfe8s"]
-[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_pasbx"]
 [ext_resource type="Texture2D" uid="uid://c3y13epn52d47" path="res://art/ui/PlayerWispPool/Party Health Bar.png" id="2_7hvc1"]
 [ext_resource type="Texture2D" uid="uid://osiqpd8jhoyd" path="res://art/icon.png" id="2_oa5s8"]
 [ext_resource type="Script" uid="uid://d27mym5gtfvpr" path="res://user_interface/encounter/menu_layout/PartyCharacterStats/highlight_character_stats_ui.gd" id="2_pasbx"]
-
+[ext_resource type="FontFile" uid="uid://cfk0gmxowcanh" path="res://fonts/simple-pixel.ttf" id="5_pasbx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pasbx"]
 atlas = ExtResource("2_7hvc1")
@@ -15,18 +14,17 @@ region = Rect2(0, 0, 52, 36)
 atlas = ExtResource("2_7hvc1")
 region = Rect2(52, 0, 52, 36)
 
-[node name="PartyCharacterStats" type="Control" node_paths=PackedStringArray("character_portrait", "wisp_pool_ui", "health_bar", "health_label", "name_label")]
+[node name="PartyCharacterStats" type="Control" unique_id=780191925 node_paths=PackedStringArray("character_portrait", "wisp_pool_ui", "health_bar", "health_label", "name_label")]
 layout_mode = 3
-anchor_right = 0.102000006
+anchor_right = 0.10300001
 anchor_bottom = 0.23300001
-offset_right = -0.2800064
+offset_right = 0.0799942
 offset_bottom = 0.11999512
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 mouse_filter = 2
-theme = ExtResource("1_pasbx")
 script = ExtResource("2_pasbx")
 character_portrait = NodePath("CharacterPortriat")
 wisp_pool_ui = NodePath("PartyHighlightPool")
@@ -34,18 +32,17 @@ health_bar = NodePath("HealthBar")
 health_label = NodePath("HealthLabel")
 name_label = NodePath("Name Label")
 
-[node name="HighlightedIndicator" type="Panel" parent="."]
+[node name="HighlightedIndicator" type="Panel" parent="." unique_id=1004200439]
 custom_minimum_size = Vector2(66, 84)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="HealthBar" type="TextureProgressBar" parent="."]
+[node name="HealthBar" type="TextureProgressBar" parent="." unique_id=198480741]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -66,7 +63,7 @@ texture_progress = SubResource("AtlasTexture_a0kcy")
 tint_under = Color(0.49803922, 0.49803922, 0.49803922, 1)
 tint_progress = Color(0, 1, 1, 1)
 
-[node name="CharacterPortriat" type="TextureRect" parent="."]
+[node name="CharacterPortriat" type="TextureRect" parent="." unique_id=2044642495]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -83,7 +80,7 @@ mouse_filter = 2
 texture = ExtResource("2_oa5s8")
 expand_mode = 1
 
-[node name="PartyHighlightPool" parent="." instance=ExtResource("1_cfe8s")]
+[node name="PartyHighlightPool" parent="." unique_id=713743372 instance=ExtResource("1_cfe8s")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -95,7 +92,7 @@ offset_top = -28.0
 offset_right = 29.0
 offset_bottom = 28.0
 
-[node name="HealthLabel" type="Label" parent="."]
+[node name="HealthLabel" type="Label" parent="." unique_id=1478321709]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -105,14 +102,16 @@ anchor_bottom = 0.5
 offset_left = -15.0
 offset_top = 30.0
 offset_right = 15.0
-offset_bottom = 42.0
+offset_bottom = 39.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_pasbx")
+theme_override_font_sizes/font_size = 5
 text = "00/00"
 horizontal_alignment = 1
-vertical_alignment = 2
+vertical_alignment = 1
 
-[node name="Name Label" type="Label" parent="."]
+[node name="Name Label" type="Label" parent="." unique_id=205379751]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -125,6 +124,9 @@ offset_right = 12.0
 offset_bottom = -26.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_pasbx")
+theme_override_font_sizes/font_size = 5
 text = "NAME"
 horizontal_alignment = 1
+vertical_alignment = 1
 uppercase = true

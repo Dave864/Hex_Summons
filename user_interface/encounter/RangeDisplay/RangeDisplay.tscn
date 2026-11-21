@@ -1,15 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://brswtgdm48yey"]
+[gd_scene format=3 uid="uid://brswtgdm48yey"]
 
+[ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="1_p8if6"]
 [ext_resource type="Script" uid="uid://bfo867j3rde8c" path="res://user_interface/encounter/RangeDisplay/range_display.gd" id="5"]
 
-
-[node name="RangeDisplay" type="Panel"]
-custom_minimum_size = Vector2(56, 48)
-offset_right = 56.0
+[node name="RangeDisplay" type="Panel" unique_id=1842082698]
+custom_minimum_size = Vector2(64, 48)
+offset_right = 64.0
 offset_bottom = 48.0
 size_flags_horizontal = 9
 size_flags_vertical = 5
 mouse_filter = 2
+theme = ExtResource("1_p8if6")
 script = ExtResource("5")
 row_count = 7
 col_count = 7
