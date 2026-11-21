@@ -194,14 +194,18 @@ func _depress_option_button(option: Option) -> void:
 			_wait_button.button_pressed = false
 
 
-## Toggles the current active button off if it is not movement. Does not toggle
-## the movement button off.
+## Toggles the movement button. Toggles the current active button off if it is
+## not movement. Does not toggle movement off it is selected multiple times in
+## a row.
 func _on_Movement_toggled(toggled_on: bool) -> void:
 	if toggled_on and _active_option != Option.MOVE:
 		_depress_option_button(_active_option)
 		SignalBus.emit_character_action_type_canceled()
 		_active_option = Option.MOVE
-		_movement_button.call_deferred("grab_focus")
+		_movement_button.grab_focus.call_deferred()
+	elif not toggled_on and _active_option == Option.MOVE:
+		_movement_button.set_pressed_no_signal(true)
+		_movement_button.grab_focus.call_deferred()
 
 
 ## Toggles the techinque button. When toggled on, the last active button is toggled
