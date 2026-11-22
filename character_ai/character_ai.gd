@@ -107,8 +107,8 @@ func determine_action_chain() -> Array[Array]:
 		var details: Array[Variant] = _determine_action_details(action, ab)
 		if details.size() == 0:
 			continue
-		if action.name == MOVE_ACTION_NAME:
-			return[
+		if action.name == MOVE_ACTION_NAME or details.size() == 1:
+			return [
 				[MOVE, details[0]]
 			]
 		else:
