@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dv4dcnfe3lxnl"]
+[gd_scene format=3 uid="uid://dv4dcnfe3lxnl"]
 
 [ext_resource type="Texture2D" uid="uid://bajoqfa6xysec" path="res://art/title/title_3.png" id="1_bgmhr"]
 [ext_resource type="Theme" uid="uid://c3h3cfs57rjy8" path="res://user_interface/themes/ThemeGlyph.tres" id="1_nh5qr"]
@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="8_4rnq4"]
 [ext_resource type="AudioStream" uid="uid://cvk3dpfnl77u7" path="res://audio/music/starting_journey.wav" id="9_onrvd"]
 
-[node name="Title" type="Control" node_paths=PackedStringArray("start_button", "options_button", "credits_button", "options_viewport", "credits_viewport", "options_menu", "credits_page")]
+[node name="Title" type="Control" unique_id=151861799 node_paths=PackedStringArray("start_button", "options_button", "credits_button", "options_viewport", "credits_viewport", "options_menu", "credits_page")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,7 +28,7 @@ credits_viewport = NodePath("CreditsViewport")
 options_menu = NodePath("OptionsViewport/SubViewport/Options")
 credits_page = NodePath("CreditsViewport/SubViewport/Credits")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1792884352]
 layout_mode = 0
 offset_left = 131.0
 offset_top = 18.0
@@ -38,7 +38,7 @@ texture = ExtResource("1_bgmhr")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="ButtonContainer" type="HBoxContainer" parent="."]
+[node name="ButtonContainer" type="HBoxContainer" parent="." unique_id=849037483]
 layout_mode = 0
 offset_left = 72.0
 offset_top = 301.0
@@ -46,7 +46,7 @@ offset_right = 583.0
 offset_bottom = 339.0
 alignment = 1
 
-[node name="Start" type="Button" parent="ButtonContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="Start" type="Button" parent="ButtonContainer" unique_id=1481292126 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Start"
@@ -56,7 +56,7 @@ asp_focus_entered = NodePath("../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="Options" type="Button" parent="ButtonContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="Options" type="Button" parent="ButtonContainer" unique_id=2013382348 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Options"
@@ -66,7 +66,7 @@ asp_focus_entered = NodePath("../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="Credits" type="Button" parent="ButtonContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="Credits" type="Button" parent="ButtonContainer" unique_id=319276517 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Credits"
@@ -76,7 +76,7 @@ asp_focus_entered = NodePath("../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="CloseGame" type="Button" parent="ButtonContainer" node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
+[node name="CloseGame" type="Button" parent="ButtonContainer" unique_id=889962000 node_paths=PackedStringArray("asp_pressed", "asp_focus_entered", "asp_mouse_entered")]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Close Game"
@@ -86,7 +86,7 @@ asp_focus_entered = NodePath("../../UIMoveFocus")
 asp_mouse_entered = NodePath("../../UIMouseOver")
 metadata/_custom_type_script = "uid://da6sq681nnb6a"
 
-[node name="OptionsViewport" type="SubViewportContainer" parent="."]
+[node name="OptionsViewport" type="SubViewportContainer" parent="." unique_id=2013354547]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -96,41 +96,41 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_nh5qr")
 
-[node name="SubViewport" type="SubViewport" parent="OptionsViewport"]
+[node name="SubViewport" type="SubViewport" parent="OptionsViewport" unique_id=1429136071]
 disable_3d = true
 handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 0
 
-[node name="Options" parent="OptionsViewport/SubViewport" instance=ExtResource("4_utrti")]
+[node name="Options" parent="OptionsViewport/SubViewport" unique_id=1442503822 instance=ExtResource("4_utrti")]
 
-[node name="CreditsViewport" type="SubViewportContainer" parent="."]
+[node name="CreditsViewport" type="SubViewportContainer" parent="." unique_id=1380492541]
 visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="SubViewport" type="SubViewport" parent="CreditsViewport"]
+[node name="SubViewport" type="SubViewport" parent="CreditsViewport" unique_id=1880657568]
 handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 0
 
-[node name="Credits" parent="CreditsViewport/SubViewport" instance=ExtResource("6_i7mkt")]
+[node name="Credits" parent="CreditsViewport/SubViewport" unique_id=1664361721 instance=ExtResource("6_i7mkt")]
 
-[node name="UIMoveFocus" type="AudioStreamPlayer" parent="."]
+[node name="UIMoveFocus" type="AudioStreamPlayer" parent="." unique_id=1429936041]
 stream = ExtResource("6_ic1t1")
 volume_db = -5.0
 bus = &"Interface"
 
-[node name="UIMouseOver" type="AudioStreamPlayer" parent="."]
+[node name="UIMouseOver" type="AudioStreamPlayer" parent="." unique_id=721970649]
 stream = ExtResource("7_4ogk3")
 bus = &"Interface"
 
-[node name="UIConfirm" type="AudioStreamPlayer" parent="."]
+[node name="UIConfirm" type="AudioStreamPlayer" parent="." unique_id=937193107]
 stream = ExtResource("8_4rnq4")
 bus = &"Interface"
 
-[node name="MusicTitle" type="AudioStreamPlayer" parent="."]
+[node name="MusicTitle" type="AudioStreamPlayer" parent="." unique_id=223948919]
 stream = ExtResource("9_onrvd")
 volume_db = -4.0
 pitch_scale = 0.95

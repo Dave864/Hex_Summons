@@ -359,13 +359,14 @@ func _normal_range_details(
 		return []
 	details.append(m_path)
 	# Determine true target index to account for movement behavior
-	var true_target: int = h_map.range_finder.get_closest_id_path(
+	var closest_path := h_map.range_finder.get_closest_id_path(
 			_move_dest_id,
 			target_index,
 			action.stats.source_range.get_reach(),
 			action.stats.source_ignore_heights
-	)[-1]
-	details.append(true_target)
+	)
+	if closest_path.size() > 0:
+		details.append(closest_path[-1])
 	return details
 
 
