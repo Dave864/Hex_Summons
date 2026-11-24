@@ -2,19 +2,52 @@
 
 [ext_resource type="Script" uid="uid://broobh0km5255" path="res://encounter/tutorial.gd" id="1_auo41"]
 [ext_resource type="PackedScene" uid="uid://ddvk0q84qb3m" path="res://hex_map/SelectionTracker/SelectionTracker.tscn" id="2_bkvng"]
+[ext_resource type="PackedScene" uid="uid://bbp36hxsmfkpa" path="res://user_interface/PauseMenu/PauseMenu.tscn" id="2_mlncb"]
+[ext_resource type="PackedScene" uid="uid://bsuemwi6gtndp" path="res://hex_map/TutorialMap.tscn" id="2_mro7s"]
+[ext_resource type="PackedScene" uid="uid://dxny3bidwcnmv" path="res://encounter/camera/EncounterCamera.tscn" id="3_4stt4"]
 [ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3_x4kka"]
 [ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/interface/UIClick_Menu Button 09_KRST_NONE.wav" id="4_c3f4s"]
+[ext_resource type="PackedScene" uid="uid://cqtyo80p26xko" path="res://character/summons/Summon.tscn" id="4_mro7s"]
+[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="4_xt3vw"]
 [ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/interface/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="5_xt3vw"]
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="6_mlncb"]
 [ext_resource type="AudioStream" uid="uid://bufru41q6sqp1" path="res://audio/music/Random Battle.mp3" id="7_0nq1r"]
 
 [node name="Tutorial" type="Node" unique_id=1996116149]
+process_mode = 1
 script = ExtResource("1_auo41")
+
+[node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=2116458112]
+visible = false
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="SubViewport" type="SubViewport" parent="PauseViewport" unique_id=600092403]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 0
+
+[node name="PauseMenu" parent="PauseViewport/SubViewport" unique_id=455300474 node_paths=PackedStringArray("parent_viewport") instance=ExtResource("2_mlncb")]
+is_tutorial = true
+parent_viewport = NodePath("../..")
+
+[node name="EncounterCamera" parent="." unique_id=830489110 instance=ExtResource("3_4stt4")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1489800389]
+transform = Transform3D(0.84282833, -0.19124404, -0.50305676, 0.5381825, 0.29950044, 0.7878192, 0, -0.9347327, 0.35535166, 0, 6.48444, 0)
+light_energy = 2.0
+light_specular = 0.0
+directional_shadow_mode = 0
+sky_mode = 1
+
+[node name="Summon" parent="." unique_id=881368360 instance=ExtResource("4_mro7s")]
 
 [node name="SelectionTracker" parent="." unique_id=524150155 node_paths=PackedStringArray("selector") instance=ExtResource("2_bkvng")]
 selector = NodePath("Selector")
 
 [node name="Selector" parent="SelectionTracker" unique_id=1695897495 instance=ExtResource("3_x4kka")]
+
+[node name="TutorialMap" parent="SelectionTracker" unique_id=1192155401 instance=ExtResource("2_mro7s")]
 
 [node name="Players" type="Node" parent="." unique_id=1695683155]
 
@@ -45,3 +78,9 @@ volume_db = -10.0
 pitch_scale = 1.02
 autoplay = true
 bus = &"Music"
+
+[node name="StateMachine" type="Node" parent="." unique_id=672029748]
+script = ExtResource("4_xt3vw")
+metadata/_custom_type_script = "uid://dcm1t8lpe3xej"
+
+[connection signal="focus_moved_by_edge" from="EncounterCamera" to="SelectionTracker/Selector" method="_on_EncounterCamera_focus_moved_by_edge"]

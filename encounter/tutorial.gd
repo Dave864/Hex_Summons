@@ -60,8 +60,9 @@ enum Step{
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_check_for_required_parameters()
+	hex_map = $SelectionTracker/TutorialMap
+	selection_tracker.hex_map = hex_map
 	_connect_map_to_selector()
-	
 	ui.show()
 	ui.set_summon(summon)
 	_load_players()

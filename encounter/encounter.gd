@@ -191,9 +191,9 @@ func _connect_map_to_selector() -> void:
 func _check_for_required_parameters() -> void:
 	assert(
 		selection_tracker != null,
-		ErrorUtil.missing_required_parameter(name, selection_tracker.name)
+		ErrorUtil.missing_required_parameter(name, "SelectionTracker")
 	)
-	assert(ui != null, ErrorUtil.missing_required_parameter(name, ui.name))
+	assert(ui != null, ErrorUtil.missing_required_parameter(name, "UI"))
 
 
 ## Updates the relevant list of characters to account for the defeated character.
