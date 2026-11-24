@@ -8,6 +8,10 @@ extends EncounterUIMenuLayout
 ## PlayerOptionsMenu.
 
 
+## The UI for the pause menu.
+@export var pause_menu: PauseMenu = null
+
+
 ## Updates the active player being focused on. Does not populate certain option
 ## menus based on the specified step.
 func set_focused_character_for_step(
