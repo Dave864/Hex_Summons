@@ -6,6 +6,16 @@ extends Encounter
 ## different aspects of a combat encounter.
 
 
+## Denotes the current step in the tutorial the player is at.
+enum Step{
+	INTRO,
+	MOVEMENT,
+	TECHNIQUE,
+	SPELL,
+	SUMMON,
+	END,
+}
+
 @export_group("Text Dialogue", "dialogue_")
 ## The dialogue introducing the basic conceit of an encounter.
 @export_multiline var dialogue_intro := ""
