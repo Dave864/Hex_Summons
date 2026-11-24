@@ -45,9 +45,9 @@ const OVERLAP_RATIO := 0.75
 ##  4  \ /  3
 var _adjacent_tiles: Array[MapTile] = [null, null, null, null, null, null]
 ## Flag that indicates the highlight of the tile.
-var _highlight_type: int = HexHighlighter.Option.NONE
+var _highlight_type := HexHighlighter.Option.NONE
 ## Flag that indicates the selector of the tile.
-var _selector_type: int = HexHighlighter.Option.NONE
+var _selector_type := HexHighlighter.Option.NONE
 ## The textures available for this tile to use.
 var _texture_options: Array[Texture2D]
 
@@ -119,19 +119,19 @@ func get_all_adjacent() -> Array[MapTile]:
 
 
 ## Set the value of the highlight flag.
-func set_highlight_type(value: int) -> void:
+func set_highlight_type(value: HexHighlighter.Option) -> void:
 	_highlight_type = value
 	tile_highlighter.set_option(_highlight_type)
 	tile_highlighter.set_highlighter_transparency(Constants.OPACITY_FULL)
 
 
 ## Get the value of the highlight flag.
-func get_highlight_type() -> int:
+func get_highlight_type() -> HexHighlighter.Option:
 	return _highlight_type
 
 
 ## Set the value of the selector flag.
-func set_selector_type(value: int) -> void:
+func set_selector_type(value: HexHighlighter.Option) -> void:
 	_selector_type = value
 	selector_highlighter.set_option(_selector_type)
 	if value != HexHighlighter.Option.NONE:
@@ -152,7 +152,7 @@ func set_selector_type(value: int) -> void:
 
 
 ## Get the values of the selector flag.
-func get_selector_type() -> int:
+func get_selector_type() -> HexHighlighter.Option:
 	return _selector_type
 
 

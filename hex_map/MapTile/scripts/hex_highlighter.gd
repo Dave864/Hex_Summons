@@ -16,6 +16,7 @@ enum Option {
 	TARGET_ALLY, ## A tile with an ally within an effect range.
 	TARGET_ENEMY, ## A tile with an enemy within an effect range.
 	SELECT_MOVE, ## The tile under consideration for movement.
+	NOTIFICATION, ## A specific highlight for notifications.
 	SELECT_GRAY, ## An indication that a tile is highlighted.
 }
 
@@ -41,6 +42,8 @@ const COLOR_TARGET_ALLY := Color.GREEN
 const COLOR_TARGET_ENEMY := Color.RED
 ## The color for highlighting a selected movement tile.
 const COLOR_SELECT_MOVE := Color.YELLOW
+## The color for highlighting a notification tile.
+const COLOR_NOTIFICATION := Color(Color.GOLD, 0.5)
 ## Grey color.
 const COLOR_SELECT_GRAY := Color.GRAY
 
@@ -105,6 +108,9 @@ func set_option(hl_option: Option) -> void:
 		Option.SELECT_MOVE:
 			_set_highlighter_color(COLOR_SELECT_MOVE)
 			show()
+		Option.NOTIFICATION:
+			_set_highlighter_color(COLOR_NOTIFICATION)
+			show()
 		Option.SELECT_GRAY:
 			_set_highlighter_color(COLOR_SELECT_GRAY)
 			show()
@@ -117,11 +123,10 @@ func get_option() -> Option:
 	return _hl_option
 
 
-## Sets the transparency value of the highlighter. Accepts a value between 0 and
-## 1.0.
+## Sets the transparency value of the highlighter. Constrains to a value from
+## 0.0 to 1.0.
 func set_highlighter_transparency(f: float) -> void:
-	f = 0.0 if f < 0.0 else 1.0 if f > 1.0 else f
-	_hightlight_material.albedo_color.a = f
+	_hightlight_material.albedo_color.a = clampf(f, 0.0, 1.0)
 
 
 ## Adjusts the render priority of the highlighter by the specified amount.

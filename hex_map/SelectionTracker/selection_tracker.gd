@@ -37,6 +37,8 @@ var move_target_index: int = -1:
 		_place_ghost_sprite()
 	get:
 		return move_target_index if move_target_index >= 0 else player_index
+## The range of indexes to highlight for notifications.
+var notification_indexes: PackedInt32Array = []
 ## Stores the distance map of the source range.
 var source_d_map: DistanceMap = null
 
@@ -365,6 +367,19 @@ func indicate_directional_effect_range() -> void:
 		_ranges_cache[emission_dir] = tile_ids
 	_indicate_effect_range(tile_ids)
 	_track_targets(emission_dir, tile_ids)
+
+
+## Activate the selector highlights for a set of tiles that need to have
+## attention brought to them.
+func highlight_notification_area(area_indexes: PackedInt32Array = []) -> void:
+	if area_indexes.size() == 0 and notification_indexes.size() == 0:
+		return
+	if area_indexes.size() > 0:
+		notification_indexes = area_indexes
+	for index: int in notification_indexes:
+		var tile: MapTile = hex_map.get_tile_at(index)
+		tile.set_highlight_type(HexHighlighter.Option.NOTIFICATION)
+		_highlighted_map_indexes.append(index)
 
 
 ## Clear the higlights from all tiles.
