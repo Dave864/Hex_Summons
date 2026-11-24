@@ -15,6 +15,8 @@ const CONFIRM_TEXT_TITLE := "Return to Title Screen?\n(game progress will reset)
 ## Meesage that clarifies if the player wants to close the game.
 const CONFIRM_TEXT_CLOSE := "Close the Game?"
 
+## Flag that inidicates that the pause menu is for the tutorial.
+@export var is_tutorial := false
 ## The viewport container this menu is in.
 @export var parent_viewport: SubViewportContainer = null
 ## The viewport for the options menu.
@@ -35,8 +37,6 @@ var _options_menu: Options = null
 var _menu_state := State.CLOSED
 ## The last Control node in focus before opening the pause menu.
 var _prior_focus: Control = null
-## Flag that inidicates that the pause menu is for the tutorial.
-var _is_tutorial := false
 
 ## The timer that delays the changing from options to open.
 @onready var _timer: Timer = $Timer
@@ -60,6 +60,10 @@ func _ready() -> void:
 	)
 	assert(asp_open != null, "No audio stream for open sound has been set.")
 	assert(asp_closed != null, "No audio stream for closed sound has been set.")
+	if is_tutorial:
+		for node: Node in objective_label.get_children():
+			if node is Control:
+				node.hide()
 	_options_menu = options_viewport.get_child(0).get_child(0)
 	_timer.timeout.connect(_on_timer_timeout)
 
@@ -69,7 +73,7 @@ func _input(event: InputEvent) -> void:
 	if _menu_state == State.CLOSED and event.is_action_pressed("options_menu"):
 		_prior_focus = get_tree().get_root().gui_get_focus_owner()
 		_menu_state = State.OPEN
-		if not _is_tutorial:
+		if not is_tutorial:
 			objective_label.text = ObjectiveTracker.get_current_summary()
 			_refresh_objective_trackers()
 		asp_open.play()
@@ -95,14 +99,6 @@ func _input(event: InputEvent) -> void:
 			_prior_focus.grab_focus.call_deferred()
 		if parent_viewport != null and parent_viewport.visible:
 			parent_viewport.hide()
-
-
-## Modifies the menu to follow tutorial standard.
-func set_for_tutorial() -> void:
-	_is_tutorial = true
-	for node: Node in objective_label.get_children():
-		if node is Control:
-			node.hide()
 
 
 ## Updates the objective description.
