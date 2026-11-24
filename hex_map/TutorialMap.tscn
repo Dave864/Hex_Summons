@@ -1,0 +1,367 @@
+[gd_scene format=3 uid="uid://bsuemwi6gtndp"]
+
+[ext_resource type="Script" uid="uid://bifjkm55y01x1" path="res://hex_map/scripts/hex_map.gd" id="1_x40ye"]
+[ext_resource type="Script" uid="uid://c36u7jqkdm14" path="res://hex_map/scripts/range_finder.gd" id="2_jqgbe"]
+[ext_resource type="Script" uid="uid://bcd08sdl2f7b6" path="res://hex_map/scripts/tiles.gd" id="3_xtynh"]
+[ext_resource type="Texture2D" uid="uid://dd5o5igclh1oc" path="res://art/tile_textures/grass_texture.png" id="4_s0ry5"]
+[ext_resource type="Texture2D" uid="uid://nulkxoth1tm1" path="res://art/tile_textures/dirt_texture.png" id="5_rfuc2"]
+[ext_resource type="Texture2D" uid="uid://bmgh8cyu64one" path="res://art/tile_textures/stone_dirt_texture.png" id="6_1778k"]
+[ext_resource type="PackedScene" uid="uid://cg633481rl4ed" path="res://hex_map/MapTile/MapTile.tscn" id="7_iy11i"]
+
+[node name="TutorialMap" type="Node3D" unique_id=1192155401]
+script = ExtResource("1_x40ye")
+player_start_tiles_values = PackedInt32Array(38, 48, 58, 68)
+enemy_start_tiles_values = PackedInt32Array(17, 78)
+
+[node name="RangeFinder" type="Node" parent="." unique_id=162430485]
+script = ExtResource("2_jqgbe")
+map_tiles_reference = NodePath("../Tiles")
+
+[node name="Tiles" type="Node3D" parent="." unique_id=176510564]
+script = ExtResource("3_xtynh")
+x_count = 10
+z_count = 9
+map_textures = Array[Texture2D]([ExtResource("4_s0ry5"), ExtResource("5_rfuc2"), ExtResource("6_1778k")])
+default_texture_index = 1
+
+[node name="MapTile0" parent="Tiles" unique_id=848881723 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22724, 0, -6)
+texture_index = 1
+
+[node name="MapTile1" parent="Tiles" unique_id=1475739573 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, -6)
+texture_index = 1
+
+[node name="MapTile2" parent="Tiles" unique_id=1874079412 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, -6)
+texture_index = 1
+
+[node name="MapTile3" parent="Tiles" unique_id=1219283649 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, -6)
+texture_index = 1
+
+[node name="MapTile4" parent="Tiles" unique_id=1766071637 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, -6)
+
+[node name="MapTile5" parent="Tiles" unique_id=1998371079 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, -6)
+
+[node name="MapTile6" parent="Tiles" unique_id=2115213410 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, -6)
+texture_index = 1
+
+[node name="MapTile7" parent="Tiles" unique_id=1837134740 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, -6)
+texture_index = 1
+
+[node name="MapTile8" parent="Tiles" unique_id=1726292355 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, -6)
+texture_index = 1
+
+[node name="MapTile9" parent="Tiles" unique_id=645284715 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, -6)
+
+[node name="MapTile10" parent="Tiles" unique_id=1938701187 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36122, 0, -4.5)
+texture_index = 1
+
+[node name="MapTile11" parent="Tiles" unique_id=1623513473 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62916, 0, -4.5)
+texture_index = 1
+
+[node name="MapTile12" parent="Tiles" unique_id=803353875 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, -4.5)
+
+[node name="MapTile13" parent="Tiles" unique_id=1355824354 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, -4.5)
+
+[node name="MapTile14" parent="Tiles" unique_id=399673478 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, -4.5)
+height = 1
+
+[node name="MapTile15" parent="Tiles" unique_id=656074260 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, -4.5)
+height = 2
+
+[node name="MapTile16" parent="Tiles" unique_id=175963811 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, -4.5)
+texture_index = 2
+
+[node name="MapTile17" parent="Tiles" unique_id=1391909018 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76314, 0, -4.5)
+texture_index = 1
+
+[node name="MapTile18" parent="Tiles" unique_id=746033259 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49519, 0, -4.5)
+texture_index = 2
+
+[node name="MapTile19" parent="Tiles" unique_id=2108778991 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22724, 0, -4.5)
+texture_index = 1
+
+[node name="MapTile20" parent="Tiles" unique_id=749515651 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22724, 0, -3)
+texture_index = 1
+
+[node name="MapTile21" parent="Tiles" unique_id=1342128370 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, -3)
+texture_index = 1
+
+[node name="MapTile22" parent="Tiles" unique_id=468074038 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, -3)
+
+[node name="MapTile23" parent="Tiles" unique_id=921095139 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, -3)
+
+[node name="MapTile24" parent="Tiles" unique_id=836736422 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, -3)
+height = 1
+
+[node name="MapTile25" parent="Tiles" unique_id=1499639678 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, -3)
+height = 2
+
+[node name="MapTile26" parent="Tiles" unique_id=10609715 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, -3)
+height = 3
+
+[node name="MapTile27" parent="Tiles" unique_id=1154062846 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, -3)
+height = 3
+
+[node name="MapTile28" parent="Tiles" unique_id=259705400 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, -3)
+texture_index = 1
+
+[node name="MapTile29" parent="Tiles" unique_id=208945899 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, -3)
+texture_index = 1
+
+[node name="MapTile30" parent="Tiles" unique_id=714397716 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36122, 0, -1.5)
+
+[node name="MapTile31" parent="Tiles" unique_id=1728726038 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62917, 0, -1.5)
+texture_index = 1
+
+[node name="MapTile32" parent="Tiles" unique_id=513651060 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, -1.5)
+height = 1
+
+[node name="MapTile33" parent="Tiles" unique_id=294306922 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, -1.5)
+height = 2
+
+[node name="MapTile34" parent="Tiles" unique_id=695101903 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, -1.5)
+height = 2
+
+[node name="MapTile35" parent="Tiles" unique_id=770068006 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, -1.5)
+height = 3
+
+[node name="MapTile36" parent="Tiles" unique_id=2058737774 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, -1.5)
+height = 3
+
+[node name="MapTile37" parent="Tiles" unique_id=1511547433 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76314, 0, -1.5)
+texture_index = 2
+
+[node name="MapTile38" parent="Tiles" unique_id=335846754 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49519, 0, -1.5)
+texture_index = 1
+
+[node name="MapTile39" parent="Tiles" unique_id=118474666 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22724, 0, -1.5)
+texture_index = 1
+
+[node name="MapTile40" parent="Tiles" unique_id=1452001047 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22724, 0, 0)
+
+[node name="MapTile41" parent="Tiles" unique_id=476813888 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, 0)
+texture_index = 2
+
+[node name="MapTile42" parent="Tiles" unique_id=343253178 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, 0)
+height = 1
+
+[node name="MapTile43" parent="Tiles" unique_id=840350125 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 0)
+height = 2
+
+[node name="MapTile44" parent="Tiles" unique_id=679901262 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 0)
+height = 3
+
+[node name="MapTile45" parent="Tiles" unique_id=963238366 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 0)
+height = 3
+
+[node name="MapTile46" parent="Tiles" unique_id=110356614 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 0)
+height = 3
+
+[node name="MapTile47" parent="Tiles" unique_id=1781611816 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, 0)
+texture_index = 2
+
+[node name="MapTile48" parent="Tiles" unique_id=900802556 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, 0)
+texture_index = 1
+
+[node name="MapTile49" parent="Tiles" unique_id=851899911 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, 0)
+
+[node name="MapTile50" parent="Tiles" unique_id=1449580065 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36122, 0, 1.5)
+
+[node name="MapTile51" parent="Tiles" unique_id=403204698 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62917, 0, 1.5)
+texture_index = 1
+
+[node name="MapTile52" parent="Tiles" unique_id=31505730 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, 1.5)
+height = 1
+
+[node name="MapTile53" parent="Tiles" unique_id=1756556259 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, 1.5)
+height = 2
+
+[node name="MapTile54" parent="Tiles" unique_id=1933260635 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, 1.5)
+height = 3
+
+[node name="MapTile55" parent="Tiles" unique_id=140870199 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, 1.5)
+height = 3
+
+[node name="MapTile56" parent="Tiles" unique_id=678596 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, 1.5)
+height = 2
+
+[node name="MapTile57" parent="Tiles" unique_id=669518828 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76314, 0, 1.5)
+texture_index = 1
+
+[node name="MapTile58" parent="Tiles" unique_id=832651209 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49519, 0, 1.5)
+texture_index = 1
+
+[node name="MapTile59" parent="Tiles" unique_id=1436074112 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22724, 0, 1.5)
+
+[node name="MapTile60" parent="Tiles" unique_id=959438051 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22724, 0, 3)
+texture_index = 1
+
+[node name="MapTile61" parent="Tiles" unique_id=1587516799 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, 3)
+texture_index = 1
+
+[node name="MapTile62" parent="Tiles" unique_id=1220509232 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, 3)
+
+[node name="MapTile63" parent="Tiles" unique_id=766316874 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 3)
+height = 1
+
+[node name="MapTile64" parent="Tiles" unique_id=2105178936 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 3)
+height = 1
+
+[node name="MapTile65" parent="Tiles" unique_id=1529935725 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 3)
+height = 3
+
+[node name="MapTile66" parent="Tiles" unique_id=537474263 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 3)
+height = 2
+
+[node name="MapTile67" parent="Tiles" unique_id=395198133 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, 3)
+texture_index = 1
+
+[node name="MapTile68" parent="Tiles" unique_id=861644137 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, 3)
+texture_index = 2
+
+[node name="MapTile69" parent="Tiles" unique_id=494227080 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, 3)
+texture_index = 2
+
+[node name="MapTile70" parent="Tiles" unique_id=1361667345 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.36122, 0, 4.5)
+
+[node name="MapTile71" parent="Tiles" unique_id=283264410 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.62917, 0, 4.5)
+
+[node name="MapTile72" parent="Tiles" unique_id=1186472823 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89711, 0, 4.5)
+
+[node name="MapTile73" parent="Tiles" unique_id=824070926 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16506, 0, 4.5)
+height = 1
+
+[node name="MapTile74" parent="Tiles" unique_id=1954405295 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, 0, 4.5)
+height = 2
+
+[node name="MapTile75" parent="Tiles" unique_id=1066830972 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29904, 0, 4.5)
+height = 2
+
+[node name="MapTile76" parent="Tiles" unique_id=1022079115 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.03109, 0, 4.5)
+texture_index = 1
+
+[node name="MapTile77" parent="Tiles" unique_id=765894702 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76314, 0, 4.5)
+texture_index = 1
+
+[node name="MapTile78" parent="Tiles" unique_id=972582573 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49519, 0, 4.5)
+texture_index = 2
+
+[node name="MapTile79" parent="Tiles" unique_id=90824093 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22724, 0, 4.5)
+texture_index = 1
+
+[node name="MapTile80" parent="Tiles" unique_id=1485679968 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.22724, 0, 6)
+texture_index = 1
+
+[node name="MapTile81" parent="Tiles" unique_id=690603535 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49519, 0, 6)
+texture_index = 1
+
+[node name="MapTile82" parent="Tiles" unique_id=391487527 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76314, 0, 6)
+
+[node name="MapTile83" parent="Tiles" unique_id=78467810 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03109, 0, 6)
+
+[node name="MapTile84" parent="Tiles" unique_id=1097484501 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29904, 0, 6)
+texture_index = 1
+
+[node name="MapTile85" parent="Tiles" unique_id=1363106471 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, 0, 6)
+texture_index = 1
+
+[node name="MapTile86" parent="Tiles" unique_id=1124611957 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16506, 0, 6)
+texture_index = 1
+
+[node name="MapTile87" parent="Tiles" unique_id=188273025 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.89711, 0, 6)
+texture_index = 1
+
+[node name="MapTile88" parent="Tiles" unique_id=910338356 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.62916, 0, 6)
+texture_index = 1
+
+[node name="MapTile89" parent="Tiles" unique_id=2118717640 instance=ExtResource("7_iy11i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.36122, 0, 6)
+texture_index = 1
