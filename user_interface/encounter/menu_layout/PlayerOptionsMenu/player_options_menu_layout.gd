@@ -66,7 +66,8 @@ func clear_spell_options() -> void:
 
 
 ## Populates the action options menu with the listed summon spawn actions.
-## Hides the summon button if no actions are provided.
+## Hides the summon button if no manager is proved or if the manager has no
+## actions.
 func populate_summon_options(summon_manager: Summon) -> void:
 	if summon_manager == null or summon_manager.available_summons.size() == 0:
 		_summon_button.get_parent_control().hide()

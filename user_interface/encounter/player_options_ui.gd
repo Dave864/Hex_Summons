@@ -150,7 +150,8 @@ func set_focus_neighbors() -> void:
 
 
 ## Populates the action options menu with the listed summon spawn actions.
-## Hides the summon button if no actions are provided.
+## Hides the summon button if no manager is proved or if the manager has no
+## actions.
 @abstract func populate_summon_options(summon_manager: Summon) -> void
 
 
