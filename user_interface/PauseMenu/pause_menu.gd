@@ -35,6 +35,8 @@ var _options_menu: Options = null
 var _menu_state := State.CLOSED
 ## The last Control node in focus before opening the pause menu.
 var _prior_focus: Control = null
+## Flag that inidicates that the pause menu is for the tutorial.
+var _is_tutorial := false
 
 ## The timer that delays the changing from options to open.
 @onready var _timer: Timer = $Timer
@@ -67,8 +69,9 @@ func _input(event: InputEvent) -> void:
 	if _menu_state == State.CLOSED and event.is_action_pressed("options_menu"):
 		_prior_focus = get_tree().get_root().gui_get_focus_owner()
 		_menu_state = State.OPEN
-		objective_label.text = ObjectiveTracker.get_current_summary()
-		_refresh_objective_trackers()
+		if not _is_tutorial:
+			objective_label.text = ObjectiveTracker.get_current_summary()
+			_refresh_objective_trackers()
 		asp_open.play()
 		if parent_viewport != null and not parent_viewport.visible:
 			parent_viewport.show()
@@ -92,6 +95,19 @@ func _input(event: InputEvent) -> void:
 			_prior_focus.grab_focus.call_deferred()
 		if parent_viewport != null and parent_viewport.visible:
 			parent_viewport.hide()
+
+
+## Modifies the menu to follow tutorial standard.
+func set_for_tutorial() -> void:
+	_is_tutorial = true
+	for node: Node in objective_label.get_children():
+		if node is Control:
+			node.hide()
+
+
+## Updates the objective description.
+func update_objective(objective: String) -> void:
+	objective_label.text = objective
 
 
 ## Refreshes the objective trackers to reflect the current status of the
