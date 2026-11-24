@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cym15wwjnbdh8"]
+
+[ext_resource type="Script" uid="uid://broobh0km5255" path="res://encounter/tutorial.gd" id="1_auo41"]
+[ext_resource type="PackedScene" uid="uid://ddvk0q84qb3m" path="res://hex_map/SelectionTracker/SelectionTracker.tscn" id="2_bkvng"]
+[ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3_x4kka"]
+[ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/interface/UIClick_Menu Button 09_KRST_NONE.wav" id="4_c3f4s"]
+[ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/interface/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="5_xt3vw"]
+[ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="6_mlncb"]
+[ext_resource type="AudioStream" uid="uid://bufru41q6sqp1" path="res://audio/music/Random Battle.mp3" id="7_0nq1r"]
+
+[node name="Tutorial" type="Node" unique_id=1996116149]
+script = ExtResource("1_auo41")
+
+[node name="SelectionTracker" parent="." unique_id=524150155 node_paths=PackedStringArray("selector") instance=ExtResource("2_bkvng")]
+selector = NodePath("Selector")
+
+[node name="Selector" parent="SelectionTracker" unique_id=1695897495 instance=ExtResource("3_x4kka")]
+
+[node name="Players" type="Node" parent="." unique_id=1695683155]
+
+[node name="Enemies" type="Node" parent="." unique_id=452118050]
+
+[node name="Sound" type="Node" parent="." unique_id=123370805]
+
+[node name="UIMoveFocus" type="AudioStreamPlayer" parent="Sound" unique_id=1169335103]
+process_mode = 3
+stream = ExtResource("4_c3f4s")
+volume_db = -5.0
+bus = &"Interface"
+
+[node name="UIMouseOver" type="AudioStreamPlayer" parent="Sound" unique_id=1527911717]
+process_mode = 3
+stream = ExtResource("5_xt3vw")
+bus = &"Interface"
+
+[node name="UIConfirm" type="AudioStreamPlayer" parent="Sound" unique_id=1506705308]
+process_mode = 3
+stream = ExtResource("6_mlncb")
+bus = &"Interface"
+
+[node name="MusicBattle" type="AudioStreamPlayer" parent="Sound" unique_id=574737308]
+process_mode = 3
+stream = ExtResource("7_0nq1r")
+volume_db = -10.0
+pitch_scale = 1.02
+autoplay = true
+bus = &"Music"

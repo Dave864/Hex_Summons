@@ -1,0 +1,57 @@
+class_name Tutorial
+extends Encounter
+## Manages the events of the tutorial encounter.
+##
+## The tutorial is a structured combat encounter that walks the user through
+## different aspects of a combat encounter.
+
+
+@export_group("Text Dialogue", "dialogue_")
+## The dialogue introducing the basic conceit of an encounter.
+@export_multiline var dialogue_intro := ""
+## The dialogue explaining movement.
+@export_multiline var dialogue_move := ""
+## The dialogue explaining techniques.
+@export_multiline var dialogue_technique := ""
+## The dialogue explaining spells.
+@export_multiline var dialogue_spell := ""
+## The dialogue explaining summons.
+@export_multiline var dialogue_summon := ""
+@export_group("Objective Summary", "tooltip_objective_")
+## The tooltip describing the movement objective.
+@export_multiline var tooltip_objective_movement := ""
+## The tooltip summarizing the technique objective.
+@export_multiline var tooltip_objective_technique := ""
+## The tooltip summarizong the spell objective.
+@export_multiline var tooltip_objective_spell := ""
+## The tooltip summarizing the summon objective.
+@export_multiline var tooltip_objective_summon := ""
+@export_group("Camera Tooltips", "tooltip_")
+## The tooltip dialogue for gamepad camera movement.
+@export_multiline var tooltip_movement_gamepad := ""
+## The tooltip dialogue for keyboard & mouse camera movement.
+@export_multiline var tooltip_movement_keymouse := ""
+@export_group("Player Transition Areas", "transition_area_")
+## The area the player must be in to start the technique tutorial.
+@export var transition_area_technique: PackedInt32Array = []
+## The area the player must be in to start the spell tutorial.
+@export var transition_area_spell: PackedInt32Array = []
+## The area the player must be in to start the summon tutorial.
+@export var transition_area_summon: PackedInt32Array = []
+@export_group("Spawn Areas", "spawn_area_")
+## The tiles the enemies will spawn in for the technique tutorial.
+@export var spawn_area_technique: PackedInt32Array = []
+## The tiles the enemies will spawn in for the spell tutorial.
+@export var spawn_area_spell: PackedInt32Array = []
+## The tiles the enemies will spawn in for the summon tutorial.
+@export var spawn_area_summon: PackedInt32Array = []
+
+
+## Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_check_for_required_parameters()
+	_connect_map_to_selector()
+	
+	ui.show()
+	ui.set_summon(summon)
+	_load_players()
