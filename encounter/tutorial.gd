@@ -66,3 +66,11 @@ func _ready() -> void:
 	ui.show()
 	ui.set_summon(summon)
 	_load_players()
+
+
+## Resets the initiative tracker to match current characters.
+func reset_initative_tracker() -> void:
+	var characters: Array[Character] = []
+	characters.append_array(players.keys())
+	characters.append_array(enemies)
+	ui.initiative_tracker.populate_initiative(characters)
