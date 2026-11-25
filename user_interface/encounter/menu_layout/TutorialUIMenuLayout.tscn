@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://c51hkhbfmfhre"]
+
+[ext_resource type="Script" uid="uid://budc32ie36hoq" path="res://user_interface/encounter/menu_layout/tutorial_ui_menu_layout.gd" id="1_qq8i5"]
+[ext_resource type="PackedScene" uid="uid://d20ttalw3d47o" path="res://user_interface/wisp_pool/highlight_pool/StandbyHighlightPool/StandbyHighlightPool.tscn" id="2_u6flv"]
+[ext_resource type="PackedScene" uid="uid://d3i1mqeluj5hv" path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" id="3_3a5ar"]
+[ext_resource type="PackedScene" uid="uid://dp3b42qitf0at" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/PlayerOptionsMenuLayout.tscn" id="4_rr3kc"]
+[ext_resource type="PackedScene" uid="uid://dn4vmatmue5p6" path="res://user_interface/encounter/menu_layout/PartyCharacterStats/PartyCharacterStats.tscn" id="5_haaur"]
+[ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="6_6ignj"]
+[ext_resource type="Script" uid="uid://bsmtlfj826hye" path="res://user_interface/panel_dialogue.gd" id="6_qq8i5"]
+[ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="7_gm87l"]
+[ext_resource type="Script" uid="uid://bcj63bhaiegu3" path="res://user_interface/InputLabel/input_label.gd" id="8_2t6by"]
+[ext_resource type="AudioStream" uid="uid://dlujbdchyisu2" path="res://audio/interface/UIAlert_Dialog Screen Appears 03_KRST_NONE.wav" id="9_hixr2"]
+[ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="10_u0c45"]
+[ext_resource type="AudioStream" uid="uid://bhyadftko6eb1" path="res://audio/interface/dialogue_001.wav" id="11_5432x"]
+
+[node name="TutorialUIMenuLayout" type="Control" unique_id=2086880283 node_paths=PackedStringArray("dialogue_panel", "standby_wisp_pool")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_qq8i5")
+dialogue_panel = NodePath("PanelDialogue")
+standby_wisp_pool = NodePath("StandbyHighlightPool")
+
+[node name="StandbyHighlightPool" parent="." unique_id=672319545 instance=ExtResource("2_u6flv")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 296.0
+offset_right = -575.0
+offset_bottom = -3.0
+
+[node name="InitiativeTracker" parent="." unique_id=1500101882 instance=ExtResource("3_3a5ar")]
+layout_mode = 1
+offset_left = 24.0
+offset_top = 8.0
+offset_right = -104.0
+offset_bottom = 42.0
+
+[node name="PlayerOptionsMenuLayout" parent="." unique_id=695465796 instance=ExtResource("4_rr3kc")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 64.0
+offset_right = -431.0
+offset_bottom = -72.0
+
+[node name="PartyStatsContainer" type="VBoxContainer" parent="." unique_id=74976911]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -76.0
+offset_top = 3.0
+offset_right = -4.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="PartyCharacterStats1" parent="PartyStatsContainer" unique_id=1707017943 instance=ExtResource("5_haaur")]
+visible = false
+layout_mode = 2
+
+[node name="PartyCharacterStats2" parent="PartyStatsContainer" unique_id=377897168 instance=ExtResource("5_haaur")]
+visible = false
+layout_mode = 2
+
+[node name="PartyCharacterStats3" parent="PartyStatsContainer" unique_id=1056948423 instance=ExtResource("5_haaur")]
+visible = false
+layout_mode = 2
+
+[node name="PartyCharacterStats4" parent="PartyStatsContainer" unique_id=84328867 instance=ExtResource("5_haaur")]
+visible = false
+layout_mode = 2
+
+[node name="PanelDialogue" type="Panel" parent="." unique_id=1718999429]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.792
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.11999512
+script = ExtResource("6_qq8i5")
+metadata/_custom_type_script = "uid://bsmtlfj826hye"
+
+[node name="Label" type="Label" parent="PanelDialogue" unique_id=115306542]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 12.0
+offset_right = -20.0
+offset_bottom = -12.0
+autowrap_mode = 2
+visible_characters_behavior = 3
+
+[node name="InputLabel" type="Control" parent="PanelDialogue" unique_id=541699125 node_paths=PackedStringArray("icon_texture", "key_label") instance=ExtResource("7_gm87l")]
+z_index = 1
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -27.0
+offset_right = -10.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_2t6by")
+input_source = 0
+input_event = "ui_accept"
+icon_texture = NodePath("KeyboardLabel/IconTexture")
+key_label = NodePath("KeyboardLabel")
+
+[node name="UIOpenDialogue" type="AudioStreamPlayer" parent="PanelDialogue" unique_id=525803474]
+stream = ExtResource("9_hixr2")
+bus = &"Interface"
+
+[node name="UIProgressDialogue" type="AudioStreamPlayer" parent="PanelDialogue" unique_id=1957628678]
+stream = ExtResource("10_u0c45")
+bus = &"Interface"
+
+[node name="UISpeakDialogue" type="AudioStreamPlayer" parent="PanelDialogue" unique_id=2126660784]
+stream = ExtResource("11_5432x")
+volume_db = -15.0
+pitch_scale = 0.9
+bus = &"Interface"
+
+[node name="StateMachine" type="Node" parent="." unique_id=182262980]
+script = ExtResource("6_6ignj")
+metadata/_custom_type_script = "uid://dcm1t8lpe3xej"
+
+[node name="Wait" type="Node" parent="StateMachine" unique_id=804661086]
+
+[node name="Action" type="Node" parent="StateMachine" unique_id=199056087]
+
+[node name="Pause" type="Node" parent="StateMachine" unique_id=1179954623]
+
+[node name="Dialogue" type="Node" parent="StateMachine" unique_id=734950481]
+
+[connection signal="wait_selected" from="PlayerOptionsMenuLayout" to="StateMachine/Action" method="_on_PlayerOptionsUI_wait_selected"]
