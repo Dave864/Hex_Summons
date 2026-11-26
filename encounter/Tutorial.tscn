@@ -16,12 +16,22 @@
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="6_mlncb"]
 [ext_resource type="AudioStream" uid="uid://bufru41q6sqp1" path="res://audio/music/Random Battle.mp3" id="7_0nq1r"]
 [ext_resource type="AudioStream" uid="uid://bhyadftko6eb1" path="res://audio/interface/dialogue_001.wav" id="7_go44m"]
+[ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="8_w0wir"]
+[ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="9_ss2dj"]
 [ext_resource type="Script" uid="uid://cwy4cxexsyc1l" path="res://fsm/encounter/tutorial/tutorial_start.gd" id="17_5i26s"]
 [ext_resource type="Script" uid="uid://dkkljjsj78vry" path="res://fsm/encounter/tutorial/tutorial_instruction.gd" id="18_pwcb1"]
 [ext_resource type="Script" uid="uid://cnietku46cbgq" path="res://fsm/encounter/tutorial/tutorial_player_turn.gd" id="19_j4ub1"]
 [ext_resource type="Script" uid="uid://iak3b0og6vt3" path="res://fsm/encounter/tutorial/tutorial_summon_turn.gd" id="20_oprx8"]
 [ext_resource type="Script" uid="uid://ko4vq5eq605p" path="res://fsm/encounter/tutorial/tutorial_enemy_turn.gd" id="21_w0wir"]
 [ext_resource type="Script" uid="uid://2v8jq0rmlgd2" path="res://fsm/encounter/tutorial/tutorial_end.gd" id="22_ss2dj"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fonj2"]
+texture = ExtResource("8_w0wir")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(88, 1, 10, 10)
 
 [node name="Tutorial" type="Node" unique_id=1996116149]
 process_mode = 1
@@ -146,6 +156,94 @@ render_target_update_mode = 0
 is_tutorial = true
 parent_viewport = NodePath("../..")
 
+[node name="PopupEnd" type="PopupPanel" parent="." unique_id=1466569890]
+process_mode = 2
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(200, 75)
+
+[node name="Label" type="Label" parent="PopupEnd" unique_id=1283819076]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 196.0
+offset_bottom = 71.0
+text = "Status"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="PopupEnd" unique_id=1212620845]
+wait_time = 2.0
+one_shot = true
+
+[node name="WindowEndMenu" type="Window" parent="." unique_id=1614671584]
+process_mode = 2
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(390, 150)
+visible = false
+borderless = true
+
+[node name="Panel" type="Panel" parent="WindowEndMenu" unique_id=176412184]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_fonj2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WindowEndMenu" unique_id=121619866]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 386.0
+offset_bottom = 146.0
+
+[node name="Label" type="Label" parent="WindowEndMenu/VBoxContainer" unique_id=2000150951]
+layout_mode = 2
+size_flags_vertical = 3
+text = "What would you like to do?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WindowEndMenu/VBoxContainer" unique_id=391859953]
+layout_mode = 2
+alignment = 1
+
+[node name="StartButton" type="Button" parent="WindowEndMenu/VBoxContainer/HBoxContainer" unique_id=1984583114]
+layout_mode = 2
+focus_neighbor_left = NodePath("../TitleButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../RedoButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../RedoButton")
+focus_previous = NodePath("../TitleButton")
+text = "Start Game"
+script = ExtResource("9_ss2dj")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="RedoButton" type="Button" parent="WindowEndMenu/VBoxContainer/HBoxContainer" unique_id=1283766070]
+layout_mode = 2
+focus_neighbor_left = NodePath("../StartButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../TitleButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../TitleButton")
+focus_previous = NodePath("../StartButton")
+text = "Replay"
+script = ExtResource("9_ss2dj")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
+[node name="TitleButton" type="Button" parent="WindowEndMenu/VBoxContainer/HBoxContainer" unique_id=2080885445]
+layout_mode = 2
+focus_neighbor_left = NodePath("../RedoButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../StartButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../StartButton")
+focus_previous = NodePath("../RedoButton")
+text = "Title Screen"
+script = ExtResource("9_ss2dj")
+metadata/_custom_type_script = "uid://da6sq681nnb6a"
+
 [node name="EncounterCamera" parent="." unique_id=830489110 instance=ExtResource("3_4stt4")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1489800389]
@@ -214,7 +312,12 @@ script = ExtResource("20_oprx8")
 [node name="EnemyTurn" type="Node" parent="StateMachine" unique_id=1480984064]
 script = ExtResource("21_w0wir")
 
-[node name="End" type="Node" parent="StateMachine" unique_id=1354629782]
+[node name="End" type="Node" parent="StateMachine" unique_id=1354629782 node_paths=PackedStringArray("end_popup", "menu_window")]
 script = ExtResource("22_ss2dj")
+end_popup = NodePath("../../PopupEnd")
+menu_window = NodePath("../../WindowEndMenu")
 
+[connection signal="pressed" from="WindowEndMenu/VBoxContainer/HBoxContainer/StartButton" to="StateMachine/End" method="_on_start_pressed"]
+[connection signal="pressed" from="WindowEndMenu/VBoxContainer/HBoxContainer/RedoButton" to="StateMachine/End" method="_on_redo_pressed"]
+[connection signal="pressed" from="WindowEndMenu/VBoxContainer/HBoxContainer/TitleButton" to="StateMachine/End" method="_on_title_pressed"]
 [connection signal="focus_moved_by_edge" from="EncounterCamera" to="SelectionTracker/Selector" method="_on_EncounterCamera_focus_moved_by_edge"]

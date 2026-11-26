@@ -24,6 +24,9 @@ func _ready() -> void:
 	end_popup.popup_hide.connect(_on_popup_timer_timeout)
 	_popup_timer = end_popup.get_node("Timer")
 	_popup_timer.timeout.connect(_on_popup_timer_timeout)
+	_menu_focus_button = menu_window.get_node(
+			"VBoxContainer/HBoxContainer/StartButton"
+	)
 
 
 ## Called by the state machine upon changing the active state. The `msg` parameter
@@ -32,8 +35,13 @@ func enter(_msg := {}) -> void:
 	tutorial.set_step(Tutorial.Step.END)
 	WispController.recall_all_to_players(tutorial.summon.summon_wisp_pool)
 	get_tree().paused = true
+	var popup_label: Label = end_popup.get_node("Label")
 	if tutorial.enemies_defeated():
-		pass
+		popup_label.text = "Victory!"
+	elif tutorial.players_defeated():
+		popup_label.text = "Defeat!"
+	else:
+		popup_label.text = "ERROR!"
 	end_popup.show()
 	_popup_timer.start()
 
@@ -48,7 +56,7 @@ func _on_popup_timer_timeout() -> void:
 
 
 ## Reloads the tutorial.
-func _on_reset_pressed() -> void:
+func _on_redo_pressed() -> void:
 	get_tree().paused = false
 	state_machine.transition_to(START)
 
@@ -61,7 +69,7 @@ func _on_title_pressed() -> void:
 
 
 ## Goes to the start of the game.
-func _on_continue_pressed() -> void:
+func _on_start_pressed() -> void:
 	SceneController.reset_landmark()
 	get_tree().paused = false
 	SceneController.change_scene_to_landmark_zone("TownStart")
