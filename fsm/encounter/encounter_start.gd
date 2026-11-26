@@ -7,6 +7,7 @@ extends EncounterState
 ## starting character is not a valid type.
 
 
+## The first character in the encounter.
 var starting_character: Character
 
 

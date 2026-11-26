@@ -29,13 +29,6 @@ func enter(_msg := {}) -> void:
 	SignalBus.emit_player_turn_started(_active_char)
 
 
-### Corresponds to the `_process()` callback.
-#func update(_delta: float) -> void:
-	## Move to the `End` State when all enemies are defeated.
-	#if enc.enemies_defeated() or enc.players_defeated():
-		#state_machine.transition_to(END)
-
-
 ## Called by the state machine before changing the active state.
 ## Use this function to clean up the state.
 func exit() -> void:
@@ -56,7 +49,8 @@ func _disconnect_signals() -> void:
 	_active_char.is_waiting.disconnect(_on_PlayerCharacter_is_waiting)
 	_active_char.turn_ended.disconnect(_on_PlayerCharacter_turn_ended)
 
-## Rerturns if the encounter has reached its end. Triggers a state change if
+
+## Returns if the encounter has reached its end. Triggers a state change if
 ## it has.
 func _reached_end() -> bool:
 	if enc.players_defeated() or enc.enemies_defeated():
