@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="7_qwnjr"]
 [ext_resource type="Script" uid="uid://ds7n6ekq64jsp" path="res://fsm/user_interface/encounter/encounter_ui_wait.gd" id="8_myum3"]
 [ext_resource type="Script" uid="uid://bhh7a8inf0l3v" path="res://fsm/user_interface/encounter/encounter_ui_action.gd" id="9_icuix"]
-[ext_resource type="Script" uid="uid://bivg5gtassi7s" path="res://fsm/user_interface/encounter/encounter_ui_pause.gd" id="10_u8hkc"]
 
 [node name="EncounterUIMenuLayout" type="Control" unique_id=2086880283 node_paths=PackedStringArray("standby_wisp_pool")]
 layout_mode = 3
@@ -89,8 +88,5 @@ script = ExtResource("8_myum3")
 
 [node name="Action" type="Node" parent="StateMachine" unique_id=199056087]
 script = ExtResource("9_icuix")
-
-[node name="Pause" type="Node" parent="StateMachine" unique_id=1179954623]
-script = ExtResource("10_u8hkc")
 
 [connection signal="wait_selected" from="PlayerOptionsMenuLayout" to="StateMachine/Action" method="_on_PlayerOptionsUI_wait_selected"]

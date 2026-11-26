@@ -7,7 +7,6 @@ extends State
 
 # The states the Encounter UI can be in.
 const WAIT: String = "Wait"
-const PAUSE: String = "Pause"
 const ACTION: String = "Action"
 
 ## Typed reference to the EncounterUI node.

@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://b8653jyeljph1"]
+[gd_scene format=3 uid="uid://b8653jyeljph1"]
 
 [ext_resource type="Script" uid="uid://dsv35awa3y33i" path="res://user_interface/encounter/button_layout/encounter_ui_button_layout.gd" id="2"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://cnunas8fekg6v" path="res://user_interface/encounter/button_layout/PlayerOptionsButtonLayout/PlayerOptionsButtonLayout.tscn" id="4_864f0"]
 [ext_resource type="Script" uid="uid://ds7n6ekq64jsp" path="res://fsm/user_interface/encounter/encounter_ui_wait.gd" id="5"]
-[ext_resource type="Script" uid="uid://bivg5gtassi7s" path="res://fsm/user_interface/encounter/encounter_ui_pause.gd" id="7"]
 [ext_resource type="Theme" uid="uid://ck2pd3asogb2e" path="res://user_interface/themes/ThemeBlueSigil.tres" id="8"]
 [ext_resource type="PackedScene" uid="uid://d3i1mqeluj5hv" path="res://user_interface/encounter/InitiativeTracker/InitiativeTracker.tscn" id="10"]
 [ext_resource type="PackedScene" uid="uid://cy3ef1wdf5tu" path="res://user_interface/encounter/button_layout/user_character_stats/ActiveCharacterStats.tscn" id="11"]
@@ -12,8 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://by7j6btb8hhip" path="res://user_interface/encounter/button_layout/user_character_stats/PartyCharacterStats.tscn" id="12"]
 [ext_resource type="PackedScene" uid="uid://5td8sfwtxdp6" path="res://user_interface/wisp_pool/basic_pool/StandbyWispPool/StandbyWispPool.tscn" id="18"]
 
-
-[node name="EncounterUIButtonLayout" type="Control" node_paths=PackedStringArray("standby_wisp_pool")]
+[node name="EncounterUIButtonLayout" type="Control" unique_id=300003736 node_paths=PackedStringArray("standby_wisp_pool")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,7 +23,7 @@ theme = ExtResource("8")
 script = ExtResource("2")
 standby_wisp_pool = NodePath("StandbyPool")
 
-[node name="InitiativeTracker" parent="." instance=ExtResource("10")]
+[node name="InitiativeTracker" parent="." unique_id=1691545481 instance=ExtResource("10")]
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
@@ -35,7 +33,7 @@ offset_right = 576.0
 offset_bottom = 36.0
 grow_horizontal = 1
 
-[node name="PlayerOptionsButtonLayout" parent="." instance=ExtResource("4_864f0")]
+[node name="PlayerOptionsButtonLayout" parent="." unique_id=1146111487 instance=ExtResource("4_864f0")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,7 +43,7 @@ offset_top = 230.0
 offset_right = -3.0
 offset_bottom = -18.0
 
-[node name="StandbyPool" parent="." instance=ExtResource("18")]
+[node name="StandbyPool" parent="." unique_id=188305261 instance=ExtResource("18")]
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
@@ -53,7 +51,7 @@ anchor_bottom = 0.0
 offset_right = 60.0
 offset_bottom = 60.0
 
-[node name="EnemyStats" type="VBoxContainer" parent="."]
+[node name="EnemyStats" type="VBoxContainer" parent="." unique_id=620842159]
 layout_mode = 0
 anchor_left = 1.0
 anchor_top = 0.003
@@ -65,7 +63,7 @@ grow_horizontal = 0
 mouse_filter = 2
 alignment = 1
 
-[node name="PartyStatsContainer" type="VBoxContainer" parent="."]
+[node name="PartyStatsContainer" type="VBoxContainer" parent="." unique_id=35977338]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -77,22 +75,22 @@ grow_vertical = 2
 mouse_filter = 2
 alignment = 2
 
-[node name="PartyCharacterStats1" parent="PartyStatsContainer" instance=ExtResource("12")]
+[node name="PartyCharacterStats1" parent="PartyStatsContainer" unique_id=224728357 instance=ExtResource("12")]
 layout_mode = 2
 
-[node name="PartyCharacterStats2" parent="PartyStatsContainer" instance=ExtResource("12")]
+[node name="PartyCharacterStats2" parent="PartyStatsContainer" unique_id=124799070 instance=ExtResource("12")]
 visible = false
 layout_mode = 2
 
-[node name="PartyCharacterStats3" parent="PartyStatsContainer" instance=ExtResource("12")]
+[node name="PartyCharacterStats3" parent="PartyStatsContainer" unique_id=689486109 instance=ExtResource("12")]
 visible = false
 layout_mode = 2
 
-[node name="PartyCharacterStats4" parent="PartyStatsContainer" instance=ExtResource("12")]
+[node name="PartyCharacterStats4" parent="PartyStatsContainer" unique_id=904115133 instance=ExtResource("12")]
 visible = false
 layout_mode = 2
 
-[node name="ActiveCharacterStats" parent="." instance=ExtResource("11")]
+[node name="ActiveCharacterStats" parent="." unique_id=371454318 instance=ExtResource("11")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -104,17 +102,14 @@ offset_right = 116.0
 offset_bottom = -2.0
 grow_vertical = 0
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=1976207370 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4")
 initial_state = NodePath("Wait")
 
-[node name="Wait" type="Node" parent="StateMachine"]
+[node name="Wait" type="Node" parent="StateMachine" unique_id=1487414374]
 script = ExtResource("5")
 
-[node name="Pause" type="Node" parent="StateMachine"]
-script = ExtResource("7")
-
-[node name="Action" type="Node" parent="StateMachine"]
+[node name="Action" type="Node" parent="StateMachine" unique_id=603010657]
 script = ExtResource("11_xj5a2")
 
 [connection signal="wait_selected" from="PlayerOptionsButtonLayout" to="StateMachine/Action" method="_on_PlayerOptionsUI_wait_selected"]
