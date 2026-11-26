@@ -8,16 +8,13 @@ extends EncounterUIMenuLayout
 ## PlayerOptionsMenu.
 
 
-## The UI for the pause menu.
-@export var pause_menu: PauseMenu = null
+## Flag indicating the current step of the tutorial
+var tutorial_step := Tutorial.Step.INTRO
 
 
 ## Updates the active player being focused on. Does not populate certain option
-## menus based on the specified step.
-func set_focused_character_for_step(
-	new_player: PlayerCharacter,
-	tutorial_step: Tutorial.Step
-) -> void:
+## menus based on the current step.
+func set_focused_character_for_step(new_player: PlayerCharacter) -> void:
 	_focused_character = new_player
 	_summon_manager.summoner = _focused_character
 	_set_highlight_for_focus_character(true)
