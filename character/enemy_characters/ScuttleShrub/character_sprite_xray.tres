@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://dtee1e6mkhb48"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dtee1e6mkhb48"]
 
 [ext_resource type="Shader" uid="uid://dtt3a1dq31nnw" path="res://character/material/sprite_billboard_draw.gdshader" id="1_gsho2"]
 [ext_resource type="Texture2D" uid="uid://cxafpnjy1qnp2" path="res://art/character/Scuttleshrub_Spritesheet.png" id="2_gsho2"]

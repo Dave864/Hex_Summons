@@ -2,16 +2,20 @@
 
 [ext_resource type="Script" uid="uid://broobh0km5255" path="res://encounter/tutorial.gd" id="1_auo41"]
 [ext_resource type="PackedScene" uid="uid://ddvk0q84qb3m" path="res://hex_map/SelectionTracker/SelectionTracker.tscn" id="2_bkvng"]
+[ext_resource type="Script" uid="uid://bsmtlfj826hye" path="res://user_interface/panel_dialogue.gd" id="2_gonly"]
 [ext_resource type="PackedScene" uid="uid://bbp36hxsmfkpa" path="res://user_interface/PauseMenu/PauseMenu.tscn" id="2_mlncb"]
 [ext_resource type="PackedScene" uid="uid://bsuemwi6gtndp" path="res://hex_map/TutorialMap.tscn" id="2_mro7s"]
 [ext_resource type="PackedScene" uid="uid://dxny3bidwcnmv" path="res://encounter/camera/EncounterCamera.tscn" id="3_4stt4"]
+[ext_resource type="PackedScene" uid="uid://ckassm00rixmq" path="res://user_interface/InputLabel/InputLabel.tscn" id="3_5i26s"]
 [ext_resource type="PackedScene" uid="uid://c1ln2aeqn7ab2" path="res://selector_node/Selector.tscn" id="3_x4kka"]
 [ext_resource type="AudioStream" uid="uid://da8hts3woouac" path="res://audio/interface/UIClick_Menu Button 09_KRST_NONE.wav" id="4_c3f4s"]
 [ext_resource type="PackedScene" uid="uid://cqtyo80p26xko" path="res://character/summons/Summon.tscn" id="4_mro7s"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="4_xt3vw"]
+[ext_resource type="AudioStream" uid="uid://dlujbdchyisu2" path="res://audio/interface/UIAlert_Dialog Screen Appears 03_KRST_NONE.wav" id="5_rrk63"]
 [ext_resource type="AudioStream" uid="uid://bu5440jx2rb3c" path="res://audio/interface/UIMisc_Mouse Over Options 03_KRST_NONE.wav" id="5_xt3vw"]
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="6_mlncb"]
 [ext_resource type="AudioStream" uid="uid://bufru41q6sqp1" path="res://audio/music/Random Battle.mp3" id="7_0nq1r"]
+[ext_resource type="AudioStream" uid="uid://bhyadftko6eb1" path="res://audio/interface/dialogue_001.wav" id="7_go44m"]
 
 [node name="Tutorial" type="Node" unique_id=1996116149]
 process_mode = 1
@@ -67,12 +71,57 @@ tooltip_objective_spell = "Vanquish the foe using your spells and techniques."
 tooltip_objective_summon = "Harness your full arsenal and finish the threat."
 tooltip_movement_gamepad = "The camera will follow the tile selector. Use the right joystick to rotate the camera."
 tooltip_movement_keymouse = "Hover the mouse at the edges of the screen to move the camera. Hold down {0} and drag the mouse to rotate the camera."
-transition_area_technique = [null, 1, 2, 3, 10, 11, 12, 20, 21, 22, 30, 31, 40, 41, 50, 51, 60, 61, 62, 70, 71, 72, 80, 81, 82]
-transition_area_spell = [25, 26, 27, 33, 34, 35, 36, 42, 43, 44, 45, 46, 52, 53, 54, 55, 65]
-transition_area_summon = [26, 27, 35, 36, 44, 45, 46, 54, 55, 65]
-spawn_area_technique = [18, 78]
-spawn_area_spell = [11, 41, 71]
-spawn_area_summon = [18, 68, 77, 87]
+
+[node name="PanelDialogue" type="Panel" parent="." unique_id=1482611221]
+visible = false
+anchors_preset = -1
+anchor_top = 0.792
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.11999512
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_gonly")
+metadata/_custom_type_script = "uid://bsmtlfj826hye"
+
+[node name="Label" type="Label" parent="PanelDialogue" unique_id=2004731629]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 12.0
+offset_right = -20.0
+offset_bottom = -12.0
+autowrap_mode = 2
+visible_characters_behavior = 3
+
+[node name="InputLabel" parent="PanelDialogue" unique_id=541699125 instance=ExtResource("3_5i26s")]
+z_index = 1
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -27.0
+offset_right = -10.0
+offset_bottom = -7.0
+
+[node name="UIOpenDialogue" type="AudioStreamPlayer" parent="PanelDialogue" unique_id=1600966967]
+stream = ExtResource("5_rrk63")
+bus = &"Interface"
+
+[node name="UIProgressDialogue" type="AudioStreamPlayer" parent="PanelDialogue" unique_id=582816959]
+stream = ExtResource("6_mlncb")
+bus = &"Interface"
+
+[node name="UISpeakDialogue" type="AudioStreamPlayer" parent="PanelDialogue" unique_id=34794888]
+stream = ExtResource("7_go44m")
+volume_db = -15.0
+pitch_scale = 0.9
+bus = &"Interface"
 
 [node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=2116458112]
 visible = false
@@ -80,6 +129,7 @@ offset_right = 640.0
 offset_bottom = 360.0
 
 [node name="SubViewport" type="SubViewport" parent="PauseViewport" unique_id=600092403]
+transparent_bg = true
 handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 0
