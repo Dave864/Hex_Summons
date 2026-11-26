@@ -28,6 +28,7 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 		_move_origin_index = s_tracker.player_index
 	var character_tile: MapTile = hex_map.get_tile_at(s_tracker.move_target_index)
 	s_tracker.emit_new_focus_point(character_tile.get_character_position())
+	s_tracker.highlight_notification_area()
 	s_tracker.highlight_player_movement()
 	_pathbuilder.update_move_area_details(
 			_move_origin_index,

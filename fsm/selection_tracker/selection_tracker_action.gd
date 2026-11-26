@@ -117,6 +117,7 @@ func _is_target_tile(map_tile: MapTile) -> bool:
 ## Updates the selection display to show the source area.
 func _highlight_source_range() -> void:
 	s_tracker.clear_highlights()
+	s_tracker.highlight_notification_area()
 	s_tracker.highlight_action_source_area()
 
 

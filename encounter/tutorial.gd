@@ -121,6 +121,8 @@ func set_step(current_step: Step) -> void:
 		Step.INTRO:
 			dialogue_panel.set_text(dialogue_intro)
 			pause_menu.update_objective("")
+			_restore_party_health()
+			_place_players_intro()
 		Step.MOVEMENT:
 			dialogue_panel.set_text(dialogue_move)
 			pause_menu.update_objective(tooltip_objective_movement)
@@ -141,10 +143,44 @@ func set_step(current_step: Step) -> void:
 			_place_enemies_summon_phase()
 
 
+## Defines a notification area for the selection tracker based off the expected
+## next step.
+func set_notification_area() -> void:
+	match tutorial_step:
+		Step.MOVEMENT:
+			selection_tracker.notification_indexes = transition_area_technique
+		Step.TECHNIQUE:
+			selection_tracker.notification_indexes = transition_area_spell
+		Step.SPELL:
+			selection_tracker.notification_indexes = transition_area_summon
+		_:
+			selection_tracker.notification_indexes.clear()
+
+
+## Checks if all the players are within an active transition zone.
+func players_in_transition_area() -> bool:
+	for player: PlayerCharacter in players.keys():
+		var index := player.map_coordinate.get_tile_index()
+		if selection_tracker.notification_indexes.has(index):
+			return false
+	return true
+
+
 ## Resets all party health to max.
 func _restore_party_health() -> void:
 	for player: PlayerCharacter in players:
+		# Sets the player as active if it was defeated previously
+		players[player] = true
 		player.stats.max_cur_health()
+
+
+## Places the players at their starting positions.
+func _place_players_intro() -> void:
+	for index: int in players.size():
+		hex_map.place_character_at_tile(
+				players.keys()[index],
+				hex_map.player_start_tiles_values[index]
+		)
 
 
 ## Places enemy characters for the technique phase.
@@ -210,3 +246,24 @@ func _refresh_initiative_tracker() -> void:
 	var characters: Array[Character] = players.keys()
 	characters.append_array(enemies)
 	ui.initiative_tracker.populate_initiative(characters)
+
+
+## Initializes player characters present in the encounter.
+func _load_players() -> void:
+	var p_index: int = 0
+	var party_data: Dictionary[String, PartyController.PlayerDetails] = (
+		PartyController.get_active_party_data()
+	)
+	for data: PartyController.PlayerDetails in party_data.values():
+		var player: PlayerCharacter = _player_template.instantiate()
+		player.defeated.connect(_on_Character_defeated)
+		$Players.add_child(player)
+		player.update_player_details(data)
+		players[player] = true
+		player.stats.max_cur_health()
+		hex_map.place_character_at_tile(
+				player,
+				hex_map.player_start_tiles_values[p_index]
+		)
+		p_index += 1
+	ui.track_party_members(players.keys())
