@@ -149,6 +149,7 @@ func _place_enemies_technique_phase() -> void:
 		enemy.defeated.connect(_on_Character_defeated)
 		hex_map.place_character_at_tile(enemy, tile_id)
 	_connect_character_ai()
+	_refresh_initiative_tracker()
 
 
 ## Places enemy characters for the spell phase.
@@ -163,6 +164,8 @@ func _place_enemies_spell_phase() -> void:
 		enemy.defeated.connect(_on_Character_defeated)
 		hex_map.place_character_at_tile(enemy, spawn_area_technique[index])
 	_connect_character_ai()
+	_refresh_initiative_tracker()
+
 
 
 ## Places enemy characters for the summon phase.
@@ -178,6 +181,7 @@ func _place_enemies_summon_phase() -> void:
 		enemy.defeated.connect(_on_Character_defeated)
 		hex_map.place_character_at_tile(enemy, spawn_area_technique[index])
 	_connect_character_ai()
+	_refresh_initiative_tracker()
 
 
 ## Goes through the current enemies and connects their ai logic to the encounter
@@ -192,3 +196,10 @@ func _connect_character_ai() -> void:
 				enemies,
 				summon
 		)
+
+
+## Resets the initiative tracker to account for the current characters.
+func _refresh_initiative_tracker() -> void:
+	var characters: Array[Character] = players.keys()
+	characters.append_array(enemies)
+	ui.initiative_tracker.populate_initiative(characters)
