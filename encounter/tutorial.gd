@@ -106,10 +106,17 @@ func reset_initative_tracker() -> void:
 	ui.initiative_tracker.populate_initiative(characters)
 
 
-## Progresses the step the tutorial is on.
-func progress_step(next_step: Step) -> void:
-	tutorial_step = next_step
-	ui.tutorial_step = next_step
+## Progresses the step the tutorial is on. Updates the instruction dialogue,
+## objective text, and loading enemies that are required for the step.
+func progress_step() -> void:
+	set_step(tutorial_step + 1)
+
+
+## Sets the step the tutorial is on, updating the instruction dialogue,
+## objective text, and loading enemies that are required for the step.
+func set_step(current_step: Step) -> void:
+	tutorial_step = current_step
+	ui.tutorial_step = current_step
 	match tutorial_step:
 		Step.INTRO:
 			dialogue_panel.set_text(dialogue_intro)

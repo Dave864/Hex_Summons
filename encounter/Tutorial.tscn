@@ -16,6 +16,8 @@
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="6_mlncb"]
 [ext_resource type="AudioStream" uid="uid://bufru41q6sqp1" path="res://audio/music/Random Battle.mp3" id="7_0nq1r"]
 [ext_resource type="AudioStream" uid="uid://bhyadftko6eb1" path="res://audio/interface/dialogue_001.wav" id="7_go44m"]
+[ext_resource type="Script" uid="uid://cwy4cxexsyc1l" path="res://fsm/encounter/tutorial/tutorial_start.gd" id="17_5i26s"]
+[ext_resource type="Script" uid="uid://dkkljjsj78vry" path="res://fsm/encounter/tutorial/tutorial_instruction.gd" id="18_pwcb1"]
 
 [node name="Tutorial" type="Node" unique_id=1996116149]
 process_mode = 1
@@ -186,13 +188,16 @@ pitch_scale = 1.02
 autoplay = true
 bus = &"Music"
 
-[node name="StateMachine" type="Node" parent="." unique_id=672029748]
+[node name="StateMachine" type="Node" parent="." unique_id=672029748 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_xt3vw")
+initial_state = NodePath("Start")
 metadata/_custom_type_script = "uid://dcm1t8lpe3xej"
 
 [node name="Start" type="Node" parent="StateMachine" unique_id=1127954111]
+script = ExtResource("17_5i26s")
 
 [node name="Instruction" type="Node" parent="StateMachine" unique_id=1478900817]
+script = ExtResource("18_pwcb1")
 
 [node name="PlayerTurn" type="Node" parent="StateMachine" unique_id=1212646127]
 
