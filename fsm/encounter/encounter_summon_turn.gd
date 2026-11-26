@@ -25,14 +25,6 @@ func enter(_msg := {}) -> void:
 	SignalBus.emit_summon_turn_started()
 
 
-## Corresponds to the `_process()` callback.
-func update(_delta: float) -> void:
-	# Move to the `End` State when all enemies are defeated.
-	if enc.enemies.size() == 0:
-		state_machine.transition_to(END)
-	## TODO: Add logic to check if all players are defeated
-
-
 ## Connect signals that will persist throughout the life of this state.
 func _ready_connect_signals() -> void:
 	enc.summon.is_waiting.connect(_on_SummonCharacter_is_waiting)
