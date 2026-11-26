@@ -18,6 +18,10 @@
 [ext_resource type="AudioStream" uid="uid://bhyadftko6eb1" path="res://audio/interface/dialogue_001.wav" id="7_go44m"]
 [ext_resource type="Script" uid="uid://cwy4cxexsyc1l" path="res://fsm/encounter/tutorial/tutorial_start.gd" id="17_5i26s"]
 [ext_resource type="Script" uid="uid://dkkljjsj78vry" path="res://fsm/encounter/tutorial/tutorial_instruction.gd" id="18_pwcb1"]
+[ext_resource type="Script" uid="uid://cnietku46cbgq" path="res://fsm/encounter/tutorial/tutorial_player_turn.gd" id="19_j4ub1"]
+[ext_resource type="Script" uid="uid://iak3b0og6vt3" path="res://fsm/encounter/tutorial/tutorial_summon_turn.gd" id="20_oprx8"]
+[ext_resource type="Script" uid="uid://ko4vq5eq605p" path="res://fsm/encounter/tutorial/tutorial_enemy_turn.gd" id="21_w0wir"]
+[ext_resource type="Script" uid="uid://2v8jq0rmlgd2" path="res://fsm/encounter/tutorial/tutorial_end.gd" id="22_ss2dj"]
 
 [node name="Tutorial" type="Node" unique_id=1996116149]
 process_mode = 1
@@ -110,6 +114,8 @@ offset_left = -40.0
 offset_top = -27.0
 offset_right = -10.0
 offset_bottom = -7.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="UIOpenDialogue" type="AudioStreamPlayer" parent="PanelDialogue" unique_id=1600966967]
 stream = ExtResource("5_rrk63")
@@ -200,11 +206,15 @@ script = ExtResource("17_5i26s")
 script = ExtResource("18_pwcb1")
 
 [node name="PlayerTurn" type="Node" parent="StateMachine" unique_id=1212646127]
+script = ExtResource("19_j4ub1")
 
 [node name="SummonTurn" type="Node" parent="StateMachine" unique_id=905598009]
+script = ExtResource("20_oprx8")
 
 [node name="EnemyTurn" type="Node" parent="StateMachine" unique_id=1480984064]
+script = ExtResource("21_w0wir")
 
 [node name="End" type="Node" parent="StateMachine" unique_id=1354629782]
+script = ExtResource("22_ss2dj")
 
 [connection signal="focus_moved_by_edge" from="EncounterCamera" to="SelectionTracker/Selector" method="_on_EncounterCamera_focus_moved_by_edge"]
