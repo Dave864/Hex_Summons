@@ -14,6 +14,7 @@ func enter(_msg := {}) -> void:
 			tutorial.ui.initiative_tracker.get_current_character()
 	)
 	await starting_character.start_set
+	tutorial.reset_initative_tracker()
 	tutorial.set_step(Tutorial.Step.INTRO)
 	tutorial.dialogue_panel.display()
 

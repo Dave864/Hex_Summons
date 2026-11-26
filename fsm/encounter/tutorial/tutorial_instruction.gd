@@ -11,6 +11,9 @@ extends TutorialState
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
+	# Clear out the indexes to prevent prior notification areas from showing up.
+	tutorial.selection_tracker.notification_indexes = []
+	tutorial.selection_tracker.clear_highlights()
 	tutorial.progress_step()
 	tutorial.dialogue_panel.display()
 
