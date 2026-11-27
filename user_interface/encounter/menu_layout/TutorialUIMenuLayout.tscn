@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://dp3b42qitf0at" path="res://user_interface/encounter/menu_layout/PlayerOptionsMenu/PlayerOptionsMenuLayout.tscn" id="4_rr3kc"]
 [ext_resource type="PackedScene" uid="uid://dn4vmatmue5p6" path="res://user_interface/encounter/menu_layout/PartyCharacterStats/PartyCharacterStats.tscn" id="5_haaur"]
 [ext_resource type="Script" uid="uid://dcm1t8lpe3xej" path="res://fsm/state_machine.gd" id="6_6ignj"]
+[ext_resource type="Script" uid="uid://b1enhbi3awovn" path="res://fsm/user_interface/tutorial/tutorial_ui_wait.gd" id="7_3aa0g"]
+[ext_resource type="Script" uid="uid://7v7rb2ar0uyu" path="res://fsm/user_interface/tutorial/tutorial_ui_action.gd" id="8_u6flv"]
+[ext_resource type="Script" uid="uid://bdj6pxmwqwul0" path="res://fsm/user_interface/tutorial/tutorial_ui_pause.gd" id="9_3a5ar"]
 
 [node name="TutorialUIMenuLayout" type="Control" unique_id=2086880283 node_paths=PackedStringArray("standby_wisp_pool")]
 layout_mode = 3
@@ -76,16 +79,18 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="StateMachine" type="Node" parent="." unique_id=182262980]
+[node name="StateMachine" type="Node" parent="." unique_id=182262980 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("6_6ignj")
+initial_state = NodePath("Wait")
 metadata/_custom_type_script = "uid://dcm1t8lpe3xej"
 
 [node name="Wait" type="Node" parent="StateMachine" unique_id=804661086]
+script = ExtResource("7_3aa0g")
 
 [node name="Action" type="Node" parent="StateMachine" unique_id=199056087]
+script = ExtResource("8_u6flv")
 
 [node name="Pause" type="Node" parent="StateMachine" unique_id=1179954623]
-
-[node name="Dialogue" type="Node" parent="StateMachine" unique_id=734950481]
+script = ExtResource("9_3a5ar")
 
 [connection signal="wait_selected" from="PlayerOptionsMenuLayout" to="StateMachine/Action" method="_on_PlayerOptionsUI_wait_selected"]

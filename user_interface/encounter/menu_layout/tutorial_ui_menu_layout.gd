@@ -8,8 +8,16 @@ extends EncounterUIMenuLayout
 ## PlayerOptionsMenu.
 
 
+## Indicates that the tutorial step has been updated.
+signal step_updated
+## Indicates that the UI should be reactivated.
+signal reactivated
+
 ## Flag indicating the current step of the tutorial
-var tutorial_step := Tutorial.Step.INTRO
+var tutorial_step := Tutorial.Step.INTRO:
+	set(value):
+		tutorial_step = value
+		step_updated.emit()
 
 
 ## Updates the active player being focused on. Does not populate certain option
@@ -20,12 +28,16 @@ func set_focused_character_for_step(new_player: PlayerCharacter) -> void:
 	_set_highlight_for_focus_character(true)
 	_player_options_menu.clear_all_options()
 	# Don't display before step 2. TECHNIQUE.
-	_player_options_menu.populate_technique_options(
-			[] if tutorial_step < 2 else _focused_character.get_techniques()
-	)
+	if tutorial_step < 2:
+		_player_options_menu.populate_technique_options([])
+	else:
+		_player_options_menu.populate_technique_options(
+			_focused_character.get_techniques()
+		)
 	# Don't display before step 3, SPELL.
 	_player_options_menu.populate_spell_options(
-			[] if tutorial_step < 3 else _focused_character.get_spells()
+			[] as Array[Action] if tutorial_step < 3
+			else _focused_character.get_spells()
 	)
 	# Don't displau before step 4, SUMMON.
 	_player_options_menu.populate_summon_options(
@@ -34,3 +46,8 @@ func set_focused_character_for_step(new_player: PlayerCharacter) -> void:
 	# TODO: Add call to get items when items are implemented.
 	_player_options_menu.populate_item_options([])
 	display_player_menu(true)
+
+
+## Emits the reactivated signal.
+func emit_reactivated() -> void:
+	reactivated.emit()
