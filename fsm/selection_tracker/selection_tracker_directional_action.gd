@@ -86,6 +86,8 @@ func _orient_emission_to_tile(map_tile: MapTile) -> void:
 ## Orients the action emission to the closest valid target.
 func _orient_to_closest_target() -> void:
 	var target_distances: Array[Array] = _get_target_distances()
+	if target_distances.size() == 0:
+		return
 	var target_index: int = target_distances[0][0].map_coordinate.get_tile_index()
 	var target_tile: MapTile = hex_map.get_tile_at(target_index)
 	_orient_emission_to_tile(target_tile)

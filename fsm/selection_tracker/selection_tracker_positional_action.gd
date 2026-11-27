@@ -74,14 +74,17 @@ func _resolve_joystick_for_area(dir: HexUtil.HexDirection) -> void:
 ## Places the effect emission so that the effect area highlights the closest
 ## target. Emission is not placed if no valid tile could be found.
 func _place_closest_to_target() -> void:
-	var action: Action = s_tracker.get_focus_action()
-	var target_details: Array[Variant] = _get_target_distances()[0]
+	var target_distances := _get_target_distances()
+	if target_distances.size() == 0:
+		return
+	var target_details: Array[Variant] = target_distances[0]
 	var target_index: int = target_details[0].map_coordinate.get_tile_index()
 	var character_index_details: DistanceData = (
 		s_tracker.source_d_map.all_dist_at(s_tracker.move_target_index)
 	)
 	# When processing a spawn action, all character indexes are removed from the
 	# source range. We don't need to ignore the index if it is not present.
+	var action: Action = s_tracker.get_focus_action()
 	var ignore_character_index: bool = (
 		s_tracker.source_d_map.has(s_tracker.move_target_index)
 		and action.stats.dead_range.get_reach() > 0
