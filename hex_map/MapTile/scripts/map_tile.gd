@@ -122,7 +122,8 @@ func get_all_adjacent() -> Array[MapTile]:
 func set_highlight_type(value: HexHighlighter.Option) -> void:
 	_highlight_type = value
 	tile_highlighter.set_option(_highlight_type)
-	tile_highlighter.set_highlighter_transparency(Constants.OPACITY_FULL)
+	if value != HexHighlighter.Option.NOTIFICATION:
+		tile_highlighter.set_highlighter_transparency(Constants.OPACITY_FULL)
 
 
 ## Get the value of the highlight flag.
@@ -136,7 +137,10 @@ func set_selector_type(value: HexHighlighter.Option) -> void:
 	selector_highlighter.set_option(_selector_type)
 	if value != HexHighlighter.Option.NONE:
 		selector_highlighter.offset_render_priority(1)
-	selector_highlighter.set_highlighter_transparency(Constants.OPACITY_FULL)
+	if value != HexHighlighter.Option.NOTIFICATION:
+		selector_highlighter.set_highlighter_transparency(
+				Constants.OPACITY_FULL
+		)
 	var highlighter_mesh: CylinderMesh = tile_highlighter.mesh
 	if (
 		value != HexHighlighter.Option.NONE

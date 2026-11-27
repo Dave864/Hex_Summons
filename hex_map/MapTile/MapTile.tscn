@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://cg633481rl4ed"]
+[gd_scene format=4 uid="uid://cg633481rl4ed"]
 
 [ext_resource type="Script" uid="uid://bx23fuvw0qnbb" path="res://hex_map/scripts/occupant.gd" id="1"]
 [ext_resource type="Script" uid="uid://dj7oaoibsxx4h" path="res://hex_map/MapTile/scripts/hex_highlighter.gd" id="2"]
@@ -62,7 +62,7 @@ radial_segments = 6
 rings = 0
 cap_bottom = false
 
-[node name="MapTile" type="Area3D" node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh")]
+[node name="MapTile" type="Area3D" unique_id=466356379 node_paths=PackedStringArray("selector_highlighter", "tile_highlighter", "tile_mesh")]
 collision_layer = 2
 collision_mask = 12
 script = ExtResource("7")
@@ -71,24 +71,24 @@ tile_highlighter = NodePath("TileHighlighter")
 tile_mesh = NodePath("MapTileMesh")
 texture_index = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=623137457]
 shape = ExtResource("9")
 
-[node name="MouseBlocker" type="Area3D" parent="."]
+[node name="MouseBlocker" type="Area3D" parent="." unique_id=472419921]
 collision_layer = 32
 collision_mask = 0
 
-[node name="ScalingHexCollider" type="CollisionShape3D" parent="MouseBlocker"]
+[node name="ScalingHexCollider" type="CollisionShape3D" parent="MouseBlocker" unique_id=1863280797]
 shape = ExtResource("8")
 script = ExtResource("4")
 
-[node name="Occupant" type="Node" parent="."]
+[node name="Occupant" type="Node" parent="." unique_id=377181342]
 script = ExtResource("1")
 
-[node name="MapCoordinate" type="Marker3D" parent="."]
+[node name="MapCoordinate" type="Marker3D" parent="." unique_id=394765378]
 script = ExtResource("3")
 
-[node name="SelectorHighlighter" type="MeshInstance3D" parent="." node_paths=PackedStringArray("height_reference")]
+[node name="SelectorHighlighter" type="MeshInstance3D" parent="." unique_id=2069482088 node_paths=PackedStringArray("height_reference")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
 visible = false
 mesh = SubResource("12")
@@ -96,19 +96,19 @@ skeleton = NodePath("../TileHighlighter")
 script = ExtResource("2")
 height_reference = NodePath("..")
 
-[node name="MapTileMesh" type="MeshInstance3D" parent="."]
+[node name="MapTileMesh" type="MeshInstance3D" parent="." unique_id=1918383796]
 mesh = SubResource("ArrayMesh_cr88n")
 script = ExtResource("8_be511")
 metadata/_custom_type_script = "uid://ch3c7t7aq0s28"
 
-[node name="TileHighlighter" type="MeshInstance3D" parent="." node_paths=PackedStringArray("height_reference")]
+[node name="TileHighlighter" type="MeshInstance3D" parent="." unique_id=1764750302 node_paths=PackedStringArray("height_reference")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
 visible = false
 mesh = SubResource("10")
 script = ExtResource("2")
 height_reference = NodePath("..")
 
-[node name="DebugLabel" type="Label3D" parent="."]
+[node name="DebugLabel" type="Label3D" parent="." unique_id=984079758]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.125, 0.2)
 pixel_size = 0.02
 offset = Vector2(0, 5)
