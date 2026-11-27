@@ -122,8 +122,6 @@ func set_enemies_reference(enemy_list: Array[Character]) -> void:
 ## Updates the character that is the reference for selections.
 func set_focused_character(new_focus: Character) -> void:
 	focused_character = new_focus
-	if _enemy_characters.size() == 0:
-		return
 	_movement_tile_ids.clear()
 	if focused_character == null:
 		_ghost_sprite.sprite_frames = SpriteFrames.new()
@@ -262,6 +260,9 @@ func highlight_player_movement() -> void:
 		else:
 			tile.set_highlight_type(HexHighlighter.Option.ORIGIN_ALLY)
 		_highlighted_map_indexes.append(tile.map_coordinate.get_tile_index())
+		if tile.map_coordinate.get_tile_index() in notification_indexes:
+			tile.set_selector_type(HexHighlighter.Option.NOTIFICATION)
+			_selectable_map_indexes.append(tile.map_coordinate.get_tile_index())
 
 
 ## Highlight the specified tiles as being within the source range of the 
@@ -371,15 +372,15 @@ func indicate_directional_effect_range() -> void:
 
 ## Activate the selector highlights for a set of tiles that need to have
 ## attention brought to them.
-func highlight_notification_area(area_indexes: PackedInt32Array = []) -> void:
+func indicate_notification_area(area_indexes: PackedInt32Array = []) -> void:
 	if area_indexes.size() == 0 and notification_indexes.size() == 0:
 		return
 	if area_indexes.size() > 0:
 		notification_indexes = area_indexes
 	for index: int in notification_indexes:
 		var tile: MapTile = hex_map.get_tile_at(index)
-		tile.set_highlight_type(HexHighlighter.Option.NOTIFICATION)
-		_highlighted_map_indexes.append(index)
+		tile.set_selector_type(HexHighlighter.Option.NOTIFICATION)
+		_selectable_map_indexes.append(index)
 
 
 ## Clear the higlights from all tiles.

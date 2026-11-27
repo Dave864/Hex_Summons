@@ -28,7 +28,7 @@ func enter(_msg: Dictionary[Variant, Variant] = {}) -> void:
 		_move_origin_index = s_tracker.player_index
 	var character_tile: MapTile = hex_map.get_tile_at(s_tracker.move_target_index)
 	s_tracker.emit_new_focus_point(character_tile.get_character_position())
-	s_tracker.highlight_notification_area()
+	s_tracker.indicate_notification_area()
 	s_tracker.highlight_player_movement()
 	_pathbuilder.update_move_area_details(
 			_move_origin_index,
@@ -104,17 +104,23 @@ func _update_selection(map_tile: MapTile) -> void:
 	MouseHandler.update_mouse_tracker_3d(map_tile.get_character_position())
 	if !map_tile.is_active():
 		return
-
 	# Turn off previous selector indicator to indicate a new tile is being
 	# hovered over.
 	if selector.tile_hovered != null:
 		selector.tile_hovered.set_selector_type(HexHighlighter.Option.NONE)
+		# Reset highlight to notification if the tile is in the notification
+		# range.
+		var tile_index := selector.tile_hovered.map_coordinate.get_tile_index()
+		if tile_index in s_tracker.notification_indexes:
+			selector.tile_hovered.set_selector_type(
+					HexHighlighter.Option.NOTIFICATION
+			)
 	selector.tile_hovered = map_tile
 	
 	if InputController.source_is_gamepad():
 		s_tracker.emit_new_focus_point(map_tile.get_character_position())
 
-	var highlight: int = map_tile.get_highlight_type()
+	var highlight := map_tile.get_highlight_type()
 	if (
 		highlight == HexHighlighter.Option.RANGE_MOVE
 		or highlight == HexHighlighter.Option.ORIGIN_PLAYER
