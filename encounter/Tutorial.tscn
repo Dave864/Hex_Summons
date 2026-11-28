@@ -48,38 +48,50 @@ To win you must simply lower the health of all opponents to zero. If all of your
 Your warriors and the enemies take turns executing their actions. The order of who goes next is indicated in the bar at the top of the screen."
 dialogue_move = "Before we go over your arsenal, you must learn how to walk.
 [b]
-On your warrior's turn you can highlight where they will move to using {0}. Press {1} to select their destination.
+On your warrior's turn you can highlight where they will move to using {0}. Press {1} to select their destination. When one is selected, the path they will take will be displayed.
 [b]
-An indicator will appear showing the path they will take to reach the selected tile.
+A warrior moves to the target when their turn ends. This is done by either selecting WAIT or pressing its hotkey.
 [b]
-They will not move until you end their turn. You can do so by either selecting the option or by pressing its hotkey.
+Practice taking your first steps. Move your warriors to the marked area."
+dialogue_technique = "One way of dispatching of your foes is through the use of martial skills, or TECHNIQUES.
 [b]
-Practice taking your first steps. Move your warriors to the marked area when you are ready to learn about your arsenal."
-dialogue_technique = "One way of dispatching of your foes is through the use of martial skills, or techniques.
+All techniques have a cooldown, which is the number of turns that must pass before it can be used again.
 [b]
-All techniques have a cooldown, which is the number of turns that must pass before it can be used again. Some techniques have a cooldown of zero, meaning they can be used every turn.
+Techniques with a cooldown of zero can be used every turn.
 [b]
-Techniques and other actions have a range they can effect. This is indicated when you have it selected for use. Purple marks where the technique can be cast (its range). Yellow marks the area the technique effects (its area). Targets marked by the area will be hit by the technique.
+Techniques and other actions have a range they can effect. This is indicated when you have it selected for use.
 [b]
-Using a technique will end the warrior's turn. If you need to reposition you need to go back to movement. A technique will only be used if a target is within its area.
+Purple marks where the technique can be cast (its range). Orange marks the area the technique effects (its area). Targets marked by the area will be hit by the technique.
+[b]
+Using a technique ends the warrior's turn. A technique will only be used if a target is within its area.
+[b]
+You can switch back to movement if you need to reposition.
 [b]
 Master techniques and defeat the threat!"
-dialogue_spell = "Another tool your warriors have is the power of spells. Spells are cast by expending elemental wisps, which come in one of four elements: earth, fire, water, and wind.
+dialogue_spell = "Another tool of your warriors is the power of SPELLS. They are cast by expending elemental wisps, which come in one of four elements: earth, fire, water, and wind.
 [b]
-All spells have a requirement and a cost. In order to be able to cast it, the number of wisps the warrior has must meet the requirement value. When casting the spell, the cost value is paid from the warrior's wisp pool.
+All spells have a requirement and a cost.
 [b]
-Wisps used for casting spells go into the summon pool. They cannot be used for casting spells while they are here.
+In order to be able to cast it, the number of wisps the warrior has must meet the requirement value.
+[b]
+When casting the spell, the cost value is paid from the warrior's wisp pool.
+[b]
+Wisps expended casting spells go into the summon pool. They cannot be used for casting spells while here.
 [b]
 Casting a spell ends the warrior's turn.
 [b]
 Harness your magical might and techniques to overcome the enemy!"
-dialogue_summon = "The final power your warriors possess is the ability to call forth summons, entities of considerable strength.
+dialogue_summon = "The final power your warriors possess is the ability to call forth SUMMONS, entities of considerable strength.
 [b]
-In order to call a summon you need to have the required wisps stockpiled in the summon pool. When a summon is called, the required wisps are drawn from the summon pool to form it. Only one summon can be active at a time.
+In order to call a summon you need to have the required wisps stockpiled in the summon pool.
 [b]
-A summon bases its strength on the warrior who called it. The warrior's attack and defenses are multiplied. The warrior's health becomes the summon's; if it falls to zero the summon will fade and the warrior will be knocked out.
+When a summon is called, the required wisps are drawn from the summon pool to form it. Only one summon can be active at a time.
+[b]
+A summon bases its strength on the warrior who called it. The warrior's attack and defenses are multiplied. The warrior's health becomes the summon's.
 [b]
 The active summon takes the turn of the warrior who called it, as they must use all of their focus to maintain the summon's form.
+[b]
+If a summon's health drops to zero, it disappears and the warrior who called it is also knocked out.
 [b]
 Whenever a summon uses an action it expends some of the wisps that make up its form. These wisps are returned to the warrior they were originally bonded with, allowing them to be used for spells again.
 [b]
