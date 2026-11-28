@@ -16,7 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://b4jvukx5h5fd7" path="res://audio/interface/UIMisc_Open Close Pause Menu 09_KRST_NONE.wav" id="7_iog8l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n4y2n"]
-bg_color = Color(0, 0, 0.5019608, 0.54901963)
+bg_color = Color(0, 0, 0.5019608, 0.74509805)
 
 [node name="PauseMenu" type="Control" unique_id=455300474 node_paths=PackedStringArray("options_viewport", "objective_label", "button_first_focus", "asp_open", "asp_closed")]
 process_mode = 3
