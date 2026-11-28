@@ -131,6 +131,9 @@ func load_summon(summon_name: String, spawn_position: Vector3) -> void:
 ## Sets the summon to be inactive, placing them out of the map and resetting the
 ## specific summon details in preparation for the next summon.
 func dismiss_summon() -> void:
+	# If not active, it is considered dismissed.
+	if not _active:
+		return
 	emit_signal("deactivated")
 	_active = false
 	visible = false
