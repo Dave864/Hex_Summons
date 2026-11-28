@@ -58,12 +58,14 @@ func _on_popup_timer_timeout() -> void:
 ## Reloads the tutorial.
 func _on_redo_pressed() -> void:
 	get_tree().paused = false
+	end_popup.hide()
 	state_machine.transition_to(START)
 
 
 ## Loads the title screen. 
 func _on_title_pressed() -> void:
 	SceneController.reset_landmark()
+	end_popup.hide()
 	get_tree().paused = false
 	SceneController.change_scene_to_title()
 
@@ -71,5 +73,6 @@ func _on_title_pressed() -> void:
 ## Goes to the start of the game.
 func _on_start_pressed() -> void:
 	SceneController.reset_landmark()
+	end_popup.hide()
 	get_tree().paused = false
 	SceneController.change_scene_to_landmark_zone("TownStart")

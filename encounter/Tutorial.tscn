@@ -46,7 +46,9 @@ Combat encounters begin when you collide with another creature while traveling. 
 To win you must simply lower the health of all opponents to zero. If all of your warriors' health drop to zero, you lose the fight and will be sent back to the title screen.
 [b]
 Your warriors and the enemies take turns executing their actions. The order of who goes next is indicated in the bar at the top of the screen."
-dialogue_move = "Before we go over your arsenal, you must learn how to walk. On your warrior's turn you can highlight where they will move to using {0}. Press {1} to select their destination.
+dialogue_move = "Before we go over your arsenal, you must learn how to walk.
+[b]
+On your warrior's turn you can highlight where they will move to using {0}. Press {1} to select their destination.
 [b]
 An indicator will appear showing the path they will take to reach the selected tile.
 [b]
