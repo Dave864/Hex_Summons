@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://chtyidgqblhxn" path="res://audio/interface/UIClick_Accept Button 04_KRST_NONE.wav" id="6_mlncb"]
 [ext_resource type="AudioStream" uid="uid://bufru41q6sqp1" path="res://audio/music/Random Battle.mp3" id="7_0nq1r"]
 [ext_resource type="AudioStream" uid="uid://bhyadftko6eb1" path="res://audio/interface/dialogue_001.wav" id="7_go44m"]
+[ext_resource type="PackedScene" uid="uid://c51hkhbfmfhre" path="res://user_interface/encounter/menu_layout/TutorialUIMenuLayout.tscn" id="8_ss2dj"]
 [ext_resource type="Texture2D" uid="uid://ceqm1n8ren8ki" path="res://art/ui/GlyphTheme2.png" id="8_w0wir"]
 [ext_resource type="Script" uid="uid://da6sq681nnb6a" path="res://user_interface/audio_nodes/button_audio.gd" id="9_ss2dj"]
 [ext_resource type="Script" uid="uid://cwy4cxexsyc1l" path="res://fsm/encounter/tutorial/tutorial_start.gd" id="17_5i26s"]
@@ -33,7 +34,7 @@ texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 region_rect = Rect2(88, 1, 10, 10)
 
-[node name="Tutorial" type="Node" unique_id=1996116149]
+[node name="Tutorial" type="Node" unique_id=1996116149 node_paths=PackedStringArray("ui")]
 process_mode = 1
 script = ExtResource("1_auo41")
 dialogue_intro = "Welcome to the combat tutorial.
@@ -45,9 +46,9 @@ Combat encounters begin when you collide with another creature while traveling. 
 To win you must simply lower the health of all opponents to zero. If all of your warriors' health drop to zero, you lose the fight and will be sent back to the title screen.
 [b]
 Your warriors and the enemies take turns executing their actions. The order of who goes next is indicated in the bar at the top of the screen."
-dialogue_move = "Before we go over your arsenal, you must learn how to walk. On your warrior's turn you can select where they will move to using the {0}. You can select the target destination using {1}.
+dialogue_move = "Before we go over your arsenal, you must learn how to walk. On your warrior's turn you can highlight where they will move to using {0}. Press {1} to select their destination.
 [b]
-An indicator will appear showing the path they will take to reach the destination.
+An indicator will appear showing the path they will take to reach the selected tile.
 [b]
 They will not move until you end their turn. You can do so by either selecting the option or by pressing its hotkey.
 [b]
@@ -87,6 +88,9 @@ tooltip_objective_spell = "Vanquish the foe using your spells and techniques."
 tooltip_objective_summon = "Harness your full arsenal and finish the threat."
 tooltip_movement_gamepad = "The camera will follow the tile selector. Use the right joystick to rotate the camera."
 tooltip_movement_keymouse = "Hover the mouse at the edges of the screen to move the camera. Hold down {0} and drag the mouse to rotate the camera."
+ui = NodePath("TutorialUIMenuLayout")
+
+[node name="TutorialUIMenuLayout" parent="." unique_id=2086880283 instance=ExtResource("8_ss2dj")]
 
 [node name="PanelDialogue" type="Panel" parent="." unique_id=1482611221]
 visible = false
@@ -142,6 +146,7 @@ pitch_scale = 0.9
 bus = &"Interface"
 
 [node name="PauseViewport" type="SubViewportContainer" parent="." unique_id=2116458112]
+process_mode = 3
 visible = false
 offset_right = 640.0
 offset_bottom = 360.0

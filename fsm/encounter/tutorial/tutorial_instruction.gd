@@ -4,31 +4,30 @@ extends TutorialState
 ## state.
 ##
 ## The tutorial progresses to the next step, updating the dialogue and resetting
-## the map to load thhe relevant enemies.When the text has been exhausted it
+## the map to load the relevant enemies.When the text has been exhausted it
 ## goes to the corresponding character turn state.
 
 
 ## Called by the state machine upon changing the active state. The `msg` parameter
 ## is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(_msg := {}) -> void:
-	# Clear out the indexes to prevent prior notification areas from showing up.
-	tutorial.selection_tracker.notification_indexes = []
 	tutorial.selection_tracker.clear_highlights()
+	tutorial.selection_tracker.clear_indicators()
 	tutorial.progress_step()
+	tutorial.dialogue_panel.exhausted.connect(_on_dialogue_exhausted)
 	tutorial.dialogue_panel.display()
 
 
-## Virtual function. To be called in the _ready function to connect signals to 
-## the state. The signals connected here should not be required by other states.
-func _ready_connect_signals() -> void:
-	tutorial.dialogue_panel.hidden.connect(_on_dialogue_hidden)
+## Called by the state machine before changing the active state.
+## Use this function to clean up the state.
+func exit() -> void:
+	tutorial.dialogue_panel.exhausted.disconnect(_on_dialogue_exhausted)
 
 
 ## Prepares to go into the next combat step.
-func _on_dialogue_hidden() -> void:
-	if not _state_is_active():
-		return
-	var first_character := tutorial.get_next_character()
+func _on_dialogue_exhausted() -> void:
+	tutorial.ui.emit_reactivated()
+	var first_character := tutorial.get_current_character()
 	if first_character is PlayerCharacter:
 		if (
 				tutorial.summon.is_active()

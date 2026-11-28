@@ -24,10 +24,6 @@ const ENEMY_PATH_SCUTTLESHRUB := (
 const ENEMY_PATH_STUMBLETREE := (
 		"res://character/enemy_characters/StumbleTree/StumbleTree.tscn"
 )
-## The path to the elder stumbletree enemy.
-const ENEMY_PATH_ELDER_STUMBLETREE := (
-		"res://character/enemy_characters/ElderStumbleTree/ElderStumbleTree.tscn"
-)
 
 @export_group("Text Dialogue", "dialogue_")
 ## The dialogue introducing the basic conceit of an encounter.
@@ -56,18 +52,31 @@ const ENEMY_PATH_ELDER_STUMBLETREE := (
 @export_multiline var tooltip_movement_keymouse := ""
 @export_group("Player Transition Areas", "transition_area_")
 ## The area the player must be in to start the technique tutorial.
-@export var transition_area_technique: PackedInt32Array = []
+@export var transition_area_technique: PackedInt32Array = [
+	0, 1, 2, 3, 10, 11,
+	12, 20, 21, 22, 30,
+	31, 40, 41, 50, 51,
+	60, 61, 62, 70, 71,
+	72, 80, 81, 82,
+]
 ## The area the player must be in to start the spell tutorial.
-@export var transition_area_spell: PackedInt32Array = []
+@export var transition_area_spell: PackedInt32Array = [
+	25, 26, 27, 33, 34, 35, 36,
+	43, 44, 45, 46, 53, 54, 55,
+	56, 64, 65, 66, 74, 75
+]
 ## The area the player must be in to start the summon tutorial.
-@export var transition_area_summon: PackedInt32Array = []
+@export var transition_area_summon: PackedInt32Array = [
+	26, 27, 35, 36, 44,
+	45, 46, 54, 55, 65,
+]
 @export_group("Spawn Areas", "spawn_area_")
 ## The tiles the enemies will spawn in for the technique tutorial.
-@export var spawn_area_technique: PackedInt32Array = [0, 1]
+@export var spawn_area_technique: PackedInt32Array = [33, 53]
 ## The tiles the enemies will spawn in for the spell tutorial.
-@export var spawn_area_spell: PackedInt32Array = [0, 1, 2]
+@export var spawn_area_spell: PackedInt32Array = [31, 50, 62]
 ## The tiles the enemies will spawn in for the summon tutorial.
-@export var spawn_area_summon: PackedInt32Array = [0, 1, 2, 3, 4]
+@export var spawn_area_summon: PackedInt32Array = [49, 38, 48, 58]
 
 ## The current step in the tutorial process.
 var tutorial_step := Step.INTRO
@@ -81,10 +90,6 @@ var tutorial_step := Step.INTRO
 @onready var _enemy_scuttleshrub: PackedScene = preload(ENEMY_PATH_SCUTTLESHRUB)
 ## Reference to the stumbletree enemy.
 @onready var _enemy_stumbletree: PackedScene = preload(ENEMY_PATH_STUMBLETREE)
-## Reference to the elder stumbletree enemy.
-@onready var _enemy_elder_stumbletree: PackedScene = preload(
-		ENEMY_PATH_ELDER_STUMBLETREE
-)
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -124,19 +129,32 @@ func set_step(current_step: Step) -> void:
 			_restore_party_health()
 			_place_players_intro()
 		Step.MOVEMENT:
+			_connect_selector_to_characters()
+			var selection := (
+					"the left joystick" if InputController.source_is_gamepad()
+					else "the mouse"
+			)
+			var confirmation := (
+					"" if InputController.source_is_gamepad()
+					else ""
+			)
+			dialogue_move = dialogue_move.format([selection, confirmation])
 			dialogue_panel.set_text(dialogue_move)
 			pause_menu.update_objective(tooltip_objective_movement)
 		Step.TECHNIQUE:
+			_connect_selector_to_characters()
 			dialogue_panel.set_text(dialogue_technique)
 			pause_menu.update_objective(tooltip_objective_technique)
 			_restore_party_health()
 			_place_enemies_technique_phase()
 		Step.SPELL:
+			_connect_selector_to_characters()
 			dialogue_panel.set_text(dialogue_spell)
 			pause_menu.update_objective(tooltip_objective_spell)
 			_restore_party_health()
 			_place_enemies_spell_phase()
 		Step.SUMMON:
+			_connect_selector_to_characters()
 			dialogue_panel.set_text(dialogue_summon)
 			pause_menu.update_objective(tooltip_objective_summon)
 			_restore_party_health()
@@ -161,7 +179,7 @@ func set_notification_area() -> void:
 func players_in_transition_area() -> bool:
 	for player: PlayerCharacter in players.keys():
 		var index := player.map_coordinate.get_tile_index()
-		if selection_tracker.notification_indexes.has(index):
+		if not selection_tracker.notification_indexes.has(index):
 			return false
 	return true
 
@@ -197,32 +215,27 @@ func _place_enemies_technique_phase() -> void:
 
 ## Places enemy characters for the spell phase.
 func _place_enemies_spell_phase() -> void:
-	for index: int in spawn_area_technique.size():
-		var enemy: EnemyCharacter = (
-				_enemy_scuttleshrub.instantiate() if index == 1
-				else _enemy_stumbletree.instantiate()
-		) 
+	for index: int in spawn_area_spell.size():
+		var enemy: EnemyCharacter = _enemy_scuttleshrub.instantiate()
 		$Enemies.add_child(enemy)
 		enemies.append(enemy)
 		enemy.defeated.connect(_on_Character_defeated)
-		hex_map.place_character_at_tile(enemy, spawn_area_technique[index])
+		hex_map.place_character_at_tile(enemy, spawn_area_spell[index])
 	_connect_character_ai()
 	_refresh_initiative_tracker()
 
 
-
 ## Places enemy characters for the summon phase.
 func _place_enemies_summon_phase() -> void:
-	for index: int in spawn_area_technique.size():
+	for index: int in spawn_area_summon.size():
 		var enemy: EnemyCharacter = (
-				_enemy_elder_stumbletree.instantiate() if index == 2
-				else _enemy_stumbletree.instantiate() if index == 3
+				_enemy_stumbletree.instantiate() if index == 0
 				else _enemy_scuttleshrub.instantiate()
 		) 
 		$Enemies.add_child(enemy)
 		enemies.append(enemy)
 		enemy.defeated.connect(_on_Character_defeated)
-		hex_map.place_character_at_tile(enemy, spawn_area_technique[index])
+		hex_map.place_character_at_tile(enemy, spawn_area_summon[index])
 	_connect_character_ai()
 	_refresh_initiative_tracker()
 

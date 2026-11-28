@@ -7,6 +7,9 @@ extends Panel
 ## falls within the character limit of the panel.
 
 
+## Indicates that the currently set dialogue has been exhausted.
+signal exhausted
+
 ## The size of the panel.
 const PANEL_SIZE := Vector2(640.0, 75.0)
 ## The position of the text.
@@ -131,6 +134,7 @@ func _input(event: InputEvent) -> void:
 			_asp_progress_dialogue.play()
 		else:
 			hide()
+			exhausted.emit()
 
 
 ## Parses the provided text into section that are each no longer than the

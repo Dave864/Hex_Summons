@@ -179,12 +179,17 @@ func _get_start_indices(
 
 ## Connects all map tile "mouse_hovered" signals to the selector.
 func _connect_map_to_selector() -> void:
-	selection_tracker.set_players_reference(players.keys())
-	selection_tracker.set_enemies_reference(enemies)
+	_connect_selector_to_characters() 
 	for mt: MapTile in hex_map.get_map_tiles():
 		mt.mouse_hovered.connect(
 				selection_tracker.selector._on_MapTile_mouse_hovered
 		)
+
+
+## Connects all characters to the selector.
+func _connect_selector_to_characters() -> void:
+	selection_tracker.set_players_reference(players.keys())
+	selection_tracker.set_enemies_reference(enemies)
 
 
 ## Check that all required parameters are set.

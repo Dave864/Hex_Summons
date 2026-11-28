@@ -26,17 +26,22 @@ func _ready() -> void:
 func populate_initiative(characters: Array[Character]) -> void:
 	_current_index = 0
 	_init_order.resize(characters.size())
+	_character_tracker.clear()
 	for i: int in characters.size():
 		_init_order[i] = characters[i]
 		_character_tracker[characters[i].get_instance_id()] = false
-		characters[i].stats.connect(
-				"agility_changed",
-				Callable(self, "_on_CharacterStatModifiers_agility_changed")
-		)
-		characters[i].connect(
-				"defeated",
-				Callable(self, "_on_Character_defeated")
-		)
+		if (
+				not characters[i].stats.is_connected(
+					"agility_changed",
+					_on_CharacterStatModifiers_agility_changed
+				)
+		):
+			characters[i].stats.connect(
+					"agility_changed",
+					_on_CharacterStatModifiers_agility_changed
+			)
+		if not characters[i].defeated.is_connected(_on_Character_defeated):
+			characters[i].defeated.connect(_on_Character_defeated)
 	_calculate_full_initiative()
 	_update_display()
 

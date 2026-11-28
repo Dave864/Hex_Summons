@@ -28,6 +28,10 @@ func enter(_msg := {}) -> void:
 	_connect_signals()
 	await tutorial.camera.move_focus_decay(_active_char.position)
 	tutorial.camera.enable_edge_detection()
+	if tutorial.enemies_defeated():
+		# Objective needs to indicate that the player should move to the area.
+		tutorial.dialogue_panel.set_text(tutorial.tooltip_objective_movement)
+		tutorial.set_notification_area()
 	SignalBus.emit_player_turn_started(_active_char)
 
 
@@ -83,12 +87,9 @@ func _on_PlayerCharacter_turn_ended() -> void:
 	if _reached_end():
 		return
 	if tutorial.players_in_transition_area():
+		tutorial.selection_tracker.notification_indexes.clear()
 		state_machine.transition_to(INSTRUCTION)
 		return
-	if tutorial.enemies_defeated():
-		# Objective needs to indicate that the player should move to the area.
-		tutorial.dialogue_panel.set_text(tutorial.tooltip_objective_movement)
-		tutorial.set_notification_area()
 	var next_character: Character = tutorial.get_next_character()
 	tutorial.progress_initiative()
 	if next_character is PlayerCharacter:
