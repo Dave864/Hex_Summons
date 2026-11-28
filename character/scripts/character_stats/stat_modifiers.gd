@@ -32,7 +32,7 @@ func set_cur_health(delta: int) -> int:
 	var new_health: int = get_stat(Stat.Type.CUR_HEALTH) + delta
 	var max_health: int = get_stat(Stat.Type.MAX_HEALTH)
 	new_health = int(clamp(new_health, 0, max_health))
-	emit_signal("health_changed", new_health, max_health)
+	health_changed.emit(new_health, max_health)
 	return new_health
 
 

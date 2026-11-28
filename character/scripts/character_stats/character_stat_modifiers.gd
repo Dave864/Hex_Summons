@@ -70,7 +70,9 @@ func set_cur_health(delta: int) -> int:
 
 ## Set current health to the maximum value.
 func max_cur_health() -> void:
+	var previous_health = _current_health
 	_current_health = get_stat(Stat.Type.MAX_HEALTH)
+	health_changed.emit(previous_health, _current_health)
 
 
 ## Get all the stats.
